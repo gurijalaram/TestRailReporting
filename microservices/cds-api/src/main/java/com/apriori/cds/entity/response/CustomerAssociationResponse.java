@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "cds/CustomerAssociationsSchema.json")
+@Schema(location = "CustomerAssociationsSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor

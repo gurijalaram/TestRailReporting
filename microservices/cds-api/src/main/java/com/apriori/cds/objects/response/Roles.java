@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/RolesSchema.json")
+@Schema(location = "RolesSchema.json")
 public class Roles extends Pagination {
     private List<Role> items;
     private Roles response;

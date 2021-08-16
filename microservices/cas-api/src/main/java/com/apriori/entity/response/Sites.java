@@ -9,7 +9,7 @@ import lombok.Data;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/SitesSchema.json")
+@Schema(location = "SitesSchema.json")
 public class Sites extends Pagination {
     private List<Site> items;
     private Sites response;

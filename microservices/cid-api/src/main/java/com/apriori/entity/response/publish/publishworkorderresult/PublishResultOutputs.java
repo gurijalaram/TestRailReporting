@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PublishResultOutputs {
     private ScenarioIterationKey scenarioIterationKey;
+    private String comments;
+    private String description;
 }

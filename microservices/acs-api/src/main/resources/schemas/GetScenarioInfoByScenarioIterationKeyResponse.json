@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "initialized": {
+      "type": "boolean"
+    },
+    "missing": {
+      "type": "boolean"
+    },
+    "virtual": {
+      "type": "boolean"
+    },
+    "componentName": {
+      "type": "string"
+    },
+    "componentType": {
+      "type": "string"
+    },
+    "configurationName": {
+      "type": "string"
+    },
+    "scenarioName": {
+      "type": "string"
+    },
+    "locked": {
+      "type": "boolean"
+    },
+    "fileName": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updateddBy": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "initialized",
+    "missing",
+    "virtual",
+    "componentName",
+    "componentType",
+    "configurationName",
+    "scenarioName",
+    "locked",
+    "fileName",
+    "createdBy",
+    "createdAt",
+    "updateddBy",
+    "updatedAt"
+  ]
+}

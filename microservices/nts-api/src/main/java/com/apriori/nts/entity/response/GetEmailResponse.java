@@ -6,7 +6,7 @@ import com.apriori.utils.http.enums.Schema;
 import java.util.List;
 
 
-@Schema(location = "nts/NtsGetEmailsResponseSchema.json")
+@Schema(location = "NtsGetEmailsResponseSchema.json")
 public class GetEmailResponse  extends Pagination {
 
     private GetEmailResponse response;

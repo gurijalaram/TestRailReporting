@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "cid/FmsFileSchema.json")
+@Schema(location = "FmsFileSchema.json")
 public class FileResponse {
     private String identity;
     private String createdBy;
