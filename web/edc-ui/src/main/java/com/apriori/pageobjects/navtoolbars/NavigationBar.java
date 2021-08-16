@@ -46,10 +46,10 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
      *
      * @retun new page object
      */
-        public HelpPage clickHelpDropdown() {
-                pageUtils.waitForElementAndClick(helpDropdown);
-               return new HelpPage(driver);
-           }
+    public HelpPage clickHelpDropdown() {
+        pageUtils.waitForElementAndClick(helpDropdown);
+        return new HelpPage(driver);
+    }
 
     /**
      * Click on the User dropdown
@@ -57,8 +57,8 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
      * @return new page object
      */
     public MyUserPage clickUserDropdown() {
-            pageUtils.waitForElementAndClick(userDropdown);
-            return new MyUserPage(driver);
-        }
+        pageUtils.waitForElementAndClick(userDropdown);
+        return new MyUserPage(driver);
+    }
 }
 

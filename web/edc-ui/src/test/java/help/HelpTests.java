@@ -1,7 +1,7 @@
 package help;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 import com.apriori.pageobjects.navtoolbars.help.AboutUsPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
@@ -22,19 +22,19 @@ public class HelpTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"2272"})
+    @TestRail(testCaseId = {"8941"})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
 
         loginPage = new EdcAppLoginPage(driver);
         aboutUsPage = loginPage.login(UserUtil.getUser())
             .clickHelpDropdown()
-           .selectAbout()
+            .selectAbout()
             .switchTab()
-            .agreeTermsAndCondition()
-            .closeOnlineHelpChat();
+            .agreeTermsAndCondition();
 
-//        assertThat(aboutUsPage.getAboutUsPageTitle(), containsString("Product Cost Management Experts"));
+        assertThat(aboutUsPage.getAboutUsPageUrl(), containsString("https://www.apriori.com/about-us"));
+        assertThat(aboutUsPage.getAboutUsMetaTag(), containsString("Improving Your Profitability through Digital Manufacturing"));
     }
 }
 
