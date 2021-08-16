@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "cidapp/CssComponentResponse.json")
+@Schema(location = "CssComponentResponse.json")
 @JsonRootName("response")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Data

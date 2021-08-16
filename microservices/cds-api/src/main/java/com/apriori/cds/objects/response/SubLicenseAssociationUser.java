@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/SubLicenseAssociationUserSchema.json")
+@Schema(location = "SubLicenseAssociationUserSchema.json")
 public class SubLicenseAssociationUser {
     private SubLicenseAssociationUser response;
     private String identity;

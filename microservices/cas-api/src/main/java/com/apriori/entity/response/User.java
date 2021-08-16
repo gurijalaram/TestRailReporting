@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/UserSchema.json")
+@Schema(location = "UserSchema.json")
 public class User {
     private User response;
     private String identity;
