@@ -207,6 +207,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage selectSecondaryProcess(String processTypes, String process) {
         expandSecondaryProcessTree(processTypes);
+        checkSecondaryProcessBox(process);
         By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
         pageUtils.waitForElementAndClick(byProcess);
         return this;
@@ -219,6 +220,17 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage selectSecondaryProcess(String process) {
         By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span[@role]", process.trim()));
+        pageUtils.waitForElementAndClick(byProcess);
+        return this;
+    }
+
+    /**
+     * Select secondary process checkbox
+     * @param process - the process
+     * @return current page object
+     */
+    public SecondaryProcessesPage checkSecondaryProcessBox(String process) {
+        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//label", process.trim()));
         pageUtils.waitForElementAndClick(byProcess);
         return this;
     }
