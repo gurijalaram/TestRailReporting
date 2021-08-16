@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/CustomerUsersSchema.json")
+@Schema(location = "CustomerUsersSchema.json")
 public class CustomerUsers extends Pagination {
     private List<CustomerUser> items;
     private CustomerUsers response;

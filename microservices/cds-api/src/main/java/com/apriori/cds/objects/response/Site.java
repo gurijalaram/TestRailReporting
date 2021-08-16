@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "cds/SiteSchema.json")
+@Schema(location = "SiteSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor

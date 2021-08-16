@@ -2,7 +2,7 @@ package com.apriori.apibase.services.bcs.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "bcs/CisPartCostingSchema.json")
+@Schema(location = "CisPartCostingSchema.json")
 public class PartCosting {
     private Integer dtcMessagesCount;
     private Integer failedGcdsCount;

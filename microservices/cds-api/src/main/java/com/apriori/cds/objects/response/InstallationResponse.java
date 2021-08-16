@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/InstallationsSchema.json")
+@Schema(location = "InstallationsSchema.json")
 public class InstallationResponse extends Pagination {
     private List<InstallationItems> items;
     private InstallationResponse response;

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/ApplicationSchema.json")
+@Schema(location = "ApplicationSchema.json")
 public class Application {
     private Boolean isSingleTenant;
     private Boolean isCloudHomeApp;
