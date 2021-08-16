@@ -53,13 +53,13 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [type='number']")
     private WebElement maskedInput;
 
-    @FindBy(css = ".process-selector-details [@value='wholePart']")
+    @FindBy(css = ".process-selector-details [value='wholePart']")
     private WebElement fractionDefault;
 
-    @FindBy(xpath = "//h6[.='What Fraction of Component is Painted?']/..//input[@value='user']")
+    @FindBy(xpath = "//h6[contains(text(),'What Fraction of Component is Painted?')]/..//input[@value='user']")
     private WebElement fractionUser;
 
-    @FindBy(css = ".process-selector-details [@type='number']")
+    @FindBy(css = ".process-selector-details [type='number']")
     private WebElement fractionInput;
 
     @FindBy(css = ".process-selector-details [value='threadedHoles']")
