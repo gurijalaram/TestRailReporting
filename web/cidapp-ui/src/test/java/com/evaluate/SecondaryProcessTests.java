@@ -331,14 +331,16 @@ public class SecondaryProcessTests extends TestBase {
     @TestRail(testCaseId = {"5132"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 
-        resourceFile = FileResourceUtil.getResourceAsFile("SheetMetal.prt");
-
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "SheetMetal";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
+        loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndSubmit(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
@@ -353,7 +355,8 @@ public class SecondaryProcessTests extends TestBase {
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Powder Coat Cart");
 
-        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38s (77%)"));
+
+        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (11.35%)"));
     }
 
     @Test
