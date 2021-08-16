@@ -10,17 +10,6 @@ global:
   service_host: ats.core.qa.apriori.net
 
 #  Specific environment configurations
-
-######################################################## LOCAL ########################################################
-local:
-  secret_key:
-  ap_user_context:
-
-  ############################ sds ############################
-  sds:
-    api_url: http://localhost:8811/
-
-
 ######################################################## INT-CORE ########################################################
 int-core:
   secret_key: 65J1ID2B6LDG
@@ -52,7 +41,9 @@ qa-21-1:
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
   secret_key: 502M4JBUCE36
-  ap_user_context: eyJpZGVudGl0eSI6Ijk2NzJCN0hFTDc4TCIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMDJUMTM6MzVaIiwidXBkYXRlZEF0IjoiMjAyMS0wNi0xMVQwODowMloiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6Ijk2NzJCN0hFN0c5RiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDItMDJUMTM6MzVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyMjR9LCJjdXN0b21lcklkZW50aXR5IjoiNjdKNTE3QzlMOTZBIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 92E1E4E9DFCD
 
   sds:
     api_url: https://sds.na-1.qa-cig-perf.apriori.net/
@@ -84,6 +75,9 @@ qa-cid-perf:
   css:
     api_url: https://css.na-1.qa-cid-perf.apriori.net/
 
+  vds:
+    api_url: https://vds.na-1.qa-cig-perf.apriori.net/
+
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
@@ -93,3 +87,12 @@ qa-cig-perf:
 
   vds:
     api_url: https://vds.na-1.qa-cig-perf.apriori.net/
+
+######################################################## LOCAL ########################################################
+local:
+  secret_key:
+  ap_user_context:
+
+  ############################ sds ############################
+  sds:
+    api_url: http://localhost:8811/
