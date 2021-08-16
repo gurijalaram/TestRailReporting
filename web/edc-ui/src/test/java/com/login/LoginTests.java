@@ -61,8 +61,5 @@ public class LoginTests extends TestBase {
         loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
-
-        // To counter the incorrect login blocking the active username
-        edcPage = loginPage.login(UserUtil.getUser());
     }
 }

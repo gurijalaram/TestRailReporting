@@ -5,7 +5,6 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
-import com.utils.Constants;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -22,7 +21,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CidAppLoginPage.class);
 
-    private static String loginPageUrl = PropertiesContext.getStr("${env}.cidapp.ui_url");
+    private static String loginPageUrl = PropertiesContext.get("${env}.cidapp.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

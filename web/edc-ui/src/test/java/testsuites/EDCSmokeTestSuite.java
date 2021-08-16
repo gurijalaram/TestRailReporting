@@ -8,13 +8,11 @@ import help.HelpTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 @ProjectRunID("610")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
-@Categories.ExcludeCategory(IgnoreTests.class)
 @Suite.SuiteClasses({
     LoginTests.class,
     HelpTests.class

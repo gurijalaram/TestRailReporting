@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.navtoolbars.help.AboutUsPage;
 import com.apriori.pageobjects.navtoolbars.help.HelpPage;
 import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
 
@@ -16,21 +15,11 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class NavigationBar extends LoadableComponent<NavigationBar> {
 
-
     @FindBy(css = ".help-dropdown")
     private WebElement helpDropdown;
 
-    @FindBy(css = "[data-icon='info-circle']")
-    private WebElement aboutButton;
-
     @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
-
-    @FindBy(css = "[data-icon='sign-out-alt']")
-    private WebElement logoutButton;
-
-    @FindBy(css = "[data-icon='user")
-    private WebElement myProfile;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -56,7 +45,6 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
      * Selects the help dropdown and go to Help
      *
      * @retun new page object
-     * @return
      */
         public HelpPage clickHelpDropdown() {
                 pageUtils.waitForElementAndClick(helpDropdown);
@@ -64,23 +52,12 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
            }
 
     /**
-     * Select About button
+     * Click on the User dropdown
      *
      * @return new page object
      */
-    public AboutUsPage clickAbout() {
-            pageUtils.waitForElementAndClick(helpDropdown);
-            pageUtils.waitForElementAndClick(aboutButton);
-            return new AboutUsPage(driver);
-       }
-
-    /**
-     * Click on the User dropdown
-     * @return
-     */
     public MyUserPage clickUserDropdown() {
             pageUtils.waitForElementAndClick(userDropdown);
-            pageUtils.waitForElementAndClick(myProfile);
             return new MyUserPage(driver);
         }
 }
