@@ -117,6 +117,15 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Paint Cart')]/..//input[@type='number']")
     private WebElement compPaintCartInput;
 
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
+    private WebElement compLoadBarDefault;
+
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='user']")
+    private WebElement compLoadBarUser;
+
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@type='number']")
+    private WebElement compLoadBarInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -406,6 +415,38 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public double getComponentsPaintCart() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(compPaintCartInput).getAttribute("value"));
+    }
+
+    /**
+     * Select components per load bar
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectCompLoadBar() {
+        pageUtils.waitForElementAndClick(compLoadBarDefault);
+        return this;
+    }
+
+    /**
+     * Inputs component per load bar
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputCompLoadBar(String value) {
+        pageUtils.waitForElementAndClick(compLoadBarUser);
+        compLoadBarInput.clear();
+        compLoadBarInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Gets component per paint cart
+     *
+     * @return double
+     */
+    public double getComponentsLoadBar() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(compLoadBarInput).getAttribute("value"));
     }
 
     /**

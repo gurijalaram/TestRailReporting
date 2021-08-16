@@ -415,16 +415,15 @@ public class SecondaryProcessTests extends TestBase {
         materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
-            .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
-            .submit(EvaluatePage.class)
             .costScenario()
+            .goToSecondaryTab()
             .openSecondaryProcesses()
-            .selectSecondaryProcess("Surface Treatment, Paint", "Wet Coat Line")
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Paint", "Wet Coat Line")
             .inputFractionOverride("0.40")
             .inputMaskedFeatures("1")
             .inputBatchSizeOverride("254")
-            .inputCompPaintCart("1")
+            .inputCompLoadBar("1")
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
@@ -432,9 +431,9 @@ public class SecondaryProcessTests extends TestBase {
             .selectOptionsTab();
 
         assertThat(materialProcessPage.getFractionPainted(), is(0.40));
-        assertThat(materialProcessPage.getMaskedFeature(), is(1));
-        assertThat(materialProcessPage.getFractionPainted(), is(254));
-        assertThat(materialProcessPage.getComponentsPaintCart(), is(1));
+        assertThat(materialProcessPage.getMaskedFeature(), is(1.0));
+        assertThat(materialProcessPage.getFractionPainted(), is(.4));
+        assertThat(materialProcessPage.getComponentsLoadBar(), is(1.0));
     }
 
     @Test

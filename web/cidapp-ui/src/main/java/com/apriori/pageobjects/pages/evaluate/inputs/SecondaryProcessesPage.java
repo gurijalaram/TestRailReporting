@@ -9,6 +9,7 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -91,6 +92,15 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
 
     @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Paint Cart')]/..//input[@type='number']")
     private WebElement paintCartInput;
+
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
+    private WebElement compLoadBarDefault;
+
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='user']")
+    private WebElement compLoadBarUser;
+
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@type='number']")
+    private WebElement compLoadBarInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -293,7 +303,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputOptionsOverride(String value) {
         pageUtils.waitForElementAndClick(opOverrideButton);
-        pageUtils.clearInput(opOverrideInput);
+        opOverrideInput.clear();
         opOverrideInput.sendKeys(value);
         return this;
     }
@@ -325,7 +335,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputMaskingOverride(String value) {
         pageUtils.waitForElementAndClick(maskedUser);
-        pageUtils.clearInput(maskedInput);
+        maskedInput.clear();
         maskedInput.sendKeys(value);
         return this;
     }
@@ -357,7 +367,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputFractionOverride(String value) {
         pageUtils.waitForElementAndClick(fractionUser);
-        pageUtils.clearInput(fractionInput);
+        fractionInput.clear();
         fractionInput.sendKeys(value);
         return this;
     }
@@ -399,7 +409,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputMaskedFeatures(String value) {
         pageUtils.waitForElementAndClick(maskedFeatureUser);
-        pageUtils.clearInput(maskedFeatureInput);
+        maskedFeatureInput.clear();
         maskedFeatureInput.sendKeys(value);
         return this;
     }
@@ -431,7 +441,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputBatchSizeOverride(String value) {
         pageUtils.waitForElementAndClick(batchSizeUser);
-        pageUtils.clearInput(batchSizeInput);
+        batchSizeInput.sendKeys(Keys.CONTROL + "a" + Keys.BACK_SPACE);
         batchSizeInput.sendKeys(value);
         return this;
     }
@@ -463,7 +473,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage inputCompPaintCart(String value) {
         pageUtils.waitForElementAndClick(paintCartUser);
-        pageUtils.clearInput(paintCartInput);
+        paintCartInput.clear();
         paintCartInput.sendKeys(value);
         return this;
     }
@@ -475,6 +485,38 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public double getComponentsPaintCart() {
         return Double.parseDouble(pageUtils.waitForElementToAppear(paintCartInput).getAttribute("textContent"));
+    }
+
+    /**
+     * Select components per load bar
+     *
+     * @return current page object
+     */
+    public SecondaryProcessesPage selectCompLoadBar() {
+        pageUtils.waitForElementAndClick(compLoadBarDefault);
+        return this;
+    }
+
+    /**
+     * Inputs component per load bar
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputCompLoadBar(String value) {
+        pageUtils.waitForElementAndClick(compLoadBarUser);
+        compLoadBarInput.clear();
+        compLoadBarInput.sendKeys(value);
+        return this;
+    }
+
+    /**
+     * Gets component per paint cart
+     *
+     * @return double
+     */
+    public double getComponentsLoadBar() {
+        return Double.parseDouble(pageUtils.waitForElementToAppear(compLoadBarInput).getAttribute("textContent"));
     }
 
     /**
