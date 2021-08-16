@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/ValidateSiteSchema.json")
+@Schema(location = "ValidateSiteSchema.json")
 public class ValidateSite {
     private ValidateSite response;
     private String status;

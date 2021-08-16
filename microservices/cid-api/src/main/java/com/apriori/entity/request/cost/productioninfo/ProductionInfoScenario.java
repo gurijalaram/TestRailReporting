@@ -2,7 +2,7 @@ package com.apriori.entity.request.cost.productioninfo;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "FileCostWorkOrderResponse.json")
+@Schema(location = "FileCostWorkorderResponse.json")
 public class ProductionInfoScenario {
     private String typeName;
     private String stateName;

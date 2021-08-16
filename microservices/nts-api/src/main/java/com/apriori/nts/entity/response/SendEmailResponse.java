@@ -2,7 +2,7 @@ package com.apriori.nts.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "nts/NtsSendEmailResponseSchema.json")
+@Schema(location = "NtsSendEmailResponseSchema.json")
 public class SendEmailResponse {
     private String identity;
 

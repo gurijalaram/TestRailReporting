@@ -32,7 +32,7 @@ public class UserSecurityService {
      * @throws NoSuchElementException if the iteration has no more elements
      */
     public static UserCredentials getUser(String accessLevel) {
-        return PropertiesContext.getStr("global.different_users").equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
+        return PropertiesContext.get("global.different_users").equals("true") ? getSecurityUser(accessLevel) : getGlobalUser();
     }
 
     private static synchronized UserCredentials getSecurityUser(String security) {

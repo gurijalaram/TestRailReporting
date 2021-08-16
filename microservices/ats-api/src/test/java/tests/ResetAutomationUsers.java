@@ -25,9 +25,9 @@ public class ResetAutomationUsers {
 
     String url = String.format(
         "%s/users/%s/password?key=%s",
-        PropertiesContext.getStr("${env}.ats.api_url"),
-        PropertiesContext.getStr("${env}.ats.automation_username"),
-        PropertiesContext.getStr("${env}.secret_key")
+        PropertiesContext.get("${env}.ats.api_url"),
+        PropertiesContext.get("${env}.ats.automation_username"),
+        PropertiesContext.get("${env}.secret_key")
     );
 
     /**
@@ -43,7 +43,7 @@ public class ResetAutomationUsers {
 
             RequestEntity requestEntity = RequestEntity.init(String.format(url, userIndex), null)
                 .setUrlEncodingEnabled(false)
-                .setBody(new ResetAutoUsers().setPassword(PropertiesContext.getStr("${env}.ats.automation_password")));
+                .setBody(new ResetAutoUsers().setPassword(PropertiesContext.get("${env}.ats.automation_password")));
 
             ResponseWrapper<String> resetAutoUsersResponse = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
 

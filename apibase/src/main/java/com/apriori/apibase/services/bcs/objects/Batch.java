@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "bcs/CisCustomerBatchSchema.json")
+@Schema(location = "CisCustomerBatchSchema.json")
 public class Batch {
     
     private String identity;

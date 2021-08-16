@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "bcs/CisReportSchema.json")
+@Schema(location = "CisReportSchema.json")
 public class Report { 
     private String identity;
     private String createdBy;

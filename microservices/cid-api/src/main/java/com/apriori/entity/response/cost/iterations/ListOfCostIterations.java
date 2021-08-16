@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import java.util.ArrayList;
 import java.util.List;
 
-@Schema(location = "cid/CostIterationResponse.json")
+@Schema(location = "CostIterationResponse.json")
 public class ListOfCostIterations extends ArrayList<ListOfCostIterations> {
 
     private List<ListOfCostIteration> commandType;
