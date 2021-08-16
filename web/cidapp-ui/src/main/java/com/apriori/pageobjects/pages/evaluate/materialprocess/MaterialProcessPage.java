@@ -75,46 +75,46 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "g.highcharts-label.highcharts-data-label")
     private List<WebElement> charPercentage;
 
-    @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@value='default']")
+    @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@value='default']")
     private WebElement averageThicknessDefault;
 
-    @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@value='user']")
+    @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@value='user']")
     private WebElement averageThicknessUser;
 
-    @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@type='number']")
     private WebElement averageThickInput;
 
-    @FindBy(xpath = "//h6[.='Case Depth Selection']/..//input[@value='default']")
+    @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@value='default']")
     private WebElement caseDepthDefault;
 
-    @FindBy(xpath = "//h6[.='Case Depth Selection']/..//input[@value='user']")
+    @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@value='user']")
     private WebElement caseDepthUser;
 
-    @FindBy(xpath = "//h6[.='Case Depth Selection']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@type='number']")
     private WebElement caseDepthInput;
 
-    @FindBy(xpath = "//h6[.='Masking']/..//input[@value='defaultNoMasking']")
+    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='defaultNoMasking']")
     private WebElement maskingDefault;
 
-    @FindBy(xpath = "//h6[.='Masking']/..//input[@value='userOverride']")
+    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='userOverride']")
     private WebElement maskingUser;
 
-    @FindBy(xpath = "//h6[.='Masking']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@type='number']")
     private WebElement maskingInput;
 
-    @FindBy(xpath = "//h6[.='What Fraction of Component is Painted?']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'What Fraction of Component is Painted?')]/..//input[@type='number']")
     private WebElement fractionInput;
 
-    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@value='none']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@value='none']")
     private WebElement noMasking;
 
-    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@type='number']")
     private WebElement maskedFeatureInput;
 
-    @FindBy(xpath = "//h6[.='Painted Batch Size']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Painted Batch Size')]/..//input[@type='number']")
     private WebElement batchSizeInput;
 
-    @FindBy(xpath = "//h6[.='Number of Components Per Paint Cart']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Paint Cart')]/..//input[@type='number']")
     private WebElement compPaintCartInput;
 
     private WebDriver driver;

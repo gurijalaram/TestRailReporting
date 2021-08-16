@@ -68,7 +68,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [value='none']")
     private WebElement noMasking;
 
-    @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@value='user']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@value='user']")
     private WebElement maskedFeatureUser;
 
     @FindBy(xpath = "//h6[.='Number of Masked Features']/..//input[@type='number']")
@@ -86,10 +86,10 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [value='auto']")
     private WebElement compPaintPartDefault;
 
-    @FindBy(xpath = "//h6[.='Number of Components Per Paint Cart']/..//input[@value='user']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Paint Cart')]/..//input[@value='user']")
     private WebElement paintCartUser;
 
-    @FindBy(xpath = "//h6[.='Number of Components Per Paint Cart']/..//input[@type='number']")
+    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Paint Cart')]/..//input[@type='number']")
     private WebElement paintCartInput;
 
     private WebDriver driver;
