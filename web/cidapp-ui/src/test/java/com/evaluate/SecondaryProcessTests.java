@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
@@ -352,7 +353,7 @@ public class SecondaryProcessTests extends TestBase {
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Powder Coat Cart");
 
-        assertThat(materialProcessPage.getProcessPercentage(), hasItem("38 (77%)"));
+        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38s (77%)"));
     }
 
     @Test

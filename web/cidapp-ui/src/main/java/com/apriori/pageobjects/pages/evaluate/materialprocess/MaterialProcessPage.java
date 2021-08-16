@@ -14,6 +14,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 /**
@@ -70,6 +71,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     @FindBy(css = ".highcharts-series-group rect")
     private List<WebElement> chart;
+
+    @FindBy(css = "g.highcharts-label.highcharts-data-label")
+    private List<WebElement> charPercentage;
 
     @FindBy(xpath = "//h6[.='Average Wall Thickness']/..//input[@value='default']")
     private WebElement averageThicknessDefault;
@@ -159,6 +163,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     /**
      * Checks if tab is displayed
+     *
      * @return true/false
      */
     public boolean isPartNestingTabDisplayed() {
@@ -249,6 +254,17 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         chart.forEach(x -> pageUtils.waitForElementAndClick(chart.get(position)));
         return this;
+    }
+
+    /**
+     * Gets the process percentage
+     *
+     * @param axisLabel - the label on the x axis
+     * @return list string
+     */
+    public List<String> getProcessPercentage(String axisLabel) {
+        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        return charPercentage.stream().map(x -> pageUtils.waitForElementToAppear(charPercentage.get(position)).getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
