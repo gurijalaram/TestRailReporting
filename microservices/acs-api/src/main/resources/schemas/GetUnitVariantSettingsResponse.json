@@ -2,49 +2,49 @@
   "type": "object",
   "properties": {
     "CGM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "CGS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "FPM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "FPS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "IOM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "IOS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "IPM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "IPS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MGM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MGS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MKM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MKS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MMGM": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MMGS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     },
     "MMKS": {
-      "$ref": "../acs/GetCustomUnitVariantSettingsResponse.json"
+      "$ref": "GetCustomUnitVariantSettingsResponse.json"
     }
   },
   "required": [

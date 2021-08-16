@@ -52,9 +52,14 @@ public class GetUnitVariantSettingsTests {
 
         assertThat(getCustomUnitVariantSettingsResponse.getType(), is(equalTo("simple")));
         assertThat(getCustomUnitVariantSettingsResponse.getName(), is(equalTo("CUSTOM")));
-        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo("true")));
-        assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo("mm")));
-        assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo("kg")));
+
+        String expectedLength = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "mm" : "in";
+        String expectedMass = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "kg" : "lb";
+        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo("false")));
+
+        assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
+        assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
+
         assertThat(getCustomUnitVariantSettingsResponse.getTime(), is(equalTo("s")));
         assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces(), is(equalTo(2.0)));
         assertThat(getCustomUnitVariantSettingsResponse.isSystem(), is(false));

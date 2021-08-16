@@ -11,35 +11,35 @@ import java.util.ArrayList;
 @Data
 @Schema(location = "GetUnitVariantSettingsResponse.json")
 public class GetUnitVariantSettingsResponse {
-    @JsonProperty("CGM")
+    @JsonProperty
     private UnitVariantSetting CGM;
-    @JsonProperty("CGS")
+    @JsonProperty
     private UnitVariantSetting CGS;
-    @JsonProperty("FPM")
+    @JsonProperty
     private UnitVariantSetting FPM;
-    @JsonProperty("FPS")
+    @JsonProperty
     private UnitVariantSetting FPS;
-    @JsonProperty("IOM")
+    @JsonProperty
     private UnitVariantSetting IOM;
-    @JsonProperty("IOS")
+    @JsonProperty
     private UnitVariantSetting IOS;
-    @JsonProperty("IPM")
+    @JsonProperty
     private UnitVariantSetting IPM;
-    @JsonProperty("IPS")
+    @JsonProperty
     private UnitVariantSetting IPS;
-    @JsonProperty("MGM")
+    @JsonProperty
     private UnitVariantSetting MGM;
-    @JsonProperty("MGS")
+    @JsonProperty
     private UnitVariantSetting MGS;
-    @JsonProperty("MKM")
+    @JsonProperty
     private UnitVariantSetting MKM;
-    @JsonProperty("MKS")
+    @JsonProperty
     private UnitVariantSetting MKS;
-    @JsonProperty("MMGM")
+    @JsonProperty
     private UnitVariantSetting MMGM;
-    @JsonProperty("MMGS")
+    @JsonProperty
     private UnitVariantSetting MMGS;
-    @JsonProperty("MMKS")
+    @JsonProperty
     private UnitVariantSetting MMKS;
 
     public ArrayList<UnitVariantSetting> getAllUnitVariantSetting() {

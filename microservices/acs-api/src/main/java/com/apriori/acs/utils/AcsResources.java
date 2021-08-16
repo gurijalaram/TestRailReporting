@@ -35,17 +35,8 @@ public class AcsResources {
     private static final HashMap<String, String> token = new APIAuthentication()
             .initAuthorizationHeaderNoContent("aPrioriCIGenerateUser@apriori.com");
 
-    private final String orderSuccess = "SUCCESS";
-    private final String orderFailed = "FAILED";
-    private final String acceptHeader = "Accept";
     private final String contentType = "Content-Type";
     private final String applicationJson = "application/json";
-    private final String textPlain = "text/plain";
-    Map<String, String> headers = new HashMap<>();
-    private String baseUrl = PropertiesContext.get("${env}.base_url");
-    private String sessionUrl = "apriori/cost/session/";
-
-    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * Creates Missing Scenario
@@ -103,7 +94,8 @@ public class AcsResources {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_DISPLAY_UNITS, GetDisplayUnitsResponse.class)
-                .headers(token);
+                .headers(token)
+                .inlineVariables(Constants.USERNAME);
 
         return (GetDisplayUnitsResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }
@@ -118,7 +110,8 @@ public class AcsResources {
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS, SetDisplayUnitsResponse.class)
                 .headers(token)
-                .body(setDisplayUnitsInputs);
+                .body(setDisplayUnitsInputs)
+                .inlineVariables(Constants.USERNAME);
 
         return (SetDisplayUnitsResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
     }
@@ -148,7 +141,8 @@ public class AcsResources {
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_CUSTOM_UNIT_VARIANT_SETTINGS, UnitVariantSetting.class)
-                .headers(token);
+                .headers(token)
+                .inlineVariables(Constants.USERNAME);
 
         return (UnitVariantSetting) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }

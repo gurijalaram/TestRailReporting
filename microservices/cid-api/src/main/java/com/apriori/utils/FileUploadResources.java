@@ -10,6 +10,7 @@ import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.entity.enums.CidWorkorderApiEnum;
+import com.apriori.entity.enums.WorkorderStatusEnum;
 import com.apriori.entity.request.cost.createcostworkorder.CostOrderInputs;
 import com.apriori.entity.request.cost.createcostworkorder.CostOrderScenario;
 import com.apriori.entity.request.cost.createcostworkorder.CostOrderScenarioIteration;
@@ -77,15 +78,10 @@ public class FileUploadResources {
     private static final HashMap<String, String> token = new APIAuthentication()
             .initAuthorizationHeaderNoContent("qa-automation-02@apriori.com");
 
-    private final String orderSuccess = "SUCCESS";
-    private final String orderFailed = "FAILED";
     private final String acceptHeader = "Accept";
     private final String contentType = "Content-Type";
     private final String applicationJson = "application/json";
     private final String textPlain = "text/plain";
-    Map<String, String> headers = new HashMap<>();
-    private String baseUrl = PropertiesContext.get("${env}.cid.api_url");
-    private String sessionUrl = "apriori/cost/session/";
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -597,8 +593,9 @@ public class FileUploadResources {
                 Thread.currentThread().interrupt();
             }
 
-        } while (!status.equals(orderSuccess) && !status.equals(orderFailed) && ((System.currentTimeMillis() / 1000) -
-                initialTime) < WAIT_TIME);
+        } while (!status.equals(WorkorderStatusEnum.SUCCESS.getWorkorderStatus())
+                && !status.equals(WorkorderStatusEnum.FAILED.getWorkorderStatus())
+                && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return status;
     }
