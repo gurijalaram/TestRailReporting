@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/SubLicenseAssociationUsersSchema.json")
+@Schema(location = "SubLicenseAssociationUsersSchema.json")
 public class SubLicenseAssociationItems {
     private String identity;
     private String createdBy;

@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/PostBatchSchema.json")
+@Schema(location = "PostBatchSchema.json")
 public class PostBatch {
     private PostBatch response;
     private String identity;

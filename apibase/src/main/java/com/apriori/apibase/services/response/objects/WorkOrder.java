@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "FileWorkOrderSchema.json")
+@Schema(location = "FileWorkorderSchema.json")
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WorkOrder {
 

@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "cds/SubLicensesSchema.json")
+@Schema(location = "SubLicensesSchema.json")
 public class SubLicenses extends Pagination {
     private List<SubLicense> items;
     private SubLicenses response;

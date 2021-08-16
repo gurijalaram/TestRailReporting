@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "fms/FmsFileSchema.json")
+@Schema(location = "FmsFileSchema.json")
 public class FileResponse {
     private String identity;
     private String createdBy;

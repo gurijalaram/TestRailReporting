@@ -4,6 +4,8 @@ import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.apriori.utils.properties.PropertiesContext;
+
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 
 import java.util.HashMap;
@@ -13,7 +15,7 @@ public class APIAuthentication {
 
     private String accessToken = null;
     private int timeToLive = 0;
-    private String baseUrl = System.getProperty("baseUrl");
+    private String baseUrl = PropertiesContext.get("${env}.base_url");
 
     /**
      * Fetch Authorization header for user

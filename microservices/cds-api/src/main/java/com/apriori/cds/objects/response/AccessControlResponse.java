@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/AccessControlSchema.json")
+@Schema(location = "AccessControlSchema.json")
 public class AccessControlResponse {
     private AccessControlResponse response;
     private String identity;

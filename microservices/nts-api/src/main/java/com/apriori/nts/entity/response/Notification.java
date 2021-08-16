@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "nts/NtsNotificationSchema.json")
+@Schema(location = "NtsNotificationSchema.json")
 public class Notification {
     private String applicationIdentity;
     private String customerIdentity;
