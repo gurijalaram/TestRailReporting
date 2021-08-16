@@ -66,6 +66,12 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [value='threadedHoles']")
     private WebElement maskedFeaturesDefault;
 
+    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='userOverride']")
+    private WebElement maskingUser;
+
+    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@type='number']")
+    private WebElement maskingInput;
+
     @FindBy(css = ".process-selector-details [value='none']")
     private WebElement noMasking;
 
@@ -322,7 +328,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      *
      * @return current page object
      */
-    public SecondaryProcessesPage selectMasking() {
+    public SecondaryProcessesPage selectNumberOfMasking() {
         pageUtils.waitForElementAndClick(maskedDefault);
         return this;
     }
@@ -388,6 +394,19 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage selectMaskedFeatures() {
         pageUtils.waitForElementAndClick(maskedFeaturesDefault);
+        return this;
+    }
+
+    /**
+     * Inputs masking
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public SecondaryProcessesPage inputMasking(String value) {
+        pageUtils.waitForElementAndClick(maskingUser);
+        pageUtils.clearInput(maskedInput);
+        maskedInput.sendKeys(value);
         return this;
     }
 
