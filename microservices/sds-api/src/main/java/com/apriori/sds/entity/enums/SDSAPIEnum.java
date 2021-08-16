@@ -55,7 +55,10 @@ public enum SDSAPIEnum implements ExternalEndpointEnum {
     // COMPONENTS
     GET_COMPONENTS("components"),
     POST_COMPONENTS("components"),
-    GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s");
+    GET_COMPONENT_SINGLE_BY_IDENTITY("components/%s"),
+
+    // SECONDARY PROCESS
+    GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES("components/%s/scenarios/%s/vpes/%s/process-groups/%s/secondary-processes");
 
 
     private final String endpoint;

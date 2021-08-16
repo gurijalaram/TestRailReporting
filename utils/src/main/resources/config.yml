@@ -47,9 +47,6 @@ qa-cid-perf:
   user_identity: 1F7GAI5DLI2B
   customer_identity: 92E1E4E9DFCD
 
-  sds:
-    api_url: https://sds.na-1.qa-cig-perf.apriori.net/
-
   ats:
     api_url: https://ats.na-1.qa-cid-perf.apriori.net
     token_username: qa-automation-01
@@ -79,6 +76,9 @@ qa-cid-perf:
 
   vds:
     api_url: https://vds.na-1.qa-cig-perf.apriori.net/
+
+  sds:
+    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
 
 
 ######################################################## QA-CIG-PERF ########################################################
