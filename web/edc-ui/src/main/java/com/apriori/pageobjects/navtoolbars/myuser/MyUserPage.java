@@ -16,8 +16,14 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
 
+    @FindBy(css = "[data-icon='user']")
+    private WebElement myProfile;
+
     @FindBy(css = ".active-account")
     private WebElement activeAccount;
+
+    @FindBy(css = "[data-icon='gavel']")
+    private WebElement termsOfUse;
 
     private final WebDriver driver;
     private final PageUtils pageUtils;
@@ -48,5 +54,15 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
     public EdcAppLoginPage logout() {
         pageUtils.waitForElementAndClick(logoutButton);
         return new EdcAppLoginPage(driver);
+    }
+
+    public MyProfilePage clickMyProfile() {
+        pageUtils.waitForElementAndClick(myProfile);
+        return new MyProfilePage(driver);
+    }
+
+    public TermsOfUsePage selectTermsOfUse() {
+        pageUtils.waitForElementAndClick(termsOfUse);
+        return new TermsOfUsePage(driver);
     }
 }
