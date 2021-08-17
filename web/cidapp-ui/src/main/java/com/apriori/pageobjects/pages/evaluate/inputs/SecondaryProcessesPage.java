@@ -9,7 +9,6 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -296,9 +295,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputOptionsOverride(String value) {
-        pageUtils.waitForElementAndClick(opOverrideButton);
-        pageUtils.clear(opOverrideInput);
-        opOverrideInput.sendKeys(value);
+        inputOverrideValue(opOverrideButton, opOverrideInput, value);
         return this;
     }
 
@@ -328,9 +325,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMaskingOverride(String value) {
-        pageUtils.waitForElementAndClick(maskedUser);
-        maskedInput.clear();
-        maskedInput.sendKeys(value);
+        inputOverrideValue(maskedUser, maskedInput, value);
         return this;
     }
 
@@ -360,11 +355,10 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputFractionOverride(String value) {
-        pageUtils.waitForElementAndClick(fractionUser);
-        fractionInput.clear();
-        fractionInput.sendKeys(value);
+        inputOverrideValue(fractionUser, fractionInput, value);
         return this;
     }
+
 
     /**
      * Get masked feature
@@ -392,9 +386,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMasking(String value) {
-        pageUtils.waitForElementAndClick(maskingUser);
-        pageUtils.clear(maskedInput);
-        maskedInput.sendKeys(value);
+        inputOverrideValue(maskingUser, maskedInput, value);
         return this;
     }
 
@@ -415,9 +407,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMaskedFeatures(String value) {
-        pageUtils.waitForElementAndClick(maskedFeatureUser);
-        pageUtils.clear(maskedFeatureInput);
-        maskedFeatureInput.sendKeys(value);
+        inputOverrideValue(maskedFeatureUser, maskedInput, value);
         return this;
     }
 
@@ -447,9 +437,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputBatchSizeOverride(String value) {
-        pageUtils.waitForElementAndClick(batchSizeUser);
-        batchSizeInput.sendKeys(Keys.CONTROL + "a" + Keys.BACK_SPACE);
-        batchSizeInput.sendKeys(value);
+        inputOverrideValue(batchSizeUser, batchSizeInput, value);
         return this;
     }
 
@@ -479,9 +467,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompPaintCart(String value) {
-        pageUtils.waitForElementAndClick(paintCartUser);
-        pageUtils.clear(paintCartInput);
-        paintCartInput.sendKeys(value);
+        inputOverrideValue(paintCartUser, paintCartInput, value);
         return this;
     }
 
@@ -511,9 +497,22 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompLoadBar(String value) {
-        pageUtils.waitForElementAndClick(compLoadBarUser);
-        pageUtils.clear(compLoadBarInput);
-        compLoadBarInput.sendKeys(value);
+        inputOverrideValue(compLoadBarUser, compLoadBarInput, value);
+        return this;
+    }
+
+    /**
+     * Input override value
+     *
+     * @param value    - the value
+     * @param override - the override radio button
+     * @param input    - input locator
+     * @return current page object
+     */
+    private SecondaryProcessesPage inputOverrideValue(WebElement override, WebElement input, String value) {
+        pageUtils.waitForElementAndClick(override);
+        pageUtils.clear(input);
+        input.sendKeys(value);
         return this;
     }
 
