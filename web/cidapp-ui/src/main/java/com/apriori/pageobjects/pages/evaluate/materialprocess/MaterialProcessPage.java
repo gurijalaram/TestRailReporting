@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.PsoController;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -129,11 +130,13 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
+    private PsoController psoController;
 
     public MaterialProcessPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.panelController = new PanelController(driver);
+        this.psoController = new PsoController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -293,9 +296,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputAverageWallThickness(String value) {
-        pageUtils.waitForElementAndClick(averageThicknessUser);
-        pageUtils.clear(averageThickInput);
-        averageThickInput.sendKeys(value);
+        psoController.inputOverrideValue(averageThicknessUser, averageThickInput, value);
         return this;
     }
 
@@ -325,9 +326,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCaseDepth(String value) {
-        pageUtils.waitForElementAndClick(caseDepthUser);
-        pageUtils.clear(caseDepthInput);
-        caseDepthInput.sendKeys(value);
+        psoController.inputOverrideValue(caseDepthUser, caseDepthInput, value);
         return this;
     }
 
@@ -357,9 +356,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMasking(String value) {
-        pageUtils.waitForElementAndClick(maskingUser);
-        pageUtils.clear(maskingUser);
-        maskingUser.sendKeys(value);
+        psoController.inputOverrideValue(maskingUser, maskingInput, value);
         return this;
     }
 
@@ -434,9 +431,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCompLoadBar(String value) {
-        pageUtils.waitForElementAndClick(compLoadBarUser);
-        pageUtils.clear(compLoadBarInput);
-        compLoadBarInput.sendKeys(value);
+        psoController.inputOverrideValue(compLoadBarUser, compLoadBarInput, value);
         return this;
     }
 
