@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "cds/AddDeploymentSchema.json")
+@Schema(location = "AddDeploymentSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor

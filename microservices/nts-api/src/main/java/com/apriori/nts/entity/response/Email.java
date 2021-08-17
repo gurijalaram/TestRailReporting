@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "nts/NtsGetEmailResponseSchema.json")
+@Schema(location = "NtsGetEmailResponseSchema.json")
 public class Email {
 
 

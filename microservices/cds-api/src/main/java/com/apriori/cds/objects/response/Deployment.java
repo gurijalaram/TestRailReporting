@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/DeploymentSchema.json")
+@Schema(location = "DeploymentSchema.json")
 public class Deployment {
     private Deployment response;
     private Boolean isDefault;

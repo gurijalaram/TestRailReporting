@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/SingleCustomerSchema.json")
+@Schema(location = "SingleCustomerSchema.json")
 public class SingleCustomer {
     private SingleCustomer response;
     private String identity;

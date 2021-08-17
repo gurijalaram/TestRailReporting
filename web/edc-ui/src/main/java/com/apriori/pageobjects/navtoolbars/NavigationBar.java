@@ -1,6 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.pageobjects.navtoolbars.help.HelpPage;
 import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
+
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +14,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class NavigationBar extends LoadableComponent<NavigationBar> {
-
 
     @FindBy(css = ".help-dropdown")
     private WebElement helpDropdown;
@@ -41,12 +42,23 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
     }
 
     /**
-     * Selects the User dropdown
+     * Selects the help dropdown and go to Help
      *
      * @retun new page object
+     */
+    public HelpPage clickHelpDropdown() {
+        pageUtils.waitForElementAndClick(helpDropdown);
+        return new HelpPage(driver);
+    }
+
+    /**
+     * Click on the User dropdown
+     *
+     * @return new page object
      */
     public MyUserPage clickUserDropdown() {
         pageUtils.waitForElementAndClick(userDropdown);
         return new MyUserPage(driver);
     }
 }
+

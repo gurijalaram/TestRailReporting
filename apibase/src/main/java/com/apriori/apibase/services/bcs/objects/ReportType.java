@@ -2,7 +2,7 @@ package com.apriori.apibase.services.bcs.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "bcs/CisReportTypeSchema.json")
+@Schema(location = "CisReportTypeSchema.json")
 public class ReportType {
     private String identity;
     private String createdBy;
