@@ -76,12 +76,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "g.highcharts-label.highcharts-data-label")
     private List<WebElement> chartPercentage;
 
-    @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@value='default']")
-    private WebElement averageThicknessDefault;
-
-    @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@value='default']")
-    private WebElement caseDepthDefault;
-
     @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='defaultNoMasking']")
     private WebElement maskingDefault;
 
@@ -252,7 +246,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectAverageWallThickness() {
-        pageUtils.waitForElementAndClick(averageThicknessDefault);
+        pageUtils.waitForElementAndClick(psoController.defaultXpath("Average Wall Thickness"));
         return this;
     }
 
@@ -282,7 +276,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectCaseDepth() {
-        pageUtils.waitForElementAndClick(caseDepthDefault);
+        pageUtils.waitForElementAndClick(psoController.defaultXpath("Case Depth Selection"));
         return this;
     }
 

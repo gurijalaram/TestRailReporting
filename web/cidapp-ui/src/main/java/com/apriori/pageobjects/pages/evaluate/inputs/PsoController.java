@@ -56,4 +56,14 @@ public class PsoController {
     public WebElement inputXpath(String userValue) {
         return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[contains(text(),'%s')]/..//input[@value='number']", userValue))));
     }
+
+    /**
+     * Builds user override xpath
+     *
+     * @param userValue - the value to build the xpath
+     * @return webelement
+     */
+    public WebElement defaultXpath(String userValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[contains(text(),'%s')]/..//input[@value='default']", userValue))));
+    }
 }
