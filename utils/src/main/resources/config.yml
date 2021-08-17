@@ -24,6 +24,9 @@ int-core:
   vds:
     api_url: https://vds.core.int.apriori.net/
 
+  cas:
+    api_url: https://cas-api.na-1.int.apriori.net/%s
+
 
 ######################################################## QA-21.1 ########################################################
 qa-21-1:
@@ -38,6 +41,9 @@ qa-21-1:
 
   vds:
     api_url: https://vds.na-1.qa-21-1.apriori.net/
+
+  cas:
+    api_url: https://cas-api.na-1.qa-21-1.apriori.net/%s
 
 
 ######################################################## QA-CID-PERF ########################################################
@@ -66,7 +72,7 @@ qa-cid-perf:
     ui_url: https://cid.na-1.qa-cid-perf.apriori.net/
 
   cas:
-    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
+    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/%s
 
   fms:
     api_url: https://fms.na-1.qa-cid-perf.apriori.net/
@@ -90,11 +96,18 @@ qa-cig-perf:
   vds:
     api_url: https://vds.na-1.qa-cig-perf.apriori.net/
 
+  cas:
+    api_url: https://cas-api.na-1.qa-cig-perf.apriori.net/%s
+
+
 ######################################################## LOCAL ########################################################
 local:
   secret_key:
   ap_user_context:
-
+  base_url: http://localhost
   ############################ sds ############################
   sds:
-    api_url: http://localhost:8811/
+    api_url: ${local.base_url}:8811/
+
+  cas:
+    api_url: ${local.base_url}:8818/%s
