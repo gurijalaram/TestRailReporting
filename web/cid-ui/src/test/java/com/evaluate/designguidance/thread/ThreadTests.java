@@ -276,6 +276,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"7779"})
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
