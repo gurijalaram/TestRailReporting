@@ -79,20 +79,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@value='default']")
     private WebElement averageThicknessDefault;
 
-    @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@value='user']")
-    private WebElement averageThicknessUser;
-
-    @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@type='number']")
-    private WebElement averageThickInput;
-
     @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@value='default']")
     private WebElement caseDepthDefault;
-
-    @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@value='user']")
-    private WebElement caseDepthUser;
-
-    @FindBy(xpath = "//h6[contains(text(),'Case Depth Selection')]/..//input[@type='number']")
-    private WebElement caseDepthInput;
 
     @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='defaultNoMasking']")
     private WebElement maskingDefault;
@@ -100,32 +88,11 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='userOverride']")
     private WebElement maskingUser;
 
-    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@type='number']")
-    private WebElement maskingInput;
-
-    @FindBy(xpath = "//h6[contains(text(),'What Fraction of Component is Painted?')]/..//input[@type='number']")
-    private WebElement fractionInput;
-
     @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@value='none']")
     private WebElement noMasking;
 
-    @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@type='number']")
-    private WebElement maskedFeatureInput;
-
-    @FindBy(xpath = "//h6[contains(text(),'Painted Batch Size')]/..//input[@type='number']")
-    private WebElement batchSizeInput;
-
-    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Paint Cart')]/..//input[@type='number']")
-    private WebElement compPaintCartInput;
-
     @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
     private WebElement compLoadBarDefault;
-
-    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='user']")
-    private WebElement compLoadBarUser;
-
-    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@type='number']")
-    private WebElement compLoadBarInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -296,7 +263,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputAverageWallThickness(String value) {
-        psoController.inputOverrideValue(averageThicknessUser, averageThickInput, value);
+        psoController.inputOverrideValue(psoController.userXpath("Average Wall Thickness"), psoController.inputXpath("Average Wall Thickness"), value);
         return this;
     }
 
@@ -306,7 +273,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return string
      */
     public String getAverageWallThickness() {
-        return pageUtils.waitForElementToAppear(averageThickInput).getAttribute("value");
+        return psoController.inputXpath("Average Wall Thickness").getAttribute("value");
     }
 
     /**
@@ -326,7 +293,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCaseDepth(String value) {
-        psoController.inputOverrideValue(caseDepthUser, caseDepthInput, value);
+        psoController.inputOverrideValue(psoController.userXpath("Case Depth Selection"), psoController.inputXpath("Case Depth Selection"), value);
         return this;
     }
 
@@ -336,7 +303,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return string
      */
     public double getCaseDepth() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(caseDepthInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("Case Depth Selection").getAttribute("value"));
     }
 
     /**
@@ -356,7 +323,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMasking(String value) {
-        psoController.inputOverrideValue(maskingUser, maskingInput, value);
+        psoController.inputOverrideValue(maskingUser, psoController.inputXpath("Masking"), value);
         return this;
     }
 
@@ -366,7 +333,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getMasking() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(maskingInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("Masking").getAttribute("value"));
     }
 
     /**
@@ -375,7 +342,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getFractionPainted() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(fractionInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("What Fraction of Component is Painted?").getAttribute("value"));
     }
 
     /**
@@ -393,7 +360,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getMaskedFeature() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedFeatureInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("Number of Masked Features").getAttribute("value"));
     }
 
     /**
@@ -402,7 +369,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getPaintedBatchSize() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(batchSizeInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("Painted Batch Size").getAttribute("value"));
     }
 
     /**
@@ -411,7 +378,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getComponentsPaintCart() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(compPaintCartInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("Number of Components Per Paint Cart").getAttribute("value"));
     }
 
     /**
@@ -431,7 +398,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(compLoadBarUser, compLoadBarInput, value);
+        psoController.inputOverrideValue(psoController.userXpath("Number of Components Per Load Bar"), psoController.inputXpath("Number of Components Per Load Bar"), value);
         return this;
     }
 
@@ -441,7 +408,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getComponentsLoadBar() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(compLoadBarInput).getAttribute("value"));
+        return Double.parseDouble(psoController.inputXpath("Number of Components Per Load Bar").getAttribute("value"));
     }
 
     /**
