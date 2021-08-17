@@ -193,6 +193,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"7774"})
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
