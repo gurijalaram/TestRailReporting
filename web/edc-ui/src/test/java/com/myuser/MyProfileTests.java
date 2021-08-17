@@ -29,6 +29,6 @@ public class MyProfileTests extends TestBase {
             .clickMyProfile();
 
         assertThat(myProfilePage.getUserProfileUrl(), containsString("user-profile"));
-        assertThat(myProfilePage.verifyTextFieldEnable(), not(true));
+        assertThat(myProfilePage.isTextFieldEnabled(), not(true));
     }
 }
