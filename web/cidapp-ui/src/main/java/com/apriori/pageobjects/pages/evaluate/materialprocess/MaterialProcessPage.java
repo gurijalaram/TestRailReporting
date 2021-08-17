@@ -74,7 +74,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private List<WebElement> chart;
 
     @FindBy(css = "g.highcharts-label.highcharts-data-label")
-    private List<WebElement> charPercentage;
+    private List<WebElement> chartPercentage;
 
     @FindBy(xpath = "//h6[contains(text(),'Average Wall Thickness')]/..//input[@value='default']")
     private WebElement averageThicknessDefault;
@@ -243,7 +243,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public List<String> getProcessPercentage(String axisLabel) {
         int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
-        return charPercentage.stream().map(x -> pageUtils.waitForElementToAppear(charPercentage.get(position)).getAttribute("textContent")).collect(Collectors.toList());
+        return chartPercentage.stream().map(x -> pageUtils.waitForElementToAppear(chartPercentage.get(position)).getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
