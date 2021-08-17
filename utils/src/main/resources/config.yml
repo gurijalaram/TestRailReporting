@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-21-1
+env: qa-cid-perf
 
 # Define the global properties not related to environment
 global:
