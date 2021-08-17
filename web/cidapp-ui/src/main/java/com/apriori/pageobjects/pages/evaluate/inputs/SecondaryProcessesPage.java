@@ -62,9 +62,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [value='threadedHoles']")
     private WebElement maskedFeaturesDefault;
 
-    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='userOverride']")
-    private WebElement maskingUser;
-
     @FindBy(css = ".process-selector-details [value='none']")
     private WebElement noMasking;
 
@@ -327,7 +324,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputFractionOverride(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("What Fraction of Component is Painted?"), fractionInput, value);
+        psoController.inputOverrideValue(psoController.userLocator("What Fraction of Component is Painted?"), fractionInput, value);
         return this;
     }
 
@@ -358,7 +355,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMasking(String value) {
-        psoController.inputOverrideValue(maskingUser, maskedInput, value);
+        psoController.inputOverrideValue(psoController.overrideLocator("Masking"), maskedInput, value);
         return this;
     }
 
@@ -379,7 +376,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMaskedFeatures(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Number of Masked Features"), maskedInput, value);
+        psoController.inputOverrideValue(psoController.userLocator("Number of Masked Features"), maskedInput, value);
         return this;
     }
 
@@ -389,7 +386,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getMaskedFeatures() {
-        return Double.parseDouble(psoController.inputXpath("Number of Masked Features").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Number of Masked Features").getAttribute("value"));
     }
 
     /**
@@ -409,7 +406,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputBatchSizeOverride(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Painted Batch Size"), psoController.inputXpath("Painted Batch Size"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Painted Batch Size"), psoController.inputLocator("Painted Batch Size"), value);
         return this;
     }
 
@@ -419,7 +416,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getBatchSize() {
-        return Double.parseDouble(psoController.inputXpath("Painted Batch Size").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Painted Batch Size").getAttribute("value"));
     }
 
     /**
@@ -439,7 +436,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompPaintCart(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Number of Components Per Paint Cart"), psoController.inputXpath("Number of Components Per Paint Cart"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Number of Components Per Paint Cart"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
         return this;
     }
 
@@ -449,7 +446,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getComponentsPaintCart() {
-        return Double.parseDouble(psoController.inputXpath("Number of Components Per Paint Cart").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Number of Components Per Paint Cart").getAttribute("value"));
     }
 
     /**
@@ -469,7 +466,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Number of Components Per Load Bar"), psoController.inputXpath("Number of Components Per Paint Cart"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Number of Components Per Load Bar"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
         return this;
     }
 
@@ -479,7 +476,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return double
      */
     public double getComponentsLoadBar() {
-        return Double.parseDouble(psoController.inputXpath("Number of Components Per Paint Cart").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Number of Components Per Paint Cart").getAttribute("value"));
     }
 
     /**

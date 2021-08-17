@@ -79,14 +79,14 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='defaultNoMasking']")
     private WebElement maskingDefault;
 
-    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='userOverride']")
-    private WebElement maskingUser;
-
     @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@value='none']")
     private WebElement noMasking;
 
     @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
     private WebElement compLoadBarDefault;
+
+    @FindBy(css = "[value='colorantAdded']")
+    private WebElement addColorantButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -246,7 +246,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectAverageWallThickness() {
-        pageUtils.waitForElementAndClick(psoController.defaultXpath("Average Wall Thickness"));
+        pageUtils.waitForElementAndClick(psoController.defaultLocator("Average Wall Thickness"));
         return this;
     }
 
@@ -257,7 +257,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputAverageWallThickness(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Average Wall Thickness"), psoController.inputXpath("Average Wall Thickness"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Average Wall Thickness"), psoController.inputLocator("Average Wall Thickness"), value);
         return this;
     }
 
@@ -267,7 +267,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return string
      */
     public String getAverageWallThickness() {
-        return psoController.inputXpath("Average Wall Thickness").getAttribute("value");
+        return psoController.inputLocator("Average Wall Thickness").getAttribute("value");
     }
 
     /**
@@ -276,7 +276,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectCaseDepth() {
-        pageUtils.waitForElementAndClick(psoController.defaultXpath("Case Depth Selection"));
+        pageUtils.waitForElementAndClick(psoController.defaultLocator("Case Depth Selection"));
         return this;
     }
 
@@ -287,7 +287,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCaseDepth(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Case Depth Selection"), psoController.inputXpath("Case Depth Selection"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Case Depth Selection"), psoController.inputLocator("Case Depth Selection"), value);
         return this;
     }
 
@@ -297,7 +297,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return string
      */
     public double getCaseDepth() {
-        return Double.parseDouble(psoController.inputXpath("Case Depth Selection").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Case Depth Selection").getAttribute("value"));
     }
 
     /**
@@ -317,7 +317,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMasking(String value) {
-        psoController.inputOverrideValue(maskingUser, psoController.inputXpath("Masking"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Masking"), psoController.inputLocator("Masking"), value);
         return this;
     }
 
@@ -327,7 +327,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getMasking() {
-        return Double.parseDouble(psoController.inputXpath("Masking").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Masking").getAttribute("value"));
     }
 
     /**
@@ -336,7 +336,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getFractionPainted() {
-        return Double.parseDouble(psoController.inputXpath("What Fraction of Component is Painted?").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("What Fraction of Component is Painted?").getAttribute("value"));
     }
 
     /**
@@ -354,7 +354,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getMaskedFeature() {
-        return Double.parseDouble(psoController.inputXpath("Number of Masked Features").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Number of Masked Features").getAttribute("value"));
     }
 
     /**
@@ -363,7 +363,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getPaintedBatchSize() {
-        return Double.parseDouble(psoController.inputXpath("Painted Batch Size").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Painted Batch Size").getAttribute("value"));
     }
 
     /**
@@ -372,7 +372,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getComponentsPaintCart() {
-        return Double.parseDouble(psoController.inputXpath("Number of Components Per Paint Cart").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Number of Components Per Paint Cart").getAttribute("value"));
     }
 
     /**
@@ -392,7 +392,19 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(psoController.userXpath("Number of Components Per Load Bar"), psoController.inputXpath("Number of Components Per Load Bar"), value);
+        psoController.inputOverrideValue(psoController.userLocator("Number of Components Per Load Bar"), psoController.inputLocator("Number of Components Per Load Bar"), value);
+        return this;
+    }
+
+    /**
+     * Input defined value
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputDefinedValueDropdown(String value) {
+        psoController.userLocator("Number of cavities  (Piece Part & Tooling Cost Driver)");
+        pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), value);
         return this;
     }
 
@@ -402,7 +414,19 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return double
      */
     public double getComponentsLoadBar() {
-        return Double.parseDouble(psoController.inputXpath("Number of Components Per Load Bar").getAttribute("value"));
+        return Double.parseDouble(psoController.inputLocator("Number of Components Per Load Bar").getAttribute("value"));
+    }
+
+    /**
+     * Input nominal override
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputOverrideNominal(String value) {
+        psoController.inputOverrideValue(psoController.userLocator("Nominal Wall Thickness (Piece Part Cost Driver)"),
+            psoController.inputLocator("Nominal Wall Thickness (Piece Part Cost Driver)"), value);
+        return this;
     }
 
     /**
@@ -421,5 +445,25 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
+    }
+
+    /**
+     * Input material regrind
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputMaterialRegrind(String value) {
+        psoController.inputOverrideValue(psoController.userDefinedLocator("Material Regrind Allowance   (Piece Part Cost Driver)"),
+            psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
+        return this;
+    }
+
+    /**
+     * Add colourant
+     * @return current page object
+     */
+    public MaterialProcessPage selectAddColorantButton() {
+        pageUtils.waitForElementAndClick(addColorantButton);
+        return this;
     }
 }

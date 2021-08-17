@@ -40,30 +40,51 @@ public class PsoController {
     /**
      * Builds user override xpath
      *
-     * @param userValue - the value to build the xpath
+     * @param locatorValue - the value to build the xpath
      * @return webelement
      */
-    public WebElement userXpath(String userValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[contains(text(),'%s')]/..//input[@value='user']", userValue))));
+    public WebElement userLocator(String locatorValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='user']", locatorValue))));
     }
 
     /**
      * Builds user input xpath
      *
-     * @param userValue - the value to build the xpath
+     * @param locatorValue - the value to build the xpath
      * @return webelement
      */
-    public WebElement inputXpath(String userValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[contains(text(),'%s')]/..//input[@value='number']", userValue))));
+    public WebElement inputLocator(String locatorValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='number']", locatorValue))));
     }
 
     /**
      * Builds user override xpath
      *
-     * @param userValue - the value to build the xpath
+     * @param locatorValue - the value to build the xpath
      * @return webelement
      */
-    public WebElement defaultXpath(String userValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[contains(text(),'%s')]/..//input[@value='default']", userValue))));
+    public WebElement defaultLocator(String locatorValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='default']", locatorValue))));
+    }
+
+    /**
+     * Builds user input xpath
+     *
+     * @param locatorValue - the value to build the xpath
+     * @return webelement
+     */
+    public WebElement userDefinedLocator(String locatorValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userDefinedMode']", locatorValue))));
+    }
+
+
+    /**
+     * Select options dropdown
+     *
+     * @param dropdown - the dropdown
+     * @return webelement
+     */
+    public WebElement dropdownLocator(String dropdown) {
+        return driver.findElement(By.xpath(String.format("//label[.='%s']/..//div[@class='apriori-select searchable css-1ilwabi-container']", dropdown)));
     }
 }
