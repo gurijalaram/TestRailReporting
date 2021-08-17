@@ -161,8 +161,8 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Carburize")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getCaseDepth(), is(equalTo(0.46)));
-        assertThat(materialProcessPage.getMasking(), is(equalTo(1.0)));
+        assertThat(materialProcessPage.getOverriddenPso("Case Depth Selection"), is(equalTo(0.46)));
+        assertThat(materialProcessPage.getOverriddenPso("Masking"), is(equalTo(1.0)));
     }
 
     @Test
@@ -234,7 +234,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getMasking(), is(1.0));
+        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(1.0));
     }
 
     @Test
@@ -431,7 +431,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getFractionPainted(), is(0.30));
+        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(0.30));
         assertThat(materialProcessPage.isNoMaskingSelected(), is(true));
         assertThat(materialProcessPage.getComponentsPaintCart(), is(414.0));
         assertThat(materialProcessPage.getPaintedBatchSize(), is(2.0));
@@ -468,10 +468,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Wet Coat Line")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getFractionPainted(), is(0.40));
-        assertThat(materialProcessPage.getMaskedFeature(), is(1.0));
-        assertThat(materialProcessPage.getFractionPainted(), is(.4));
-        assertThat(materialProcessPage.getComponentsLoadBar(), is(1.0));
+        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(0.40));
+        assertThat(materialProcessPage.getOverriddenPso("Number of Masked Features"), is(1.0));
+        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(.4));
+        assertThat(materialProcessPage.getOverriddenPso("Number of Components Per Load Bar"), is(1.0));
     }
 
     @Test

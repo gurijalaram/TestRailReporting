@@ -77,6 +77,15 @@ public class PsoController {
         return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userDefinedMode']", locatorValue))));
     }
 
+    /**
+     * Builds user override xpath
+     *
+     * @param locatorValue - the value to build the xpath
+     * @return webelement
+     */
+    public WebElement overrideLocator(String locatorValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userOverride']", locatorValue))));
+    }
 
     /**
      * Select options dropdown
@@ -87,4 +96,14 @@ public class PsoController {
     public WebElement dropdownLocator(String dropdown) {
         return driver.findElement(By.xpath(String.format("//label[.='%s']/..//div[@class='apriori-select searchable css-1ilwabi-container']", dropdown)));
     }
+
+    /**
+     * Gets value for overridden PSO
+     * @param pso - the pso
+     * @return double
+     */
+    public double getOverriddenPso(String pso) {
+        return Double.parseDouble(inputLocator(pso).getAttribute("value"));
+    }
+
 }

@@ -381,15 +381,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Gets masked feature
-     *
-     * @return double
-     */
-    public double getMaskedFeatures() {
-        return Double.parseDouble(psoController.inputLocator("Number of Masked Features").getAttribute("value"));
-    }
-
-    /**
      * Selects batch size
      *
      * @return current page object
@@ -408,15 +399,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     public SecondaryProcessesPage inputBatchSizeOverride(String value) {
         psoController.inputOverrideValue(psoController.userLocator("Painted Batch Size"), psoController.inputLocator("Painted Batch Size"), value);
         return this;
-    }
-
-    /**
-     * Gets batch size
-     *
-     * @return double
-     */
-    public double getBatchSize() {
-        return Double.parseDouble(psoController.inputLocator("Painted Batch Size").getAttribute("value"));
     }
 
     /**
@@ -441,15 +423,6 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Gets component per paint cart
-     *
-     * @return double
-     */
-    public double getComponentsPaintCart() {
-        return Double.parseDouble(psoController.inputLocator("Number of Components Per Paint Cart").getAttribute("value"));
-    }
-
-    /**
      * Select components per load bar
      *
      * @return current page object
@@ -471,12 +444,12 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     }
 
     /**
-     * Gets component per paint cart
-     *
+     * Gets value for overridden PSO
+     * @param pso - the pso
      * @return double
      */
-    public double getComponentsLoadBar() {
-        return Double.parseDouble(psoController.inputLocator("Number of Components Per Paint Cart").getAttribute("value"));
+    public double getOverriddenPso(String pso) {
+        return psoController.getOverriddenPso(pso);
     }
 
     /**

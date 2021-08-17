@@ -85,6 +85,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
     private WebElement compLoadBarDefault;
 
+    @FindBy(xpath = "//h6[.='Number of Cavities']/..//input[@value='optimize']")
+    private WebElement optimizeMinCost;
+
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
@@ -292,12 +295,13 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Gets case depth
+     * Gets value for overridden PSO
      *
-     * @return string
+     * @param pso - the pso
+     * @return double
      */
-    public double getCaseDepth() {
-        return Double.parseDouble(psoController.inputLocator("Case Depth Selection").getAttribute("value"));
+    public double getOverriddenPso(String pso) {
+        return psoController.getOverriddenPso(pso);
     }
 
     /**
@@ -322,39 +326,12 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Gets case depth
-     *
-     * @return double
-     */
-    public double getMasking() {
-        return Double.parseDouble(psoController.inputLocator("Masking").getAttribute("value"));
-    }
-
-    /**
-     * Gets fraction of component painted
-     *
-     * @return double
-     */
-    public double getFractionPainted() {
-        return Double.parseDouble(psoController.inputLocator("What Fraction of Component is Painted?").getAttribute("value"));
-    }
-
-    /**
      * Checks if masking is selected
      *
      * @return true/false
      */
     public boolean isNoMaskingSelected() {
         return !pageUtils.waitForElementToAppear(noMasking).getAttribute("checked").equals("null");
-    }
-
-    /**
-     * Gets masked feature
-     *
-     * @return double
-     */
-    public double getMaskedFeature() {
-        return Double.parseDouble(psoController.inputLocator("Number of Masked Features").getAttribute("value"));
     }
 
     /**
@@ -397,24 +374,66 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     }
 
     /**
-     * Input defined value
+     * Select defined value
      *
      * @param value - the value
      * @return current page object
      */
-    public MaterialProcessPage inputDefinedValueDropdown(String value) {
+    public MaterialProcessPage selectDefinedValue(String value) {
         psoController.userLocator("Number of cavities  (Piece Part & Tooling Cost Driver)");
         pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), value);
         return this;
     }
 
     /**
-     * Gets component per paint cart
+     * Select mold material
      *
-     * @return double
+     * @param value - the value
+     * @return current page object
      */
-    public double getComponentsLoadBar() {
-        return Double.parseDouble(psoController.inputLocator("Number of Components Per Load Bar").getAttribute("value"));
+    public MaterialProcessPage selectMoldMaterial(String value) {
+        psoController.userLocator("Mold Material");
+        pageUtils.typeAheadSelect(psoController.dropdownLocator("Mold Material"), value);
+        return this;
+    }
+
+    /**
+     * Get mold material
+     *
+     * @return string
+     */
+    public String getMoldMaterial() {
+        return psoController.dropdownLocator("Mold Material").getAttribute("textContent");
+    }
+
+    /**
+     * Get Part tolerance
+     *
+     * @return string
+     */
+    public String getPartTolerance() {
+        return psoController.dropdownLocator("Part Tolerance").getAttribute("textContent");
+    }
+
+    /**
+     * Select tolerance
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selectTolerances(String value) {
+        psoController.userLocator("Tolerances");
+        pageUtils.typeAheadSelect(psoController.dropdownLocator("Part Tolerance"), value);
+        return this;
+    }
+
+    /**
+     * Gets defined value
+     *
+     * @return integer
+     */
+    public int getDefinedValue() {
+        return Integer.parseInt(psoController.dropdownLocator("User defined value").getAttribute("textContent"));
     }
 
     /**
@@ -427,6 +446,56 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
         psoController.inputOverrideValue(psoController.userLocator("Nominal Wall Thickness (Piece Part Cost Driver)"),
             psoController.inputLocator("Nominal Wall Thickness (Piece Part Cost Driver)"), value);
         return this;
+    }
+
+    /**
+     * Input material regrind
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputMaterialRegrind(String value) {
+        psoController.inputOverrideValue(psoController.userDefinedLocator("Material Regrind Allowance   (Piece Part Cost Driver)"),
+            psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
+        return this;
+    }
+
+    /**
+     * Add colourant
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectAddColorantButton() {
+        pageUtils.waitForElementAndClick(addColorantButton);
+        return this;
+    }
+
+    /**
+     * Select optimize minimum cost
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectOptimizeMinCost() {
+        pageUtils.waitForElementAndClick(optimizeMinCost);
+        return this;
+    }
+
+    /**
+     * Checks optimize is selected
+     *
+     * @return true/false
+     */
+    public boolean isOptimizeMinCostSelected() {
+        return !pageUtils.waitForElementToAppear(optimizeMinCost).getAttribute("checked").equals("null");
+    }
+
+    /**
+     * Checks colorant is selected
+     *
+     * @return true/false
+     */
+    public boolean isColorantSelected() {
+        return !pageUtils.waitForElementToAppear(addColorantButton).getAttribute("checked").equals("null");
     }
 
     /**
@@ -445,25 +514,5 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
-    }
-
-    /**
-     * Input material regrind
-     * @param value - the value
-     * @return current page object
-     */
-    public MaterialProcessPage inputMaterialRegrind(String value) {
-        psoController.inputOverrideValue(psoController.userDefinedLocator("Material Regrind Allowance   (Piece Part Cost Driver)"),
-            psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
-        return this;
-    }
-
-    /**
-     * Add colourant
-     * @return current page object
-     */
-    public MaterialProcessPage selectAddColorantButton() {
-        pageUtils.waitForElementAndClick(addColorantButton);
-        return this;
     }
 }
