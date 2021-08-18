@@ -113,6 +113,7 @@ qa-cig-perf:
   user_identity: C339C55A8155
   customer_identity: C339C55A8155
   secret_key: WJIM0HV7Z6U1
+  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
 
   ats:
     api_url: https://ats.na-1.qa-cig-perf.apriori.net
@@ -134,6 +135,7 @@ qa-cig-perf:
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
+    base_url: https://demo.apriori-internal.qa-20-1.apriori.net/
 
     ats:
       api_url: https://ats.na-1.qa-20-1.apriori.net
