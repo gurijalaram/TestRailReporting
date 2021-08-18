@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "AtsAuthorizeSchema.json")
+@Schema(location = "common/AtsAuthorizeSchema.json")
 public class AuthorizationResponse {
     @JsonProperty
     private Object response;

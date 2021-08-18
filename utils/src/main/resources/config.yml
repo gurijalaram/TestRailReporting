@@ -73,6 +73,7 @@ qa-cid-perf:
   ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
   user_identity: 1F7GAI5DLI2B
   customer_identity: 92E1E4E9DFCD
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   ats:
     api_url: https://ats.na-1.qa-cid-perf.apriori.net
@@ -112,6 +113,7 @@ qa-cig-perf:
   user_identity: C339C55A8155
   customer_identity: C339C55A8155
   secret_key: WJIM0HV7Z6U1
+  base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
 
   ats:
     api_url: https://ats.na-1.qa-cig-perf.apriori.net
@@ -138,6 +140,7 @@ onprem:
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
+    base_url: https://demo.apriori-internal.qa-20-1.apriori.net/
 
     ats:
       api_url: https://ats.na-1.qa-20-1.apriori.net
