@@ -36,6 +36,8 @@ int-core:
   vds:
     api_url: https://vds.core.int.apriori.net/
 
+  cas:
+    api_url: https://cas-api.na-1.int.apriori.net/%s
 
 ######################################################## QA-21.1 ########################################################
 qa-21-1:
@@ -62,6 +64,8 @@ qa-21-1:
   vds:
     api_url: https://vds.na-1.qa-21-1.apriori.net/
 
+  cas:
+    api_url: https://cas-api.na-1.qa-21-1.apriori.net/%s
 
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
@@ -89,7 +93,7 @@ qa-cid-perf:
     ui_url: https://cid.na-1.qa-cid-perf.apriori.net/
 
   cas:
-    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
+    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/%s
 
   fms:
     api_url: https://fms.na-1.qa-cid-perf.apriori.net/
@@ -102,7 +106,6 @@ qa-cid-perf:
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
-
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
@@ -123,6 +126,9 @@ qa-cig-perf:
 
   vds:
     api_url: https://vds.na-1.qa-cig-perf.apriori.net/
+    
+  cas:
+    api_url: https://cas-api.na-1.qa-cig-perf.apriori.net/%s
 
 onprem:
   base_url: https://conqbaci01/
@@ -130,7 +136,7 @@ onprem:
   reports: ${onprem.base_url}jasperserver-pro/login.html
 
 ######################################################## QA-20-1 ########################################################
-  qa-20-1:
+qa-20-1:
     secret_key: LZJM8S47H5S8
 
     ats:
@@ -144,13 +150,18 @@ onprem:
       automation_username: qa-automation-%s@apriori.com
       automation_password: TrumpetSnakeFridgeToasty18!%
 
+    cas:
+      api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
+
+
 ######################################################## LOCAL ########################################################
 local:
   secret_key: DogCatMonkey
+  base_url: http://localhost
   ap_user_context:
 
   ats:
-    api_url: http://localhost:8805
+    api_url: ${local.base_url}:8805
     token_username: jvautour
     token_email: jvautour@apriori.com
     token_issuer: 2021 R1
@@ -160,8 +171,9 @@ local:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
-
-  ############################ sds ############################
   sds:
     api_url: http://localhost:8811/
+    api_url: ${local.base_url}:8811/
 
+  cas:
+    api_url: ${local.base_url}:8818/%s
