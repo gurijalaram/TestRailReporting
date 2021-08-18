@@ -255,7 +255,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.cssSelector(String.format("div[id='qa-material-modal-select-field'] input[value='%s']", material));
+        By materialsInfo = By.xpath(String.format("//div[@id='qa-material-modal-select-field']//div[.='%s']", material));
         return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
     }
 
@@ -658,5 +658,25 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public <T> T backFromError(Class<T> className) {
         return modalDialogController.backFromError(className);
+    }
+
+    /**
+     * Validates the new tab page title
+     *
+     * @return String
+     */
+    public String getTabTitle() {
+        return driver.getTitle();
+    }
+
+    /**
+     * Close The newly opened tab
+     *
+     * @return page object
+     */
+    public EvaluatePage closeNewlyOpenedTab() {
+        pageUtils.windowHandler(1).close();
+        pageUtils.windowHandler(0);
+        return new EvaluatePage(driver);
     }
 }

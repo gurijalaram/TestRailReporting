@@ -1,10 +1,10 @@
 package com.pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import com.pageobjects.pages.explore.ExplorePage;
-import com.utils.Constants;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class CidLoginPage extends LoadableComponent<CidLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CidLoginPage.class);
-    private static String loginPageUrl = Constants.getDefaultUrl();
+    private static String loginPageUrl = PropertiesContext.get("{env}.base_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Schema(location = "cidapp/ScenarioResponseSchema.json")
+@Schema(location = "ScenarioResponseSchema.json")
 public class ScenarioResponse {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)

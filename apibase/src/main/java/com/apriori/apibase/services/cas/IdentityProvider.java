@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/IdentityProviderSchema.json")
+@Schema(location = "IdentityProviderSchema.json")
 public class IdentityProvider {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)

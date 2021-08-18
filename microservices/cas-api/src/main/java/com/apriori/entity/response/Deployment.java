@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/DeploymentSchema.json")
+@Schema(location = "DeploymentSchema.json")
 public class Deployment {
     private Deployment response;
     private Boolean isDefault;

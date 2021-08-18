@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/UpdateCredentialsSchema.json")
+@Schema(location = "UpdateCredentialsSchema.json")
 public class UpdateCredentials {
 
     private String currentPasswordHash;

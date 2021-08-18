@@ -53,8 +53,4 @@ public class ResponseWrapper<T> {
     public T getResponseEntity() {
         return responseEntity;
     }
-
-    public void setResponseEntity(T responseEntity) {
-        this.responseEntity = responseEntity;
-    }
 }

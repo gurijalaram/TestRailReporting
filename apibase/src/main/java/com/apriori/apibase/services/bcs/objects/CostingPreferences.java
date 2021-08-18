@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import java.util.List;
 
-@Schema(location = "bcs/CisCostingPreferencesSchema.json")
+@Schema(location = "CisCostingPreferencesSchema.json")
 public class CostingPreferences extends Pagination {
     private List<Tolerance> tolerances;
     private CostingPreferences response;

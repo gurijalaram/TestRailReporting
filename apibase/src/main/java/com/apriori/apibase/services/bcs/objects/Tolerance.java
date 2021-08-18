@@ -2,7 +2,7 @@ package com.apriori.apibase.services.bcs.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "bcs/CisToleranceSchema.json")
+@Schema(location = "CisToleranceSchema.json")
 public class Tolerance {
     private String name;
     private String unit;

@@ -6,7 +6,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-@Schema(location = "WorkOrdersWrapperSchema.json")
+@Schema(location = "WorkordersWrapperSchema.json")
 public class WorkOrdersWrapper {
 
     @JsonProperty

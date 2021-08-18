@@ -28,7 +28,7 @@ public class LogoutPage extends LoadableComponent<LogoutPage> {
     @FindBy(css = "button[data-ap-nav-dialog='showSwitchSchemaDialog']")
     private WebElement switchSchema;
 
-    @FindBy(css = "a[href='session/logout']")
+    @FindBy(css = "a[href='session/com.logout']")
     private WebElement logOut;
 
     private WebDriver driver;
