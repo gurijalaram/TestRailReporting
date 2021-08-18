@@ -4,17 +4,16 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
 
 import com.utils.Constants;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(EdcAppLoginPage.class);
     private static String loginPageUrl = Constants.getDefaultUrl();
 
     @FindBy(css = "input[name='email']")
@@ -48,14 +47,14 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
     public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (url == null || url.isEmpty()) {
             url = loginPageUrl;
         }
         if (loadNewPage) {
             driver.get(url);
         }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
+        log.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

@@ -16,7 +16,6 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
-import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -257,7 +256,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isMaterialInfoDisplayed(String material) {
-        By materialsInfo = By.cssSelector(String.format("div[id='qa-material-modal-select-field'] input[value='%s']", material));
+        By materialsInfo = By.xpath(String.format("//div[@id='qa-material-modal-select-field']//div[.='%s']", material));
         return pageUtils.waitForElementToAppear(materialsInfo).isDisplayed();
     }
 

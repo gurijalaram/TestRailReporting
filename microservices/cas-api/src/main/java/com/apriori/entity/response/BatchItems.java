@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cas/BatchItemsSchema.json")
+@Schema(location = "BatchItemsSchema.json")
 public class BatchItems extends Pagination {
     private BatchItems response;
     private List<BatchItem> items;

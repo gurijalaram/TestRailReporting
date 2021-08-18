@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cidapp/GetComponentResponse.json")
+@Schema(location = "GetComponentResponse.json")
 public class GetComponentItems {
     private GetComponentItems response;
     private String identity;

@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cidapp/ImageResponseSchema.json")
+@Schema(location = "ImageResponseSchema.json")
 public class ImageResponse {
     private ImageResponse response;
     private String identity;

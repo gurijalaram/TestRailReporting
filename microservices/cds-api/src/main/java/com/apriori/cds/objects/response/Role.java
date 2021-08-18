@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/RoleSchema.json")
+@Schema(location = "RoleSchema.json")
 public class Role {
     private String identity;
     private String createdBy;
