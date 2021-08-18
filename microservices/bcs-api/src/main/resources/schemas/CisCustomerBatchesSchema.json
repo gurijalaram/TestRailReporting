@@ -10,7 +10,7 @@
         "items"
       ],
       "allOf": [
-        {"$ref": "../PaginationSchema.json"},
+        {"$ref": "common/PaginationSchema.json"},
         {"items": {
           "type": "array",
           "additionalItems": true,
