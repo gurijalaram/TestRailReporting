@@ -29,7 +29,6 @@ int-core:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
-
   sds:
     api_url: https://sds.core.int.apriori.net/
 
@@ -37,7 +36,10 @@ int-core:
     api_url: https://vds.core.int.apriori.net/
 
   cas:
-    api_url: https://cas-api.na-1.int.apriori.net/%s
+    api_url: https://cas-api.core.int.apriori.net/%s
+
+  fms:
+    api_url: https://fms.core.int.apriori.net/
 
 ######################################################## QA-21.1 ########################################################
 qa-21-1:
@@ -66,6 +68,10 @@ qa-21-1:
 
   cas:
     api_url: https://cas-api.na-1.qa-21-1.apriori.net/%s
+
+  fms:
+    api_url: https://fms.na-1.qa-21-1.apriori.net/
+
 
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
@@ -130,6 +136,9 @@ qa-cig-perf:
   cas:
     api_url: https://cas-api.na-1.qa-cig-perf.apriori.net/%s
 
+  fms:
+    api_url: https://fms.na-1.qa-cig-perf.apriori.net/
+
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
@@ -147,6 +156,10 @@ qa-20-1:
 
     cas:
       api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
+
+    fms:
+      api_url: https://fms.na-1.qa-20-1.apriori.net/
+
 
 ######################################################## LOCAL ########################################################
 local:
@@ -170,3 +183,6 @@ local:
 
   cas:
     api_url: ${local.base_url}:8818/%s
+
+  fms:
+    api_url: ${local.base_url}:8806/
