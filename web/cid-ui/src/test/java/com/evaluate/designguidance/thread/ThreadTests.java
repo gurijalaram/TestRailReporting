@@ -193,6 +193,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"7774"})
     @Description("Testing warning message displayed when thread length is removed")
     public void costedThreadLengthRemoved() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -276,6 +277,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = {"7779"})
     @Description("Testing that adding no value in the thread shows a warning message")
     public void junkValueTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
