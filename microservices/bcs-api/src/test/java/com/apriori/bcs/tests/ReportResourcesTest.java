@@ -80,6 +80,7 @@ public class ReportResourcesTest extends TestUtil {
 
     @AfterClass
     public static void testCleanup() {
+
         BcsUtils.checkAndCancelBatch(batch);
     }
 

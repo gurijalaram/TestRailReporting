@@ -24,7 +24,10 @@
               "multiSelect",
               "allowedValues",
               "ordinal",
-              "customerIdentity"
+              "customerIdentity",
+              "createdAt",
+              "createdBy",
+              "options"
             ],
             "properties": {
               "name": {
@@ -61,6 +64,18 @@
               },
               "precision": {
                 "type": "integer"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "options": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
               }
             }
           }
