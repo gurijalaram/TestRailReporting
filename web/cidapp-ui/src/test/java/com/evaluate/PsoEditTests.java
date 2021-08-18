@@ -113,6 +113,7 @@ public class PsoEditTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(3)
             .openMaterialProcess()
+            // TODO: 18/08/2021 cn - bar chart showing as double
             .selectBarChart("Vertical Automatic")
             .selectOptionsTab()
             .selectOptimizeMinCost()
@@ -293,11 +294,10 @@ public class PsoEditTests extends TestBase {
             .selectOptionsTab()
             .inputBundleCount("jrigm")
             .closePanel()
-            .costScenario()
             .openMaterialProcess()
             .selectBarChart("Band Saw")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("Bundle Sawing"), is(not(equalTo("jfigm"))));
+        assertThat(String.valueOf(materialProcessPage.getOverriddenPso("Bundle Sawing")), is(not(equalTo("jrigm"))));
     }
 }

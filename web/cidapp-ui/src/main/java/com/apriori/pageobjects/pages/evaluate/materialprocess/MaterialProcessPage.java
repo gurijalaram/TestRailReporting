@@ -231,7 +231,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
         int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
-        chart.forEach(x -> pageUtils.waitForElementAndClick(chart.get(position)));
+        chart.forEach(x -> pageUtils.actionClick(chart.get(position)));
         return this;
     }
 
@@ -395,7 +395,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectMoldMaterial(String value) {
-        psoController.userLocator("Mold Material");
         pageUtils.typeAheadSelect(psoController.dropdownLocator("Mold Material"), value);
         return this;
     }
@@ -425,7 +424,6 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectTolerances(String value) {
-        psoController.userLocator("Tolerances");
         pageUtils.typeAheadSelect(psoController.dropdownLocator("Part Tolerance"), value);
         return this;
     }
