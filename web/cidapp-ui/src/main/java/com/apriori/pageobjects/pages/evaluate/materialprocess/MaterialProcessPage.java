@@ -76,22 +76,22 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "g.highcharts-label.highcharts-data-label")
     private List<WebElement> chartPercentage;
 
-    @FindBy(xpath = "//h6[contains(text(),'Masking')]/..//input[@value='defaultNoMasking']")
+    @FindBy(xpath = "//h6[text()='Masking']/..//input[@value='defaultNoMasking']")
     private WebElement maskingDefault;
 
-    @FindBy(xpath = "//h6[contains(text(),'Number of Masked Features')]/..//input[@value='none']")
+    @FindBy(xpath = "//h6[text()='Number of Masked Features']/..//input[@value='none']")
     private WebElement noMasking;
 
-    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
+    @FindBy(xpath = "//h6[text()='Number of Components Per Load Bar']/..//input[@value='auto']")
     private WebElement compLoadBarDefault;
 
-    @FindBy(xpath = "//h6[.='Number of Cavities']/..//input[@value='optimize']")
+    @FindBy(xpath = "//h6[text()='Number of Cavities']/..//input[@value='optimize']")
     private WebElement optimizeMinCost;
 
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
-    @FindBy(xpath = "//h6[.='Number of cavities  (Piece Part & Tooling Cost Driver)']/..//input[@value='optimize']")
+    @FindBy(xpath = "//h6[text()='Number of cavities  (Piece Part & Tooling Cost Driver)']/..//input[@value='optimize']")
     private WebElement cavitiesOptimizeMinCost;
 
     private WebDriver driver;
@@ -383,7 +383,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectDefinedValue(String value) {
-        psoController.userLocator("Number of cavities  (Piece Part & Tooling Cost Driver)");
+        pageUtils.waitForElementAndClick(psoController.userLocator("Number of cavities  (Piece Part & Tooling Cost Driver)"));
         pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), value);
         return this;
     }
@@ -446,8 +446,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputOverrideNominal(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Nominal Wall Thickness (Piece Part Cost Driver)"),
-            psoController.inputLocator("Nominal Wall Thickness (Piece Part Cost Driver)"), value);
+        psoController.inputOverrideValue(psoController.overrideLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"),
+            psoController.inputLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"), value);
         return this;
     }
 

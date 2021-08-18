@@ -44,7 +44,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement userLocator(String locatorValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='user']", locatorValue))));
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='user']", locatorValue));
+        return pageUtils.waitForElementToAppear(byLocator);
     }
 
     /**
@@ -54,7 +55,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement inputLocator(String locatorValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='number']", locatorValue))));
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@type='number']", locatorValue));
+        return pageUtils.waitForElementToAppear(byLocator);
     }
 
     /**
@@ -64,7 +66,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement defaultLocator(String locatorValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='default']", locatorValue))));
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='default']", locatorValue));
+        return pageUtils.waitForElementToAppear(byLocator);
     }
 
     /**
@@ -74,7 +77,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement definedModeLocator(String locatorValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userDefinedMode']", locatorValue))));
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='userDefinedMode']", locatorValue));
+        return pageUtils.waitForElementToAppear(byLocator);
     }
 
     /**
@@ -84,7 +88,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement definedLocator(String locatorValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userDefined']", locatorValue))));
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='userDefined']", locatorValue));
+        return pageUtils.waitForElementToAppear(byLocator);
     }
 
     /**
@@ -94,7 +99,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement overrideLocator(String locatorValue) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userOverride']", locatorValue))));
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='userOverride']", locatorValue));
+        return pageUtils.waitForElementToAppear(byLocator);
     }
 
     /**
@@ -104,7 +110,8 @@ public class PsoController {
      * @return webelement
      */
     public WebElement dropdownLocator(String dropdown) {
-        return driver.findElement(By.xpath(String.format("//label[.='%s']/..//div[@class='apriori-select searchable css-1ilwabi-container']", dropdown)));
+        By byLocator = By.xpath(String.format("//label[text()='%s']/..", dropdown));
+        return pageUtils.waitForElementToAppear(byLocator).findElement(By.cssSelector(".apriori-select"));
     }
 
     /**

@@ -71,7 +71,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [value='auto']")
     private WebElement compPaintPartDefault;
 
-    @FindBy(xpath = "//h6[contains(text(),'Number of Components Per Load Bar')]/..//input[@value='auto']")
+    @FindBy(xpath = "//h6[text()='Number of Components Per Load Bar']/..//input[@value='auto']")
     private WebElement compLoadBarDefault;
 
     private WebDriver driver;
