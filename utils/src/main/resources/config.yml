@@ -39,7 +39,6 @@ int-core:
   cas:
     api_url: https://cas-api.na-1.int.apriori.net/%s
 
-
 ######################################################## QA-21.1 ########################################################
 qa-21-1:
   secret_key: LZJM8S47H5S8
@@ -67,7 +66,6 @@ qa-21-1:
 
   cas:
     api_url: https://cas-api.na-1.qa-21-1.apriori.net/%s
-
 
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
@@ -109,7 +107,6 @@ qa-cid-perf:
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
 
-
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
   user_identity: C339C55A8155
@@ -133,8 +130,6 @@ qa-cig-perf:
   cas:
     api_url: https://cas-api.na-1.qa-cig-perf.apriori.net/%s
 
-
-
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
@@ -150,10 +145,8 @@ qa-20-1:
       automation_username: qa-automation-%s@apriori.com
       automation_password: TrumpetSnakeFridgeToasty18!%
 
-
-  cas:
-    api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
-
+    cas:
+      api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
 
 ######################################################## LOCAL ########################################################
 local:
@@ -171,8 +164,6 @@ local:
     auth_targetCloudContext: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
-
-
 
   sds:
     api_url: ${local.base_url}:8811/
