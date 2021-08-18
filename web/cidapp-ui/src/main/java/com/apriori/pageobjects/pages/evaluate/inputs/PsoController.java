@@ -73,8 +73,18 @@ public class PsoController {
      * @param locatorValue - the value to build the xpath
      * @return webelement
      */
-    public WebElement userDefinedLocator(String locatorValue) {
+    public WebElement definedModeLocator(String locatorValue) {
         return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userDefinedMode']", locatorValue))));
+    }
+
+    /**
+     * Builds user input xpath
+     *
+     * @param locatorValue - the value to build the xpath
+     * @return webelement
+     */
+    public WebElement definedLocator(String locatorValue) {
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//h6[.='%s']/..//input[@value='userDefined']", locatorValue))));
     }
 
     /**

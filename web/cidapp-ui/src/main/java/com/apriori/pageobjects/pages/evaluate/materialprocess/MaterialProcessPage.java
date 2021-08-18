@@ -91,6 +91,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
+    @FindBy(xpath = "//h6[.='Number of cavities  (Piece Part & Tooling Cost Driver)']/..//input[@value='optimize']")
+    private WebElement cavitiesOptimizeMinCost;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -455,7 +458,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMaterialRegrind(String value) {
-        psoController.inputOverrideValue(psoController.userDefinedLocator("Material Regrind Allowance   (Piece Part Cost Driver)"),
+        psoController.inputOverrideValue(psoController.definedModeLocator("Material Regrind Allowance   (Piece Part Cost Driver)"),
             psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
         return this;
     }
@@ -496,6 +499,74 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public boolean isColorantSelected() {
         return !pageUtils.waitForElementToAppear(addColorantButton).getAttribute("checked").equals("null");
+    }
+
+    /**
+     * Input bundle count
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputBundleCount(String value) {
+        psoController.inputOverrideValue(psoController.overrideLocator("Bundle Sawing"),
+            psoController.inputLocator("Bundle Sawing"), value);
+        return this;
+    }
+
+    /**
+     * Input material allowance
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputMaterialAllowance(String value) {
+        psoController.inputOverrideValue(psoController.overrideLocator("Material Allowance (Piece Part Cost Driver)"),
+            psoController.inputLocator("Material Allowance (Piece Part Cost Driver)"), value);
+        return this;
+    }
+
+    /**
+     * Input cooling time
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputCoolingTime(String value) {
+        psoController.inputOverrideValue(psoController.userLocator("Cooling Time"),
+            psoController.inputLocator("Cooling Time"), value);
+        return this;
+    }
+
+    /**
+     * Input colour charge
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputColorCharge(String value) {
+        psoController.inputOverrideValue(psoController.definedLocator("Colorant   (Piece Part Cost Driver)"),
+            psoController.inputLocator("Colorant   (Piece Part Cost Driver)"), value);
+        return this;
+    }
+
+
+    /**
+     * Select optimize minimum cost
+     *
+     * @return current page object
+     */
+    public MaterialProcessPage selectCavitiesOptimizeMinCost() {
+        pageUtils.waitForElementAndClick(cavitiesOptimizeMinCost);
+        return this;
+    }
+
+    /**
+     * Checks optimize is selected
+     *
+     * @return true/false
+     */
+    public boolean isCavitiesOptimizeMinCostSelected() {
+        return !pageUtils.waitForElementToAppear(cavitiesOptimizeMinCost).getAttribute("checked").equals("null");
     }
 
     /**
