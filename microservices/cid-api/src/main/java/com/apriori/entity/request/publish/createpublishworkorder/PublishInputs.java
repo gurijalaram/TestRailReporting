@@ -9,4 +9,6 @@ public class PublishInputs {
     private Boolean overwrite;
     private Boolean lock;
     private PublishScenarioIterationKey scenarioIterationKey;
+    private String description;
+    private String comments;
 }

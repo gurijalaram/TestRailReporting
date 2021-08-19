@@ -2,7 +2,7 @@ package com.apriori.entity.request.publish.createpublishworkorder;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "cid/CreatePublishWorkOrderResponse.json")
+@Schema(location = "CreatePublishWorkOrderResponse.json")
 public class PublishWorkOrderInfo {
     private PublishCommand command;
 

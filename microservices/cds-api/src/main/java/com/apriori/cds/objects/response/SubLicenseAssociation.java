@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/SubLicenseAssociationSchema.json")
+@Schema(location = "SubLicenseAssociationSchema.json")
 public class SubLicenseAssociation extends Pagination {
     private List<SubLicenseAssociationItems> items;
     private SubLicenseAssociation response;

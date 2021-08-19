@@ -10,5 +10,6 @@ public class LoadCadMetadataInputs {
     private boolean keepFreeBodies;
     private boolean freeBodiesPreserveCad;
     private boolean freeBodiesIgnoreMissingComponents;
+    private String fileName;
     private String requestedBy;
 }

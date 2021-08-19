@@ -8,7 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "cds/AccessControlsSchema.json")
+@Schema(location = "AccessControlsSchema.json")
 public class AccessControls extends Pagination {
     private AccessControls response;
     private List<AccessControlResponse> items;

@@ -2,7 +2,7 @@ package com.apriori.cds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "cds/ConfigurationSchema.json")
+@Schema(location = "ConfigurationSchema.json")
 public class ConfigurationItems {
     private String identity;
     private String createdBy;
