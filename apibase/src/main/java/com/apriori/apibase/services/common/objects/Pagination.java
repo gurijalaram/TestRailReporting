@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 
 @JsonRootName("response")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "PaginationSchema.json")
+@Schema(location = "common/PaginationSchema.json")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
