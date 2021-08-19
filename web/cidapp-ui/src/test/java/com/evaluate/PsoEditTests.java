@@ -29,7 +29,7 @@ public class PsoEditTests extends TestBase {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"761", "762", "763", "764"})
+    @TestRail(testCaseId = {"7286", "7287", "7288", "7289"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -64,7 +64,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"771", "772", "773"})
+    @TestRail(testCaseId = {"7269", "7297", "7289"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -97,7 +97,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"769", "770"})
+    @TestRail(testCaseId = {"7294", "7295"})
     @Description("Sand Casting edit PSO")
     public void sandCastPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -129,7 +129,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"768"})
+    @TestRail(testCaseId = {"7293"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -158,7 +158,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"774"})
+    @TestRail(testCaseId = {"7299"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -187,7 +187,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"775"})
+    @TestRail(testCaseId = {"7300"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void sheetPlasticPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
@@ -216,7 +216,7 @@ public class PsoEditTests extends TestBase {
     }
 
     /*@Test
-    @TestRail(testCaseId = {"1652"})
+    @TestRail(testCaseId = {"8972"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -274,7 +274,7 @@ public class PsoEditTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"749"})
+    @TestRail(testCaseId = {"7275"})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
