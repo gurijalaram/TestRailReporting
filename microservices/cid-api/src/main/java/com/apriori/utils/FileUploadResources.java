@@ -54,6 +54,7 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
+import com.apriori.utils.users.UserUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -76,7 +77,7 @@ public class FileUploadResources {
     private static final long WAIT_TIME = 180;
 
     private static final HashMap<String, String> token = new APIAuthentication()
-            .initAuthorizationHeaderNoContent("qa-automation-02@apriori.com");
+            .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
 
     private final String acceptHeader = "Accept";
     private final String contentType = "Content-Type";
