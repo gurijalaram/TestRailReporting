@@ -38,17 +38,6 @@ public class PsoController {
     }
 
     /**
-     * Builds user override xpath
-     *
-     * @param locatorValue - the value to build the xpath
-     * @return webelement
-     */
-    public WebElement userLocator(String locatorValue) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='user']", locatorValue));
-        return pageUtils.waitForElementToAppear(byLocator);
-    }
-
-    /**
      * Builds user input xpath
      *
      * @param locatorValue - the value to build the xpath
@@ -60,46 +49,14 @@ public class PsoController {
     }
 
     /**
-     * Builds user override xpath
+     * Builds xpath locator for element
      *
-     * @param locatorValue - the value to build the xpath
+     * @param label - the label to build the xpath
+     * @param value - the attribute value to build the xpath
      * @return webelement
      */
-    public WebElement defaultLocator(String locatorValue) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='default']", locatorValue));
-        return pageUtils.waitForElementToAppear(byLocator);
-    }
-
-    /**
-     * Builds user input xpath
-     *
-     * @param locatorValue - the value to build the xpath
-     * @return webelement
-     */
-    public WebElement definedModeLocator(String locatorValue) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='userDefinedMode']", locatorValue));
-        return pageUtils.waitForElementToAppear(byLocator);
-    }
-
-    /**
-     * Builds user input xpath
-     *
-     * @param locatorValue - the value to build the xpath
-     * @return webelement
-     */
-    public WebElement definedLocator(String locatorValue) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='userDefined']", locatorValue));
-        return pageUtils.waitForElementToAppear(byLocator);
-    }
-
-    /**
-     * Builds user override xpath
-     *
-     * @param locatorValue - the value to build the xpath
-     * @return webelement
-     */
-    public WebElement overrideLocator(String locatorValue) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='userOverride']", locatorValue));
+    public WebElement buildLocator(String label, String value) {
+        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='%s']", label, value));
         return pageUtils.waitForElementToAppear(byLocator);
     }
 
@@ -116,6 +73,7 @@ public class PsoController {
 
     /**
      * Gets value for overridden PSO
+     *
      * @param pso - the pso
      * @return double
      */

@@ -324,7 +324,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputFractionOverride(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("What Fraction of Component is Painted?"), fractionInput, value);
+        psoController.inputOverrideValue(psoController.buildLocator("What Fraction of Component is Painted?", "user"), fractionInput, value);
         return this;
     }
 
@@ -355,7 +355,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMasking(String value) {
-        psoController.inputOverrideValue(psoController.overrideLocator("Masking"), maskedInput, value);
+        psoController.inputOverrideValue(psoController.buildLocator("Masking", "userOverride"), maskedInput, value);
         return this;
     }
 
@@ -376,7 +376,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMaskedFeatures(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Number of Masked Features"), maskedInput, value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Masked Features", "user"), maskedInput, value);
         return this;
     }
 
@@ -397,7 +397,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputBatchSizeOverride(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Painted Batch Size"), psoController.inputLocator("Painted Batch Size"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Painted Batch Size", "user"), psoController.inputLocator("Painted Batch Size"), value);
         return this;
     }
 
@@ -418,7 +418,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompPaintCart(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Number of Components Per Paint Cart"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Paint Cart", "user"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
         return this;
     }
 
@@ -439,7 +439,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Number of Components Per Load Bar"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Load Bar", "user"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
         return this;
     }
 

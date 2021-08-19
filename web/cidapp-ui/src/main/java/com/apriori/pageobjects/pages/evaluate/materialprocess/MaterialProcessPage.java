@@ -252,7 +252,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectAverageWallThickness() {
-        pageUtils.waitForElementAndClick(psoController.defaultLocator("Average Wall Thickness"));
+        pageUtils.waitForElementAndClick(psoController.buildLocator("Average Wall Thickness", "default"));
         return this;
     }
 
@@ -263,7 +263,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputAverageWallThickness(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Average Wall Thickness"), psoController.inputLocator("Average Wall Thickness"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Average Wall Thickness", "user"), psoController.inputLocator("Average Wall Thickness"), value);
         return this;
     }
 
@@ -282,7 +282,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectCaseDepth() {
-        pageUtils.waitForElementAndClick(psoController.defaultLocator("Case Depth Selection"));
+        pageUtils.waitForElementAndClick(psoController.buildLocator("Case Depth Selection", "default"));
         return this;
     }
 
@@ -293,7 +293,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCaseDepth(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Case Depth Selection"), psoController.inputLocator("Case Depth Selection"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Case Depth Selection", "user"), psoController.inputLocator("Case Depth Selection"), value);
         return this;
     }
 
@@ -324,7 +324,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMasking(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Masking"), psoController.inputLocator("Masking"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Masking", "user"), psoController.inputLocator("Masking"), value);
         return this;
     }
 
@@ -372,7 +372,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Number of Components Per Load Bar"), psoController.inputLocator("Number of Components Per Load Bar"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Load Bar", "user"), psoController.inputLocator("Number of Components Per Load Bar"), value);
         return this;
     }
 
@@ -383,7 +383,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectDefinedValue(String value) {
-        pageUtils.waitForElementAndClick(psoController.userLocator("Number of cavities  (Piece Part & Tooling Cost Driver)"));
+        pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities  (Piece Part & Tooling Cost Driver)", "user"));
         pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), value);
         return this;
     }
@@ -444,7 +444,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputOverrideNominal(String value) {
-        psoController.inputOverrideValue(psoController.overrideLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"),
+        psoController.inputOverrideValue(psoController.buildLocator("Nominal Wall Thickness  (Piece Part Cost Driver)", "userOverride"),
             psoController.inputLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"), value);
         return this;
     }
@@ -456,7 +456,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMaterialRegrind(String value) {
-        psoController.inputOverrideValue(psoController.definedModeLocator("Material Regrind Allowance   (Piece Part Cost Driver)"),
+        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance   (Piece Part Cost Driver)", "userDefinedMode"),
             psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
         return this;
     }
@@ -506,7 +506,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputBundleCount(String value) {
-        psoController.inputOverrideValue(psoController.overrideLocator("Bundle Sawing"),
+        psoController.inputOverrideValue(psoController.buildLocator("Bundle Sawing", "userOverride"),
             psoController.inputLocator("Bundle Sawing"), value);
         return this;
     }
@@ -518,7 +518,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMaterialAllowance(String value) {
-        psoController.inputOverrideValue(psoController.overrideLocator("Material Allowance (Piece Part Cost Driver)"),
+        psoController.inputOverrideValue(psoController.buildLocator("Material Allowance (Piece Part Cost Driver)", "userOverride"),
             psoController.inputLocator("Material Allowance (Piece Part Cost Driver)"), value);
         return this;
     }
@@ -530,7 +530,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCoolingTime(String value) {
-        psoController.inputOverrideValue(psoController.userLocator("Cooling Time"),
+        psoController.inputOverrideValue(psoController.buildLocator("Cooling Time", "user"),
             psoController.inputLocator("Cooling Time"), value);
         return this;
     }
@@ -542,7 +542,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputColorCharge(String value) {
-        psoController.inputOverrideValue(psoController.definedLocator("Colorant   (Piece Part Cost Driver)"),
+        psoController.inputOverrideValue(psoController.buildLocator("Colorant   (Piece Part Cost Driver)", "userDefined"),
             psoController.inputLocator("Colorant   (Piece Part Cost Driver)"), value);
         return this;
     }
