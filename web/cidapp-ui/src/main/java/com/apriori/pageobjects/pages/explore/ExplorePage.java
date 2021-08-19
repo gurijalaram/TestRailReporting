@@ -95,6 +95,16 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Selects all scenarios on the page
+     *
+     * @return current page object
+     */
+    public ExplorePage selectAllScenarios() {
+        scenarioTableController.selectAllScenarios();
+        return this;
+    }
+
+    /**
      * Opens the scenario
      *
      * @param componentName - name of the part
@@ -203,13 +213,13 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Opens the preview panel
+     * Opens or closes the preview panel
      *
-     * @return new page object
+     * @return generic page object
      */
-    public PreviewPage previewPanel() {
+    public <T> T previewPanel(Class<T> klass) {
         pageUtils.waitForElementAndClick(previewButton);
-        return new PreviewPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
