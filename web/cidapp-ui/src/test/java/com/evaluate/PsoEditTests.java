@@ -40,7 +40,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3)
@@ -75,7 +75,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario(7)
@@ -108,7 +108,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3)
@@ -140,7 +140,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -169,7 +169,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -198,7 +198,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -227,7 +227,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -285,7 +285,7 @@ public class PsoEditTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        materialProcessPage = loginPage.login(UserUtil.getUser())
+        materialProcessPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
