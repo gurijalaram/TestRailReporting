@@ -11,7 +11,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.SmokeTests;
+import testsuites.RegressionTestSuite;
 
 public class LogoutTests extends TestBase {
 
@@ -19,7 +19,7 @@ public class LogoutTests extends TestBase {
     private EdcAppLoginPage edcPage;
 
     @Test
-    @Category(SmokeTests.class)
+    @Category(RegressionTestSuite.class)
     @TestRail(testCaseId = {"8922"})
     @Description("Test Logout successfully")
     public void testLogout() {

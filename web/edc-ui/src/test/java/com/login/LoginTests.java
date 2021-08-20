@@ -12,12 +12,11 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.SmokeTests;
+import testsuites.EDCSmokeTestSuite;
+import testsuites.RegressionTestSuite;
 
-@Slf4j
 public class LoginTests extends TestBase {
 
     public LoginTests() {
@@ -30,7 +29,7 @@ public class LoginTests extends TestBase {
     private ElectronicsDataCollectionPage edcPage;
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({RegressionTestSuite.class, EDCSmokeTestSuite.class})
     @TestRail(testCaseId = {"8886"})
     @Description("Test successful login")
     public void testLogin() {
@@ -42,7 +41,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({RegressionTestSuite.class, EDCSmokeTestSuite.class})
     @TestRail(testCaseId = {"8889"})
     @Description("Test unsuccessful login with incorrect email and incorrect password")
     public void testIncorrectEmailAndPassword() {
@@ -53,7 +52,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
+    @Category({RegressionTestSuite.class, EDCSmokeTestSuite.class})
     @TestRail(testCaseId = {"8890"})
     @Description("Test unsuccessful login with correct email and incorrect password")
     public void testEmailAndIncorrectPassword() {

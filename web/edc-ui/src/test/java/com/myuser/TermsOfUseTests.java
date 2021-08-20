@@ -11,6 +11,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.RegressionTestSuite;
 
 public class TermsOfUseTests extends TestBase {
 
@@ -18,6 +20,7 @@ public class TermsOfUseTests extends TestBase {
     private TermsOfUsePage termsOfUsePage;
 
     @Test
+    @Category(RegressionTestSuite.class)
     @TestRail(testCaseId = {"8923"})
     @Description("Validate Terms of use")
     public void testTermsOfUse() {
