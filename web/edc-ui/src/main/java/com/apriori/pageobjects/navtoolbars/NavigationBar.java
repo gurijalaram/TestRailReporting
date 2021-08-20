@@ -21,6 +21,9 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
     @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
 
+    @FindBy(css = "[data-icon='chevron-left']")
+    private WebElement goBackButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -59,6 +62,10 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
     public MyUserPage clickUserDropdown() {
         pageUtils.waitForElementAndClick(userDropdown);
         return new MyUserPage(driver);
+    }
+
+    public void clickGoBack() {
+        pageUtils.waitForElementAndClick(goBackButton);
     }
 }
 
