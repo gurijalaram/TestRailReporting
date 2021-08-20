@@ -57,7 +57,7 @@ public class PreviewPanelTests extends TestBase {
             .costScenario()
             .clickExplore()
             .highlightScenario(partName, testScenarioName)
-            .previewPanel();
+            .openPreviewPanel();
 
         assertThat(previewPage.isPreviewPanelDisplayed(), is(true));
     }
@@ -88,7 +88,7 @@ public class PreviewPanelTests extends TestBase {
             .selectFilter("Recent")
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
-            .previewPanel();
+            .openPreviewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
         assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
