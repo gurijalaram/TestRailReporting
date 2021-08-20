@@ -36,7 +36,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filterButton;
 
-    @FindBy(id = "qa-scenario-list-preview-button")
+    @FindBy(css = "[data-icon='angle-double-left']")
     private WebElement previewButton;
 
     @FindBy(id = "qa-scenario-list-filter-selector")
@@ -213,13 +213,12 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Opens or closes the preview panel
+     * Opens the preview panel
      *
-     * @return generic page object
+     * @return new page object
      */
-    public <T> T previewPanel(Class<T> klass) {
-        pageUtils.waitForElementAndClick(previewButton);
-        return PageFactory.initElements(driver, klass);
+    public PreviewPage openPreviewPanel() {
+        return componentTableActions.openPreviewPanel(previewButton);
     }
 
     /**

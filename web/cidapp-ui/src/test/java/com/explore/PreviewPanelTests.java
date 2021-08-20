@@ -1,13 +1,11 @@
 package com.explore;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -66,7 +64,7 @@ public class PreviewPanelTests extends TestBase {
             .costScenario()
             .clickExplore()
             .highlightScenario(partName, testScenarioName)
-            .previewPanel(PreviewPage.class);
+            .openPreviewPanel();
 
         assertThat(previewPage.isPreviewPanelDisplayed(), is(true));
     }
@@ -97,7 +95,7 @@ public class PreviewPanelTests extends TestBase {
             .selectFilter("Recent")
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
-            .previewPanel(PreviewPage.class);
+            .openPreviewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
         assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
