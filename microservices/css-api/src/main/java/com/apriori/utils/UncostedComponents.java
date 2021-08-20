@@ -4,6 +4,7 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
@@ -32,7 +33,7 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, String token) {
-        return getCssComponent(componentName, scenarioName, token, "NOT_COSTED");
+        return getCssComponent(componentName, scenarioName, token, ScenarioStateEnum.NOT_COSTED);
     }
 
     /**
@@ -43,7 +44,7 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
-        return getCssComponent(componentName, scenarioName, new JwtTokenUtil().retrieveJwtToken(), "NOT_COSTED");
+        return getCssComponent(componentName, scenarioName, new JwtTokenUtil().retrieveJwtToken(), ScenarioStateEnum.NOT_COSTED);
     }
 
     /**
@@ -53,7 +54,7 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, String token, String scenarioState) {
+    public List<Item> getCssComponent(String componentName, String scenarioName, String token, ScenarioStateEnum scenarioState) {
         final int SOCKET_TIMEOUT = 120000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
@@ -83,7 +84,7 @@ public class UncostedComponents {
                         throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                     }
 
-                    if (firstItem.getScenarioState().equals(scenarioState.toUpperCase())) {
+                    if (firstItem.getScenarioState().equals(scenarioState.getState())) {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());

@@ -112,7 +112,7 @@ public class CidAppTestUtil {
      * @param userCredentials - user credentials
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, String scenarioState, UserCredentials userCredentials) {
+    public List<Item> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
         return new UncostedComponents().getCssComponent(componentName, scenarioName, getToken(userCredentials), scenarioState);
     }
 
