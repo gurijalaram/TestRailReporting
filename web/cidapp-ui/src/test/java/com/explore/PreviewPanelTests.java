@@ -1,11 +1,13 @@
 package com.explore;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -128,33 +130,42 @@ public class PreviewPanelTests extends TestBase {
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String scenarioName4 = new GenerateStringUtil().generateScenarioName();
         String filterName = new GenerateStringUtil().generateFilterName();
+        String notes = new GenerateStringUtil().generateNotes();
 
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .info()
+                .inputNotes(notes)
+                .submit(EvaluatePage.class)
                 .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+                .info()
+                .inputNotes(notes)
+                .submit(EvaluatePage.class)
                 .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
+                .info()
+                .inputNotes(notes)
+                .submit(EvaluatePage.class)
                 .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
+                .info()
+                .inputNotes(notes)
+                .submit(EvaluatePage.class)
                 .clickExplore()
                 .selectFilter("Recent")
                 .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
                 .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-                .previewPanel(PreviewPage.class);
+                .openPreviewPanel();
 
         assertThat(previewPage.getSelectionTitle(), is(equalTo("2 Scenarios Selected")));
 
-        explorePage = new ExplorePage(driver);
-        previewPage = explorePage.previewPanel(ExplorePage.class)
+        previewPage.closePreviewPanel()
                 .filter()
                 .saveAs()
                 .inputName(filterName)
-                .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
-                .addCriteriaWithOption("Scenario Name", "Contains", scenarioName2)
-                .addCriteriaWithOption("Scenario Name", "Contains", scenarioName3)
-                .addCriteriaWithOption("Scenario Name", "Contains", scenarioName4)
+                .addCriteriaWithOption("Notes", "Contains", notes)
                 .submit(ExplorePage.class)
                 .selectAllScenarios()
-                .previewPanel(PreviewPage.class);
+                .openPreviewPanel();
 
         assertThat(previewPage.getSelectionTitle(), is(equalTo("4 Scenarios Selected")));
     }
