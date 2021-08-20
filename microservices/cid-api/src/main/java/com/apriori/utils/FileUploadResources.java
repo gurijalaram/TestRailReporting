@@ -381,6 +381,13 @@ public class FileUploadResources {
                             inputs))
                 );
 
+        try {
+            HTTP2Request.build(requestEntity).post();
+        } catch (Exception e) {
+            do {
+                HTTP2Request.build(requestEntity).post();
+            } while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500);
+        }
         return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
     }
 

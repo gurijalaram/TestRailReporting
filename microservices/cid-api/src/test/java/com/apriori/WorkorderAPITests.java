@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -179,13 +180,13 @@ public class WorkorderAPITests {
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
 
-        assertThat(getAdminInfoResponse.getLastModifiedBy(), is(equalTo("aPrioriCIGenerateUser")));
+        assertThat(getAdminInfoResponse.getLastModifiedBy(), is(containsString("qa-automation")));
         assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
         assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
         assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
         assertThat(getAdminInfoResponse.getLocked(), is(equalTo("false")));
         assertThat(getAdminInfoResponse.getActive(), is(equalTo("true")));
-        assertThat(getAdminInfoResponse.getLastModifiedByFullName(), is(equalTo("aPriori CIGenerateUser")));
+        assertThat(getAdminInfoResponse.getLastModifiedByFullName(), is(containsString("QA Automation Account")));
     }
 
     @Test
