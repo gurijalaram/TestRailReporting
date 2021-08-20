@@ -91,7 +91,7 @@ public class ActionsTests extends TestBase {
         assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
     }
 
-    //@Test
+    @Test
     @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7197", "7198"})
