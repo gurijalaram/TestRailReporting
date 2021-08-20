@@ -11,8 +11,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.EDCSmokeTestSuite;
 
 
 public class HelpTests extends TestBase {
@@ -21,7 +19,6 @@ public class HelpTests extends TestBase {
     private AboutUsPage aboutUsPage;
 
     @Test
-    @Category(EDCSmokeTestSuite.class)
     @TestRail(testCaseId = {"8941"})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
