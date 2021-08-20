@@ -77,13 +77,15 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("M3CapScrew", scenarioName)
+            .highlightScenario(componentName, scenarioName)
+            .clickSearch(componentName)
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
+            .clickSearch(componentName)
             .highlightScenario("M3CapScrew", scenarioName)
             .info();
 
