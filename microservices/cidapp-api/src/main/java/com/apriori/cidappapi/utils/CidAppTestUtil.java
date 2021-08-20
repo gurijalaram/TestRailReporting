@@ -34,8 +34,6 @@ import java.util.concurrent.TimeUnit;
 public class CidAppTestUtil {
 
     private String token = null;
-    private String componentId;
-    private String scenarioId;
 
     /**
      * Adds a new component
@@ -101,9 +99,6 @@ public class CidAppTestUtil {
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
-
-        componentId = itemResponse.get(0).getComponentIdentity();
-        scenarioId = itemResponse.get(0).getScenarioIdentity();
 
         return itemResponse.get(0);
     }
@@ -279,7 +274,7 @@ public class CidAppTestUtil {
         }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentId, scenarioId, WAIT_TIME)
+                componentName, scenarioName, WAIT_TIME)
         );
     }
 
