@@ -56,4 +56,5 @@ public class InstallationItems {
     private String updatedBy;
     private String url;
     private List<Object> applications = null;
+    private String apVersion;
 }
