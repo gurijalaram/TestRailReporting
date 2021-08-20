@@ -385,6 +385,7 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA);
 
+        // TODO: 20/08/2021 cn - this needs to be reworked
         //assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 }
