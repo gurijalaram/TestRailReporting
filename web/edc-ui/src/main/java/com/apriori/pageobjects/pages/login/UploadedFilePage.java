@@ -9,23 +9,23 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
-public class BillOfMaterialsPage {
+public class UploadedFilePage {
 
-    @FindBy(css = ".part-card card")
-    private WebElement fileMatch;
+    @FindBy(css = "[data-icon='exclamation-circle']")
+    private WebElement fileOne;
 
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public BillOfMaterialsPage(WebDriver driver) {
+    public UploadedFilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
-    public BillOfMaterialsPage highlightItem() {
-        pageUtils.waitForElementAndClick(fileMatch);
-        return this;
+    public BillOfMaterialsPage clickItemOne() {
+        pageUtils.waitForElementAndClick(fileOne);
+        return new BillOfMaterialsPage(driver);
     }
 }

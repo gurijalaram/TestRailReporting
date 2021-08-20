@@ -24,6 +24,8 @@ public class UploadTests extends TestBase {
         loginPage = new EdcAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadComponent(resourceFile)
-            .clickUploadPCBA();
+            .clickUploadPCBA()
+            .clickItemOne()
+            .highlightItem();
     }
 }

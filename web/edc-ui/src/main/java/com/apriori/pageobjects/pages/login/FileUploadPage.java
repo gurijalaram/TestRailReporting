@@ -64,8 +64,8 @@ public class FileUploadPage {
      *
      * @return new page object
      */
-    public BillOfMaterialsPage clickUploadPCBA() {
+    public UploadedFilePage clickUploadPCBA() {
         pageUtils.waitForElementAndClick(uploadPcbaButton);
-        return new BillOfMaterialsPage(driver);
+        return new UploadedFilePage(driver);
     }
 }
