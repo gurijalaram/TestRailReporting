@@ -173,7 +173,7 @@ public class ActionsTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
-            .previewPanel();
+            .openPreviewPanel();
 
         assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
 
