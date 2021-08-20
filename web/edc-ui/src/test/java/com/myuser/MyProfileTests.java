@@ -12,8 +12,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.RegressionTestSuite;
 
 public class MyProfileTests extends TestBase {
 
@@ -21,7 +19,6 @@ public class MyProfileTests extends TestBase {
     private MyProfilePage myProfilePage;
 
     @Test
-    @Category(RegressionTestSuite.class)
     @TestRail(testCaseId = {"1551"})
     @Description("Navigate to My Profile Test")
     public void testMyProfile() {

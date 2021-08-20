@@ -4,6 +4,7 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import com.login.LoginTests;
+import com.logout.LogoutTests;
 import com.myuser.MyProfileTests;
 import com.myuser.TermsOfUseTests;
 import help.HelpTests;
@@ -16,6 +17,7 @@ import org.junit.runners.Suite;
     LoginTests.class,
     MyProfileTests.class,
     TermsOfUseTests.class,
+    LogoutTests.class,
     HelpTests.class
 })
 public class RegressionTestSuite {
