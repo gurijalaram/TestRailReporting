@@ -201,8 +201,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputProperty(String property) {
-        WebElement propertyDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index)));
-        pageUtils.typeAheadSelect(propertyDropdown, property);
+        By propertyDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index));
+        pageUtils.waitForElementAndClick(propertyDropdown);
+        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, property));
+        pageUtils.waitForElementAndClick(byMaterialCatalog);
+
         return this;
     }
 
@@ -213,8 +216,10 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputOperation(String operation) {
-        WebElement operationDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index)));
-        pageUtils.typeAheadSelect(operationDropdown, operation);
+        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index));
+        pageUtils.waitForElementAndClick(operationDropdown);
+        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operation));
+        pageUtils.waitForElementAndClick(byMaterialCatalog);
         return this;
     }
 
