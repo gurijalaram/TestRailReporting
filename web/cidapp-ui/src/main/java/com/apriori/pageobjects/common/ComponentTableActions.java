@@ -126,9 +126,9 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @param element - the preview button
      * @return new page object
      */
-    public PreviewPage closePreviewPanel(WebElement element) {
+    public ComponentTableActions closePreviewPanel(WebElement element) {
         pageUtils.waitForElementAndClick(element);
-        return new PreviewPage(driver);
+        return this;
     }
 
     /**
