@@ -114,8 +114,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-2702")
-    @Issue("BA-1957")
     @TestRail(testCaseId = {"6282"})
     @Description("User can change the default VPE")
     public void defaultVPE() {
@@ -136,8 +134,7 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        //assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO));
-        //TODO uncomment above line when BA-1957 is done
+        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO));
     }
 
     @Test
