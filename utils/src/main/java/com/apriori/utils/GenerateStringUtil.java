@@ -133,6 +133,16 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates a notes
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateNotes() {
+        return "AutoNotes" + RandomStringUtils.randomAlphabetic(5);
+    }
+
+    /**
      * Generates a 12 character alpanumeric string
      *
      * @return string
