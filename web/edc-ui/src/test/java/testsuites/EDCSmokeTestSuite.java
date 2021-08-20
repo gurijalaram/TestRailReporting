@@ -14,8 +14,7 @@ import testsuites.suiteinterface.SmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Suite.SuiteClasses({
-    LoginTests.class,
-    HelpTests.class
+    LoginTests.class
 })
 public class EDCSmokeTestSuite {
 }
