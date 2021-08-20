@@ -11,9 +11,6 @@
     "hasNextPage",
     "hasPreviousPage"
   ],
-  "optional": [
-    "isRestrictedByAccessControl"
-  ],
   "properties": {
     "isFirstPage": {
       "type": "boolean"
@@ -40,9 +37,6 @@
       "type": "boolean"
     },
     "hasPreviousPage": {
-      "type": "boolean"
-    },
-    "isRestrictedByAccessControl": {
       "type": "boolean"
     }
   }

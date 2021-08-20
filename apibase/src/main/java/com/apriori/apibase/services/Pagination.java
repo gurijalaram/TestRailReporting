@@ -5,7 +5,6 @@ import com.apriori.utils.http.enums.Schema;
 
 @Schema(location = "common/PaginationSchema.json")
 public class Pagination {
-    private Boolean isRestrictedByAccessControl;
     private Boolean isFirstPage;
     private Boolean isLastPage;
     private Integer pageNumber;
@@ -15,15 +14,6 @@ public class Pagination {
     private Integer totalPageCount;
     private Boolean hasNextPage;
     private Boolean hasPreviousPage;
-
-    public Boolean getRestrictedByAccessControl() {
-        return isRestrictedByAccessControl;
-    }
-
-    public Pagination setRestrictedByAccessControl(Boolean restrictedByAccessControl) {
-        isRestrictedByAccessControl = restrictedByAccessControl;
-        return this;
-    }
 
     public Boolean getIsFirstPage() {
         return isFirstPage;

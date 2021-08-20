@@ -30,9 +30,6 @@
     },
     "value": {
       "type": ["string", "integer", "boolean", "number"]
-    },
-    "isRestrictedByAccessControl": {
-      "type": "boolean"
     }
   }
 }
