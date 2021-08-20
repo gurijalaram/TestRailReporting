@@ -7,7 +7,9 @@
     "createdBy",
     "createdByName",
     "name",
-    "type",
+    "type"
+  ],
+  "optional": [
     "isRestrictedByAccessControl"
   ],
   "properties": {
