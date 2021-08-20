@@ -1,11 +1,13 @@
 package com.settings;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
@@ -24,7 +26,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -36,13 +37,13 @@ import java.io.File;
 public class SettingsTests extends TestBase {
     File resourceFile;
     private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
     private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
     private Item cssItem;
+    private SecondaryPage secondaryPage;
 
     @After
     public void resetAllSettings() {
@@ -53,7 +54,6 @@ public class SettingsTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6283"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
@@ -86,7 +86,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6281", "5442"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -138,7 +137,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6285", "6286"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -166,7 +164,6 @@ public class SettingsTests extends TestBase {
 
     @Ignore("Uncomment when ba-1955 is done")
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6287", "6288"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -179,17 +176,17 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize(batchSize)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .costScenario();
-        //select secondary inputs
+            .costScenario()
+            .goToSecondaryTab();
 
-        //assertThat(secondaryInputsPage.getBatchSize(), equalTo(batchSize));
+        assertThat(secondaryPage.getBatchSize(), is(equalTo(batchSize)));
     }
 
     @Test
