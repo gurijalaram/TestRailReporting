@@ -31,5 +31,4 @@ public class PreferenceResponse {
     private String name;
     private String type;
     private String value;
-    private Boolean isRestrictedByAccessControl;
 }

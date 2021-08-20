@@ -9,9 +9,6 @@
     "name",
     "type"
   ],
-  "optional": [
-    "isRestrictedByAccessControl"
-  ],
   "properties": {
     "identity": {
       "type": "string"
