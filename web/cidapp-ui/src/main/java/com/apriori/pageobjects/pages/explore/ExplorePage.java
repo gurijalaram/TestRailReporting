@@ -36,7 +36,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(id = "qa-scenario-list-filter-button")
     private WebElement filterButton;
 
-    @FindBy(id = "qa-scenario-list-preview-button")
+    @FindBy(css = "[data-icon='angle-double-left']")
     private WebElement previewButton;
 
     @FindBy(id = "qa-scenario-list-filter-selector")
@@ -92,6 +92,16 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getComponentsFound() {
         return pageUtils.waitForElementAppear(scenarioCount).getText();
+    }
+
+    /**
+     * Selects all scenarios on the page
+     *
+     * @return current page object
+     */
+    public ExplorePage selectAllScenarios() {
+        scenarioTableController.selectAllScenarios();
+        return this;
     }
 
     /**
@@ -207,9 +217,8 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return new page object
      */
-    public PreviewPage previewPanel() {
-        pageUtils.waitForElementAndClick(previewButton);
-        return new PreviewPage(driver);
+    public PreviewPage openPreviewPanel() {
+        return componentTableActions.openPreviewPanel(previewButton);
     }
 
     /**
