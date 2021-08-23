@@ -5,6 +5,10 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
 import com.apriori.utils.enums.ColourEnum;
+import com.apriori.utils.enums.DecimalPlaceEnum;
+import com.apriori.utils.enums.LengthEnum;
+import com.apriori.utils.enums.MassEnum;
+import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
@@ -39,6 +43,10 @@ public class ResetSettingsUtil {
         preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
 
         String unitIdentity = mappedResponse.get("display.unitsGroup");
+        String lengthIdentity = mappedResponse.get("display.lengthUnits");
+        String massIdentity = mappedResponse.get("display.massUnits");
+        String timeIdentity = mappedResponse.get("display.timeUnits");
+        String decimalIdentity = mappedResponse.get("display.decimalPlaces");
         String colourIdentity = mappedResponse.get("display.selectionColor");
         String scenarioIdentity = mappedResponse.get("production.defaultScenarioName");
         String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
@@ -53,6 +61,10 @@ public class ResetSettingsUtil {
             .token(token)
             .customBody("{\"userPreferences\": {"
                 + "\"" + unitIdentity + "\":\"" + UnitsEnum.MMKS.getUnits() + "\","
+                + "\"" + lengthIdentity + "\":\"" + LengthEnum.MILLIMETER.getLength() + "\","
+                + "\"" + massIdentity + "\":\"" + MassEnum.KILOGRAM.getMass() + "\","
+                + "\"" + timeIdentity + "\":\"" + TimeEnum.SECOND.getTime() + "\","
+                + "\"" + decimalIdentity + "\":\"" + DecimalPlaceEnum.TWO.getDecimalPlaces() + "\","
                 + "\"" + colourIdentity + "\":\"" + ColourEnum.YELLOW.getColour() + "\","
                 + "\"" + scenarioIdentity + "\":\"Initial\","
                 + "\"" + proGroupIdentity + "\":\"" + null + "\","

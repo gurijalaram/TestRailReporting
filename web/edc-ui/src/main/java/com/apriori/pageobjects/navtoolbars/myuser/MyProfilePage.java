@@ -52,7 +52,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
      *
      * @return boolean
      */
-    public boolean verifyTextFieldEnable() {
+    public boolean isTextFieldEnabled() {
         return pageUtils.waitForElementToAppear(username).isEnabled();
     }
 }

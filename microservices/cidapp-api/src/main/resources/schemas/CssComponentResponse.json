@@ -11,6 +11,9 @@
         "isLastPage": {
           "type": "boolean"
         },
+        "isRestrictedByAccessControl": {
+          "type": "boolean"
+        },
         "pageNumber": {
           "type": "integer"
         },

@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-@Schema(location = "AtsTokenSchema.json")
+@Schema(location = "common/AtsTokenSchema.json")
 public class Token {
     @JsonProperty
     private String token;
