@@ -9,7 +9,7 @@
     "type",
     "requiredAttributeType",
     "multiSelect",
-    "allowedValues"
+    "options"
   ],
   "properties": {
     "identity": {
@@ -42,9 +42,15 @@
     "precision": {
       "type": "integer"
     },
-    "allowedValues": {
+    "options": {
       "type": "array",
       "items": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "string"
+      },
+      "createdBy": {
         "type": "string"
       }
     }

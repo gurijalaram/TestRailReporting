@@ -14,7 +14,7 @@ public class AboutUsPage {
     @FindBy(id = "about_us_section")
     private WebElement aboutUs;
 
-    @FindBy(xpath = "//div[@id='gdpr']//button[.='Yes I Agree']")
+    @FindBy(css = ".red-btn")
     private WebElement termsButton;
 
     private final WebDriver driver;
