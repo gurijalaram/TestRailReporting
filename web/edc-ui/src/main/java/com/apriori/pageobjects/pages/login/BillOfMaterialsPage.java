@@ -11,7 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class BillOfMaterialsPage {
 
-    @FindBy(css = ".part-card card")
+    @FindBy(css = ".part-card")
     private WebElement fileMatch;
 
     private WebDriver driver;

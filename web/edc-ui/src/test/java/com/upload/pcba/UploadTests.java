@@ -18,7 +18,9 @@ public class UploadTests extends TestBase {
 
     @Test
     public void testUploadBOM () {
-        resourceFile = FileResourceUtil.getResourceAsFile("Test BOM 5 (1).csv");
+        String fileName = "Test BOM 5 (1).csv";
+
+        resourceFile = FileResourceUtil.getResourceAsFile(fileName);
         currentUser = UserUtil.getUser();
 
         loginPage = new EdcAppLoginPage(driver);
