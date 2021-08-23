@@ -3,7 +3,7 @@ package com.apriori.apibase.services;
 import com.apriori.utils.http.enums.Schema;
 
 
-@Schema(location = "PaginationSchema.json")
+@Schema(location = "common/PaginationSchema.json")
 public class Pagination {
     private Boolean isFirstPage;
     private Boolean isLastPage;
