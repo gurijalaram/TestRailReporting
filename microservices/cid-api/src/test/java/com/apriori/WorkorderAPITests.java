@@ -90,7 +90,7 @@ public class WorkorderAPITests {
         );
         FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
 
-        getAndValidateImage(fileUploadOutputs.getScenarioIterationKey());
+        getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -98,11 +98,11 @@ public class WorkorderAPITests {
                 processGroup
         );
 
-        getAndValidateImage(costOutputs.getScenarioIterationKey());
+        getAndValidateImageInfo(costOutputs.getScenarioIterationKey());
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
-        getAndValidateImage(publishResultOutputs.getScenarioIterationKey());
+        getAndValidateImageInfo(publishResultOutputs.getScenarioIterationKey());
     }
 
     @Test
@@ -345,17 +345,15 @@ public class WorkorderAPITests {
         );
     }
 
-    private void getAndValidateImage(ScenarioIterationKey scenarioIterationKey) {
+    private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
         FileUploadResources fileUploadResources = new FileUploadResources();
 
-        String webImageResponse = fileUploadResources
-                .getImageByScenarioIterationKey(
-                scenarioIterationKey.getScenarioKey(), "web").toString();
-        String desktopImageResponse = fileUploadResources
-                .getImageByScenarioIterationKey(
-                scenarioIterationKey.getScenarioKey(), "desktop").toString();
+        GetImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
 
-        fileUploadResources.imageValidation(webImageResponse);
-        fileUploadResources.imageValidation(desktopImageResponse);
+        assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
+        assertThat(imageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
+        assertThat(imageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
+        assertThat(imageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
+        assertThat(imageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
     }
 }
