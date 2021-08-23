@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
@@ -30,6 +31,9 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     @FindBy(css = ".scenario-preview")
     private WebElement previewData;
 
+    @FindBy(css = "[data-icon='angle-double-right']")
+    private WebElement previewButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
@@ -50,6 +54,16 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(cardHeader);
+    }
+
+    /**
+     * Opens the preview panel
+     *
+     * @return new page object
+     */
+    public ExplorePage closePreviewPanel() {
+        new ComponentTableActions(driver).closePreviewPanel(previewButton);
+        return new ExplorePage(driver);
     }
 
     /**
