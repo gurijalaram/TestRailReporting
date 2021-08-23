@@ -73,7 +73,6 @@ public class PartNestingTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
