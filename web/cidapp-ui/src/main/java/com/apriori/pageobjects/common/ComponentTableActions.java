@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.common;
 
+import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -100,11 +101,34 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     /**
      * Open filters page
      *
+     * @param element - the filter button
      * @return new page object
      */
     public FilterPage filter(WebElement element) {
         pageUtils.waitForElementAndClick(element);
         return new FilterPage(driver);
+    }
+
+    /**
+     * Opens the preview panel
+     *
+     * @param element - the preview button
+     * @return new page object
+     */
+    public PreviewPage openPreviewPanel(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
+        return new PreviewPage(driver);
+    }
+
+    /**
+     * Close the preview panel
+     *
+     * @param element - the preview button
+     * @return new page object
+     */
+    public ComponentTableActions closePreviewPanel(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
+        return this;
     }
 
     /**
