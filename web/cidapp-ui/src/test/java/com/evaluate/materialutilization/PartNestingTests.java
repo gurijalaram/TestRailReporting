@@ -5,9 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
-import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
-import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
-
 import com.apriori.pageobjects.pages.evaluate.materialprocess.PartNestingPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -129,7 +126,7 @@ public class PartNestingTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-		
+
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
