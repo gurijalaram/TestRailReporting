@@ -95,6 +95,16 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Selects all scenarios on the page
+     *
+     * @return current page object
+     */
+    public ExplorePage selectAllScenarios() {
+        scenarioTableController.selectAllScenarios();
+        return this;
+    }
+
+    /**
      * Opens the scenario
      *
      * @param componentName - name of the part

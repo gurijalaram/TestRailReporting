@@ -34,6 +34,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".apriori-table .table-head")
     private WebElement tableHeaders;
 
+    @FindBy(css = ".table-head .checkbox-icon")
+    private WebElement selectAllCheckBox;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -54,6 +57,16 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(componentTable);
         pageUtils.invisibilityOfElements(componentTableSpinner);
+    }
+
+    /**
+     * Selects all scenarios on the page
+     *
+     * @return current page object
+     */
+    public ScenarioTableController selectAllScenarios() {
+        pageUtils.waitForElementAndClick(selectAllCheckBox);
+        return this;
     }
 
     /**
