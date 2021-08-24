@@ -25,7 +25,6 @@ import java.io.File;
 
 public class PartNestingTests extends TestBase {
 
-    private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private MaterialProcessPage materialProcessPage;
     private PartNestingPage partNestingPage;
@@ -47,8 +46,8 @@ public class PartNestingTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-        partNestingPage = loginPage.login(currentUser)
+        partNestingPage = new CidAppLoginPage(driver)
+            .login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -71,8 +70,8 @@ public class PartNestingTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = new CidAppLoginPage(driver)
+            .login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -99,9 +98,8 @@ public class PartNestingTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = new CidAppLoginPage(driver)
+            .login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -124,9 +122,8 @@ public class PartNestingTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-
-        evaluatePage = loginPage.login(currentUser)
+        evaluatePage = new CidAppLoginPage(driver)
+            .login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -153,9 +150,8 @@ public class PartNestingTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-
-        materialProcessPage = loginPage.login(currentUser)
+        materialProcessPage = new CidAppLoginPage(driver)
+            .login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.STOCK_MACHINING)
             .costScenario()
