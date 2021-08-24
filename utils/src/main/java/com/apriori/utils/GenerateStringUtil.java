@@ -150,4 +150,13 @@ public class GenerateStringUtil {
     public String getRandomString() {
         return RandomStringUtils.randomAlphanumeric(12);
     }
+
+    /**
+     * Generates a 12 character numeric string
+     *
+     * @return String
+     */
+    public String getRandomNumbers() {
+        return RandomStringUtils.randomNumeric(8);
+    }
 }
