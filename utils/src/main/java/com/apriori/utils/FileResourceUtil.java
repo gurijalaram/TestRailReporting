@@ -2,15 +2,15 @@ package com.apriori.utils;
 
 import com.apriori.utils.enums.ProcessGroupEnum;
 
-import com.amazonaws.regions.Regions;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.iterable.S3Objects;
-import com.amazonaws.services.s3.model.GetObjectRequest;
-import com.amazonaws.services.s3.model.S3Object;
-import com.amazonaws.services.s3.model.S3ObjectSummary;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.GetObjectRequest;
+import software.amazon.awssdk.services.s3.model.GetObjectResponse;
+import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
+import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -26,7 +26,7 @@ public class FileResourceUtil {
     private static final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
     private static final int TEMP_DIR_ATTEMPTS = 50;
     private static final String S3_BUCKET_NAME = "qa-test-parts";
-    private static final Regions S3_REGION_NAME = Regions.US_EAST_1;
+    private static final Region S3_REGION_NAME = Region.US_EAST_1;
 
     /**
      * Get resource file stream from a jar file. {getResource}
@@ -87,11 +87,21 @@ public class FileResourceUtil {
      */
     public static List<String> getCloudFileList() {
         List<String> cloudFileList = new ArrayList<>();
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(S3_REGION_NAME).build();
 
-        S3Objects.inBucket(s3Client, S3_BUCKET_NAME).forEach((S3ObjectSummary s3ObjectSummary) -> {
-            cloudFileList.add(s3ObjectSummary.getKey());
-        });
+        S3Client s3Client = S3Client.builder()
+            .region(S3_REGION_NAME)
+            .build();
+
+        ListObjectsRequest listObjects = ListObjectsRequest
+            .builder()
+            .bucket(S3_BUCKET_NAME)
+            .build();
+
+        List<S3Object> objects = s3Client.listObjects(listObjects).contents();
+
+        objects.forEach(s3Object ->
+            cloudFileList.add(s3Object.key())
+        );
 
         return cloudFileList;
     }
@@ -100,10 +110,18 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
-        AmazonS3 s3Client = AmazonS3ClientBuilder.standard().withRegion(S3_REGION_NAME).build();
-        S3Object object = s3Client.getObject(new GetObjectRequest(S3_BUCKET_NAME, cloudFilePath));
+        S3Client s3Client = S3Client.builder()
+            .region(S3_REGION_NAME)
+            .build();
 
-        return copyIntoTempFile(object.getObjectContent(), localTempFolderPath, fileName);
+        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+            .bucket(S3_BUCKET_NAME)
+            .key(cloudFilePath)
+            .build();
+
+        ResponseInputStream<GetObjectResponse> object = s3Client.getObject(getObjectRequest);
+
+        return copyIntoTempFile(object, localTempFolderPath, fileName);
     }
 
     /**
