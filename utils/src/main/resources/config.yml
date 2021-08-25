@@ -75,6 +75,7 @@ qa-21-1:
 
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
+  name: qa-cid-perf
   secret_key: 502M4JBUCE36
   ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
   user_identity: 1F7GAI5DLI2B
@@ -91,6 +92,9 @@ qa-cid-perf:
     auth_targetCloudContext: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+
+  admin:
+    ui_url: ${qa-cid-perf.base_url}apriori/login
 
   cds:
     api_url: https://cds.na-1.qa-cid-perf.apriori.net/
@@ -110,6 +114,9 @@ qa-cid-perf:
 
   vds:
     api_url: https://vds.na-1.qa-cid-perf.apriori.net/
+
+  reports:
+    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/

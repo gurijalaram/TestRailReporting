@@ -52,7 +52,6 @@ import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-import com.apriori.utils.properties.PropertiesContext;
 
 import com.apriori.utils.users.UserUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -68,7 +67,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class FileUploadResources {
@@ -299,6 +297,7 @@ public class FileUploadResources {
                         FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
                 .formParams(new FormParams().use("filename", fileName));
 
+        assertThat(HTTP2Request.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
         return (FileResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
     }
 
@@ -381,14 +380,15 @@ public class FileUploadResources {
                             inputs))
                 );
 
+        String bodyToReturn;
         try {
-            HTTP2Request.build(requestEntity).post();
+            bodyToReturn = HTTP2Request.build(requestEntity).post().getBody();
         } catch (Exception e) {
             do {
-                HTTP2Request.build(requestEntity).post();
+                bodyToReturn = HTTP2Request.build(requestEntity).post().getBody();
             } while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500);
         }
-        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+        return jsonNode(bodyToReturn, "id");
     }
 
     /**
