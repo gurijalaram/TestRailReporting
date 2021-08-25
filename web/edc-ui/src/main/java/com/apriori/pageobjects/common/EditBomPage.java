@@ -8,9 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class EditBomPage {
+public class EditBomPage extends LoadableComponent<EditBomPage> {
 
     @FindBy(css = ".modal-footer .disabled")
     private WebElement disabledSaveButton;
@@ -24,6 +25,9 @@ public class EditBomPage {
     @FindBy(css = ".modal-footer .btn-outline-primary")
     private WebElement saveButton;
 
+    @FindBy(css = ".modal-title .bill-of-materials-type")
+    private WebElement pcbaLogo;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -34,22 +38,54 @@ public class EditBomPage {
         PageFactory.initElements(driver, this);
     }
 
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(pcbaLogo);
+    }
+
+    /**
+     * Check if the save button is enabled
+     *
+     * @return boolean
+     */
     public boolean isSaveButtonEnabled() {
         return pageUtils.waitForElementToAppear(disabledSaveButton).isEnabled();
     }
 
+    /**
+     * Enter the Mount Type
+     *
+     * @param testMountTypeData
+     * @return current page object
+     */
     public EditBomPage enterMountType(String testMountTypeData) {
         mountTypeInput.clear();
         mountTypeInput.sendKeys(testMountTypeData);
         return this;
     }
 
+    /**
+     * Enter the Pin Count
+     *
+     * @param testPinCountData
+     * @return current page object
+     */
     public EditBomPage enterPinCount(String testPinCountData) {
         pinCountInput.clear();
         pinCountInput.sendKeys(testPinCountData);
         return this;
     }
 
+    /**
+     * Click on the Save button
+     *
+     * @return new page object
+     */
     public BillOfMaterialsPage clickSave() {
         pageUtils.waitForElementAndClick(saveButton);
         return new BillOfMaterialsPage(driver);

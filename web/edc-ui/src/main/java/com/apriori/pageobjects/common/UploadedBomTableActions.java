@@ -8,18 +8,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class UploadedBomTableActions {
-
-    @FindBy(id = "clear-button")
-    private WebElement clearSelectionButton;
-
-    @FindBy(id = "edit-button")
-    private  WebElement editButton;
-
-    @FindBy(id = "select-button")
-    private WebElement selectPartButton;
+public class UploadedBomTableActions extends LoadableComponent<UploadedBomTableActions> {
 
     @FindBy(id = "add-button")
     private WebElement addPartButton;
@@ -27,44 +19,63 @@ public class UploadedBomTableActions {
     private PageUtils pageUtils;
     private WebDriver driver;
 
-    public UploadedBomTableActions (WebDriver driver) {
+    public UploadedBomTableActions(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
-    /**
-     * Clear part selection
-     *
-     * @return new page object
-     */
-    public UploadedFilePage clearPartSelection () {
-        pageUtils.waitForElementAndClick(clearSelectionButton);
-        return new UploadedFilePage(driver);
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(addPartButton);
     }
 
     /**
-     * Edit the selected BOM
+     * Clear part selection
      *
+     *  @param element - clear selection button
      * @return new page object
      */
-    public EditBomPage editSelectedBom () {
-        pageUtils.waitForElementAndClick(editButton);
-        return new EditBomPage(driver);
+    public UploadedFilePage clearPartSelection(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
+        return new UploadedFilePage(driver);
     }
 
     /**
      * Selects part for export
      *
+     *  @param element - select part button
      * @return new page object
      */
-    public void selectPartForExport () {
-        pageUtils.waitForElementAndClick(selectPartButton);
+    public void selectPartForExport(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
     }
 
-    public AddCustomPartPage addCustomPart () {
-        pageUtils.waitForElementAndClick(addPartButton);
+    /**
+     * Add a Custom part
+     *
+     * @param element - the add button
+     * @return
+     */
+    public AddCustomPartPage addCustomPart(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
         return new AddCustomPartPage(driver);
+    }
+
+    /**
+     * Edit the selected BOM
+     *
+     *  @param element - the edit button
+     * @return new page object
+     */
+    public EditBomPage editSelectedBom(WebElement element) {
+        pageUtils.waitForElementAndClick(element);
+        return new EditBomPage(driver);
     }
 }

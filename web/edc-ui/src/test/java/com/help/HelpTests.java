@@ -18,6 +18,10 @@ public class HelpTests extends TestBase {
     private EdcAppLoginPage loginPage;
     private AboutUsPage aboutUsPage;
 
+    public HelpTests() {
+        super();
+    }
+
     @Test
     @TestRail(testCaseId = {"8941"})
     @Description("Be able to access help information in the application header")

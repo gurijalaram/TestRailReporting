@@ -16,6 +16,10 @@ public class LogoutTests extends TestBase {
     private EdcAppLoginPage loginPage;
     private EdcAppLoginPage edcPage;
 
+    public LogoutTests() {
+        super();
+    }
+
     @Test
     @TestRail(testCaseId = {"8922"})
     @Description("Test Logout successfully")

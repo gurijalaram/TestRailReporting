@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.common.UploadedBomTableActions;
 import com.apriori.utils.PageUtils;
 
@@ -8,26 +9,59 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class BillOfMaterialsPage extends UploadedBomTableActions {
+public class BillOfMaterialsPage extends LoadableComponent<BillOfMaterialsPage> {
 
     @FindBy(css = ".part-card")
     private WebElement fileMatch;
 
+    @FindBy(id = "edit-button")
+    private  WebElement editButton;
+
+    @FindBy(css = "[data-icon='plus']")
+    private WebElement addButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
+    private UploadedBomTableActions uploadedBomTableActions;
+
     public BillOfMaterialsPage(WebDriver driver) {
-        super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.uploadedBomTableActions = new UploadedBomTableActions(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(addButton);
+    }
+
+    /**
+     * Highlight the selected file
+     *
+     * @return current page object
+     */
     public BillOfMaterialsPage highlightItem() {
         pageUtils.waitForElementAndClick(fileMatch);
         return this;
+    }
+
+    /**
+     * Edit the selected BOM
+     *
+     * @return new page object
+     */
+    public EditBomPage editSelectedBom() {
+        return uploadedBomTableActions.editSelectedBom(editButton);
     }
 }

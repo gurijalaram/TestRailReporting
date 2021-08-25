@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.navtoolbars.help.HelpPage;
 import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
 
+import com.apriori.pageobjects.pages.login.FileUploadPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -64,8 +65,14 @@ public class NavigationBar extends LoadableComponent<NavigationBar> {
         return new MyUserPage(driver);
     }
 
-    public void clickGoBack() {
+    /**
+     * Click go back button <
+     *
+     * @return new page object
+     */
+    public FileUploadPage clickGoBack() {
         pageUtils.waitForElementAndClick(goBackButton);
+        return new FileUploadPage(driver);
     }
 }
 

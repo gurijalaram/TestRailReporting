@@ -7,6 +7,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -14,13 +15,16 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class FileUploadPage {
+public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
 
     @FindBy(css = ".input-group-prepend .action-button")
     private WebElement uploadPcbaButton;
+
+    @FindBy(css = ".bill-of-materials-upload")
+    private WebElement uploadSection;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -30,6 +34,16 @@ public class FileUploadPage {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(uploadSection);
     }
 
     /**

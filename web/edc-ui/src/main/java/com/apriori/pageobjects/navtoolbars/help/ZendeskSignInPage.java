@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.login;
+package com.apriori.pageobjects.navtoolbars.help;
 
 import com.apriori.utils.PageUtils;
 
@@ -10,18 +10,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
+public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
 
-    @FindBy(css = "[data-icon='exclamation-circle']")
-    private WebElement fileOne;
+    @FindBy(css = "input[name='email']")
+    private WebElement email;
 
-    @FindBy(id = "filter-button")
-    private WebElement filterButton;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-
-    public UploadedFilePage(WebDriver driver) {
+    public ZendeskSignInPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -35,16 +32,16 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(filterButton);
+        pageUtils.waitForElementToAppear(email);
     }
 
     /**
-     * Click on the Matched part
+     * Switches from parent to child tab
      *
-     * @return new page object
+     * @return page object
      */
-    public BillOfMaterialsPage selectMatchedPart() {
-        pageUtils.waitForElementAndClick(fileOne);
-        return new BillOfMaterialsPage(driver);
+    public ZendeskSignInPage switchTab() {
+        pageUtils.windowHandler(1);
+        return new ZendeskSignInPage(driver);
     }
 }
