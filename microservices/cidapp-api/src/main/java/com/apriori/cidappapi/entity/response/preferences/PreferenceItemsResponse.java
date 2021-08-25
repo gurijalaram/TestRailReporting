@@ -21,4 +21,5 @@ import java.util.List;
 @NoArgsConstructor
 public class PreferenceItemsResponse extends Pagination {
     List<PreferenceResponse> items;
+    private Boolean isRestrictedByAccessControl;
 }
