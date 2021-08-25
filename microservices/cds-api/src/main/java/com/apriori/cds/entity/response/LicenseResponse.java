@@ -27,6 +27,9 @@ public class LicenseResponse {
     private List<LicensedModule> licensedModules = null;
     private String customerIdentity;
     private String siteIdentity;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
 
     public LicenseResponse getResponse() {
         return response;

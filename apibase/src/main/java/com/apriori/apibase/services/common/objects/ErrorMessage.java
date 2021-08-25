@@ -9,7 +9,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 
 import java.time.LocalDate;
 
-@Schema(location = "common/ErrorMessageSchema.json")
+@Schema(location = "ErrorMessageSchema.json")
 public class ErrorMessage {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)

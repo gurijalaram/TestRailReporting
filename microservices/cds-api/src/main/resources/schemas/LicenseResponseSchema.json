@@ -17,9 +17,11 @@
         "apVersion",
         "description",
         "subLicenses",
-        "licensedModules",
-        "customerIdentity",
-        "siteIdentity"
+        "licensedModules"
+      ],
+      "optional": [
+      "customerIdentity",
+      "siteIdentity"
       ],
       "properties": {
         "identity": {
