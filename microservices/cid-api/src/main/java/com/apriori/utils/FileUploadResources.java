@@ -380,13 +380,15 @@ public class FileUploadResources {
                             inputs))
                 );
 
-        String bodyToReturn;
+        String bodyToReturn = "";
         try {
             bodyToReturn = HTTP2Request.build(requestEntity).post().getBody();
         } catch (Exception e) {
-            do {
+            int counter = 0;
+            while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500 && bodyToReturn.isEmpty() && counter < 2) {
                 bodyToReturn = HTTP2Request.build(requestEntity).post().getBody();
-            } while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500);
+                counter++;
+            }
         }
         return jsonNode(bodyToReturn, "id");
     }
