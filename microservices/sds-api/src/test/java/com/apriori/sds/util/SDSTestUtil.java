@@ -122,8 +122,10 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return responsewrapper
      */
     protected static Item postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
+        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
+
         final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(componentName)
-            .componentName(componentName)
+            .componentName(uniqueComponentName)
             .scenarioName(scenarioName)
             .override(false)
             .fileContents(EncodedFileUtil.encodeFileFromCloudToBase64Binary(componentName, processGroup))
