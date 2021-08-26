@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.pageobjects.common.SearchAndCostStatusPage;
+import com.apriori.pageobjects.common.UploadedBomTableActions;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,10 +22,12 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private UploadedBomTableActions uploadedBomTableActions;
 
     public UploadedFilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.uploadedBomTableActions = new UploadedBomTableActions(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -46,5 +50,14 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
     public MatchedPartPage selectMatchedPart() {
         pageUtils.waitForElementAndClick(fileOne);
         return new MatchedPartPage(driver);
+    }
+
+    /**
+     * Click the filter button
+     *
+     * @return new page object
+     */
+    public SearchAndCostStatusPage filter() {
+        return uploadedBomTableActions.filterDropdown(filterButton);
     }
 }
