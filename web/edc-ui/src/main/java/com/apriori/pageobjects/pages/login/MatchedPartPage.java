@@ -12,7 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class BillOfMaterialsPage extends LoadableComponent<BillOfMaterialsPage> {
+public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
 
     @FindBy(css = ".part-card")
     private WebElement fileMatch;
@@ -28,7 +28,7 @@ public class BillOfMaterialsPage extends LoadableComponent<BillOfMaterialsPage> 
 
     private UploadedBomTableActions uploadedBomTableActions;
 
-    public BillOfMaterialsPage(WebDriver driver) {
+    public MatchedPartPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.uploadedBomTableActions = new UploadedBomTableActions(driver);
@@ -51,7 +51,7 @@ public class BillOfMaterialsPage extends LoadableComponent<BillOfMaterialsPage> 
      *
      * @return current page object
      */
-    public BillOfMaterialsPage highlightItem() {
+    public MatchedPartPage highlightItem() {
         pageUtils.waitForElementAndClick(fileMatch);
         return this;
     }

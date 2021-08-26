@@ -17,9 +17,6 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
     @FindBy(css = "[id='qa-uploaded-bill-of-materials'] .title-left")
     private WebElement uploadedBillOfMaterials;
 
-    @FindBy(id = "qa-drag-drop")
-    private WebElement clickToSelect;
-
     private PageUtils pageUtils;
     private WebDriver driver;
 

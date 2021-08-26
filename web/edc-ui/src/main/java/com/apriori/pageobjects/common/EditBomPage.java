@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.pageobjects.pages.login.BillOfMaterialsPage;
+import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -86,8 +86,8 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
      *
      * @return new page object
      */
-    public BillOfMaterialsPage clickSave() {
+    public MatchedPartPage clickSave() {
         pageUtils.waitForElementAndClick(saveButton);
-        return new BillOfMaterialsPage(driver);
+        return new MatchedPartPage(driver);
     }
 }

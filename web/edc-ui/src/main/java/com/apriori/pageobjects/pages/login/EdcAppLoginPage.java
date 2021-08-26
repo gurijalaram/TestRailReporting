@@ -28,7 +28,6 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
     @FindBy(css = "div.auth0-global-message.auth0-global-message-error span")
     private WebElement loginErrorMsg;
 
-
     private WebDriver driver;
     private PageUtils pageUtils;
 

@@ -43,8 +43,8 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      *
      * @return new page object
      */
-    public BillOfMaterialsPage selectMatchedPart() {
+    public MatchedPartPage selectMatchedPart() {
         pageUtils.waitForElementAndClick(fileOne);
-        return new BillOfMaterialsPage(driver);
+        return new MatchedPartPage(driver);
     }
 }

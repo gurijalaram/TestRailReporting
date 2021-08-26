@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.common.EditBomPage;
-import com.apriori.pageobjects.pages.login.BillOfMaterialsPage;
+import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -22,7 +22,7 @@ public class UploadTests extends TestBase {
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private EditBomPage editBomPage;
-    private BillOfMaterialsPage billOfMaterialsPage;
+    private MatchedPartPage matchedPartPage;
 
     public UploadTests() {
         super();
@@ -35,7 +35,7 @@ public class UploadTests extends TestBase {
     @Description("Basic workflow to upload a csv file, edit missing sections and save")
     public void testUploadBOM() {
 
-        String fileName = "Test BOM 5_v1.0.csv";
+        String fileName = "Test BOM 5 (1).csv";
         String testMountTypeData = generateStringUtil.getRandomString();
         String testPinCountData = generateStringUtil.getRandomNumbers();
 
@@ -51,7 +51,7 @@ public class UploadTests extends TestBase {
 
         assertThat(editBomPage.isSaveButtonEnabled(), not(true));
 
-        billOfMaterialsPage = editBomPage.enterMountType(testMountTypeData)
+        matchedPartPage = editBomPage.enterMountType(testMountTypeData)
             .enterPinCount(testPinCountData)
             .clickSave();
     }
