@@ -1,5 +1,7 @@
 package com.upload.pcba;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -54,5 +56,7 @@ public class UploadTests extends TestBase {
         matchedPartPage = editBomPage.enterMountType(testMountTypeData)
             .enterPinCount(testPinCountData)
             .clickSave();
+
+        assertThat(matchedPartPage.getPinCountHeader(), is(equalTo("Pin Count")));
     }
 }
