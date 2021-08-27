@@ -124,7 +124,7 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static Item postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
         final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
 
-        final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(componentName)
+        final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(uniqueComponentName)
             .componentName(uniqueComponentName)
             .scenarioName(scenarioName)
             .override(false)
@@ -142,10 +142,12 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return responsewrapper
      */
     protected static Item postRollUp(String componentName, String scenarioName) {
+        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
+
         final PostComponentRequest postComponentRequest = PostComponentRequest.builder()
             .scenarioName(scenarioName)
             .override(false)
-            .componentName(componentName)
+            .componentName(uniqueComponentName)
             .componentType("ROLLUP")
             .build();
 
