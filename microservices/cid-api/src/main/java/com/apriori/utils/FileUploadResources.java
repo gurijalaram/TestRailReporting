@@ -111,7 +111,33 @@ public class FileUploadResources {
                         .scenarioName(scenarioName)
                         .fileKey(fileResponse.getIdentity())
                         .fileName(fileResponse.getFilename())
-                        .build());
+                        .build()
+        );
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(fileUploadWorkorderId),
+                FileUploadOutputs.class
+        );
+    }
+
+    /**
+     * Upload part
+     *
+     * @param fileResponse response from file upload initialise
+     * @param scenarioName scenario name to use
+     * @return FileUploadOutputs
+     */
+    public FileUploadOutputs uploadPartSuppress500(FileResponse fileResponse, String scenarioName) {
+        String fileUploadWorkorderId = createWorkorderSuppress500(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+                FileUploadInputs.builder()
+                        .keepFreeBodies(false)
+                        .freeBodiesPreserveCad(false)
+                        .freeBodiesIgnoreMissingComponents(true)
+                        .scenarioName(scenarioName)
+                        .fileKey(fileResponse.getIdentity())
+                        .fileName(fileResponse.getFilename())
+                        .build()
+        );
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
@@ -378,6 +404,28 @@ public class FileUploadResources {
                     .setCommand(new WorkorderCommand(
                             commandType,
                             inputs))
+                );
+
+        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+    }
+
+    /**
+     * Creates workorder, suppress 500
+     *
+     * @param commandType String
+     * @param inputs Object
+     * @return String
+     */
+    private String createWorkorderSuppress500(String commandType, Object inputs) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
+                .headers(token)
+                .body(new WorkorderRequest()
+                        .setCommand(new WorkorderCommand(
+                                commandType,
+                                inputs))
                 );
 
         String bodyToReturn = "";
