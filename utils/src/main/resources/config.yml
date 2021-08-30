@@ -29,6 +29,19 @@ int-core:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
+  cds:
+    api_url: https://cds.na-1.int.apriori.net/
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity:
+    appro_application_identity:
+    apriori_production_deployment_identity:
+    cia_application_identity:
+    automation_user_identity01:
+    automation_user_identity02:
+    automation_user_identity03:
+    apriori_internal_customer_Identity:
+    identity_role:
+
   sds:
     api_url: https://sds.core.int.apriori.net/
 
@@ -94,6 +107,16 @@ qa-cid-perf:
 
   cds:
     api_url: https://cds.na-1.qa-cid-perf.apriori.net/
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity:
+    appro_application_identity:
+    apriori_production_deployment_identity:
+    cia_application_identity:
+    automation_user_identity01:
+    automation_user_identity02:
+    automation_user_identity03:
+    apriori_internal_customer_Identity:
+    identity_role:
 
   cidapp:
     api_url: https://cid-api.na-1.qa-cid-perf.apriori.net/
@@ -141,6 +164,19 @@ qa-cig-perf:
   fms:
     api_url: https://fms.na-1.qa-cig-perf.apriori.net/
 
+  cds:
+    api_url: https://cds.na-1.qa-cig-perf.apriori.net/
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity:
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity: 1J8M416FBJ94
+    automation_user_identity01: 9672B7HEL78L
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    apriori_internal_customer_Identity: C339C55A8155
+    identity_role: 67J517C9L762
+
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
@@ -156,6 +192,19 @@ qa-20-1:
       auth_targetCloudContext: L2H992828N8ML2H992828N8N5HK8H97M75I41J8M416FBJD2
       automation_username: qa-automation-%s@apriori.com
       automation_password: TrumpetSnakeFridgeToasty18!%
+
+    cds:
+      api_url: https://cds.na-1.qa-20-1.apriori.net/
+      apriori_core_services_installation_identity:
+      apriori_cloud_home_identity:
+      appro_application_identity:
+      apriori_production_deployment_identity:
+      cia_application_identity:
+      automation_user_identity01:
+      automation_user_identity02:
+      automation_user_identity03:
+      apriori_internal_customer_Identity:
+      identity_role:
 
     cas:
       api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
