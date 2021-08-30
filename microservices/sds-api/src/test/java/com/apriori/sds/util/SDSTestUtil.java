@@ -122,8 +122,10 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return responsewrapper
      */
     protected static Item postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
-        final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(componentName)
-            .componentName(componentName)
+        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
+
+        final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(uniqueComponentName)
+            .componentName(uniqueComponentName)
             .scenarioName(scenarioName)
             .override(false)
             .fileContents(EncodedFileUtil.encodeFileFromCloudToBase64Binary(componentName, processGroup))
@@ -140,10 +142,12 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return responsewrapper
      */
     protected static Item postRollUp(String componentName, String scenarioName) {
+        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
+
         final PostComponentRequest postComponentRequest = PostComponentRequest.builder()
             .scenarioName(scenarioName)
             .override(false)
-            .componentName(componentName)
+            .componentName(uniqueComponentName)
             .componentType("ROLLUP")
             .build();
 
