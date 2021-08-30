@@ -417,7 +417,7 @@ public class FileUploadResources {
 
         String fileUploadWorkorderId = "";
         final RequestEntity requestEntity;
-        if (!ignore500Error) {
+        if (ignore500Error) {
             requestEntity = RequestEntityUtil
                     .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
                     .headers(token)
