@@ -54,6 +54,7 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import com.apriori.utils.users.UserUtil;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -96,14 +97,14 @@ public class FileUploadResources {
     }
 
     /**
-     * Upload part
+     * Upload part, suppress 500 error (retry file upload three times)
      *
      * @param fileResponse response from file upload initialise
      * @param scenarioName scenario name to use
-     * @return FileUploadOutputs
+     * @return FileUploadOutputs instance
      */
-    public FileUploadOutputs uploadPart(FileResponse fileResponse, String scenarioName) {
-        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+    public FileUploadOutputs uploadPartSuppress500(FileResponse fileResponse, String scenarioName) {
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
                 FileUploadInputs.builder()
                         .keepFreeBodies(false)
                         .freeBodiesPreserveCad(false)
@@ -111,7 +112,8 @@ public class FileUploadResources {
                         .scenarioName(scenarioName)
                         .fileKey(fileResponse.getIdentity())
                         .fileName(fileResponse.getFilename())
-                        .build()
+                        .build(),
+                true
         );
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
@@ -121,14 +123,14 @@ public class FileUploadResources {
     }
 
     /**
-     * Upload part
+     * Upload part, expose 500 error (only one file upload attempt)
      *
      * @param fileResponse response from file upload initialise
      * @param scenarioName scenario name to use
-     * @return FileUploadOutputs
+     * @return FileUploadOutputs instance
      */
-    public FileUploadOutputs uploadPartSuppress500(FileResponse fileResponse, String scenarioName) {
-        String fileUploadWorkorderId = createWorkorderSuppress500(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+    public FileUploadOutputs createFileUploadWorkorderExposeError(FileResponse fileResponse, String scenarioName) {
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
                 FileUploadInputs.builder()
                         .keepFreeBodies(false)
                         .freeBodiesPreserveCad(false)
@@ -136,13 +138,25 @@ public class FileUploadResources {
                         .scenarioName(scenarioName)
                         .fileKey(fileResponse.getIdentity())
                         .fileName(fileResponse.getFilename())
-                        .build()
+                        .build(),
+                false
         );
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
                 FileUploadOutputs.class
         );
+
+        /*String fileUploadWorkorderId = createWorkorder(
+                WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+                inputs,
+                false
+        );
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(fileUploadWorkorderId),
+                FileUploadOutputs.class
+        );*/
     }
 
     /**
@@ -152,7 +166,7 @@ public class FileUploadResources {
      * @return LoadCadMetadataOutputs - outputs to use in next call
      */
     public LoadCadMetadataOutputs loadCadMetadata(FileResponse fileResponse) {
-        String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
+        String loadCadMetadataWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
                 LoadCadMetadataInputs.builder()
                         .keepFreeBodies(false)
                         .freeBodiesPreserveCad(false)
@@ -160,7 +174,8 @@ public class FileUploadResources {
                         .fileMetadataIdentity(fileResponse.getIdentity())
                         .requestedBy(fileResponse.getUserIdentity())
                         .fileName(fileResponse.getFilename())
-                        .build()
+                        .build(),
+                true
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
@@ -178,12 +193,13 @@ public class FileUploadResources {
      */
     public GeneratePartImagesOutputs generatePartImages(FileResponse fileResponse,
                                                         LoadCadMetadataOutputs loadCadMetadataOutputs) {
-        String generatePartImagesWorkorderId = createWorkorder(
+        String generatePartImagesWorkorderId = createFileUploadWorkorder(
                 WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
                 GeneratePartImagesInputs.builder()
                         .cadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                         .requestedBy(fileResponse.getUserIdentity())
-                        .build()
+                        .build(),
+                true
         );
         submitWorkorder(generatePartImagesWorkorderId);
 
@@ -220,7 +236,7 @@ public class FileUploadResources {
             );
         }
 
-        String generateAssemblyImagesWorkorderId = createWorkorder(
+        String generateAssemblyImagesWorkorderId = createFileUploadWorkorder(
                 WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
                 GenerateAssemblyImagesInputs.builder()
                         .componentIdentity(generateStringUtil.getRandomString())
@@ -228,7 +244,8 @@ public class FileUploadResources {
                         .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
                         .subComponents(subComponentsList)
                         .requestedBy(fileResponse.getUserIdentity())
-                        .build()
+                        .build(),
+                true
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
@@ -388,35 +405,53 @@ public class FileUploadResources {
     }
 
     /**
-     * Creates workorder
+     * Creates file upload workorder (with ignore HTTP 500 error capability)
      *
      * @param commandType String
      * @param inputs Object
-     * @return String
+     * @param ignore500Error Boolean
+     * @return String file upload workorder id
      */
-    private String createWorkorder(String commandType, Object inputs) {
+    private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
         token.put(contentType, applicationJson);
 
-        final RequestEntity requestEntity = RequestEntityUtil
-                .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
-                .headers(token)
-                .body(new WorkorderRequest()
-                    .setCommand(new WorkorderCommand(
-                            commandType,
-                            inputs))
-                );
-
-        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+        String fileUploadWorkorderId = "";
+        final RequestEntity requestEntity;
+        if (!ignore500Error) {
+            requestEntity = RequestEntityUtil
+                    .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
+                    .headers(token)
+                    .body(new WorkorderRequest()
+                            .setCommand(new WorkorderCommand(
+                                    commandType,
+                                    inputs))
+                    );
+            fileUploadWorkorderId = jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+        } else {
+            requestEntity = RequestEntityUtil
+                    .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
+                    .headers(token)
+                    .body(new WorkorderRequest()
+                            .setCommand(new WorkorderCommand(
+                                    commandType,
+                                    inputs))
+                    );
+            int counter = 0;
+            while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
+                counter++;
+            }
+        }
+        return fileUploadWorkorderId;
     }
 
     /**
-     * Creates workorder, suppress 500
+     * Creates workorder (without ignore HTTP 500 error capability)
      *
      * @param commandType String
      * @param inputs Object
-     * @return String
+     * @return String file upload workorder id
      */
-    private String createWorkorderSuppress500(String commandType, Object inputs) {
+    public String createWorkorder(String commandType, Object inputs) {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil
@@ -428,17 +463,7 @@ public class FileUploadResources {
                                 inputs))
                 );
 
-        String bodyToReturn = "";
-        try {
-            bodyToReturn = HTTP2Request.build(requestEntity).post().getBody();
-        } catch (Exception e) {
-            int counter = 0;
-            while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500 && bodyToReturn.isEmpty() && counter < 2) {
-                bodyToReturn = HTTP2Request.build(requestEntity).post().getBody();
-                counter++;
-            }
-        }
-        return jsonNode(bodyToReturn, "id");
+        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
     }
 
     /**
