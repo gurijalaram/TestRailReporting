@@ -1,6 +1,7 @@
 package com.apriori.cds.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -15,6 +16,8 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.stream.Collectors;
 
 public class CdsRolesTests {
     private String url;
@@ -35,8 +38,7 @@ public class CdsRolesTests {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(2));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getName(), is("USER"));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(1).getName(), is("ADMIN"));
+        assertThat(response.getResponseEntity().getResponse().getItems().stream().map(Role::getName).collect(Collectors.toList()), hasItems("USER", "ADMIN"));
     }
 
     @Test
@@ -53,6 +55,6 @@ public class CdsRolesTests {
         ResponseWrapper<Role> response = cdsTestUtil.getCommonRequest(identityUrl, Role.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getName(), is("USER"));
+        assertThat(response.getResponseEntity().getResponse().getName(), is("ADMIN"));
     }
 }
