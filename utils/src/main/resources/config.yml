@@ -148,6 +148,9 @@ qa-cid-perf:
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
 
+  bcs:
+    api_url: https://bcs.na-1.qa-21-1.apriori.net/
+
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
   user_identity: C339C55A8155

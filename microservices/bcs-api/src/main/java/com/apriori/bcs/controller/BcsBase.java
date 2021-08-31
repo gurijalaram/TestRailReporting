@@ -1,12 +1,13 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.bcs.utils.Constants;
+import com.apriori.utils.properties.PropertiesContext;
 
 public class BcsBase {
     private static String baseUrl;
 
     static {
-        baseUrl = Constants.getCisServiceHost() + "/customers";
+        baseUrl = PropertiesContext.get("${env}.bcs.api_url") + "customers";
     }
 
     /**
@@ -37,7 +38,7 @@ public class BcsBase {
      */
     public static String getReportTypesUrl() {
         StringBuilder url;
-        url = new StringBuilder("https://" + Constants.getCisServiceHost().concat("/report-types")).append("%s?key=")
+        url = new StringBuilder("https://" + PropertiesContext.get("${env}.bcs.api_url").concat("report-types")).append("%s?key=")
                 .append(Constants.getSecretKey());
         return url.toString();
     }
