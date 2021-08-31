@@ -29,6 +29,18 @@ int-core:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
+  cds:
+    api_url: https://cds.na-1.int.apriori.net/
+    apriori_core_services_installation_identity: 70EGN68B5CMH
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: H337GKD0LA0N
+    cia_application_identity:
+    automation_user_identity01: ${int-core.user_identity}
+    automation_user_identity02:
+    automation_user_identity03:
+    identity_role: H337GKD0L80E
+
   sds:
     api_url: https://sds.core.int.apriori.net/
 
@@ -59,6 +71,18 @@ qa-21-1:
     auth_targetCloudContext: 67J517C9L96A67J517C9L96B6NC0K8DHKJJD1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+
+  cds:
+    api_url: https://cds.na-1.qa-21-1.apriori.net/
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity:
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity01: 9672B7HEL78L
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
 
   sds:
     api_url: https://sds.na-1.qa-21-1.apriori.net/
@@ -94,6 +118,16 @@ qa-cid-perf:
 
   cds:
     api_url: https://cds.na-1.qa-cid-perf.apriori.net/
+    apriori_core_services_installation_identity: 8E9MK02F4H9F
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: CNLKB29B4GN8
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity01: ${qa-cid-perf.user_identity}
+    automation_user_identity02: 1F4GF3E20D38
+    automation_user_identity03: 1F4HJ2A9GM9C
+    apriori_internal_customer_identity:
+    identity_role: 67J517C9L763
 
   cidapp:
     api_url: https://cid-api.na-1.qa-cid-perf.apriori.net/
@@ -141,6 +175,18 @@ qa-cig-perf:
   fms:
     api_url: https://fms.na-1.qa-cig-perf.apriori.net/
 
+  cds:
+    api_url: https://cds.na-1.qa-cig-perf.apriori.net/
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity:
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity: 1J8M416FBJ94
+    automation_user_identity01: 9672B7HEL78L
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
+
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
@@ -157,11 +203,84 @@ qa-20-1:
       automation_username: qa-automation-%s@apriori.com
       automation_password: TrumpetSnakeFridgeToasty18!%
 
+    cds:
+      api_url: https://cds.na-1.qa-20-1.apriori.net/
+      apriori_core_services_installation_identity:
+      apriori_cloud_home_identity:
+      appro_application_identity:
+      apriori_production_deployment_identity:
+      cia_application_identity:
+      automation_user_identity01: ${qa-20-1.user_identity}
+      automation_user_identity02:
+      automation_user_identity03:
+      apriori_internal_customer_identity:
+      identity_role:
+
     cas:
       api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
 
     fms:
       api_url: https://fms.na-1.qa-20-1.apriori.net/
+
+
+######################################################## QA-BLUE ########################################################
+qa-blue:
+  secret_key: 65J1ID2B6LDG
+  ap_user_context:
+  user_identity: 61BM75C53GA0
+  customer_identity: L2H992828N8M
+  base_url:
+
+  cds:
+    api_url: https://cds.core.qa.apriori.net/
+    apriori_core_services_installation_identity: 5HJ9CB8JA831
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: L2H992828N8N
+    cia_application_identity:
+    automation_user_identity01: ${qa-blue.user_identity}
+    automation_user_identity02:
+    automation_user_identity03:
+    identity_role: L2H992828L8E
+
+  cidapp:
+    api_url: https://cid-api.core.qa.apriori.net/
+    ui_url: https://cid.core.qa.apriori.net/
+
+  cas:
+    api_url: https://cas-api.core.qa.apriori.net/%s
+
+  fms:
+    api_url: https://fms.core.qa.apriori.net/
+
+  css:
+    api_url: https://css.core.qa.apriori.net/
+
+  vds:
+    api_url: https://vds.core.qa.apriori.net/
+
+  sds:
+    api_url: https://sds.core.qa.apriori.net/
+
+######################################################## STAGING ########################################################
+staging:
+  secret_key: K6JWVF8KV884
+  ap_user_context:
+  user_identity: 6AHL1HHGB15E
+  customer_identity: 7G0JGBE2N4GM
+  base_url:
+
+  cds:
+    api_url: https://cds.us.staging.apriori.net
+    apriori_core_services_installation_identity: 5HJ9CB8JA831
+    apriori_cloud_home_identity:
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity:
+    automation_user_identity01: ${qa-staging.user_identity}
+    automation_user_identity02:
+    automation_user_identity03:
+    identity_role: 7G0JGBE2N2GE
 
 
 ######################################################## LOCAL ########################################################
@@ -180,6 +299,19 @@ local:
     auth_targetCloudContext: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+
+  cds:
+    api_url: ${local.base_url}:8808/
+    apriori_core_services_installation_identity: 70EGN68B5CMH
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: H337GKD0LA0N
+    cia_application_identity:
+    automation_user_identity01: 8GFDIG229629
+    automation_user_identity02:
+    automation_user_identity03:
+    apriori_internal_customer_identity: H337GKD0LA0M
+    identity_role: H337GKD0L80E
 
   sds:
     api_url: ${local.base_url}:8811/
