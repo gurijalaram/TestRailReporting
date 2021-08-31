@@ -1,5 +1,7 @@
 package com.apriori.cidappapi.utils;
 
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
@@ -24,7 +26,6 @@ import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 
 import java.io.File;
 import java.util.List;
@@ -69,7 +70,7 @@ public class CidAppTestUtil {
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
@@ -95,7 +96,7 @@ public class CidAppTestUtil {
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
 
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
@@ -256,7 +257,7 @@ public class CidAppTestUtil {
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
 
-                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
@@ -265,7 +266,7 @@ public class CidAppTestUtil {
                     throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                 }
                 if (scenarioResponse.getScenarioState().equals(terminalScenarioState.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
-                    Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                     return scenarioRepresentation;
                 }
