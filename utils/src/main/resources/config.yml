@@ -150,6 +150,11 @@ qa-cid-perf:
 
   bcs:
     api_url: https://bcs.na-1.qa-21-1.apriori.net/
+    customer_identity: 67J517C9L96A
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:

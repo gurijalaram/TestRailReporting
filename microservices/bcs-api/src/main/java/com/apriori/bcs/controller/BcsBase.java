@@ -16,7 +16,7 @@ public class BcsBase {
      * @return url
      */
     public static String getCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("/").append(Constants.getCisCustomerIdentity())
+        StringBuilder url = new StringBuilder(baseUrl).append("/").append(PropertiesContext.get("${env}.bcs.customer_identity"))
                 .append("/%s?key=").append(Constants.getSecretKey());
         return url.toString();
     }
@@ -61,7 +61,7 @@ public class BcsBase {
      * @return url
      */
     public static String getBatchUrlWithIdentity() {
-        String url = String.format(getBatchUrl(), "/" + Constants.getCisBatchIdentity() + "%s");
+        String url = String.format(getBatchUrl(), "/" + PropertiesContext.get("${env}.bcs.batch_identity") + "%s");
         return url;
     }
 

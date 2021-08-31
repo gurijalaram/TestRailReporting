@@ -5,11 +5,11 @@ import com.apriori.bcs.entity.response.Report;
 import com.apriori.bcs.entity.response.ReportExport;
 import com.apriori.bcs.entity.response.ReportTemplates;
 import com.apriori.bcs.entity.response.Reports;
-import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
 
@@ -50,7 +50,7 @@ public class ReportResources extends BcsBase {
     public static <T> ResponseWrapper<T> createReport(NewReportRequest nrr, Integer status, Class klass) {
         String url = String.format(getCisUrl(), endpointReports);
         List<String> partsIdentities = new ArrayList<>();
-        partsIdentities.add(Constants.getCisPartIdentity());
+        partsIdentities.add(PropertiesContext.get("${env}.bcs.part_identity"));
         NewReportRequest body = new NewReportRequest();
         body
                 .setExternalId(String.format(nrr.getExternalId(), System.currentTimeMillis()))
