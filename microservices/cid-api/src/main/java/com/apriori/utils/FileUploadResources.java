@@ -103,7 +103,7 @@ public class FileUploadResources {
      * @param scenarioName scenario name to use
      * @return FileUploadOutputs instance
      */
-    public FileUploadOutputs uploadPartSuppress500(FileResponse fileResponse, String scenarioName) {
+    public FileUploadOutputs createFileUploadWorkorderSuppressError(FileResponse fileResponse, String scenarioName) {
         String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
                 FileUploadInputs.builder()
                         .keepFreeBodies(false)
@@ -155,7 +155,7 @@ public class FileUploadResources {
      * @return LoadCadMetadataOutputs - outputs to use in next call
      */
     public LoadCadMetadataOutputs loadCadMetadata(FileResponse fileResponse) {
-        String loadCadMetadataWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
+        String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
                 LoadCadMetadataInputs.builder()
                         .keepFreeBodies(false)
                         .freeBodiesPreserveCad(false)
@@ -163,8 +163,7 @@ public class FileUploadResources {
                         .fileMetadataIdentity(fileResponse.getIdentity())
                         .requestedBy(fileResponse.getUserIdentity())
                         .fileName(fileResponse.getFilename())
-                        .build(),
-                true
+                        .build()
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
@@ -182,16 +181,14 @@ public class FileUploadResources {
      */
     public GeneratePartImagesOutputs generatePartImages(FileResponse fileResponse,
                                                         LoadCadMetadataOutputs loadCadMetadataOutputs) {
-        String generatePartImagesWorkorderId = createFileUploadWorkorder(
+        String generatePartImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
                 GeneratePartImagesInputs.builder()
                         .cadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                         .requestedBy(fileResponse.getUserIdentity())
-                        .build(),
-                true
+                        .build()
         );
         submitWorkorder(generatePartImagesWorkorderId);
-
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(generatePartImagesWorkorderId),
                 GeneratePartImagesOutputs.class
@@ -225,7 +222,7 @@ public class FileUploadResources {
             );
         }
 
-        String generateAssemblyImagesWorkorderId = createFileUploadWorkorder(
+        String generateAssemblyImagesWorkorderId = createWorkorder(
                 WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
                 GenerateAssemblyImagesInputs.builder()
                         .componentIdentity(generateStringUtil.getRandomString())
@@ -233,8 +230,7 @@ public class FileUploadResources {
                         .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
                         .subComponents(subComponentsList)
                         .requestedBy(fileResponse.getUserIdentity())
-                        .build(),
-                true
+                        .build()
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
@@ -292,13 +288,11 @@ public class FileUploadResources {
                                 setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
                         .build()
         );
-
         submitWorkorder(createPublishWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
-
     }
 
     /**
@@ -404,19 +398,8 @@ public class FileUploadResources {
     private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
         token.put(contentType, applicationJson);
 
-        String fileUploadWorkorderId = "";
-        final RequestEntity requestEntity;
+        RequestEntity requestEntity;
         if (ignore500Error) {
-            requestEntity = RequestEntityUtil
-                    .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
-                    .headers(token)
-                    .body(new WorkorderRequest()
-                            .setCommand(new WorkorderCommand(
-                                    commandType,
-                                    inputs))
-                    );
-            fileUploadWorkorderId = jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
-        } else {
             requestEntity = RequestEntityUtil
                     .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
                     .headers(token)
@@ -430,7 +413,17 @@ public class FileUploadResources {
                 counter++;
             }
         }
-        return fileUploadWorkorderId;
+
+        requestEntity = RequestEntityUtil
+                .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
+                .headers(token)
+                .body(new WorkorderRequest()
+                        .setCommand(new WorkorderCommand(
+                                commandType,
+                                inputs))
+                );
+
+        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
     }
 
     /**
@@ -485,30 +478,6 @@ public class FileUploadResources {
                 .init(CidWorkorderApiEnum.GET_IMAGES, null)
                 .headers(token)
                 .inlineVariables(imageId);
-
-        return HTTP2Request.build(requestEntity).get().getBody();
-    }
-
-    /**
-     * Get images by scenario iteration key
-     *
-     * @param scenarioKey - scenario iteration
-     * @param imageType - web or desktop image
-     * @return Object - response
-     */
-    public Object getImageByScenarioIterationKey(ScenarioKey scenarioKey, String imageType) {
-        token.put(contentType, applicationJson);
-
-        final RequestEntity requestEntity = RequestEntityUtil
-                .init(CidWorkorderApiEnum.GET_IMAGE_BY_SCENARIO_ITERATION_KEY, null)
-                .headers(token)
-                .inlineVariables(
-                        scenarioKey.getWorkspaceId().toString(),
-                        scenarioKey.getTypeName(),
-                        scenarioKey.getMasterName(),
-                        scenarioKey.getStateName(),
-                        String.valueOf(getLatestIteration(token, scenarioKey)),
-                        imageType);
 
         return HTTP2Request.build(requestEntity).get().getBody();
     }
@@ -638,8 +607,7 @@ public class FileUploadResources {
      */
     private String checkWorkorderStatus(String workorderId) {
         long initialTime = System.currentTimeMillis() / 1000;
-        RequestEntity requestEntityBody;
-        String status = "";
+        String status;
 
         try {
             TimeUnit.SECONDS.sleep(3);

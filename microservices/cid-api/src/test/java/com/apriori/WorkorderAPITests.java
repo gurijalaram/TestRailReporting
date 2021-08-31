@@ -89,7 +89,7 @@ public class WorkorderAPITests {
                 processGroup
         );
 
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPartSuppress500(fileResponse, testScenarioName);
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
 
         getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
@@ -168,7 +168,7 @@ public class WorkorderAPITests {
                 "bracket_basic.prt",
                 processGroup
         );
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPartSuppress500(fileResponse, testScenarioName);
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -292,7 +292,7 @@ public class WorkorderAPITests {
                 processGroup
         );
 
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPartSuppress500(
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
                 fileResponse,
                 testScenarioName
         );
@@ -364,7 +364,7 @@ public class WorkorderAPITests {
                     component.getProcessGroup()
             );
 
-            fileUploadResources.uploadPartSuppress500(
+            fileUploadResources.createFileUploadWorkorderSuppressError(
                     fileResponse,
                     component.getScenarioName()
             );
@@ -377,7 +377,7 @@ public class WorkorderAPITests {
                 assemblyToUse.getProcessGroup()
         );
 
-        fileUploadResources.uploadPartSuppress500(
+        fileUploadResources.createFileUploadWorkorderSuppressError(
                 assemblyFileResponse,
                 assemblyToUse.getScenarioName()
         );
