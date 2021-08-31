@@ -50,6 +50,6 @@ public class Constants {
      * @return string
      */
     public static String getServiceUrl() {
-        return PropertiesContext.get("${env}.cds.api_base").concat("/%s?key=").concat(PropertiesContext.get("${env}.secret_key"));
+        return PropertiesContext.get("${env}.cds.api_url").concat("%s?key=").concat(PropertiesContext.get("${env}.secret_key"));
     }
 }
