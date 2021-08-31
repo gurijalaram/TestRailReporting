@@ -203,24 +203,27 @@ public class CidAppTestUtil {
         String scenarioState;
         ResponseWrapper<ScenarioResponse> scenarioRepresentation;
 
+        waitSeconds(2);
+        do {
+            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
+            waitSeconds(POLLING_INTERVAL);
+        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
+        return scenarioRepresentation;
+    }
+
+    /**
+     * Waits for specified time
+     * @param seconds - the seconds
+     */
+    private void waitSeconds(long seconds) {
         try {
-            TimeUnit.SECONDS.sleep(2);
+            TimeUnit.SECONDS.sleep(seconds);
         } catch (InterruptedException e) {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        do {
-            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
-            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
-            try {
-                TimeUnit.SECONDS.sleep(POLLING_INTERVAL);
-            } catch (InterruptedException e) {
-                log.error(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
-        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
-
-        return scenarioRepresentation;
     }
 
     /**
