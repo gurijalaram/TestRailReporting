@@ -23,6 +23,21 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates the component name by adding random number and nano time
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateComponentName(String componentName) {
+        final int index = componentName.indexOf(".");
+        final String randomSymbols = new Random().nextInt(1000) + "-" + System.nanoTime();
+
+        return componentName.substring(0, index)
+            + randomSymbols
+            + componentName.substring(index);
+    }
+
+    /**
      * Generates the comparison name and adds random number and nano time
      *
      * @return string
