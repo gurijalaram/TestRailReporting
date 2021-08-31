@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -187,7 +188,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(STOCK_MACHINING)
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();

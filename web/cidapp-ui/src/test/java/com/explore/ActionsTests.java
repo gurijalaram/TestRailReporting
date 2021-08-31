@@ -110,7 +110,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -160,7 +160,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        previewPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        previewPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -274,7 +274,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
@@ -310,7 +310,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        assignPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        assignPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
@@ -347,7 +347,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -383,7 +383,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -425,7 +425,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -471,7 +471,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -518,7 +518,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -567,7 +567,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Default")
@@ -612,7 +612,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        infoPage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -659,7 +659,7 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")

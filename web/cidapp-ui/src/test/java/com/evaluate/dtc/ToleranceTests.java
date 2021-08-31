@@ -658,7 +658,7 @@ public class ToleranceTests extends TestBase {
             .submit(ExplorePage.class)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 

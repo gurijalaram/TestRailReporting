@@ -86,7 +86,7 @@ public class NewScenarioNameTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
@@ -126,7 +126,7 @@ public class NewScenarioNameTests extends TestBase {
         cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
 
-        cssItemB = new EvaluatePage(driver).navigateToScenario(cssItem)
+        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
@@ -137,7 +137,7 @@ public class NewScenarioNameTests extends TestBase {
             .publish(cssItemA, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
-        cssItemC = new EvaluatePage(driver).navigateToScenario(cssItem)
+        cssItemC = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -148,7 +148,7 @@ public class NewScenarioNameTests extends TestBase {
             .publish(cssItemB, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")

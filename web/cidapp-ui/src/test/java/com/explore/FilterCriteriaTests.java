@@ -161,7 +161,7 @@ public class FilterCriteriaTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("High")
@@ -195,7 +195,7 @@ public class FilterCriteriaTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .publishScenario()
             .publish(cssItem, currentUser, ExplorePage.class)
             .filter()
@@ -257,7 +257,7 @@ public class FilterCriteriaTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .publishScenario()
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")

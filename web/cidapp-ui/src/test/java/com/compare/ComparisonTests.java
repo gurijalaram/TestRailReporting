@@ -234,7 +234,7 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItem = new EvaluatePage(driver).navigateToScenario(cssItem)
+        cssItem = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
@@ -300,7 +300,7 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        comparePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        comparePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
@@ -547,7 +547,7 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItemB = new EvaluatePage(driver).navigateToScenario(cssItem)
+        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()

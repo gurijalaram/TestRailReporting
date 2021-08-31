@@ -220,7 +220,7 @@ public class TwoModelMachiningTests extends TestBase {
             .clickExplore()
             .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")

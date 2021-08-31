@@ -104,7 +104,7 @@ public class SettingsTests extends TestBase {
             .submit(ExplorePage.class)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class);
