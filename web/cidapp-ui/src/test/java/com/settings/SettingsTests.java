@@ -3,10 +3,12 @@ package com.settings;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -44,6 +46,7 @@ public class SettingsTests extends TestBase {
     private SelectionPage selectionPage;
     private Item cssItem;
     private SecondaryPage secondaryPage;
+    private MaterialSelectorPage materialSelectorPage;
 
     @After
     public void resetAllSettings() {
@@ -370,7 +373,6 @@ public class SettingsTests extends TestBase {
         assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
     }
 
-    @Ignore("Uncomment when ba-1961 is done")
     @Test
     @TestRail(testCaseId = {"6300", "6304"})
     @Description("Options should filter subsequent drop down options available")
@@ -379,13 +381,13 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        productionDefaultPage = loginPage.login(currentUser)
+        materialSelectorPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA);
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA)
+            .openMaterialSelectorTable();
 
-        // TODO: 20/08/2021 cn - this needs to be reworked
-        //assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
+        assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 }
