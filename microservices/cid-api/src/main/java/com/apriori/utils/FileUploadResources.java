@@ -146,17 +146,6 @@ public class FileUploadResources {
                 checkGetWorkorderDetails(fileUploadWorkorderId),
                 FileUploadOutputs.class
         );
-
-        /*String fileUploadWorkorderId = createWorkorder(
-                WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
-                inputs,
-                false
-        );
-        submitWorkorder(fileUploadWorkorderId);
-        return objectMapper.convertValue(
-                checkGetWorkorderDetails(fileUploadWorkorderId),
-                FileUploadOutputs.class
-        );*/
     }
 
     /**
