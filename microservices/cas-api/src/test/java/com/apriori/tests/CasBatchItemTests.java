@@ -47,7 +47,7 @@ public class CasBatchItemTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
@@ -72,7 +72,7 @@ public class CasBatchItemTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
@@ -94,7 +94,7 @@ public class CasBatchItemTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 
@@ -130,7 +130,7 @@ public class CasBatchItemTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 

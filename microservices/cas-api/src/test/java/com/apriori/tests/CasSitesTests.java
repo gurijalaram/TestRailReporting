@@ -129,9 +129,9 @@ public class CasSitesTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        String identity = response.getResponseEntity().getResponse().getIdentity();
+        String identity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = casTestUtil.addSite(identity, siteID, siteName);
 

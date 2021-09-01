@@ -45,7 +45,7 @@ public class CasCustomerBatchTests extends TestUtil {
         String description = customerName + " Description";
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         String batchEndpoint = url + customerIdentity + "/batches/";
 
@@ -78,7 +78,7 @@ public class CasCustomerBatchTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
 

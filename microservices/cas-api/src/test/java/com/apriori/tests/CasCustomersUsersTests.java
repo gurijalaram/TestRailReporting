@@ -46,7 +46,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         String usersEndpoint = url + customerIdentity + "/users/";
 
@@ -81,7 +81,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName);
 
@@ -107,7 +107,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName);
 
