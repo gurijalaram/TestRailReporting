@@ -241,6 +241,7 @@ public class CdsTestUtil extends TestUtil {
                     .siteIdentity(siteIdentity)
                     .applications(Arrays.asList(Constants.getApProApplicationIdentity()))
                     .cloudReference(cloudReference)
+                    .apVersion("2020 R1")
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());

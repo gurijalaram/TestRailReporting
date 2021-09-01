@@ -126,7 +126,8 @@ public abstract class VDSTestUtil extends TestUtil {
 
     public static String getAssociatedProcessGroupIdentity() {
         if (associatedProcessGroupIdentity == null) {
-            associatedProcessGroupIdentity = getDigitalFactory().getProcessGroupAssociations().getSheetMetal().getProcessGroupIdentity();
+            //TODO z: replace with a new functionality regarding Process group associations.
+            //associatedProcessGroupIdentity = getDigitalFactory().getProcessGroupAssociations().getSheetMetal().getProcessGroupIdentity();
         }
         return associatedProcessGroupIdentity;
     }
