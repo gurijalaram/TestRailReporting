@@ -6,8 +6,6 @@
     "pageNumber",
     "pageSize",
     "pageItemCount",
-    "totalItemCount",
-    "totalPageCount",
     "hasNextPage",
     "hasPreviousPage"
   ],
