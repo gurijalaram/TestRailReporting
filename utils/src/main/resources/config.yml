@@ -110,6 +110,7 @@ qa-cid-perf:
   ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
   user_identity: 1F7GAI5DLI2B
   customer_identity: 92E1E4E9DFCD
+  auth_targetCloudContext: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
   base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   ats:
@@ -154,6 +155,19 @@ qa-cid-perf:
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
+
+  bcs:
+    api_url: https://bcs.na-1.qa-21-1.apriori.net/
+    customer_identity: 67J517C9L96A
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+  nts:
+    api_url: https://nts.na-1.qa-cid-perf.apriori.net/
+    email_subject: NTSSendEmail
+    email_content: This is an automated email
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
