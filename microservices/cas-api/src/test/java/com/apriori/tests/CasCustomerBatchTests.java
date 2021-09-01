@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
@@ -12,7 +13,6 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.CustomerBatch;
 import com.apriori.entity.response.CustomerBatches;
 import com.apriori.entity.response.PostBatch;
-import com.apriori.entity.response.SingleCustomer;
 import com.apriori.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -44,7 +44,7 @@ public class CasCustomerBatchTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
         String batchEndpoint = url + customerIdentity + "/batches/";
@@ -76,7 +76,7 @@ public class CasCustomerBatchTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getIdentity();
 

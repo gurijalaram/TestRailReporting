@@ -7,11 +7,15 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Builder;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "InstallationSchema.json")
+@Data
+@Builder
 public class Installation {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
@@ -24,6 +28,7 @@ public class Installation {
     private String cloudReference;
     private String description;
     private Boolean active;
+    private String apVersion;
     private String url;
     private String realm;
     private String s3Bucket;

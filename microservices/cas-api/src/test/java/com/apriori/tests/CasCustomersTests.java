@@ -12,7 +12,6 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
-import com.apriori.entity.response.SingleCustomer;
 import com.apriori.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -132,7 +131,7 @@ public class CasCustomersTests extends TestUtil {
         String description = customerName + " Description";
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
+        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
@@ -169,7 +168,7 @@ public class CasCustomersTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 

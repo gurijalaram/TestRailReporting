@@ -5,13 +5,13 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
-import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -45,7 +45,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
         String usersEndpoint = url + customerIdentity + "/users/";
@@ -80,7 +80,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName);
@@ -106,7 +106,7 @@ public class CasCustomersUsersTests extends TestUtil {
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName);

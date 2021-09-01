@@ -7,12 +7,12 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.not;
 
+import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
-import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.Sites;
 import com.apriori.entity.response.ValidateSite;
@@ -127,7 +127,7 @@ public class CasSitesTests extends TestUtil {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 

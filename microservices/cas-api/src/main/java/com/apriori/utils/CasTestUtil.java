@@ -10,7 +10,6 @@ import com.apriori.entity.response.CustomProperties;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUserProfile;
 import com.apriori.entity.response.PostBatch;
-import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
@@ -41,9 +40,9 @@ public class CasTestUtil extends TestUtil {
      * @param email          - the email pattern
      * @return ResponseWrapper <SingleCustomer>
      */
-    public ResponseWrapper<SingleCustomer> addCustomer(String name, String cloudReference, String description, String email) {
+    public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String description, String email) {
 
-        RequestEntity requestEntity = RequestEntity.init(url, SingleCustomer.class)
+        RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("customer",
                 Customer.builder().name(name)
