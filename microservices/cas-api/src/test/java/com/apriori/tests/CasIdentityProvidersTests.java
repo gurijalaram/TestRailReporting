@@ -33,7 +33,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     @TestRail(testCaseId = {"5646", "5647"})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828N8M/identity-providers/");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/" + PropertiesContext.get("${env}.customer_identity") + "/identity-providers/");
 
         ResponseWrapper<IdentityProviders> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, IdentityProviders.class,
             new APIAuthentication().initAuthorizationHeaderContent(token));

@@ -20,8 +20,10 @@
         "username",
         "active",
         "mfaRequired",
-        "customProperties",
         "userType"
+      ],
+      "optional": [
+        "customProperties"
       ],
       "properties": {
         "identity": {

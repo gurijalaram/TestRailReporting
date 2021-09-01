@@ -32,10 +32,10 @@ public class CasDeploymentsTests extends TestUtil {
     @TestRail(testCaseId = {"5657"})
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828LC1/deployments");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/" + PropertiesContext.get("${env}.customer_identity") + "/deployments");
 
         ResponseWrapper<Deployments> responseDeployment = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -45,10 +45,10 @@ public class CasDeploymentsTests extends TestUtil {
     @TestRail(testCaseId = {"5658"})
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828LC1/deployments/");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/" + PropertiesContext.get("${env}.customer_identity") + "/deployments/");
 
         ResponseWrapper<Deployments> responseDeployments = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseDeployments.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployments.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -57,7 +57,7 @@ public class CasDeploymentsTests extends TestUtil {
         String deploymentUrl = apiUrl + deploymentIdentity;
 
         ResponseWrapper<Deployment> deploymentByID = new CommonRequestUtil().getCommonRequest(deploymentUrl, true, Deployment.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(deploymentByID.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deploymentByID.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));

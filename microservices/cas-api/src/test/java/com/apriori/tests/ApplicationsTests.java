@@ -32,10 +32,10 @@ public class ApplicationsTests extends TestUtil {
     @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
-        String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828LC1/applications");
+        String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/" + PropertiesContext.get("${env}.customer_identity") + "/applications");
 
         ResponseWrapper<Applications> responseApplications = new CommonRequestUtil().getCommonRequest(url, true, Applications.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+            new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseApplications.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

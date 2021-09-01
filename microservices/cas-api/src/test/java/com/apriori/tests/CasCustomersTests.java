@@ -72,7 +72,7 @@ public class CasCustomersTests extends TestUtil {
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(name)));
+        assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(name)));
     }
 
     @Test
@@ -130,10 +130,11 @@ public class CasCustomersTests extends TestUtil {
         String cloudRef = generateStringUtil.generateCloudReference();
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
+        String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
 
-        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
         String customerNameUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(customerName);
 
@@ -149,14 +150,14 @@ public class CasCustomersTests extends TestUtil {
         ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(identity, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(patchResponse.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+        assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
 
         ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityUrl, true, Customer.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+        assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customerName)));
+        assertThat(responseIdentity.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
     }
 
     @Test

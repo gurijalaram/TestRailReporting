@@ -80,6 +80,7 @@
                   "salesforceId",
                   "active",
                   "maxCadFileRetentionDays",
+                  "maxCadFileSize",
                   "useExternalIdentityProvider",
                   "mfaRequired",
                   "oneTimePasswordApplications",
@@ -135,6 +136,10 @@
                     "type": "boolean"
                   },
                   "maxCadFileRetentionDays": {
+                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/maxCadFileRetentionDays",
+                    "type": "integer"
+                  },
+                  "maxCadFileSize": {
                     "$id": "#/properties/response/properties/items/items/anyOf/0/properties/maxCadFileRetentionDays",
                     "type": "integer"
                   },
