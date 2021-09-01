@@ -11,9 +11,9 @@ import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.User;
-import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5665"})
     @Description("Get user by identity.")
     public void getUserById() {
-        String url = String.format(Constants.getApiUrl(), "users/18EFF425JA5J");
+        String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "users/18EFF425JA5J");
 
         ResponseWrapper<User> user = new CommonRequestUtil().getCommonRequest(url, true, User.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -45,7 +45,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        String url = String.format(Constants.getApiUrl(), "users/current");
+        String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "users/current");
 
         ResponseWrapper<User> user = new CommonRequestUtil().getCommonRequest(url, true, User.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));

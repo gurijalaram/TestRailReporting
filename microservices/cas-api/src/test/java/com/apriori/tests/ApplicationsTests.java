@@ -10,9 +10,9 @@ import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.Applications;
-import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class ApplicationsTests extends TestUtil {
     @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
-        String url = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/applications");
+        String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828LC1/applications");
 
         ResponseWrapper<Applications> responseApplications = new CommonRequestUtil().getCommonRequest(url, true, Applications.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));

@@ -17,10 +17,10 @@ import com.apriori.entity.response.Site;
 import com.apriori.entity.response.Sites;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.tests.utils.CasTestUtil;
-import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -33,7 +33,7 @@ public class CasSitesTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = String.format(Constants.getApiUrl(), "customers/");
+    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
 
     @Before
     public void getToken() {

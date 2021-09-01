@@ -11,9 +11,9 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.Deployment;
 import com.apriori.entity.response.Deployments;
-import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class CasDeploymentsTests extends TestUtil {
     @TestRail(testCaseId = {"5657"})
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/deployments");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828LC1/deployments");
 
         ResponseWrapper<Deployments> responseDeployment = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -45,7 +45,7 @@ public class CasDeploymentsTests extends TestUtil {
     @TestRail(testCaseId = {"5658"})
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828LC1/deployments/");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828LC1/deployments/");
 
         ResponseWrapper<Deployments> responseDeployments = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));

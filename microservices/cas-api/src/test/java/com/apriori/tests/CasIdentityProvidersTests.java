@@ -11,9 +11,9 @@ import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.SingleIdp;
-import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -33,7 +33,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     @TestRail(testCaseId = {"5646", "5647"})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/L2H992828N8M/identity-providers/");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/L2H992828N8M/identity-providers/");
 
         ResponseWrapper<IdentityProviders> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, IdentityProviders.class,
             new APIAuthentication().initAuthorizationHeaderContent(token));

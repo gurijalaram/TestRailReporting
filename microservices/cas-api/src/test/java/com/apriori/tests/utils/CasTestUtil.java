@@ -3,7 +3,6 @@ package com.apriori.tests.utils;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
-
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
@@ -16,16 +15,13 @@ import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
-
-import com.apriori.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
-import org.apache.http.HttpStatus;
+import com.apriori.utils.properties.PropertiesContext;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -35,7 +31,7 @@ import java.util.Collections;
 public class CasTestUtil extends TestUtil {
 
     private static String token = new JwtTokenUtil().retrieveJwtToken();
-    private String url = String.format(Constants.getApiUrl(), "customers/");
+    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
 
     /**
      * POST call to add a customer

@@ -14,10 +14,10 @@ import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.tests.utils.CasTestUtil;
-import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -28,7 +28,7 @@ public class CasCustomersUsersTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = String.format(Constants.getApiUrl(), "customers/");
+    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
 
     @Before
     public void getToken() {

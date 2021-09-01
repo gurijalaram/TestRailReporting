@@ -14,10 +14,10 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.SingleCustomer;
 import com.apriori.tests.utils.CasTestUtil;
-import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import com.google.common.net.UrlEscapers;
 import io.qameta.allure.Description;
@@ -33,7 +33,7 @@ public class CasCustomersTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = String.format(Constants.getApiUrl(), "customers/");
+    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
 
     @Before
     public void getToken() {
@@ -44,7 +44,7 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers?sortBy[ASC]=name");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers?sortBy[ASC]=name");
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
             new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -87,7 +87,7 @@ public class CasCustomersTests extends TestUtil {
         Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
         String name = customer.getName();
 
-        String nameEndpoint = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
+        String nameEndpoint = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
 
         ResponseWrapper<Customers> responseName = new CommonRequestUtil().getCommonRequest(nameEndpoint, false, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -100,7 +100,7 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5644"})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
-        String apiUrl = String.format(Constants.getApiUrl(), "customers/76EA87KCHIKD");
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/76EA87KCHIKD");
 
         ResponseWrapper<ErrorMessage> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, ErrorMessage.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -113,7 +113,7 @@ public class CasCustomersTests extends TestUtil {
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
         String name = generateStringUtil.generateCustomerName();
-        String apiUrl = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
+        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
 
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -135,7 +135,7 @@ public class CasCustomersTests extends TestUtil {
 
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
 
-        String customerNameUrl = String.format(Constants.getApiUrl(), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(customerName);
+        String customerNameUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(customerName);
 
         ResponseWrapper<Customers> responseName = new CommonRequestUtil().getCommonRequest(customerNameUrl, false, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
