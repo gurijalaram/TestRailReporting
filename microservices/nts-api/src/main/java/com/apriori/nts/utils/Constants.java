@@ -18,6 +18,8 @@ public class Constants {
     public static final String DEFAULT_ENVIRONMENT_VALUE = "int-core";
     private static final Properties PROPERTIES = new Properties();
     private static final File INPUT_STREAM;
+    public static final String EMAIL_SUBJECT = "NTSSendEmail";
+    public static final String EMAIL_CONTENT = "This is an automated email";
     public static String environment;
     private static String baseUrl;
     private static String ntsServiceHost;
