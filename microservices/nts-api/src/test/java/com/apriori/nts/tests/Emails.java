@@ -8,6 +8,7 @@ import com.apriori.nts.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.junit.Assert;
@@ -20,7 +21,7 @@ public class Emails {
 
     @Before
     public void setServiceUrl() {
-        baseUrl = "https://" + Constants.getNtsServiceHost() + "/emails%s?key=" + Constants.getSecretKey();
+        baseUrl = PropertiesContext.get("${env}.nts.api_url") + "emails%s?key=" + PropertiesContext.get("${env}.nts.secret_key");
     }
 
     @Test
