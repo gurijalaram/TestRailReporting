@@ -27,7 +27,7 @@ import java.io.File;
 
 public class FilterCriteriaTests extends TestBase {
 
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private File resourceFile;

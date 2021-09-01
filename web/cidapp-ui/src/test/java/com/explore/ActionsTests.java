@@ -37,7 +37,8 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class ActionsTests extends TestBase {
-    UserCredentials currentUser;
+
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;

@@ -34,7 +34,7 @@ import java.io.File;
 
 public class PublishExistingCostedTests extends TestBase {
 
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
