@@ -171,9 +171,9 @@ public class CasCustomersTests extends TestUtil {
 
         ResponseWrapper<SingleCustomer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo(customerName)));
+        assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        String identity = response.getResponseEntity().getResponse().getIdentity();
+        String identity = response.getResponseEntity().getIdentity();
         String mfaUrl = url + identity + "/reset-mfa";
 
         ResponseWrapper resettingResponse = casTestUtil.resetMfa(mfaUrl);
