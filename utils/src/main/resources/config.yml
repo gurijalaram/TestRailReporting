@@ -17,6 +17,7 @@ int-core:
   base_url: https://na-1.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   user_identity: 8GFDIG229629
+  auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N712ILED65K4I1J8M416FBJ94
 
   ats:
     api_url: https://ats.core.int.apriori.net
@@ -25,7 +26,7 @@ int-core:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_targetCloudContext: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
+    auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -53,6 +54,10 @@ int-core:
   fms:
     api_url: https://fms.core.int.apriori.net/
 
+  nts:
+    api_url: https://nts.core.int.apriori.net/
+
+
 ######################################################## QA-21.1 ########################################################
 qa-21-1:
   secret_key: LZJM8S47H5S8
@@ -60,6 +65,7 @@ qa-21-1:
   base_url: https://na-1.apriori-internal.int.apriori.net/
   user_identity: 67J517C9L96A
   customer_identity: 67J517C9L96A
+  auth_target_cloud_context: 67J517C9L96A67J517C9L96B6NC0K8DHKJJD1J8M416FBJD2
 
   ats:
     api_url: https://ats.na-1.qa-21-1.apriori.net
@@ -68,7 +74,7 @@ qa-21-1:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_targetCloudContext: 67J517C9L96A67J517C9L96B6NC0K8DHKJJD1J8M416FBJ94
+    auth_target_cloud_context: 67J517C9L96A67J517C9L96B6NC0K8DHKJJD1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -103,6 +109,10 @@ qa-21-1:
   fms:
     api_url: https://fms.na-1.qa-21-1.apriori.net/
 
+  nts:
+    api_url: https://nts.na-1.qa-21-1.apriori.net/
+
+
 
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
@@ -110,8 +120,8 @@ qa-cid-perf:
   ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
   user_identity: 1F7GAI5DLI2B
   customer_identity: 92E1E4E9DFCD
-  auth_targetCloudContext: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
   base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  auth_target_cloud_context: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
 
   ats:
     api_url: https://ats.na-1.qa-cid-perf.apriori.net
@@ -120,7 +130,7 @@ qa-cid-perf:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_targetCloudContext: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
+    auth_target_cloud_context: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -157,7 +167,7 @@ qa-cid-perf:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
 
   bcs:
-    api_url: https://bcs.na-1.qa-21-1.apriori.net/
+    api_url: https://bcs.na-1.qa-cid-perf.apriori.net/
     customer_identity: 67J517C9L96A
     report_identity: 50A4DFJF3NC7
     reportType_identity: 0J3JMAA4MCAJ
@@ -166,8 +176,7 @@ qa-cid-perf:
 
   nts:
     api_url: https://nts.na-1.qa-cid-perf.apriori.net/
-    email_subject: NTSSendEmail
-    email_content: This is an automated email
+
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
@@ -175,6 +184,7 @@ qa-cig-perf:
   customer_identity: C339C55A8155
   secret_key: WJIM0HV7Z6U1
   base_url: https://demo.apriori-internal.qa-cig-perf.apriori.net/
+  auth_target_cloud_context: C339C55A815522IJ2ID5BC2H1MN93NDNF9551J8M416FBJD2
 
   ats:
     api_url: https://ats.na-1.qa-cig-perf.apriori.net
@@ -183,7 +193,7 @@ qa-cig-perf:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_targetCloudContext: C339C55A815522IJ2ID5BC2H1MN93NDNF9551J8M416FBJ94
+    auth_target_cloud_context: C339C55A815522IJ2ID5BC2H1MN93NDNF9551J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -208,6 +218,9 @@ qa-cig-perf:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
+  nts:
+    api_url: https://nts.na-1.qa-cig-perf.apriori.net/
+
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
@@ -220,7 +233,7 @@ qa-20-1:
       token_issuer: 2020 R1
       token_subject: 4127
       auth_application: CID
-      auth_targetCloudContext: L2H992828N8ML2H992828N8N5HK8H97M75I41J8M416FBJD2
+      auth_target_cloud_context: L2H992828N8ML2H992828N8N5HK8H97M75I41J8M416FBJD2
       automation_username: qa-automation-%s@apriori.com
       automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -251,6 +264,8 @@ qa-blue:
   user_identity: 61BM75C53GA0
   customer_identity: L2H992828N8M
   base_url:
+  auth_target_cloud_context: L2H992828N8ML2H992828N8N5HK8H97M75I41J8M416FBJFL
+
 
   cds:
     api_url: https://cds.core.qa.apriori.net/
@@ -282,6 +297,9 @@ qa-blue:
 
   sds:
     api_url: https://sds.core.qa.apriori.net/
+
+  nts:
+    api_url: https://nts.core.qa.apriori.net/
 
 ######################################################## STAGING ########################################################
 staging:
@@ -317,7 +335,7 @@ local:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_targetCloudContext: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
+    auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -342,3 +360,6 @@ local:
 
   fms:
     api_url: ${local.base_url}:8806/
+
+  nts:
+    api_url: ${local.base_url}:8807/

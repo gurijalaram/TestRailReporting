@@ -29,7 +29,7 @@ public class AtsAuthorization extends TestUtil {
 
         AuthorizationResponse response = AuthorizeUserUtil.authorizeUser(PropertiesContext.get("${env}.secret_key"),
             PropertiesContext.get("${env}.ats.api_url"),
-            PropertiesContext.get("${env}.ats.auth_targetCloudContext"),
+            PropertiesContext.get("${env}.ats.auth_target_cloud_context"),
             token,
             HttpStatus.SC_OK);
     }
