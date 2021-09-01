@@ -72,6 +72,13 @@ qa-21-1:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
+  cidapp:
+    api_url: https://cid-api.na-1.qa-21-1.apriori.net/
+    ui_url: https://cid.na-1.qa-21-1.apriori.net/
+
+  css:
+    api_url: https://css.na-1.qa-21-1.apriori.net/
+
   cds:
     api_url: https://cds.na-1.qa-21-1.apriori.net/
     apriori_core_services_installation_identity:

@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author cfrith
@@ -89,7 +90,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-digital-factory-select-field']//div[@class='text-overflow']")
     private WebElement selectedVPE;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
+    @FindBy(css = "[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
@@ -330,6 +331,14 @@ public class EvaluatePage extends EvaluateToolbar {
     public SecondaryProcessesPage openSecondaryProcesses() {
         inputsController.openSecondaryProcesses(secondaryProcessesPencil);
         return new SecondaryProcessesPage(driver);
+    }
+
+    /**
+     * Checks if secondary process pencil is enabled
+     * @return boolean
+     */
+    public boolean isSecondaryProcessButtonEnabled() {
+        return pageUtils.waitForElementToAppear(secondaryProcessesPencil).isEnabled();
     }
 
     /**
@@ -658,6 +667,14 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public <T> T backFromError(Class<T> className) {
         return modalDialogController.backFromError(className);
+    }
+
+    /**
+     * Gets secondary processes
+     * @return list of string
+     */
+    public List<String> getListOfSecondaryProcesses() {
+        return Stream.of(secondaryProcessBox.getAttribute("textContent").split("\\[")).collect(Collectors.toList());
     }
 
     /**
