@@ -16,12 +16,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class Emails {
+    private String cloudContext = PropertiesContext.get("${env}.auth_targetCloudContext");
     private PropertyStore propertyStore = new PropertyStore();
     private String baseUrl;
 
     @Before
     public void setServiceUrl() {
-        baseUrl = PropertiesContext.get("${env}.nts.api_url") + "emails%s?key=" + PropertiesContext.get("${env}.nts.secret_key");
+        baseUrl = PropertiesContext.get("${env}.nts.api_url") + "emails?key=" + PropertiesContext.get("${env}.secret_key");
     }
 
     @Test
@@ -29,7 +30,7 @@ public class Emails {
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         String subject = String.format("%s_%d", Constants.EMAIL_SUBJECT, System.currentTimeMillis());
-        NotificationService.sendEmail(baseUrl, subject, Constants.EMAIL_CONTENT, PropertiesContext.get("${env}.auth.targetCloudContext"));
+        NotificationService.sendEmail(baseUrl, subject, Constants.EMAIL_CONTENT, cloudContext);
         Boolean emailExists = NotificationService.validateEmail(subject);
         Assert.assertEquals(true, emailExists);
     }
@@ -39,7 +40,7 @@ public class Emails {
     @TestRail(testCaseId = {"3880"})
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
-        GetEmailResponse getEmailResponse = NotificationService.getEmails(baseUrl, PropertiesContext.get("${env}.auth.targetCloudContext"));
+        GetEmailResponse getEmailResponse = NotificationService.getEmails(baseUrl, cloudContext);
         propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
         JsonManager.serializeJsonToFile(FileResourceUtil.getResourceAsFile("property-store.json").getPath(),
             propertyStore);
@@ -52,7 +53,7 @@ public class Emails {
         String subject = String.format("%s_%d", Constants.EMAIL_SUBJECT, System.currentTimeMillis());
         SendEmailResponse sendEmailResponse = NotificationService.sendEmail(baseUrl, subject,
             Constants.EMAIL_CONTENT,
-            PropertiesContext.get("${env}.auth.targetCloudContext"));
-        NotificationService.getEmail(baseUrl, sendEmailResponse.getIdentity(), PropertiesContext.get("${env}.auth.targetCloudContext"));
+            cloudContext);
+        NotificationService.getEmail(baseUrl, sendEmailResponse.getIdentity(), cloudContext);
     }
 }
