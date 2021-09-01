@@ -16,8 +16,8 @@ public class BcsBase {
      * @return url
      */
     public static String getCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("/").append(PropertiesContext.get("${env}.bcs.customer_identity"))
-                .append("/%s?key=").append(Constants.getSecretKey());
+        StringBuilder url = new StringBuilder(baseUrl).append("/").append(PropertiesContext.get("${env}.customer_identity"))
+                .append("/%s?key=").append(Constants.SECRET_KEY);
         return url.toString();
     }
 
@@ -27,7 +27,7 @@ public class BcsBase {
      * @return url
      */
     public static String getBaseCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("?key=").append(Constants.getSecretKey());
+        StringBuilder url = new StringBuilder(baseUrl).append("?key=").append(Constants.SECRET_KEY);
         return url.toString();
     }
 
@@ -39,7 +39,7 @@ public class BcsBase {
     public static String getReportTypesUrl() {
         StringBuilder url;
         url = new StringBuilder("https://" + PropertiesContext.get("${env}.bcs.api_url").concat("report-types")).append("%s?key=")
-                .append(Constants.getSecretKey());
+                .append(Constants.SECRET_KEY);
         return url.toString();
     }
 

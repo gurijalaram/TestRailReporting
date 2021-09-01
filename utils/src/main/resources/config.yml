@@ -57,6 +57,14 @@ int-core:
   nts:
     api_url: https://nts.core.int.apriori.net/
 
+  bcs:
+    api_url: https://bcs.core.int.apriori.net/
+    report_identity: EAJCNLK8AF36
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: BFF0260D58KB
+    batch_identity: 9059GI9AHFE9
+
+
 
 ######################################################## QA-21.1 ########################################################
 qa-21-1:
@@ -111,6 +119,13 @@ qa-21-1:
 
   nts:
     api_url: https://nts.na-1.qa-21-1.apriori.net/
+
+  bcs:
+    api_url: https://bcs.na-1.qa-21-1.apriori.net/
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
 
 
 
@@ -168,7 +183,6 @@ qa-cid-perf:
 
   bcs:
     api_url: https://bcs.na-1.qa-cid-perf.apriori.net/
-    customer_identity: 67J517C9L96A
     report_identity: 50A4DFJF3NC7
     reportType_identity: 0J3JMAA4MCAJ
     part_identity: 6E5GDN0CHB95
@@ -221,6 +235,14 @@ qa-cig-perf:
   nts:
     api_url: https://nts.na-1.qa-cig-perf.apriori.net/
 
+  bcs:
+    api_url: https://bcs.na-1.qa-cig-perf.apriori.net/
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
     secret_key: LZJM8S47H5S8
@@ -255,6 +277,13 @@ qa-20-1:
 
     fms:
       api_url: https://fms.na-1.qa-20-1.apriori.net/
+
+    bcs:
+      api_url: https://bcs.na-1.qa-20-1.apriori.net/
+      report_identity:
+      reportType_identity:
+      part_identity:
+      batch_identity:
 
 
 ######################################################## QA-BLUE ########################################################
@@ -301,6 +330,13 @@ qa-blue:
   nts:
     api_url: https://nts.core.qa.apriori.net/
 
+  bcs:
+    api_url: https://bcs.core.qa.apriori.net/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
+
 ######################################################## STAGING ########################################################
 staging:
   secret_key: K6JWVF8KV884
@@ -320,6 +356,13 @@ staging:
     automation_user_identity02:
     automation_user_identity03:
     identity_role: 7G0JGBE2N2GE
+
+  bcs:
+    api_url: https://bcs.na-1.qa-20-1.apriori.net/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
 
 
 ######################################################## LOCAL ########################################################
@@ -363,3 +406,12 @@ local:
 
   nts:
     api_url: ${local.base_url}:8807/
+
+  bcs:
+    api_url: ${local.base_url}:8810/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
+
+
