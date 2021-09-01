@@ -13,7 +13,7 @@ import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.InstallationResponse;
 import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;

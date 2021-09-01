@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 import com.apriori.cds.entity.response.ConfigurationResponse;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

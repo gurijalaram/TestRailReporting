@@ -16,7 +16,7 @@ import com.apriori.entity.response.SingleCustomer;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.Sites;
 import com.apriori.entity.response.ValidateSite;
-import com.apriori.tests.utils.CasTestUtil;
+import com.apriori.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

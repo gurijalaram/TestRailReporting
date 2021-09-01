@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

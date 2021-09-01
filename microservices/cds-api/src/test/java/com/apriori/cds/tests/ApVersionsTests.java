@@ -8,7 +8,7 @@ import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.cds.objects.response.ApVersions;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

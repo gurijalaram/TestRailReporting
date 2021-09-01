@@ -13,7 +13,7 @@ import com.apriori.entity.response.CustomerBatch;
 import com.apriori.entity.response.CustomerBatches;
 import com.apriori.entity.response.PostBatch;
 import com.apriori.entity.response.SingleCustomer;
-import com.apriori.tests.utils.CasTestUtil;
+import com.apriori.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

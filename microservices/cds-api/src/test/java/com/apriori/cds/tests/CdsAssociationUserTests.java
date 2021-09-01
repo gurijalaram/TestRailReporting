@@ -9,12 +9,11 @@ import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.AssociationUserResponse;
 import com.apriori.cds.objects.response.Customer;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;

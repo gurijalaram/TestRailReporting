@@ -1,4 +1,4 @@
-package com.apriori.cds.tests.utils;
+package com.apriori.cds.utils;
 
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
@@ -19,7 +19,6 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;

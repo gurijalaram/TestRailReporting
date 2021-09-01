@@ -9,7 +9,7 @@ import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.cds.entity.response.IdentityProviderPagination;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;

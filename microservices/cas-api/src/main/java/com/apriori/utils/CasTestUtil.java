@@ -1,4 +1,4 @@
-package com.apriori.tests.utils;
+package com.apriori.utils;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -15,7 +15,6 @@ import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
 import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
@@ -47,15 +46,18 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(url, SingleCustomer.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("customer",
-                new Customer().setName(name)
-                    .setCloudReference(cloudReference)
-                    .setDescription(description)
-                    .setCustomerType("CLOUD_ONLY")
-                    .setActive(true)
-                    .setMfaRequired(true)
-                    .setUseExternalIdentityProvider(false)
-                    .setMaxCadFileRetentionDays(584)
-                    .setEmailDomains(Arrays.asList(email + ".com", "gmail.com")));
+                Customer.builder().name(name)
+                    .cloudReference(cloudReference)
+                    .description(description)
+                    .salesforceId(new GenerateStringUtil().generateSalesForceId())
+                    .customerType("CLOUD_ONLY")
+                    .active(true)
+                    .mfaRequired(true)
+                    .useExternalIdentityProvider(false)
+                    .maxCadFileRetentionDays(584)
+                    .maxCadFileSize(51)
+                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -72,7 +74,9 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(endpoint, Customer.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("customer",
-                new Customer().setEmailDomains(Arrays.asList(email + ".com", email + ".co.uk")));
+                Customer.builder()
+                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
+                    .build());
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }
