@@ -37,9 +37,9 @@ public class NewScenarioNameTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Item cssItem;
-    private Item cssItemA;
-    private Item cssItemB;
-    private Item cssItemC;
+    private Item cssScenarioItemA;
+    private Item cssScenarioItemB;
+    private Item cssScenarioItemC;
 
     public NewScenarioNameTests() {
         super();
@@ -123,10 +123,10 @@ public class NewScenarioNameTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssItemA = loginPage.login(currentUser)
+        cssScenarioItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
 
-        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
+        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
@@ -134,10 +134,10 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssItemA, currentUser, EvaluatePage.class)
+            .publish(cssScenarioItemA, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
-        cssItemC = new ExplorePage(driver).navigateToScenario(cssItem)
+        cssScenarioItemC = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -145,7 +145,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssItemB, currentUser, EvaluatePage.class)
+            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
@@ -155,7 +155,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssItemC, currentUser, EvaluatePage.class)
+            .publish(cssScenarioItemC, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
