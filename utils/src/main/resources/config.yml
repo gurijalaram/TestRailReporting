@@ -358,7 +358,7 @@ staging:
     identity_role: 7G0JGBE2N2GE
 
   bcs:
-    api_url: https://bcs.na-1.qa-20-1.apriori.net/
+    api_url: https://bcs.us.staging.apriori.net/
     report_identity:
     reportType_identity:
     part_identity:
