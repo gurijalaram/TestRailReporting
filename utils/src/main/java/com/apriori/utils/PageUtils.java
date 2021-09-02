@@ -221,6 +221,15 @@ public class PageUtils {
         ((JavascriptExecutor) driver).executeScript("arguments[0].value = ''", targetElement);
     }
 
+    /**
+     * Clears a text input area
+     * @param element - the webelement
+     */
+    public void clear(WebElement element) {
+        waitForElementAndClick(element);
+        element.sendKeys(Keys.CONTROL + "a" + Keys.BACK_SPACE);
+    }
+
     public Dimension getWindowDimension() {
         return driver.manage().window().getSize();
     }
