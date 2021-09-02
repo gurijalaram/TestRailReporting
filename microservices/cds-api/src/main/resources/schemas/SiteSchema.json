@@ -130,7 +130,6 @@
                             "identity",
                             "createdBy",
                             "createdAt",
-                            "updatedAt",
                             "name",
                             "cloudReference",
                             "description",
@@ -146,6 +145,9 @@
                             "deploymentIdentity",
                             "region",
                             "applications"
+                          ],
+                          "optional": [
+                            "updatedAt"
                           ],
                           "properties": {
                             "identity": {

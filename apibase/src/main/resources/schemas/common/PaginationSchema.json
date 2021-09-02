@@ -6,10 +6,11 @@
     "pageNumber",
     "pageSize",
     "pageItemCount",
-    "totalItemCount",
-    "totalPageCount",
     "hasNextPage",
     "hasPreviousPage"
+  ],
+  "optional": [
+    "isRestrictedByAccessControl"
   ],
   "properties": {
     "isFirstPage": {
@@ -37,6 +38,9 @@
       "type": "boolean"
     },
     "hasPreviousPage": {
+      "type": "boolean"
+    },
+    "isRestrictedByAccessControl": {
       "type": "boolean"
     }
   }

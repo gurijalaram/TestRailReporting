@@ -1,10 +1,10 @@
-package com.apriori.apibase.services.nts.apicalls;
+package com.apriori.nts.utils;
 
 import com.apriori.apibase.services.nts.objects.Email;
 import com.apriori.apibase.services.nts.objects.GetEmailResponse;
-import com.apriori.apibase.services.nts.objects.Notifications;
 import com.apriori.apibase.services.nts.objects.SendEmailResponse;
 import com.apriori.apibase.services.nts.utils.EmailSetup;
+import com.apriori.nts.entity.response.Notifications;
 import com.apriori.utils.EmailUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.ConnectionManager;
@@ -142,7 +142,7 @@ public class NotificationService {
     }
 
     public static Notifications getNotifications(String serviceHost, String secretKey) {
-        String url = "https://" + serviceHost + "/notifications?key=" + secretKey;
+        String url = serviceHost + "notifications?key=" + secretKey;
         return (Notifications) GenericRequestUtil.get(
             RequestEntity.init(url, Notifications.class),
             new RequestAreaApi()
