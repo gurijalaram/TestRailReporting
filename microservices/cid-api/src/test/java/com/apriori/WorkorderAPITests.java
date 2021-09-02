@@ -84,6 +84,8 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "Casting.prt",
                 processGroup
@@ -115,6 +117,7 @@ public class WorkorderAPITests {
         FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
         ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
         assemblyComponents.add(
@@ -164,6 +167,8 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup
@@ -204,6 +209,8 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup
@@ -235,6 +242,7 @@ public class WorkorderAPITests {
         FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
         ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
         assemblyComponents.add(
@@ -287,6 +295,8 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup
@@ -328,6 +338,8 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup

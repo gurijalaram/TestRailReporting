@@ -77,6 +77,7 @@ public class FileUploadResources {
 
     private static final HashMap<String, String> token = new APIAuthentication()
             .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
+    private static HashMap<String, String> headers = new HashMap<>();
 
     private final String acceptHeader = "Accept";
     private final String contentType = "Content-Type";
@@ -472,11 +473,12 @@ public class FileUploadResources {
      * @return Object - response
      */
     public Object getImageById(String imageId) {
-        token.put(acceptHeader, textPlain);
+        headers = token;
+        headers.put("Accept", "text.plain");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_IMAGES, null)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(imageId);
 
         return HTTP2Request.build(requestEntity).get().getBody();
