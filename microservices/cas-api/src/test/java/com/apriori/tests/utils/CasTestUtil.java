@@ -4,6 +4,7 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
@@ -31,7 +32,7 @@ import java.util.Collections;
 public class CasTestUtil extends TestUtil {
 
     private static String token = new JwtTokenUtil().retrieveJwtToken();
-    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
+    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), CASAPIEnum.GET_CUSTOMERS.getEndpointString());
 
     /**
      * POST call to add a customer
@@ -98,7 +99,7 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <ValidateSite>
      */
     public ResponseWrapper<ValidateSite> validateSite(String identity, String siteId) {
-        String endpoint = url + identity + "/sites/validate";
+        String endpoint = url + identity + CASAPIEnum.VALIDATE_SITES.getEndpointString();
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, ValidateSite.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -115,7 +116,7 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <Site>
      */
     public ResponseWrapper<Site> addSite(String identity, String siteId, String siteName) {
-        String endpoint = url + identity + "/sites";
+        String endpoint = url + identity + CASAPIEnum.POST_SITES.getEndpointString();
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, Site.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -134,7 +135,7 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <CustomerUser>
      */
     public ResponseWrapper<CustomerUser> addUser(String identity, String userName, String customerName) {
-        String endpoint = url + identity + "/users/";
+        String endpoint = url + identity + CASAPIEnum.POST_USERS.getEndpointString();
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, CustomerUser.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -165,7 +166,7 @@ public class CasTestUtil extends TestUtil {
         LocalDateTime createdAt = LocalDateTime.parse("2020-11-23T10:15:30");
         LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
         LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
-        String endpoint = url + customerIdentity + "/users/" + identity;
+        String endpoint = url + customerIdentity + CASAPIEnum.POST_USERS.getEndpointString() + identity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, UpdateUser.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -201,7 +202,7 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <PostBatch>
      */
     public ResponseWrapper<PostBatch> addBatchFile(String customerIdentity) {
-        String endpoint = url + customerIdentity + "/batches/";
+        String endpoint = url + customerIdentity + CASAPIEnum.POST_BATCHES.getEndpointString();
 
         final File batchFile = FileResourceUtil.getResourceAsFile("users.csv");
         RequestEntity requestEntity = RequestEntity.init(endpoint, PostBatch.class)
@@ -215,7 +216,7 @@ public class CasTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity) {
-        String endpoint = url + customerIdentity + "/batches/" + batchIdentity;
+        String endpoint = url + customerIdentity + CASAPIEnum.POST_BATCHES.getEndpointString() + batchIdentity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
@@ -229,7 +230,7 @@ public class CasTestUtil extends TestUtil {
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> newUsersFromBatch(String customerIdentity, String batchIdentity) {
-        String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items";
+        String endpoint = url + customerIdentity + CASAPIEnum.POST_BATCHES.getEndpointString() + batchIdentity + CASAPIEnum.POST_BATCH_ITEMS.getEndpointString();
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
@@ -245,7 +246,7 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <BatchItem>
      */
     public ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity) {
-        String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items/" + itemIdentity;
+        String endpoint = url + customerIdentity + CASAPIEnum.POST_BATCHES.getEndpointString() + batchIdentity + CASAPIEnum.POST_BATCH_ITEMS.getEndpointString() + itemIdentity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, BatchItem.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
