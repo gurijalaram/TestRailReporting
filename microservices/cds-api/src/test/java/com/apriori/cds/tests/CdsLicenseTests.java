@@ -15,7 +15,7 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociation;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;

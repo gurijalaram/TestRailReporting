@@ -13,7 +13,7 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
-import com.apriori.utils.CasTestUtil;
+import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
