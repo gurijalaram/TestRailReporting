@@ -6,9 +6,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import org.assertj.core.api.BooleanAssert;
-import org.assertj.core.api.SoftAssertions;
-
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.entity.request.assemblyobjects.Assembly;
 import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
@@ -33,6 +30,7 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.CidAPITest;
