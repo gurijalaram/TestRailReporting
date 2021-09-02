@@ -57,8 +57,8 @@ public class CasSitesTests extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(siteResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(siteResponse.getResponseEntity().getResponse().getItems().get(0).getSiteId(), is(not(emptyString())));
+        assertThat(siteResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(siteResponse.getResponseEntity().getItems().get(0).getSiteId(), is(not(emptyString())));
     }
 
     @Test
@@ -77,16 +77,16 @@ public class CasSitesTests extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(sitesResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String siteIdentity = sitesResponse.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
         String siteByIdUrl = siteEndpoint + siteIdentity;
 
         ResponseWrapper<Site> site = new CommonRequestUtil().getCommonRequest(siteByIdUrl,true, Site.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(site.getResponseEntity().getResponse().getIdentity(), is(equalTo(siteIdentity)));
+        assertThat(site.getResponseEntity().getIdentity(), is(equalTo(siteIdentity)));
     }
 
     @Test
@@ -105,9 +105,9 @@ public class CasSitesTests extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(sitesResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String siteId = sitesResponse.getResponseEntity().getResponse().getItems().get(0).getSiteId();
+        String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
         ResponseWrapper<ValidateSite> siteResponse = casTestUtil.validateSite(identity, siteId);
 
@@ -136,6 +136,6 @@ public class CasSitesTests extends TestUtil {
         ResponseWrapper<Site> site = casTestUtil.addSite(identity, siteID, siteName);
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(site.getResponseEntity().getResponse().getSiteId(), is(equalTo(siteID)));
+        assertThat(site.getResponseEntity().getSiteId(), is(equalTo(siteID)));
     }
 }

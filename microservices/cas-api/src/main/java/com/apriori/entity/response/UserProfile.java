@@ -6,10 +6,12 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
 
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public class UserProfile {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
@@ -18,24 +20,4 @@ public class UserProfile {
     private String createdBy;
     private String givenName;
     private String familyName;
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public String getGivenName() {
-        return givenName;
-    }
-
-    public String getFamilyName() {
-        return familyName;
-    }
 }

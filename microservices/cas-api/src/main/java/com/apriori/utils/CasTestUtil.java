@@ -81,7 +81,7 @@ public class CasTestUtil extends TestUtil {
     }
 
     /**
-     * @param url   - the endpoint
+     * @param url - the endpoint
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> resetMfa(String url) {
@@ -101,7 +101,8 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(endpoint, ValidateSite.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("site",
-                new Site().setSiteId(siteId));
+                Site.builder().siteId(siteId)
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -117,10 +118,11 @@ public class CasTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntity.init(endpoint, Site.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("site",
-                new Site().setSiteId(siteId)
-                    .setName(siteName)
-                    .setDescription("Site created by automation test")
-                    .setActive(true));
+                Site.builder().siteId(siteId)
+                    .name(siteName)
+                    .description("Site created by automation test")
+                    .active(true)
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -199,8 +201,8 @@ public class CasTestUtil extends TestUtil {
 
         final File batchFile = FileResourceUtil.getResourceAsFile("users.csv");
         RequestEntity requestEntity = RequestEntity.init(endpoint, PostBatch.class)
-                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-                .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setMultiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -212,44 +214,44 @@ public class CasTestUtil extends TestUtil {
         String endpoint = url + customerIdentity + "/batches/" + batchIdentity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
-                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 
         return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
     }
 
     /**
      * @param customerIdentity - the customer identity
-     * @param batchIdentity - batch identity
+     * @param batchIdentity    - batch identity
      * @return <T>ResponseWrapper <T>
      */
     public <T> ResponseWrapper<T> newUsersFromBatch(String customerIdentity, String batchIdentity) {
         String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items";
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
-                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-                .setBody(new BatchItemsPost().setBatchItems(Arrays.asList(batchIdentity)));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody(new BatchItemsPost().setBatchItems(Arrays.asList(batchIdentity)));
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
 
     /**
      * @param customerIdentity - the customer identity
-     * @param batchIdentity - batch identity
-     * @param itemIdentity - item identity
+     * @param batchIdentity    - batch identity
+     * @param itemIdentity     - item identity
      * @return ResponseWrapper <BatchItem>
      */
     public ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity) {
         String endpoint = url + customerIdentity + "/batches/" + batchIdentity + "/items/" + itemIdentity;
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, BatchItem.class)
-                .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
-                .setBody("batchItem",
-                    new BatchItem().setUserName("maggie")
-                        .setGivenName("Maggie")
-                        .setFamilyName("Simpsons")
-                        .setPrefix("Miss")
-                        .setCityTown("Springfield")
-                        .setJobTitle("QA"));
+            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
+            .setBody("batchItem",
+                new BatchItem().setUserName("maggie")
+                    .setGivenName("Maggie")
+                    .setFamilyName("Simpsons")
+                    .setPrefix("Miss")
+                    .setCityTown("Springfield")
+                    .setJobTitle("QA"));
 
         return GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
     }

@@ -11,12 +11,14 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "UserSchema.json")
 @JsonRootName("response")
 @Data
 public class User {
+    private Boolean isSystemUser;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
@@ -31,6 +33,8 @@ public class User {
     private String username;
     private Boolean active;
     private Boolean mfaRequired;
+    private CustomAttributes customAttributes;
     private CustomProperties customProperties;
     private String userType;
+    private List<String> resourcesAllowedToCreate;
 }
