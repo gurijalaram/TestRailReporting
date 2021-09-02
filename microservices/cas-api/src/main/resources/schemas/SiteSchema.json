@@ -65,15 +65,17 @@
                   "identity",
                   "createdAt",
                   "createdBy",
-                  "customerIdentity",
                   "name",
                   "description",
                   "active",
                   "apVersion",
-                  "applications",
                   "installations",
-                  "siteIdentities",
                   "deploymentType"
+                ],
+                "optional": [
+                  "applications",
+                  "customerIdentity",
+                  "siteIdentities"
                 ],
                 "properties": {
                   "isDefault": {
@@ -197,7 +199,6 @@
                             "identity",
                             "createdAt",
                             "createdBy",
-                            "customerIdentity",
                             "deploymentIdentity",
                             "name",
                             "cloudReference",
@@ -212,6 +213,9 @@
                             "clientSecret",
                             "cidGlobalKey",
                             "region"
+                          ],
+                          "optional": [
+                            "customerIdentity"
                           ],
                           "properties": {
                             "identity": {

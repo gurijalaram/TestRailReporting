@@ -25,6 +25,8 @@
         "clientId",
         "clientSecret",
         "cidGlobalKey",
+        "cidApiId",
+        "cidApiSecret",
         "region"
       ],
       "properties": {
@@ -97,6 +99,14 @@
           "type": "string"
         },
         "cidGlobalKey": {
+          "$id": "#/properties/cidGlobalKey",
+          "type": "string"
+        },
+        "cidApiId": {
+          "$id": "#/properties/cidGlobalKey",
+          "type": "string"
+        },
+        "cidApiSecret": {
           "$id": "#/properties/cidGlobalKey",
           "type": "string"
         },

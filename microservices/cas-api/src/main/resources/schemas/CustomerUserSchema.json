@@ -10,6 +10,7 @@
       "$id": "#/properties/response",
       "type": "object",
       "required": [
+        "isSystemUser",
         "identity",
         "createdAt",
         "createdBy",
@@ -19,12 +20,19 @@
         "username",
         "active",
         "mfaRequired",
-        "customProperties",
+        "customAttributes",
         "createdByName",
         "licenseAssignments",
         "userType"
       ],
+      "optional": [
+        "customProperties"
+      ],
       "properties": {
+        "isSystemUser": {
+          "$id": "#/properties/response/properties/identity",
+          "type": "boolean"
+        },
         "identity": {
           "$id": "#/properties/response/properties/identity",
           "type": "string"
@@ -109,6 +117,10 @@
         "mfaRequired": {
           "$id": "#/properties/response/properties/mfaRequired",
           "type": "boolean"
+        },
+        "customAttributes": {
+          "$id": "#/properties/response/properties/customAttributes",
+          "type": "object"
         },
         "customProperties": {
           "$id": "#/properties/response/properties/customProperties",

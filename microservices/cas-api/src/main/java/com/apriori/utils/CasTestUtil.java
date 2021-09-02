@@ -131,22 +131,23 @@ public class CasTestUtil extends TestUtil {
      * @param userName - username
      * @return ResponseWrapper <CustomerUser>
      */
-    public ResponseWrapper<CustomerUser> addUser(String identity, String userName) {
+    public ResponseWrapper<CustomerUser> addUser(String identity, String userName, String customerName) {
         String endpoint = url + identity + "/users/";
 
         RequestEntity requestEntity = RequestEntity.init(endpoint, CustomerUser.class)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
-                new CustomerUser().setUserType("AP_CLOUD_USER")
-                    .setEmail(userName.toLowerCase() + "@gmail.com")
-                    .setUsername(userName)
-                    .setActive(true)
-                    .setUserProfile(new CustomerUserProfile().setGivenName(userName)
+                CustomerUser.builder().userType("AP_CLOUD_USER")
+                    .email(userName.toLowerCase() + "@" + customerName.toLowerCase() + ".co.uk")
+                    .username(userName)
+                    .active(true)
+                    .userProfile(new CustomerUserProfile().setGivenName(userName)
                         .setFamilyName("Automater")
                         .setJobTitle("Automation Engineer")
                         .setDepartment("Automation")
                         .setSupervisor("Ciene Frith")
-                        .setTownCity("Brooklyn")));
+                        .setTownCity("Brooklyn"))
+                    .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
     }
@@ -158,7 +159,7 @@ public class CasTestUtil extends TestUtil {
      * @param profileIdentity  - user profile identity
      * @return ResponseWrapper <UpdateUser>
      */
-    public ResponseWrapper<UpdateUser> updateUser(String userName, String identity, String customerIdentity, String profileIdentity) {
+    public ResponseWrapper<UpdateUser> updateUser(String userName, String customerName, String identity, String customerIdentity, String profileIdentity) {
         LocalDateTime createdAt = LocalDateTime.parse("2020-11-23T10:15:30");
         LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
         LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
@@ -168,7 +169,7 @@ public class CasTestUtil extends TestUtil {
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token))
             .setBody("user",
                 new UpdateUser().setUserType("AP_CLOUD_USER")
-                    .setEmail(userName.toLowerCase() + "@gmail.com")
+                    .setEmail(userName.toLowerCase() + "@" + customerName.toLowerCase() + ".co.uk")
                     .setUsername(userName)
                     .setActive(true)
                     .setIdentity(identity)

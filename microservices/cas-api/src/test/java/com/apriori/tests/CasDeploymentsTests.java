@@ -60,6 +60,6 @@ public class CasDeploymentsTests extends TestUtil {
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(deploymentByID.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(deploymentByID.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));
+        assertThat(deploymentByID.getResponseEntity().getIdentity(), is(equalTo(deploymentIdentity)));
     }
 }

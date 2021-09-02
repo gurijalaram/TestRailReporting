@@ -37,8 +37,4 @@ public class Site {
     private List<Deployment> deployments;
     private List<LicensedApplications> licensedApplications;
     private String createdByName;
-
-    public static class LicensedApplications {
-
-    }
 }
