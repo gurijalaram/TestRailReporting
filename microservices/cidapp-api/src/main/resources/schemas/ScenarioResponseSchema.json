@@ -17,7 +17,6 @@
         "scenarioType",
         "scenarioState",
         "lastAction",
-        "ownedBy",
         "locked",
         "published"
       ],
@@ -25,7 +24,9 @@
         "previousScenarioState",
         "updatedAt",
         "ownedByName",
-        "createdByName"
+        "createdByName",
+        "subjectIdentity",
+        "ownedBy"
       ],
       "properties": {
         "identity": {
@@ -76,6 +77,9 @@
           "type": "string"
         },
         "createdByName": {
+          "type": "string"
+        },
+        "subjectIdentity": {
           "type": "string"
         }
       }

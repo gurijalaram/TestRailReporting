@@ -1,7 +1,11 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -165,8 +169,10 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      *
      * @return generic page object
      */
-    public <T> T publish(Class<T> klass) {
-        return modalDialogController.publish(klass);
+    public <T> T publish(Item cssItem, UserCredentials currentUser, Class<T> klass) {
+        modalDialogController.publish(klass);
+        new CidAppTestUtil().getScenarioRepresentation(cssItem, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, currentUser);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
