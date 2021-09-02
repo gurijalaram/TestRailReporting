@@ -42,6 +42,7 @@ public class UpdateUser {
     private String username;
     private Boolean active;
     private Boolean mfaRequired;
+    private CustomAttributes customAttributes;
     private CustomProperties customProperties;
     private String createdByName;
     private String updatedByName;

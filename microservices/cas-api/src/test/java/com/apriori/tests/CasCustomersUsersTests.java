@@ -93,7 +93,7 @@ public class CasCustomersUsersTests extends TestUtil {
         ResponseWrapper<UpdateUser> updatedUser = casTestUtil.updateUser(userName, customerName, identity, customerIdentity, profileIdentity);
 
         assertThat(updatedUser.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(updatedUser.getResponseEntity().getResponse().getUserProfile().getDepartment(), is(equalTo("QA")));
+        assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("QA")));
     }
 
     @Test
