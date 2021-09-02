@@ -31,87 +31,66 @@
       ],
       "properties": {
         "identity": {
-          "$id": "#/properties/identity",
           "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/createdAt",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/createdBy",
           "type": "string"
         },
         "customerIdentity": {
-          "$id": "#/properties/customerIdentity",
           "type": "string"
         },
         "deploymentIdentity": {
-          "$id": "#/properties/deploymentIdentity",
           "type": "string"
         },
         "name": {
-          "$id": "#/properties/name",
           "type": "string"
         },
         "cloudReference": {
-          "$id": "#/properties/cloudReference",
           "type": "string"
         },
         "description": {
-          "$id": "#/properties/description",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/active",
           "type": "boolean"
         },
         "apVersion": {
-          "$id": "#/properties/url",
           "type": "string"
         },
         "url": {
-          "$id": "#/properties/url",
           "type": "string"
         },
         "realm": {
-          "$id": "#/properties/realm",
           "type": "string"
         },
         "s3Bucket": {
-          "$id": "#/properties/s3Bucket",
           "type": "string"
         },
         "tenantGroup": {
-          "$id": "#/properties/tenantGroup",
           "type": "string"
         },
         "tenant": {
-          "$id": "#/properties/tenant",
           "type": "string"
         },
         "clientId": {
-          "$id": "#/properties/clientId",
           "type": "string"
         },
         "clientSecret": {
-          "$id": "#/properties/clientSecret",
           "type": "string"
         },
         "cidGlobalKey": {
-          "$id": "#/properties/cidGlobalKey",
           "type": "string"
         },
         "cidApiId": {
-          "$id": "#/properties/cidGlobalKey",
           "type": "string"
         },
         "cidApiSecret": {
-          "$id": "#/properties/cidGlobalKey",
           "type": "string"
         },
         "region": {
-          "$id": "#/properties/region",
           "type": "string"
         }
       }

@@ -5,7 +5,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "isDefault",
@@ -26,49 +25,37 @@
       ],
       "properties": {
         "isDefault": {
-          "$id": "#/properties/isDefault",
           "type": "boolean"
         },
         "identity": {
-          "$id": "#/properties/identity",
           "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/createdAt",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/createdBy",
           "type": "string"
         },
         "customerIdentity": {
-          "$id": "#/properties/customerIdentity",
           "type": "string"
         },
         "name": {
-          "$id": "#/properties/name",
           "type": "string"
         },
         "description": {
-          "$id": "#/properties/description",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/active",
           "type": "boolean"
         },
         "apVersion": {
-          "$id": "#/properties/apVersion",
           "type": "string"
         },
         "applications": {
-          "$id": "#/properties/applications",
           "type": "array",
           "items": {
-            "$id": "#/properties/applications/items",
             "anyOf": [
               {
-                "$id": "#/properties/applications/items/anyOf/0",
                 "type": "object",
                 "required": [
                   "isSingleTenant",
@@ -85,47 +72,36 @@
                 ],
                 "properties": {
                   "isSingleTenant": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/isSingleTenant",
                     "type": "boolean"
                   },
                   "isCloudHomeApp": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/isCloudHomeApp",
                     "type": "boolean"
                   },
                   "isPublic": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/isPublic",
                     "type": "boolean"
                   },
                   "identity": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/name",
                     "type": "string"
                   },
                   "serviceName": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/serviceName",
                     "type": "string"
                   },
                   "cloudReference": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/cloudReference",
                     "type": "string"
                   },
                   "description": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/description",
                     "type": "string"
                   },
                   "iconUrl": {
-                    "$id": "#/properties/applications/items/anyOf/0/properties/iconUrl",
                     "type": "string"
                   }
                 }
@@ -134,13 +110,10 @@
           }
         },
         "installations": {
-          "$id": "#/properties/installations",
           "type": "array",
           "items": {
-            "$id": "#/properties/installations/items",
             "anyOf": [
               {
-                "$id": "#/properties/installations/items/anyOf/0",
                 "type": "object",
                 "required": [
                   "identity",
@@ -164,75 +137,57 @@
                 ],
                 "properties": {
                   "identity": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "customerIdentity": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/customerIdentity",
                     "type": "string"
                   },
                   "deploymentIdentity": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/deploymentIdentity",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/name",
                     "type": "string"
                   },
                   "cloudReference": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/cloudReference",
                     "type": "string"
                   },
                   "description": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/description",
                     "type": "string"
                   },
                   "active": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/active",
                     "type": "boolean"
                   },
                   "url": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/url",
                     "type": "string"
                   },
                   "realm": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/realm",
                     "type": "string"
                   },
                   "s3Bucket": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/s3Bucket",
                     "type": "string"
                   },
                   "tenantGroup": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/tenantGroup",
                     "type": "string"
                   },
                   "tenant": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/tenant",
                     "type": "string"
                   },
                   "clientId": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/clientId",
                     "type": "string"
                   },
                   "clientSecret": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/clientSecret",
                     "type": "string"
                   },
                   "cidGlobalKey": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/cidGlobalKey",
                     "type": "string"
                   },
                   "region": {
-                    "$id": "#/properties/installations/items/anyOf/0/properties/region",
                     "type": "string"
                   }
                 }
@@ -241,14 +196,11 @@
           }
         },
         "siteIdentities": {
-          "$id": "#/properties/siteIdentities",
           "type": "array",
           "items": {
-            "$id": "#/properties/siteIdentities/items"
           }
         },
         "deploymentType": {
-          "$id": "#/properties/deploymentType",
           "type": "string"
         }
       }

@@ -7,7 +7,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "optional": [
         "isFirstPage",
@@ -23,49 +22,37 @@
       ],
       "properties": {
         "isFirstPage": {
-          "$id": "#/properties/response/properties/isFirstPage",
           "type": "boolean"
         },
         "isLastPage": {
-          "$id": "#/properties/response/properties/isLastPage",
           "type": "boolean"
         },
         "pageNumber": {
-          "$id": "#/properties/response/properties/pageNumber",
           "type": "integer"
         },
         "pageSize": {
-          "$id": "#/properties/response/properties/pageSize",
           "type": "integer"
         },
         "pageItemCount": {
-          "$id": "#/properties/response/properties/pageItemCount",
           "type": "integer"
         },
         "totalItemCount": {
-          "$id": "#/properties/response/properties/totalItemCount",
           "type": "integer"
         },
         "totalPageCount": {
-          "$id": "#/properties/response/properties/totalPageCount",
           "type": "integer"
         },
         "hasNextPage": {
-          "$id": "#/properties/response/properties/hasNextPage",
           "type": "boolean"
         },
         "hasPreviousPage": {
-          "$id": "#/properties/response/properties/hasPreviousPage",
           "type": "boolean"
         },
         "items": {
-          "$id": "#/properties/response/properties/items",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/items/items",
             "anyOf": [
               {
-                "$id": "#/properties/response/properties/items/items/anyOf/0",
                 "type": "object",
                 "required": [
                   "identity",
@@ -92,108 +79,82 @@
                 ],
                 "properties": {
                   "identity": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "updatedAt": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedAt",
                     "type": "string"
                   },
                   "updatedBy": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedBy",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/name",
                     "type": "string"
                   },
                   "cloudReference": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/cloudReference",
                     "type": "string"
                   },
                   "description": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/description",
                     "type": "string"
                   },
                   "customerType": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/customerType",
                     "type": "string"
                   },
                   "salesforceId": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/salesforceId",
                     "type": "string"
                   },
                   "active": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/active",
                     "type": "boolean"
                   },
                   "maxCadFileRetentionDays": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/maxCadFileRetentionDays",
                     "type": "integer"
                   },
                   "maxCadFileSize": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/maxCadFileRetentionDays",
                     "type": "integer"
                   },
                   "useExternalIdentityProvider": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/useExternalIdentityProvider",
                     "type": "boolean"
                   },
                   "mfaRequired": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/mfaRequired",
                     "type": "boolean"
                   },
                   "oneTimePasswordApplications": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/oneTimePasswordApplications",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/items/items/anyOf/0/properties/oneTimePasswordApplications/items"
                     }
                   },
                   "createdByName": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/createdByName",
                     "type": "string"
                   },
                   "updatedByName": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/updatedByName",
                     "type": "string"
                   },
                   "identityProviders": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviders",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/items/items/anyOf/0/properties/identityProviders/items"
                     }
                   },
                   "emailDomains": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailDomains",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailDomains/items",
                       "anyOf": [
                         {
-                          "$id": "#/properties/response/properties/items/items/anyOf/0/properties/emailDomains/items/anyOf/0",
                           "type": "string"
                         }
                       ]
                     }
                   },
                   "authenticationType": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/0/properties/authenticationType",
                     "type": "string"
                   }
                 }
               },
               {
-                "$id": "#/properties/response/properties/items/items/anyOf/1",
                 "type": "object",
                 "required": [
                   "identity",
@@ -217,90 +178,68 @@
                 ],
                 "properties": {
                   "identity": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/identity",
                     "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/createdAt",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/createdBy",
                     "type": "string"
                   },
                   "updatedAt": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/updatedAt",
                     "type": "string"
                   },
                   "updatedBy": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/updatedBy",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/name",
                     "type": "string"
                   },
                   "description": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/description",
                     "type": "string"
                   },
                   "customerType": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/customerType",
                     "type": "string"
                   },
                   "active": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/active",
                     "type": "boolean"
                   },
                   "maxCadFileRetentionDays": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/maxCadFileRetentionDays",
                     "type": "integer"
                   },
                   "useExternalIdentityProvider": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/useExternalIdentityProvider",
                     "type": "boolean"
                   },
                   "mfaRequired": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/mfaRequired",
                     "type": "boolean"
                   },
                   "oneTimePasswordApplications": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/oneTimePasswordApplications",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/items/items/anyOf/1/properties/oneTimePasswordApplications/items"
                     }
                   },
                   "createdByName": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/createdByName",
                     "type": "string"
                   },
                   "updatedByName": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/updatedByName",
                     "type": "string"
                   },
                   "identityProviders": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/identityProviders",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/items/items/anyOf/1/properties/identityProviders/items"
                     }
                   },
                   "emailDomains": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/emailDomains",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/items/items/anyOf/1/properties/emailDomains/items",
                       "anyOf": [
                         {
-                          "$id": "#/properties/response/properties/items/items/anyOf/1/properties/emailDomains/items/anyOf/0",
                           "type": "string"
                         }
                       ]
                     }
                   },
                   "authenticationType": {
-                    "$id": "#/properties/response/properties/items/items/anyOf/1/properties/authenticationType",
                     "type": "string"
                   }
                 }
