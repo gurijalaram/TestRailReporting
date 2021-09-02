@@ -9,6 +9,8 @@ import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -17,13 +19,15 @@ import org.junit.Test;
 public class IterationsControllerTests {
 
     private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private UserCredentials currentUser;
 
     @Test
     @Description("Get the latest iteration")
     public void getComponentsIterationsLatest() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = cidAppTestUtil.postComponents("Casting.prt", scenarioName, "Casting - Die");
+        Item postComponentResponse = cidAppTestUtil.postCssComponents("Casting.prt", scenarioName, "Casting - Die", currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();

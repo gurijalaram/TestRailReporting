@@ -2,7 +2,6 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.navtoolbars.help.HelpPage;
 import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
-
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;

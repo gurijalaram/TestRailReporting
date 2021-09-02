@@ -16,7 +16,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class Emails {
-    private String cloudContext = PropertiesContext.get("${env}.auth_targetCloudContext");
+    private String cloudContext = PropertiesContext.get("${env}.auth_target_cloud_context");
     private PropertyStore propertyStore = new PropertyStore();
     private String baseUrl;
 

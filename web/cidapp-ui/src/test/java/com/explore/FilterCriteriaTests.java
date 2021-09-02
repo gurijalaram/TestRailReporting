@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -26,12 +27,12 @@ import java.io.File;
 
 public class FilterCriteriaTests extends TestBase {
 
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private Item cssItem;
 
     public FilterCriteriaTests() {
         super();
@@ -157,8 +158,10 @@ public class FilterCriteriaTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("High")
@@ -166,7 +169,7 @@ public class FilterCriteriaTests extends TestBase {
             .inputNotes("Test Notes")
             .submit(EvaluatePage.class)
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(cssItem, currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -189,10 +192,12 @@ public class FilterCriteriaTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(cssItem, currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -249,12 +254,14 @@ public class FilterCriteriaTests extends TestBase {
         String filterName2 = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .publishScenario()
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
-            .publish(ExplorePage.class)
+            .publish(cssItem, currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -262,7 +269,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .lock(ExplorePage.class)
             .publishScenario()
-            .publish(ExplorePage.class)
+            .publish(cssItem, currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName2)

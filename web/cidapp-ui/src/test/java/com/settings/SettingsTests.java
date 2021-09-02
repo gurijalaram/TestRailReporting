@@ -1,11 +1,15 @@
 package com.settings;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.hasItems;
 
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
@@ -15,7 +19,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.MetricEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.UnitsEnum;
@@ -23,10 +26,8 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.sun.xml.bind.v2.TODO;
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -38,12 +39,14 @@ import java.io.File;
 public class SettingsTests extends TestBase {
     File resourceFile;
     private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
     private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
+    private Item cssItem;
+    private SecondaryPage secondaryPage;
+    private MaterialSelectorPage materialSelectorPage;
 
     @After
     public void resetAllSettings() {
@@ -54,7 +57,6 @@ public class SettingsTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6283"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
@@ -87,7 +89,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6281", "5442"})
     @Description("User can change the default Process group")
     public void defaultPG() {
@@ -99,22 +100,22 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        cssItem = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class);
+            .publish(cssItem, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
 
     @Test
-    @Issue("MIC-2702")
-    @Issue("BA-1957")
     @TestRail(testCaseId = {"6282"})
     @Description("User can change the default VPE")
     public void defaultVPE() {
@@ -135,12 +136,10 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        //assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO));
-        //TODO uncomment above line when BA-1957 is done
+        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO));
     }
 
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6285", "6286"})
     @Description("User can change the default Production Life")
     public void defaultProductionLife() {
@@ -168,7 +167,6 @@ public class SettingsTests extends TestBase {
 
     @Ignore("Uncomment when ba-1955 is done")
     @Test
-    @Issue("MIC-2702")
     @TestRail(testCaseId = {"6287", "6288"})
     @Description("User can change the default Batch size when set to manual")
     public void defaultBatchSize() {
@@ -181,17 +179,17 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize(batchSize)
             .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .costScenario();
-        //select secondary inputs
+            .costScenario()
+            .goToSecondaryTab();
 
-        //assertThat(secondaryInputsPage.getBatchSize(), equalTo(batchSize));
+        assertThat(secondaryPage.getBatchSize(), is(equalTo(batchSize)));
     }
 
     @Test
@@ -222,7 +220,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        selectionPage = loginPage.login(currentUser)
             .openSettings()
             .goToSelectionTab()
             .selectColour(ColourEnum.PEAR)
@@ -375,7 +373,6 @@ public class SettingsTests extends TestBase {
         assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
     }
 
-    @Ignore("Uncomment when ba-1961 is done")
     @Test
     @TestRail(testCaseId = {"6300", "6304"})
     @Description("Options should filter subsequent drop down options available")
@@ -384,12 +381,13 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        productionDefaultPage = loginPage.login(currentUser)
+        materialSelectorPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
-            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA);
+            .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_USA)
+            .openMaterialSelectorTable();
 
-        //assertThat(productionDefaultPage.getListOfMaterials(), containsInAnyOrder("<No default specified>", "F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
+        assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
     }
 }
