@@ -3,6 +3,7 @@ package com.apriori.pageobjects.pages.login;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
@@ -18,7 +19,7 @@ import utils.Constants;
 public class AdminLoginPage extends AdminHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminLoginPage.class);
-    private static String loginPageURL = Constants.getDefaultUrl();
+    private static String loginPageURL = PropertiesContext.get("${env}.admin.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;

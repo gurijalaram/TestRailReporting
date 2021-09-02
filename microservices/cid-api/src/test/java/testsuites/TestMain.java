@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TestMain {
-    public static Class defaultTest = CidAPITest.class;
+    public static Class defaultTest = CidAPISuite.class;
 
     public static void main(String[] args) {
 
