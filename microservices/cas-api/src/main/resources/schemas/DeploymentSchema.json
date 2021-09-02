@@ -17,10 +17,12 @@
         "description",
         "active",
         "apVersion",
-        "applications",
         "installations",
-        "siteIdentities",
         "deploymentType"
+      ],
+      "optional": [
+        "applications",
+        "siteIdentities"
       ],
       "properties": {
         "isDefault": {

@@ -10,6 +10,7 @@
       "$id": "#/properties/response",
       "type": "object",
       "required": [
+        "isSystemUser",
         "identity",
         "createdAt",
         "createdBy",
@@ -21,13 +22,19 @@
         "username",
         "active",
         "mfaRequired",
-        "customProperties",
         "createdByName",
         "updatedByName",
         "licenseAssignments",
         "userType"
       ],
+      "optional": [
+        "customProperties"
+      ],
       "properties": {
+        "isSystemUser": {
+          "$id": "#/properties/response/properties/isSystemUser",
+          "type": "boolean"
+        },
         "identity": {
           "$id": "#/properties/response/properties/identity",
           "type": "string"
