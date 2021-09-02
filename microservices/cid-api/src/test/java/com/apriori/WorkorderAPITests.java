@@ -6,6 +6,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import org.assertj.core.api.BooleanAssert;
+import org.assertj.core.api.SoftAssertions;
+
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.entity.request.assemblyobjects.Assembly;
 import com.apriori.entity.request.assemblyobjects.AssemblyComponent;
@@ -316,11 +319,14 @@ public class WorkorderAPITests {
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
-        assertThat(getImageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
-        assertThat(getImageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
+        SoftAssertions softAssert = new SoftAssertions();
+        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable().equals("false"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen().equals("false"));
+
+        softAssert.assertAll();
     }
 
     @Test
@@ -359,11 +365,14 @@ public class WorkorderAPITests {
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
-        assertThat(getImageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
-        assertThat(getImageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
+        SoftAssertions softAssert = new SoftAssertions();
+        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable().equals("false"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen().equals("false"));
+
+        softAssert.assertAll();
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {
