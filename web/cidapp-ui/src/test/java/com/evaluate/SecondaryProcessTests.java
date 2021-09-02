@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
@@ -44,6 +45,7 @@ public class SecondaryProcessTests extends TestBase {
     private File resourceFile;
     private UserCredentials currentUser;
     private SecondaryProcessesPage secondaryProcessPage;
+    private Item cssItem;
 
     public SecondaryProcessTests() {
         super();
@@ -516,8 +518,10 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
@@ -534,7 +538,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
 
         evaluatePage.publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
