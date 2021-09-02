@@ -314,7 +314,10 @@ public class FileUploadResources {
      * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        token.put(contentType, "multipart/form-data");
+        //token.put(contentType, "multipart/form-data");
+        headers = token;
+        headers.put(contentType, "multipart/form-data");
+        headers.put("Accept", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
