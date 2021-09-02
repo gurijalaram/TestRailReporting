@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -40,6 +41,7 @@ public class TwoModelMachiningTests extends TestBase {
     private File twoModelFile;
     private File twoModelFile2;
     private UserCredentials currentUser;
+    private Item cssItem;
 
     public TwoModelMachiningTests() {
         super();
@@ -211,12 +213,14 @@ public class TwoModelMachiningTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        cssItem = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
             .selectProcessGroup(CASTING_DIE)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
+            .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -225,7 +229,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));

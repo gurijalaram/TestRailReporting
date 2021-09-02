@@ -3,16 +3,12 @@ package com.evaluate.dtc;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.utils.APIValue;
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
-import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
-import com.apriori.pageobjects.pages.settings.SelectionPage;
 import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -45,6 +41,7 @@ public class ToleranceTests extends TestBase {
     private ToleranceDefaultsPage toleranceDefaultsPage;
 
     private File resourceFile;
+    private Item cssItem;
 
     public ToleranceTests() {
         super();
@@ -653,12 +650,15 @@ public class ToleranceTests extends TestBase {
         currentUser = testUser1;
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
 
-        new CidAppLoginPage(driver).login(testUser1)
+        loginPage = new CidAppLoginPage(driver);
+        cssItem = loginPage.login(testUser1)
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
+            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
@@ -666,8 +666,8 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage = evaluatePage.publishScenario()
-            .publish(EvaluatePage.class)
+        evaluatePage.publishScenario()
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .logout()
             .login(testUser2)
             .selectFilter("Recent")

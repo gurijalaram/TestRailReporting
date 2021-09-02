@@ -146,10 +146,10 @@
                     "type": "boolean"
                   },
                   "scenarioPublishedBy": {
-                    "type": "boolean"
+                    "type": "string"
                   },
                   "scenarioPublishedByName": {
-                    "type": "boolean"
+                    "type": "string"
                   },
                   "scenarioSystemLocked": {
                     "type": "boolean"

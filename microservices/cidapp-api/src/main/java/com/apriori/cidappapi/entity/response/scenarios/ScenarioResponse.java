@@ -22,13 +22,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Schema(location = "CostResponseSchema.json")
-public class CostResponse {
+@Schema(location = "ScenarioResponseSchema.json")
+public class ScenarioResponse {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    private String subjectIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime updatedAt;
@@ -43,5 +44,11 @@ public class CostResponse {
     private Boolean published;
     private String ownedByName;
     private String createdByName;
+    private Boolean systemLocked;
     private List<String> permissions;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime publishedAt;
+    private String publishedBy;
+    private String publishedByName;
 }

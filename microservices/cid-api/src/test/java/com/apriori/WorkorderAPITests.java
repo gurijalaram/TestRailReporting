@@ -25,7 +25,6 @@ import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;

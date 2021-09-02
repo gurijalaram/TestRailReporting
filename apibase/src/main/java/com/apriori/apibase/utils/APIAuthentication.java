@@ -3,7 +3,6 @@ package com.apriori.apibase.utils;
 import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;

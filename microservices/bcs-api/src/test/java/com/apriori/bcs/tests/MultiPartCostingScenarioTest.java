@@ -221,7 +221,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         Object batchDetails;
         Integer pollingInterval = 0;
 
-        while (pollingInterval <= Constants.getPollingTimeout()) {
+        while (pollingInterval <= Constants.POLLING_TIMEOUT) {
             batchDetails = BatchResources.getBatchRepresentation(batchIdentity).getResponseEntity();
             try {
                 CostingElementStatus pollingResult = pollState(batchDetails, Batch.class);

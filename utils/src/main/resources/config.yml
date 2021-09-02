@@ -33,10 +33,17 @@ int-core:
     auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+    
+  bcs:
+    api_url: https://bcs.core.int.apriori.net/
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
 
   cas:
     api_url: https://cas-api.core.int.apriori.net/%s
-
+    
   cds:
     api_url: https://cds.na-1.qa-21-1.apriori.net/
     apriori_core_services_installation_identity:
@@ -52,11 +59,11 @@ int-core:
   fms:
     api_url: https://fms.core.int.apriori.net/
 
+  nts:
+    api_url: https://nts.core.int.apriori.net/
+
   reports:
     ui_url: ${int-core.base_url}jasperserver-pro/login.html
-
-  sds:
-    api_url: https://sds.core.int.apriori.net/
 
   vds:
     api_url: https://vds.core.int.apriori.net/
@@ -84,6 +91,13 @@ qa-cid-perf:
     auth_target_cloud_context: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+    
+  bcs:
+    api_url: https://bcs.na-1.qa-cid-perf.apriori.net/
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
 
   cas:
     api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/%s
@@ -110,6 +124,9 @@ qa-cid-perf:
 
   fms:
     api_url: https://fms.na-1.qa-cid-perf.apriori.net/
+    
+  nts:
+    api_url: https://nts.na-1.qa-cid-perf.apriori.net/
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
@@ -119,7 +136,7 @@ qa-cid-perf:
 
   vds:
     api_url: https://vds.na-1.qa-cid-perf.apriori.net/
-
+    
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
   name: qa-cig-perf
@@ -167,6 +184,14 @@ qa-cig-perf:
   vds:
     api_url: https://vds.na-1.qa-cig-perf.apriori.net/
 
+  bcs:
+    api_url: https://bcs.na-1.qa-cig-perf.apriori.net/
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
+
+
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
   name: qa-20-1
@@ -186,6 +211,13 @@ qa-20-1:
     auth_targetCloudContext: L2H992828N8ML2H992828N8N5HK8H97M75I41J8M416FBJD2
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+    
+  bcs:
+    api_url: https://bcs.na-1.qa-20-1.apriori.net/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
 
   cas:
     api_url: https://cas-api.na-1.qa-20-1.apriori.net/%s
@@ -253,6 +285,13 @@ qa-blue:
   nts:
     api_url: https://nts.core.qa.apriori.net/
 
+  bcs:
+    api_url: https://bcs.core.qa.apriori.net/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
+
 ######################################################## STAGING ########################################################
 staging:
   secret_key: K6JWVF8KV884
@@ -272,6 +311,13 @@ staging:
     automation_user_identity02:
     automation_user_identity03:
     identity_role: 7G0JGBE2N2GE
+
+  bcs:
+    api_url: https://bcs.us.staging.apriori.net/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
 
 
 ######################################################## LOCAL ########################################################
@@ -294,6 +340,13 @@ local:
     auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
+    
+  bcs:
+    api_url: ${local.base_url}:8810/
+    report_identity:
+    reportType_identity:
+    part_identity:
+    batch_identity:
 
   cas:
     api_url: ${local.base_url}:8818/%s
@@ -313,6 +366,9 @@ local:
 
   fms:
     api_url: ${local.base_url}:8806/
+    
+  nts:
+    api_url: ${local.base_url}:8807/
 
   reports:
     ui_url: ${local.base_url}jasperserver-pro/login.html
