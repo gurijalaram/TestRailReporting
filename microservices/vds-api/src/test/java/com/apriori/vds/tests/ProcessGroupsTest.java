@@ -6,6 +6,7 @@ import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
+import com.apriori.vds.tests.util.ProcessGroupUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
@@ -16,7 +17,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class ProcessGroupsTest extends VDSTestUtil {
+public class ProcessGroupsTest extends ProcessGroupUtil {
     private static final List<String> cidSupportedPgNames = Arrays.asList("2-Model Machining", "Additive Manufacturing", "Assembly", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand");
     private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Casting - Investment");
 

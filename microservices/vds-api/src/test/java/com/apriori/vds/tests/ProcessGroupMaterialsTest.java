@@ -6,19 +6,20 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
+import com.apriori.vds.tests.util.ProcessGroupUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
-public class ProcessGroupMaterialsTest extends VDSTestUtil {
+public class ProcessGroupMaterialsTest extends ProcessGroupUtil {
 
     @Test
     @TestRail(testCaseId = {"8129"})
     @Description("Get a list of Materials for a specific customer process group.")
     public void getMaterials() {
-        this.getProcessGroupMaterial();
+        getProcessGroupMaterial();
     }
 
     @Test
