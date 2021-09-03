@@ -26,5 +26,8 @@ public class Thumbnail {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    private LocalDateTime updatedAt;
     private String createdBy;
 }

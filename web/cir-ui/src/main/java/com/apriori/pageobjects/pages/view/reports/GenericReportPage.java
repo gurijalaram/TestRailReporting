@@ -9,6 +9,8 @@ import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.MassMetricEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 
+import com.apriori.utils.properties.PropertiesContext;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -915,6 +917,22 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void waitForNewTabSwitchCastingDtcToComparison() {
         pageUtils.waitForElementToAppear(comparisonTitle);
+    }
+
+    /**
+     * Opens new tab with CID open and switches to it
+     *
+     * @param index - int of index to go to
+     * @return current page object
+     */
+    public GenericReportPage openNewCidTabAndFocus(int index) {
+        pageUtils.jsNewTab();
+        pageUtils.windowHandler(index);
+
+        driver.get(PropertiesContext.get("{env}.cidapp.ui_url"));
+        pageUtils.waitForElementToAppear(cidLogo);
+
+        return new GenericReportPage(driver);
     }
 
     /**

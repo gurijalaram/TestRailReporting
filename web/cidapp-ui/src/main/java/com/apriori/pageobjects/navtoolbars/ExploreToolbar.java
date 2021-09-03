@@ -9,12 +9,11 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 
@@ -22,9 +21,8 @@ import java.io.File;
  * @author cfrith
  */
 
+@Slf4j
 public class ExploreToolbar extends MainNavBar {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExploreToolbar.class);
 
     @FindBy(css = "[id='qa-sub-header-new-dropdown']")
     private WebElement newButton;
@@ -72,7 +70,7 @@ public class ExploreToolbar extends MainNavBar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementAppear(newButton);
         pageUtils.waitForElementAppear(deleteButton);
@@ -108,19 +106,32 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        Item component = new CidAppTestUtil().postComponents(componentName, scenarioName, resourceFile, userCredentials);
-        return navigateToScenario(component.getComponentIdentity(), component.getScenarioIdentity());
+        Item component = new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, userCredentials);
+        return navigateToScenario(component);
     }
+
+    /**
+     * Uploads a component through the API
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param resourceFile    - the file
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public Item uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+        return new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, userCredentials);
+    }
+
 
     /**
      * Navigates to the scenario via url
      *
-     * @param componentId - component id
-     * @param scenarioId  - scenario id
+     * @param cssComponent - the CSS Component
      * @return a new page object
      */
-    public EvaluatePage navigateToScenario(String componentId, String scenarioId) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", componentId, scenarioId)));
+    public EvaluatePage navigateToScenario(Item cssComponent) {
+        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 

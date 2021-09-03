@@ -1,7 +1,6 @@
 package tests;
 
 import com.apriori.acs.utils.AcsResources;
-
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;

@@ -69,7 +69,7 @@ public class AdminHomePage extends PageHeader {
      * @return String
      */
     public String getUrlToCheck() {
-        return PropertiesContext.get("{env}.base_url");
+        return PropertiesContext.get("${env}.base_url");
     }
 
     /**

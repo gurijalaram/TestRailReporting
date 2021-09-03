@@ -13,19 +13,16 @@ import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSett
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-import com.apriori.utils.properties.PropertiesContext;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.apriori.utils.users.UserUtil;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public class AcsResources {
 
@@ -33,7 +30,7 @@ public class AcsResources {
     private static final long WAIT_TIME = 180;
 
     private static final HashMap<String, String> token = new APIAuthentication()
-            .initAuthorizationHeaderNoContent("aPrioriCIGenerateUser@apriori.com");
+            .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
 
     private final String contentType = "Content-Type";
     private final String applicationJson = "application/json";
