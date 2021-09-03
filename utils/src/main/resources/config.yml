@@ -8,6 +8,20 @@ global:
   users_csv_file: common-users.csv
   different_users: true
 
+# Define the customer
+customer: ap-int
+
+#  Specific customer configurations
+######################################################## AP - INT ########################################################
+ap-int:
+  token_subject: 4127
+
+widgets:
+  token_subject: 739e
+
+gadgets:
+  token_subject: 247f
+
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
 int-core:
