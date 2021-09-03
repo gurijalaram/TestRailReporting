@@ -11,8 +11,6 @@ global:
 # Define the customer
 customer: ap-int
 
-#  Specific customer configurations
-######################################################## AP - INT ########################################################
 ap-int:
   token_subject: 4127
 
