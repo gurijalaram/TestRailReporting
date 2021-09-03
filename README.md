@@ -209,12 +209,26 @@ To get any project property use `com.apriori.utils.properties.PropertiesContext`
 `com.apriori.utils.properties.PropertiesContext` - contains get methods, that allow to get the property value to mapped type
  - `get(String propertyName)` - return property by name mapped to String
 
+### Process of receiving property
+ - at first there is a search in `System properties`
+ - if in system properties no such variable, there is a search in `utils/src/main/resources/config.yml`
+
 Property name represent String path of YML file e.g: 
    to get <br>
    >`global:` <br>
    > `prop: example` <br>
 
 `PropertiesContext.get("global.prop");`
+
+### Search Templates
+Search in `system environments` and in `config.yml` file require special naming template.
+ - for System property, in the request property name, will be automatically replaced all `"."` with `"_"`
+   Please NOTE: if you need to specify a property name as a `System environment`, you need to replace all `"."` with `"_"` in the property name, taken from java code.
+    e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search system environment with name: `global_users_csv_file`
+   
+  - for `utils/src/main/resources/config.yml`, in requested property name, will be automatically replaced all `"."` with `"/"`
+    e.g. `com.apriori.utils.properties.PropertiesContext("global.users_csv_file")` - will search config.yml property with name: `global/users_csv_file`   
+
 
 #### Property based on environment
 To get property based on environment use environment reference by key `${env}` 
