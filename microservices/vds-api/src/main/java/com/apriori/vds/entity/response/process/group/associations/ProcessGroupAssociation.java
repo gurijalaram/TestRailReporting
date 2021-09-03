@@ -1,4 +1,4 @@
-package com.apriori.vds.entity.response.user.group.associations;
+package com.apriori.vds.entity.response.process.group.associations;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
@@ -15,20 +15,23 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "UserGroupAssociationResponse.json")
+@Schema(location = "ProcessGroupAssociationResponse.json")
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserGroupAssociation {
+public class ProcessGroupAssociation {
+
     private String createdBy;
-    private String customerIdentity;
+    private String defaultVpeIdentity;
+    private String defaultVpeName;
     private String deletedBy;
     private String identity;
+    private String processGroupIdentity;
+    private String processGroupName;
     private String updatedBy;
-    private String userIdentity;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
