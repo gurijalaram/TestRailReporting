@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -131,19 +132,9 @@ public class AdminNavigationTests extends TestBase {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(
-                String.format(
-                        "%s%s%s",
-                        urlToCheck,
-                        Constants.REPORTS_URL_SUFFIX,
-                        Constants.REPORTS_LAST_SUFFIX))
-        );
+        assertThat(homePage.getCurrentUrl(), equalTo(PropertiesContext.get("${env}.report")));
         assertThat(homePage.getTabCount(), is(equalTo(2)));
         assertThat(homePage.isReportsWelcomeTextDisplayed(), is(true));
         assertThat(homePage.isReportsWelcomeTextEnabled(), is(true));
-
-        assertThat(homePage.getCurrentUrl(), containsString(Constants.ON_PREM_BASE_URL));
-        assertThat(homePage.getCurrentUrl(), containsString(Constants.REPORTS_URL_SUFFIX));
-        assertThat(homePage.getCurrentUrl(), containsString(Constants.REPORTS_LOGIN_LOCAL_SUFFIX));
     }
 }

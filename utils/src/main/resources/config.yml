@@ -170,7 +170,7 @@ qa-cig-perf:
 onprem:
   base_url: https://conqbaci01/
   admin: ${onprem.base_url}apriori/login
-  reports: ${onprem.base_url}jasperserver-pro/login.html
+  report: ${onprem.base_url}jasperserver-pro/login.html
 
   cds:
     api_url: https://cds.na-1.qa-cig-perf.apriori.net/
