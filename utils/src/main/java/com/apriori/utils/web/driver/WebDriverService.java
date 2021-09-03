@@ -74,6 +74,7 @@ public class WebDriverService extends BrowserManager {
 
                 case EDGE:
                     WebDriverManager.edgedriver().setup();
+
                     result = new EdgeDriver();
                     logger.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
                     break;
