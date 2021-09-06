@@ -25,8 +25,11 @@ public class PropertiesContext {
      * @return
      */
     public static String get(final String propertyName) {
-        return System.getProperty(propertyName,
-            getFromPropertyContext(propertyName));
+        return System.getProperty(convertToSystemPropertyTemplate(propertyName),
+                getFromPropertyContext(
+                    convertToPropertyPathTemplate(propertyName)
+                )
+        );
     }
 
     @SneakyThrows
@@ -39,9 +42,7 @@ public class PropertiesContext {
     }
 
     private static String getFromPropertyContext(String propertyName) {
-        String propertyPath = parsePropertyOnReferencesPresents(
-            convertToPropertyPathTemplate(propertyName)
-        );
+        String propertyPath = parsePropertyOnReferencesPresents(propertyName);
 
         return parsePropertyOnReferencesPresents(
             propertiesContext.at(propertyPath).asText()
@@ -64,6 +65,10 @@ public class PropertiesContext {
 
     private static boolean isPropertyContainPropertyReference(String propertyValue) {
         return propertyValue.contains(variableMarker[0]) && propertyValue.contains(variableMarker[1]);
+    }
+
+    private static String convertToSystemPropertyTemplate(String propertyName) {
+        return propertyName.replace(".", "_");
     }
 
     private static String convertToPropertyPathTemplate(String propertyName) {
