@@ -69,8 +69,8 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {""})
-    @Description("")
+    @TestRail(testCaseId = {"C8415"})
+    @Description("DELETEs a ProcessGroupAssociation for a customer.")
     public void testDeleteProcessGroupAssociation() {
         deleteProcessGroupAssociation(
             getTestingProcessGroupAssociation().getIdentity()
