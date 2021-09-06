@@ -13,6 +13,7 @@ import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAs
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociationsItems;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
+
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
@@ -39,22 +40,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
         List<ProcessGroupMaterial> processGroupMaterials = processGroupMaterialsItems.getResponseEntity().getItems();
         Assert.assertNotEquals("To get Material, response should contain it.", 0, processGroupMaterials.size());
 
-        //TODO z: update
-        //        findMaterialByAltName1()
-//        return processGroupMaterials.get(0);
-//        return findMaterialByAltName1(processGroupMaterials, "");
-        return findMaterialByAltName1(processGroupMaterials, "Galv. Steel, Hot Worked, AISI 1020");
-    }
-
-    private static ProcessGroupMaterial findMaterialByAltName1(List<ProcessGroupMaterial> processGroupMaterials, final String materialAltName1) {
-        return processGroupMaterials.stream()
-            //TODO z: update
-//            .filter(material -> materialAltName1.equals(material.getAltName1()))
-            .filter(material -> "386C8C9G1L0M".equals(material.getIdentity()))
-            .findFirst()
-            .orElseThrow(
-                () -> new IllegalArgumentException(String.format("Material with altName1: %s, was not found.", materialAltName1))
-            );
+        return processGroupMaterials.get(0);
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
