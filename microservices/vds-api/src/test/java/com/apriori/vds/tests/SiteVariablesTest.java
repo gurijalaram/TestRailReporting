@@ -19,9 +19,12 @@ import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Test;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class SiteVariablesTest extends SiteVariableUtil {
+    protected static final Set<String> siteVariableIdsToDelete = new HashSet<>();
 
     @AfterClass
     public static void deleteTestingData() {

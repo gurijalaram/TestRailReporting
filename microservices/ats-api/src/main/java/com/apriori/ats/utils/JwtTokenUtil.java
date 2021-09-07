@@ -21,7 +21,7 @@ public class JwtTokenUtil {
     private String apiUrl = PropertiesContext.get("${env}.ats.api_url");
     private String secretKey = PropertiesContext.get("${env}.secret_key");
     private String issuer = PropertiesContext.get("${env}.ats.token_issuer");
-    private String subject = PropertiesContext.get("${env}.ats.token_subject");
+    private String subject = PropertiesContext.get("${customer}.token_subject");
 
     public JwtTokenUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername().split("@")[0];
