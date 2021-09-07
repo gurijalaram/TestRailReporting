@@ -97,7 +97,7 @@ Those marked with a * are required or the job will not run
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                       javaOpts = javaOpts + " -Dcustomer=${customer}"
+                       javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
                     }
 
                     echo "${javaOpts}"
