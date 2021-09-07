@@ -30,6 +30,7 @@ Those marked with a * are required or the job will not run
 
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
+        string(name: 'CUSTOMER', defaultValue: 'none', description: 'What is the customer?')
     }
 */
     agent {
