@@ -9,10 +9,10 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Configurations;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class CasConfigurationsTests extends TestUtil {
     @TestRail(testCaseId = {"5660"})
     @Description("Returns a list of all aP Versions.")
     public void getConfigurationsTest() {
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "configurations/ap-versions");
+        String apiUrl = CASAPIEnum.GET_CONFIGURATIONS.getEndpointString();
 
         ResponseWrapper<Configurations> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Configurations.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));

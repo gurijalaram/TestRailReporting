@@ -32,7 +32,7 @@ import java.util.Collections;
 public class CasTestUtil extends TestUtil {
 
     private static String token = new JwtTokenUtil().retrieveJwtToken();
-    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), CASAPIEnum.GET_CUSTOMERS.getEndpointString());
+    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), CASAPIEnum.GET_CUSTOMER.getEndpointString());
 
     /**
      * POST call to add a customer

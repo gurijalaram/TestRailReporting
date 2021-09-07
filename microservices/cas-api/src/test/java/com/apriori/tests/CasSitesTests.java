@@ -49,7 +49,7 @@ public class CasSitesTests extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String identity = response.getResponseEntity().getItems().get(0).getIdentity();
 
         String siteEndpoint = url + identity + "/sites";
 
@@ -70,7 +70,7 @@ public class CasSitesTests extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        String customerIdentity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
         String siteEndpoint = url + customerIdentity + "/sites/";
 
         ResponseWrapper<Sites> sitesResponse = new CommonRequestUtil().getCommonRequest(siteEndpoint, true, Sites.class,
@@ -98,7 +98,7 @@ public class CasSitesTests extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String identity = response.getResponseEntity().getItems().get(0).getIdentity();
         String sitesEndpoint = url + identity + "/sites/";
 
         ResponseWrapper<Sites> sitesResponse = new CommonRequestUtil().getCommonRequest(sitesEndpoint, true, Sites.class,

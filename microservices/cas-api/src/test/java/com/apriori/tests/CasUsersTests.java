@@ -10,10 +10,10 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.User;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "users/current");
+        String url = CASAPIEnum.GET_CURRENT_USER.getEndpointString();
 
         ResponseWrapper<User> user = new CommonRequestUtil().getCommonRequest(url, true, User.class,
             new APIAuthentication().initAuthorizationHeaderContent(token));

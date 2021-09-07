@@ -12,6 +12,7 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -32,7 +33,7 @@ public class CasCustomersTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
+    private String url = CASAPIEnum.GET_CUSTOMERS.getEndpointString();
 
     @Before
     public void getToken() {
@@ -49,7 +50,7 @@ public class CasCustomersTests extends TestUtil {
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -61,7 +62,7 @@ public class CasCustomersTests extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
+        Customer customer = response.getResponseEntity().getItems().get(0);
         String identity = customer.getIdentity();
         String name = customer.getName();
 
@@ -83,7 +84,7 @@ public class CasCustomersTests extends TestUtil {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        Customer customer = response.getResponseEntity().getResponse().getItems().get(0);
+        Customer customer = response.getResponseEntity().getItems().get(0);
         String name = customer.getName();
 
         String nameEndpoint = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
@@ -92,7 +93,7 @@ public class CasCustomersTests extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseName.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -117,7 +118,7 @@ public class CasCustomersTests extends TestUtil {
         ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, Customers.class,
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(0));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(0));
     }
 
     @Test
@@ -141,9 +142,9 @@ public class CasCustomersTests extends TestUtil {
                 new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseName.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String identity = responseName.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String identity = responseName.getResponseEntity().getItems().get(0).getIdentity();
         String identityUrl = url + identity;
 
         ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(identity, email);

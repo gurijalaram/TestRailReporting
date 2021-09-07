@@ -10,6 +10,7 @@ import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItems;
 import com.apriori.entity.response.PostBatch;
@@ -17,7 +18,6 @@ import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -29,7 +29,7 @@ public class CasBatchItemTests extends TestUtil {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/");
+    private String url = CASAPIEnum.GET_CUSTOMERS.getEndpointString();
 
     @Before
     public void getToken() {
