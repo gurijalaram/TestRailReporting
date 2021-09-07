@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class ProcessGroupsTest extends ProcessGroupUtil {
-    private static final List<String> cidSupportedPgNames = Arrays.asList("2-Model Machining", "Additive Manufacturing", "Assembly", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand");
-    private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Casting - Investment");
+    private static final List<String> cidSupportedPgNames = Arrays.asList("2-Model Machining", "Additive Manufacturing", "Casting - Investment", "Bar & Tube Fab", "Casting", "Casting - Die", "Casting - Sand");
+    private static final List<String> cidNotSupportedPgNames = Arrays.asList("Assembly Molding", "Assembly Plastic Molding", "Assembly");
 
     @Test
     @TestRail(testCaseId = {"8271"})
