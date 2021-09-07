@@ -7,7 +7,18 @@ global:
   console_log_level: "OFF"
   users_csv_file: onprem-users.csv
   different_users: true
-  service_host: ats.core.qa.apriori.net
+
+# Define the customer
+customer: ap-int
+
+ap-int:
+  token_subject: 4127
+
+widgets:
+  token_subject: 739e
+
+gadgets:
+  token_subject: 247f
 
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
@@ -30,7 +41,6 @@ int-core:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -47,11 +57,10 @@ int-core:
   cds:
     api_url: https://cds.na-1.qa-21-1.apriori.net/
     apriori_core_services_installation_identity:
-    apriori_cloud_home_identity:
+    apriori_cloud_home_identity: 1J8M416FBJBK
     appro_application_identity: 1J8M416FBJ94
-    apriori_production_deployment_identity:
+    apriori_production_deployment_identity: H337GKD0LA0N
     cia_application_identity: 1J8M416FBJCD
-    automation_user_identity01: 9672B7HEL78L
     automation_user_identity02: 9671G0C4GNK2
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
@@ -88,7 +97,6 @@ qa-cid-perf:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_target_cloud_context: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -109,10 +117,8 @@ qa-cid-perf:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: CNLKB29B4GN8
     cia_application_identity: 1J8M416FBJCD
-    automation_user_identity01: ${qa-cid-perf.user_identity}
     automation_user_identity02: 1F4GF3E20D38
     automation_user_identity03: 1F4HJ2A9GM9C
-    apriori_internal_customer_identity:
     identity_role: 67J517C9L763
 
   cidapp:
@@ -156,7 +162,6 @@ qa-cig-perf:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_target_cloud_context: C339C55A815522IJ2ID5BC2H1MN93NDNF9551J8M416FBJ94
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -175,11 +180,10 @@ onprem:
   cds:
     api_url: https://cds.na-1.qa-cig-perf.apriori.net/
     apriori_core_services_installation_identity:
-    apriori_cloud_home_identity:
+    apriori_cloud_home_identity: 1J8M416FBJBK
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity:
     cia_application_identity: 1J8M416FBJ94
-    automation_user_identity01: 9672B7HEL78L
     automation_user_identity02: 9671G0C4GNK2
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
@@ -238,10 +242,8 @@ qa-20-1:
     appro_application_identity:
     apriori_production_deployment_identity:
     cia_application_identity:
-    automation_user_identity01: ${qa-20-1.user_identity}
     automation_user_identity02:
     automation_user_identity03:
-    apriori_internal_customer_identity:
     identity_role:
 
   fms:
@@ -249,57 +251,6 @@ qa-20-1:
 
   reports:
     ui_url: ${qa-20-1.base_url}jasperserver-pro/login.html
-
-######################################################## QA-BLUE ########################################################
-qa-blue:
-  secret_key: 65J1ID2B6LDG
-  ap_user_context:
-  user_identity: 61BM75C53GA0
-  customer_identity: L2H992828N8M
-  base_url:
-  auth_target_cloud_context: L2H992828N8ML2H992828N8N5HK8H97M75I41J8M416FBJFL
-
-
-  cds:
-    api_url: https://cds.core.qa.apriori.net/
-    apriori_core_services_installation_identity: 5HJ9CB8JA831
-    apriori_cloud_home_identity: 1J8M416FBJBK
-    appro_application_identity: 1J8M416FBJ94
-    apriori_production_deployment_identity: L2H992828N8N
-    cia_application_identity:
-    automation_user_identity01: ${qa-blue.user_identity}
-    automation_user_identity02:
-    automation_user_identity03:
-    identity_role: L2H992828L8E
-
-  cidapp:
-    api_url: https://cid-api.core.qa.apriori.net/
-    ui_url: https://cid.core.qa.apriori.net/
-
-  cas:
-    api_url: https://cas-api.core.qa.apriori.net/%s
-
-  fms:
-    api_url: https://fms.core.qa.apriori.net/
-
-  css:
-    api_url: https://css.core.qa.apriori.net/
-
-  vds:
-    api_url: https://vds.core.qa.apriori.net/
-
-  sds:
-    api_url: https://sds.core.qa.apriori.net/
-
-  nts:
-    api_url: https://nts.core.qa.apriori.net/
-
-  bcs:
-    api_url: https://bcs.core.qa.apriori.net/
-    report_identity:
-    reportType_identity:
-    part_identity:
-    batch_identity:
 
 ######################################################## STAGING ########################################################
 staging:
@@ -316,7 +267,6 @@ staging:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity:
     cia_application_identity:
-    automation_user_identity01: ${qa-staging.user_identity}
     automation_user_identity02:
     automation_user_identity03:
     identity_role: 7G0JGBE2N2GE
@@ -346,7 +296,6 @@ local:
     token_issuer: 2021 R1
     token_subject: 4127
     auth_application: CID
-    auth_target_cloud_context: H337GKD0LA0MH337GKD0LA0N70EGN68B5CMH1J8M416FBJF9
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
@@ -367,10 +316,8 @@ local:
     appro_application_identity: 1J8M416FBJ94
     apriori_production_deployment_identity: H337GKD0LA0N
     cia_application_identity:
-    automation_user_identity01: 8GFDIG229629
     automation_user_identity02:
     automation_user_identity03:
-    apriori_internal_customer_identity: H337GKD0LA0M
     identity_role: H337GKD0L80E
 
   fms:
