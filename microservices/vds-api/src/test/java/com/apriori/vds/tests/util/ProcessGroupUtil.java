@@ -26,7 +26,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
     private static String associatedProcessGroupIdentity;
     private static String processGroupIdentity;
 
-    protected static ProcessGroupMaterial getProcessGroupMaterial() {
+    protected static List<ProcessGroupMaterial> getProcessGroupMaterial() {
         RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity());
@@ -37,10 +37,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
             processGroupMaterialsItems.getStatusCode()
         );
 
-        List<ProcessGroupMaterial> processGroupMaterials = processGroupMaterialsItems.getResponseEntity().getItems();
-        Assert.assertNotEquals("To get Material, response should contain it.", 0, processGroupMaterials.size());
-
-        return processGroupMaterials.get(0);
+        return processGroupMaterialsItems.getResponseEntity().getItems();
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
@@ -101,7 +98,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     public static String getMaterialIdentity() {
         if (materialIdentity == null) {
-            materialIdentity = getProcessGroupMaterial().getIdentity();
+            materialIdentity = getProcessGroupMaterial().get(0).getIdentity();
         }
         return materialIdentity;
     }
