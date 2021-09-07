@@ -5,7 +5,7 @@ def javaOpts = ""
 def url
 def threadCount
 def browser
-def customer_name
+def customer
 def testSuite
 def global_users_csv_file
 def folder = "web"
@@ -95,9 +95,9 @@ Those marked with a * are required or the job will not run
                         javaOpts = javaOpts + " -Dglobal_users_csv_file=${params.CSV_FILE}"
                     }
 
-                    customer_name = params.CUSTOMER_NAME
-                    if (customer_name && customer_name != "none") {
-                       javaOpts = javaOpts + " -Dcustomer_name=${customer_name}"
+                    customer = params.CUSTOMER
+                    if (customer && customer != "none") {
+                       javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
                     }
 
                     echo "${javaOpts}"
