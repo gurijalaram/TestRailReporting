@@ -5,7 +5,7 @@ def javaOpts = ""
 def url
 def threadCount
 def browser
-def customer
+def customer_name
 def testSuite
 def global_users_csv_file
 def folder = "web"
