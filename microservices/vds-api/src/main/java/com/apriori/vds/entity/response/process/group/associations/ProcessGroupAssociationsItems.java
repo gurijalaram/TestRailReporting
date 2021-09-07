@@ -1,4 +1,4 @@
-package com.apriori.vds.entity.response.user.group.associations;
+package com.apriori.vds.entity.response.process.group.associations;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -10,11 +10,11 @@ import lombok.EqualsAndHashCode;
 
 import java.util.List;
 
-@Schema(location = "UserGroupAssociationsItems.json")
+@Schema(location = "ProcessGroupAssociationsItems.json")
 @Data
 @EqualsAndHashCode(callSuper = true)
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserGroupAssociationsItems extends Pagination {
-    private List<UserGroupAssociation> items;
+public class ProcessGroupAssociationsItems extends Pagination {
+    private List<ProcessGroupAssociation> items;
 }

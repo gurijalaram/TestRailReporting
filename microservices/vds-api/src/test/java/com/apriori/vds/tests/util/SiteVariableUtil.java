@@ -10,7 +10,7 @@ import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SiteVariableUtil extends VDSTestUtil {
+public abstract class SiteVariableUtil extends ProcessGroupUtil {
     protected static final List<String> siteVariableIdsToDelete = new ArrayList<>();
 
     protected static final String updatedName = new GenerateStringUtil().generateSiteName();
