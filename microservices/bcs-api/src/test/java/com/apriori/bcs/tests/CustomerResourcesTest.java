@@ -35,7 +35,6 @@ public class CustomerResourcesTest extends CustomerBase {
         CustomerResources.getUserDefinedAttributes();
     }
 
-
     @Test
     @TestRail(testCaseId = {"4173"})
     @Description("API returns a list of VPEs associated with a specific CIS customer")

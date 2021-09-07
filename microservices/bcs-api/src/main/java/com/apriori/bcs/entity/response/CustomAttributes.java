@@ -2,9 +2,14 @@ package com.apriori.bcs.entity.response;
 
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.Data;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -22,5 +27,8 @@ public class CustomAttributes extends Pagination {
     private CustomAttributes[] items;
     private String defaultValue;
     private Integer precision;
-
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
+    private String createdBy;
+    private List<String> options;
 }
