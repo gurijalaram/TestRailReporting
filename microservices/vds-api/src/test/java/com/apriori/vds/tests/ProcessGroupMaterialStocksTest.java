@@ -6,6 +6,7 @@ import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
+import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
 import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialStock;
 import com.apriori.vds.entity.response.process.group.materials.stock.ProcessGroupMaterialsStocksItems;
 import com.apriori.vds.tests.util.ProcessGroupUtil;
@@ -23,15 +24,19 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
     @TestRail(testCaseId = {"8191"})
     @Description("Get a list of MaterialStocks for a specific material.")
     public void getMaterialStocks() {
-        this.getMaterialsStocks();
+        RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity());
+
+        ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTP2Request.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupMaterialStocksResponse.getStatusCode());
     }
 
     @Test
     @TestRail(testCaseId = {"8192"})
     @Description("Get a specific MaterialStock for a material identified by its identity.")
     public void getMaterialStocksByIdentity() {
-        List<ProcessGroupMaterialStock> processGroupMaterialsStocks = this.getMaterialsStocks();
-        Assert.assertNotEquals("To get Material Stock, response should contain it.", 0, processGroupMaterialsStocks.size());
+        List<ProcessGroupMaterialStock> processGroupMaterialsStocks = this.getMaterialsStocksWithItems();
 
         RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialStock.class)
@@ -44,17 +49,26 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
     }
 
-    private List<ProcessGroupMaterialStock> getMaterialsStocks() {
-        RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
-                .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity());
+    private List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
+        for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
+            RequestEntity requestEntity =
+                RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+                    .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity());
 
-        ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTP2Request.build(requestEntity).get();
+            ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTP2Request.build(requestEntity).get();
+            validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupMaterialStocksResponse.getStatusCode());
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupMaterialStocksResponse.getStatusCode());
+            List<ProcessGroupMaterialStock> processGroupMaterialStocks = processGroupMaterialStocksResponse.getResponseEntity().getItems();
 
+            if (!processGroupMaterialStocks.isEmpty()) {
+                return processGroupMaterialStocks;
+            }
+        }
 
-        return processGroupMaterialStocksResponse.getResponseEntity().getItems();
+        Assert.fail("Materials don't contain materials stocks");
+
+        return null;
     }
+
 
 }

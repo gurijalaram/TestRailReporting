@@ -79,7 +79,7 @@ public class CdsAssociationUserTests {
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
 
-        String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity01");
+        String aPStaffIdentity = PropertiesContext.get("${env}.user_identity");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
