@@ -942,18 +942,13 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param className - className
      * @return Instance of class passed in
      */
-    public <T> T clickOk(boolean waitForReportLoad, Class<T> className) {
+    public <T> T clickOk(Class<T> className) {
         Actions actions = new Actions(driver);
         actions.moveToElement(okButton).perform();
         actions.click().perform();
         if (!getInputControlsDivClassName().contains("hidden")) {
             actions.moveToElement(okButton).perform();
             actions.click().perform();
-        }
-        if (waitForReportLoad) {
-            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            waitForReportToLoad();
-            pageUtils.waitForElementToAppear(upperTitle);
         }
         return PageFactory.initElements(driver, className);
     }
