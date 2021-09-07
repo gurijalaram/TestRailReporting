@@ -91,11 +91,6 @@ Those marked with a * are required or the job will not run
                         testSuite = params.OTHER_TEST
                     }
 
-                    global_users_csv_file = params.CSV_FILE
-                    if (global_users_csv_file && global_users_csv_file != "none") {
-                        javaOpts = javaOpts + " -Dglobal_users_csv_file=${params.CSV_FILE}"
-                    }
-
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
