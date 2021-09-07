@@ -38,6 +38,6 @@ public class ApplicationsTests extends TestUtil {
             new APIAuthentication().initAuthorizationHeaderContent(token));
 
         assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseApplications.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(responseApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }
