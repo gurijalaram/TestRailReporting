@@ -1,6 +1,5 @@
-package com.apriori.vds.entity.response.digital.factories;
+package com.apriori.vds.entity.response.process.group.associations;
 
-import com.apriori.bcs.entity.response.ProcessGroupAssociations;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -9,40 +8,30 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "DigitalFactoryResponse.json")
+@Schema(location = "ProcessGroupAssociationResponse.json")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonRootName(value = "response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class DigitalFactory {
-    private Boolean active;
-    private Integer annualVolume;
-    private String baseVpeIdentity;
-    private Double batchesPerYear;
+public class ProcessGroupAssociation {
+
     private String createdBy;
-    private String currencyCode;
-    private String customerIdentity;
+    private String defaultVpeIdentity;
+    private String defaultVpeName;
     private String deletedBy;
-    private String description;
     private String identity;
-    private String location;
-    private String machinesVpeIdentity;
-    private String materialCatalogVpeIdentity;
-    private String name;
-    private String ownerType;
-    private String[] permissions;
-    private ProcessGroupAssociations processGroupAssociations;
-    private String productVersion;
-    private Double productionLife;
-    private String revision;
-    private String subjectIdentity;
-    private String toolShopVpeIdentity;
+    private String processGroupIdentity;
+    private String processGroupName;
     private String updatedBy;
-    private String useType;
-    private String vpeType;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
