@@ -30,7 +30,6 @@ Those marked with a * are required or the job will not run
 
         string(name: 'TARGET_URL', defaultValue: 'none', description: 'What is the target URL for testing?')
         string(name: 'CSV_FILE', defaultValue: 'none', description: 'What is the csv file to use?')
-        string(name: 'CUSTOMER', defaultValue: 'none', description: 'What is the customer?')
     }
 */
     agent {
@@ -91,14 +90,14 @@ Those marked with a * are required or the job will not run
                         testSuite = params.OTHER_TEST
                     }
 
-//                     global_users_csv_file = params.CSV_FILE
-//                     if (global_users_csv_file && global_users_csv_file != "none") {
-//                         javaOpts = javaOpts + " -Dglobal_users_csv_file=${params.CSV_FILE}"
-//                     }
+                    global_users_csv_file = params.CSV_FILE
+                    if (global_users_csv_file && global_users_csv_file != "none") {
+                        javaOpts = javaOpts + " -Dglobal_users_csv_file=${params.CSV_FILE}"
+                    }
 
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
-                       javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                       javaOpts = javaOpts + " -Dcustomer=${customer}"
                     }
 
                     echo "${javaOpts}"
