@@ -272,8 +272,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      *
      * @return string
      */
-    public String getAverageWallThickness() {
-        return psoController.inputLocator("Average Wall Thickness").getAttribute("value");
+    public double getAverageWallThickness() {
+        return Double.parseDouble(psoController.inputLocator("Average Wall Thickness").getAttribute("value"));
     }
 
     /**
