@@ -52,4 +52,5 @@ public class ScenarioResponse {
     private LocalDateTime publishedAt;
     private String publishedBy;
     private String publishedByName;
+    private String updatedBy;
 }
