@@ -135,7 +135,9 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getDigitalFactory());
+        pageUtils.waitForElementAndClick(digitalFactoryDropdown);
+        By byDigitalFactory = By.xpath(String.format("//div[@id='qa-production-defaults-digital-factory-select']//div[.='%s']//div[@id]", digitalFactory.getDigitalFactory()));
+        pageUtils.waitForElementAndClick(byDigitalFactory);
         return this;
     }
 
