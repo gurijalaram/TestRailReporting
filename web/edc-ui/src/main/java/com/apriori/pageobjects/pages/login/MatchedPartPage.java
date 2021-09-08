@@ -68,7 +68,7 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
         return uploadedBomTableActions.editSelectedBom(editButton);
     }
 
-    public String getPinCountHeader() {
+    public String getPinCountHeaderText() {
         return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
     }
 }

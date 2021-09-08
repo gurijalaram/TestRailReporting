@@ -6,31 +6,40 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.common.EditBomPage;
-import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
+import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
-import com.apriori.utils.web.driver.TestBase;
 
+import com.util.EdcTestUtil;
+import com.utils.Constants;
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
 
-public class UploadTests extends TestBase {
+public class UploadTests extends EdcTestUtil {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private EditBomPage editBomPage;
     private MatchedPartPage matchedPartPage;
+    private String url = Constants.getApiUrl();
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
     public UploadTests() {
         super();
     }
 
-    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    @After
+    public void cleanUp() {
+        String billOfMaterialId = driver.getCurrentUrl().split("/")[4];
+        String endpoint = url + billOfMaterialId;
+        deleteBillOfMaterial(endpoint);
+    }
 
     @Test
     @TestRail(testCaseId = "1553")
@@ -57,6 +66,6 @@ public class UploadTests extends TestBase {
             .enterPinCount(testPinCountData)
             .clickSave();
 
-        assertThat(matchedPartPage.getPinCountHeader(), is(equalTo("Pin Count")));
+        assertThat(matchedPartPage.getPinCountHeaderText(), is(equalTo("Pin Count")));
     }
 }

@@ -3,5 +3,8 @@ plugins {
 }
 
 dependencies {
+    implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':microservices:ats-api')
+    implementation project(':microservices:edc-api')
 }

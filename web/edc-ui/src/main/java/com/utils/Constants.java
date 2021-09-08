@@ -1,6 +1,7 @@
 package com.utils;
 
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -47,5 +48,14 @@ public class Constants {
         System.setProperty("baseUrl", baseUrl);
 
         return baseUrl;
+    }
+
+    /**
+     * Get default url
+     *
+     * @return string
+     */
+    public static String getApiUrl() {
+        return PropertiesContext.get("${env}.edc.api_url");
     }
 }
