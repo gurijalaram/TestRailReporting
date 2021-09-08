@@ -25,7 +25,11 @@
           "type": "boolean"
         },
         "customAttributes": {
-          "type": "object"
+          "type": "object",
+          "optional": [
+            "function",
+            "workspaceId"
+          ]
         },
         "identity": {
           "type": "string",

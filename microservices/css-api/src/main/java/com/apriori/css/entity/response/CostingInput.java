@@ -12,8 +12,16 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CostingInput {
+    private String identity;
+    private Integer annualVolume;
     private CustomAttributes customAttributes;
+    private String machiningMode;
+    private String materialMode;
+    private String materialName;
+    private String processGroupName;
+    private String vpeName;
     private ProcessSetupOptions processSetupOptions;
+    private Integer productionLife;
     private SecondaryProcesses secondaryProcesses;
     private SecondaryDigitalFactories secondaryDigitalFactories;
     private Threads threads;

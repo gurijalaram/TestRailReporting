@@ -24,6 +24,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import java.util.Arrays;
 
@@ -240,6 +241,7 @@ public class CdsTestUtil extends TestUtil {
                     .siteIdentity(siteIdentity)
                     .applications(Arrays.asList(Constants.getApProApplicationIdentity()))
                     .cloudReference(cloudReference)
+                    .apVersion("2020 R1")
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
@@ -331,19 +333,19 @@ public class CdsTestUtil extends TestUtil {
                     .description("Create IDP using CDS automation")
                     .active(true)
                     .createdBy("#SYSTEM00000")
-                    .signInUrl(Constants.getSignInUrl())
-                    .signingCertificate(Constants.getSignInCert())
+                    .signInUrl(Constants.SIGNIN_URL)
+                    .signingCertificate(Constants.SIGNIN_CERT)
                     .signingCertificateExpiresAt("2030-07-22T22:45Z")
                     .signRequest(true)
                     .signRequestAlgorithm("RSA_SHA256")
                     .signRequestAlgorithmDigest("SHA256")
                     .protocolBinding("HTTP_POST")
                     .attributeMappings(AttributeMappings.builder()
-                        .userId(Constants.getSamlNameIdentifier())
-                        .email(Constants.getSamlAttributeEmail())
-                        .name(Constants.getSamlAttributeName())
-                        .givenName(Constants.getSamlAttributeGivenName())
-                        .familyName(Constants.getSamlAttributeFamilyName()).build())
+                        .userId(Constants.SAML_ATTRIBUTE_NAME_IDENTIFIER)
+                        .email(Constants.SAML_ATTRIBUTE_NAME_EMAIL)
+                        .name(Constants.SAML_ATTRIBUTE_NAME)
+                        .givenName(Constants.SAML_ATTRIBUTE_NAME_GIVEN_NAME)
+                        .familyName(Constants.SAML_ATTRIBUTE_NAME_FAMILY_NAME).build())
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
@@ -392,8 +394,8 @@ public class CdsTestUtil extends TestUtil {
                         .apVersion("2020 R1")
                         .createdBy("#SYSTEM00000")
                         .active("true")
-                        .license(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
-                        .licenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))
+                        .license(String.format(Constants.CDS_LICENSE, customerName, siteId, licenseId, subLicenseId))
+                        .licenseTemplate(String.format(Constants.CDS_LICENSE_TEMPLATE, customerName))
                         .build())
                 .build());
 
@@ -412,12 +414,12 @@ public class CdsTestUtil extends TestUtil {
             .setBody("accessControl",
                 AccessControlRequest.builder()
                     .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())
-                    .deploymentIdentity(Constants.getApProductionDeploymentIdentity())
-                    .installationIdentity(Constants.getApCoreInstallationIdentity())
-                    .applicationIdentity(Constants.getApCloudHomeApplicationIdentity())
+                    .deploymentIdentity(PropertiesContext.get("${env}.cds.apriori_production_deployment_identity"))
+                    .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
+                    .applicationIdentity(PropertiesContext.get("${env}.cds.apriori_cloud_home_identity"))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
-                    .roleIdentity(Constants.getCdsIdentityRole())
+                    .roleIdentity(PropertiesContext.get("${env}.cds.identity_role"))
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());

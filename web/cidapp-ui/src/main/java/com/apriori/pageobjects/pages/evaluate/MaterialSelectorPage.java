@@ -31,7 +31,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(xpath = "//div[@class='cell-content']")
     private WebElement rowText;
 
-    @FindBy(css = ".material-selector .table-body [role='row']")
+    @FindBy(css = ".material-selector .table-body [role='cell']")
     private List<WebElement> materialRow;
 
     @FindBy(css = ".material-selector [type='Submit']")
@@ -108,6 +108,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public MaterialSelectorPage selectMaterial(String materialName) {
         By material = By.xpath(String.format("//div[@role='row']//div[contains(text(),'%s')]", materialName));
+        pageUtils.waitForElementToAppear(material);
         pageUtils.scrollWithJavaScript(driver.findElement(material), true);
 
         if (!pageUtils.jsGetParentElement(driver.findElement(By.xpath(String.format("//div[@role='row']//div[.='%s']", materialName)))).getAttribute("class").contains("selected")) {
@@ -122,7 +123,8 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return list of string
      */
     public List<String> getListOfMaterials() {
-        return materialRow.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+        pageUtils.waitForElementsToAppear(materialRow);
+        return materialRow.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
     }
 
     /**

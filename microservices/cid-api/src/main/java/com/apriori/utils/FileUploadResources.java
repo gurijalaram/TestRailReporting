@@ -49,10 +49,10 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-import com.apriori.utils.properties.PropertiesContext;
+
+import com.apriori.utils.users.UserUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -67,7 +67,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class FileUploadResources {
@@ -76,12 +75,8 @@ public class FileUploadResources {
     private static final long WAIT_TIME = 180;
 
     private static final HashMap<String, String> token = new APIAuthentication()
-            .initAuthorizationHeaderNoContent("qa-automation-02@apriori.com");
-
-    private final String acceptHeader = "Accept";
-    private final String contentType = "Content-Type";
-    private final String applicationJson = "application/json";
-    private final String textPlain = "text/plain";
+            .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
+    private static final HashMap<String, String> headers = new HashMap<>();
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -97,14 +92,14 @@ public class FileUploadResources {
     }
 
     /**
-     * Upload part
+     * Upload part, suppress 500 error (retry file upload three times)
      *
      * @param fileResponse response from file upload initialise
      * @param scenarioName scenario name to use
-     * @return FileUploadOutputs
+     * @return FileUploadOutputs instance
      */
-    public FileUploadOutputs uploadPart(FileResponse fileResponse, String scenarioName) {
-        String fileUploadWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+    public FileUploadOutputs createFileUploadWorkorderSuppressError(FileResponse fileResponse, String scenarioName) {
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
                 FileUploadInputs.builder()
                         .keepFreeBodies(false)
                         .freeBodiesPreserveCad(false)
@@ -112,7 +107,35 @@ public class FileUploadResources {
                         .scenarioName(scenarioName)
                         .fileKey(fileResponse.getIdentity())
                         .fileName(fileResponse.getFilename())
-                        .build());
+                        .build(),
+                true
+        );
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+                checkGetWorkorderDetails(fileUploadWorkorderId),
+                FileUploadOutputs.class
+        );
+    }
+
+    /**
+     * Upload part, expose 500 error (only one file upload attempt)
+     *
+     * @param fileResponse response from file upload initialise
+     * @param scenarioName scenario name to use
+     * @return FileUploadOutputs instance
+     */
+    public FileUploadOutputs createFileUploadWorkorderExposeError(FileResponse fileResponse, String scenarioName) {
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+                FileUploadInputs.builder()
+                        .keepFreeBodies(false)
+                        .freeBodiesPreserveCad(false)
+                        .freeBodiesIgnoreMissingComponents(true)
+                        .scenarioName(scenarioName)
+                        .fileKey(fileResponse.getIdentity())
+                        .fileName(fileResponse.getFilename())
+                        .build(),
+                false
+        );
         submitWorkorder(fileUploadWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(fileUploadWorkorderId),
@@ -161,7 +184,6 @@ public class FileUploadResources {
                         .build()
         );
         submitWorkorder(generatePartImagesWorkorderId);
-
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(generatePartImagesWorkorderId),
                 GeneratePartImagesOutputs.class
@@ -261,13 +283,11 @@ public class FileUploadResources {
                                 setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
                         .build()
         );
-
         submitWorkorder(createPublishWorkorderId);
         return objectMapper.convertValue(
                 checkGetWorkorderDetails(createPublishWorkorderId),
                 PublishResultOutputs.class
         );
-
     }
 
     /**
@@ -289,7 +309,7 @@ public class FileUploadResources {
      * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        token.put(contentType, "multipart/form-data");
+        setupHeaders("multipart/form-data", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
@@ -298,6 +318,7 @@ public class FileUploadResources {
                         FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
                 .formParams(new FormParams().use("filename", fileName));
 
+        assertThat(HTTP2Request.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
         return (FileResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
     }
 
@@ -308,11 +329,11 @@ public class FileUploadResources {
      * @return GetAdminInfoResponse object
      */
     public GetAdminInfoResponse getAdminInfo(ScenarioKey publishScenarioKey) {
-        token.put(contentType, applicationJson);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_ADMIN_INFO, GetAdminInfoResponse.class)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(
                         publishScenarioKey.getWorkspaceId().toString(),
                         publishScenarioKey.getTypeName(),
@@ -329,11 +350,11 @@ public class FileUploadResources {
      * @return GetImageInfoResponse - json response from API call
      */
     public GetImageInfoResponse getImageInfo(ScenarioIterationKey scenarioIterationKey) {
-        token.put(contentType, applicationJson);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_IMAGE_INFO, GetImageInfoResponse.class)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(
                         scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
                         scenarioIterationKey.getScenarioKey().getTypeName(),
@@ -351,33 +372,72 @@ public class FileUploadResources {
      * @return GetCadMetadataResponse
      */
     public GetCadMetadataResponse getCadMetadata(String fileMetadataIdentity) {
-        token.put(contentType, applicationJson);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_CAD_METADATA, GetCadMetadataResponse.class)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(fileMetadataIdentity);
 
         return (GetCadMetadataResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
     }
 
     /**
-     * Creates workorder
+     * Creates file upload workorder (with ignore HTTP 500 error capability)
      *
      * @param commandType String
      * @param inputs Object
-     * @return String
+     * @param ignore500Error Boolean
+     * @return String file upload workorder id
      */
-    private String createWorkorder(String commandType, Object inputs) {
-        token.put(contentType, applicationJson);
+    private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
+        setupHeaders("application/json", "*/*");
+
+        RequestEntity requestEntity;
+        if (ignore500Error) {
+            requestEntity = RequestEntityUtil
+                    .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
+                    .headers(headers)
+                    .body(new WorkorderRequest()
+                            .setCommand(new WorkorderCommand(
+                                    commandType,
+                                    inputs))
+                    );
+            int counter = 0;
+            while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
+                counter++;
+            }
+        }
+
+        requestEntity = RequestEntityUtil
+                .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
+                .headers(headers)
+                .body(new WorkorderRequest()
+                        .setCommand(new WorkorderCommand(
+                                commandType,
+                                inputs))
+                );
+
+        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+    }
+
+    /**
+     * Creates workorder (without ignore HTTP 500 error capability)
+     *
+     * @param commandType String
+     * @param inputs Object
+     * @return String file upload workorder id
+     */
+    public String createWorkorder(String commandType, Object inputs) {
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
-                .headers(token)
+                .headers(headers)
                 .body(new WorkorderRequest()
-                    .setCommand(new WorkorderCommand(
-                            commandType,
-                            inputs))
+                        .setCommand(new WorkorderCommand(
+                                commandType,
+                                inputs))
                 );
 
         return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
@@ -390,11 +450,11 @@ public class FileUploadResources {
      * @return Object
      */
     private Object getWorkorderDetails(String workorderId) {
-        token.put(contentType, applicationJson);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_WORKORDER_DETAILS, WorkorderDetailsResponse.class)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(workorderId);
 
         return HTTP2Request.build(requestEntity).get().getResponseEntity();
@@ -407,36 +467,12 @@ public class FileUploadResources {
      * @return Object - response
      */
     public Object getImageById(String imageId) {
-        token.put(acceptHeader, textPlain);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_IMAGES, null)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(imageId);
-
-        return HTTP2Request.build(requestEntity).get().getBody();
-    }
-
-    /**
-     * Get images by scenario iteration key
-     *
-     * @param scenarioKey - scenario iteration
-     * @param imageType - web or desktop image
-     * @return Object - response
-     */
-    public Object getImageByScenarioIterationKey(ScenarioKey scenarioKey, String imageType) {
-        token.put(contentType, applicationJson);
-
-        final RequestEntity requestEntity = RequestEntityUtil
-                .init(CidWorkorderApiEnum.GET_IMAGE_BY_SCENARIO_ITERATION_KEY, null)
-                .headers(token)
-                .inlineVariables(
-                        scenarioKey.getWorkspaceId().toString(),
-                        scenarioKey.getTypeName(),
-                        scenarioKey.getMasterName(),
-                        scenarioKey.getStateName(),
-                        String.valueOf(getLatestIteration(token, scenarioKey)),
-                        imageType);
 
         return HTTP2Request.build(requestEntity).get().getBody();
     }
@@ -468,7 +504,7 @@ public class FileUploadResources {
      */
     private PublishScenarioIterationKey setPublishScenarioIterationKey(ScenarioKey scenarioKey) {
         return PublishScenarioIterationKey.builder()
-                .iteration(getLatestIteration(token, scenarioKey))
+                .iteration(getLatestIteration(scenarioKey))
                 .scenarioKey(PublishScenarioKey.builder()
                         .masterName(scenarioKey.getMasterName())
                         .stateName(scenarioKey.getStateName())
@@ -486,7 +522,7 @@ public class FileUploadResources {
      */
     private CostOrderScenarioIteration setCostOrderScenarioIteration(ScenarioKey scenarioKey) {
         return CostOrderScenarioIteration.builder()
-                .iteration(getLatestIteration(token, scenarioKey))
+                .iteration(getLatestIteration(scenarioKey))
                 .scenarioKey(CostOrderScenario.builder()
                         .masterName(scenarioKey.getMasterName())
                         .stateName(scenarioKey.getStateName())
@@ -519,18 +555,18 @@ public class FileUploadResources {
      * @return Integer
      */
     private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
-        token.put(contentType, applicationJson);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.INITIALIZE_COST_SCENARIO, CreateWorkorderResponse.class)
-                .headers(token)
+                .headers(headers)
                 .body(productionInfo(fileObject, scenarioKey, processGroup))
                 .inlineVariables(
                         scenarioKey.getWorkspaceId().toString(),
                         scenarioKey.getTypeName(),
                         UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
                         scenarioKey.getStateName(),
-                        String.valueOf(getLatestIteration(token, scenarioKey)));
+                        String.valueOf(getLatestIteration(scenarioKey)));
 
         return Integer.parseInt(jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id"));
     }
@@ -538,16 +574,15 @@ public class FileUploadResources {
     /**
      * Gets costing iteration
      *
-     * @param token - the user token
      * @param scenarioKey - the scenario key
      * @return int
      */
-    private int getLatestIteration(HashMap<String, String> token, ScenarioKey scenarioKey) {
-        token.put(contentType, applicationJson);
+    private int getLatestIteration(ScenarioKey scenarioKey) {
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.GET_LATEST_ITERATION, CostIteration.class)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(
                         scenarioKey.getWorkspaceId().toString(),
                         scenarioKey.getTypeName(),
@@ -566,8 +601,7 @@ public class FileUploadResources {
      */
     private String checkWorkorderStatus(String workorderId) {
         long initialTime = System.currentTimeMillis() / 1000;
-        RequestEntity requestEntityBody;
-        String status = "";
+        String status;
 
         try {
             TimeUnit.SECONDS.sleep(3);
@@ -577,7 +611,7 @@ public class FileUploadResources {
         }
 
         do {
-            token.put(contentType, applicationJson);
+            setupHeaders("application/json", "*/*");
 
             final RequestEntity requestEntity = RequestEntityUtil
                     .init(CidWorkorderApiEnum.CHECK_WORKORDER_STATUS, null)
@@ -606,11 +640,11 @@ public class FileUploadResources {
      * @param orderId - the order id
      */
     private void submitWorkorder(String orderId) {
-        token.put(contentType, applicationJson);
+        setupHeaders("application/json", "*/*");
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, SubmitWorkOrder.class)
-                .headers(token)
+                .headers(headers)
                 .body(new FileWorkOrder().setOrderIds(Collections.singletonList(orderId))
                         .setAction("SUBMIT"));
 
@@ -702,5 +736,20 @@ public class FileUploadResources {
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
+    }
+
+    /**
+     * Sets up token properly in header
+     *
+     * @param contentType String
+     * @param acceptType String
+     */
+    private void setupHeaders(String contentType, String acceptType) {
+        Object[] tokenArray = token.keySet().toArray();
+        for (Object key : tokenArray) {
+            headers.put(key.toString(), token.get(key));
+        }
+        headers.put("Content-Type", contentType);
+        headers.put("Accept", acceptType);
     }
 }

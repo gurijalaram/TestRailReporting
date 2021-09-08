@@ -18,7 +18,7 @@ public class AccessControlsTest extends VDSTestUtil {
     @TestRail(testCaseId = {"7752"})
     @Description("Get a list of Access Control Groups for a specific customer.")
     public void getGroups() {
-        getGroupsResponse();
+        getAccessControlGroupsResponse();
     }
 
     @Test

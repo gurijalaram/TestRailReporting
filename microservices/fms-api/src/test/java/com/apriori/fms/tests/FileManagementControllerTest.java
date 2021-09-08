@@ -49,7 +49,7 @@ public class FileManagementControllerTest extends TestUtil {
             token,
             ProcessGroupEnum.SHEET_METAL,
             "bracket_basic.prt"
-        ).getResponseEntity().getResponse().getIdentity();
+        ).getResponseEntity().getIdentity();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             FileManagementController.getFileByIdentity(

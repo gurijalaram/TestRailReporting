@@ -58,7 +58,7 @@ public class FileManagementController {
     private static Map<String, String> initHeaders(String token, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<String, String>() {{
                 put("Authorization", "Bearer " + token);
-                put("ap-cloud-context", PropertiesContext.get("${env}.ats.auth_targetCloudContext"));
+                put("ap-cloud-context", PropertiesContext.get("${env}.auth_target_cloud_context"));
             }};
 
         if (addMultiPartFile) {

@@ -9,6 +9,7 @@ import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.user.group.associations.UserGroupAssociationRequest;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociation;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociationsItems;
+import com.apriori.vds.tests.util.ProcessGroupUtil;
 import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
@@ -21,7 +22,7 @@ import java.util.List;
 import java.util.Set;
 
 
-public class UserGroupAssociationsTest extends VDSTestUtil {
+public class UserGroupAssociationsTest extends ProcessGroupUtil {
     private static final Set<String> userGroupAssociationsToDelete = new HashSet<>();
 
     @AfterClass

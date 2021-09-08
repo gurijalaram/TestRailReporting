@@ -1,7 +1,9 @@
 package com.apriori.cds.tests;
 
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
@@ -93,7 +95,7 @@ public class CdsCustomerUsersTests {
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(1).getIdentity(), is(equalTo(userIdentity)));
+        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getIdentity(), is(not(emptyString())));
     }
 
     @Test
