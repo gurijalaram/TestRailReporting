@@ -35,6 +35,10 @@ void copyResources(String fromDir, String toDir) {
 
 subprojects {
 
+    configurations {
+        testCompile
+    }
+
     apply plugin: 'java'
     apply plugin: 'checkstyle'
     apply plugin: 'io.qameta.allure'
@@ -42,6 +46,10 @@ subprojects {
     apply plugin: 'project-report'
 
     def encodingType = 'UTF-8'
+
+    tasks.withType(Copy).all {
+        duplicatesStrategy 'include'
+    }
 
     // Copy allure properties into each module test resources
     processTestResources {
@@ -157,8 +165,7 @@ subprojects {
     //declare all dependencies
     dependencies {
         implementation 'software.amazon.awssdk:s3:2.17.26'
-        compile 'org.apache.httpcomponents:httpclient:4.5.5'
-
+        implementation 'org.apache.httpcomponents:httpclient:4.5.5'
         implementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
         implementation 'org.seleniumhq.selenium:selenium-server:3.141.59'
         implementation 'junit:junit:4.13'
@@ -195,11 +202,9 @@ subprojects {
         implementation 'com.sun.mail:smtp:1.6.5'
         implementation 'pl.pragmatists:JUnitParams:1.1.1'
         implementation 'org.assertj:assertj-core:3.20.1'
-
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.12.4'
+        implementation "org.projectlombok:lombok:1.18.6"
 
-
-        compile "org.projectlombok:lombok:1.18.6"
         annotationProcessor 'org.projectlombok:lombok:1.18.6'
     }
 }

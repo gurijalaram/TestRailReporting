@@ -11,6 +11,7 @@ repositories {
     mavenCentral()
 }
 
+//This block allow to copy resources from apibase into current module, so we have an access to them by .getResource();
 sourceSets {
     main {
         resources {
@@ -24,8 +25,7 @@ sourceSets {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':microservices:bcs-api')
 
-    compile project(':microservices:bcs-api')
-
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
