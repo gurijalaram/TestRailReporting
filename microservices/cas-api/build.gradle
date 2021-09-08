@@ -8,6 +8,7 @@ repositories {
     mavenCentral()
 }
 
+//This block allow to copy resources from apibase into current module, so we have an access to them by .getResource();
 sourceSets {
     main {
         resources {
@@ -23,5 +24,5 @@ dependencies {
     implementation project(':utils')
     implementation project(':microservices:ats-api')
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }
