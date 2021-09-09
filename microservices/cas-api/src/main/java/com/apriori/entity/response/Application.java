@@ -13,6 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "ApplicationSchema.json")
@@ -29,9 +30,24 @@ public class Application {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private String name;
     private String serviceName;
     private String cloudReference;
     private String description;
+    private String customerType;
+    private String salesforceId;
+    private String active;
     private String iconUrl;
+    private Integer maxCadFileRetentionDays;
+    private Integer maxCadFileSize;
+    private Boolean useExternalIdentityProvider;
+    private Boolean mfaRequired;
+    private List<String> oneTimePasswordApplications;
+    private String createdByName;
+    private List<String> identityProviders;
+    private List<String> emailDomains;
+    private String authenticationType;
 }
