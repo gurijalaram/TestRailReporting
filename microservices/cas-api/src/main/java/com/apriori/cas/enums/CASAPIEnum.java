@@ -6,32 +6,34 @@ import com.apriori.utils.properties.PropertiesContext;
 public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //CUSTOMERS
-    GET_CUSTOMERS(String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/")),
+    GET_CUSTOMERS("customers/%s/%s"),
+    GET_CUSTOMER_ID("customers/%s"),
     GET_CUSTOMER("customers/"),
 
     //SITES
-    VALIDATE_SITES("/sites/validate"),
-    POST_SITES("/sites"),
+    POST_SITES(GET_CUSTOMER.getEndpointString().concat("%s/sites")),
+    POST_SITES_ID(GET_CUSTOMER.getEndpointString().concat("%s/sites/%s")),
+
+    //MFA
+    POST_MFA(GET_CUSTOMER.getEndpointString().concat("%s/reset-mfa")),
+    POST_MFA_CUSTOMER(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s/reset-mfa")),
 
     //USERS
-    POST_USERS("/users/"),
+    POST_USERS(GET_CUSTOMER.getEndpointString().concat("%s/users/")),
+    GET_USERS(GET_CUSTOMER.getEndpointString().concat("%s/users/%s")),
+    PATCH_USERS(GET_CUSTOMER.getEndpointString().concat("%s/%users/%s")),
 
     //BATCHES
-    POST_BATCHES("/batches/"),
     POST_BATCH_ITEMS("/items/"),
-
-    //APPLICATIONS
-    GET_CUSTOMER_APPLICATIONS(GET_CUSTOMERS.getEndpointString() + PropertiesContext.get("${env}.customer_identity") + "/applications"),
+    GET_BATCHES(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s/%s")),
+    BATCH_ITEM(GET_BATCHES.getEndpointString().concat("/%s")),
+    CUSTOMER_BATCHES(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s")),
 
     //CONFIGURATIONS
-    GET_CONFIGURATIONS(String.format(PropertiesContext.get("${env}.cas.api_url"), "configurations/ap-versions")),
+    GET_CONFIGURATIONS("configurations/ap-versions"),
 
     //CUSTOMER DEPLOYMENTS
-    GET_CUSTOMER_DEPLOYMENT(GET_CUSTOMERS.getEndpointString() + PropertiesContext.get("${env}.customer_identity") + "/deployments"),
-    GET_CUSTOMER_DEPLOYMENT_ID(GET_CUSTOMERS.getEndpointString() + PropertiesContext.get("${env}.customer_identity") + "/deployments/"),
-
-    //IDENTITY PROVIDERS
-    GET_IDENTITY_PROVIDERS(GET_CUSTOMERS.getEndpointString() + PropertiesContext.get("${env}.customer_identity") + "/identity-providers/"),
+    GET_CUSTOMER_DEPLOYMENT(GET_CUSTOMER.getEndpointString().concat("deployments/%s")),
 
     //CURRENT USER
     GET_CURRENT_USER(String.format(PropertiesContext.get("${env}.cas.api_url"), "users/current"));
