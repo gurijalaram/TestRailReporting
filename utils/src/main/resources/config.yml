@@ -20,6 +20,29 @@ widgets:
 gadgets:
   token_subject: 247f
 
+######################################################## DEFAULT VALUES ########################################################
+default:
+  aws_region: na-1
+
+  fms:
+    api_url: https://fms.${default.aws_region}.${env}.apriori.net/
+
+  css:
+    api_url: https://css.${default.aws_region}.${env}.apriori.net/
+
+  nts:
+    api_url: https://nts.${default.aws_region}.${env}.apriori.net/
+
+  sds:
+    api_url: https://sds.${default.aws_region}.${env}.apriori.net/
+
+  vds:
+    api_url: https://vds.${default.aws_region}.${env}.apriori.net/
+
+#
+#  fms:
+#    api_url: ${local.base_url}:8806/
+
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
 int-core:
@@ -125,23 +148,23 @@ qa-cid-perf:
     api_url: https://cid-api.na-1.qa-cid-perf.apriori.net/
     ui_url: https://cid.na-1.qa-cid-perf.apriori.net/
 
-  css:
-    api_url: https://css.na-1.qa-cid-perf.apriori.net/
+#  css:
+#    api_url: https://css.na-1.qa-cid-perf.apriori.net/
 
-  fms:
-    api_url: https://fms.na-1.qa-cid-perf.apriori.net/
+#  fms:
+#    api_url: https://fms.na-1.qa-cid-perf.apriori.net/
     
-  nts:
-    api_url: https://nts.na-1.qa-cid-perf.apriori.net/
-
+#  nts:
+#    api_url: https://nts.na-1.qa-cid-perf.apriori.net/
+#
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
-
-  sds:
-    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
-
-  vds:
-    api_url: https://vds.na-1.qa-cid-perf.apriori.net/
+#
+#  sds:
+#    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
+#
+#  vds:
+#    api_url: https://vds.na-1.qa-cid-perf.apriori.net/
     
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
