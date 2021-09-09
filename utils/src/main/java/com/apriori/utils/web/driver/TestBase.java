@@ -66,9 +66,8 @@ public class TestBase extends TestHelper {
         TestHelper.logger.info("Current Operating System:" + os);
         TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
 
-        if (!df.isHeadless()) {
-            driver.manage().window().maximize();
-        }
+        driver.manage().window().setSize(new Dimension(1920,1080));
+        driver.manage().window().maximize();
 
         TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
         driver.manage().deleteAllCookies();
