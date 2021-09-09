@@ -6,21 +6,21 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Deployment;
 import com.apriori.entity.response.Deployments;
+import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CasDeploymentsTests extends TestUtil {
+public class CasDeploymentsTests {
     private String token;
 
     @Before
@@ -32,10 +32,11 @@ public class CasDeploymentsTests extends TestUtil {
     @TestRail(testCaseId = {"5657"})
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
-        String apiUrl = CASAPIEnum.GET_CUSTOMER_DEPLOYMENT.getEndpointString();
 
-        ResponseWrapper<Deployments> responseDeployment = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Deployments> responseDeployment = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Deployments.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables("deployments/"))
+            .get();
 
         assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -45,19 +46,20 @@ public class CasDeploymentsTests extends TestUtil {
     @TestRail(testCaseId = {"5658"})
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
-        String apiUrl = CASAPIEnum.GET_CUSTOMER_DEPLOYMENT_ID.getEndpointString();
 
-        ResponseWrapper<Deployments> responseDeployments = new CommonRequestUtil().getCommonRequest(apiUrl, true, Deployments.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Deployments> responseDeployments = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Deployments.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token)))
+            .get();
 
         assertThat(responseDeployments.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployments.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String deploymentIdentity = responseDeployments.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String deploymentUrl = apiUrl + deploymentIdentity;
 
-        ResponseWrapper<Deployment> deploymentByID = new CommonRequestUtil().getCommonRequest(deploymentUrl, true, Deployment.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Deployment> deploymentByID = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_DEPLOYMENT, true, Deployment.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(deploymentIdentity))
+            .get();
 
         assertThat(deploymentByID.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deploymentByID.getResponseEntity().getIdentity(), is(equalTo(deploymentIdentity)));
