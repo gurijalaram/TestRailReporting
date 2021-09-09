@@ -46,8 +46,6 @@ public class CasCustomersUsersTests {
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-//        String usersEndpoint = url + customerIdentity + "/users/";
-
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
@@ -62,7 +60,6 @@ public class CasCustomersUsersTests {
         assertThat(customerUsers.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-//        String userUrl = usersEndpoint + userIdentity;
 
         ResponseWrapper<CustomerUser> singleUser = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_USERS, true, CustomerUser.class,
                     new APIAuthentication().initAuthorizationHeaderContent(token))
