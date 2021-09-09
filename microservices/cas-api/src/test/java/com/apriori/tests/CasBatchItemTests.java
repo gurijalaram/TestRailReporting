@@ -21,6 +21,7 @@ import com.apriori.utils.http2.builder.service.HTTP2Request;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CasBatchItemTests {
@@ -105,7 +106,7 @@ public class CasBatchItemTests {
         String itemId = batchItem.getIdentity();
         String userName = batchItem.getUserName();
 
-        ResponseWrapper<BatchItem> getItem = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_BATCH_ITEM, true, BatchItem.class,
+        ResponseWrapper<BatchItem> getItem = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.BATCH_ITEM, true, BatchItem.class,
                     new APIAuthentication().initAuthorizationHeaderContent(token))
                 .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemId))
             .get();
@@ -114,34 +115,35 @@ public class CasBatchItemTests {
         assertThat(getItem.getResponseEntity().getIdentity(), is(equalTo(itemId)));
         assertThat(getItem.getResponseEntity().getUserName(), is(equalTo(userName)));
     }
-//
-//    // TODO endpoint is not implemented
-//    @Ignore("Endpoint is not implemented")
-//    @Test
-//    @TestRail(testCaseId = {"5673"})
-//    @Description("Update an existing Batch Item identified by its identity.")
-//    public void updateBatchItem() {
-//        String customerName = generateStringUtil.generateCustomerName();
-//        String cloudRef = generateStringUtil.generateCloudReference();
-//        String email = customerName.toLowerCase();
-//        String description = customerName + " Description";
-//
-//        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-//
-//        String customerIdentity = customer.getResponseEntity().getIdentity();
-//
-//        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
-//
-//        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-//        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
-//
-//        ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
-//                new APIAuthentication().initAuthorizationHeaderContent(token));
-//
-//        String itemId = getItems.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-//
-//        ResponseWrapper<BatchItem> updateItem = casTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
-//
-//        assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-//    }
+
+    // TODO endpoint is not implemented
+    @Ignore("Endpoint is not implemented")
+    @Test
+    @TestRail(testCaseId = {"5673"})
+    @Description("Update an existing Batch Item identified by its identity.")
+    public void updateBatchItem() {
+        String customerName = generateStringUtil.generateCustomerName();
+        String cloudRef = generateStringUtil.generateCloudReference();
+        String email = customerName.toLowerCase();
+        String description = customerName + " Description";
+
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+
+        String customerIdentity = customer.getResponseEntity().getIdentity();
+
+        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
+
+        String batchIdentity = batch.getResponseEntity().getIdentity();
+
+        ResponseWrapper<BatchItems> getItems = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_BATCHES, true, BatchItems.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(customerIdentity, "batches", batchIdentity, "items"))
+            .get();
+
+        String itemId = getItems.getResponseEntity().getItems().get(0).getIdentity();
+
+        ResponseWrapper<BatchItem> updateItem = CasTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
+
+        assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+    }
 }
