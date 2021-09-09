@@ -135,7 +135,7 @@ public class CasTestUtil extends TestUtil {
     public static ResponseWrapper<ValidateSite> validateSite(String identity, String siteId) {
 
         RequestEntity requestEntity = new RequestEntity().endpoint(CASAPIEnum.POST_SITES)
-        .returnType( ValidateSite.class)
+            .returnType(ValidateSite.class)
             .headers(new APIAuthentication().initAuthorizationHeaderContent(token))
             .body("site",
                 Site.builder().siteId(siteId)
