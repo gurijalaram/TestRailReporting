@@ -9,17 +9,14 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
 
-import com.google.common.net.UrlEscapers;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
@@ -28,12 +25,10 @@ import org.junit.Test;
 
 import java.util.Arrays;
 
-public class CasCustomersTests extends TestUtil {
+public class CasCustomersTests {
 
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = CASAPIEnum.GET_CUSTOMERS.getEndpointString();
 
     @Before
     public void getToken() {
@@ -44,10 +39,9 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers?sortBy[ASC]=name");
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, Customers.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token)))
+            .get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -57,40 +51,39 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token)))
+            .get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
-        String identity = customer.getIdentity();
-        String name = customer.getName();
 
-        String identityEndpoint = url + identity;
-
-        ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityEndpoint, true, Customer.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, true, Customer.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(customer.getIdentity()))
+            .get();
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(name)));
+        assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customer.getName())));
     }
 
     @Test
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer identified by its name")
     public void getCustomerByName() {
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(url, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token)))
+            .get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
-        String name = customer.getName();
 
-        String nameEndpoint = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
-
-        ResponseWrapper<Customers> responseName = new CommonRequestUtil().getCommonRequest(nameEndpoint, false, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customers> responseName = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, false, Customers.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables("?name[CN]=" + customer.getName()))
+            .get();
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -100,10 +93,10 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5644"})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers/76EA87KCHIKD");
-
-        ResponseWrapper<ErrorMessage> response = new CommonRequestUtil().getCommonRequest(apiUrl, true, ErrorMessage.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<ErrorMessage> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, true, ErrorMessage.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables("76EA87KCHIKD"))
+            .get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
     }
@@ -112,11 +105,10 @@ public class CasCustomersTests extends TestUtil {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        String name = generateStringUtil.generateCustomerName();
-        String apiUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(name);
-
-        ResponseWrapper<Customers> response = new CommonRequestUtil().getCommonRequest(apiUrl, false, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, false, Customers.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables("?name[CN]=" + generateStringUtil.generateCustomerName()))
+            .get();
 
         assertThat(response.getResponseEntity().getTotalItemCount(), is(0));
     }
@@ -132,28 +124,29 @@ public class CasCustomersTests extends TestUtil {
         String description = customerName + " Description";
         String emailPattern = "\\S+@".concat(customerName);
 
-        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
+        ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, emailPattern);
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        String customerNameUrl = String.format(PropertiesContext.get("${env}.cas.api_url"), "customers").concat("?name[CN]=") + UrlEscapers.urlFragmentEscaper().escape(customerName);
-
-        ResponseWrapper<Customers> responseName = new CommonRequestUtil().getCommonRequest(customerNameUrl, false, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customers> responseName = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, false, Customers.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables("?name[CN]=" + customerName))
+            .get();
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String identity = responseName.getResponseEntity().getItems().get(0).getIdentity();
-        String identityUrl = url + identity;
 
-        ResponseWrapper<Customer> patchResponse = casTestUtil.updateCustomer(identity, email);
+        ResponseWrapper<Customer> patchResponse = CasTestUtil.updateCustomer(identity, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
 
-        ResponseWrapper<Customer> responseIdentity = new CommonRequestUtil().getCommonRequest(identityUrl, true, Customer.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, true, Customer.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(identity))
+            .get();
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customerName)));
@@ -169,14 +162,13 @@ public class CasCustomersTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> response = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
         String identity = response.getResponseEntity().getIdentity();
-        String mfaUrl = url + identity + "/reset-mfa";
 
-        ResponseWrapper resettingResponse = casTestUtil.resetMfa(mfaUrl);
+        ResponseWrapper<String> resettingResponse = CasTestUtil.resetMfa(identity);
 
         assertThat(resettingResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }
