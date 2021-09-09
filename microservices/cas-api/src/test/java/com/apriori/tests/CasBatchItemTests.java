@@ -1,14 +1,12 @@
 package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.BatchItem;
@@ -18,18 +16,16 @@ import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
-public class CasBatchItemTests extends TestUtil {
+public class CasBatchItemTests {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = CASAPIEnum.GET_CUSTOMERS.getEndpointString();
 
     @Before
     public void getToken() {
@@ -45,20 +41,20 @@ public class CasBatchItemTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
-        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
+        String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<BatchItems> getItems = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_BATCHES, true, BatchItems.class,
+                new APIAuthentication().initAuthorizationHeaderContent(token))
+            .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
 
         assertThat(getItems.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(getItems.getResponseEntity().getResponse().getPageItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(getItems.getResponseEntity().getPageItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -70,15 +66,15 @@ public class CasBatchItemTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
-        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
+        String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper batchItems = casTestUtil.newUsersFromBatch(customerIdentity, batchIdentity);
+        ResponseWrapper<String> batchItems = CasTestUtil.newUsersFromBatch(customerIdentity, batchIdentity);
 
         assertThat(batchItems.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
@@ -92,58 +88,60 @@ public class CasBatchItemTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
-        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
+        String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<BatchItems> getItems = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_BATCHES, true, BatchItems.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(customerIdentity, "batches", batchIdentity, "items"))
+            .get();
 
-        BatchItem batchItem = getItems.getResponseEntity().getResponse().getItems().get(0);
+        BatchItem batchItem = getItems.getResponseEntity().getItems().get(0);
         String itemId = batchItem.getIdentity();
         String userName = batchItem.getUserName();
-        String itemUrl = itemsUrl + itemId;
 
-        ResponseWrapper<BatchItem> getItem = new CommonRequestUtil().getCommonRequest(itemUrl, true, BatchItem.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<BatchItem> getItem = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_BATCH_ITEM, true, BatchItem.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemId))
+            .get();
 
         assertThat(getItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(getItem.getResponseEntity().getResponse().getIdentity(), is(equalTo(itemId)));
-        assertThat(getItem.getResponseEntity().getResponse().getUserName(), is(equalTo(userName)));
+        assertThat(getItem.getResponseEntity().getIdentity(), is(equalTo(itemId)));
+        assertThat(getItem.getResponseEntity().getUserName(), is(equalTo(userName)));
     }
-
-    // TODO endpoint is not implemented
-    @Ignore("Endpoint is not implemented")
-    @Test
-    @TestRail(testCaseId = {"5673"})
-    @Description("Update an existing Batch Item identified by its identity.")
-    public void updateBatchItem() {
-        String customerName = generateStringUtil.generateCustomerName();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String email = customerName.toLowerCase();
-        String description = customerName + " Description";
-
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
-
-        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
-
-        ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
-
-        String itemId = getItems.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-
-        ResponseWrapper<BatchItem> updateItem = casTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
-
-        assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-    }
+//
+//    // TODO endpoint is not implemented
+//    @Ignore("Endpoint is not implemented")
+//    @Test
+//    @TestRail(testCaseId = {"5673"})
+//    @Description("Update an existing Batch Item identified by its identity.")
+//    public void updateBatchItem() {
+//        String customerName = generateStringUtil.generateCustomerName();
+//        String cloudRef = generateStringUtil.generateCloudReference();
+//        String email = customerName.toLowerCase();
+//        String description = customerName + " Description";
+//
+//        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+//
+//        String customerIdentity = customer.getResponseEntity().getIdentity();
+//
+//        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
+//
+//        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
+//        String itemsUrl = url + customerIdentity + "/batches/" + batchIdentity + "/items/";
+//
+//        ResponseWrapper<BatchItems> getItems = new CommonRequestUtil().getCommonRequest(itemsUrl, true, BatchItems.class,
+//                new APIAuthentication().initAuthorizationHeaderContent(token));
+//
+//        String itemId = getItems.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+//
+//        ResponseWrapper<BatchItem> updateItem = casTestUtil.updateBatchItem(customerIdentity, batchIdentity, itemId);
+//
+//        assertThat(updateItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+//    }
 }
