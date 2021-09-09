@@ -7,8 +7,6 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.CustomerUser;
@@ -18,16 +16,16 @@ import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CasCustomersUsersTests extends TestUtil {
+public class CasCustomersUsersTests {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CasTestUtil casTestUtil = new CasTestUtil();
     private String url = CASAPIEnum.GET_CUSTOMERS.getEndpointString();
 
     @Before
@@ -45,27 +43,31 @@ public class CasCustomersUsersTests extends TestUtil {
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        String usersEndpoint = url + customerIdentity + "/users/";
+//        String usersEndpoint = url + customerIdentity + "/users/";
 
-        ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
-        ResponseWrapper<CustomerUsers> customerUsers = new CommonRequestUtil().getCommonRequest(usersEndpoint, true, CustomerUsers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<CustomerUsers> customerUsers = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMERS, true, CustomerUsers.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(customerIdentity, "users"))
+            .get();
 
         assertThat(customerUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customerUsers.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String userUrl = usersEndpoint + userIdentity;
+//        String userUrl = usersEndpoint + userIdentity;
 
-        ResponseWrapper<CustomerUser> singleUser = new CommonRequestUtil().getCommonRequest(userUrl, true, CustomerUser.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<CustomerUser> singleUser = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_USERS, true, CustomerUser.class,
+                    new APIAuthentication().initAuthorizationHeaderContent(token))
+                .inlineVariables(customerIdentity, userIdentity))
+            .get();
 
         assertThat(singleUser.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
     }
@@ -80,17 +82,17 @@ public class CasCustomersUsersTests extends TestUtil {
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
         String identity = user.getResponseEntity().getIdentity();
         String profileIdentity = user.getResponseEntity().getUserProfile().getIdentity();
 
-        ResponseWrapper<UpdateUser> updatedUser = casTestUtil.updateUser(userName, customerName, identity, customerIdentity, profileIdentity);
+        ResponseWrapper<UpdateUser> updatedUser = CasTestUtil.updateUser(userName, customerName, identity, customerIdentity, profileIdentity);
 
         assertThat(updatedUser.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("QA")));
@@ -106,17 +108,16 @@ public class CasCustomersUsersTests extends TestUtil {
         String description = customerName + " Description";
         String userName = generateStringUtil.generateUserName();
 
-        ResponseWrapper<Customer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerUser> user = casTestUtil.addUser(customerIdentity, userName, customerName);
+        ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
         String identity = user.getResponseEntity().getIdentity();
-        String mfaUrl = url + customerIdentity + "/users/" + identity + "/reset-mfa";
 
-        ResponseWrapper resetMfa = casTestUtil.resetMfa(mfaUrl);
+        ResponseWrapper<String> resetMfa = CasTestUtil.resetMfa(customerIdentity, identity);
 
         assertThat(resetMfa.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }
