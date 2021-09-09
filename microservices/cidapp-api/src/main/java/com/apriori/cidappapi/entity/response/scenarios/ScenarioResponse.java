@@ -53,4 +53,5 @@ public class ScenarioResponse {
     private String publishedBy;
     private String publishedByName;
     private String updatedBy;
+    private String updatedByName;
 }
