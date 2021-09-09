@@ -1,7 +1,7 @@
 package com.apriori.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -27,15 +27,30 @@ public class Deployment {
     private Boolean isDefault;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    private LocalDateTime updatedAt;
     private String customerIdentity;
     private String name;
+    private String cloudReference;
     private String description;
+    private String customerType;
+    private String salesforceId;
     private Boolean active;
     private String apVersion;
     private List<Installation> installations = null;
     private List<Object> siteIdentities = null;
     private String deploymentType;
+    private Integer maxCadFileRetentionDays;
+    private Integer maxCadFileSize;
+    private Boolean useExternalIdentityProvider;
+    private Boolean mfaRequired;
+    private List<String> oneTimePasswordApplications;
+    private String createdByName;
+    private List<String> identityProviders;
+    private String authenticationType;
+    private List<String> emailDomains;
 }

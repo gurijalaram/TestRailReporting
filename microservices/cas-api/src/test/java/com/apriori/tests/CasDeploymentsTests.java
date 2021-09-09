@@ -39,7 +39,7 @@ public class CasDeploymentsTests {
             .get();
 
         assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseDeployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(responseDeployment.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -52,9 +52,9 @@ public class CasDeploymentsTests {
             .get();
 
         assertThat(responseDeployments.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseDeployments.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(responseDeployments.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String deploymentIdentity = responseDeployments.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String deploymentIdentity = responseDeployments.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<Deployment> deploymentByID = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_DEPLOYMENT, true, Deployment.class,
                     new APIAuthentication().initAuthorizationHeaderContent(token))

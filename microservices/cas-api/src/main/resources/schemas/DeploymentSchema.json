@@ -11,6 +11,7 @@
         "identity",
         "createdAt",
         "createdBy",
+        "updatedAt",
         "customerIdentity",
         "name",
         "description",
@@ -34,6 +35,9 @@
           "type": "string"
         },
         "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
           "type": "string"
         },
         "customerIdentity": {
@@ -124,6 +128,8 @@
                   "name",
                   "cloudReference",
                   "description",
+                  "customerType",
+                  "salesforceId",
                   "active",
                   "url",
                   "realm",
@@ -159,6 +165,12 @@
                   },
                   "description": {
                     "type": "string"
+                  },
+                  "customerType": {
+                    "type": "string"
+                  },
+                  "salesforceId": {
+                    "type": "boolean"
                   },
                   "active": {
                     "type": "boolean"
