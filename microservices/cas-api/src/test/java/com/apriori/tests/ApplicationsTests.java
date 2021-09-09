@@ -6,20 +6,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Applications;
+import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class ApplicationsTests extends TestUtil {
+public class ApplicationsTests extends CasTestUtil {
 
     private String token;
 
@@ -32,10 +32,8 @@ public class ApplicationsTests extends TestUtil {
     @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
-        String url = CASAPIEnum.GET_CUSTOMER_APPLICATIONS.getEndpointString();
-
-        ResponseWrapper<Applications> responseApplications = new CommonRequestUtil().getCommonRequest(url, true, Applications.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<Applications> responseApplications = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Applications.class,
+            new APIAuthentication().initAuthorizationHeaderContent(token))).get();
 
         assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

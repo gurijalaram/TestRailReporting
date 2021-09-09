@@ -52,7 +52,7 @@ int-core:
     batch_identity: 6N92EN8EHM52
 
   cas:
-    api_url: https://cas-api.core.int.apriori.net/%s
+    api_url: https://cas-api.core.int.apriori.net/
     
   cds:
     api_url: https://cds.na-1.qa-21-1.apriori.net/
@@ -108,7 +108,7 @@ qa-cid-perf:
     batch_identity: 6N92EN8EHM52
 
   cas:
-    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/%s
+    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
 
   cds:
     api_url: https://cds.na-1.qa-cid-perf.apriori.net/
