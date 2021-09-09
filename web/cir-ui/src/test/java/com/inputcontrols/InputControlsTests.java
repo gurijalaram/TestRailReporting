@@ -1228,6 +1228,7 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
+            .selectExportSetDtcTests(exportSetName)
             .clickOk(true, GenericReportPage.class);
 
         assertThat(
