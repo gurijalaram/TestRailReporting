@@ -31,6 +31,8 @@ import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
+import java.io.IOException;
+
 public class CastingDtcComparisonReportTests extends TestBase {
 
     private CastingDtcReportPage castingDtcReportPage;

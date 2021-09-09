@@ -583,6 +583,18 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
+     * Waits for correct rollup to be selected
+     *
+     * @param rollup - String of rollup to wait on
+     * @return instance of GenericReportPage.java
+     */
+    public GenericReportPage waitForCorrectRollup(String rollup) {
+        By locator = By.xpath(String.format("//div[@id='rollup']//a[@title='%s']", rollup));
+        pageUtils.waitForElementToAppear(locator);
+        return this;
+    }
+
+    /**
      * Waits for specified export set to be selected
      *
      * @param exportSet String - export set to wait for selection of
@@ -1750,10 +1762,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage deselectAllDtcScores() {
-        pageUtils.scrollWithJavaScript(driver.findElement(By.xpath(String.format(genericDeselectLocator, "DTC Score"))), true);
-        pageUtils.waitForSteadinessOfElement(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
-        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
-        pageUtils.waitForElementToAppear(By.xpath("//div[@id='dtcScore']//span[contains(text(), 'Selected: 0')]"));
+        By deselectLocator = By.xpath(String.format(genericDeselectLocator, "DTC Score"));
+        pageUtils.scrollWithJavaScript(driver.findElement(deselectLocator), true);
+        pageUtils.waitForElementToAppear(deselectLocator);
+        pageUtils.waitForElementAndClick(deselectLocator);
+        /*pageUtils.waitFor(1000);
+        pageUtils.waitForElementToAppear(By.xpath("//div[@id='dtcScore']//span[contains(text(), 'Selected: 0')]"));*/
         return this;
     }
 
@@ -1865,10 +1879,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setDtcScore(String dtcScoreOption) {
         if (!dtcScoreOption.equals(DtcScoreEnum.ALL.getDtcScoreName())) {
-            pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "DTC Score")));
-            pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+            deselectAllDtcScores();
             By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", dtcScoreOption));
-            pageUtils.waitForSteadinessOfElement(locator);
             pageUtils.waitForElementAndClick(driver.findElement(locator));
         }
         pageUtils.waitForElementToAppear(By.xpath(String.format("(//li[@title='%s' and contains(@class, 'jr-isSelected')])[1]", dtcScoreOption)));
