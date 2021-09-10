@@ -61,7 +61,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"7019"})
     @Description("User can create a comparison by multi selection two or more components on explore page")
     public void createComparison() {
