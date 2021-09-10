@@ -211,7 +211,9 @@ To get any project property use `com.apriori.utils.properties.PropertiesContext`
 
 ### Process of receiving property
  - at first there is a search in `System properties`
- - if in system properties no such variable, there is a search in `utils/src/main/resources/config.yml`
+ - if in system properties no such variable, there is a search in `utils/src/main/resources/config.yml` for requested property path.
+ - if requested property path doesn't exist, then path will be updated to default and try to get it by default path.
+ - if default property not exist, then will be thrown `java.lang.IllegalArgumentException` with a text `Property with path: {propety name} not present.`
 
 Property name represent String path of YML file e.g: 
    to get <br>
