@@ -27,7 +27,8 @@
         "createdByName",
         "subjectIdentity",
         "ownedBy",
-        "updatedBy"
+        "updatedBy",
+        "updatedByName"
       ],
       "properties": {
         "identity": {
@@ -84,6 +85,9 @@
           "type": "string"
         },
         "updatedBy": {
+          "type": "string"
+        },
+        "updatedByName": {
           "type": "string"
         }
       }
