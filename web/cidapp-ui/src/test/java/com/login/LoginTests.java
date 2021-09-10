@@ -21,7 +21,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -69,7 +68,6 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    @Ignore
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6647"})
@@ -82,7 +80,6 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = {"6648"})
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
@@ -94,7 +91,6 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = {"6649"})
     @Description("Validate Login Dialog")
@@ -108,7 +104,6 @@ public class LoginTests extends TestBase {
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 
-    @Ignore
     @Category(SmokeTests.class)
     @Test
     @TestRail(testCaseId = {"6650"})
@@ -121,7 +116,6 @@ public class LoginTests extends TestBase {
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = {"6651"})
     @Description("Validate Welcome Message")
@@ -136,7 +130,6 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
     }
 
-    @Ignore
     @Test
     @TestRail(testCaseId = {"6652"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
