@@ -20,6 +20,8 @@ widgets:
 gadgets:
   token_subject: 247f
 
+sprockets:
+  token_subject: c8fc
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
 int-core:
