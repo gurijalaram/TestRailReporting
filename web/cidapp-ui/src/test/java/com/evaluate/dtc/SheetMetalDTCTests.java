@@ -5,10 +5,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -183,12 +183,10 @@ public class SheetMetalDTCTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            /*.openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        evaluatePage = settingsPage.save(ExplorePage.class)*/
+            .openSettings()
+            .goToToleranceTab()
+            .selectCad()
+            .submit(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -199,7 +197,7 @@ public class SheetMetalDTCTests extends TestBase {
 
         assertThat(evaluatePage.getGuidanceResult("Design Warnings"), is("15"));
         assertThat(evaluatePage.getGuidanceResult("Design Failures"), is("4"));
-        //assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("22"));
+        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("22"));
     }
 
     /*@Test
