@@ -61,7 +61,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @Category({SmokeTests.class})
+    @Category( {SmokeTests.class})
     @TestRail(testCaseId = {"7019"})
     @Description("User can create a comparison by multi selection two or more components on explore page")
     public void createComparison() {
@@ -137,8 +137,7 @@ public class ComparisonTests extends TestBase {
         cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItemB = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
             .clickExplore()
