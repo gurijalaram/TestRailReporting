@@ -136,7 +136,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test
@@ -232,7 +232,7 @@ public class TwoModelMachiningTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test
