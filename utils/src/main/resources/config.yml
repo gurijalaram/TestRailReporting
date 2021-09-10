@@ -22,6 +22,7 @@ gadgets:
 
 sprockets:
   token_subject: c8fc
+
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
 int-core:
