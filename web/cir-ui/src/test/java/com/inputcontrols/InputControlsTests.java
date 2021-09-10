@@ -540,8 +540,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName, GenericReportPage.class)
-                .deselectAllDtcScores()
-                .clickOk(false, GenericReportPage.class);
+                .deselectAllDtcScores();
 
         String listName = "dtcScore";
         assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));

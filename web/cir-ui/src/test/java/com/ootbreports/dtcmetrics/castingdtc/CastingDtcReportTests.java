@@ -325,7 +325,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7505"})
     @Description("Verify DTC Score Input Control - No Selection - Casting DTC Report ")
     public void testDtcScoreNoSelection() {
