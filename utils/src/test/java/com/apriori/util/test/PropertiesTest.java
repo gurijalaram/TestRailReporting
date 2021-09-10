@@ -5,6 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
 
 import com.apriori.utils.properties.PropertiesContext;
+
 import org.junit.Test;
 
 /**
