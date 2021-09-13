@@ -111,7 +111,7 @@ public class ThreadTests extends TestBase {
         threadingPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
                 .selectProcessGroup(processGroupEnum)
-                .costScenario()
+                .costScenario(7)
                 .openDesignGuidance()
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
@@ -124,7 +124,7 @@ public class ThreadTests extends TestBase {
                 .search("11000")
                 .selectMaterial("Copper, Stock, UNS C11000")
                 .submit(EvaluatePage.class)
-                .costScenario()
+                .costScenario(7)
                 .openDesignGuidance()
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
@@ -368,7 +368,7 @@ public class ThreadTests extends TestBase {
         threadingPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
                 .selectProcessGroup(processGroupEnum)
-                .costScenario()
+                .costScenario(7)
                 .openDesignGuidance()
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
@@ -381,7 +381,7 @@ public class ThreadTests extends TestBase {
                 .search("1095")
                 .selectMaterial("Steel, Hot Worked, AISI 1095")
                 .submit(EvaluatePage.class)
-                .costScenario()
+                .costScenario(7)
                 .openDesignGuidance()
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");

@@ -151,7 +151,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputAnnualVolume("9524")
