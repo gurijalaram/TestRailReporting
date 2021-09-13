@@ -36,7 +36,7 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     GET_CUSTOMER_DEPLOYMENT(GET_CUSTOMER.getEndpointString().concat("deployments/%s")),
 
     //CURRENT USER
-    GET_CURRENT_USER(String.format(PropertiesContext.get("${env}.cas.api_url"), "users/current"));
+    GET_CURRENT_USER("users/current");
 
     private final String endpoint;
 
@@ -51,6 +51,6 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.cas.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.cas.api_url") + String.format(getEndpointString(), variables);
     }
 }
