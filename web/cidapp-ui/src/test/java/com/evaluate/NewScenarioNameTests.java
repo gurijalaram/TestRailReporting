@@ -65,7 +65,7 @@ public class NewScenarioNameTests extends TestBase {
             .enterScenarioName(testScenarioName2)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(testScenarioName2));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testScenarioName2), is(true));
     }
 
     @Category(IgnoreTests.class)
@@ -105,7 +105,7 @@ public class NewScenarioNameTests extends TestBase {
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(testNewScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName), is(true));
     }
 
     @Test
