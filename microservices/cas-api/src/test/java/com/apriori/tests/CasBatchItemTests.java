@@ -31,7 +31,6 @@ public class CasBatchItemTests {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken();
-        RequestEntityUtil.useTokenForRequests(token);
     }
 
     @Test

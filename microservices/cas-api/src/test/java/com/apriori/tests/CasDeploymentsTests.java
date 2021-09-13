@@ -25,7 +25,6 @@ public class CasDeploymentsTests {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken();
-        RequestEntityUtil.useTokenForRequests(token);
     }
 
     @Test
