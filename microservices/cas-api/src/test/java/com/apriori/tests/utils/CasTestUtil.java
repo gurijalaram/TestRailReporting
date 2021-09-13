@@ -69,7 +69,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static ResponseWrapper<Customer> updateCustomer(String identity, String email) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID,Customer.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .body("customer",
                 Customer.builder()
@@ -156,12 +156,13 @@ public class CasTestUtil extends TestUtil {
                     .email(userName.toLowerCase() + "@" + customerName.toLowerCase() + ".co.uk")
                     .username(userName)
                     .active(true)
-                    .userProfile(new CustomerUserProfile().setGivenName(userName)
-                        .setFamilyName("Automater")
-                        .setJobTitle("Automation Engineer")
-                        .setDepartment("Automation")
-                        .setSupervisor("Ciene Frith")
-                        .setTownCity("Brooklyn"))
+                    .userProfile(CustomerUserProfile.builder().givenName(userName)
+                        .familyName("Automater")
+                        .jobTitle("Automation Engineer")
+                        .department("Automation")
+                        .supervisor("Ciene Frith")
+                        .townCity("Brooklyn")
+                        .build())
                     .build())
             .inlineVariables(identity);
 
@@ -248,7 +249,8 @@ public class CasTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, null)
             .token(token)
-            .body(new BatchItemsPost().setBatchItems(Arrays.asList(batchIdentity)))
+            .body(BatchItemsPost.builder().batchItems(Arrays.asList(batchIdentity))
+                .build())
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items");
 
         return HTTP2Request.build(requestEntity).post();
