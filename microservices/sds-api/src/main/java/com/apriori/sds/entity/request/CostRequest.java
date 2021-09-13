@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.entity.request;
+package com.apriori.sds.entity.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

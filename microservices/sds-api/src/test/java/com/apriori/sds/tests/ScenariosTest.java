@@ -2,9 +2,9 @@ package com.apriori.sds.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
+import com.apriori.sds.entity.request.CostRequest;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -22,7 +22,6 @@ import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
