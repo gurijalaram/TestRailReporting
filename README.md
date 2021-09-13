@@ -209,16 +209,24 @@ To get any project property use `com.apriori.utils.properties.PropertiesContext`
 `com.apriori.utils.properties.PropertiesContext` - contains get methods, that allow to get the property value to mapped type
  - `get(String propertyName)` - return property by name mapped to String
 
-### Process of receiving property
- - at first there is a search in `System properties`
- - if in system properties no such variable, there is a search in `utils/src/main/resources/config.yml`
-
-Property name represent String path of YML file e.g: 
-   to get <br>
-   >`global:` <br>
-   > `prop: example` <br>
+Property name represent String path of YML file e.g:
+to get <br>
+>`global:` <br>
+> `prop: example` <br>
 
 `PropertiesContext.get("global.prop");`
+
+### Process of receiving property
+ - 1). at first there is a search in `System properties`
+ - 2). if in system properties no such variable, there is a search in `utils/src/main/resources/config.yml` for requested property path.
+ - 3). if requested property path doesn't exist, then path will be updated to default and try to get it by default path.
+ - 4). if default property not exist, then will be thrown `java.lang.IllegalArgumentException` with a text `Property with path: {propety name} not present.`
+
+e.g. PropertiesContext.get("${env}.fms.api_url") | note that ${env} = qa-cid-perf <br>
+   1). Get system environment `qa-cid-perf_fms_api_url`, <br>
+   2). if step 1 return nothing | get the property from config.yml `qa-cid-perf/fms/api_url` <br>
+   3). if step 2 return nothing | get the property from config.yml default `default/fms/api_url` <br>
+   4). if step 3 return nothing | thrown `java.lang.IllegalArgumentException` with a text `Property with path: qa-cid-perf/fms/api_url not present.` <br>
 
 ### Search Templates
 Search in `system environments` and in `config.yml` file require special naming template.
