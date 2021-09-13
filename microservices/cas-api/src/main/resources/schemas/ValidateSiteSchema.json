@@ -7,14 +7,12 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "status"
       ],
       "properties": {
         "status": {
-          "$id": "#/properties/response/properties/status",
           "type": "string"
         }
       }

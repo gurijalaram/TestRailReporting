@@ -1,26 +1,31 @@
 package com.apriori.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "UserSchema.json")
+@JsonRootName("response")
+@Data
 public class User {
-    private User response;
+    private Boolean isSystemUser;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String customerIdentity;
     private UserProfile userProfile;
@@ -28,59 +33,8 @@ public class User {
     private String username;
     private Boolean active;
     private Boolean mfaRequired;
+    private CustomAttributes customAttributes;
     private CustomProperties customProperties;
     private String userType;
-
-
-    public User getResponse() {
-        return response;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public String getCustomerIdentity() {
-        return customerIdentity;
-    }
-
-    public UserProfile getUserProfile() {
-        return userProfile;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public Boolean getActive() {
-        return active;
-    }
-
-    public Boolean getMfaRequired() {
-        return mfaRequired;
-    }
-
-    public CustomProperties getCustomProperties() {
-        return customProperties;
-    }
-
-    public String getUserType() {
-        return userType;
-    }
+    private List<String> resourcesAllowedToCreate;
 }
