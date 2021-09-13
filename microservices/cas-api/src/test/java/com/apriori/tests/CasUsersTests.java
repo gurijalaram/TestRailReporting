@@ -6,14 +6,14 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 
-import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.User;
-import com.apriori.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -29,28 +29,13 @@ public class CasUsersTests extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"5665"})
-    @Description("Get user by identity.")
-    public void getUserById() {
-        String url = String.format(Constants.getApiUrl(), "users/18EFF425JA5J");
-
-        ResponseWrapper<User> user = new CommonRequestUtil().getCommonRequest(url, true, User.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
-
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(user.getResponseEntity().getResponse().getIdentity(), is(not(emptyString())));
-    }
-
-    @Test
     @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        String url = String.format(Constants.getApiUrl(), "users/current");
-
-        ResponseWrapper<User> user = new CommonRequestUtil().getCommonRequest(url, true, User.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<User> user = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CURRENT_USER, User.class)
+            .token(token)).get();
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(user.getResponseEntity().getResponse().getIdentity(), is(not(emptyString())));
+        assertThat(user.getResponseEntity().getIdentity(), is(not(emptyString())));
     }
 }
