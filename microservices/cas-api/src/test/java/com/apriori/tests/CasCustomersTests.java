@@ -8,7 +8,6 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.services.common.objects.ErrorMessage;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.tests.utils.CasTestUtil;
@@ -16,6 +15,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -33,15 +33,15 @@ public class CasCustomersTests {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken();
+        RequestEntityUtil.useTokenForRequests(token);
     }
 
     @Test
     @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+            .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -51,18 +51,16 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+            .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, true, Customer.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(customer.getIdentity()))
-            .get();
+        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+            .token(token)
+            .inlineVariables(customer.getIdentity())).get();
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customer.getName())));
@@ -72,18 +70,17 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer identified by its name")
     public void getCustomerByName() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+            .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customers> responseName = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, false, Customers.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables("?name[CN]=" + customer.getName()))
-            .get();
+        ResponseWrapper<Customers> responseName = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+            .token(token)
+            .urlEncodingEnabled(false)
+            .inlineVariables("?name[CN]=" + customer.getName())).get();
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -93,10 +90,9 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5644"})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
-        ResponseWrapper<ErrorMessage> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, true, ErrorMessage.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables("76EA87KCHIKD"))
-            .get();
+        ResponseWrapper<ErrorMessage> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+            .token(token)
+            .inlineVariables("76EA87KCHIKD")).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
     }
@@ -105,10 +101,9 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, false, Customers.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables("?name[CN]=" + generateStringUtil.generateCustomerName()))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+            .token(token)
+            .inlineVariables("?name[CN]=" + generateStringUtil.generateCustomerName())).get();
 
         assertThat(response.getResponseEntity().getTotalItemCount(), is(0));
     }
@@ -128,10 +123,10 @@ public class CasCustomersTests {
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        ResponseWrapper<Customers> responseName = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, false, Customers.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables("?name[CN]=" + customerName))
-            .get();
+        ResponseWrapper<Customers> responseName = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+            .token(token)
+            .urlEncodingEnabled(false)
+            .inlineVariables("?name[CN]=" + customerName)).get();
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -143,10 +138,9 @@ public class CasCustomersTests {
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
 
-        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER_ID, true, Customer.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(identity))
-            .get();
+        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+            .token(token)
+            .inlineVariables(identity)).get();
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customerName)));
