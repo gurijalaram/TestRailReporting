@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Site;
@@ -20,6 +19,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -35,24 +35,23 @@ public class CasSitesTests {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken();
+        RequestEntityUtil.useTokenForRequests(token);
     }
 
     @Test
     @TestRail(testCaseId = {"5649"})
     @Description("Returns a list of sites for the customer")
     public void getCustomerSites() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+            .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String identity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> siteResponse = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.POST_SITES, true, Sites.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(identity))
-            .get();
+        ResponseWrapper<Sites> siteResponse = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES, Sites.class)
+            .token(token)
+            .inlineVariables(identity)).get();
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -63,28 +62,25 @@ public class CasSitesTests {
     @TestRail(testCaseId = {"5650"})
     @Description("Get the Site identified by its identity.")
     public void getSiteByIdentity() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token)))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+            .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> sitesResponse = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.POST_SITES, true, Sites.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(customerIdentity))
-            .get();
+        ResponseWrapper<Sites> sitesResponse = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES, Sites.class)
+            .token(token)
+            .inlineVariables(customerIdentity)).get();
 
         assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> site = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.POST_SITES_ID, true, Site.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(customerIdentity, siteIdentity))
-            .get();
+        ResponseWrapper<Site> site = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES_ID, Site.class)
+            .token(token)
+            .inlineVariables(customerIdentity, siteIdentity)).get();
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(site.getResponseEntity().getIdentity(), is(equalTo(siteIdentity)));
@@ -94,18 +90,16 @@ public class CasSitesTests {
     @TestRail(testCaseId = {"5651"})
     @Description("Validates Customer's Site record by site ID.")
     public void validateCustomerSite() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMER, true, Customers.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token)))
-            .get();
+        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+            .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String identity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> sitesResponse = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.POST_SITES, true, Sites.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token))
-            .inlineVariables(identity))
-            .get();
+        ResponseWrapper<Sites> sitesResponse = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES, Sites.class)
+            .token(token)
+            .inlineVariables(identity)).get();
 
         assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
