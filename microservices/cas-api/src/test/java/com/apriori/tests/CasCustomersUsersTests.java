@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.CustomerUser;
@@ -17,6 +16,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -26,11 +26,11 @@ import org.junit.Test;
 public class CasCustomersUsersTests {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private String url = CASAPIEnum.GET_CUSTOMERS.getEndpointString();
 
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken();
+        RequestEntityUtil.useTokenForRequests(token);
     }
 
     @Test
@@ -51,20 +51,18 @@ public class CasCustomersUsersTests {
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
-        ResponseWrapper<CustomerUsers> customerUsers = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_CUSTOMERS, true, CustomerUsers.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(customerIdentity, "users"))
-            .get();
+        ResponseWrapper<CustomerUsers> customerUsers = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMERS, CustomerUsers.class)
+            .token(token)
+            .inlineVariables(customerIdentity, "users")).get();
 
         assertThat(customerUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customerUsers.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        ResponseWrapper<CustomerUser> singleUser = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.GET_USERS, true, CustomerUser.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables(customerIdentity, userIdentity))
-            .get();
+        ResponseWrapper<CustomerUser> singleUser = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_USERS, CustomerUser.class)
+            .token(token)
+            .inlineVariables(customerIdentity, userIdentity)).get();
 
         assertThat(singleUser.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
     }
