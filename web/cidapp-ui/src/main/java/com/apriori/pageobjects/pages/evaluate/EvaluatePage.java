@@ -187,6 +187,25 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets the scenario name
+     *
+     * @return current page object
+     */
+    public String getCurrentScenarioName() {
+        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
+    }
+
+    /**
+     * Checks scenario name appears
+     *
+     * @return true/false
+     */
+    public boolean isCurrentScenarioNameDisplayed(String scenarioName) {
+        By byCurrentScenario = By.xpath(String.format("//div[@id='qa-scenario-select-field']//div[.='%s']//div[@id]", scenarioName));
+        return pageUtils.waitForElementToAppear(byCurrentScenario).isDisplayed();
+    }
+
+    /**
      * Selects the pg dropdown
      *
      * @param processGroup - the process group
@@ -512,15 +531,6 @@ public class EvaluatePage extends EvaluateToolbar {
             : null;
 
         return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
-    }
-
-    /**
-     * Gets the scenario name
-     *
-     * @return current page object
-     */
-    public String getCurrentScenarioName() {
-        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
     }
 
     /**

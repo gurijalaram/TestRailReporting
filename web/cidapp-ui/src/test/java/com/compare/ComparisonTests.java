@@ -146,7 +146,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .openBasisScenario();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName), is(true));
 
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -165,7 +165,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
     }
 
     @Test
@@ -612,7 +612,7 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
 
         comparePage = evaluatePage.clickCompare();
 
@@ -626,7 +626,7 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openBasisScenario();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName), is(true));
 
         comparePage = evaluatePage.clickCompare();
 
