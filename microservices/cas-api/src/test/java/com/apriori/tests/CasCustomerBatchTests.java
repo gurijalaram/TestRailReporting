@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.CustomerBatch;
@@ -17,6 +16,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -30,6 +30,7 @@ public class CasCustomerBatchTests {
     @Before
     public void getToken() {
         token = new JwtTokenUtil().retrieveJwtToken();
+        RequestEntityUtil.useTokenForRequests(token);
     }
 
     @Test
@@ -51,10 +52,9 @@ public class CasCustomerBatchTests {
         assertThat(batch.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(batch.getResponseEntity().getCustomerIdentity(), is(equalTo(customerIdentity)));
 
-        ResponseWrapper<CustomerBatches> customerBatches = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.BATCH_ITEM, true, CustomerBatches.class,
-                    new APIAuthentication().initAuthorizationHeaderContent(token))
-                .inlineVariables("batches"))
-            .get();
+        ResponseWrapper<CustomerBatches> customerBatches = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, CustomerBatches.class)
+            .token(token)
+            .inlineVariables("batches")).get();
 
         assertThat(customerBatches.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customerBatches.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -81,8 +81,8 @@ public class CasCustomerBatchTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerBatch> customerBatch = HTTP2Request.build(CasTestUtil.getCommonRequest(CASAPIEnum.CUSTOMER_BATCHES, true, CustomerBatch.class,
-            new APIAuthentication().initAuthorizationHeaderContent(token))
+        ResponseWrapper<CustomerBatch> customerBatch = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER_BATCHES, CustomerBatch.class)
+            .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity)).get();
 
         assertThat(customerBatch.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
