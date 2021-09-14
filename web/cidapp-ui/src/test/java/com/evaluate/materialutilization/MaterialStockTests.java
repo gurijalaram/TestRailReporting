@@ -19,6 +19,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -39,6 +40,7 @@ public class MaterialStockTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
+    @Issue("AP-71976")
     @TestRail(testCaseId = {"5115"})
     @Description("Validate material name is updated in material and util panel")
     public void materialSelectionTest() {

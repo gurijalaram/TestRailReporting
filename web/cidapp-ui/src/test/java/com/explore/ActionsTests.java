@@ -514,6 +514,7 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         cssItem = loginPage.login(currentUser)
