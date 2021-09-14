@@ -7,7 +7,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "identity",
@@ -21,35 +20,27 @@
       ],
       "properties": {
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
         "id": {
-          "$id": "#/properties/response/properties/id",
           "type": "string"
         },
         "customerIdentity": {
-          "$id": "#/properties/response/properties/customerIdentity",
           "type": "string"
         },
         "filename": {
-          "$id": "#/properties/response/properties/filename",
           "type": "string"
         },
         "itemCount": {
-          "$id": "#/properties/response/properties/itemCount",
           "type": "integer"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
         "createdByName": {
-          "$id": "#/properties/response/properties/createdByName",
           "type": "string"
         }
       }

@@ -986,7 +986,7 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .goToSecondaryTab()
             .openSecondaryProcesses()
@@ -996,9 +996,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectSecondaryProcess("Packaging")
             .reset()
             .submit(EvaluatePage.class)
-            .costScenario();
+            .costScenario()
+            .goToSecondaryTab();
 
-        assertThat(evaluatePage.getListOfSecondaryProcesses(), hasItems("No Processes Selected..."));
+        assertThat(secondaryPage.getSecondaryProcesses(), hasItems("No Processes Selected..."));
 
         evaluatePage.goToSecondaryTab()
             .openSecondaryProcesses()
