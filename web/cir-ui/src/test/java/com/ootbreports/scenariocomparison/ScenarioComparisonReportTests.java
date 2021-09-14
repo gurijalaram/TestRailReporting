@@ -119,7 +119,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
                 .selectFirstTwoComparisonScenarios()
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
 
         usdFirstFbc = scenarioComparisonReportPage.getFbcValue(true);
@@ -127,7 +127,7 @@ public class ScenarioComparisonReportTests extends TestBase {
 
         scenarioComparisonReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
 
         gbpFirstFbc = scenarioComparisonReportPage.getFbcValue(true);

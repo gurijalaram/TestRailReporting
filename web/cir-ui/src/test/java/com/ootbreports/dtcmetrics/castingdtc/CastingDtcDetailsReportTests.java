@@ -172,7 +172,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
-            .clickOk(true, CastingDtcReportPage.class);
+            .clickOk(CastingDtcReportPage.class);
 
         castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
         String partName = castingDtcReportPage.getPartNameDtcReports();

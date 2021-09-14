@@ -186,9 +186,6 @@ qa-cid-perf:
   vds:
     api_url: https://vds.na-1.qa-cid-perf.apriori.net/
 
-  reports:
-    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
-
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
   name: qa-cig-perf
@@ -219,9 +216,11 @@ qa-cig-perf:
 
 ######################################################## On Prem ########################################################
 onprem:
-  base_url: https://conqbaci01/
-  admin: ${onprem.base_url}apriori/login
-  report: ${onprem.base_url}jasperserver-pro/login.html
+  name: onprem
+  base_url: https://localhost/
+
+  admins:
+    ui_url: ${onprem.base_url}apriori/login
 
   cds:
     apriori_core_services_installation_identity:
@@ -234,14 +233,13 @@ onprem:
     identity_role: 67J517C9L762
 
   reports:
-    ui_url: ${qa-cig-perf.base_url}jasperserver-pro/login.html
+    ui_url: ${onprem.base_url}jasperserver-pro/login.html
 
   bcs:
     report_identity: 50A4DFJF3NC7
     reportType_identity: 0J3JMAA4MCAJ
     part_identity: 6E5GDN0CHB95
     batch_identity: 6N92EN8EHM52
-
 
 ######################################################## QA-20-1 ########################################################
 qa-20-1:

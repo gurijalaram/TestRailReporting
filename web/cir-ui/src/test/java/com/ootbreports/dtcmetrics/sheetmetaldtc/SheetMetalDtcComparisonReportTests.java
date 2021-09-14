@@ -83,7 +83,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC_COMPARISON.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
                 .waitForCorrectRollupInDropdown(rollupName)
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getDisplayedRollup(), is(equalTo(rollupName)));

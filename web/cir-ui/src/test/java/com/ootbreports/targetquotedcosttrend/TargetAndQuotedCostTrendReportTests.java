@@ -81,7 +81,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
         assertThat(targetQuotedCostTrendReportPage.getProjectRollupDropdownOptionText(),
                 is(equalTo("AC CYCLE TIME VT 1")));
 
-        targetQuotedCostTrendReportPage.clickOk(true, TargetQuotedCostTrendReportPage.class);
+        targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
     }
 
@@ -106,7 +106,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
 
         String projectToSelect = "PROJECT 4";
         targetQuotedCostTrendReportPage.selectProject(projectToSelect);
-        targetQuotedCostTrendReportPage.clickOk(true, TargetQuotedCostTrendReportPage.class);
+        targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
 
         assertThat(targetQuotedCostTrendReportPage.isChartDisplayedAndEnabled(), is(equalTo(true)));
         assertThat(targetQuotedCostTrendReportPage.getProjectNameAboveChart(), is(equalTo(projectToSelect)));
@@ -127,7 +127,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
         assertThat(targetQuotedCostTrendReportPage.isExportDateRecent(), is(equalTo(true)));
 
         String exportDateSelected = targetQuotedCostTrendReportPage.getCurrentExportDate().replace("T", " ");
-        targetQuotedCostTrendReportPage.clickOk(true, TargetQuotedCostTrendReportPage.class);
+        targetQuotedCostTrendReportPage.clickOk(TargetQuotedCostTrendReportPage.class);
         assertThat(targetQuotedCostTrendReportPage.getExportDateFromAboveChart(), is(equalTo(exportDateSelected)));
     }
 
@@ -169,14 +169,14 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
                         TargetQuotedCostTrendReportPage.class);
 
         targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetQuotedCostTrendReportPage.class)
+                .clickOk(TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         targetQuotedCostTrendReportPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetQuotedCostTrendReportPage.class)
+                .clickOk(TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();

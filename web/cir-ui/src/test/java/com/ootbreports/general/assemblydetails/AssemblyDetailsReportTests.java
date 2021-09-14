@@ -99,14 +99,14 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getCapitalInvestmentsGrandTotalFromTable();
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getCapitalInvestmentsGrandTotalFromTable();
@@ -131,12 +131,12 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
         gbpGrandTotal = assemblyDetailsReportPage.getValueFromTable(
@@ -148,7 +148,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
@@ -176,7 +176,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .clickOk(true, AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -228,7 +228,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
                 .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-                .clickOk(true, AssemblyDetailsReportPage.class)
+                .clickOk(AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM_LOWERCASE.getAssemblySetName())
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -280,7 +280,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .clickOk(true, AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -321,14 +321,14 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
-            .clickOk(true, AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class)
+                .clickOk(AssemblyDetailsReportPage.class)
                 .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -379,7 +379,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
             .setAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .clickOk(true, AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -430,7 +430,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
             .setAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
-            .clickOk(true, AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.TOP_LEVEL.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -490,7 +490,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.PISTON_ASSEMBLY.getExportSetName(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         //assemblyDetailsReportPage.openNewCidTabAndFocus(1);
@@ -617,13 +617,13 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class);
+                .clickOk(AssemblyDetailsReportPage.class);
 
         String partNumberComponent = assemblyDetailsReportPage.getComponentLinkPartNumber();
         assemblyDetailsReportPage.clickComponentLinkAssemblyDetails();
@@ -815,7 +815,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-            .clickOk(true, AssemblyDetailsReportPage.class)
+            .clickOk(AssemblyDetailsReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         Map<String, String> reportsValues = new HashMap<>();
@@ -860,13 +860,13 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class)
+                .clickOk(AssemblyDetailsReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
-                .clickOk(true, AssemblyDetailsReportPage.class);
+                .clickOk(AssemblyDetailsReportPage.class);
 
         ArrayList<BigDecimal> levelValues =
                 assemblyDetailsReportPage.getLevelValues(AssemblyTypeEnum.SUB_ASSEMBLY.getAssemblyType());
@@ -894,7 +894,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .selectExportSetDtcTests(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
             .waitForExportSetSelection(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
             .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         BigDecimal actualVariance = assemblyDetailsReportPage.getComponentCostReportValue("Variance");
@@ -930,7 +930,7 @@ public class AssemblyDetailsReportTests extends TestBase {
 
         assemblyDetailsReportPage = new AssemblyDetailsReportPage(driver)
                 .setAssembly(AssemblySetEnum.TOP_LEVEL_MULTI_VPE.getAssemblySetName())
-                .clickOk(true, GenericReportPage.class)
+                .clickOk(GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         ArrayList<String> reportsVpeValues = assemblyDetailsReportPage.getAllVpeValuesAssemblyDetailsReport();

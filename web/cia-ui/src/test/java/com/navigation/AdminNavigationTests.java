@@ -132,7 +132,7 @@ public class AdminNavigationTests extends TestBase {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(PropertiesContext.get("${env}.report")));
+        assertThat(homePage.getCurrentUrl(), equalTo(PropertiesContext.get("${env}.reports.ui_url")));
         assertThat(homePage.getTabCount(), is(equalTo(2)));
         assertThat(homePage.isReportsWelcomeTextDisplayed(), is(true));
         assertThat(homePage.isReportsWelcomeTextEnabled(), is(true));

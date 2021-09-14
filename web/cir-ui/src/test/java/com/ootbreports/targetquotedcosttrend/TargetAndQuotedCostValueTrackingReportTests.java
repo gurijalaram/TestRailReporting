@@ -109,14 +109,14 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                         TargetAndQuotedCostValueTrackingPage.class);
 
         targetAndQuotedCostValueTrackingPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
 
         targetAndQuotedCostValueTrackingPage.clickInputControlsButton()
                 .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetAndQuotedCostValueTrackingPage.getFinalCost();
@@ -172,7 +172,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
         String exportDateSelected = targetAndQuotedCostValueTrackingPage.getSelectedExportDate()
                 .replace("T", " ");
 
-        targetAndQuotedCostValueTrackingPage.clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+        targetAndQuotedCostValueTrackingPage.clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class);
 
         assertThat(targetAndQuotedCostValueTrackingPage.getExportDateOnReport()
@@ -190,7 +190,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectProjectNameToAppear("1");
 
@@ -244,7 +244,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_VALUE_TRACKING.getReportName(),
                         TargetAndQuotedCostValueTrackingPage.class)
                 .selectProjectRollup(RollupEnum.AC_CYCLE_TIME_VT_1.getRollupName())
-                .clickOk(true, TargetAndQuotedCostValueTrackingPage.class)
+                .clickOk(TargetAndQuotedCostValueTrackingPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetAndQuotedCostValueTrackingPage.class)
                 .clickProjectLink(index)
                 .switchTab(1)

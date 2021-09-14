@@ -239,7 +239,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC_DETAILS.getReportName(), PlasticDtcReportPage.class)
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), PlasticDtcReportPage.class)
             .selectSortOrder(SortOrderEnum.MANUFACTURING_ISSUES.getSortOrderEnum())
-            .clickOk(true, PlasticDtcReportPage.class);
+            .clickOk(PlasticDtcReportPage.class);
 
         plasticDtcReportPage.waitForReportToLoad();
 

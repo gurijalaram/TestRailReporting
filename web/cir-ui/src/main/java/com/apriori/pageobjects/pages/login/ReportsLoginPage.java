@@ -20,7 +20,7 @@ import java.util.List;
 public class ReportsLoginPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(ReportsLoginPage.class);
-    private static final String loginPageURL = PropertiesContext.get("${env}.report");
+    private static final String loginPageURL = PropertiesContext.get("${env}.reports.ui_url");
 
     @FindBy(css = "input[name='j_username']")
     private WebElement email;

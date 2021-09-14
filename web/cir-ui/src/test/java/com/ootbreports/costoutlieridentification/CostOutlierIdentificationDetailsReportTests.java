@@ -109,7 +109,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .selectExportSet(
                         ExportSetEnum.SHEET_METAL_DTC.getExportSetName(),
                         CostOutlierIdentificationReportPage.class)
-                .clickOk(true, CostOutlierIdentificationReportPage.class);
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
         String partName = costOutlierIdentificationReportPage.getPartNameCastingSheetMetalDtcDetails(
                 true);
@@ -140,14 +140,14 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.COST_OUTLIER_IDENTIFICATION.getReportName(),
                         GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), CostOutlierIdentificationReportPage.class)
-                .clickOk(true, CostOutlierIdentificationReportPage.class);
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
         if (driver.findElement(By.xpath("//span[contains(text(), 'Rollup')]/../following-sibling::td[2]/span"))
                 .getText().contains("SHEET METAL DTC")) {
             costOutlierIdentificationReportPage.clickInputControlsButton()
                     .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                    .clickOk(true, GenericReportPage.class)
+                    .clickOk(GenericReportPage.class)
                     .waitForReportToLoad();
             costOutlierIdentificationReportPage.waitForSvgToRender();
         }
@@ -250,7 +250,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(),
                         CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.ANNUALISED_VALUE, "10000")
-                .clickOk(true, CostOutlierIdentificationReportPage.class);
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 
@@ -297,7 +297,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                         CostOutlierIdentificationReportPage.class)
                 .selectExportSet(ExportSetEnum.COST_OUTLIER_THRESHOLD_ROLLUP.getExportSetName(), CostOutlierIdentificationReportPage.class)
                 .inputAnnualisedOrPercentValue(Constants.PERCENT_VALUE, "100")
-                .clickOk(true, CostOutlierIdentificationReportPage.class);
+                .clickOk(CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
 

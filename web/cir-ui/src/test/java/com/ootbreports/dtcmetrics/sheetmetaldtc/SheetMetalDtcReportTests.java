@@ -87,7 +87,7 @@ public class SheetMetalDtcReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), SheetMetalDtcReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), SheetMetalDtcReportPage.class)
                 .waitForCorrectRollupInDropdown(rollupName)
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         assertThat(sheetMetalDtcReportPage.getDisplayedRollup(), is(equalTo(rollupName)));
@@ -246,7 +246,7 @@ public class SheetMetalDtcReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.SHEET_METAL_DTC.getReportName(), GenericReportPage.class)
                 .selectExportSet(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class)
                 .selectSortOrder(SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum())
-                .clickOk(true, SheetMetalDtcReportPage.class)
+                .clickOk(SheetMetalDtcReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), SheetMetalDtcReportPage.class);
 
         sheetMetalDtcReportPage.waitForReportToLoad();

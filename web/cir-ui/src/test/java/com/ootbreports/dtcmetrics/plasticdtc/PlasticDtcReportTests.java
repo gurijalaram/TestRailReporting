@@ -120,7 +120,7 @@ public class PlasticDtcReportTests extends TestBase {
         );
 
         genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
@@ -129,7 +129,7 @@ public class PlasticDtcReportTests extends TestBase {
 
         genericReportPage.clickInputControlsButton()
             .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
+            .clickOk(GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
         genericReportPage.hoverPartNameBubbleDtcReports();
@@ -180,7 +180,7 @@ public class PlasticDtcReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());
         genericReportPage.hoverPartNameBubbleDtcReports();
