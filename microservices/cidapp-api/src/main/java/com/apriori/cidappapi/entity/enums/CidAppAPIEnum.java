@@ -17,7 +17,13 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //Preferences
     GET_PREFERENCES("users/current/preferences?pageSize=100"),
-    PATCH_PREFERENCES("users/current/preferences");
+    PATCH_PREFERENCES("users/current/preferences"),
+
+    //Scenario
+    POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
+
+    //Costing Templates
+    GET_COSTING_TEMPLATES("costing-templates");
 
     private final String endpoint;
 

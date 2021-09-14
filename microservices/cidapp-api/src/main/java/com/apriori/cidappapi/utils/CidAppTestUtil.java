@@ -12,8 +12,12 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.request.CostRequest;
+import com.apriori.sds.entity.response.CostingTemplate;
+import com.apriori.sds.entity.response.CostingTemplatesItems;
+import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.utils.FormParams;
@@ -329,5 +333,43 @@ public class CidAppTestUtil {
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
         return HTTP2Request.build(requestEntity).get();
+    }
+
+    public Scenario costScenario(String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(getToken(userCredentials))
+                .inlineVariables(componentId, scenarioId)
+                .body("costingInputs", CostRequest.builder()
+                    .annualVolume(5500)
+                    .batchSize(458)
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .materialName("Aluminum, Cast, ANSI AL380.0")
+                    .productionLife(5.0)
+                    .vpeName(digitalFactoryEnum.getDigitalFactory())
+                    .costingTemplateIdentity(getFirstCostingTemplate(userCredentials).getIdentity())
+                    .deleteTemplateAfterUse(false)
+                    .build()
+                );
+
+        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+
+        return responseWrapper.getResponseEntity();
+    }
+
+    protected CostingTemplate getFirstCostingTemplate(UserCredentials userCredentials) {
+        List<CostingTemplate> costingTemplates = getCostingTemplates(userCredentials);
+//        assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
+        return costingTemplates.get(0);
+    }
+
+    protected List<CostingTemplate> getCostingTemplates(UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
+                .token(getToken(userCredentials));
+
+        ResponseWrapper<CostingTemplatesItems> response = HTTP2Request.build(requestEntity).get();
+
+        return response.getResponseEntity().getItems();
     }
 }
