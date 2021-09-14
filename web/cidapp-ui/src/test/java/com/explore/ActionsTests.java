@@ -88,6 +88,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
+            .selectFilter("Recent")
             .clickSearch(componentName)
             .highlightScenario("M3CapScrew", scenarioName)
             .info();
