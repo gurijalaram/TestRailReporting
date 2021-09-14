@@ -5,11 +5,11 @@ env: qa-cid-perf
 global:
   schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: widgets-users.csv
+  users_csv_file: common-users.csv
   different_users: true
 
 # Define the customer
-customer: widgets
+customer: ap-int
 
 ap-int:
   token_subject: 4127
