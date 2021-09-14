@@ -14,7 +14,6 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
