@@ -5,6 +5,7 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -35,7 +36,9 @@ public class InputsController {
      * @return current page object
      */
     public InputsController selectProcessGroup(WebElement processGroupDropdown, ProcessGroupEnum processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, processGroup.getProcessGroup());
+        pageUtils.waitForElementAndClick(processGroupDropdown);
+        By byProcessGroup = By.xpath(String.format("//div[@id='qa-process-group-select-field']//div[.='%s']//div[@id]", processGroup.getProcessGroup()));
+        pageUtils.waitForElementAndClick(byProcessGroup);
         return this;
     }
 
