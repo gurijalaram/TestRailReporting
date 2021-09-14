@@ -184,7 +184,7 @@ public class WorkorderAPITests {
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
         GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
-        
+
         assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
         assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
         assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
