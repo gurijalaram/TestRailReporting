@@ -78,6 +78,8 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
             .info()
