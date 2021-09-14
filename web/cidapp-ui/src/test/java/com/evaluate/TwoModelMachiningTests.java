@@ -21,7 +21,9 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -131,9 +133,11 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
-            .costScenario()
+            .costScenario(5)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
