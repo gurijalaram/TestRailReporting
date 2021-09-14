@@ -141,7 +141,7 @@ qa-cid-perf:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
 
   edc:
-    api_url: https://edc-api.na-1.qa-cid-perf.apriori.net/bill-of-materials/
+    api_url: https://edc-api.na-1.qa-cid-perf.apriori.net/
 
   vds:
     api_url: https://vds.na-1.qa-cid-perf.apriori.net/

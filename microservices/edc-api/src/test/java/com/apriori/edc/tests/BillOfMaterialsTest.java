@@ -3,6 +3,7 @@ package com.apriori.edc.tests;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
 import com.apriori.edc.tests.util.EdcTestUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
@@ -75,5 +76,13 @@ public class BillOfMaterialsTest extends EdcTestUtil {
     @Severity(SeverityLevel.NORMAL)
     public void postBillOfMaterials() {
         userTestDataUtil.uploadTestData(userData);
+    }
+
+    @Test
+    @TestRail(testCaseId = "1506")
+    @Description("Delete a bill of material")
+    public void testDeleteBomByIdentity() {
+
+        deleteBillOfMaterialById("2HKD5HMCJABD");
     }
 }

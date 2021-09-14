@@ -1,4 +1,4 @@
-package com.util;
+package com.apriori.edc.utils;
 
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.ats.utils.JwtTokenUtil;
@@ -6,13 +6,15 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.web.driver.TestBase;
 
-public class EdcTestUtil extends TestBase {
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class EDCResources {
 
     private static String token = new JwtTokenUtil().retrieveJwtToken();
 
-    public ResponseWrapper<String> deleteBillOfMaterial(String endpoint) {
+    public static ResponseWrapper<String> deleteBillOfMaterial(String endpoint) {
         RequestEntity requestEntity = RequestEntity.init(endpoint, null)
             .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
 

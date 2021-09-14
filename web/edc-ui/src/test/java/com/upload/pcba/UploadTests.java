@@ -11,24 +11,25 @@ import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserUtil;
 
-import com.util.EdcTestUtil;
-import com.utils.Constants;
+import com.util.EdcUiTestUtil;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
 
-public class UploadTests extends EdcTestUtil {
+public class UploadTests extends EdcUiTestUtil {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private EditBomPage editBomPage;
     private MatchedPartPage matchedPartPage;
-    private String url = Constants.getApiUrl();
+    private String url = String.format(PropertiesContext.get("${env}.edc.api_url") + "bill-of-materials/");
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+
 
     public UploadTests() {
         super();
@@ -38,7 +39,7 @@ public class UploadTests extends EdcTestUtil {
     public void cleanUp() {
         String billOfMaterialId = driver.getCurrentUrl().split("/")[4];
         String endpoint = url + billOfMaterialId;
-        deleteBillOfMaterial(endpoint);
+        deleteBom(endpoint);
     }
 
     @Test

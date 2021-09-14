@@ -56,6 +56,6 @@ public class Constants {
      * @return string
      */
     public static String getApiUrl() {
-        return PropertiesContext.get("${env}.edc.api_url");
+        return PropertiesContext.get("${env}.edc.api_url") + "bill-of-materials/";
     }
 }
