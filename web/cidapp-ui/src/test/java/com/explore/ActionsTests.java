@@ -276,6 +276,7 @@ public class ActionsTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
