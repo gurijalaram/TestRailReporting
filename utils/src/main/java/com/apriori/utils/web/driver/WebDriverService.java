@@ -7,6 +7,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -49,25 +51,32 @@ public class WebDriverService extends BrowserManager {
                     System.setProperty("webdriver.chrome.logfile", System.getProperty("java.io.tmpdir") + File.separator + "chromedriver.log");
                     System.setProperty("webdriver.chrome.verboseLogging", "true");
 
-                    ChromeOptions options = new ChromeDriverOptions(downloadPath, locale).getChromeOptions();
-                    dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
-                    dc.setCapability(ChromeOptions.CAPABILITY, options);
-                    dc.setAcceptInsecureCerts(true);
-                    result = new ChromeDriver(dc);
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.setCapability("browser.download.dir", downloadPath);
+                    chromeOptions.setCapability("intl.accept.languages", locale);
+                    chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                    chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    chromeOptions.acceptInsecureCerts(true);
+
+                    result = new ChromeDriver(chromeOptions);
                     logger.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
                     break;
 
                 case FIREFOX:
                     WebDriverManager.firefoxdriver().setup();
 
-                    DesiredCapabilities firefoxOptions = new FirefoxOptions(downloadPath, locale).getFirefoxOptions();
-                    firefoxOptions.acceptInsecureCerts();
+                    FirefoxOptions firefoxOptions = new FirefoxOptions();
+                    firefoxOptions.getBrowserName();
+                    firefoxOptions.setCapability("browser.download.dir", downloadPath);
+                    firefoxOptions.setCapability("intl.accept_languages", locale);
+
                     result = new FirefoxDriver(firefoxOptions);
                     logger.info("Full list of Capabilities: " + ((FirefoxDriver) result).getCapabilities().toString());
                     break;
 
                 case EDGE:
                     WebDriverManager.edgedriver().setup();
+
                     result = new EdgeDriver();
                     logger.info("Full list of Capabilities: " + ((EdgeDriver) result).getCapabilities().toString());
                     break;
