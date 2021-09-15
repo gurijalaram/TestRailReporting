@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -15,6 +17,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author cfrith
@@ -51,6 +55,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
 
+    @FindBy(css = "[role='status']")
+    private List<WebElement> statusSpinner;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -71,6 +78,8 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(settingsButton);
         pageUtils.waitForElementAppear(helpDropdown);
+        assertTrue("Status spinner should not be displayed", pageUtils.invisibilityOfElements(statusSpinner));
+        assertTrue("Explore button is not clickable", pageUtils.isElementClickable(exploreButton));
     }
 
     /**
