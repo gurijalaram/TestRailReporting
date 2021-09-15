@@ -21,7 +21,9 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
@@ -82,7 +84,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName.toUpperCase()));
+        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName));
         assertThat(evaluatePage.getSourcePartDetails(), containsString(testScenarioName));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
@@ -131,12 +133,14 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
-            .costScenario()
+            .costScenario(5)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test
@@ -167,33 +171,35 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.98, 1)));
+        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.34, 5)));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(18.88, 5));
-        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(2.33, 1)));
+        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(2.33, 5)));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModel1PartName, twoModel1ScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(82.70, 1)));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(25.81, 1));
-        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1928, 1)));
+        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(82.70, 5)));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(20.91, 5));
+        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1.93, 5)));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModel1PartName, twoModel2ScenarioName, twoModelFile2, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .clickSearch(twoModel1PartName)
             .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(83.78, 1)));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(30.67, 1));
-        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1615, 1)));
+        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(83.78, 5)));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(30.67, 5));
+        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1.62, 5)));
     }
 
     @Test
@@ -232,7 +238,7 @@ public class TwoModelMachiningTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test

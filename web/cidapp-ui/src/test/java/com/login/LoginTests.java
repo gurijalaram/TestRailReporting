@@ -20,6 +20,8 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -98,9 +100,8 @@ public class LoginTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
 
-        assertThat(loginPage.getMarketingText(), containsString("COST INSIGHT GENERATE:\n" +
-            "SOLUTION FOR A NEW NORMAL\n" +
-            "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
+        assertThat(loginPage.getMarketingText(), containsString("aPriori Cost Insight\n" +
+            "Explore the Possible"));
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 
@@ -122,7 +123,7 @@ public class LoginTests extends TestBase {
     public void welcomeMessage() {
 
         loginPage = new CidAppLoginPage(driver);
-        assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Access to these web services is available only to aPriori licensed customers, partners and employees"));
+        assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Use of aPriori applications is governed by the terms and conditions of your existing SaaS license Agreement with aPriori."));
 
         privacyPolicyPage = loginPage.privacyPolicy();
 
@@ -156,8 +157,10 @@ public class LoginTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .logout()
             .login(UserUtil.getUser())
-            .selectFilter("Recent")
-            .openScenario("225_gasket-1-solid1", scenarioName);
+            .selectFilter("Public")
+            .clickSearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }

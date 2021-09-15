@@ -4,7 +4,6 @@ import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_CHINA;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.utils.enums.ProcessGroupEnum.POWDER_METAL;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -207,6 +206,6 @@ public class PublishExistingCostedTests extends TestBase {
             .changeName(scenarioName2)
             .publish(cssItem, currentUser, EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
     }
 }

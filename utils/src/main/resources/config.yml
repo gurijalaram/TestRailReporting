@@ -90,7 +90,7 @@ int-core:
     batch_identity: 6N92EN8EHM52
 
   cas:
-    api_url: https://cas-api.core.int.apriori.net/%s
+    api_url: https://cas-api.core.int.apriori.net/
     
   cds:
     api_url: https://cds.na-1.qa-21-1.apriori.net/
@@ -103,6 +103,9 @@ int-core:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
+  ci-connect:
+    ui_url: https://ci-connect.core.int.apriori.net/
+ 
   fms:
     api_url: https://fms.core.int.apriori.net/
 
@@ -134,6 +137,9 @@ qa-cid-perf:
     part_identity: 6E5GDN0CHB95
     batch_identity: 6N92EN8EHM52
 
+  cas:
+    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
+
   cds:
     apriori_core_services_installation_identity: 8E9MK02F4H9F
     apriori_cloud_home_identity: 1J8M416FBJBK
@@ -143,6 +149,9 @@ qa-cid-perf:
     automation_user_identity02: 1F4GF3E20D38
     automation_user_identity03: 1F4HJ2A9GM9C
     identity_role: 67J517C9L763
+
+  ci-connect:
+    ui_url: https://ci-connect.na-1.qa-cid-perf.apriori.net/
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html

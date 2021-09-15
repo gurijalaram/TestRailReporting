@@ -7,7 +7,6 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "identity",
@@ -28,82 +27,62 @@
       ],
       "properties": {
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
         "name": {
-          "$id": "#/properties/response/properties/name",
           "type": "string"
         },
         "cloudReference": {
-          "$id": "#/properties/response/properties/cloudReference",
           "type": "string"
         },
         "description": {
-          "$id": "#/properties/response/properties/description",
           "type": "string"
         },
         "customerType": {
-          "$id": "#/properties/response/properties/customerType",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/response/properties/active",
           "type": "boolean"
         },
         "maxCadFileRetentionDays": {
-          "$id": "#/properties/response/properties/maxCadFileRetentionDays",
           "type": "integer"
         },
         "useExternalIdentityProvider": {
-          "$id": "#/properties/response/properties/useExternalIdentityProvider",
           "type": "boolean"
         },
         "mfaRequired": {
-          "$id": "#/properties/response/properties/mfaRequired",
           "type": "boolean"
         },
         "oneTimePasswordApplications": {
-          "$id": "#/properties/response/properties/oneTimePasswordApplications",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/oneTimePasswordApplications/items"
           }
         },
         "createdByName": {
-          "$id": "#/properties/response/properties/createdByName",
           "type": "string"
         },
         "identityProviders": {
-          "$id": "#/properties/response/properties/identityProviders",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/identityProviders/items"
           }
         },
         "emailDomains": {
-          "$id": "#/properties/response/properties/emailDomains",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/emailDomains/items",
             "anyOf": [
               {
-                "$id": "#/properties/response/properties/emailDomains/items/anyOf/0",
                 "type": "string"
               }
             ]
           }
         },
         "authenticationType": {
-          "$id": "#/properties/response/properties/authenticationType",
           "type": "string"
         }
       }
