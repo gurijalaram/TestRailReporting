@@ -8,19 +8,15 @@
   ],
   "properties": {
     "identity": {
-      "$id": "#/properties/identity",
       "type": "string"
     },
     "createdAt": {
-      "$id": "#/properties/createdAt",
       "type": "string"
     },
     "createdBy": {
-      "$id": "#/properties/createdBy",
       "type": "string"
     },
     "version": {
-      "$id": "#/properties/version",
       "type": "string"
     }
   }

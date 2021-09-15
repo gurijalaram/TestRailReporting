@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -27,6 +28,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -49,6 +51,13 @@ public class SecondaryProcessTests extends TestBase {
 
     public SecondaryProcessTests() {
         super();
+    }
+
+    @After
+    public void resetAllSettings() {
+        if (currentUser != null) {
+            new ResetSettingsUtil().resetSettings(currentUser);
+        }
     }
 
     @Test
@@ -397,7 +406,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart");
 
 
-        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (11.35%)"));
+        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (77.36%)"));
     }
 
     @Test
@@ -545,7 +554,8 @@ public class SecondaryProcessTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Scenario Name", "Equals", scenarioName)
             .submit(ExplorePage.class)
-            .openScenario("SheetMetal", scenarioName);
+            .openScenario("SheetMetal", scenarioName)
+            .goToSecondaryTab();
 
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
@@ -986,29 +996,31 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .goToSecondaryTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
+            .reset()
             .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Packaging")
             .reset()
-            .submit(EvaluatePage.class)
-            .costScenario();
+            .cancel()
+            .costScenario()
+            .goToSecondaryTab();
 
-        assertThat(evaluatePage.getListOfSecondaryProcesses(), hasItems("No Processes Selected..."));
+        assertThat(secondaryPage.getSecondaryProcesses(), hasItems("No Processes Selected..."));
 
         evaluatePage.goToSecondaryTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
+            .deselectAll()
             .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Packaging")
             .deselectAll()
-            .submit(EvaluatePage.class)
-            .costScenario();
+            .cancel();
 
         assertThat(evaluatePage.getListOfSecondaryProcesses(), is("No Processes Selected..."));
     }
