@@ -1,6 +1,7 @@
 package com.apriori.cidappapi.entity.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,4 +23,7 @@ public class CostRequest {
     private String vpeName;
     private Boolean deleteTemplateAfterUse;
     private String costingTemplateIdentity;
+
+    @JsonProperty("UDARegion")
+    private String udaRegion;
 }

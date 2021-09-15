@@ -3,7 +3,6 @@ package com.apriori.vds.entity.response.custom.attributes;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,7 +15,6 @@ import java.util.List;
 @Schema(location = "CustomAttribute.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class CustomAttribute {
     private String createdBy;
     private String customerIdentity;
@@ -32,6 +30,8 @@ public class CustomAttribute {
     private String type;
     private String updatedBy;
     private List<String> options;
+    private List<String> scope;
+    private Boolean searchable;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
