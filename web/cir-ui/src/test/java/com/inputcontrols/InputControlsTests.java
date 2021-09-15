@@ -449,14 +449,10 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, genericReportPageClass)
             .waitForInputControlsLoad()
+            .selectExportSet(exportSet, genericReportPageClass)
+            .selectExportSetDtcTests(exportSet)
             .setProcessGroup(processGroupName)
             .clickOk(true, genericReportPageClass);
-
-        genericReportPage.clickInputControlsButton()
-                .waitForInputControlsLoad()
-                .selectExportSet(exportSet, genericReportPageClass)
-                //.setProcessGroup(processGroupName)
-                .clickOk(true, genericReportPageClass);
 
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),
@@ -1235,6 +1231,21 @@ public class InputControlsTests extends TestBase {
             .selectExportSet(exportSetName, GenericReportPage.class)
             .selectExportSetDtcTests(exportSetName)
             .clickOk(true, GenericReportPage.class);
+
+        WebElement exportSetValueElement = driver.findElement(
+                By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span")
+        );
+        WebElement processGroupValueElement = driver.findElement(
+                By.xpath("//span[contains(text(), 'Process Group:')]/../following-sibling::td[2]/span")
+        );
+        if (!exportSetValueElement.getText().equals(exportSetName)
+                && processGroupValueElement.getText().equals(processGroupName)) {
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .selectExportSetWithoutReset(exportSetName, GenericReportPage.class)
+                    .setProcessGroup(processGroupName)
+                    .clickOk(true, GenericReportPage.class);
+        }
 
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),
