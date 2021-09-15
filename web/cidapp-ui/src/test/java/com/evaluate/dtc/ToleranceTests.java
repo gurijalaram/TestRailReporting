@@ -662,7 +662,7 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
-        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("11"));
+        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("13"));
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
@@ -673,7 +673,7 @@ public class ToleranceTests extends TestBase {
             .selectFilter("Recent")
             .openScenario(componentName, testScenarioName);
 
-        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("11"));
+        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("13"));
 
         /*tolerancesPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab()

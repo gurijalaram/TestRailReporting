@@ -439,7 +439,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Load Bar", "user"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Load Bar", "user"), psoController.inputLocator("Number of Components Per Load Bar"), value);
         return this;
     }
 

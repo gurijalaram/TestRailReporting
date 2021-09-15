@@ -110,6 +110,9 @@ int-core:
     automation_user_identity03: 775K40H47HEF
     identity_role: 67J517C9L762
 
+  ci-connect:
+    ui_url: https://ci-connect.core.int.apriori.net/
+
   fms:
     api_url: https://fms.core.int.apriori.net/
 
@@ -176,6 +179,9 @@ qa-cid-perf:
 
   nts:
     api_url: https://nts.na-1.qa-cid-perf.apriori.net/
+
+  ci-connect:
+    ui_url: https://ci-connect.na-1.qa-cid-perf.apriori.net/
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html

@@ -862,6 +862,19 @@ public class PageUtils {
     }
 
     /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param locatorId            - the locator id
+     * @return current page object
+     */
+    public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
+        waitForElementAndClick(dropdownSelector);
+        By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
+        waitForElementAndClick(byValue);
+    }
+
+    /**
      * Click on an element that is off screen. The element in this case would be marked as un-clickable.
      * This method brings the element into focus without having to scroll
      *
