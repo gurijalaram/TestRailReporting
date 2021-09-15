@@ -78,6 +78,8 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
             .info()
@@ -86,6 +88,7 @@ public class ActionsTests extends TestBase {
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
+            .selectFilter("Recent")
             .clickSearch(componentName)
             .highlightScenario("M3CapScrew", scenarioName)
             .info();
@@ -276,6 +279,7 @@ public class ActionsTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
@@ -394,6 +398,8 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario("BasicScenario_Forging", scenarioName)
             .info()
             .selectStatus("New")
@@ -401,6 +407,8 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("BasicScenario_Forging", scenarioName)
             .info()
             .editNotes("Testing QA notes validating the ability to edit notes")
@@ -624,7 +632,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
-            .enterKeySearch(componentName.toUpperCase())
+            .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .info()
             .selectStatus("New")

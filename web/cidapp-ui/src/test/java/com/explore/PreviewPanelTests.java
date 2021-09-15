@@ -65,6 +65,8 @@ public class PreviewPanelTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(partName, testScenarioName)
             .openPreviewPanel();
 

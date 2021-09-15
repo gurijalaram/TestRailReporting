@@ -230,7 +230,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
-        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        int position = IntStream.range(0, pageUtils.waitForElementsToAppear(xAxisLabel).size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         chart.forEach(x -> pageUtils.actionClick(chart.get(position)));
         return this;
     }
