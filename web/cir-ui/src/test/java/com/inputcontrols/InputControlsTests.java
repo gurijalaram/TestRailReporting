@@ -443,14 +443,20 @@ public class InputControlsTests extends TestBase {
      * @param processGroupName - String
      */
     public void testSingleProcessGroup(String reportName, String exportSet, String processGroupName) {
+        Class<GenericReportPage> genericReportPageClass = GenericReportPage.class;
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
-            .navigateToReport(reportName, GenericReportPage.class)
+            .navigateToReport(reportName, genericReportPageClass)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSet, GenericReportPage.class)
             .setProcessGroup(processGroupName)
-            .clickOk(true, GenericReportPage.class);
+            .clickOk(true, genericReportPageClass);
+
+        genericReportPage.clickInputControlsButton()
+                .waitForInputControlsLoad()
+                .selectExportSet(exportSet, genericReportPageClass)
+                //.setProcessGroup(processGroupName)
+                .clickOk(true, genericReportPageClass);
 
         assertThat(
             genericReportPage.getProcessGroupValueDtc(reportName),

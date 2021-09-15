@@ -562,10 +562,21 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        pageUtils.waitForElementAndClick(locator);
+        //pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementAndClick(resetButton);
-        pageUtils.waitForElementAndClick(locator);
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "0");
+        //pageUtils.waitForElementAndClick(locator);
+        driver.findElement(locator).click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        return PageFactory.initElements(driver, className);
+    }
+
+    public <T> T selectExportSetWithoutReset(String exportSet, Class<T> className) {
+        By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
+        //pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitFor(1000);
+        driver.findElement(locator).click();
+        //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
     }
 
@@ -707,11 +718,15 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of current page object
      */
     public GenericReportPage setProcessGroup(String processGroupOption) {
-        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
-        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        By locator = By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption));
-        pageUtils.waitForSteadinessOfElement(locator);
-        pageUtils.waitForElementAndClick(driver.findElement(locator));
+        deselectAllProcessGroups();
+        deselectAllProcessGroups();
+        pageUtils.waitForElementToAppear(
+                By.xpath(String.format("//div[@id='processGroup']//span[@title='Selected: %s']", 0)));
+
+        driver.findElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption))).click();
+
+        pageUtils.waitForElementToAppear(
+                By.xpath(String.format("//div[@id='processGroup']//span[@title='Selected: %s']", 1)));
         return this;
     }
 
@@ -749,7 +764,10 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return GenericReportPage instance
      */
     public GenericReportPage deselectAllProcessGroups() {
-        pageUtils.waitForElementAndClick(By.xpath(String.format(genericDeselectLocator, "Process Group")));
+        By deselectLocator = By.xpath(String.format(genericDeselectLocator, "Process Group"));
+        pageUtils.scrollWithJavaScript(driver.findElement(deselectLocator), true);
+        pageUtils.waitForElementToAppear(deselectLocator);
+        pageUtils.waitForElementAndClick(deselectLocator);
         return this;
     }
 
@@ -1719,19 +1737,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage selectComponent(String componentName) {
         pageUtils.scrollWithJavaScript(componentSelectDropdown, true);
-        Actions actions = new Actions(driver);
-        actions.moveToElement(componentSelectDropdown).perform();
-        actions.click().perform();
-        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isFocused')]"));
-        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//a"));
-        pageUtils.waitForElementAndClick(componentSelectDropdown);
-        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a[contains(@class, 'jr-isOpen')]"));
-        pageUtils.waitForElementAndClick(componentSelectSearchInput);
-        componentSelectSearchInput.clear();
-        pageUtils.waitForSteadinessOfElement(By.xpath("//label[@title='Component Select']//input"));
+        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a"));
+        pageUtils.waitForElementToAppear(currentCurrencyElement);
+        pageUtils.waitForElementToAppear(By.xpath(String.format(genericDeselectLocator, "Scenario Name")));
+        pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Select All']/a"));
+        pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Invert']/a"));
+        componentSelectDropdown.click();
         componentSelectSearchInput.sendKeys(componentName);
-        By componentToSelectLocator = By.xpath(String.format("//a[contains(text(), '%s')]", componentName));
-        pageUtils.waitForElementAndClick(componentToSelectLocator);
+        pageUtils.waitForElementAndClick(By.xpath(String.format("//a[contains(text(), '%s')]", componentName)));
         return this;
     }
 
@@ -1766,8 +1779,6 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.scrollWithJavaScript(driver.findElement(deselectLocator), true);
         pageUtils.waitForElementToAppear(deselectLocator);
         pageUtils.waitForElementAndClick(deselectLocator);
-        /*pageUtils.waitFor(1000);
-        pageUtils.waitForElementToAppear(By.xpath("//div[@id='dtcScore']//span[contains(text(), 'Selected: 0')]"));*/
         return this;
     }
 
