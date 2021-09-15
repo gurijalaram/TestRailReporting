@@ -641,7 +641,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return string
      */
     public String getSourcePartDetails() {
-        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'] .input-group");
+        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'].input-group");
         pageUtils.waitForElementToAppear(sourcePart);
         return driver.findElement(sourcePart).getAttribute("textContent");
     }

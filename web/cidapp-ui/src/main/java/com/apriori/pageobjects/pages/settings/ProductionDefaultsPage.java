@@ -9,7 +9,6 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -135,9 +134,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        pageUtils.waitForElementAndClick(digitalFactoryDropdown);
-        By byDigitalFactory = By.xpath(String.format("//div[@id='qa-production-defaults-digital-factory-select']//div[.='%s']//div[@id]", digitalFactory.getDigitalFactory()));
-        pageUtils.waitForElementAndClick(byDigitalFactory);
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, "qa-production-defaults-digital-factory-select", digitalFactory.getDigitalFactory());
         return this;
     }
 
@@ -148,9 +145,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
-        pageUtils.waitForElementAndClick(materialCatalogDropdown);
-        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-production-defaults-material-catalog-select']//div[.='%s']//div[@id]", materialCatalog.getDigitalFactory()));
-        pageUtils.waitForElementAndClick(byMaterialCatalog);
+        pageUtils.typeAheadSelect(materialCatalogDropdown, "qa-production-defaults-material-catalog-select", materialCatalog.getDigitalFactory());
         return this;
     }
 

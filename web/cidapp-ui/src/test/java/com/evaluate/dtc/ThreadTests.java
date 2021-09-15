@@ -43,7 +43,7 @@ public class ThreadTests extends TestBase {
     }
 
     @After
-    public void resetPreferences() {
+    public void resetAllSettings() {
         if (currentUser != null) {
             new ResetSettingsUtil().resetSettings(currentUser);
         }
@@ -511,7 +511,7 @@ public class ThreadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
+                .selectProcessGroup(processGroupEnum)
                 .costScenario()
                 .openDesignGuidance()
                 .openThreadsTab()
