@@ -10,6 +10,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
@@ -31,7 +32,6 @@ import com.utils.ComparisonDeltaEnum;
 import com.utils.DirectionEnum;
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
-import org.hamcrest.Matchers;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -137,8 +137,7 @@ public class ComparisonTests extends TestBase {
         cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItemB = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
             .clickExplore()
@@ -147,7 +146,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .openBasisScenario();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName), is(true));
 
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -166,7 +165,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
     }
 
     @Test
@@ -451,11 +450,11 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.getCardHeader(), Matchers.containsInRelativeOrder("Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Result"));
+        assertThat(comparePage.getCardHeader(), containsInRelativeOrder("Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Result"));
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
-        assertThat(comparePage.getCardHeader(), Matchers.containsInRelativeOrder("Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Result"));
+        assertThat(comparePage.getCardHeader(), containsInRelativeOrder("Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Result"));
     }
 
     @Test
@@ -613,7 +612,7 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName2)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
 
         comparePage = evaluatePage.clickCompare();
 
@@ -627,7 +626,7 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openBasisScenario();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName), is(true));
 
         comparePage = evaluatePage.clickCompare();
 

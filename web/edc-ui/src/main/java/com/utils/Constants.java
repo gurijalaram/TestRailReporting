@@ -49,13 +49,4 @@ public class Constants {
 
         return baseUrl;
     }
-
-    /**
-     * Get default url
-     *
-     * @return string
-     */
-    public static String getApiUrl() {
-        return PropertiesContext.get("${env}.edc.api_url") + "bill-of-materials/";
-    }
 }

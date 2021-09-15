@@ -7,9 +7,9 @@
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
+        "isSystemUser",
         "identity",
         "createdAt",
         "createdBy",
@@ -21,39 +21,38 @@
         "username",
         "active",
         "mfaRequired",
-        "customProperties",
+        "customAttributes",
         "createdByName",
         "updatedByName",
         "licenseAssignments",
         "userType"
       ],
+      "optional": [
+        "customProperties"
+      ],
       "properties": {
+        "isSystemUser": {
+          "type": "boolean"
+        },
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
         "updatedAt": {
-          "$id": "#/properties/response/properties/updatedAt",
           "type": "string"
         },
         "updatedBy": {
-          "$id": "#/properties/response/properties/updatedBy",
           "type": "string"
         },
         "customerIdentity": {
-          "$id": "#/properties/response/properties/customerIdentity",
           "type": "string"
         },
         "userProfile": {
-          "$id": "#/properties/response/properties/userProfile",
           "type": "object",
           "required": [
             "identity",
@@ -68,80 +67,64 @@
           ],
           "properties": {
             "identity": {
-              "$id": "#/properties/response/properties/userProfile/properties/identity",
               "type": "string"
             },
             "createdAt": {
-              "$id": "#/properties/response/properties/userProfile/properties/createdAt",
               "type": "string"
             },
             "createdBy": {
-              "$id": "#/properties/response/properties/userProfile/properties/createdBy",
               "type": "string"
             },
             "updatedAt": {
-              "$id": "#/properties/response/properties/userProfile/properties/updatedAt",
               "type": "string"
             },
             "givenName": {
-              "$id": "#/properties/response/properties/userProfile/properties/givenName",
               "type": "string"
             },
             "familyName": {
-              "$id": "#/properties/response/properties/userProfile/properties/familyName",
               "type": "string"
             },
             "jobTitle": {
-              "$id": "#/properties/response/properties/userProfile/properties/jobTitle",
               "type": "string"
             },
             "department": {
-              "$id": "#/properties/response/properties/userProfile/properties/department",
               "type": "string"
             },
             "supervisor": {
-              "$id": "#/properties/response/properties/userProfile/properties/supervisor",
               "type": "string"
             }
           }
         },
         "email": {
-          "$id": "#/properties/response/properties/email",
           "type": "string"
         },
         "username": {
-          "$id": "#/properties/response/properties/username",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/response/properties/active",
           "type": "boolean"
         },
         "mfaRequired": {
-          "$id": "#/properties/response/properties/mfaRequired",
           "type": "boolean"
         },
+        "customAttributes": {
+          "type": "object"
+        },
         "customProperties": {
-          "$id": "#/properties/response/properties/customProperties",
           "type": "object"
         },
         "createdByName": {
-          "$id": "#/properties/response/properties/createdByName",
           "type": "string"
         },
         "updatedByName": {
-          "$id": "#/properties/response/properties/updatedByName",
           "type": "string"
         },
         "licenseAssignments": {
-          "$id": "#/properties/response/properties/licenseAssignments",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/licenseAssignments/items"
           }
         },
         "userType": {
-          "$id": "#/properties/response/properties/userType",
           "type": "string"
         }
       }

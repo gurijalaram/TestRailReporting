@@ -313,7 +313,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
-            .selectionMethod("MCAD <material not found - VPE default used>")
+            .selectionMethod("Digital Factory Default ")
             .submit(EvaluatePage.class)
             .costScenario();
 

@@ -35,7 +35,7 @@ public class EdcTestUtil extends TestUtil {
 
     protected static void deleteBillOfMaterialById(final String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY, null)
                 .inlineVariables(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
     }

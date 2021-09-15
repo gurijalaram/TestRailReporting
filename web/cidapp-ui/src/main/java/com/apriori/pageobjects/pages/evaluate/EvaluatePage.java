@@ -187,6 +187,25 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets the scenario name
+     *
+     * @return current page object
+     */
+    public String getCurrentScenarioName() {
+        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
+    }
+
+    /**
+     * Checks scenario name appears
+     *
+     * @return true/false
+     */
+    public boolean isCurrentScenarioNameDisplayed(String scenarioName) {
+        By byCurrentScenario = By.xpath(String.format("//div[@id='qa-scenario-select-field']//div[.='%s']//div[@id]", scenarioName));
+        return pageUtils.waitForElementToAppear(byCurrentScenario).isDisplayed();
+    }
+
+    /**
      * Selects the pg dropdown
      *
      * @param processGroup - the process group
@@ -515,15 +534,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets the scenario name
-     *
-     * @return current page object
-     */
-    public String getCurrentScenarioName() {
-        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
-    }
-
-    /**
      * Gets the part name
      *
      * @return part name as String
@@ -631,7 +641,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return string
      */
     public String getSourcePartDetails() {
-        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'] .input-group");
+        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'].input-group");
         pageUtils.waitForElementToAppear(sourcePart);
         return driver.findElement(sourcePart).getAttribute("textContent");
     }
