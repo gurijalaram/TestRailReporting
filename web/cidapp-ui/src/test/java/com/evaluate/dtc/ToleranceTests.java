@@ -20,8 +20,10 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.OverridesEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Ignore;
@@ -670,7 +672,9 @@ public class ToleranceTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .logout()
             .login(testUser2)
-            .selectFilter("Recent")
+            .selectFilter("Public")
+            .clickSearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(componentName, testScenarioName);
 
         assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("13"));
