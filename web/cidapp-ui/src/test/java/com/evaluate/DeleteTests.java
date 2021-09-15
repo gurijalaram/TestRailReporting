@@ -59,7 +59,7 @@ public class DeleteTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
             .submit(ExplorePage.class)
-            .highlightScenario("CASTING", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .delete()
             .submit(ExplorePage.class);
 
