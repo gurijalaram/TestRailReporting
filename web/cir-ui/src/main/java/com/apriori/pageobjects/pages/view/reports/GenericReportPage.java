@@ -566,6 +566,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(resetButton);
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "0");
         //pageUtils.waitForElementAndClick(locator);
+        pageUtils.waitForElementToAppear(locator);
         driver.findElement(locator).click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
