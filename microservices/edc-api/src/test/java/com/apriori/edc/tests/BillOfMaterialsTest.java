@@ -83,6 +83,6 @@ public class BillOfMaterialsTest extends EdcTestUtil {
     @Description("Delete a bill of material")
     public void testDeleteBomByIdentity() {
 
-        deleteBillOfMaterialById("2HKD73BH25LC");
+        deleteBillOfMaterialById("2N71G203C00I");
     }
 }

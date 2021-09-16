@@ -47,7 +47,7 @@ public class UploadTests extends EdcUiTestUtil {
     @Description("Basic workflow to upload a csv file, edit missing sections and save")
     public void testUploadBOM() {
 
-        String fileName = "Test BOM 5 (1).csv";
+        String fileName = "Test BOM 5.csv";
         String testMountTypeData = generateStringUtil.getRandomString();
         String testPinCountData = generateStringUtil.getRandomNumbers();
 
