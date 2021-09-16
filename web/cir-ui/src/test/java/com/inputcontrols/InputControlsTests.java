@@ -1194,7 +1194,6 @@ public class InputControlsTests extends TestBase {
 
         if (setMinimumAnnualSpend) {
             genericReportPage.inputMinimumAnnualSpend();
-            genericReportPage.waitForMinimumAnnualSpendOnChart();
         }
 
         genericReportPage.clickOk(true, GenericReportPage.class)

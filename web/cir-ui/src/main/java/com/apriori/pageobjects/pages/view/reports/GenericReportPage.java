@@ -627,8 +627,8 @@ public class GenericReportPage extends ReportsPageHeader {
         By locator = By.xpath("//label[@title='Minimum Annual Spend']/input");
         pageUtils.waitForElementAndClick(locator);
         WebElement minimumAnnualSpend = driver.findElement(locator);
-        pageUtils.clearInput(driver.findElement(locator));
-        pageUtils.waitForSteadinessOfElement(locator);
+        pageUtils.clearInput(minimumAnnualSpend);
+        //pageUtils.waitForSteadinessOfElement(locator);
         minimumAnnualSpend.sendKeys("6631000");
         return this;
     }
