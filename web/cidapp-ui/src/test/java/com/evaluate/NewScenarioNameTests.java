@@ -126,7 +126,7 @@ public class NewScenarioNameTests extends TestBase {
         cssScenarioItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssItem)
+        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItemA)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
@@ -137,7 +137,7 @@ public class NewScenarioNameTests extends TestBase {
             .publish(cssScenarioItemA, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
-        cssScenarioItemC = new ExplorePage(driver).navigateToScenario(cssItem)
+        cssScenarioItemC = new EvaluatePage(driver).navigateToScenario(cssScenarioItemB)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -148,7 +148,7 @@ public class NewScenarioNameTests extends TestBase {
             .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssScenarioItemC)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
