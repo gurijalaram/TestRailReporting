@@ -223,6 +223,7 @@ public class PageUtils {
 
     /**
      * Clears a text input area
+     *
      * @param element - the webelement
      */
     public void clear(WebElement element) {
@@ -366,6 +367,7 @@ public class PageUtils {
 
     /**
      * Checks the elements is displayed by size
+     *
      * @param element - the element
      * @return int
      */
@@ -836,22 +838,27 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
-        waitForElementAndClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
-        waitForElementAndClick(byValue);
+        waitForElementToAppear(byValue);
+        actionClick(driver.findElement(byValue));
     }
 
     /**
      * Interacts with a dropdown and input the relevant info
      *
      * @param dropdownSelector - the selector
-     * @param locatorId            - the locator id
+     * @param locatorId        - the locator id
+     * @param locatorValue     - the locator value
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
-        waitForElementAndClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
-        waitForElementAndClick(byValue);
+        waitForElementToAppear(byValue);
+        actionClick(driver.findElement(byValue));
     }
 
     /**
