@@ -842,7 +842,7 @@ public class PageUtils {
         actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
         waitForElementToAppear(byValue);
-        javaScriptClick(driver.findElement(byValue));
+        actionClick(driver.findElement(byValue));
     }
 
     /**
@@ -858,7 +858,7 @@ public class PageUtils {
         actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
         waitForElementToAppear(byValue);
-        javaScriptClick(driver.findElement(byValue));
+        actionClick(driver.findElement(byValue));
     }
 
     /**
