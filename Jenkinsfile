@@ -110,6 +110,7 @@ Those marked with a * are required or the job will not run
                 }
             }
         }
+
         stage("Build") {
             steps {
                 echo "Building.."
@@ -129,6 +130,7 @@ Those marked with a * are required or the job will not run
                 }
             }
         }
+
         stage("Test") {
             steps {
                 echo "Running.."
@@ -179,8 +181,8 @@ Those marked with a * are required or the job will not run
                 allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
             }
         }
-
     }
+
     post {
         always {
             echo "Cleaning up.."
@@ -190,6 +192,7 @@ Those marked with a * are required or the job will not run
                 if ("${params.TEST_MODE}" == "LOCAL") {
                     sh "docker rm -f \$(docker ps --filter name=chrome -q)"
                     sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+                    sh "docker rm -f \$(docker ps --filter name=edge -q)"
                     sh "docker rmi -f selenium/node-firefox"
                     sh "docker rmi -f selenium/node-chrome"
                 }
