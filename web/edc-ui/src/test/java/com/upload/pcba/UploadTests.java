@@ -5,29 +5,28 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.edc.utils.EDCResources;
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.web.driver.TestBase;
 
-import com.util.EdcUiTestUtil;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
 
-public class UploadTests extends EdcUiTestUtil {
+public class UploadTests extends TestBase {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private EditBomPage editBomPage;
     private MatchedPartPage matchedPartPage;
-    private String url = String.format(PropertiesContext.get("${env}.edc.api_url") + "bill-of-materials/");
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
 
@@ -38,8 +37,7 @@ public class UploadTests extends EdcUiTestUtil {
     @After
     public void cleanUp() {
         String billOfMaterialId = driver.getCurrentUrl().split("/")[4];
-        String endpoint = url + billOfMaterialId;
-        deleteBom(endpoint);
+        EDCResources.deleteBillOfMaterialById(billOfMaterialId);
     }
 
     @Test

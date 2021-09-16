@@ -1,23 +1,21 @@
 package com.apriori.edc.utils;
 
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.ats.utils.JwtTokenUtil;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.edc.entity.enums.EDCAPIEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 public class EDCResources {
 
-    private static String token = new JwtTokenUtil().retrieveJwtToken();
+    public static ResponseWrapper<Object> deleteBillOfMaterialById(final String identity) {
+        com.apriori.utils.http2.builder.common.entity.RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
+                .inlineVariables(identity).token(new JwtTokenUtil().retrieveJwtToken());
 
-    public static ResponseWrapper<String> deleteBillOfMaterial(String endpoint) {
-        RequestEntity requestEntity = RequestEntity.init(endpoint, null)
-            .setHeaders(new APIAuthentication().initAuthorizationHeaderContent(token));
-
-        return GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+        return HTTP2Request.build(requestEntity).delete();
     }
 }

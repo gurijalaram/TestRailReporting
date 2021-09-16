@@ -33,7 +33,7 @@ public class EdcTestUtil extends TestUtil {
         billOfMaterialsIdsToDelete.forEach(BillOfMaterialsTest::deleteBillOfMaterialById);
     }
 
-    protected static void deleteBillOfMaterialById(final String identity) {
+    public static void deleteBillOfMaterialById(final String identity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
                 .inlineVariables(identity);
