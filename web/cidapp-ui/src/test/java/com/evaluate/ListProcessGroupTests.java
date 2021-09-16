@@ -47,7 +47,6 @@ public class ListProcessGroupTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
-
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
