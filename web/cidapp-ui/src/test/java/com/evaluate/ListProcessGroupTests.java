@@ -52,7 +52,12 @@ public class ListProcessGroupTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
-        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(Arrays.stream(ProcessGroupEnum.getNames()).filter(x -> !x.equals("Without PG") && !x.equals("Assembly")).toArray(String[]::new)));
+        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(Arrays.stream(ProcessGroupEnum.getNames()).filter(x ->
+                !x.equals(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.ROLL_UP.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.COMPOSITES.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.WITHOUT_PG.getProcessGroup()))
+            .toArray(String[]::new)));
     }
 
     @Ignore("Assemblies cannot be upload")
