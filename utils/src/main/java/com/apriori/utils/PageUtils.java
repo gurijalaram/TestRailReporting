@@ -836,9 +836,9 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
-        waitForElementAndClick(dropdownSelector);
+        javaScriptClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
-        waitForElementAndClick(byValue);
+        javaScriptClick(driver.findElement(byValue));
     }
 
     /**
@@ -849,9 +849,9 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
-        waitForElementAndClick(dropdownSelector);
+        javaScriptClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
-        waitForElementAndClick(byValue);
+        javaScriptClick(driver.findElement(byValue));
     }
 
     /**
