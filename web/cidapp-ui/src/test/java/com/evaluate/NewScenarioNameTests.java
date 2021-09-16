@@ -126,7 +126,7 @@ public class NewScenarioNameTests extends TestBase {
         cssScenarioItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssItem)
+        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItemA)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
