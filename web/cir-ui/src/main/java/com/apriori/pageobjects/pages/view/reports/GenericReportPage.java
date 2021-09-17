@@ -982,7 +982,6 @@ public class GenericReportPage extends ReportsPageHeader {
         }
         if (waitForReportLoad) {
             pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-            waitForReportToLoad();
             pageUtils.waitForElementToAppear(upperTitle);
         }
         return PageFactory.initElements(driver, className);

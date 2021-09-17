@@ -1190,22 +1190,38 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSetDtcTests(exportSet);
+            .selectExportSetWithoutReset(exportSet, GenericReportPage.class);
 
         if (setMinimumAnnualSpend) {
             genericReportPage.inputMinimumAnnualSpend();
         }
 
         genericReportPage.clickOk(true, GenericReportPage.class)
-            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-            .waitForMinimumAnnualSpendOnChart();
+            .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
         genericReportPage.clickInputControlsButton()
                 .waitForInputControlsLoad()
-                .selectExportSet(exportSet, GenericReportPage.class);
+                .selectExportSet(exportSet, GenericReportPage.class)
+                .clickOk(true, GenericReportPage.class);
 
-        genericReportPage.waitForCorrectAvailableSelectedCount("export set selection.", "Selected: ", "1");
-        genericReportPage.clickOk(true, GenericReportPage.class);
+        if (setMinimumAnnualSpend && !driver.findElement(
+                By.xpath("//span[contains(text(), 'Minimum Annual Spend:')]/../following-sibling::td[2]/span"))
+                .getText().equals("6,631,000.00")) {
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .inputMinimumAnnualSpend();
+        }
+
+        if (genericReportPage.isInputControlsDisplayed()) {
+            genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "1");
+            genericReportPage.clickOk(true, GenericReportPage.class);
+        }
+
+        genericReportPage.waitForReportToLoad();
+        genericReportPage.clickInputControlsButton()
+                .waitForInputControlsLoad()
+                .selectExportSetWithoutReset(exportSet, GenericReportPage.class)
+                .clickOk(true, GenericReportPage.class);
     }
 
     private void testCostMetricCore(String reportName, String exportSet, String costMetric) {
