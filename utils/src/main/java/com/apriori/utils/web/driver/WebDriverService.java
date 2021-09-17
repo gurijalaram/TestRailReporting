@@ -56,7 +56,7 @@ public class WebDriverService extends BrowserManager {
                     chromeOptions.setCapability("intl.accept.languages", locale);
                     chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                     chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                    chromeOptions.acceptInsecureCerts(true);
+                    chromeOptions.setAcceptInsecureCerts(true);
 
                     result = new ChromeDriver(chromeOptions);
                     logger.info("Full list of Capabilities: " + ((ChromeDriver) result).getCapabilities().toString());
