@@ -541,7 +541,7 @@ public class MachiningDtcReportTests extends TestBase {
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7662"})
-    @Description("\tVerify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
+    @Description("Verify Select Parts list is correctly filtered by input control - Process Group - Machining DTC Report")
     public void testPartListFilterByInputControlsProcessGroup() {
         genericReportPage = new ReportsLoginPage(driver)
             .login()

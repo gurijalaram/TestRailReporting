@@ -977,6 +977,7 @@ public class GenericReportPage extends ReportsPageHeader {
         actions.moveToElement(okButton).perform();
         actions.click().perform();
         pageUtils.waitForElementToAppear(upperTitle);
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         if (!getInputControlsDivClassName().contains("hidden")) {
             actions.moveToElement(okButton).perform();
             actions.click().perform();
