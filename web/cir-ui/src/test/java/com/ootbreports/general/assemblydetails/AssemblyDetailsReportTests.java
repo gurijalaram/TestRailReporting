@@ -30,6 +30,8 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.By;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -83,7 +85,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CustomerSmokeTests.class})
+    @Category({ReportsTest.class, CustomerSmokeTests.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1922"})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {
@@ -100,6 +102,17 @@ public class AssemblyDetailsReportTests extends TestBase {
             .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
+
+        if (!driver.findElement(
+                By.xpath("//span[contains(text(), 'Assembly #:')]/../ancestor::tr[@style='height:12px']/following-siblin" +
+                        "g::tr[1]//span")).getText().equals(AssemblySetEnum.SUB_ASSEMBLY_SHORT.getAssemblySetName())) {
+            assemblyDetailsReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .exportSetDeselectAll();
+            assemblyDetailsReportPage.selectExportSetWithoutReset(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
+                    .clickOk(true, GenericReportPage.class)
+                    .waitForReportToLoad();
+        }
 
         usdGrandTotal = assemblyDetailsReportPage.getValueFromTable(
                 assemblyType,
