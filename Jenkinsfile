@@ -195,6 +195,7 @@ Those marked with a * are required or the job will not run
                     sh "docker rm -f \$(docker ps --filter name=edge -q)"
                     sh "docker rmi -f selenium/node-firefox"
                     sh "docker rmi -f selenium/node-chrome"
+                    sh "docker rmi -f selenium/node-edge"
                 }
             }
             sh "docker system prune --force"
