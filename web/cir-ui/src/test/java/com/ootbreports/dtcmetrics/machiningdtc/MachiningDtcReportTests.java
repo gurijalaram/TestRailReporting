@@ -397,7 +397,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3575"})
     @Description("Verify that invalid date (year) fails in both earliest and latest export date field")
     public void testInvalidYearValueExportSetFilter() {
@@ -409,7 +409,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3576"})
     @Description("Verify that invalid date (month) fails in both earliest and latest export date field")
     public void testInvalidMonthValueExportSetFilter() {
@@ -421,7 +421,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3577"})
     @Description("Verify that invalid date (day) fails in both earliest and latest export date field")
     public void testInvalidDayValueExportSetFilter() {
