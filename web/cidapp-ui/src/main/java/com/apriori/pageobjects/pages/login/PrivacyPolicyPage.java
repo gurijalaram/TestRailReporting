@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.login;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -21,11 +23,11 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
 
-    @FindBy(css = "section[id='services_title_section'] > div > h1")
-    private WebElement heading;
+    @FindBy(css = ".privacy-page h1")
+    private WebElement aprioriHeading;
 
-    @FindBy(css = "a[href='https://www.apriori.com']")
-    private WebElement logo;
+    @FindBy(css = "a img[alt='aPriori']")
+    private WebElement aprioriLogo;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -45,7 +47,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        isPageLogoDisplayed();
+        assertTrue("aPriori logo is not displayed", isPageLogoDisplayed());
     }
 
     /**
@@ -55,7 +57,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      */
     public String getPageHeading() {
         pageUtils.windowHandler(1);
-        return heading.getText();
+        return aprioriHeading.getText();
     }
 
     /**
@@ -63,9 +65,9 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      *
      * @return - webelement
      */
-    public WebElement isPageLogoDisplayed() {
+    public boolean isPageLogoDisplayed() {
         pageUtils.windowHandler(1);
-        return pageUtils.waitForElementAppear(logo);
+        return pageUtils.waitForElementAppear(aprioriLogo).isDisplayed();
     }
 
     /**
