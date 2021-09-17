@@ -372,14 +372,14 @@ public class PageUtils {
      * @return int
      */
     public int waitForElementsToAppear(By element) {
-        int count = 0;
-        int retries = 60;
+        long startTime = System.currentTimeMillis() / 1000;
+
         int secondsToWait = 1;
         try {
             do {
                 TimeUnit.SECONDS.sleep(secondsToWait);
                 driver.findElements(element);
-            } while (driver.findElements(element).size() < 1 && count++ <= retries);
+            } while (driver.findElements(element).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
 
             return driver.findElements(element).size();
 
@@ -387,6 +387,28 @@ public class PageUtils {
             logger.debug("Trying to recover from a stale element reference exception");
         }
         throw new AssertionError("Element is not displayed");
+    }
+
+    /**
+     * Checks the elements is displayed by size
+     * @param element - the element
+     * @return int
+     */
+    public int waitForElementsToNotAppear(By element) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int secondsToWait = 1;
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(secondsToWait);
+                driver.findElements(element);
+            } while (driver.findElements(element).size() > 0 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+            return driver.findElements(element).size();
+
+        } catch (StaleElementReferenceException | InterruptedException e) {
+            logger.debug("Trying to recover from a stale element reference exception");
+        }
+        throw new AssertionError("Element is displayed");
     }
 
     public WebElement waitForElementAppear(WebElement element) {
