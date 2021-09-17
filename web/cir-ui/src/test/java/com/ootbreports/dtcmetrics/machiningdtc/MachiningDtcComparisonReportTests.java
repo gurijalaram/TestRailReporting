@@ -312,7 +312,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3027"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {

@@ -313,7 +313,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7656"})
     @Description("Verify Minimum Annual Spend input control functions correctly - Casting DTC Comparison Report")
     public void testMinimumAnnualSpend() {
