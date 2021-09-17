@@ -1110,8 +1110,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public boolean isExportSetFilterErrorDisplayedAndEnabled(boolean isEarliest) {
         pageUtils.waitForElementToAppear(earliestExportSetDateError);
-        pageUtils.waitFor(1000);
-        pageUtils.waitForElementToAppear(latestExportSetDateError);
+        //pageUtils.waitFor(1000);
+        pageUtils.waitForElementToAppear(By.xpath("//div[@id='latestExportDate']//div"));
         return isEarliest ? earliestExportSetDateError.isDisplayed() && earliestExportSetDateError.isEnabled() :
                 latestExportSetDateError.isDisplayed() && latestExportSetDateError.isEnabled();
     }
