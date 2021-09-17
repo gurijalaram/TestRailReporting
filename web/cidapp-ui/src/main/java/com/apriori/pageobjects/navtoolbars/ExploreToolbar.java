@@ -262,15 +262,14 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Uploads a cad file and select submit
      *
-     * @param scenarioName - the name of the scenario
      * @param filePath     - location of the file
      * @param klass-       the class name
      * @param <T>          - generic type
      * @return generic page object
      */
-    public <T> T updateCadFile(String scenarioName, File filePath, Class<T> klass) {
+    public <T> T updateCadFile(File filePath, Class<T> klass) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath).submit(klass);
+        return new FileUploadPage(driver).enterFilePath(filePath).submit(klass);
     }
 }
