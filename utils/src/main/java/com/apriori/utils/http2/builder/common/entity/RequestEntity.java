@@ -1,10 +1,10 @@
 package com.apriori.utils.http2.builder.common.entity;
 
-import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.enums.EndpointType;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http2.utils.UserAuthenticationEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,17 +42,20 @@ public class RequestEntity {
     private EndpointType endpointType = EndpointType.EXTERNAL;
     private boolean followRedirection = false;
     private FormParams formParams;
-    @Singular private Map<String, String> headers = new HashMap<>();
+    @Singular
+    private Map<String, String> headers = new HashMap<>();
     private Object[] inlineVariablesArray;
     private MultiPartFiles multiPartFiles;
     private Class<?> returnType;
     private int socketTimeout = 60000;
     private String token;
     private boolean urlEncodingEnabled = true;
-    @Singular private List<Map<String, ?>> urlParams = new ArrayList<>();
+    @Singular
+    private List<Map<String, ?>> urlParams = new ArrayList<>();
     private boolean useCookie = false;
     private UserAuthenticationEntity userAuthenticationEntity;
-    @Singular private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
+    @Singular
+    private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
 
 
     public RequestEntity body(String node, Object body) {

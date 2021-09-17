@@ -7,31 +7,31 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 public class RequestAreaClearRequest implements RequestArea {
     @Override
     public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {
-        return  RequestInitService.build(requestEntity).connect().get();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> post(RequestEntity requestEntity) {
-        return  RequestInitService.build(requestEntity).connect().post();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> postMultipart(RequestEntity requestEntity) {
-        return  RequestInitService.build(requestEntity).connect().postMultiPart();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> put(RequestEntity requestEntity) {
-        return  RequestInitService.build(requestEntity).connect().put();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> delete(RequestEntity requestEntity) {
-        return  RequestInitService.build(requestEntity).connect().delete();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> patch(RequestEntity requestEntity) {
-        return  RequestInitService.build(requestEntity).connect().patch();
+        return null;
     }
 }

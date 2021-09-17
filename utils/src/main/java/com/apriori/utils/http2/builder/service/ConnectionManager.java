@@ -3,7 +3,6 @@ package com.apriori.utils.http2.builder.service;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 
 import com.apriori.utils.constants.CommonConstants;
-import com.apriori.utils.http.builder.common.response.common.PayloadJSON;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -160,7 +159,7 @@ class ConnectionManager<T> {
             }
 
             ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) ->
-                new com.apriori.utils.http.builder.dao.ObjectMapper())
+                new com.apriori.utils.http2.builder.service.ObjectMapper())
             );
 
             T responseEntity = response.assertThat()
@@ -209,16 +208,14 @@ class ConnectionManager<T> {
 
     /**
      * Sends request to desired endpoint with the desired specifications using HTTP POST method
-     * As a request it sends {@link MultiPartFiles} instead of {@link PayloadJSON}
+     * As a request it sends {@link MultiPartFiles}
      *
      * @return JSON POJO object instance of @returnType
      */
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-
             createRequestSpecification()
                 .given()
-
                 .config(
                     RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
                         ContentType.TEXT)))

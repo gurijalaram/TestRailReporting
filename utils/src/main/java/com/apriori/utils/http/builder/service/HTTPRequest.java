@@ -1,7 +1,7 @@
 package com.apriori.utils.http.builder.service;
 
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
+import com.apriori.utils.http2.utils.UserAuthenticationEntity;
 
 import org.openqa.selenium.WebDriver;
 
@@ -32,7 +32,7 @@ public class HTTPRequest {
      * @return
      */
     public RequestInitService unauthorized() {
-        return RequestInitService.build(RequestEntity.unAuthorized());
+        return null;
     }
 
     /**
@@ -45,9 +45,7 @@ public class HTTPRequest {
      */
     public RequestInitService defaultFormAuthorization(final String username, final String password) {
 
-        return RequestInitService.build(
-            RequestEntity.initDefaultFormAuthorizationData(username, password)
-        );
+        return null;
     }
 
 
@@ -60,9 +58,7 @@ public class HTTPRequest {
      */
     public RequestInitService customFormAuthorization(UserAuthenticationEntity userAuthenticationEntity) {
 
-        return RequestInitService.build(
-            RequestEntity.initCustomFormAuthorizationData(userAuthenticationEntity)
-        );
+        return null;
     }
 
     /**
@@ -76,12 +72,7 @@ public class HTTPRequest {
      */
     public RequestInitService userSessionLigin(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
 
-        return RequestInitService.build(
-            RequestEntity.initSessionAuthorizationData(
-                new UserAuthenticationEntity(emailAddress, sessionId, alreadyLoggedIn),
-                driver
-            )
-        );
+        return null;
     }
 
     /**
@@ -94,8 +85,6 @@ public class HTTPRequest {
     //TODO z: as I know, we don't have this authorization type (by URL)
     public RequestInitService userAuthorizationData(final String username, final String password) {
 
-        return RequestInitService.build(
-            RequestEntity.initUrlAuthorizationData(username, password)
-        );
+        return null;
     }
 }

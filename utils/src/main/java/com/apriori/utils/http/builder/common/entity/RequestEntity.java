@@ -7,6 +7,7 @@ import com.apriori.utils.http.enums.EndpointType;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http2.utils.UserAuthenticationEntity;
 import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
@@ -24,6 +25,7 @@ import java.util.Map;
  * {@link #urlParams}          -   inline url params formatted in the following way: ?param1=value1&param2=value2
  * {@link #inlineVariables}    -   inline variables.
  */
+@Deprecated
 public class RequestEntity {
 
     private String token;

@@ -1,5 +1,6 @@
 package com.pageobjects.actions;
 
+import com.apriori.apibase.services.response.objects.AuthenticateJSON;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.services.response.objects.WorkOrderCommand;
 import com.apriori.apibase.services.response.objects.WorkOrderInputs;
@@ -8,7 +9,6 @@ import com.apriori.apibase.services.response.objects.WorkOrderScenarioIteration;
 import com.apriori.apibase.services.response.objects.WorkOrdersWrapper;
 import com.apriori.apibase.services.response.objects.WorkSpaceSearchCriteria;
 import com.apriori.apibase.services.response.objects.WorkSpaceSearchWrapper;
-import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -74,8 +74,9 @@ public class ScenarioAction {
             )
             .setStatusCode(200)
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        // TODO z:
+        //            .post();
 
     }
 
@@ -87,16 +88,18 @@ public class ScenarioAction {
                 .setWorkOrderScenarioIteration(workOrderScenarioIteration)
             );
 
-        ResponseWrapper<SubmitWorkOrder> submitWorkOredrResponseWrapper = new HTTPRequest().unauthorized()
-            .customizeRequest()
-            .setHeaders(authorizationHeader)
-            .setReturnType(SubmitWorkOrder.class)
-            .setEndpoint(baseURL + "ws/workorder/orders")
-            .setBody(workOrderCommand)
-            .setStatusCode(201)
-            .commitChanges()
-            .connect()
-            .post();
+        ResponseWrapper<SubmitWorkOrder> submitWorkOredrResponseWrapper = null;
+        // TODO z:
+        //            new HTTPRequest().unauthorized()
+        //            .customizeRequest()
+        //            .setHeaders(authorizationHeader)
+        //            .setReturnType(SubmitWorkOrder.class)
+        //            .setEndpoint(baseURL + "ws/workorder/orders")
+        //            .setBody(workOrderCommand)
+        //            .setStatusCode(201)
+        //            .commitChanges()
+        //            .connect();
+        //            .post();
 
         return submitWorkOredrResponseWrapper.getResponseEntity();
     }
@@ -109,8 +112,9 @@ public class ScenarioAction {
             .setStatusCode(HttpStatus.SC_OK)
             .setBody(workSpaceSearch)
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        // TODO z:
+        //            .post();
 
         return (WorkOrdersWrapper) new HTTPRequest().unauthorized()
             .customizeRequest()
@@ -119,8 +123,8 @@ public class ScenarioAction {
             .setReturnType(WorkOrdersWrapper.class)
             .setEndpoint(baseURL + "ws/scenario-search/search/savedSearch?name=default&limit=1000")
             .commitChanges()
-            .connect()
-            .get().getResponseEntity();
+            .connect();
+        //            .get().getResponseEntity();
     }
 
 
@@ -147,14 +151,16 @@ public class ScenarioAction {
     }
 
     private String authenticateUser(String username, String password) {
-        ResponseWrapper<AuthenticateJSON> authenticateJSONResponseWrapper = new HTTPRequest().defaultFormAuthorization(username, password)
-            .customizeRequest()
-            .setReturnType(AuthenticateJSON.class)
-            .setEndpoint(baseURL + "ws/auth/token")
-            .setStatusCode(HttpStatus.SC_OK)
-            .commitChanges()
-            .connect()
-            .post();
+        ResponseWrapper<AuthenticateJSON> authenticateJSONResponseWrapper = null;
+        //            new HTTPRequest().defaultFormAuthorization(username, password)
+        //            .customizeRequest()
+        //            .setReturnType(AuthenticateJSON.class)
+        //            .setEndpoint(baseURL + "ws/auth/token")
+        //            .setStatusCode(HttpStatus.SC_OK)
+        //            .commitChanges()
+        //            .connect()
+        // TODO z:
+        //            .post();
 
         return authenticateJSONResponseWrapper.getResponseEntity().getAccessToken();
     }

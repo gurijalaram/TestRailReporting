@@ -1,6 +1,6 @@
 package com.apriori.apibase.utils;
 
-import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
+import com.apriori.apibase.services.response.objects.AuthenticateJSON;
 import com.apriori.utils.http.builder.service.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
@@ -64,13 +64,15 @@ public class APIAuthentication {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
-            ResponseWrapper<AuthenticateJSON> tokenDetails = new HTTPRequest().defaultFormAuthorization(username, password)
-                .customizeRequest()
-                .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(baseUrl + "ws/auth/token")
-                .commitChanges()
-                .connect()
-                .post();
+            ResponseWrapper<AuthenticateJSON> tokenDetails = null;
+            // TODO z: fix it
+            //                new HTTPRequest().defaultFormAuthorization(username, password)
+            //                .customizeRequest()
+            //                .setReturnType(AuthenticateJSON.class)
+            //                .setEndpoint(baseUrl + "ws/auth/token")
+            //                .commitChanges()
+            //                .connect()
+            //                .post();
 
             timeToLive = tokenDetails.getResponseEntity().getExpiresIn();
             accessToken = tokenDetails.getResponseEntity().getAccessToken();

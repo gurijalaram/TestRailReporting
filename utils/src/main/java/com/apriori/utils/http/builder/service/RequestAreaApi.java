@@ -8,62 +8,32 @@ public class RequestAreaApi implements RequestArea {
 
     @Override
     public <T> ResponseWrapper<T> get(RequestEntity requestEntity) {
-        return RequestInitService.build(requestEntity)
-                .customizeRequest()
-                .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .get();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> post(RequestEntity requestEntity) {
-        return RequestInitService.build(requestEntity)
-                .customizeRequest()
-                .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .post();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> postMultipart(RequestEntity requestEntity) {
-        return RequestInitService.build(requestEntity)
-                .customizeRequest()
-                .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .postMultiPart();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> put(RequestEntity requestEntity) {
-        return RequestInitService.build(requestEntity)
-                .customizeRequest()
-                .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .put();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> delete(RequestEntity requestEntity) {
-        return RequestInitService.build(requestEntity)
-                .customizeRequest()
-                .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .delete();
+        return null;
     }
 
     @Override
     public <T> ResponseWrapper<T> patch(RequestEntity requestEntity) {
-        return RequestInitService.build(requestEntity)
-                .customizeRequest()
-                .setFollowRedirection(true)
-                .commitChanges()
-                .connect()
-                .patch();
+        return null;
     }
 
 }

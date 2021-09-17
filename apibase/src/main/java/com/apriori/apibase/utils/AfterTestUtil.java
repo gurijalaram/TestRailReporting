@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 /**
  * @author mparker
  */
+// TODO z: finish this refactoring
 public class AfterTestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(AfterTestUtil.class);
@@ -61,8 +62,8 @@ public class AfterTestUtil {
             .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
                 .setUseCadToleranceThreshhold(false))
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
 
         resetToleranceValues(username);
     }
@@ -88,8 +89,8 @@ public class AfterTestUtil {
                 .setSystem(true)
                 .setCustom(false)))
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
     }
 
     /**
@@ -104,8 +105,8 @@ public class AfterTestUtil {
             .setEndpoint(baseUrl + "ws/workspace/users/me/preferences/preference?key=cost.table.decimal.places")
             .setCustomBody("2")
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
     }
 
     /**
@@ -121,8 +122,8 @@ public class AfterTestUtil {
             .setEndpoint(baseUrl + "ws/workspace/users/me/preferences/preference?key=selectionColor")
             .setCustomBody(ColourEnum.YELLOW.getColour())
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
     }
 
     /**
@@ -138,8 +139,8 @@ public class AfterTestUtil {
             .setEndpoint(baseUrl + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
             .setCustomBody("Initial")
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
     }
 
     /**
@@ -160,8 +161,8 @@ public class AfterTestUtil {
                 .setProductionLife(null)
                 .setBatchSizeMode(false))
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
     }
 
     /**
@@ -194,7 +195,7 @@ public class AfterTestUtil {
                 .setStraightnessOverride(null)
                 .setSymmetryOverride(null))
             .commitChanges()
-            .connect()
-            .post();
+            .connect();
+        //            .post();
     }
 }

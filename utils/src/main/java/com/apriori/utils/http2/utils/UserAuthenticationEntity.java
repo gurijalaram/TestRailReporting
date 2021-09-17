@@ -1,4 +1,4 @@
-package com.apriori.utils.http.builder.common.entity;
+package com.apriori.utils.http2.utils;
 
 
 /**

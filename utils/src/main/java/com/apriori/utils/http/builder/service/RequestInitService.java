@@ -1,8 +1,8 @@
 package com.apriori.utils.http.builder.service;
 
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.ConnectionManager;
 
+@Deprecated
 public class RequestInitService {
 
     private RequestEntity requestEntity;
@@ -20,7 +20,7 @@ public class RequestInitService {
         return requestEntity;
     }
 
-    public ConnectionManager<?> connect() {
-        return new ConnectionManager<>(this.requestEntity, this.requestEntity.getReturnType());
+    public Object connect() {
+        return null;
     }
 }
