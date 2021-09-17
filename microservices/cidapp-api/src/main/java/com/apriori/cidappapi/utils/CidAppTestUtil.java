@@ -12,6 +12,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.request.CostRequest;
+import com.apriori.sds.entity.request.PublishRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
@@ -335,6 +336,10 @@ public class CidAppTestUtil {
     }
 
     /**
+     * Post cost a scenario
+     *
+     * @param componentName      - the component name
+     * @param scenarioName       - the scenario name
      * @param componentId        - the component id
      * @param scenarioId         - the scenario id
      * @param processGroupEnum   - the process group
@@ -344,7 +349,7 @@ public class CidAppTestUtil {
      * @param userCredentials    - the user credentials
      * @return scenario object
      */
-    public Scenario postCostScenario(String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
+    public List<Item> postCostScenario(String componentName, String scenarioName, String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(getToken(userCredentials))
@@ -356,10 +361,12 @@ public class CidAppTestUtil {
                 );
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
 
-        return responseWrapper.getResponseEntity();
+        return getCssComponent(componentName, scenarioName, ScenarioStateEnum.COST_COMPLETE, userCredentials);
     }
 
     /**
+     * Get costing template id
+     *
      * @param processGroupEnum   - the process group
      * @param digitalFactoryEnum - the digital factory
      * @param mode               - the material mode
@@ -371,7 +378,10 @@ public class CidAppTestUtil {
         return postCostingTemplate(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials);
     }
 
+
     /**
+     * Post costing template
+     *
      * @param processGroupEnum   - the process group
      * @param digitalFactoryEnum - the digital factory
      * @param mode               - the material mode
@@ -397,5 +407,22 @@ public class CidAppTestUtil {
         ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).post();
 
         return response.getResponseEntity();
+    }
+
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
+                .token(getToken(userCredentials))
+                .inlineVariables(componentId, scenarioId)
+                .body("scenario", PublishRequest.builder()
+                    .assignedTo("A9DMC92LK859")
+                    .costMaturity("Initial".toUpperCase())
+                    .override(false)
+                    .status("New".toUpperCase())
+                    .build()
+                );
+        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+
+        return getScenarioRepresentation(item, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, userCredentials);
     }
 }
