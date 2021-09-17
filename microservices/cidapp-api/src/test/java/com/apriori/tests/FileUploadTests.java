@@ -22,11 +22,13 @@ public class FileUploadTests extends CidAppTestUtil {
 
         String componentName = "Casting";
         File resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        String mode = "manual";
+        String materialName = "Aluminum, Cast, ANSI AL380.0";
         UserCredentials currentUser = UserUtil.getUser();
 
         Item componentResponse = new CidAppTestUtil().postCssComponents(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
-        new CidAppTestUtil().costScenario(componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), ProcessGroupEnum.CASTING_DIE, DigitalFactoryEnum.APRIORI_USA, currentUser);
+        new CidAppTestUtil().postCostScenario(componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), ProcessGroupEnum.CASTING_DIE, DigitalFactoryEnum.APRIORI_USA, mode, materialName, currentUser);
         //new CidAppTestUtil().publishScenario(componentResponse.getComponentUpdatedBy(), componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
         //publish();
     }

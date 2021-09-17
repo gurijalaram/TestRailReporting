@@ -12,8 +12,6 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.request.CostRequest;
-import com.apriori.sds.entity.response.CostingTemplate;
-import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
@@ -220,6 +218,7 @@ public class CidAppTestUtil {
 
     /**
      * Waits for specified time
+     *
      * @param seconds - the seconds
      */
     private void waitSeconds(long seconds) {
@@ -335,41 +334,68 @@ public class CidAppTestUtil {
         return HTTP2Request.build(requestEntity).get();
     }
 
-    public Scenario costScenario(String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, UserCredentials userCredentials) {
+    /**
+     * @param componentId        - the component id
+     * @param scenarioId         - the scenario id
+     * @param processGroupEnum   - the process group
+     * @param digitalFactoryEnum - the digital factory
+     * @param mode               - the material mode
+     * @param materialName       - the material name
+     * @param userCredentials    - the user credentials
+     * @return scenario object
+     */
+    public Scenario postCostScenario(String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(getToken(userCredentials))
                 .inlineVariables(componentId, scenarioId)
                 .body("costingInputs", CostRequest.builder()
-                    .annualVolume(5500)
-                    .batchSize(458)
-                    .processGroupName(processGroupEnum.getProcessGroup())
-                    .materialName("Aluminum, Cast, ANSI AL380.0")
-                    .productionLife(5.0)
-                    .vpeName(digitalFactoryEnum.getDigitalFactory())
-                    .costingTemplateIdentity(getFirstCostingTemplate(userCredentials).getIdentity())
-                    .deleteTemplateAfterUse(false)
+                    .costingTemplateIdentity(getCostingTemplateId(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials).getIdentity())
+                    .deleteTemplateAfterUse(true)
                     .build()
                 );
-
         ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
 
         return responseWrapper.getResponseEntity();
     }
 
-    protected CostingTemplate getFirstCostingTemplate(UserCredentials userCredentials) {
-        List<CostingTemplate> costingTemplates = getCostingTemplates(userCredentials);
-//        assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
-        return costingTemplates.get(0);
+    /**
+     * @param processGroupEnum   - the process group
+     * @param digitalFactoryEnum - the digital factory
+     * @param mode               - the material mode
+     * @param materialName       - the material name
+     * @param userCredentials    - the user credentials
+     * @return scenario object
+     */
+    private Scenario getCostingTemplateId(ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
+        return postCostingTemplate(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials);
     }
 
-    protected List<CostingTemplate> getCostingTemplates(UserCredentials userCredentials) {
+    /**
+     * @param processGroupEnum   - the process group
+     * @param digitalFactoryEnum - the digital factory
+     * @param mode               - the material mode
+     * @param materialName       - the material name
+     * @param userCredentials    - the user credentials
+     * @return scenario object
+     */
+    private Scenario postCostingTemplate(ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class)
-                .token(getToken(userCredentials));
+            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
+                .token(getToken(userCredentials))
+                .body("costingTemplate", CostRequest.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .vpeName(digitalFactoryEnum.getDigitalFactory())
+                    .materialMode(mode.toUpperCase())
+                    .materialName(materialName)
+                    .annualVolume(5500)
+                    .productionLife(5.0)
+                    .batchSize(458)
+                    .propertiesToReset(null)
+                    .build());
 
-        ResponseWrapper<CostingTemplatesItems> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).post();
 
-        return response.getResponseEntity().getItems();
+        return response.getResponseEntity();
     }
 }
