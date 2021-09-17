@@ -128,7 +128,7 @@ public class LoginTests extends TestBase {
         privacyPolicyPage = loginPage.privacyPolicy();
 
         assertThat(privacyPolicyPage.getChildWindowURL(), containsString("https://www.apriori.com/privacy-policy"));
-        assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
+        assertThat(privacyPolicyPage.getPageHeading(), containsString("aPriori Technologies, Inc. Privacy Policy"));
     }
 
     @Test
