@@ -20,15 +20,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        CastingDtcReportTests.class,
-        CastingDtcDetailsReportTests.class,
-        CastingDtcComparisonReportTests.class,
-        MachiningDtcReportTests.class,
-        MachiningDtcDetailsReportTests.class,
-        MachiningDtcComparisonReportTests.class,
-        PlasticDtcReportTests.class,
-        PlasticDtcDetailsReportTests.class,
-        PlasticDtcComparisonReportTests.class
+        MachiningDtcReportTests.class
 })
 
 public class CiaCirTestDevSuite {
