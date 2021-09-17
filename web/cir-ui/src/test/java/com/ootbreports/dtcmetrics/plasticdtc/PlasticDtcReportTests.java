@@ -101,7 +101,7 @@ public class PlasticDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1370"})
     @Description("Verify currency code functionality works correctly")
     public void testCurrencyCodeFunctionality() {
