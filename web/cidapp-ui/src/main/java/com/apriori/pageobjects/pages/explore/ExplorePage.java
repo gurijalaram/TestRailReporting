@@ -256,7 +256,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return new page object
      */
     public ExplorePage enterKeySearch(String componentName) {
-        componentTableActions.enterKeySearch(componentName);
+        componentTableActions.enterKeySearch(componentName.toUpperCase());
         return this;
     }
 
