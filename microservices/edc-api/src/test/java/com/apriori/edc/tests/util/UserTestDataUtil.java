@@ -138,7 +138,7 @@ public class UserTestDataUtil extends TestUtil {
     }
 
     public String uploadTestData(final UserDataEDC userDataEDC) {
-        final File testData = FileResourceUtil.getResourceAsFile("test_data", "apriori-4-items.csv");
+        final File testData = FileResourceUtil.getResourceAsFile("test_data", "Test BOM 5.csv");
 
         RequestEntity requestEntity = RequestEntityUtil.init(
             BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, BillOfSingleMaterialWrapper.class)

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "BillOfMaterialsResponse")
+@Schema(location = "BillOfMaterialsResponse.json")
 @Data
 @Builder
 @AllArgsConstructor
