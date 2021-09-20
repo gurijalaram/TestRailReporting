@@ -1300,6 +1300,7 @@ public class GenericReportPage extends ReportsPageHeader {
             By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]/div/a", i));
             pageUtils.waitForElementAndClick(locator);
         }
+        pageUtils.waitFor(1000);
         waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Selected: ", "2");
         return this;
     }
