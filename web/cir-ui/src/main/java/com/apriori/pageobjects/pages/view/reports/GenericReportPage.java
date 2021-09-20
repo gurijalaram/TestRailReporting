@@ -1299,15 +1299,8 @@ public class GenericReportPage extends ReportsPageHeader {
         for (int i = 1; i < 3; i++) {
             By locator = By.xpath(String.format("(//div[@title='Scenarios to Compare']//ul)[1]/li[%s]/div/a", i));
             pageUtils.waitForElementAndClick(locator);
-            if (i == 1) {
-                By postFilterLocator = By.xpath(String.format(
-                        "(//div[@title='Scenarios to Compare']//ul)[1]/li[%s and @class='jr-mSelectlist-item " +
-                                "jr-isHovered jr jr-isSelected']",
-                        i
-                ));
-                pageUtils.waitForElementToAppear(postFilterLocator);
-            }
         }
+        waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Selected: ", "2");
         return this;
     }
 
