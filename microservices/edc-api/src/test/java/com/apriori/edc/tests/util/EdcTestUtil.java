@@ -48,7 +48,7 @@ public class EdcTestUtil extends TestUtil {
     }
 
     protected static BillOfMaterials getBillOfMaterialsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterials.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItems.class);
         ResponseWrapper<BillOfMaterialsItems> billOfMaterialsItemsResponseWrapper = HTTP2Request.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -57,7 +57,7 @@ public class EdcTestUtil extends TestUtil {
         List<BillOfMaterials> billOfMaterials = billOfMaterialsItemsResponseWrapper.getResponseEntity().getItems();
         Assert.assertNotEquals("To get Bill of Materials, response should contain it.", 0, billOfMaterials.size());
 
-        return (BillOfMaterials) billOfMaterialsItemsResponseWrapper.getResponseEntity().getItems();
+         return billOfMaterialsItemsResponseWrapper.getResponseEntity().getItems().get(0);
     }
 
     public static BillOfMaterials getBoms() {
