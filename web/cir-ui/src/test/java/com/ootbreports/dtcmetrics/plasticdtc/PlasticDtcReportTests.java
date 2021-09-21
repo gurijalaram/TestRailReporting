@@ -120,7 +120,7 @@ public class PlasticDtcReportTests extends TestBase {
             is(equalTo(RollupEnum.ROLL_UP_A.getRollupName()))
         );
 
-        genericReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+        genericReportPage.selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), PlasticDtcReportPage.class);
 
@@ -129,7 +129,7 @@ public class PlasticDtcReportTests extends TestBase {
         usdAnnualSpend = genericReportPage.getAnnualSpendFromBubbleTooltip();
 
         genericReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), PlasticDtcReportPage.class);
 
@@ -180,7 +180,7 @@ public class PlasticDtcReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.PLASTIC_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.PLASTIC_DTC.getReportName());

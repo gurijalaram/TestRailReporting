@@ -127,7 +127,7 @@ public class ScenarioComparisonReportTests extends TestBase {
         usdSecondFbc = scenarioComparisonReportPage.getFbcValue(false);
 
         scenarioComparisonReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
                 .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ScenarioComparisonReportPage.class);
 

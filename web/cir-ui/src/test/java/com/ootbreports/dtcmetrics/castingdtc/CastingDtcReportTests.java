@@ -172,7 +172,7 @@ public class CastingDtcReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.CASTING_DTC.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class);
 
         genericReportPage.setReportName(ReportNamesEnum.CASTING_DTC.getReportName());
@@ -201,7 +201,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {

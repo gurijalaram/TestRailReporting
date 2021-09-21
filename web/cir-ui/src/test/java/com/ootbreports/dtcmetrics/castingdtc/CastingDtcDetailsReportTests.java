@@ -28,7 +28,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -173,7 +172,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(), CastingDtcReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), CastingDtcReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), CastingDtcReportPage.class)
             .clickOk(true, CastingDtcReportPage.class);
 
         castingDtcReportPage.setReportName(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());

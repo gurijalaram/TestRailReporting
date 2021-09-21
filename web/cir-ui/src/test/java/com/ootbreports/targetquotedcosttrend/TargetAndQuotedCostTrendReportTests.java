@@ -166,14 +166,14 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.TARGET_AND_QUOTED_COST_TREND.getReportName(),
                         TargetQuotedCostTrendReportPage.class);
 
-        targetQuotedCostTrendReportPage.checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+        targetQuotedCostTrendReportPage.selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
                 .clickOk(true, TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         targetQuotedCostTrendReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
                 .clickOk(true, TargetQuotedCostTrendReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 

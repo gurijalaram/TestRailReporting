@@ -99,7 +99,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -121,7 +121,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         );
 
         assemblyDetailsReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -150,12 +150,12 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 
         assemblyDetailsReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), AssemblyDetailsReportPage.class);
 
@@ -167,7 +167,7 @@ public class AssemblyDetailsReportTests extends TestBase {
         assertThat(assemblyDetailsReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
 
         assemblyDetailsReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
 

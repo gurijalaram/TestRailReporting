@@ -161,12 +161,12 @@ public class GenericReportPage extends ReportsPageHeader {
     private WebElement inputBox;
 
     @FindBy(xpath = "//label[@title='Currency Code']/div/div/div/a")
-    private WebElement currentCurrencyElement;
+    private WebElement currencyDropdown;
 
-    @FindBy(css = "li[title='USD'] > div > a")
+    @FindBy(css = "li[title='USD']")
     private WebElement usdCurrencyOption;
 
-    @FindBy(css = "li[title='GBP'] > div > a")
+    @FindBy(css = "li[title='GBP']")
     private WebElement gbpCurrencyOption;
 
     @FindBy(id = "apply")
@@ -789,15 +789,23 @@ public class GenericReportPage extends ReportsPageHeader {
     /**
      * Checks current currency selection, fixes if necessary
      *
-     * @param currency - String
+     * @param currencyToSelect - String
      * @param <T> - generic
      * @param className - class to return instance of
      * @return instance of class passed in
      */
-    public <T> T checkCurrencySelected(String currency, Class<T> className) {
-        if (!currentCurrencyElement.getAttribute("title").equals(currency)) {
-            pageUtils.waitForElementAndClick(currentCurrencyElement);
-            pageUtils.waitForElementAndClick(currencyMap.get(currency));
+    public <T> T selectCurrency(String currencyToSelect, Class<T> className) {
+        pageUtils.scrollWithJavaScript(currencyDropdown, true);
+        if (!currencyDropdown.getAttribute("title").equals(currencyToSelect)) {
+            pageUtils.waitFor(1000);
+
+            pageUtils.waitForElementAndClick(currencyDropdown);
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("li[title='%s']", currencyToSelect)));
+
+            pageUtils.waitForElementToAppear(
+                    By.xpath(String.format("//label[@title='Currency Code']/div/div/div/a[@title='%s']",
+                                    currencyToSelect))
+            );
         }
         return PageFactory.initElements(driver, className);
     }
@@ -1733,7 +1741,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectComponent(String componentName) {
         pageUtils.scrollWithJavaScript(componentSelectDropdown, true);
         pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a"));
-        pageUtils.waitForElementToAppear(currentCurrencyElement);
+        pageUtils.waitForElementToAppear(currencyDropdown);
         pageUtils.waitForElementToAppear(By.xpath(String.format(genericDeselectLocator, "Scenario Name")));
         pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Select All']/a"));
         pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Invert']/a"));

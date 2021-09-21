@@ -182,14 +182,14 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
                 .selectExportSet(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
-                .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
                 .clickOk(true, ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ComponentCostReportPage.class);
 
         BigDecimal lifetimeCostUSD = componentCostReportPage.getLifetimeCost();
 
         componentCostReportPage.clickInputControlsButton()
-                .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
                 .clickOk(true, ComponentCostReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), ComponentCostReportPage.class);
 

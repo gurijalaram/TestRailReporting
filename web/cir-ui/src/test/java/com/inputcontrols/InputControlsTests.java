@@ -262,18 +262,35 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Export Set:')]/../following-sibling::td[2]/span"))
+                .getText().equals(exportSetName)) {
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .selectExportSetWithoutReset(exportSetName, GenericReportPage.class)
+                    .clickOk(true, GenericReportPage.class);
+        }
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();
         usdGrandTotal = genericReportPage.getFBCValueFromBubbleTooltip("FBC Value");
 
         genericReportPage.clickInputControlsButton()
-            .checkCurrencySelected(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-            .clickOk(true, GenericReportPage.class)
-            .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class);
+            .waitForInputControlsLoad()
+            .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+            .clickOk(true, GenericReportPage.class);
+
+        if (!driver.findElement(By.xpath("//span[contains(text(), 'Currency:')]/../following-sibling::td[2]/span"))
+                .getText().equals(CurrencyEnum.GBP.getCurrency())) {
+            genericReportPage.clickInputControlsButton()
+                    .waitForInputControlsLoad()
+                    .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                    .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                    .clickOk(true, GenericReportPage.class);
+        }
 
         genericReportPage.setReportName(reportName);
         genericReportPage.hoverPartNameBubbleDtcReports();

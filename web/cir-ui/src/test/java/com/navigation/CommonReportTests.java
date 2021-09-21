@@ -239,7 +239,7 @@ public class CommonReportTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.CASTING_DTC.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
@@ -290,7 +290,7 @@ public class CommonReportTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(ExportSetEnum.ROLL_UP_A.getExportSetName(), GenericReportPage.class)
-            .checkCurrencySelected(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+            .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
 
