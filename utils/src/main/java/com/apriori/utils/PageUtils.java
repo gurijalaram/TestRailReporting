@@ -690,7 +690,7 @@ public class PageUtils {
             .withMessage("Cannot click element locator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver webDriver) -> {
-                actionClick(locator);
+                locator.click();
                 return true;
             });
     }
