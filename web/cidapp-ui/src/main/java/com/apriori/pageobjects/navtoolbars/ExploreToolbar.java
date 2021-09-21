@@ -63,6 +63,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-action-bar-action-assign")
     private WebElement assignButton;
 
+    @FindBy(id = "qa-action-bar-action-update-cad-file")
+    private WebElement cadFileButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -254,5 +257,19 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparePage(driver);
+    }
+
+    /**
+     * Uploads a cad file and select submit
+     *
+     * @param filePath     - location of the file
+     * @param klass-       the class name
+     * @param <T>          - generic type
+     * @return generic page object
+     */
+    public <T> T updateCadFile(File filePath, Class<T> klass) {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(cadFileButton);
+        return new FileUploadPage(driver).enterFilePath(filePath).submit(klass);
     }
 }
