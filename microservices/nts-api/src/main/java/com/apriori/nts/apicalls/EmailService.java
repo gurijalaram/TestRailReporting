@@ -15,7 +15,6 @@ import com.apriori.utils.properties.PropertiesContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import javax.mail.Message;
@@ -123,13 +122,6 @@ public class EmailService {
 
         return (GetEmailResponse)
             HTTP2Request.build(requestEntity).get().getResponseEntity();
-
-
-//
-//                return (GetEmailResponse) GenericRequestUtil.get(
-//                    RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
-//                    new RequestAreaApi()
-//                ).getResponseEntity();
     }
 
     /**
@@ -139,11 +131,6 @@ public class EmailService {
      * @return Service response
      */
     public static Email getEmail(String identity) {
-        //        String url = String.format(baseUrl, "/" + identity);
-        //
-        //        Map<String, String> headers = new HashMap<>();
-        //        headers.put("ap-cloud-context", cloudContext);
-
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
             .inlineVariables(identity)
             .headers(new HashMap<String, String>() {{
@@ -153,11 +140,5 @@ public class EmailService {
 
         return (Email)
             HTTP2Request.build(requestEntity).get().getResponseEntity();
-
-        //
-        //            GenericRequestUtil.get(
-        //            RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
-        //            new RequestAreaApi()
-        //        ).getResponseEntity();
     }
 }

@@ -1,22 +1,21 @@
 package com.apriori.apibase.utils;
 
+import com.apriori.apibase.enums.BaseAPIEnum;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.utils.http.builder.service.HTTPRequest;
-
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO ALL: test it
 public class APIValue {
 
     private static final Logger logger = LoggerFactory.getLogger(APIValue.class);
-
-    private String baseUrl = System.getProperty("baseUrl");
 
     /**
      * Gets value from tolerance api
@@ -37,21 +36,10 @@ public class APIValue {
      * @return string representation of the api value
      */
     private String getValueFromAPI(String username, String apiPath) {
-
-        RequestEntity requestEntity = RequestEntityUtil.init(null, ToleranceValuesEntity.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.GET_TOLERANCE_VALUE, ToleranceValuesEntity.class)
             .headers(new APIAuthentication().initAuthorizationHeader(username));
 
         String jsonResponse = HTTP2Request.build(requestEntity).get().getBody();
-        // TODO z:
-        //            new HTTPRequest()
-        //            .unauthorized()
-        //            .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-        //            .setEndpoint(baseUrl + endpoint)
-        //            .setReturnType(entityClass)
-        //            .commitChanges()
-        //            .connect()
-        //            .get()
-        //            .getBody();
 
         JsonNode node;
         try {

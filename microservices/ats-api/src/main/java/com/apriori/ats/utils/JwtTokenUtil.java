@@ -1,16 +1,16 @@
 package com.apriori.ats.utils;
 
+import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.apibase.services.ats.objects.Token;
 import com.apriori.apibase.services.ats.objects.TokenInformation;
 import com.apriori.apibase.services.ats.objects.TokenRequest;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpStatus;
 
 @Slf4j
 public class JwtTokenUtil {
@@ -18,8 +18,6 @@ public class JwtTokenUtil {
     private String currentToken;
     private String username = PropertiesContext.get("${env}.ats.token_username");
     private String email = PropertiesContext.get("${env}.ats.token_email");
-    private String apiUrl = PropertiesContext.get("${env}.ats.api_url");
-    private String secretKey = PropertiesContext.get("${env}.secret_key");
     private String issuer = PropertiesContext.get("${env}.ats.token_issuer");
     private String subject = PropertiesContext.get("${customer}.token_subject");
 
@@ -43,7 +41,6 @@ public class JwtTokenUtil {
 
         log.info("Retrieving JWT Token...");
 
-        String url = apiUrl.concat(String.format("/tokens?key=%s", secretKey));
         TokenRequest body = new TokenRequest();
         TokenInformation information = new TokenInformation();
         information
@@ -52,12 +49,12 @@ public class JwtTokenUtil {
             .setNameAndEmail(username, email);
         body.setToken(information);
 
-        Token token = (Token) GenericRequestUtil.postMultipart(
-            RequestEntity.init(url, Token.class)
-                .setBody(body)
-                .setStatusCode(HttpStatus.SC_CREATED),
-            new RequestAreaApi()
-        ).getResponseEntity();
+        RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.POST_TOKEN, Token.class)
+            .body(body);
+
+        Token token = (Token) HTTP2Request.build(requestEntity)
+            .postMultipart()
+            .getResponseEntity();
 
         return currentToken = token.getToken();
     }
