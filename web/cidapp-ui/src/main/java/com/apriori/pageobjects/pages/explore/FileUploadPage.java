@@ -96,7 +96,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath - the file path
      * @return current page object
      */
-    private FileUploadPage enterFilePath(File filePath) {
+    public FileUploadPage enterFilePath(File filePath) {
         try {
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
