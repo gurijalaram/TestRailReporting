@@ -29,6 +29,9 @@ public class CustomAttributes extends Pagination {
     private Integer precision;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private String createdBy;
+    private String updatedBy;
     private List<String> options;
 }

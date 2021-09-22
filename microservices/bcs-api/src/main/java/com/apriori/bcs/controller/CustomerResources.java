@@ -8,87 +8,62 @@ import com.apriori.bcs.entity.response.DigitalFactories;
 import com.apriori.bcs.entity.response.ProcessGroups;
 import com.apriori.bcs.entity.response.UserDefinedAttributes;
 import com.apriori.bcs.entity.response.VPE;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
-import org.apache.http.HttpStatus;
+public class CustomerResources {
 
-public class CustomerResources extends BcsBase {
+    public static <T> ResponseWrapper<T> getCustomers() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_CUSTOMERS, Customers.class);
 
-    private static final String endpointCostingPreferences = "costing-preferences";
-    private static final String endpointProcessGroups = "process-groups";
-    private static final String endpointUserDefinedAttributes = "user-defined-attributes";
-    private static final String endpointVPE = "virtual-production-environments";
-    private static final String endpointDigitalFactories = "digital-factories";
-    private static final String endpointCustomAttributes = "custom-attributes";
-
-    public static <T>  ResponseWrapper<T> getCustomers() {
-        String url = String.format(getBaseCisUrl(), "");
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, Customers.class),
-                new RequestAreaApi()
-        );
+        return HTTP2Request.build(requestEntity).get();
     }
 
-    public static <T>  ResponseWrapper<T> getCostingPreferences() {
-        String url = String.format(getCisUrl(), endpointCostingPreferences);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, CostingPreferences.class),
-                new RequestAreaApi()
-        );
+    public static <T> ResponseWrapper<T> getCostingPreferences() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_COSTING_PREFERENCES, CostingPreferences.class);
+
+        return HTTP2Request.build(requestEntity).get();
     }
 
     public static CostingPreferences patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
-        String url = String.format(getCisUrl(), endpointCostingPreferences);
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PATCH_COSTING_PREFERENCES, CostingPreferences.class)
+            .body(patchCostingPreferenceRequest);
 
-        return (CostingPreferences) GenericRequestUtil.patch(
-                RequestEntity.init(url, CostingPreferences.class)
-                        .setBody(patchCostingPreferenceRequest)
-                        .setStatusCode(HttpStatus.SC_OK),
-                new RequestAreaApi()
-        ).getResponseEntity();
+        return (CostingPreferences) HTTP2Request.build(requestEntity).patch()
+            .getResponseEntity();
     }
 
-    public static <T>  ResponseWrapper<T> getProcessGroups() {
-        String url = String.format(getCisUrl(), endpointProcessGroups);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, ProcessGroups.class),
-                new RequestAreaApi()
-        );
+    public static <T> ResponseWrapper<T> getProcessGroups() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
+
+        return HTTP2Request.build(requestEntity).get();
     }
 
-    public static <T>  ResponseWrapper<T> getUserDefinedAttributes() {
-        String url = String.format(getCisUrl(), endpointUserDefinedAttributes);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, UserDefinedAttributes.class),
-                new RequestAreaApi()
-        );
+    public static <T> ResponseWrapper<T> getUserDefinedAttributes() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_USER_DEFINED_ATTRIBUTES, UserDefinedAttributes.class);
+
+        return HTTP2Request.build(requestEntity).get();
     }
 
-    public static <T>  ResponseWrapper<T> getVirtualProductEnvironments() {
-        String url = String.format(getCisUrl(), endpointVPE);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, VPE.class),
-                new RequestAreaApi()
-        );
+    public static <T> ResponseWrapper<T> getVirtualProductEnvironments() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_VPEs, VPE.class);
+
+        return HTTP2Request.build(requestEntity).get();
     }
 
-    public static <T>  ResponseWrapper<T> getDigitalFactories() {
-        String url = String.format(getCisUrl(), endpointDigitalFactories);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, DigitalFactories.class),
-                new RequestAreaApi()
-        );
+    public static <T> ResponseWrapper<T> getDigitalFactories() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactories.class);
+
+        return HTTP2Request.build(requestEntity).get();
     }
 
-    public static <T>  ResponseWrapper<T> getCustomAttributes() {
-        String url = String.format(getCisUrl(), endpointCustomAttributes);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, CustomAttributes.class),
-                new RequestAreaApi()
-        );
+    public static <T> ResponseWrapper<T> getCustomAttributes() {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributes.class);
+
+        return HTTP2Request.build(requestEntity).get();
     }
 
 }

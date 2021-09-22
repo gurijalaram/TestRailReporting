@@ -1,7 +1,6 @@
 package com.apriori.bcs.utils;
 
 import com.apriori.apibase.utils.ApiUtils;
-
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
 
@@ -25,10 +24,6 @@ public class BcsUtils extends ApiUtils {
 
         State(String st) {
             state = st;
-        }
-
-        String getState() {
-            return state;
         }
 
         static boolean contains(String objectsState) {
@@ -101,26 +96,6 @@ public class BcsUtils extends ApiUtils {
     }
 
     /**
-     * Gets the provided report identity
-     *
-     * @param obj   Report
-     * @param klass
-     * @return string
-     */
-    public static String getReportIdentity(Object obj, Class klass) {
-        String value = null;
-        try {
-            value = getPropertyValue(obj, klass, "getReportIdentity");
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-        }
-
-        return value;
-    }
-
-
-    /**
      * Cancel any batch in a non-terminal state
      *
      * @param batch
@@ -135,38 +110,6 @@ public class BcsUtils extends ApiUtils {
     }
 
     /**
-     * Wait for a batch to enter into a terminal state
-     *
-     * @param batch
-     * @return
-     * @throws InterruptedException Thread interrupted
-     */
-    public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
-        Object batchDetails;
-        Integer pollingInterval = 0;
-        State state;
-
-        while (pollingInterval <= Constants.POLLING_TIMEOUT) {
-            batchDetails = BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
-            try {
-                state = pollState(batchDetails, Batch.class);
-                if (state != State.PROCESSING) {
-                    return state;
-                }
-            } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
-                throw e;
-
-            }
-
-            pollingInterval += 1;
-        }
-
-        return State.PROCESSING;
-    }
-
-    /**
      * Polls BCS to get a batch/part's costing status
      *
      * @param obj
@@ -175,6 +118,8 @@ public class BcsUtils extends ApiUtils {
      */
     public static State pollState(Object obj, Class klass) throws InterruptedException {
         String state = BcsUtils.getState(obj, klass);
+
+        // TODO ALL: should be refactored to switch
         if (state.toUpperCase().equals("COMPLETED")) {
             return State.COMPLETED;
         } else if (state.toUpperCase().equals("ERRORED")) {
