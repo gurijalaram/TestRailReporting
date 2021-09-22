@@ -22,6 +22,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -134,6 +135,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2052")
     @TestRail(testCaseId = {"6211"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
