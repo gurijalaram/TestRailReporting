@@ -36,8 +36,7 @@ public class UploadTests extends TestBase {
 
     @After
     public void cleanUp() {
-        String billOfMaterialId = driver.getCurrentUrl().split("/")[4];
-        EDCResources.deleteBillOfMaterialById(billOfMaterialId);
+        EDCResources.deleteBillOfMaterialById(matchedPartPage.getBillOfMaterialsId());
     }
 
     @Test

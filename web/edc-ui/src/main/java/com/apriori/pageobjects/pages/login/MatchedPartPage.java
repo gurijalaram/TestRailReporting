@@ -71,4 +71,11 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
     public String getPinCountHeaderText() {
         return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
     }
+
+    public String getBillOfMaterialsId(){
+        String currentUrl = driver.getCurrentUrl();
+        int billOfMaterialsIdPosition = 4;
+        String[] currMatArray = currentUrl.split("/");
+        return currMatArray[billOfMaterialsIdPosition];
+    }
 }
