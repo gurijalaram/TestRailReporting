@@ -157,7 +157,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
-            .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
