@@ -18,7 +18,7 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
     private WebElement fileMatch;
 
     @FindBy(id = "edit-button")
-    private  WebElement editButton;
+    private WebElement editButton;
 
     @FindBy(css = "[data-icon='plus']")
     private WebElement addButton;
@@ -72,7 +72,12 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
         return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
     }
 
-    public String getBillOfMaterialsId(){
+    /**
+     * Gets the BOM Identity
+     *
+     * @return String
+     */
+    public String getBillOfMaterialsId() {
         String currentUrl = driver.getCurrentUrl();
         int billOfMaterialsIdPosition = 4;
         String[] currMatArray = currentUrl.split("/");
