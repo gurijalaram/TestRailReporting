@@ -13,13 +13,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
+
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
