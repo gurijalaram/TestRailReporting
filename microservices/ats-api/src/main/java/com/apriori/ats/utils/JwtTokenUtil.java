@@ -1,9 +1,9 @@
 package com.apriori.ats.utils;
 
-import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.apibase.services.ats.objects.Token;
 import com.apriori.apibase.services.ats.objects.TokenInformation;
 import com.apriori.apibase.services.ats.objects.TokenRequest;
+import com.apriori.ats.utils.enums.ATSAPIEnum;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
