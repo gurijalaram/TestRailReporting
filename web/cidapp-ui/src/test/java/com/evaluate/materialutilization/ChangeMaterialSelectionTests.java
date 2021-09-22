@@ -22,7 +22,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -44,8 +43,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"6186"})
-    @Issue("BA-1758")
-    @Issue("MIC-3130")
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -76,7 +73,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6187"})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
@@ -108,7 +104,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6188"})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
@@ -139,7 +134,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6189"})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
@@ -172,7 +166,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
 
     @Test
-    @Issue("MIC-3130")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6190", "5420"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
@@ -210,7 +203,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6191"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
@@ -239,9 +231,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6192"})
-    @Issue("BA-1758")
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -271,7 +261,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6193", "5420"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
@@ -297,7 +286,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6194"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
@@ -321,7 +309,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3130")
     @TestRail(testCaseId = {"6195"})
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
@@ -348,8 +335,6 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"6196"})
-    @Issue("BA-1758")
-    @Issue("MIC-3130")
     @Description("Test opening material selection and selecting cancel after making a selection")
     public void changeMaterialSelectionTestCancel() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
