@@ -17,6 +17,10 @@ public class TermsOfUseTests extends TestBase {
     private EdcAppLoginPage loginPage;
     private TermsOfUsePage termsOfUsePage;
 
+    public TermsOfUseTests() {
+        super();
+    }
+
     @Test
     @TestRail(testCaseId = {"8923"})
     @Description("Validate Terms of use")
@@ -26,7 +30,7 @@ public class TermsOfUseTests extends TestBase {
             .clickUserDropdown()
             .selectTermsOfUse();
 
-        assertThat(termsOfUsePage.getTermsOfUseUrl(), containsString("https://edc.na-1.qa-21-1.apriori.net/terms-of-use"));
+        assertThat(termsOfUsePage.getTermsOfUseUrl(), containsString("https://edc.na-1.qa-cid-perf.apriori.net/terms-of-use"));
         assertThat(termsOfUsePage.getTermsOfUseText(), containsString(" application (”Application”), including the intellectual property rights and trade secrets contained therein"));
     }
 }

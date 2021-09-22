@@ -15,6 +15,9 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "[data-icon='info-circle']")
     private WebElement aboutButton;
 
+    @FindBy(css = "[data-icon='question-circle']")
+    private WebElement helpButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -33,11 +36,26 @@ public class HelpPage extends LoadableComponent<HelpPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(aboutButton);
     }
 
+    /**
+     * Click on About from Help drop down
+     *
+     * @return new page object
+     */
     public AboutUsPage selectAbout() {
         pageUtils.waitForElementAndClick(aboutButton);
         return new AboutUsPage(driver);
+    }
+
+    /**
+     * Click on Help from Help drop down
+     *
+     * @return new page object
+     */
+    public ZendeskSignInPage selectHelp() {
+        pageUtils.waitForElementAndClick(helpButton);
+        return new ZendeskSignInPage(driver);
     }
 }
