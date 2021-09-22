@@ -202,7 +202,7 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Category( {SanityTests.class})
+    @Category({SanityTests.class})
     @TestRail(testCaseId = {"2648", "1352", "1355"})
     @Description("User can cost STEP Assembly with Powder Coat Cart Secondary Processes")
     public void testSTEPAssemblyPowderCoatCart() {
