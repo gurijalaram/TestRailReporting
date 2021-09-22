@@ -69,9 +69,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectType(String materialType) {
-        pageUtils.waitForElementAndClick(typeDropdown);
-        By type = By.xpath(String.format("//button[.='%s']", materialType));
-        pageUtils.scrollWithJavaScript(driver.findElement(type), true).click();
+        pageUtils.typeAheadSelect(typeDropdown, materialType);
         return this;
     }
 
