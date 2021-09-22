@@ -1012,8 +1012,7 @@ public class SecondaryProcessTests extends TestBase {
 
         assertThat(secondaryPage.getSecondaryProcesses(), hasItems("No Processes Selected..."));
 
-        evaluatePage.goToSecondaryTab()
-            .openSecondaryProcesses()
+        evaluatePage = secondaryPage.openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
             .deselectAll()
