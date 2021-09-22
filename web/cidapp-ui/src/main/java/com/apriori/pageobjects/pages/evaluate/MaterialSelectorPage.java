@@ -75,6 +75,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     /**
      * Selects the method
+     * <p>The material method has to be the fully qualified name eg. Digital Factory Default [Steel, Hot Worked, AISI 1010] </p>
      *
      * @param selectionMethod - the selection method
      * @return current page object
