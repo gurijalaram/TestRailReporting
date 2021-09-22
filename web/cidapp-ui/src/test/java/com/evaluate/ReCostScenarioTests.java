@@ -19,7 +19,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -65,7 +64,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6102"})
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
@@ -91,7 +89,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6103"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {
@@ -117,7 +114,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6104"})
     @Description("Test recosting a cad file - Pocket Recognition")
     public void testRecostPocketRecognition() {
@@ -143,7 +139,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6105"})
     @Description("Test recosting a cad file - Shared Walls")
     public void testRecostSharedWalls() {
@@ -169,7 +164,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3071")
     @TestRail(testCaseId = {"6106"})
     @Description("Test recosting a cad file - Slot Examples")
     public void testRecostSlotExamples() {
