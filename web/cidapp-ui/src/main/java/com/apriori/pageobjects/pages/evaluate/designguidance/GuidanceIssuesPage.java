@@ -106,7 +106,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private void selectIssue(String issueDropdown) {
         String[] issues = issueDropdown.split(",");
 
-        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", x.trim()))).findElement(By.cssSelector("svg[data-icon='chevron-down']"))))
+        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..//div[@class='expand-button-wrapper']//*[local-name()='svg']", x.trim())))))
             .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
     }
 
