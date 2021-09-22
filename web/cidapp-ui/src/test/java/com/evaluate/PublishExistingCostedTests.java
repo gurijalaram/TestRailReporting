@@ -46,7 +46,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3108")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6209", "5427"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
