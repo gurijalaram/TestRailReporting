@@ -1,7 +1,6 @@
 package com.evaluate.materialutilization;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -170,7 +169,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"6190", "5420"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "bracket_basic";
@@ -182,7 +181,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
-            .selectProcessGroup(STOCK_MACHINING)
+            .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();
 
@@ -206,7 +205,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"6191"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         String componentName = "bracket_basic";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
@@ -265,7 +264,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"6193", "5420"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "Machined Box AMERICAS";
@@ -289,7 +288,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     @TestRail(testCaseId = {"6194"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
-        final ProcessGroupEnum processGroupEnum = STOCK_MACHINING;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "Machined Box AMERICAS IronCast";
@@ -299,9 +298,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(STOCK_MACHINING)
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectionMethod("Digital Factory Default ")
+            .selectionMethod("Digital Factory Default")
             .submit(EvaluatePage.class)
             .costScenario();
 

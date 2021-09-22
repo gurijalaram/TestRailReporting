@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
 
-    @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(css = "div[id='qa-material-type-select'] [data-icon='chevron-down']")
     private WebElement typeDropdown;
 
-    @FindBy(xpath = "//label[.='Selection Method']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement methodDropdown;
+    @FindBy(css = "div[id='qa-material-selection-method-select'] [data-icon='chevron-down']")
+    private WebElement modeDropdown;
 
     @FindBy(xpath = "//label[normalize-space(text())='Search']/following-sibling::input")
     private WebElement searchInput;
@@ -82,9 +82,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectionMethod(String selectionMethod) {
-        pageUtils.waitForElementAndClick(methodDropdown);
-        By method = By.xpath(String.format("//button[.='%s']", selectionMethod));
-        pageUtils.scrollWithJavaScript(driver.findElement(method), true).click();
+        pageUtils.typeAheadSelect(modeDropdown, selectionMethod);
         return this;
     }
 
