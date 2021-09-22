@@ -57,7 +57,7 @@ public class EdcTestUtil extends TestUtil {
         List<BillOfMaterials> billOfMaterials = billOfMaterialsItemsResponseWrapper.getResponseEntity().getItems();
         Assert.assertNotEquals("To get Bill of Materials, response should contain it.", 0, billOfMaterials.size());
 
-         return billOfMaterialsItemsResponseWrapper.getResponseEntity().getItems().get(0);
+        return billOfMaterialsItemsResponseWrapper.getResponseEntity().getItems().get(0);
     }
 
     public static BillOfMaterials getBoms() {
