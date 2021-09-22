@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.edc.utils.EDCResources;
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.MatchedPartPage;
@@ -15,6 +14,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.apriori.edcapi.utils.EDCResources;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;

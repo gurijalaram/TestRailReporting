@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
-import com.utils.Constants;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
-    private static String loginPageUrl = Constants.getDefaultUrl();
+    private static final String loginPageUrl = PropertiesContext.get("${env}.edc.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
