@@ -161,8 +161,8 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getAnnualVolume(), is("9,524"));
-        assertThat(evaluatePage.getProductionLife(), is("7.00"));
+        assertThat(evaluatePage.getAnnualVolume(), is("9524"));
+        assertThat(evaluatePage.getProductionLife(), is("7"));
     }
 
     @Ignore("Uncomment when ba-1955 is done")
