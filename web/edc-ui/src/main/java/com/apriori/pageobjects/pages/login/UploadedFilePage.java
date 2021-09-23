@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.navtoolbars.myuser;
+package com.apriori.pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
 
@@ -10,15 +10,18 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class TermsOfUsePage extends LoadableComponent<TermsOfUsePage> {
+public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
 
-    @FindBy(xpath = "//p[@class='main-text']")
-    private WebElement termsText;
+    @FindBy(css = "[data-icon='exclamation-circle']")
+    private WebElement fileOne;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
+    @FindBy(id = "filter-button")
+    private WebElement filterButton;
 
-    public TermsOfUsePage(WebDriver driver) {
+    private WebDriver driver;
+    private PageUtils pageUtils;
+
+    public UploadedFilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -32,24 +35,16 @@ public class TermsOfUsePage extends LoadableComponent<TermsOfUsePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(termsText);
+        pageUtils.waitForElementToAppear(filterButton);
     }
 
     /**
-     * Gets page Url
+     * Click on the Matched part
      *
-     * @return String
+     * @return new page object
      */
-    public String getTermsOfUseUrl() {
-        return driver.getCurrentUrl();
-    }
-
-    /**
-     * Gets Terms Of Use text
-     *
-     * @return String
-     */
-    public String getTermsOfUseText() {
-        return termsText.getText();
+    public MatchedPartPage selectMatchedPart() {
+        pageUtils.waitForElementAndClick(fileOne);
+        return new MatchedPartPage(driver);
     }
 }

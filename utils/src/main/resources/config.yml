@@ -53,6 +53,10 @@ default:
   css:
     api_url: https://css.${default.aws_region}.${env}.apriori.net/
 
+  edc:
+    ui_url: https://edc.${default.aws_region}.${env}.apriori.net/
+    api_url: https://edc-api.${default.aws_region}.${env}.apriori.net/
+
   fms:
     api_url: https://fms.${default.aws_region}.${env}.apriori.net/
 
@@ -155,6 +159,16 @@ qa-cid-perf:
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
+
+  sds:
+    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
+
+  edc:
+    ui_url: https://edc.na-1.qa-cid-perf.apriori.net/
+    api_url: https://edc-api.na-1.qa-cid-perf.apriori.net/
+
+  vds:
+    api_url: https://vds.na-1.qa-cid-perf.apriori.net/
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:

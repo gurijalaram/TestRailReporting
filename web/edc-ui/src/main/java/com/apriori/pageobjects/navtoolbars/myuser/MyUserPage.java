@@ -56,11 +56,21 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
         return new EdcAppLoginPage(driver);
     }
 
+    /**
+     * Click on My Profile
+     *
+     * @return new page object
+     */
     public MyProfilePage clickMyProfile() {
         pageUtils.waitForElementAndClick(myProfile);
         return new MyProfilePage(driver);
     }
 
+    /**
+     * Click Terms of Use
+     *
+     * @return new page object
+     */
     public TermsOfUsePage selectTermsOfUse() {
         pageUtils.waitForElementAndClick(termsOfUse);
         return new TermsOfUsePage(driver);
