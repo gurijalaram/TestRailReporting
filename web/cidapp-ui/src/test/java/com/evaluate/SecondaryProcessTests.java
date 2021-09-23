@@ -1021,6 +1021,6 @@ public class SecondaryProcessTests extends TestBase {
             .deselectAll()
             .cancel();
 
-        assertThat(evaluatePage.getListOfSecondaryProcesses(), is("No Processes Selected..."));
+        assertThat(evaluatePage.getListOfSecondaryProcesses(), hasItem("No Processes Selected..."));
     }
 }
