@@ -9,5 +9,6 @@
   "processGroup": "Sheet Metal",
   "productionLife": 3.45,
   "scenarioName": "Initial",
-  "vpeName": "aPriori - Regional Data Libraries - Standard"
+  "vpeName": "aPriori USA",
+  "udas": "{\"UDARegion\":\"USA\"}"
 }

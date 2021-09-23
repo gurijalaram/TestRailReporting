@@ -139,14 +139,14 @@ public class BcsUtils extends ApiUtils {
      *
      * @param batch
      * @return
-     * @throws InterruptedException Thread interrupted
+     * @throws InterruptedException  Thread interrupted
      */
     public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
         Object batchDetails;
         Integer pollingInterval = 0;
         State state;
 
-        while (pollingInterval <= Constants.POLLING_TIMEOUT) {
+        while (pollingInterval <= Constants.BATCH_POLLING_TIMEOUT) {
             batchDetails = BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
             try {
                 state = pollState(batchDetails, Batch.class);

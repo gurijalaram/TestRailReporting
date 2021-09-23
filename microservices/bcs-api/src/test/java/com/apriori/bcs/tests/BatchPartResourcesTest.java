@@ -49,18 +49,18 @@ public class BatchPartResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"8690"})
     @Description("Attempt to add a new part to a batch using empty string values")
     public void createBatchPartWithEmptyStringValues() {
-        NewPartRequest newPartRequest_Null = getNewPartRequest();
-        newPartRequest_Null.setMaterialName(null);
-        newPartRequest_Null.setVpeName(null);
+        NewPartRequest newPartRequestNull = getNewPartRequest();
+        newPartRequestNull.setMaterialName(null);
+        newPartRequestNull.setVpeName(null);
 
-        BatchPartResources.createNewBatchPart(newPartRequest_Null, batch.getIdentity(),
+        BatchPartResources.createNewBatchPart(newPartRequestNull, batch.getIdentity(),
                 BatchPartResources.ProcessGroupValue.USE_NULL);
 
-        NewPartRequest newPartRequest_EmptyString = getNewPartRequest();
-        newPartRequest_EmptyString.setMaterialName("");
-        newPartRequest_EmptyString.setVpeName("");
+        NewPartRequest newPartRequestEmptyString = getNewPartRequest();
+        newPartRequestEmptyString.setMaterialName("");
+        newPartRequestEmptyString.setVpeName("");
 
-        BatchPartResources.createNewBatchPart(newPartRequest_EmptyString, batch.getIdentity(),
+        BatchPartResources.createNewBatchPart(newPartRequestEmptyString, batch.getIdentity(),
                 BatchPartResources.ProcessGroupValue.USE_EMPTY_STRING);
 
 
