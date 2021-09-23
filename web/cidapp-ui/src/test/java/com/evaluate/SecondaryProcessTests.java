@@ -245,7 +245,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(1.0));
+        assertThat(materialProcessPage.getOverriddenPso("Masking"), is(1.0));
     }
 
     @Test
