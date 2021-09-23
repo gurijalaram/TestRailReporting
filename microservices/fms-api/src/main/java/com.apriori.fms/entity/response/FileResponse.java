@@ -33,4 +33,6 @@ public class FileResponse {
     private String folder;
     private Long filesize;
     private String md5hash;
+    public String updatedBy;
+    public String deletedBy;
 }
