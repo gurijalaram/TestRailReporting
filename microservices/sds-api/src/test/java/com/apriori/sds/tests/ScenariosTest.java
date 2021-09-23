@@ -370,7 +370,6 @@ public class ScenariosTest extends SDSTestUtil {
                     .processGroupName("Sheet Metal")
                     .productionLife(5.0)
                     .vpeName("aPriori USA")
-//                    .udaRegion("Europe")
                     .customAttributes(CustomAttributes.builder().udaRegion("Europe").build())
                     .costingTemplateIdentity(getFirstCostingTemplate().getIdentity())
                     .deleteTemplateAfterUse(false)
