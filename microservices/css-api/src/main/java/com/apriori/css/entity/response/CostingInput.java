@@ -19,6 +19,7 @@ public class CostingInput {
     private String materialMode;
     private String materialName;
     private String processGroupName;
+    private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     private String vpeName;
     private ProcessSetupOptions processSetupOptions;
     private Integer productionLife;
