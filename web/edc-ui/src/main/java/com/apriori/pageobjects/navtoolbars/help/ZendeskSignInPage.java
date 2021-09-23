@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.navtoolbars.myuser;
+package com.apriori.pageobjects.navtoolbars.help;
 
 import com.apriori.utils.PageUtils;
 
@@ -10,15 +10,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class TermsOfUsePage extends LoadableComponent<TermsOfUsePage> {
+public class ZendeskSignInPage extends LoadableComponent<ZendeskSignInPage> {
 
-    @FindBy(xpath = "//p[@class='main-text']")
-    private WebElement termsText;
+    @FindBy(css = "input[name='email']")
+    private WebElement email;
 
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    public TermsOfUsePage(WebDriver driver) {
+    public ZendeskSignInPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -32,24 +32,16 @@ public class TermsOfUsePage extends LoadableComponent<TermsOfUsePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(termsText);
+        pageUtils.waitForElementToAppear(email);
     }
 
     /**
-     * Gets page Url
+     * Switches from parent to child tab
      *
-     * @return String
+     * @return page object
      */
-    public String getTermsOfUseUrl() {
-        return driver.getCurrentUrl();
-    }
-
-    /**
-     * Gets Terms Of Use text
-     *
-     * @return String
-     */
-    public String getTermsOfUseText() {
-        return termsText.getText();
+    public ZendeskSignInPage switchTab() {
+        pageUtils.windowHandler(1);
+        return new ZendeskSignInPage(driver);
     }
 }
