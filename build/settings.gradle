@@ -13,8 +13,8 @@ include(':apibase')
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 
-final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api"]
-final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cid-ui", "cidapp-ui", "cir-ui", "edc-ui"]
+final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api"]
+final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cid-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
@@ -52,6 +52,7 @@ if (configuration != null) {
     include(':microservices:nts-api')
     include(':microservices:vds-api')
     include(':microservices:sds-api')
+    include(':microservices:cis-api')
 
     project(':microservices:acs-api').projectDir = file('../microservices/acs-api')
     project(':microservices:ats-api').projectDir = file('../microservices/ats-api')
@@ -66,6 +67,7 @@ if (configuration != null) {
     project(':microservices:nts-api').projectDir = file('../microservices/nts-api')
     project(':microservices:vds-api').projectDir = file('../microservices/vds-api')
     project(':microservices:sds-api').projectDir = file('../microservices/sds-api')
+    project(':microservices:cis-api').projectDir = file('../microservices/cis-api')
 
     //Web
     include ':web:cia-ui'
@@ -75,6 +77,7 @@ if (configuration != null) {
     include ':web:ciconnect-ui'
     include ':web:cas-ui'
     include ':web:edc-ui'
+    include ':web:cis-ui'
 
     project(':web:cia-ui').projectDir = file('../web/cia-ui')
     project(':web:cid-ui').projectDir = file('../web/cid-ui')
@@ -83,6 +86,7 @@ if (configuration != null) {
     project(':web:ciconnect-ui').projectDir = file('../web/ciconnect-ui')
     project(':web:cas-ui').projectDir = file('../web/cas-ui')
     project(':web:edc-ui').projectDir = file('../web/edc-ui')
+    project(':web:cis-ui').projectDir = file('../web/cis-ui')
 
     if (System.getProperty("all") != null) {
         include(':database')
