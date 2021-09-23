@@ -18,7 +18,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 
@@ -32,7 +31,6 @@ public class MaterialPMITests extends TestBase {
 
     private File resourceFile;
 
-
     public MaterialPMITests() {
         super();
     }
@@ -45,7 +43,6 @@ public class MaterialPMITests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3342")
     @TestRail(testCaseId = {"6283"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {

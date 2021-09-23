@@ -161,7 +161,8 @@ public class NewScenarioNameTests extends TestBase {
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .selectFilter("Recent");
 
         assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA), equalTo(1));
         assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB), equalTo(1));

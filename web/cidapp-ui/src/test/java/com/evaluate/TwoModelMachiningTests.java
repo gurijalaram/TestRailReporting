@@ -25,7 +25,6 @@ import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -36,21 +35,19 @@ public class TwoModelMachiningTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ExplorePage explorePage;
-    private GuidanceIssuesPage guidanceIssuesPage;
 
     private File resourceFile;
     private File twoModelFile;
     private File twoModelFile2;
     private UserCredentials currentUser;
     private Item cssItem;
+    private GuidanceIssuesPage guidanceIssuesPage;
 
     public TwoModelMachiningTests() {
         super();
     }
 
     @Test
-    @Issue("MIC-3286")
     @Category(SmokeTests.class)
     @Description("Validate Source and util tile appears when 2 MM is selected")
     @TestRail(testCaseId = {"7861", "7862", "7863", "7864", "7870"})
@@ -102,7 +99,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1921")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
     public void testOpenSourceModel() {
@@ -203,7 +199,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1885")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})
     public void testOpenPublicSourceModel() {
@@ -242,7 +237,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3139")
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
@@ -343,11 +337,10 @@ public class TwoModelMachiningTests extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
 
-        /*guidanceIssuesPage = evaluatePage.openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
+        guidanceIssuesPage = evaluatePage.openDesignGuidance()
+            .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Units of the model of the stock differ from the units of the finished model."));*/
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Units of the model of the stock differ from the units of the finished model."));
     }
 
 
@@ -361,8 +354,6 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
         String twoModelPartName = "Die Casting Lower Control Arm (As Machined2)";
-
-
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
         twoModelFile2 = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".SLDPRT");
