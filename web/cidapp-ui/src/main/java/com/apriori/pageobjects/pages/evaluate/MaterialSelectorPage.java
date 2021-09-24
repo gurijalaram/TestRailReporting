@@ -16,11 +16,11 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage> {
 
-    @FindBy(xpath = "//label[.='Type']/following-sibling::div[contains(@class,'apriori-select form-control')]")
+    @FindBy(css = "div[id='qa-material-type-select'] [data-icon='chevron-down']")
     private WebElement typeDropdown;
 
-    @FindBy(xpath = "//label[.='Selection Method']/following-sibling::div[contains(@class,'apriori-select form-control')]")
-    private WebElement methodDropdown;
+    @FindBy(css = "div[id='qa-material-selection-method-select'] [data-icon='chevron-down']")
+    private WebElement modeDropdown;
 
     @FindBy(xpath = "//label[normalize-space(text())='Search']/following-sibling::input")
     private WebElement searchInput;
@@ -31,7 +31,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     @FindBy(xpath = "//div[@class='cell-content']")
     private WebElement rowText;
 
-    @FindBy(css = ".material-selector .table-body [role='row']")
+    @FindBy(css = ".material-selector .table-body [role='cell']")
     private List<WebElement> materialRow;
 
     @FindBy(css = ".material-selector [type='Submit']")
@@ -69,22 +69,19 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectType(String materialType) {
-        pageUtils.waitForElementAndClick(typeDropdown);
-        By type = By.xpath(String.format("//button[.='%s']", materialType));
-        pageUtils.scrollWithJavaScript(driver.findElement(type), true).click();
+        pageUtils.typeAheadSelect(typeDropdown, materialType);
         return this;
     }
 
     /**
      * Selects the method
+     * <p>The material method has to be the fully qualified name eg. Digital Factory Default [Steel, Hot Worked, AISI 1010] </p>
      *
      * @param selectionMethod - the selection method
      * @return current page object
      */
     public MaterialSelectorPage selectionMethod(String selectionMethod) {
-        pageUtils.waitForElementAndClick(methodDropdown);
-        By method = By.xpath(String.format("//button[.='%s']", selectionMethod));
-        pageUtils.scrollWithJavaScript(driver.findElement(method), true).click();
+        pageUtils.typeAheadSelect(modeDropdown, selectionMethod);
         return this;
     }
 
@@ -108,6 +105,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public MaterialSelectorPage selectMaterial(String materialName) {
         By material = By.xpath(String.format("//div[@role='row']//div[contains(text(),'%s')]", materialName));
+        pageUtils.waitForElementToAppear(material);
         pageUtils.scrollWithJavaScript(driver.findElement(material), true);
 
         if (!pageUtils.jsGetParentElement(driver.findElement(By.xpath(String.format("//div[@role='row']//div[.='%s']", materialName)))).getAttribute("class").contains("selected")) {
@@ -122,7 +120,8 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return list of string
      */
     public List<String> getListOfMaterials() {
-        return materialRow.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+        pageUtils.waitForElementsToAppear(materialRow);
+        return materialRow.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
     }
 
     /**

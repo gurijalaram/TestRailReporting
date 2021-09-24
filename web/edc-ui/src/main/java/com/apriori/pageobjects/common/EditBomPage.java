@@ -28,12 +28,20 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
     @FindBy(css = ".modal-title .bill-of-materials-type")
     private WebElement pcbaLogo;
 
+    @FindBy(id = "average-cost")
+    private WebElement averageCost;
+
+    @FindBy(id = "manufacturer-part-number")
+    private WebElement partNumber;
+
     private PageUtils pageUtils;
     private WebDriver driver;
+    private DialogController dialogController;
 
     public EditBomPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.dialogController = new DialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -82,12 +90,46 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
     }
 
     /**
+     * Enter the Average cost
+     *
+     * @param testAverageCostData
+     * @return current page object
+     */
+    public EditBomPage enterAverageCost(String testAverageCostData) {
+        averageCost.clear();
+        averageCost.sendKeys(testAverageCostData);
+        return this;
+    }
+
+    /**
+     * Enter the Manufacturer part number
+     *
+     * @param testPartNumberData
+     * @return current page object
+     */
+    public EditBomPage enterManufacturerPartNumber(String testPartNumberData) {
+        partNumber.clear();
+        partNumber.sendKeys(testPartNumberData);
+        return this;
+    }
+
+    /**
      * Click on the Save button
      *
      * @return new page object
      */
     public MatchedPartPage clickSave() {
-        pageUtils.waitForElementAndClick(saveButton);
+        dialogController.save();
+        return new MatchedPartPage(driver);
+    }
+
+    /**
+     * Click the cancel button
+     *
+     * @return new page object
+     */
+    public MatchedPartPage clickCancel() {
+        dialogController.cancel();
         return new MatchedPartPage(driver);
     }
 }

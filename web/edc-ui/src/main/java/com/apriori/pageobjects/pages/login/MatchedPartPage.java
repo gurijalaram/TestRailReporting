@@ -18,10 +18,13 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
     private WebElement fileMatch;
 
     @FindBy(id = "edit-button")
-    private  WebElement editButton;
+    private WebElement editButton;
 
     @FindBy(css = "[data-icon='plus']")
     private WebElement addButton;
+
+    @FindBy(css = "p:nth-child(5) > span.title")
+    private WebElement pinCount;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -63,5 +66,21 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
      */
     public EditBomPage editSelectedBom() {
         return uploadedBomTableActions.editSelectedBom(editButton);
+    }
+
+    public String getPinCountHeaderText() {
+        return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
+    }
+
+    /**
+     * Gets the BOM Identity
+     *
+     * @return String
+     */
+    public String getBillOfMaterialsId() {
+        String currentUrl = driver.getCurrentUrl();
+        int billOfMaterialsIdPosition = 4;
+        String[] currMatArray = currentUrl.split("/");
+        return currMatArray[billOfMaterialsIdPosition];
     }
 }

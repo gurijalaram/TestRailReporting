@@ -5,7 +5,6 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import com.pageobjects.pages.explore.ExplorePage;
-import com.utils.Constants;
 import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

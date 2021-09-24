@@ -43,7 +43,7 @@ public class CostingScenarioTest extends TestUtil {
     @Description("Test costing scenarion, includes creating a new batch, a new part and waiting for the costing " +
             "process to complete. Then retrieve costing results.")
     public void costPart() {
-        Integer defaultTimeout = Constants.getPollingTimeout();
+        Integer defaultTimeout = Constants.BATCH_POLLING_TIMEOUT;
 
         // create batch
         batch = BatchResources.createNewBatch();

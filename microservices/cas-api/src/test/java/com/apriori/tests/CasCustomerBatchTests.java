@@ -5,30 +5,27 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
-import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.apibase.utils.CommonRequestUtil;
-import com.apriori.apibase.utils.TestUtil;
+import com.apriori.apibase.services.cas.Customer;
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.CustomerBatch;
 import com.apriori.entity.response.CustomerBatches;
 import com.apriori.entity.response.PostBatch;
-import com.apriori.entity.response.SingleCustomer;
 import com.apriori.tests.utils.CasTestUtil;
-import com.apriori.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
-public class CasCustomerBatchTests extends TestUtil {
+public class CasCustomerBatchTests {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private CasTestUtil casTestUtil = new CasTestUtil();
-    private String url = String.format(Constants.getApiUrl(), "customers/");
 
     @Before
     public void getToken() {
@@ -44,25 +41,24 @@ public class CasCustomerBatchTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        String batchEndpoint = url + customerIdentity + "/batches/";
+        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
-
-        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
+        String batchIdentity = batch.getResponseEntity().getIdentity();
 
         assertThat(batch.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(batch.getResponseEntity().getResponse().getCustomerIdentity(), is(equalTo(customerIdentity)));
+        assertThat(batch.getResponseEntity().getCustomerIdentity(), is(equalTo(customerIdentity)));
 
-        ResponseWrapper<CustomerBatches> customerBatches = new CommonRequestUtil().getCommonRequest(batchEndpoint, true, CustomerBatches.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<CustomerBatches> customerBatches = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, CustomerBatches.class)
+            .token(token)
+            .inlineVariables("batches")).get();
 
         assertThat(customerBatches.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customerBatches.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        ResponseWrapper deleteBatch = casTestUtil.deleteBatch(customerIdentity, batchIdentity);
+        ResponseWrapper<String> deleteBatch = CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
 
         assertThat(deleteBatch.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
@@ -76,22 +72,22 @@ public class CasCustomerBatchTests extends TestUtil {
         String email = customerName.toLowerCase();
         String description = customerName + " Description";
 
-        ResponseWrapper<SingleCustomer> customer = casTestUtil.addCustomer(customerName, cloudRef, description, email);
+        ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getResponse().getIdentity();
+        String customerIdentity = customer.getResponseEntity().getIdentity();
 
-        ResponseWrapper<PostBatch> batch = casTestUtil.addBatchFile(customerIdentity);
+        ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
-        String batchIdentity = batch.getResponseEntity().getResponse().getIdentity();
-        String batchUrl = url + customerIdentity + "/batches/" + batchIdentity;
+        String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerBatch> customerBatch = new CommonRequestUtil().getCommonRequest(batchUrl, true, CustomerBatch.class,
-                new APIAuthentication().initAuthorizationHeaderContent(token));
+        ResponseWrapper<CustomerBatch> customerBatch = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER_BATCHES, CustomerBatch.class)
+            .token(token)
+            .inlineVariables(customerIdentity, "batches", batchIdentity)).get();
 
         assertThat(customerBatch.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(customerBatch.getResponseEntity().getResponse().getIdentity(), is(equalTo(batchIdentity)));
+        assertThat(customerBatch.getResponseEntity().getIdentity(), is(equalTo(batchIdentity)));
 
-        ResponseWrapper deleteBatch = casTestUtil.deleteBatch(customerIdentity, batchIdentity);
+        ResponseWrapper<String> deleteBatch = CasTestUtil.deleteBatch(customerIdentity, batchIdentity);
 
         assertThat(deleteBatch.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }

@@ -1,7 +1,9 @@
 package com.apriori.pageobjects;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.workflows.GenericWorkflow;
 
 import org.openqa.selenium.WebDriver;
@@ -35,9 +37,9 @@ public class LoginPage {
         pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         if (loadNewPage) {
-            driver.get(Constants.getDefaultUrl());
+            driver.get(PropertiesContext.get("${env}.ci-connect.ui_url"));
         }
-        logger.info("CURRENTLY ON INSTANCE: " + Constants.getDefaultUrl());
+        logger.info("CURRENTLY ON INSTANCE: " + PropertiesContext.get("${env}.ci-connect.ui_url"));
         PageFactory.initElements(driver, this);
     }
 
@@ -59,7 +61,7 @@ public class LoginPage {
      * @return new page object
      */
     public GenericWorkflow login() {
-        UserCredentials userCredentials = new UserCredentials(Constants.USER_EMAIL, Constants.USER_PASSWORD);
+        UserCredentials userCredentials = UserUtil.getUser();
 
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new GenericWorkflow(driver);

@@ -9,8 +9,11 @@ import lombok.SneakyThrows;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
+import java.util.Optional;
 
 public class PropertiesContext {
+
+    private static final String DEFAULT_PROPERTIES_KEY = "/default";
 
     private static final String[] variableMarker = {"${", "}"};
     private static final JsonNode propertiesContext;
@@ -25,8 +28,11 @@ public class PropertiesContext {
      * @return
      */
     public static String get(final String propertyName) {
-        return System.getProperty(propertyName,
-            getFromPropertyContext(propertyName));
+        return Optional.ofNullable(
+            System.getProperty(convertToSystemPropertyTemplate(propertyName))
+        ).orElseGet(
+            () -> getFromPropertyContext(convertToPropertyPathTemplate(propertyName))
+        );
     }
 
     @SneakyThrows
@@ -39,13 +45,40 @@ public class PropertiesContext {
     }
 
     private static String getFromPropertyContext(String propertyName) {
-        String propertyPath = parsePropertyOnReferencesPresents(
-            convertToPropertyPathTemplate(propertyName)
+        String readyToWorkPropertyPath = parsePropertyOnReferencesPresents(propertyName);
+
+        String propertyValue = parsePropertyOnReferencesPresents(
+            propertiesContext.at(readyToWorkPropertyPath).asText()
         );
 
-        return parsePropertyOnReferencesPresents(
-            propertiesContext.at(propertyPath).asText()
+        if (StringUtils.isBlank(propertyValue)) {
+            propertyValue = getDefaultValueThrowExceptionIfMissed(readyToWorkPropertyPath);
+        }
+
+        return propertyValue;
+    }
+
+    private static String getDefaultValueThrowExceptionIfMissed(String propertyPath) {
+        String propertyValue = parsePropertyOnReferencesPresents(
+            propertiesContext.at(
+                updateToDefaultPropertyPath(propertyPath)
+            ).asText()
         );
+
+        if (StringUtils.isBlank(propertyValue)) {
+            throw new IllegalArgumentException(
+                String.format("Property with path: %s not present.", propertyPath)
+            );
+        }
+
+        return propertyValue;
+    }
+
+    private static String updateToDefaultPropertyPath(String readyToWorkPropertyPath) {
+        return DEFAULT_PROPERTIES_KEY +
+            readyToWorkPropertyPath.substring(
+                StringUtils.ordinalIndexOf(readyToWorkPropertyPath, "/", 2)
+            );
     }
 
     private static String parsePropertyOnReferencesPresents(String propertyPath) {
@@ -64,6 +97,10 @@ public class PropertiesContext {
 
     private static boolean isPropertyContainPropertyReference(String propertyValue) {
         return propertyValue.contains(variableMarker[0]) && propertyValue.contains(variableMarker[1]);
+    }
+
+    private static String convertToSystemPropertyTemplate(String propertyName) {
+        return propertyName.replace(".", "_");
     }
 
     private static String convertToPropertyPathTemplate(String propertyName) {

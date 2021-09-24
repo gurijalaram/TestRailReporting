@@ -4,6 +4,7 @@ import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -29,6 +30,7 @@ public class DeleteTests extends TestBase {
     private ExplorePage explorePage;
     private File resourceFile;
     private UserCredentials currentUser;
+    private Item cssItem;
 
     public DeleteTests() {
         super();
@@ -57,7 +59,7 @@ public class DeleteTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
             .submit(ExplorePage.class)
-            .highlightScenario("CASTING", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .delete()
             .submit(ExplorePage.class);
 
@@ -79,8 +81,10 @@ public class DeleteTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -88,14 +92,14 @@ public class DeleteTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser,EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Scenario Name", "Contains", scenarioName)
             .submit(ExplorePage.class)
-            .highlightScenario("CASTING", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .delete()
             .submit(ExplorePage.class);
 

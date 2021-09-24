@@ -35,7 +35,7 @@ public class InputsController {
      * @return current page object
      */
     public InputsController selectProcessGroup(WebElement processGroupDropdown, ProcessGroupEnum processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, processGroup.getProcessGroup());
+        pageUtils.typeAheadSelect(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
         return this;
     }
 

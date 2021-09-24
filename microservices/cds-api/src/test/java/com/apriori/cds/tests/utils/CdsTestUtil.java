@@ -5,6 +5,7 @@ import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.License;
@@ -24,6 +25,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.dao.GenericRequestUtil;
 import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import java.util.Arrays;
 
@@ -67,7 +69,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String salesForceId, String email) {
-        url = String.format(serviceUrl, "customers");
+        url = String.format(serviceUrl, CDSAPIEnum.GET_CUSTOMERS.getEndpointString());
 
         RequestEntity requestEntity = RequestEntity.init(url, Customer.class)
             .setBody("customer",
@@ -97,7 +99,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String customerName) {
-        url = String.format(serviceUrl, String.format("customers/%s/users", customerIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_USERS.getEndpointString(), customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
@@ -125,7 +127,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> patchUser(String customerIdentity, String userIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.PATCH_USERS.getEndpointString(), customerIdentity, userIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, User.class)
             .setBody("user",
@@ -147,7 +149,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
-        url = String.format(serviceUrl, String.format("customers/%s/sites", customerIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_SITES.getEndpointString(), customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Site.class)
             .setBody("site",
@@ -169,7 +171,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String deploymentName, String siteIdentity, String deploymentType) {
-        url = String.format(serviceUrl, String.format("customers/%s/deployments", customerIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_DEPLOYMENTS.getEndpointString(), customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, Deployment.class)
             .setBody("deployment",
@@ -195,7 +197,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licensed-applications", customerIdentity, siteIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_APPLICATION_SITES.getEndpointString(), customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicensedApplication.class)
             .setHeaders("Content-Type", "application/json")
@@ -219,7 +221,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/deployments/%s/installations", customerIdentity, deploymentIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_INSTALLATIONS.getEndpointString(), customerIdentity, deploymentIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
             .setBody("installation",
@@ -240,6 +242,7 @@ public class CdsTestUtil extends TestUtil {
                     .siteIdentity(siteIdentity)
                     .applications(Arrays.asList(Constants.getApProApplicationIdentity()))
                     .cloudReference(cloudReference)
+                    .apVersion("2020 R1")
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
@@ -254,7 +257,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> patchInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/deployments/%s/installations/%s", customerIdentity, deploymentIdentity, installationIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.PATCH_INSTALLATIONS.getEndpointString(), customerIdentity, deploymentIdentity, installationIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, InstallationItems.class)
             .setBody("installation",
@@ -275,7 +278,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<AssociationUserItems> addAssociationUser(String apCustomerIdentity, String associationIdentity, String userIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/customer-associations/%s/customer-association-users", apCustomerIdentity, associationIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_ASSOCIATIONS.getEndpointString(), apCustomerIdentity, associationIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, AssociationUserItems.class)
             .setBody("userAssociation",
@@ -298,7 +301,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_SUBLICENSE_ASSOCIATIONS.getEndpointString(), customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, SubLicenseAssociationUser.class)
             .setBody("userAssociation",
@@ -319,7 +322,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<IdentityProviderResponse> addSaml(String customerIdentity, String userIdentity, String customerName) {
-        url = String.format(serviceUrl, String.format("customers/%s/identity-providers", customerIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_SAML.getEndpointString(), customerIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setBody("identityProvider",
@@ -331,19 +334,19 @@ public class CdsTestUtil extends TestUtil {
                     .description("Create IDP using CDS automation")
                     .active(true)
                     .createdBy("#SYSTEM00000")
-                    .signInUrl(Constants.getSignInUrl())
-                    .signingCertificate(Constants.getSignInCert())
+                    .signInUrl(Constants.SIGNIN_URL)
+                    .signingCertificate(Constants.SIGNIN_CERT)
                     .signingCertificateExpiresAt("2030-07-22T22:45Z")
                     .signRequest(true)
                     .signRequestAlgorithm("RSA_SHA256")
                     .signRequestAlgorithmDigest("SHA256")
                     .protocolBinding("HTTP_POST")
                     .attributeMappings(AttributeMappings.builder()
-                        .userId(Constants.getSamlNameIdentifier())
-                        .email(Constants.getSamlAttributeEmail())
-                        .name(Constants.getSamlAttributeName())
-                        .givenName(Constants.getSamlAttributeGivenName())
-                        .familyName(Constants.getSamlAttributeFamilyName()).build())
+                        .userId(Constants.SAML_ATTRIBUTE_NAME_IDENTIFIER)
+                        .email(Constants.SAML_ATTRIBUTE_NAME_EMAIL)
+                        .name(Constants.SAML_ATTRIBUTE_NAME)
+                        .givenName(Constants.SAML_ATTRIBUTE_NAME_GIVEN_NAME)
+                        .familyName(Constants.SAML_ATTRIBUTE_NAME_FAMILY_NAME).build())
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());
@@ -358,7 +361,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<IdentityProviderResponse> patchIdp(String customerIdentity, String idpIdentity, String userIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/identity-providers/%s", customerIdentity, idpIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.PATCH_SAML.getEndpointString(), customerIdentity, idpIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, IdentityProviderResponse.class)
             .setHeaders("Content-Type", "application/json")
@@ -382,7 +385,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
-        url = String.format(serviceUrl, String.format("customers/%s/sites/%s/licenses", customerIdentity, siteIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_LICENSE.getEndpointString(), customerIdentity, siteIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, LicenseResponse.class)
             .setBody(LicenseRequest.builder()
@@ -392,8 +395,8 @@ public class CdsTestUtil extends TestUtil {
                         .apVersion("2020 R1")
                         .createdBy("#SYSTEM00000")
                         .active("true")
-                        .license(String.format(Constants.getLicense(), customerName, siteId, licenseId, subLicenseId))
-                        .licenseTemplate(String.format(Constants.getLicenseTemplate(), customerName))
+                        .license(String.format(Constants.CDS_LICENSE, customerName, siteId, licenseId, subLicenseId))
+                        .licenseTemplate(String.format(Constants.CDS_LICENSE_TEMPLATE, customerName))
                         .build())
                 .build());
 
@@ -406,18 +409,18 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
-        url = String.format(serviceUrl, String.format("customers/%s/users/%s/access-controls", customerIdentity, userIdentity));
+        url = String.format(serviceUrl, String.format(CDSAPIEnum.POST_ACCESS_CONTROL.getEndpointString(), customerIdentity, userIdentity));
 
         RequestEntity requestEntity = RequestEntity.init(url, AccessControlResponse.class)
             .setBody("accessControl",
                 AccessControlRequest.builder()
                     .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())
-                    .deploymentIdentity(Constants.getApProductionDeploymentIdentity())
-                    .installationIdentity(Constants.getApCoreInstallationIdentity())
-                    .applicationIdentity(Constants.getApCloudHomeApplicationIdentity())
+                    .deploymentIdentity(PropertiesContext.get("${env}.cds.apriori_production_deployment_identity"))
+                    .installationIdentity(PropertiesContext.get("${env}.cds.apriori_core_services_installation_identity"))
+                    .applicationIdentity(PropertiesContext.get("${env}.cds.apriori_cloud_home_identity"))
                     .createdBy("#SYSTEM00000")
                     .roleName("USER")
-                    .roleIdentity(Constants.getCdsIdentityRole())
+                    .roleIdentity(PropertiesContext.get("${env}.cds.identity_role"))
                     .build());
 
         return GenericRequestUtil.post(requestEntity, new RequestAreaApi());

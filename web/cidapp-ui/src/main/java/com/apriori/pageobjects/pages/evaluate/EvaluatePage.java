@@ -29,6 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author cfrith
@@ -89,7 +90,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-digital-factory-select-field']//div[@class='text-overflow']")
     private WebElement selectedVPE;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
+    @FindBy(css = "[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
@@ -183,6 +184,25 @@ public class EvaluatePage extends EvaluateToolbar {
         By currentScenario = By.xpath(String.format("//button[.='%s']", scenarioName));
         pageUtils.waitForElementAndClick(currentScenario);
         return this;
+    }
+
+    /**
+     * Gets the scenario name
+     *
+     * @return current page object
+     */
+    public String getCurrentScenarioName() {
+        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
+    }
+
+    /**
+     * Checks scenario name appears
+     *
+     * @return true/false
+     */
+    public boolean isCurrentScenarioNameDisplayed(String scenarioName) {
+        By byCurrentScenario = By.xpath(String.format("//div[@id='qa-scenario-select-field']//div[.='%s']//div[@id]", scenarioName));
+        return pageUtils.waitForElementToAppear(byCurrentScenario).isDisplayed();
     }
 
     /**
@@ -330,6 +350,14 @@ public class EvaluatePage extends EvaluateToolbar {
     public SecondaryProcessesPage openSecondaryProcesses() {
         inputsController.openSecondaryProcesses(secondaryProcessesPencil);
         return new SecondaryProcessesPage(driver);
+    }
+
+    /**
+     * Checks if secondary process pencil is enabled
+     * @return boolean
+     */
+    public boolean isSecondaryProcessButtonEnabled() {
+        return pageUtils.waitForElementToAppear(secondaryProcessesPencil).isEnabled();
     }
 
     /**
@@ -506,15 +534,6 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets the scenario name
-     *
-     * @return current page object
-     */
-    public String getCurrentScenarioName() {
-        return pageUtils.waitForElementToAppear(scenarioName).getAttribute("textContent");
-    }
-
-    /**
      * Gets the part name
      *
      * @return part name as String
@@ -622,7 +641,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return string
      */
     public String getSourcePartDetails() {
-        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'] .input-group");
+        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'].input-group");
         pageUtils.waitForElementToAppear(sourcePart);
         return driver.findElement(sourcePart).getAttribute("textContent");
     }
@@ -658,6 +677,14 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public <T> T backFromError(Class<T> className) {
         return modalDialogController.backFromError(className);
+    }
+
+    /**
+     * Gets secondary processes
+     * @return list of string
+     */
+    public List<String> getListOfSecondaryProcesses() {
+        return Stream.of(secondaryProcessBox.getAttribute("textContent").split("\\[")).collect(Collectors.toList());
     }
 
     /**

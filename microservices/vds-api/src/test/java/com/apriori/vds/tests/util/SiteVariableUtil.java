@@ -8,10 +8,11 @@ import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRe
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public abstract class SiteVariableUtil extends VDSTestUtil {
-    protected static final List<String> siteVariableIdsToDelete = new ArrayList<>();
+public abstract class SiteVariableUtil extends ProcessGroupUtil {
 
     protected static final String updatedName = new GenerateStringUtil().generateSiteName();
     protected static final String updatedValue = "UpdatedValue";

@@ -7,7 +7,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
-import com.apriori.apibase.utils.AfterTestUtil;
 import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -24,7 +23,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -53,7 +51,6 @@ public class DecimalPlaceTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @Issue("MIC-2851")
     @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295"})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
@@ -92,7 +89,7 @@ public class DecimalPlaceTests extends TestBase {
 
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
         assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.2%"));
-        assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4 sec"), is(true));
+        assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4s"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$26.7"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$31.6"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$31.6"), is(true));

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -29,13 +30,16 @@ import java.io.File;
 
 public class NewScenarioNameTests extends TestBase {
 
+    UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private Item cssItem;
+    private Item cssScenarioItemA;
+    private Item cssScenarioItemB;
+    private Item cssScenarioItemC;
 
     public NewScenarioNameTests() {
         super();
@@ -61,7 +65,7 @@ public class NewScenarioNameTests extends TestBase {
             .enterScenarioName(testScenarioName2)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(testScenarioName2));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testScenarioName2), is(true));
     }
 
     @Category(IgnoreTests.class)
@@ -79,8 +83,10 @@ public class NewScenarioNameTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser);
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
@@ -90,7 +96,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -99,7 +105,7 @@ public class NewScenarioNameTests extends TestBase {
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(testNewScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName), is(true));
     }
 
     @Test
@@ -116,10 +122,11 @@ public class NewScenarioNameTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
 
-
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioA, resourceFile, currentUser)
+        cssScenarioItemA = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
+
+        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItemA)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
@@ -127,8 +134,10 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioB, resourceFile, currentUser)
+            .publish(cssScenarioItemA, currentUser, EvaluatePage.class)
+            .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
+
+        cssScenarioItemC = new EvaluatePage(driver).navigateToScenario(cssScenarioItemB)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -136,21 +145,24 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioC, resourceFile, currentUser)
+            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
+
+        explorePage = new EvaluatePage(driver).navigateToScenario(cssScenarioItemC)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssScenarioItemC, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .selectFilter("Recent");
 
         assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA), equalTo(1));
         assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB), equalTo(1));

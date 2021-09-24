@@ -15,7 +15,6 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -37,7 +36,6 @@ public class ListProcessGroupTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1877")
     @TestRail(testCaseId = {"6197"})
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
@@ -47,12 +45,16 @@ public class ListProcessGroupTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
 
-
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
-        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(Arrays.stream(ProcessGroupEnum.getNames()).filter(x -> !x.equals("Without PG") && !x.equals("Assembly")).toArray(String[]::new)));
+        assertThat(evaluatePage.getListOfProcessGroups(), hasItems(Arrays.stream(ProcessGroupEnum.getNames()).filter(x ->
+                !x.equals(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.ROLL_UP.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.COMPOSITES.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.WITHOUT_PG.getProcessGroup()))
+            .toArray(String[]::new)));
     }
 
     @Ignore("Assemblies cannot be upload")

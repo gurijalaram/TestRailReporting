@@ -13,6 +13,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang.time.StopWatch;
@@ -55,10 +56,12 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     private static Map<String, String> parts = new HashMap<>();
     private static CountDownLatch countDownLatch;
     private static Materials materials = new Materials();
+    private static int numberOfParts;
 
     @BeforeClass
     public static void testSetup() {
         getPartsList();
+        numberOfParts = Integer.valueOf(PropertiesContext.get("${env}.bcs.number_of_parts"));
         batch = BatchResources.createNewBatch();
     }
 
@@ -114,13 +117,13 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"7696"})
+    @TestRail(testCaseId = {"9111"})
     @Description("Test costing scenarion, includes creating a new batch, with multiple parts and waiting for the " +
             "costing process to complete for all parts. Then retrieve costing results.")
     public void costMultipleParts() throws InterruptedException {
         batchIdentity = BcsUtils.getIdentity(batch, Batch.class);
         ThreadPoolExecutor threadPoolExecutor = (ThreadPoolExecutor) Executors.newFixedThreadPool(Constants.MULTIPART_THREAD_COUNT);
-        countDownLatch = new CountDownLatch(Constants.MAX_NUMBER_OF_PARTS);
+        countDownLatch = new CountDownLatch(numberOfParts);
 
         StopWatch stopWatch = new StopWatch();
         stopWatch.start();
@@ -128,7 +131,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         // Load all parts, set in the constant MAX_NUMBER_OF_PARTS. Parts
         // will begin costing once added to the batch
         try {
-            for (int i = 1; i <= Constants.MAX_NUMBER_OF_PARTS; i++) {
+            for (int i = 1; i <= numberOfParts; i++) {
                 LoadParts loadParts = new LoadParts();
                 threadPoolExecutor.execute(loadParts);
 
@@ -141,7 +144,6 @@ public class MultiPartCostingScenarioTest extends TestUtil {
             threadPoolExecutor.shutdown();
         }
 
-        System.out.println("Parts added: " + parts.size());
         // Start Costing the batch, which means no more parts can be added
         try {
             BatchResources.startCosting(batchIdentity);
@@ -173,7 +175,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
             System.out.println("Errored: " + errored);
             System.out.println("Rejected: " + rejected);
             System.out.println("No. of Parts: " + parts.size());
-            System.out.println("Missing Parts: " + (Constants.MAX_NUMBER_OF_PARTS - parts.size()));
+            System.out.println("Missing Parts: " + (numberOfParts - parts.size()));
 
             terminal = completed + errored + rejected;
             if (terminal >= parts.size()) {
@@ -208,7 +210,6 @@ public class MultiPartCostingScenarioTest extends TestUtil {
                     entry.getKey());
             Part currentPart = responseWrapper.getResponseEntity();
             parts.put(currentPart.getIdentity(), currentPart.getState());
-            System.out.println(currentPart.getIdentity() + " :: " + currentPart.getState());
         }
     }
 
@@ -221,7 +222,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         Object batchDetails;
         Integer pollingInterval = 0;
 
-        while (pollingInterval <= Constants.getPollingTimeout()) {
+        while (pollingInterval <= Constants.BATCH_POLLING_TIMEOUT) {
             batchDetails = BatchResources.getBatchRepresentation(batchIdentity).getResponseEntity();
             try {
                 CostingElementStatus pollingResult = pollState(batchDetails, Batch.class);
@@ -282,6 +283,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
                 .filter(part -> part.split("/").length > 2)
                 .filter(part -> !part.toLowerCase().contains("without pg"))
                 .filter(part -> !part.toLowerCase().contains("assembly"))
+                .filter(part -> !part.contains("2-Model Machining"))
                 .collect(Collectors.toList());
     }
 }

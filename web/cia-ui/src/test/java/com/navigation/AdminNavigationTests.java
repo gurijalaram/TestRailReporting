@@ -133,7 +133,13 @@ public class AdminNavigationTests extends TestBase {
         String urlToCheck = homePage.getUrlToCheck();
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(urlToCheck + Constants.REPORTS_URL_SUFFIX + Constants.REPORTS_LAST_SUFFIX));
+        assertThat(homePage.getCurrentUrl(), equalTo(
+                String.format(
+                        "%s%s%s",
+                        urlToCheck,
+                        Constants.REPORTS_URL_SUFFIX,
+                        Constants.REPORTS_LAST_SUFFIX))
+        );
         assertThat(homePage.getTabCount(), is(equalTo(2)));
         assertThat(homePage.isReportsLogoutDisplayed(), is(true));
         assertThat(homePage.isReportsLogoutEnabled(), is(true));

@@ -1,5 +1,6 @@
 package com.apriori;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -24,11 +25,11 @@ import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.CidAPITest;
@@ -83,13 +84,16 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "Casting.prt",
                 processGroup
         );
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
 
-        getAndValidateImage(fileUploadOutputs.getScenarioIterationKey());
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
+
+        getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -97,11 +101,11 @@ public class WorkorderAPITests {
                 processGroup
         );
 
-        getAndValidateImage(costOutputs.getScenarioIterationKey());
+        getAndValidateImageInfo(costOutputs.getScenarioIterationKey());
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
-        getAndValidateImage(publishResultOutputs.getScenarioIterationKey());
+        getAndValidateImageInfo(publishResultOutputs.getScenarioIterationKey());
     }
 
     @Test
@@ -113,6 +117,7 @@ public class WorkorderAPITests {
         FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
         ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
         assemblyComponents.add(
@@ -162,11 +167,13 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup
         );
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -178,14 +185,11 @@ public class WorkorderAPITests {
         GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
-
-        assertThat(getAdminInfoResponse.getLastModifiedBy(), is(equalTo("aPrioriCIGenerateUser")));
         assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
         assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
         assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
         assertThat(getAdminInfoResponse.getLocked(), is(equalTo("false")));
         assertThat(getAdminInfoResponse.getActive(), is(equalTo("true")));
-        assertThat(getAdminInfoResponse.getLastModifiedByFullName(), is(equalTo("aPriori CIGenerateUser")));
     }
 
     @Test
@@ -202,6 +206,8 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup
@@ -233,6 +239,7 @@ public class WorkorderAPITests {
         FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
         ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
         assemblyComponents.add(
@@ -275,7 +282,7 @@ public class WorkorderAPITests {
     @Category(CidAPITest.class)
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
-    public void testGetImageInfo() {
+    public void testGetImageInfoSuppress500Version() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
@@ -285,11 +292,17 @@ public class WorkorderAPITests {
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 processGroup
         );
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.uploadPart(fileResponse, testScenarioName);
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+                fileResponse,
+                testScenarioName
+        );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -300,11 +313,60 @@ public class WorkorderAPITests {
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
-        assertThat(getImageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
-        assertThat(getImageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
-        assertThat(getImageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
+        SoftAssertions softAssert = new SoftAssertions();
+        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable().equals("false"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen().equals("false"));
+
+        softAssert.assertAll();
+    }
+
+    @Test
+    @Issue("AP-69600")
+    @Category(CidAPITest.class)
+    @TestRail(testCaseId = {"8693"})
+    @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
+    public void testGetImageInfoExpose500ErrorVersion() {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                        "CreatePartData.json"
+                ).getPath(), NewPartRequest.class
+        );
+
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                "bracket_basic.prt",
+                processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderExposeError(
+                fileResponse,
+                testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+                productionInfoInputs,
+                fileUploadOutputs,
+                processGroup
+        );
+
+        GetImageInfoResponse getImageInfoResponse = fileUploadResources
+                .getImageInfo(costOutputs.getScenarioIterationKey());
+
+        SoftAssertions softAssert = new SoftAssertions();
+        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable().equals("false"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable().equals("true"));
+        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen().equals("false"));
+
+        softAssert.assertAll();
     }
 
     private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {
@@ -317,7 +379,7 @@ public class WorkorderAPITests {
                     component.getProcessGroup()
             );
 
-            fileUploadResources.uploadPart(
+            fileUploadResources.createFileUploadWorkorderSuppressError(
                     fileResponse,
                     component.getScenarioName()
             );
@@ -330,7 +392,7 @@ public class WorkorderAPITests {
                 assemblyToUse.getProcessGroup()
         );
 
-        fileUploadResources.uploadPart(
+        fileUploadResources.createFileUploadWorkorderSuppressError(
                 assemblyFileResponse,
                 assemblyToUse.getScenarioName()
         );
@@ -344,17 +406,15 @@ public class WorkorderAPITests {
         );
     }
 
-    private void getAndValidateImage(ScenarioIterationKey scenarioIterationKey) {
+    private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
         FileUploadResources fileUploadResources = new FileUploadResources();
 
-        String webImageResponse = fileUploadResources
-                .getImageByScenarioIterationKey(
-                scenarioIterationKey.getScenarioKey(), "web").toString();
-        String desktopImageResponse = fileUploadResources
-                .getImageByScenarioIterationKey(
-                scenarioIterationKey.getScenarioKey(), "desktop").toString();
+        GetImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
 
-        fileUploadResources.imageValidation(webImageResponse);
-        fileUploadResources.imageValidation(desktopImageResponse);
+        assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
+        assertThat(imageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
+        assertThat(imageInfoResponse.getPartNestingDiagramAvailable(), is(equalTo("false")));
+        assertThat(imageInfoResponse.getWebImageAvailable(), is(equalTo("true")));
+        assertThat(imageInfoResponse.getWebImageRequiresRegen(), is(equalTo("false")));
     }
 }

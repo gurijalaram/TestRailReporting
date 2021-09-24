@@ -6,7 +6,9 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -20,9 +22,10 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -33,20 +36,19 @@ public class TwoModelMachiningTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private ExplorePage explorePage;
-    private GuidanceIssuesPage guidanceIssuesPage;
 
     private File resourceFile;
     private File twoModelFile;
     private File twoModelFile2;
     private UserCredentials currentUser;
+    private Item cssItem;
+    private GuidanceIssuesPage guidanceIssuesPage;
 
     public TwoModelMachiningTests() {
         super();
     }
 
     @Test
-    @Issue("MIC-3286")
     @Category(SmokeTests.class)
     @Description("Validate Source and util tile appears when 2 MM is selected")
     @TestRail(testCaseId = {"7861", "7862", "7863", "7864", "7870"})
@@ -80,7 +82,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName.toUpperCase()));
+        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName));
         assertThat(evaluatePage.getSourcePartDetails(), containsString(testScenarioName));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
@@ -98,7 +100,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1921")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
     public void testOpenSourceModel() {
@@ -129,12 +130,14 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
-            .costScenario()
+            .costScenario(5)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test
@@ -165,37 +168,38 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.98, 1)));
+        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(96.34, 5)));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(18.88, 5));
-        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(2.33, 1)));
+        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(2.33, 5)));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModel1PartName, twoModel1ScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(82.70, 1)));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(25.81, 1));
-        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1928, 1)));
+        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(82.70, 5)));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(20.91, 5));
+        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1.93, 5)));
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModel1PartName, twoModel2ScenarioName, twoModelFile2, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .clickSearch(twoModel1PartName)
             .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(83.78, 1)));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(30.67, 1));
-        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1615, 1)));
+        assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(83.78, 5)));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(30.67, 5));
+        assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1.62, 5)));
     }
 
     @Test
-    @Issue("BA-1885")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})
     public void testOpenPublicSourceModel() {
@@ -211,12 +215,14 @@ public class TwoModelMachiningTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        cssItem = loginPage.login(currentUser)
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
             .selectProcessGroup(CASTING_DIE)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
+            .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -225,14 +231,13 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(sourceScenarioName));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test
-    @Issue("MIC-3139")
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
@@ -282,8 +287,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName.toUpperCase()));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourceScenarioName));
+        assertThat(evaluatePage.getSourcePartDetails(), is(equalTo(sourcePartName + "/" + sourceScenarioName)));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
 
         evaluatePage.selectSourcePart()
@@ -293,8 +297,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2PartName.toUpperCase()));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2ScenarioName));
+        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2PartName + "/" + source2ScenarioName));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(11.66, 1));
     }
 
@@ -325,17 +328,18 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(TWO_MODEL_MACHINING)
             .selectSourcePart()
+            .selectFilter("Recent")
+            .clickSearch(wrongSourcePartName)
             .highlightScenario(wrongSourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
 
-        /*guidanceIssuesPage = evaluatePage.openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeAndGCD("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
+        guidanceIssuesPage = evaluatePage.openDesignGuidance()
+            .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
 
-        assertThat(guidancePage.getGuidanceMessage(), containsString("Units of the model of the stock differ from the units of the finished model."));*/
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Units of the model of the stock differ from the units of the finished model."));
     }
 
 
@@ -349,8 +353,6 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String sourcePartName = "Die Casting Lower Control Arm (As Cast)";
         String twoModelPartName = "Die Casting Lower Control Arm (As Machined2)";
-
-
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
         twoModelFile2 = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".SLDPRT");

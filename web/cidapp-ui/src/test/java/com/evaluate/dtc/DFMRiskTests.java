@@ -426,13 +426,9 @@ public class DFMRiskTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
             .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(437, 10));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(639, 10));
 
         // TODO uncomment this section when update cad file is implemented
         /*evaluatePage.updateCadFile(cadResourceFile);

@@ -5,7 +5,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import com.help.HelpTests;
 import com.login.LoginTests;
-import com.logout.LogoutTests;
+import com.login.LogoutTests;
 import com.myuser.MyProfileTests;
 import com.myuser.TermsOfUseTests;
 import com.upload.pcba.UploadTests;
@@ -16,9 +16,9 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     LoginTests.class,
+    LogoutTests.class,
     MyProfileTests.class,
     TermsOfUseTests.class,
-    LogoutTests.class,
     HelpTests.class,
     UploadTests.class
 })

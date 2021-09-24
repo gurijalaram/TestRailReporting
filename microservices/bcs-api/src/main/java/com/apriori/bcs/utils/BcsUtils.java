@@ -8,9 +8,7 @@ import com.apriori.bcs.entity.response.Batch;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class BcsUtils extends ApiUtils {
 
@@ -141,14 +139,14 @@ public class BcsUtils extends ApiUtils {
      *
      * @param batch
      * @return
-     * @throws InterruptedException Thread interrupted
+     * @throws InterruptedException  Thread interrupted
      */
     public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
         Object batchDetails;
         Integer pollingInterval = 0;
         State state;
 
-        while (pollingInterval <= Constants.getPollingTimeout()) {
+        while (pollingInterval <= Constants.BATCH_POLLING_TIMEOUT) {
             batchDetails = BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
             try {
                 state = pollState(batchDetails, Batch.class);

@@ -221,6 +221,16 @@ public class PageUtils {
         ((JavascriptExecutor) driver).executeScript("arguments[0].value = ''", targetElement);
     }
 
+    /**
+     * Clears a text input area
+     *
+     * @param element - the webelement
+     */
+    public void clear(WebElement element) {
+        waitForElementAndClick(element);
+        element.sendKeys(Keys.CONTROL + "a" + Keys.BACK_SPACE);
+    }
+
     public Dimension getWindowDimension() {
         return driver.manage().window().getSize();
     }
@@ -357,18 +367,19 @@ public class PageUtils {
 
     /**
      * Checks the elements is displayed by size
+     *
      * @param element - the element
      * @return int
      */
     public int waitForElementsToAppear(By element) {
-        int count = 0;
-        int retries = 60;
+        long startTime = System.currentTimeMillis() / 1000;
+
         int secondsToWait = 1;
         try {
             do {
                 TimeUnit.SECONDS.sleep(secondsToWait);
                 driver.findElements(element);
-            } while (driver.findElements(element).size() < 1 && count++ <= retries);
+            } while (driver.findElements(element).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
 
             return driver.findElements(element).size();
 
@@ -376,6 +387,28 @@ public class PageUtils {
             logger.debug("Trying to recover from a stale element reference exception");
         }
         throw new AssertionError("Element is not displayed");
+    }
+
+    /**
+     * Checks the elements is displayed by size
+     * @param element - the element
+     * @return int
+     */
+    public int waitForElementsToNotAppear(By element) {
+        long startTime = System.currentTimeMillis() / 1000;
+        int secondsToWait = 1;
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(secondsToWait);
+                driver.findElements(element);
+            } while (driver.findElements(element).size() > 0 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+
+            return driver.findElements(element).size();
+
+        } catch (StaleElementReferenceException | InterruptedException e) {
+            logger.debug("Trying to recover from a stale element reference exception");
+        }
+        throw new AssertionError("Element is displayed");
     }
 
     public WebElement waitForElementAppear(WebElement element) {
@@ -827,9 +860,27 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
-        waitForElementAndClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
-        waitForElementAndClick(byValue);
+        waitForElementToAppear(byValue);
+        actionClick(driver.findElement(byValue));
+    }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param locatorId        - the locator id
+     * @param locatorValue     - the locator value
+     * @return current page object
+     */
+    public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
+        waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
+        By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
+        waitForElementToAppear(byValue);
+        actionClick(driver.findElement(byValue));
     }
 
     /**

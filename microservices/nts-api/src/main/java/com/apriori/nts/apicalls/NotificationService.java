@@ -1,6 +1,5 @@
 package com.apriori.nts.apicalls;
 
-import com.apriori.nts.entity.response.Email;
 import com.apriori.nts.entity.response.GetEmailResponse;
 import com.apriori.nts.entity.response.Notifications;
 import com.apriori.nts.entity.response.SendEmailResponse;
@@ -198,14 +197,14 @@ public class NotificationService {
      * @param cloudContext Cloud context key
      * @return Service response
      */
-    public static Email getEmail(String baseUrl, String identity, String cloudContext) {
+    public static GetEmailResponse getEmail(String baseUrl, String identity, String cloudContext) {
         String url = String.format(baseUrl, "/" + identity);
 
         Map<String, String> headers = new HashMap<>();
         headers.put("ap-cloud-context", cloudContext);
 
-        return (Email) GenericRequestUtil.get(
-            RequestEntity.init(url, Email.class).setHeaders(headers),
+        return (GetEmailResponse) GenericRequestUtil.get(
+            RequestEntity.init(url, GetEmailResponse.class).setHeaders(headers),
             new RequestAreaApi()
         ).getResponseEntity();
     }

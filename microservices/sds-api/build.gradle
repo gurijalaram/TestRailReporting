@@ -11,6 +11,7 @@ repositories {
     mavenCentral()
 }
 
+//This block allow to copy resources from apibase into current module, so we have an access to them by .getResource();
 sourceSets {
     main {
         resources {
@@ -27,5 +28,5 @@ dependencies {
     implementation project(':microservices:css-api')
     implementation project(':microservices:cidapp-api')
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

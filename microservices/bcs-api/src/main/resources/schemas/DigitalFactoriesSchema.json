@@ -8,45 +8,10 @@
     "response": {
       "type": "object",
       "required": [
-        "isFirstPage",
-        "isLastPage",
-        "pageNumber",
-        "pageSize",
-        "pageItemCount",
-        "totalItemCount",
-        "totalPageCount",
-        "hasNextPage",
-        "hasPreviousPage",
         "items"
       ],
+      "$ref": "common/PaginationSchema.json",
       "properties": {
-        "isFirstPage": {
-          "type": "boolean"
-        },
-        "isLastPage": {
-          "type": "boolean"
-        },
-        "pageNumber": {
-          "type": "integer"
-        },
-        "pageSize": {
-          "type": "integer"
-        },
-        "pageItemCount": {
-          "type": "integer"
-        },
-        "totalItemCount": {
-          "type": "integer"
-        },
-        "totalPageCount": {
-          "type": "integer"
-        },
-        "hasNextPage": {
-          "type": "boolean"
-        },
-        "hasPreviousPage": {
-          "type": "boolean"
-        },
         "items": {
           "type": "array",
           "items": {

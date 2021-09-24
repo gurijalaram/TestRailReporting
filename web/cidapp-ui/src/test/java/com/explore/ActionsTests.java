@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -36,23 +37,24 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class ActionsTests extends TestBase {
+
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private InfoPage infoPage;
     private PreviewPage previewPage;
     private AssignPage assignPage;
-
     private File resourceFile;
-    UserCredentials currentUser;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private Item cssItem;
 
     public ActionsTests() {
         super();
     }
 
     @Test
-    @Issue("BA-1920")
+    @Issue("BA-2043")
     @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -64,23 +66,30 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
-            .highlightScenario("M3CapScrew", scenarioName)
+            .selectFilter("Recent")
+            .clickSearch(componentName)
+            .highlightScenario(componentName, scenarioName)
+            .clickSearch(componentName)
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("Qa Description")
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
+            .selectFilter("Recent")
+            .clickSearch(componentName)
             .highlightScenario("M3CapScrew", scenarioName)
             .info();
 
@@ -89,7 +98,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7197", "7198"})
     @Description("Validate status and cost maturity columns can be added")
@@ -102,15 +110,17 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -137,7 +147,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7902", "5436"})
     @Description("User can lock and unlock a scenario")
@@ -150,8 +159,10 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        previewPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        previewPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1020")
@@ -159,7 +170,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .clickSearch(componentName)
@@ -180,7 +191,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7259", "7265", "7269", "7272"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
@@ -214,7 +224,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7258", "7263", "7267", "7270"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
@@ -249,7 +258,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
@@ -262,15 +270,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -285,7 +295,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7174", "7173"})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
@@ -297,15 +306,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        assignPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        assignPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -319,7 +330,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7178", "7262", "7910"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -332,8 +342,10 @@ public class ActionsTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
@@ -343,7 +355,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("New")
             .selectCostMaturity("Low")
             .selectAssignee("Ciene Frith")
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -355,7 +367,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7187"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
@@ -367,8 +378,10 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -376,8 +389,10 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario("BasicScenario_Forging", scenarioName)
             .info()
             .selectStatus("New")
@@ -385,6 +400,8 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("BasicScenario_Forging", scenarioName)
             .info()
             .editNotes("Testing QA notes validating the ability to edit notes")
@@ -395,7 +412,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7188"})
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
@@ -407,8 +423,10 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -416,7 +434,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())
@@ -439,7 +457,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7186", "7191"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -451,15 +468,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -483,7 +502,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7911"})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
@@ -494,17 +512,20 @@ public class ActionsTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(testUser1)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, testUser1)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -528,7 +549,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7199", "7912"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
@@ -543,8 +563,10 @@ public class ActionsTests extends TestBase {
 
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("Default")
@@ -554,7 +576,7 @@ public class ActionsTests extends TestBase {
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
             .selectAssignee("Moya Parker")
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -574,7 +596,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7266", "7913"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {
@@ -586,18 +607,20 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
-            .enterKeySearch(componentName.toUpperCase())
+            .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .info()
             .selectStatus("New")
@@ -631,15 +654,17 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .enterKeySearch(componentName.toUpperCase())

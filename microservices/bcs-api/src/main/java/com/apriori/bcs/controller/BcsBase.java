@@ -1,12 +1,13 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.bcs.utils.Constants;
+import com.apriori.utils.properties.PropertiesContext;
 
 public class BcsBase {
     private static String baseUrl;
 
     static {
-        baseUrl = Constants.getCisServiceHost() + "/customers";
+        baseUrl = PropertiesContext.get("${env}.bcs.api_url") + "customers";
     }
 
     /**
@@ -15,8 +16,8 @@ public class BcsBase {
      * @return url
      */
     public static String getCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("/").append(Constants.getCisCustomerIdentity())
-                .append("/%s?key=").append(Constants.getSecretKey());
+        StringBuilder url = new StringBuilder(baseUrl).append("/").append(PropertiesContext.get("${env}.customer_identity"))
+                .append("/%s?key=").append(Constants.SECRET_KEY);
         return url.toString();
     }
 
@@ -26,7 +27,7 @@ public class BcsBase {
      * @return url
      */
     public static String getBaseCisUrl() {
-        StringBuilder url = new StringBuilder(baseUrl).append("?key=").append(Constants.getSecretKey());
+        StringBuilder url = new StringBuilder(baseUrl).append("?key=").append(Constants.SECRET_KEY);
         return url.toString();
     }
 
@@ -37,8 +38,8 @@ public class BcsBase {
      */
     public static String getReportTypesUrl() {
         StringBuilder url;
-        url = new StringBuilder("https://" + Constants.getCisServiceHost().concat("/report-types")).append("%s?key=")
-                .append(Constants.getSecretKey());
+        url = new StringBuilder("https://" + PropertiesContext.get("${env}.bcs.api_url").concat("report-types")).append("%s?key=")
+                .append(Constants.SECRET_KEY);
         return url.toString();
     }
 
@@ -60,7 +61,7 @@ public class BcsBase {
      * @return url
      */
     public static String getBatchUrlWithIdentity() {
-        String url = String.format(getBatchUrl(), "/" + Constants.getCisBatchIdentity() + "%s");
+        String url = String.format(getBatchUrl(), "/" + PropertiesContext.get("${env}.bcs.batch_identity") + "%s");
         return url;
     }
 

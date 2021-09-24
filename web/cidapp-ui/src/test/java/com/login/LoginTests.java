@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -19,6 +20,8 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -38,6 +41,7 @@ public class LoginTests extends TestBase {
 
     private File resourceFile;
     private UserCredentials currentUser;
+    private Item cssItem;
 
     public LoginTests() {
         super();
@@ -96,9 +100,8 @@ public class LoginTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
 
-        assertThat(loginPage.getMarketingText(), containsString("COST INSIGHT GENERATE:\n" +
-            "SOLUTION FOR A NEW NORMAL\n" +
-            "Proactively notify your team of manufacturability issues and enable them to optimize their designs faster."));
+        assertThat(loginPage.getMarketingText(), containsString("aPriori Cost Insight\n" +
+            "Explore the Possible"));
         assertThat(loginPage.isLogoDisplayed(), is(true));
     }
 
@@ -120,12 +123,12 @@ public class LoginTests extends TestBase {
     public void welcomeMessage() {
 
         loginPage = new CidAppLoginPage(driver);
-        assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Access to these web services is available only to aPriori licensed customers, partners and employees"));
+        assertThat(loginPage.getWelcomeText(), containsString("Welcome! This login page provides access to aPriori's web applications, support portal and customer community. Use of aPriori applications is governed by the terms and conditions of your existing SaaS license Agreement with aPriori."));
 
         privacyPolicyPage = loginPage.privacyPolicy();
 
         assertThat(privacyPolicyPage.getChildWindowURL(), containsString("https://www.apriori.com/privacy-policy"));
-        assertThat(privacyPolicyPage.getPageHeading(), containsString("APRIORI TECHNOLOGIES, INC. PRIVACY POLICY"));
+        assertThat(privacyPolicyPage.getPageHeading(), containsString("aPriori Technologies, Inc. Privacy Policy"));
     }
 
     @Test
@@ -140,8 +143,10 @@ public class LoginTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cssItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -149,11 +154,13 @@ public class LoginTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(EvaluatePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .logout()
             .login(UserUtil.getUser())
-            .selectFilter("Recent")
-            .openScenario("225_gasket-1-solid1", scenarioName);
+            .selectFilter("Public")
+            .clickSearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }

@@ -22,6 +22,7 @@ import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -98,13 +99,6 @@ public class ScenariosTest extends SDSTestUtil {
 
         ResponseWrapper<ScenarioManifest> response = HTTP2Request.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-    }
-
-    @Test
-    @TestRail(testCaseId = "8427")
-    @Description("Add a scenario to a component.")
-    public void testPostScenario() {
-        this.postTestingScenario();
     }
 
     @Test
@@ -323,27 +317,6 @@ public class ScenariosTest extends SDSTestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
-    }
-
-    private Scenario postTestingScenario() {
-        PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
-            .scenarioName(new GenerateStringUtil().generateScenarioName())
-            .override(false)
-            .updatedBy(getTestingComponent().getCreatedBy())
-            .build();
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_SCENARIO_BY_COMPONENT_ID, Scenario.class)
-                .inlineVariables(getComponentId())
-                .body("scenario", scenarioRequestBody);
-
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
-
-        final Scenario scenario = responseWrapper.getResponseEntity();
-        assertEquals(String.format("The scenario with a name %s, was not uploaded.", scenarioRequestBody.getScenarioName()),
-            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
-
-        return scenario;
     }
 
     private Scenario publishAndGetReadyToWorkScenario() {

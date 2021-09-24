@@ -1,6 +1,6 @@
 package com.apriori.css.entity.response;
 
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -32,22 +32,22 @@ public class Item {
     private String componentType;
     private String componentFilename;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime componentCreatedAt;
     private String componentCreatedBy;
     private String componentCreatedByName;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime componentUpdatedAt;
     private String componentUpdatedBy;
     private String componentUpdatedByName;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
     private String createdByName;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
     private String deletedBy;
     private String deletedByName;
@@ -63,24 +63,24 @@ public class Item {
     private String scenarioOwnedByName;
     private Boolean scenarioLocked;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioLockedAt;
     private Boolean scenarioLockedBy;
     private Boolean scenarioLockedByName;
     private Boolean scenarioPublished;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioPublishedAt;
     private String scenarioPublishedBy;
     private String scenarioPublishedByName;
     private String scenarioSystemLocked;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioCreatedAt;
     private String scenarioCreatedBy;
     private String scenarioCreatedByName;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioUpdatedAt;
     private String iterationIdentity;
     private Integer iteration;
@@ -91,18 +91,18 @@ public class Item {
     private Boolean iterationHasWebImage;
     private Boolean iterationIsCadConnected;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime iterationCreatedAt;
     private String iterationCreatedBy;
     private String iterationCreatedByName;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime iterationUpdatedAt;
     private String iterationUpdatedBy;
     private String iterationUpdatedByName;
     private CostingInput costingInput;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioAssignedAt;
     private String scenarioAssignedBy;
     private String scenarioAssignedByName;
@@ -120,7 +120,7 @@ public class Item {
     private String scenarioStatus;
     private Integer scenarioSystemLockCode;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private String scenarioSystemLockedAt;
     private String scenarioUpdatedBy;
     private String scenarioUpdatedByName;
@@ -131,9 +131,6 @@ public class Item {
     private Thumbnail thumbnail;
 
     public static class AnalysisOfChildren {
-    }
-
-    public static class AnalysisOfScenario {
     }
 
     public static class AnalysisOfScenarioAndChildren {

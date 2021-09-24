@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.common;
 
+import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.pageobjects.pages.login.UploadedFilePage;
 import com.apriori.utils.PageUtils;
 
@@ -53,8 +54,9 @@ public class UploadedBomTableActions extends LoadableComponent<UploadedBomTableA
      *  @param element - select part button
      * @return new page object
      */
-    public void selectPartForExport(WebElement element) {
+    public MatchedPartPage selectPartForExport(WebElement element) {
         pageUtils.waitForElementAndClick(element);
+        return new MatchedPartPage(driver);
     }
 
     /**

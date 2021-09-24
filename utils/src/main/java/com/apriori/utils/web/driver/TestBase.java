@@ -66,13 +66,9 @@ public class TestBase extends TestHelper {
         TestHelper.logger.info("Current Operating System:" + os);
         TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
 
-        if (!df.isHeadless() && mode.equals(TestMode.LOCAL) && (os.toLowerCase().contains("linux") || os.toLowerCase().contains("mac"))) {
-            // Todo 28/02/2020 - Commented out because this is causing headless on linux to crash with error message 'No X11 display...' this will be reworked in the future
-            //MaximizeBrowserOnUnix.maximizeOnUnixSystems(driver);
-        } else {
-            driver.manage().window().setSize(new Dimension(1920,1080));
-            driver.manage().window().maximize();
-        }
+        driver.manage().window().setSize(new Dimension(1920,1080));
+        driver.manage().window().maximize();
+
         TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
         driver.manage().deleteAllCookies();
         TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());

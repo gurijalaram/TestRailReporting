@@ -1,0 +1,96 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "permissions",
+        "customerIdentity",
+        "scenarioName",
+        "scenarioType",
+        "scenarioState",
+        "lastAction",
+        "locked",
+        "published"
+      ],
+      "optional": [
+        "previousScenarioState",
+        "updatedAt",
+        "ownedByName",
+        "createdByName",
+        "subjectIdentity",
+        "ownedBy",
+        "updatedBy",
+        "updatedByName"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "permissions": {
+          "type": "array",
+          "items": {
+          }
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "scenarioName": {
+          "type": "string"
+        },
+        "scenarioType": {
+          "type": "string"
+        },
+        "scenarioState": {
+          "type": "string"
+        },
+        "previousScenarioState": {
+          "type": "string"
+        },
+        "lastAction": {
+          "type": "string"
+        },
+        "ownedBy": {
+          "type": "string"
+        },
+        "locked": {
+          "type": "boolean"
+        },
+        "published": {
+          "type": "boolean"
+        },
+        "ownedByName": {
+          "type": "string"
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "subjectIdentity": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "updatedByName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -14,6 +14,7 @@ import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -77,7 +78,7 @@ public class CdsAssociationUserTests {
     @Description("Get customer association for apriori Internal")
     public void addCustomerUserAssociation() {
 
-        String aPStaffIdentity = Constants.getUserIdentity01();
+        String aPStaffIdentity = PropertiesContext.get("${env}.user_identity");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
@@ -91,7 +92,7 @@ public class CdsAssociationUserTests {
     public void getAssociationUsers() {
         String associationEndpoint = String.format(url, String.format("customers/%s/customer-associations/%s/customer-association-users", aPCustomerIdentity, associationIdentity));
 
-        String aPStaffIdentity = Constants.getUserIdentity02();
+        String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity02");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
@@ -107,7 +108,7 @@ public class CdsAssociationUserTests {
     @TestRail(testCaseId = {"5964"})
     @Description("Get user details for association")
     public void getAssociationByUserIdentity() {
-        String aPStaffIdentity = Constants.getUserIdentity03();
+        String aPStaffIdentity = PropertiesContext.get("${env}.cds.automation_user_identity03");
 
         ResponseWrapper<AssociationUserItems> associationUser = cdsTestUtil.addAssociationUser(aPCustomerIdentity, associationIdentity, aPStaffIdentity);
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));

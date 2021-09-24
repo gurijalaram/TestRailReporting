@@ -34,8 +34,7 @@ public class HelpTests extends TestBase {
             .switchTab()
             .agreeTermsAndCondition();
 
-        assertThat(aboutUsPage.getAboutUsPageUrl(), containsString("https://www.apriori.com/about-us"));
-        assertThat(aboutUsPage.getAboutUsMetaTag(), containsString("Improving Your Profitability through Digital Manufacturing"));
+        assertThat(aboutUsPage.getAboutUsPageUrl(), containsString("https://www.apriori.com/about"));
     }
 }
 

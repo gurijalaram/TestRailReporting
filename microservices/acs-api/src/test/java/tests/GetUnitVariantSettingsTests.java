@@ -7,13 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.utils.AcsResources;
-
 import com.apriori.utils.TestRail;
 
-import com.apriori.utils.properties.PropertiesContext;
-
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
@@ -55,7 +51,8 @@ public class GetUnitVariantSettingsTests {
 
         String expectedLength = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "mm" : "in";
         String expectedMass = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "kg" : "lb";
-        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo("false")));
+        String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
+        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
 
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
         assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
