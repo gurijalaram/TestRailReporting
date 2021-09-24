@@ -65,11 +65,9 @@ public class WorkflowPage {
     private WebElement paginatorBeginning;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(2) > img")
     private WebElement paginatorPrevious;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child" +
-            "(10) > img")
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(8)")
     private WebElement paginatorNext;
-    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child" +
-            "(11) > img")
+    @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(9) > img")
     private WebElement paginatorLast;
     @FindBy(css = "#root_pagemashupcontainer-1_gridadvanced-46-grid-advanced-paging-container > div > div:nth-child(3) > div")
     private WebElement rowRangeLabel;
@@ -133,6 +131,15 @@ public class WorkflowPage {
             "Locked"
         };
         return expectedHeaders;
+    }
+
+    /**
+     * Get the number of workflow rows in the workflow table
+     *
+     * @return number of rows
+     */
+    public Integer getRowCount() {
+        return tableUtils.getRowCount(workflowList) - 1;
     }
 
     /**
@@ -256,7 +263,6 @@ public class WorkflowPage {
         pageUtils.waitForElementToBeClickable(pageSizeLabel);
         String[] labelSplit = pageSizeLbl.getText().split("Rows");
 
-        System.out.println("Field: " + pageSizeLbl.getText());
         String[] range = labelSplit[1].split("-");
         return Integer.parseInt(range[1].trim());
     }

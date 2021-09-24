@@ -131,6 +131,9 @@
         },
         "stagesAndMaterialsVisible": {
           "type": "boolean"
+        },
+        "materialMode": {
+          "type": "string"
         }
       }
     }

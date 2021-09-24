@@ -1,21 +1,27 @@
 package com.apriori.bcs.utils;
 
-import com.apriori.apibase.utils.ApiUtils;
+import static org.junit.Assert.fail;
 
+import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
+import com.apriori.bcs.entity.response.Part;
+import com.apriori.utils.ApiUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public class BcsUtils extends ApiUtils {
+public class BcsUtils extends ApiUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(BcsUtils.class);
 
     public enum State {
         COMPLETED("COMPLETED"),
+        COSTING("COSTING"),
         ERRORED("ERRORED"),
         PROCESSING("PROCESSING"),
         REJECTED("REJECTED"),
@@ -139,7 +145,7 @@ public class BcsUtils extends ApiUtils {
      *
      * @param batch
      * @return
-     * @throws InterruptedException  Thread interrupted
+     * @throws InterruptedException
      */
     public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
         Object batchDetails;
@@ -195,4 +201,80 @@ public class BcsUtils extends ApiUtils {
 
         return State.PROCESSING;
     }
+
+    /**
+     * Polls BCS to get a batch/part's costing status
+     *
+     * @param obj
+     * @param klass
+     * @return Costing Status
+     */
+    public static State pollForCostingState(Object obj, Class klass) throws InterruptedException {
+        String state = BcsUtils.getState(obj, klass);
+        if (state.toUpperCase().equals("COSTING")) {
+            return State.COSTING;
+        } else {
+            try {
+                Thread.sleep(10000);
+            } catch (Exception e) {
+                logger.error(e.getMessage());
+                logger.error(Arrays.toString(e.getStackTrace()));
+                throw e;
+            }
+        }
+
+        return State.PROCESSING;
+    }
+
+    /**
+     * Parses the Scenario & Component
+     *
+     * @param url THe cid url returned in the getPart response
+     * @return
+     */
+    public static Map<String, String> getScenarioAndComponent(String url) {
+        String[] sections = url.split("/");
+        Map<String, String> identities = new HashMap<>();
+        identities.put("component", sections[4]);
+        identities.put("scenario", sections[6]);
+        return identities;
+    }
+
+    /**
+     * Wait for a part to enter into a costing state
+     */
+    public static void waitForCostingState(String batchIdentity, String partIdentity) {
+        BcsUtils.State partState = BcsUtils.State.PROCESSING;
+        int count = 0;
+        int defaultTimeout = 100;
+        Object partDetails;
+
+        while (count <= defaultTimeout) {
+            partDetails =
+                    BatchPartResources.getBatchPartRepresentation(batchIdentity,
+                            partIdentity);
+            try {
+                partState = BcsUtils.pollForCostingState(partDetails, Part.class);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            String state = BcsUtils.getState(partDetails, Part.class);
+            if (state.equalsIgnoreCase(BcsUtils.State.ERRORED.toString())) {
+                String errors = BcsUtils.getErrors(batchIdentity, Part.class);
+                logger.error(errors);
+                fail("Part was in state 'ERRORED'");
+                return;
+            }
+
+            if (partState == BcsUtils.State.COSTING) {
+                break;
+            }
+            count += 1;
+        }
+
+
+    }
+
+
 }
