@@ -55,8 +55,7 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, String token, ScenarioStateEnum scenarioState) {
-        // TODO: 16/09/2021 cn - revert to 120000 within 5 working days
-        final int SOCKET_TIMEOUT = 240000;
+        final int SOCKET_TIMEOUT = 120000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
@@ -64,8 +63,7 @@ public class UncostedComponents {
             .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
-        // TODO: 16/09/2021 cn - revert to 120 within 5 working days
-        final int WAIT_TIME = 240;
+        final int WAIT_TIME = 120;
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {

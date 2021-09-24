@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -286,8 +287,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName.toUpperCase()));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourceScenarioName));
+        assertThat(evaluatePage.getSourcePartDetails(), is(equalTo(sourcePartName + "/" + sourceScenarioName)));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
 
         evaluatePage.selectSourcePart()
@@ -297,8 +297,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2PartName.toUpperCase()));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2ScenarioName));
+        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2PartName + "/" + source2ScenarioName));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(11.66, 1));
     }
 

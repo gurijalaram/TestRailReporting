@@ -36,13 +36,13 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     @FindBy(css = ".issue-description")
     private WebElement issueDescription;
 
-    @FindBy(xpath = "//span[.='Investigation']")
+    @FindBy(css = "svg[data-icon='eye']")
     private WebElement investigationTab;
 
-    @FindBy(xpath = "//span[.='Tolerances']")
+    @FindBy(css = "svg[data-icon='ruler']")
     private WebElement tolerancesTab;
 
-    @FindBy(xpath = "//span[.='Threads']")
+    @FindBy(css = "svg[data-icon='screwdriver']")
     private WebElement threadsTab;
 
     private WebDriver driver;
@@ -68,7 +68,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(issuesTabActive);
-        pageUtils.waitForElementAppear(chartTable);
     }
 
     /**
