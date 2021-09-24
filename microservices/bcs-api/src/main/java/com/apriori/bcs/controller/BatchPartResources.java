@@ -15,6 +15,7 @@ import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
 import java.io.File;
 import java.util.HashMap;
@@ -60,6 +61,29 @@ public class BatchPartResources extends BcsBase {
         );
     }
 
+
+    /**
+     * Create a part with no material
+     *
+     * @param npr
+     * @param batchIdentity
+     * @param <T>
+     * @return
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartNoMaterial(NewPartRequest npr, String batchIdentity) {
+        npr.setMaterialName(null);
+        return createNewBatchPart(npr, batchIdentity);
+    }
+
+    /**
+     * Creat a new part
+     *
+     * @param npr New part request
+     * @param batchIdentity
+     * @param processGroupValue
+     * @param <T>
+     * @return
+     */
     public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
                                                             ProcessGroupValue processGroupValue) {
         String url = String.format(EndPoint.BATCH_PARTS.getEndPoint(),
@@ -164,4 +188,20 @@ public class BatchPartResources extends BcsBase {
                 new RequestAreaApi()
         );
     }
+
+
+    /**
+     * Generate a newpartrequest
+     *
+     * @return newPartRequest
+     */
+    public static NewPartRequest getNewPartRequest() {
+        NewPartRequest newPartRequest =
+                (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+        newPartRequest.setFilename("bracket_form.prt");
+
+        return newPartRequest;
+    }
+
 }

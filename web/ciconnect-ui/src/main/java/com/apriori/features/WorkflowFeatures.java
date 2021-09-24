@@ -7,8 +7,8 @@ import com.apriori.pageobjects.NavBarPage;
 import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -276,6 +276,7 @@ public class WorkflowFeatures {
      * @return Paginator values and state
      */
     public Map<String, Object> inspectSchedulePaginator() {
+        workflowPage.refreshPage();
         values = new HashMap<>();
         values.put("rowRange", workflowPage.getRowRange());
 
@@ -283,20 +284,34 @@ public class WorkflowFeatures {
         Integer rowTotal = Integer.parseInt(totalSplit[totalSplit.length - 1].trim());
         values.put("rowTotal", rowTotal);
 
-        workflowPage.pageNext();
-        values.put("nextRowRange", workflowPage.getRowRange());
+        String[] firstPageRange = workflowPage.getRowRange().split("-");
+        Integer firstPageRowCount = Integer.parseInt(firstPageRange[1].trim());
 
-        workflowPage.pageBack();
-        values.put("previousRowRange", workflowPage.getRowRange());
+        if (firstPageRowCount != 25) {
+            Integer rowCount = workflowPage.getRowCount();
+            values.put("firstPageRowCount", rowCount);
 
-        workflowPage.pageToTheEnd();
-        String rowRange = workflowPage.getRowRange();
-        Boolean lastRangeContainsTotalRows = rowRange.contains(rowTotal.toString());
-        values.put("isLastRowRange", lastRangeContainsTotalRows);
+        } else {
+            values.put("firstPageRowCount", 25);
 
-        workflowPage.pageToTheBeginning();
-        values.put("beginningRowRange", workflowPage.getRowRange());
+            workflowPage.pageNext();
+            Integer seecondPageRowCount = Integer.parseInt(PropertiesContext.get("${env}.ci-connect.second_page_starting_range_number"))
+                    + workflowPage.getRowCount();
+            values.put("nextRowRange", workflowPage.getRowRange());
+            values.put("pageNextRowCount", seecondPageRowCount);
 
+            workflowPage.pageBack();
+            values.put("previousRowRange", workflowPage.getRowRange());
+
+            workflowPage.refreshPage();
+            workflowPage.pageToTheEnd();
+            String rowRange = workflowPage.getRowRange();
+            Boolean lastRangeContainsTotalRows = rowRange.contains(rowTotal.toString());
+            values.put("isLastRowRange", lastRangeContainsTotalRows);
+
+            workflowPage.pageToTheBeginning();
+            values.put("beginningRowRange", workflowPage.getRowRange());
+        }
         return values;
     }
 

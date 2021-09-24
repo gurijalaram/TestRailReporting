@@ -20,8 +20,6 @@ import java.util.UUID;
 
 public class BatchResources extends BcsBase {
     private static final String endpointBatches = String.format(getBatchUrl(), "");
-    private static final String endpointBatchesWithIdentity = String.format(getBatchUrlWithIdentity(), "");
-    private static final String endPointBatchCosting = String.format(getBatchUrlWithIdentity(), "/start-costing");
 
     public static <T> ResponseWrapper<T> getBatches() {
         return getBatches(null);
