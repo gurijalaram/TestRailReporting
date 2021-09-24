@@ -5,17 +5,18 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -23,6 +24,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class CdsGetCustomerTests {
 
@@ -50,7 +52,6 @@ public class CdsGetCustomerTests {
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
     }
 
     @AfterClass
@@ -84,14 +85,18 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        RequestEntity requestEntity = RequestEntity.init(customerIdentityEndpoint, Customer.class)
-            .setHeaders("Content-Type", "application/json")
-            .setBody("customer",
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_CUSTOMERS_BY_ID, Customer.class)
+            .inlineVariables(customerIdentity)
+            .headers(new HashMap<String, String>() {{
+                    put("Content-Type", "application/json");
+                }}
+            )
+            .body("customer",
                 Customer.builder()
                     .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
                     .build());
 
-        ResponseWrapper<Customer> updatedEmail = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+        ResponseWrapper<Customer> updatedEmail = HTTP2Request.build(requestEntity).patch();
 
         assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
     }

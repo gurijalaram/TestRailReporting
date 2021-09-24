@@ -9,6 +9,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.services.common.objects.ErrorMessage;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
@@ -16,11 +17,11 @@ import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.apriori.utils.http2.builder.common.entity.RequestEntity;
+import com.apriori.utils.http2.builder.service.HTTP2Request;
+import com.apriori.utils.http2.utils.RequestEntityUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -142,10 +143,11 @@ public class CdsCustomerUsersTests {
 
         String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
-        String wrongIdentityEndpoint = String.format(url, String.format("customers/%s/users/L2H992829CFB", customerIdentity));
 
-        RequestEntity requestEntity = RequestEntity.init(wrongIdentityEndpoint, ErrorMessage.class);
-        ResponseWrapper<ErrorMessage> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DELETE_USER_BY_CUSTOMER_ID, ErrorMessage.class)
+            .inlineVariables(customerIdentity);
+
+        ResponseWrapper<ErrorMessage> responseWrapper = HTTP2Request.build(requestEntity).delete();
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
         assertThat(responseWrapper.getResponseEntity().getMessage(), is(containsString("Unable to get user with identity")));
     }

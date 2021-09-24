@@ -9,12 +9,14 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.entity.response.SubLicense;
 import com.apriori.cds.entity.response.SubLicenses;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Licenses;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociation;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
+import com.apriori.cds.tests.entitie.IdentityHolder;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -24,36 +26,40 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
 
 public class CdsLicenseTests {
 
-    private String url;
-    private String userIdentityEndpoint;
-    private String customerIdentityEndpoint;
     private String userAssociationIdentity;
-    private String deleteEndpoint;
+    private IdentityHolder deleteIdentityHolder;
+    private IdentityHolder userIdentityHolder;
+    private IdentityHolder customerIdentityHolder;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
-    @Before
-    public void setServiceUrl() {
-        url = Constants.getServiceUrl();
-    }
-
     @After
     public void cleanUp() {
-        if (deleteEndpoint != null) {
-            cdsTestUtil.delete(deleteEndpoint);
+        if (deleteIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS,
+                deleteIdentityHolder.customerIdentity(),
+                deleteIdentityHolder.siteIdentity(),
+                deleteIdentityHolder.licenseIdentity(),
+                deleteIdentityHolder.subLicenseIdentity(),
+                deleteIdentityHolder.userIdentity()
+            );
         }
-        if (userIdentityEndpoint != null) {
-            cdsTestUtil.delete(userIdentityEndpoint);
+        if (userIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS,
+                userIdentityHolder.customerIdentity(),
+                userIdentityHolder.userIdentity()
+            );
         }
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_CUSTOMER_ID,
+                customerIdentityHolder.customerIdentity()
+            );
         }
     }
 
@@ -72,7 +78,9 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
@@ -97,16 +105,21 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> response = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
+            Licenses.class,
+            customerIdentity
+        );
+
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(license.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
     }
@@ -126,21 +139,26 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> response = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
-
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
+            Licenses.class,
+            customerIdentity
+        );
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
-        String licenseIdentityEndpoint = String.format(url, String.format("customers/%s/licenses/%s", customerIdentity, licenseIdentity));
-
-        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(licenseIdentityEndpoint, LicenseResponse.class);
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
+            LicenseResponse.class,
+            customerIdentity,
+            licenseIdentity
+        );
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(licenseResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(licenseIdentity)));
     }
@@ -161,11 +179,16 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
@@ -173,9 +196,13 @@ public class CdsLicenseTests {
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licenseIdentity = licenseResponse.getResponseEntity().getResponse().getIdentity();
-        String subLicenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses", customerIdentity, siteIdentity, licenseIdentity));
 
-        ResponseWrapper<SubLicenses> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicenses.class);
+        ResponseWrapper<SubLicenses> subLicense = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SUB_LICENSES,
+            SubLicenses.class,
+            customerIdentity,
+            siteIdentity,
+            licenseIdentity
+        );
 
         assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(subLicense.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -197,11 +224,16 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
@@ -210,9 +242,14 @@ public class CdsLicenseTests {
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licenseIdentity = licenseResponse.getResponseEntity().getResponse().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
-        String subLicenseEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
 
-        ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(subLicenseEndpoint, SubLicense.class);
+        ResponseWrapper<SubLicense> subLicense = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_SUB_LICENSE,
+            SubLicense.class,
+            customerIdentity,
+            siteIdentity,
+            licenseIdentity,
+            subLicenseIdentity
+        );
 
         assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(subLicense.getResponseEntity().getResponse().getName(), containsString("License"));
@@ -234,22 +271,29 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
-
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
+            Licenses.class,
+            customerIdentity
+        );
+
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
@@ -258,7 +302,13 @@ public class CdsLicenseTests {
 
         assertThat(associationUserItemsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(associationUserItemsResponse.getResponseEntity().getResponse().getCreatedBy(), is(equalTo("#SYSTEM00000")));
-        deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
+        deleteIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licenseIdentity)
+            .subLicenseIdentity(subLicenseIdentity)
+            .userIdentity(userIdentity)
+            .build();
     }
 
     @Test
@@ -278,34 +328,52 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
+            Licenses.class,
+            customerIdentity
+        );
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
         userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
 
-        String userAssociationEndpoint = String.format(serviceUrl, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity));
-        ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(userAssociationEndpoint, SubLicenseAssociation.class);
+        ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_SUB_LICENSE_USERS,
+            SubLicenseAssociation.class,
+            customerIdentity,
+            siteIdentity,
+            licenseIdentity,
+            subLicenseIdentity
+        );
 
         assertThat(associationUserResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(associationUserResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
+        deleteIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licenseIdentity)
+            .subLicenseIdentity(subLicenseIdentity)
+            .userIdentity(userIdentity)
+            .build();
     }
 
     @Test
@@ -324,31 +392,50 @@ public class CdsLicenseTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String customerLicenseEndpoint = String.format(url, String.format("customers/%s/licenses", customerIdentity));
 
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 
-        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(customerLicenseEndpoint, Licenses.class);
+        ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
+            Licenses.class,
+            customerIdentity
+        );
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
         userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
 
-        deleteEndpoint = String.format(url, String.format("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s", customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity));
+        deleteIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licenseIdentity)
+            .subLicenseIdentity(subLicenseIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
-        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(deleteEndpoint);
+        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(CDSAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS,
+            customerIdentity,
+            siteIdentity,
+            licenseIdentity,
+            subLicenseIdentity,
+            userIdentity
+        );
         assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
 }

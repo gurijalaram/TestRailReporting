@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.not;
 import static org.hamcrest.Matchers.nullValue;
 
 import com.apriori.cds.entity.response.ConfigurationResponse;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
@@ -19,21 +20,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CdsConfigurationsTests {
-    private String url;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-
-    @Before
-    public void setServiceUrl() {
-        url = Constants.getServiceUrl();
-    }
 
     @Test
     @TestRail(testCaseId = {"5966"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getBlacklistedEmailDomains() {
-        url = String.format(url, "configurations/blacklisted-email-domains");
-
-        ResponseWrapper<ConfigurationResponse> response = cdsTestUtil.getCommonRequest(url, ConfigurationResponse.class);
+        ResponseWrapper<ConfigurationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CONFIGURATIONS_EMAIL, ConfigurationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
