@@ -88,7 +88,7 @@ public class RemoteWebDriverService extends BrowserManager {
             result.setFileDetector(new LocalFileDetector());
             logger.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-        } catch (UnreachableBrowserException | MalformedURLException e) {
+        } catch (UnreachableBrowserException | MalformedURLException | NullPointerException e) {
             e.printStackTrace();
         }
         return result;
