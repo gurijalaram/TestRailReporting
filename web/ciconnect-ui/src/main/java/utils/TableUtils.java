@@ -59,6 +59,22 @@ public class TableUtils {
     }
 
     /**
+     * Return the number of rows in a table
+     *
+     * @param table The target table
+     * @return number of rows
+     */
+    public Integer getRowCount(WebElement table) {
+        pageUtils.waitForElementToBeClickable(table);
+        List<WebElement> rows =
+                table.findElements(By.tagName("tr"))
+                        .stream()
+                        .skip(1)
+                        .collect(Collectors.toList());
+        return  rows.size();
+    }
+
+    /**
      * Return the index of a workflow
      *
      * @param table table to search
