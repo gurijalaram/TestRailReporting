@@ -185,14 +185,11 @@ public class WorkorderAPITests {
         GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
-
-        assertThat(getAdminInfoResponse.getLastModifiedBy(), is(containsString("qa-automation")));
         assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
         assertThat(getAdminInfoResponse.getComments(), is(equalTo("Comments go here...")));
         assertThat(getAdminInfoResponse.getDescription(), is(equalTo("Description goes here...")));
         assertThat(getAdminInfoResponse.getLocked(), is(equalTo("false")));
         assertThat(getAdminInfoResponse.getActive(), is(equalTo("true")));
-        assertThat(getAdminInfoResponse.getLastModifiedByFullName(), is(containsString("QA Automation Account")));
     }
 
     @Test

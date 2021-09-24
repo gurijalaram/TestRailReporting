@@ -8,6 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cidappapi.utils.ResetSettingsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -27,6 +28,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -49,6 +51,13 @@ public class SecondaryProcessTests extends TestBase {
 
     public SecondaryProcessTests() {
         super();
+    }
+
+    @After
+    public void resetAllSettings() {
+        if (currentUser != null) {
+            new ResetSettingsUtil().resetSettings(currentUser);
+        }
     }
 
     @Test
@@ -236,7 +245,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(1.0));
+        assertThat(materialProcessPage.getOverriddenPso("Masking"), is(1.0));
     }
 
     @Test
@@ -397,7 +406,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart");
 
 
-        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (11.35%)"));
+        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (77.35%)"));
     }
 
     @Test
@@ -545,7 +554,8 @@ public class SecondaryProcessTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Scenario Name", "Equals", scenarioName)
             .submit(ExplorePage.class)
-            .openScenario("SheetMetal", scenarioName);
+            .openScenario("SheetMetal", scenarioName)
+            .goToSecondaryTab();
 
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
@@ -992,25 +1002,25 @@ public class SecondaryProcessTests extends TestBase {
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
+            .reset()
             .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Packaging")
             .reset()
-            .submit(EvaluatePage.class)
+            .cancel()
             .costScenario()
             .goToSecondaryTab();
 
         assertThat(secondaryPage.getSecondaryProcesses(), hasItems("No Processes Selected..."));
 
-        evaluatePage.goToSecondaryTab()
-            .openSecondaryProcesses()
+        evaluatePage = secondaryPage.openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
+            .deselectAll()
             .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Packaging")
             .deselectAll()
-            .submit(EvaluatePage.class)
-            .costScenario();
+            .cancel();
 
-        assertThat(evaluatePage.getListOfSecondaryProcesses(), is("No Processes Selected..."));
+        assertThat(evaluatePage.getListOfSecondaryProcesses(), hasItem("No Processes Selected..."));
     }
 }

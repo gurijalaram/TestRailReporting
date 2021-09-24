@@ -104,7 +104,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     public InfoPage inputDescription(String description) {
         pageUtils.waitForElementAndClick(descriptionInput);
-        descriptionInput.clear();
+        pageUtils.clear(descriptionInput);
         descriptionInput.sendKeys(description);
         return this;
     }
@@ -130,7 +130,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     public InfoPage inputNotes(String notes) {
         pageUtils.waitForElementAndClick(notesInput);
-        notesInput.clear();
+        pageUtils.clear(notesInput);
         notesInput.sendKeys(notes);
         return this;
     }

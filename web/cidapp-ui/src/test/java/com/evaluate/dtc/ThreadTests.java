@@ -1,5 +1,6 @@
 package com.evaluate.dtc;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -43,7 +44,7 @@ public class ThreadTests extends TestBase {
     }
 
     @After
-    public void resetPreferences() {
+    public void resetAllSettings() {
         if (currentUser != null) {
             new ResetSettingsUtil().resetSettings(currentUser);
         }
@@ -116,7 +117,7 @@ public class ThreadTests extends TestBase {
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreaded("SimpleHole:1"), is("check"));
+        assertThat(threadingPage.getThreaded("SimpleHole:1"), containsString("check"));
 
         threadingPage.closePanel()
                 .selectProcessGroup(processGroupEnum)
@@ -129,7 +130,7 @@ public class ThreadTests extends TestBase {
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreaded("SimpleHole:1"), is("check"));
+        assertThat(threadingPage.getThreaded("SimpleHole:1"), containsString("check"));
     }
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
@@ -511,7 +512,7 @@ public class ThreadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
+                .selectProcessGroup(processGroupEnum)
                 .costScenario()
                 .openDesignGuidance()
                 .openThreadsTab()

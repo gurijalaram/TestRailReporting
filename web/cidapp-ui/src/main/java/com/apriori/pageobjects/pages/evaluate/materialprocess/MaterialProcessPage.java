@@ -230,7 +230,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
-        int position = IntStream.range(0, xAxisLabel.size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
+        int position = IntStream.range(0, pageUtils.waitForElementsToAppear(xAxisLabel).size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         chart.forEach(x -> pageUtils.actionClick(chart.get(position)));
         return this;
     }
@@ -293,7 +293,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputCaseDepth(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Case Depth Selection", "user"), psoController.inputLocator("Case Depth Selection"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Case Depth Selection", "userOverride"), psoController.inputLocator("Case Depth Selection"), value);
         return this;
     }
 
@@ -324,7 +324,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMasking(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Masking", "user"), psoController.inputLocator("Masking"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Masking", "userOverride"), psoController.inputLocator("Masking"), value);
         return this;
     }
 

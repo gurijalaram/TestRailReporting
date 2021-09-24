@@ -36,13 +36,13 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     @FindBy(css = ".issue-description")
     private WebElement issueDescription;
 
-    @FindBy(xpath = "//span[.='Investigation']")
+    @FindBy(css = "svg[data-icon='eye']")
     private WebElement investigationTab;
 
-    @FindBy(xpath = "//span[.='Tolerances']")
+    @FindBy(css = "svg[data-icon='ruler']")
     private WebElement tolerancesTab;
 
-    @FindBy(xpath = "//span[.='Threads']")
+    @FindBy(css = "svg[data-icon='screwdriver']")
     private WebElement threadsTab;
 
     private WebDriver driver;
@@ -68,7 +68,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(issuesTabActive);
-        pageUtils.waitForElementAppear(chartTable);
     }
 
     /**
@@ -106,7 +105,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private void selectIssue(String issueDropdown) {
         String[] issues = issueDropdown.split(",");
 
-        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..", x.trim()))).findElement(By.cssSelector("svg[data-icon='chevron-down']"))))
+        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..//div[@class='expand-button-wrapper']//*[local-name()='svg']", x.trim())))))
             .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
     }
 

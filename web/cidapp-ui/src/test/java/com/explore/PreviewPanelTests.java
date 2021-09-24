@@ -21,7 +21,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -65,6 +64,8 @@ public class PreviewPanelTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(partName, testScenarioName)
             .openPreviewPanel();
 
@@ -106,7 +107,6 @@ public class PreviewPanelTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2001")
     @Category(SmokeTests.class)
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(testCaseId = {"6202", "6203", "6204"})

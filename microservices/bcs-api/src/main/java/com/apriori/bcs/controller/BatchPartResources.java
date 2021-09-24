@@ -99,7 +99,7 @@ public class BatchPartResources extends BcsBase {
                         .use("ProcessGroup", processGroup)
                         //.use("ProductionLife", npr.getProductionLife().toString())
                         .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
-                        //.use("Udas", npr.getUdas())
+                        .use("Udas", npr.getUdas())
                         .use("VpeName", npr.getVpeName())
                         .use("MaterialName", npr.getMaterialName())
                         .use("generateWatchpointReport", "true")
@@ -119,7 +119,7 @@ public class BatchPartResources extends BcsBase {
         Object partDetails;
         BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
-        while (count <= Constants.POLLING_TIMEOUT * 2) {
+        while (count <= Constants.BATCH_POLLING_TIMEOUT * 2) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
             try {
@@ -144,7 +144,7 @@ public class BatchPartResources extends BcsBase {
         Object partDetails;
         BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
-        while (count <= Constants.POLLING_TIMEOUT) {
+        while (count <= Constants.BATCH_POLLING_TIMEOUT) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
             try {

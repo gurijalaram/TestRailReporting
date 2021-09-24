@@ -46,7 +46,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3108")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6209", "5427"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
@@ -136,7 +135,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
+    @Issue("BA-2052")
     @TestRail(testCaseId = {"6211"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
@@ -160,7 +159,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
-            .uploadComponentAndSubmit(scenarioName, FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp"), EvaluatePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()

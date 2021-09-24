@@ -3,17 +3,16 @@ package com.apriori.pageobjects.pages.login;
 import com.apriori.pageobjects.navtoolbars.NavigationBar;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import java.io.File;
+
+@Slf4j
 public class ElectronicsDataCollectionPage extends NavigationBar {
-
-    private static final Logger logger = LoggerFactory.getLogger(ElectronicsDataCollectionPage.class);
 
     @FindBy(css = "[id='qa-uploaded-bill-of-materials'] .title-left")
     private WebElement uploadedBillOfMaterials;
@@ -25,7 +24,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -37,5 +36,15 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      */
     public String getUploadedBillOfMaterials() {
         return pageUtils.waitForElementToAppear(uploadedBillOfMaterials).getAttribute("textContent");
+    }
+
+    /**
+     * Upload the resource file
+     *
+     * @param resourceFile resource file
+     * @return new page object
+     */
+    public FileUploadPage uploadComponent(File resourceFile) {
+        return new FileUploadPage(driver).inputComponentDetails(resourceFile);
     }
 }

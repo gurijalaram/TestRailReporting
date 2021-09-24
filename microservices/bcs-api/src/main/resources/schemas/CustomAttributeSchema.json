@@ -9,8 +9,8 @@
     "type",
     "requiredAttributeType",
     "multiSelect",
-    "options",
-    "createdAt"
+    "options"
+
   ],
   "properties": {
     "identity": {
@@ -52,6 +52,12 @@
         "type": "string"
       },
       "createdBy": {
+        "type": "string"
+      },
+      "updatedAt": {
+        "type": "string"
+      },
+      "updatedBy": {
         "type": "string"
       }
     }

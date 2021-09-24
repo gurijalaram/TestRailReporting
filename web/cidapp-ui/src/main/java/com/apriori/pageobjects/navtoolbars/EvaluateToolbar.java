@@ -20,7 +20,7 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(EvaluateToolbar.class);
 
-    @FindBy(css = "[id='qa-sub-header-cost-button']")
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
 
     @FindBy(css = ".alert")
@@ -44,6 +44,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return new page object
      */
     public EvaluatePage costScenario() {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         checkForCostLabel(2);
         return new EvaluatePage(driver);

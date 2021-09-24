@@ -50,20 +50,11 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".process-selector-details [value='userOverride']")
     private WebElement maskedUser;
 
-    @FindBy(css = ".process-selector-details [type='number']")
-    private WebElement maskedInput;
-
     @FindBy(css = ".process-selector-details [value='wholePart']")
     private WebElement fractionDefault;
 
-    @FindBy(css = ".process-selector-details [type='number']")
-    private WebElement fractionInput;
-
     @FindBy(css = ".process-selector-details [value='threadedHoles']")
     private WebElement maskedFeaturesDefault;
-
-    @FindBy(css = ".process-selector-details [value='none']")
-    private WebElement noMasking;
 
     @FindBy(css = ".process-selector-details [value='productionBatchSize']")
     private WebElement batchSizeDefault;
@@ -167,9 +158,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      */
     public SecondaryProcessesPage expandSecondaryProcessTree(String processTypes) {
         Arrays.stream(Stream.of(processTypes)
-            .map(processType -> processType.split(","))
-            .collect(Collectors.toList())
-            .get(0))
+                .map(processType -> processType.split(","))
+                .collect(Collectors.toList())
+                .get(0))
             .forEach(process -> {
                 By secondaryProcess = By.xpath(String.format("//span[.='%s']/ancestor::span", process.trim()));
                 pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(secondaryProcess), true);
@@ -294,7 +285,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMaskingOverride(String value) {
-        psoController.inputOverrideValue(maskedUser, maskedInput, value);
+        psoController.inputOverrideValue(maskedUser, psoController.inputLocator("Masking"), value);
         return this;
     }
 
@@ -304,7 +295,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return string
      */
     public double getMasking() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(maskedInput).getAttribute("value"));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(psoController.inputLocator("Masking")).getAttribute("value"));
     }
 
     /**
@@ -324,18 +315,8 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputFractionOverride(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("What Fraction of Component is Painted?", "user"), fractionInput, value);
+        psoController.inputOverrideValue(psoController.buildLocator("What Fraction of Component is Painted?", "user"), psoController.inputLocator("What Fraction of Component is Painted?"), value);
         return this;
-    }
-
-
-    /**
-     * Get masked feature
-     *
-     * @return string
-     */
-    public double getFractionPainted() {
-        return Double.parseDouble(pageUtils.waitForElementToAppear(fractionInput).getAttribute("value"));
     }
 
     /**
@@ -355,7 +336,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMasking(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Masking", "userOverride"), maskedInput, value);
+        psoController.inputOverrideValue(psoController.buildLocator("Masking", "userOverride"), psoController.inputLocator("Masking"), value);
         return this;
     }
 
@@ -365,7 +346,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage selectNoMasking() {
-        pageUtils.waitForElementAndClick(noMasking);
+        pageUtils.waitForElementAndClick(psoController.buildLocator("Number of Masked Features", "none"));
         return this;
     }
 
@@ -376,7 +357,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputMaskedFeatures(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Number of Masked Features", "user"), maskedInput, value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Masked Features", "user"), psoController.inputLocator("Number of Masked Features"), value);
         return this;
     }
 
@@ -439,12 +420,13 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputCompLoadBar(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Load Bar", "user"), psoController.inputLocator("Number of Components Per Paint Cart"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Number of Components Per Load Bar", "user"), psoController.inputLocator("Number of Components Per Load Bar"), value);
         return this;
     }
 
     /**
      * Gets value for overridden PSO
+     *
      * @param pso - the pso
      * @return double
      */

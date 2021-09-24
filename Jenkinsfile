@@ -8,7 +8,8 @@ def browser
 def customer
 def testSuite
 def global_users_csv_file
-def folder = "web"
+def folder
+def addlJavaOpts
 
 pipeline {
 /*
@@ -59,10 +60,10 @@ Those marked with a * are required or the job will not run
                     javaOpts = javaOpts + " -Denv=${params.TARGET_ENV}"
 
                     folder = params.MODULE_TYPE
-                    if (!folder && "${JOB_NAME}".contains("-UI")) {
+                    if (!folder && "${MODULE}".contains("-ui")) {
                         folder = "web"
                     }
-                    else if (!folder && "${JOB_NAME}".contains("-API")) {
+                    else if (!folder && "${MODULE}".contains("-api")) {
                         folder = "microservices"
                     }
 
@@ -100,25 +101,36 @@ Those marked with a * are required or the job will not run
                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
                     }
 
+                    addlJavaOpts = params.JAVAOPTS
+                    if (addlJavaOpts && addlJavaOpts != "none") {
+                        javaOpts = javaOpts + " " + addlJavaOpts
+                    }
+
                     echo "${javaOpts}"
                 }
             }
         }
+
         stage("Build") {
             steps {
                 echo "Building.."
-                sh """
-                    docker build \
-                        --build-arg MODULE=${MODULE} \
-                        --build-arg TEST_MODE=${TEST_MODE} \
-                        --build-arg FOLDER=${folder} \
-                        --no-cache \
-                        --tag ${buildInfo.name}-build-${uuid}:latest \
-                        --label \"build-date=${uuid}\" \
-                        .
-                """
+                withCredentials([
+                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
+                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
+                    sh """
+                        docker build \
+                            --build-arg FOLDER=${folder} \
+                            --build-arg MODULE=${MODULE} \
+                            --build-arg TEST_MODE=${TEST_MODE} \
+                            --no-cache \
+                            --tag ${buildInfo.name}-build-${uuid}:latest \
+                            --label \"build-date=${uuid}\" \
+                            .
+                    """
+                }
             }
         }
+
         stage("Test") {
             steps {
                 echo "Running.."
@@ -169,8 +181,8 @@ Those marked with a * are required or the job will not run
                 allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
             }
         }
-
     }
+
     post {
         always {
             echo "Cleaning up.."
@@ -180,8 +192,10 @@ Those marked with a * are required or the job will not run
                 if ("${params.TEST_MODE}" == "LOCAL") {
                     sh "docker rm -f \$(docker ps --filter name=chrome -q)"
                     sh "docker rm -f \$(docker ps --filter name=firefox -q)"
+                    sh "docker rm -f \$(docker ps --filter name=edge -q)"
                     sh "docker rmi -f selenium/node-firefox"
                     sh "docker rmi -f selenium/node-chrome"
+                    sh "docker rmi -f selenium/node-edge"
                 }
             }
             sh "docker system prune --force"

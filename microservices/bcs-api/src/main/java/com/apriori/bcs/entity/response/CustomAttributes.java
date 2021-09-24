@@ -6,10 +6,11 @@ import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmss
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -27,8 +28,15 @@ public class CustomAttributes extends Pagination {
     private CustomAttributes[] items;
     private String defaultValue;
     private Integer precision;
+    private String[] options;
+    private String createdBy;
+    private String updatedBy;
+
+    @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String createdBy;
-    private List<String> options;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
 }

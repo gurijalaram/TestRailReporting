@@ -240,8 +240,7 @@ public class ComparisonTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        comparePage = new ExplorePage(driver).navigateToScenario(cssItemB)
-            .selectProcessGroup(processGroupEnum)
+        comparePage = new EvaluatePage(driver).selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
