@@ -121,8 +121,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     /**
      * Finds the scenario by component name
+     *
      * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     * @param scenarioName  - the scenario name
      * @return by
      */
     private By byComponentName(String componentName, String scenarioName) {
@@ -137,7 +138,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
-        return pageUtils.waitForElementsToAppear(byScenarioName(componentName,scenarioName));
+        return pageUtils.waitForElementsToAppear(byScenarioName(componentName, scenarioName));
     }
 
 
@@ -286,7 +287,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * Selects the scenario by checkbox
      *
      * @param componentName - component name
-     * @param scenarioName - scenario name
+     * @param scenarioName  - scenario name
      * @return current page object
      */
     public ScenarioTableController selectScenario(String componentName, String scenarioName) {
