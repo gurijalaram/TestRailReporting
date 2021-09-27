@@ -49,4 +49,5 @@ public class ScenarioCostingDefaultsResponse {
     private Boolean productionLifeOverridden;
     private Integer componentsPerProduct;
     private List<ScenarioAvailableProcessGroupSelection> availableProcessGroupSelections;
+    private String materialMode;
 }
