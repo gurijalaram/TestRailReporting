@@ -2,7 +2,6 @@ package com.apriori.sds.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
@@ -11,8 +10,11 @@ import java.util.List;
 @Schema(location = "ScenarioCostingDefaultsResponse.json")
 @Data
 @JsonRootName("response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ScenarioCostingDefaultsResponse {
+    private String materialMode;
+    private String vpeName;
+    private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
+    private String identity;
     private String[] availablePgNames;
     private Boolean machiningModeEnabled;
     private Integer computedBatchSize;
@@ -47,5 +49,4 @@ public class ScenarioCostingDefaultsResponse {
     private Boolean productionLifeOverridden;
     private Integer componentsPerProduct;
     private List<ScenarioAvailableProcessGroupSelection> availableProcessGroupSelections;
-    private String materialMode;
 }
