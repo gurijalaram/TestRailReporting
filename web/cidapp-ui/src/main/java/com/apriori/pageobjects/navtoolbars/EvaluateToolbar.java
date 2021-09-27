@@ -67,6 +67,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label contains/doesn't contain text
      */
     public void checkForCostLabel(int timeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.textPresentInElement(costLabel, NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
         pageUtils.textNotPresentInElement(costLabel, NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }
