@@ -302,6 +302,7 @@ public class ComparisonTests extends TestBase {
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
+            .navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
