@@ -7,7 +7,6 @@ import com.apriori.vds.entity.response.custom.attributes.CustomAttribute;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -20,7 +19,6 @@ import java.util.List;
 @Schema(location = "Customization.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Customization {
     private List<CustomAttribute> customAttributes;
     private String customerIdentity;

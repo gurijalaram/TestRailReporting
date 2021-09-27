@@ -32,9 +32,13 @@ public class GenerateStringUtil {
         final int index = componentName.indexOf(".");
         final String randomSymbols = new Random().nextInt(1000) + "-" + System.nanoTime();
 
-        return componentName.substring(0, index)
-            + randomSymbols
-            + componentName.substring(index);
+        if (index != -1) {
+            return componentName.substring(0, index)
+                + randomSymbols
+                + componentName.substring(index);
+        }
+
+        return componentName + randomSymbols;
     }
 
     /**

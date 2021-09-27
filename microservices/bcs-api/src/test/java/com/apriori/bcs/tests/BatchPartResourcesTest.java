@@ -26,7 +26,7 @@ public class BatchPartResourcesTest extends TestUtil {
     @BeforeClass
     public static void testSetup() {
         batch = BatchResources.createNewBatch();
-        NewPartRequest newPartRequest = getNewPartRequest();
+        NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
         part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
 
     }
@@ -40,7 +40,7 @@ public class BatchPartResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4280"})
     @Description("Add a new part to a batch")
     public void createBatchParts() {
-        NewPartRequest newPartRequest = getNewPartRequest();
+        NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();;
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
     }
 
@@ -49,22 +49,19 @@ public class BatchPartResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"8690"})
     @Description("Attempt to add a new part to a batch using empty string values")
     public void createBatchPartWithEmptyStringValues() {
-        NewPartRequest newPartRequestNull = getNewPartRequest();
+        NewPartRequest newPartRequestNull = BatchPartResources.getNewPartRequest();
         newPartRequestNull.setMaterialName(null);
         newPartRequestNull.setVpeName(null);
 
         BatchPartResources.createNewBatchPart(newPartRequestNull, batch.getIdentity(),
                 BatchPartResources.ProcessGroupValue.USE_NULL);
 
-        NewPartRequest newPartRequestEmptyString = getNewPartRequest();
+        NewPartRequest newPartRequestEmptyString = BatchPartResources.getNewPartRequest();
         newPartRequestEmptyString.setMaterialName("");
         newPartRequestEmptyString.setVpeName("");
 
         BatchPartResources.createNewBatchPart(newPartRequestEmptyString, batch.getIdentity(),
                 BatchPartResources.ProcessGroupValue.USE_EMPTY_STRING);
-
-
-
 
     }
 
@@ -95,20 +92,6 @@ public class BatchPartResourcesTest extends TestUtil {
     @Description("Return the costing results for a part")
     public void getPartReport() {
         BatchPartResources.getPartReport(batch.getIdentity(), part.getIdentity());
-    }
-
-    /**
-     * Generate a newpartrequest
-     *
-     * @return newPartRequest
-     */
-    private static NewPartRequest getNewPartRequest() {
-        NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
-                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
-        newPartRequest.setFilename("bracket_form.prt");
-
-        return newPartRequest;
     }
 
 
