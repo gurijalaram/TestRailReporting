@@ -58,7 +58,6 @@ public class CdsAssociationUserTests {
 
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        // TODO z: test it
         customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_ASSOCIATIONS_WITH_PAGE_BY_ID, CustomerAssociationResponse.class, aPCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
 
@@ -71,7 +70,7 @@ public class CdsAssociationUserTests {
                 aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
         }
         if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_CUSTOMER_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 

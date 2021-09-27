@@ -37,7 +37,6 @@ public class CdsTestUtil extends TestUtil {
      * @param <T>   - generic object
      * @return generic object
      */
-    // TODO ALL: should be refactored to work with Enum
     public <T> ResponseWrapper<T> getCommonRequest(CDSAPIEnum cdsapiEnum, Class klass, String... inlineVariables) {
         return HTTP2Request.build(RequestEntityUtil.init(cdsapiEnum, klass).inlineVariables(inlineVariables))
             .get();
@@ -48,7 +47,6 @@ public class CdsTestUtil extends TestUtil {
      *
      * @return responsewrapper
      */
-    // TODO ALL: should be refactored to work with Enum
     public ResponseWrapper<String> delete(CDSAPIEnum cdsapiEnum, String... inlineVariables) {
         return HTTP2Request.build(RequestEntityUtil.init(cdsapiEnum, null).inlineVariables(inlineVariables)).delete();
 
@@ -141,6 +139,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_SITES_BY_CUSTOMER_ID, Site.class)
+            .inlineVariables(customerIdentity)
             .body("site",
                 Site.builder().name(siteName)
                     .description("Site created by automation test")
@@ -397,6 +396,7 @@ public class CdsTestUtil extends TestUtil {
      */
     public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_ACCESS_CONTROL_BY_CUSTOMER_USER_IDS, AccessControlResponse.class)
+            .inlineVariables(customerIdentity, userIdentity)
             .body("accessControl",
                 AccessControlRequest.builder()
                     .customerIdentity(Constants.getAPrioriInternalCustomerIdentity())

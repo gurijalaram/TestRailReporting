@@ -16,7 +16,7 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociation;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.tests.entitie.IdentityHolder;
+import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -57,7 +57,7 @@ public class CdsLicenseTests {
             );
         }
         if (customerIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_CUSTOMER_ID,
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID,
                 customerIdentityHolder.customerIdentity()
             );
         }

@@ -9,7 +9,6 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -36,14 +35,10 @@ public class CdsGetCustomerTests {
     private static String salesForceId;
     private static String emailPattern;
     private static String customerIdentity;
-    private static String url;
-    private static String customerIdentityEndpoint;
     private static String updatedEmailPattern;
 
     @BeforeClass
     public static void setDetails() {
-        url = Constants.getServiceUrl();
-
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
@@ -56,8 +51,8 @@ public class CdsGetCustomerTests {
 
     @AfterClass
     public static void cleanUp() {
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -65,7 +60,7 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(customerIdentityEndpoint, Customer.class);
+        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_BY_ID, Customer.class, customerIdentity);
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
@@ -74,9 +69,10 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5957"})
     @Description("Get customer applications")
     public void getCustomersApplications() {
-        String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
-
-        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(applicationsEndpoint, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_APPLICATION_BY_CUSTOMER_ID,
+            Applications.class,
+            customerIdentity
+        );
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(equalTo(0)));
     }
