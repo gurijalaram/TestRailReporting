@@ -3,7 +3,6 @@ package com.apriori.vds.entity.response.access.control;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 @Schema(location = "AccessControlPermission.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class AccessControlPermission {
     private String actions;
     private String createdBy;
@@ -32,6 +30,8 @@ public class AccessControlPermission {
     private String resourceType;
     private String ruleType;
     private String updatedBy;
+    private Boolean requiresTransliteration;
+    private Boolean isSimpleRule;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
