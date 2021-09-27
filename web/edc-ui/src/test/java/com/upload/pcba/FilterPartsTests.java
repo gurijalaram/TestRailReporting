@@ -21,13 +21,13 @@ public class FilterPartsTests extends TestBase {
     @Test
     public void testFiltering() {
 
-        String fileName = "Test BOM 5 (1).csv";
+        String fileName = "Test BOM 5.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
 
         loginPage = new EdcAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
             .uploadComponent(resourceFile)
             .clickUploadPCBA()
-            .filter();
+            .filterDropdown();
     }
 }

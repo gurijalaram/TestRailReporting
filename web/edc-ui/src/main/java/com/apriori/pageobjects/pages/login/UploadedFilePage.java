@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.login;
 
-import com.apriori.pageobjects.common.SearchAndCostStatusPage;
 import com.apriori.pageobjects.common.UploadedBomTableActions;
 import com.apriori.utils.PageUtils;
 
@@ -19,6 +18,9 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
 
     @FindBy(id = "filter-button")
     private WebElement filterButton;
+
+    @FindBy(id = "export-button")
+    private WebElement exportBomButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -53,11 +55,22 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
     }
 
     /**
-     * Click the filter button
+     * Filter drop down
      *
      * @return new page object
      */
-    public SearchAndCostStatusPage filter() {
-        return uploadedBomTableActions.filterDropdown(filterButton);
+    public UploadedFilePage filterDropdown() {
+        pageUtils.waitForElementAndClick(filterButton);
+        return this;
+    }
+
+    /**
+     * Select Export Bill of materials
+     *
+     * @return same page object
+     */
+    public UploadedFilePage selectExportBom() {
+        pageUtils.waitForElementAndClick(exportBomButton);
+        return this;
     }
 }

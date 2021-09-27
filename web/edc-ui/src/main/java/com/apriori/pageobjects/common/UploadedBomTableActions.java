@@ -80,15 +80,4 @@ public class UploadedBomTableActions extends LoadableComponent<UploadedBomTableA
         pageUtils.waitForElementAndClick(element);
         return new EditBomPage(driver);
     }
-
-    /**
-     * Filter drop down
-     *
-     * @param element - the filter button
-     * @return new page object
-     */
-    public SearchAndCostStatusPage filterDropdown(WebElement element) {
-        pageUtils.waitForElementAndClick(element);
-        return new SearchAndCostStatusPage(driver);
-    }
 }
