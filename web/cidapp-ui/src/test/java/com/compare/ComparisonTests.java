@@ -298,8 +298,7 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        comparePage = new ExplorePage(driver).navigateToScenario(cssItem)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+        comparePage = new ExplorePage(driver).uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
             .navigateToScenario(cssItem)
