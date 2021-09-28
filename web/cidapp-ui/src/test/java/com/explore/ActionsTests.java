@@ -561,7 +561,6 @@ public class ActionsTests extends TestBase {
         String filterName2 = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
 
-
         loginPage = new CidAppLoginPage(driver);
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
