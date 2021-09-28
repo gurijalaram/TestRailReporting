@@ -223,7 +223,7 @@ qa-cig-perf:
 ######################################################## On Prem ########################################################
 onprem:
   name: onprem
-  base_url: https://localhost/
+  base_url: https://conqsbel81-01/
 
   admins:
     ui_url: ${onprem.base_url}apriori/login
