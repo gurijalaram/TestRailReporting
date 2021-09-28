@@ -19,7 +19,7 @@ import org.junit.Test;
 
 import java.io.File;
 
-public class FileUploadTests {
+public class FileUploadAPI {
 
     private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
