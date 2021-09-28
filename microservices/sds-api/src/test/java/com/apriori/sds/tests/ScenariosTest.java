@@ -6,6 +6,7 @@ import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.CustomAttributes;
+import com.apriori.sds.entity.request.CostRequest;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
