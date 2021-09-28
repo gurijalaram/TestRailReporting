@@ -10,12 +10,12 @@ import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import java.io.File;
 import java.util.HashMap;
@@ -34,14 +34,14 @@ public class BatchPartResources {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(batchIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PART_REPRESENTATION_BY_BATCH_PART_IDS, Part.class)
             .inlineVariables(batchIdentity, partIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
@@ -86,7 +86,7 @@ public class BatchPartResources {
                 .use("generateWatchpointReport", "true")
             );
 
-        return HTTP2Request.build(requestEntity).postMultipart();
+        return HTTPRequest.build(requestEntity).postMultipart();
     }
 
     public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity) {
@@ -115,7 +115,7 @@ public class BatchPartResources {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_RESULTS_BY_BATCH_PART_IDS, Results.class)
             .inlineVariables(batchIdentity, partIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity) {
@@ -139,6 +139,6 @@ public class BatchPartResources {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
             .inlineVariables(batchIdentity, partIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 }

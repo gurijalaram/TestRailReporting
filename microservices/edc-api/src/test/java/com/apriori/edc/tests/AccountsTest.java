@@ -9,11 +9,11 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edc.tests.util.UserDataEDC;
 import com.apriori.edc.tests.util.UserTestDataUtil;
 import com.apriori.edc.utils.Constants;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.AccountEndpointEnum;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
@@ -54,7 +54,7 @@ public class AccountsTest extends TestUtil {
     public void testGetAccounts() {
         RequestEntity requestEntity = RequestEntityUtil.init(AccountEndpointEnum.GET_ACCOUNTS, Accounts.class);
 
-        ResponseWrapper<Accounts> accountsResponseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<Accounts> accountsResponseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountsResponseWrapper.getStatusCode());
     }
 
@@ -123,7 +123,7 @@ public class AccountsTest extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(
             AccountEndpointEnum.GET_ACTIVE_USER, AccountsStatusWrapper.class);
 
-        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity().getAccountStatus();
@@ -134,7 +134,7 @@ public class AccountsTest extends TestUtil {
             AccountEndpointEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsStatusWrapper.class)
             .inlineVariables(identity);
 
-        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity().getAccountStatus();
@@ -144,7 +144,7 @@ public class AccountsTest extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(AccountEndpointEnum.ACTIVATE_ACCOUNTS_BY_IDENTITY, AccountsStatusWrapper.class)
             .inlineVariables(identity);
 
-        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity().getAccountStatus();
@@ -156,7 +156,7 @@ public class AccountsTest extends TestUtil {
             .inlineVariables(identity)
             .body(accountStatus);
 
-        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).patch();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTPRequest.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity().getAccountStatus();
@@ -173,7 +173,7 @@ public class AccountsTest extends TestUtil {
             AccountEndpointEnum.POST_ACCOUNTS, AccountsStatusWrapper.class)
             .body(accountStatus);
 
-        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity()
@@ -185,7 +185,7 @@ public class AccountsTest extends TestUtil {
             AccountEndpointEnum.DELETE_ACCOUNTS_BY_IDENTITY, null)
             .inlineVariables(identity);
 
-        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTP2Request.build(requestEntity).delete();
+        ResponseWrapper<AccountsStatusWrapper> responseWrapper = HTTPRequest.build(requestEntity).delete();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, responseWrapper.getStatusCode());
     }
 }

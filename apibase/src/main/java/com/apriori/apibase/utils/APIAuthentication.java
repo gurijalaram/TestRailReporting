@@ -2,11 +2,11 @@ package com.apriori.apibase.utils;
 
 import com.apriori.apibase.enums.BaseAPIEnum;
 import com.apriori.apibase.services.response.objects.AuthenticateJSON;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
-import com.apriori.utils.http2.utils.UserAuthenticationEntity;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 
@@ -56,7 +56,7 @@ public class APIAuthentication {
             RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_AUTH_TOKEN, AuthenticateJSON.class)
                 .userAuthenticationEntity(new UserAuthenticationEntity(username, password));
 
-            ResponseWrapper<AuthenticateJSON> tokenDetails = HTTP2Request.build(requestEntity).post();
+            ResponseWrapper<AuthenticateJSON> tokenDetails = HTTPRequest.build(requestEntity).post();
 
             timeToLive = tokenDetails.getResponseEntity().getExpiresIn();
             accessToken = tokenDetails.getResponseEntity().getAccessToken();

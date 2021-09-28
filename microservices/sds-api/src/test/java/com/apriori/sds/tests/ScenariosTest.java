@@ -15,14 +15,13 @@ import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -53,7 +52,7 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId(), getScenarioId()
                 );
 
-        ResponseWrapper<ScenarioCostingDefaultsResponse> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioCostingDefaultsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -67,7 +66,7 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId(), getScenarioId()
                 );
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -81,7 +80,7 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId(), getScenarioId()
                 );
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -97,7 +96,7 @@ public class ScenariosTest extends SDSTestUtil {
                     testingRollUp.getComponentIdentity(), testingRollUp.getScenarioIdentity()
                 );
 
-        ResponseWrapper<ScenarioManifest> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioManifest> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -117,7 +116,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .inlineVariables(getComponentId(), getScenarioId())
                 .body("scenario", scenarioRequestBody);
 
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
         final Scenario copiedScenario = responseWrapper.getResponseEntity();
@@ -154,7 +153,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .inlineVariables(scenarioForUpdate.getComponentIdentity(), scenarioForUpdate.getScenarioIdentity())
                 .body("scenario", scenarioRequestBody);
 
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).patch();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).patch();
         final Scenario scenario = responseWrapper.getResponseEntity();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
@@ -191,7 +190,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .inlineVariables(getComponentId(), publishAndGetReadyToWorkScenario().getIdentity())
                 .body("scenario", scenarioRequestBody);
 
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         final Scenario forkScenario = responseWrapper.getResponseEntity();
@@ -214,7 +213,7 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId(), getScenarioId()
                 );
 
-        ResponseWrapper<ScenarioHoopsImage> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -235,7 +234,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .inlineVariables(getComponentId(), scenario.getIdentity())
                 .body("scenario", scenarioRequestBody);
 
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         addScenarioToDelete(responseWrapper.getResponseEntity().getIdentity());
@@ -300,7 +299,7 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId(), scenarioIdentity
                 );
 
-        ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity();
@@ -313,7 +312,7 @@ public class ScenariosTest extends SDSTestUtil {
                     getComponentId()
                 );
 
-        ResponseWrapper<ScenarioItemsResponse> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioItemsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
@@ -334,7 +333,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .inlineVariables(testingComponent.getComponentIdentity(), testingComponent.getScenarioIdentity())
                 .body("scenario", scenarioRequestBody);
 
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         final Scenario publishedScenario = responseWrapper.getResponseEntity();
@@ -374,7 +373,7 @@ public class ScenariosTest extends SDSTestUtil {
                     .build()
                 );
 
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity();

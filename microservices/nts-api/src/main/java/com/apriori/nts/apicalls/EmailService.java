@@ -7,9 +7,9 @@ import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.nts.utils.EmailSetup;
 import com.apriori.nts.utils.NtsUtil;
 import com.apriori.utils.EmailUtil;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.slf4j.Logger;
@@ -121,7 +121,7 @@ public class EmailService {
             });
 
         return (GetEmailResponse)
-            HTTP2Request.build(requestEntity).get().getResponseEntity();
+            HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -139,6 +139,6 @@ public class EmailService {
             });
 
         return (Email)
-            HTTP2Request.build(requestEntity).get().getResponseEntity();
+            HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 }

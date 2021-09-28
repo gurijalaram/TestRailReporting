@@ -1,4 +1,4 @@
-package com.apriori.utils.http2.builder.service;
+package com.apriori.utils.http.builder.request;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.core.JsonParseException;

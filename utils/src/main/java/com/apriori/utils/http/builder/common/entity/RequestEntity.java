@@ -1,10 +1,9 @@
-package com.apriori.utils.http2.builder.common.entity;
+package com.apriori.utils.http.builder.common.entity;
 
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.enums.EndpointType;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http2.utils.UserAuthenticationEntity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

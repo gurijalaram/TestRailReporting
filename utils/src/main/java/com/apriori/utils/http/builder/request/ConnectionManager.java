@@ -1,13 +1,13 @@
-package com.apriori.utils.http2.builder.service;
+package com.apriori.utils.http.builder.request;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 
 import com.apriori.utils.constants.CommonConstants;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -159,7 +159,7 @@ class ConnectionManager<T> {
             }
 
             ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) ->
-                new com.apriori.utils.http2.builder.service.ObjectMapper())
+                new com.apriori.utils.http.builder.request.ObjectMapper())
             );
 
             T responseEntity = response.assertThat()

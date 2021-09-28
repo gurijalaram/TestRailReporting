@@ -1,16 +1,15 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.user.group.associations.UserGroupAssociationRequest;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociation;
 import com.apriori.vds.entity.response.user.group.associations.UserGroupAssociationsItems;
 import com.apriori.vds.tests.util.ProcessGroupUtil;
-import com.apriori.vds.tests.util.VDSTestUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -47,7 +46,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                     getGroupIdentity(),
                     this.postUserGroupAssociation().getIdentity()
                 );
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
     @Test
@@ -84,7 +83,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                     .build()
                 );
 
-        final ResponseWrapper<UserGroupAssociation> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
+        final ResponseWrapper<UserGroupAssociation> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, updatedSiteVariableResponse.getStatusCode());
     }
 
@@ -92,7 +91,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
             .inlineVariables(getGroupIdentity());
 
-        ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, userGroupAssociationsResponse.getStatusCode());
 
         return userGroupAssociationsResponse.getResponseEntity().getItems();
@@ -131,7 +130,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
                 .inlineVariables(getGroupIdentity())
                 .body(requestBody);
 
-        ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<UserGroupAssociation> userGroupAssociationResponse = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, userGroupAssociationResponse.getStatusCode());
 
         UserGroupAssociation createdUserGroupAssociation = userGroupAssociationResponse.getResponseEntity();
@@ -146,6 +145,6 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
                 .inlineVariables(getGroupIdentity(), ugaIdentity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
 }

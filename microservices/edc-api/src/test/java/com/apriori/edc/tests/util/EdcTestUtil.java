@@ -2,7 +2,7 @@ package com.apriori.edc.tests.util;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edc.utils.Constants;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;

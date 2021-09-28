@@ -3,10 +3,10 @@ package com.apriori.edc.tests;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
 import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
 import com.apriori.edc.tests.util.EdcTestUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserUtil;
 
 import io.qameta.allure.Description;
@@ -28,7 +28,7 @@ public class BillOfMaterialsTest extends EdcTestUtil {
             BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, UserUtil.getUser(), BillOfMaterialsWrapper.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                HTTP2Request.build(requestEntity).get().getStatusCode());
+                HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class BillOfMaterialsTest extends EdcTestUtil {
                 .inlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                HTTP2Request.build(requestEntity).get().getStatusCode());
+                HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
     @Test
@@ -56,7 +56,7 @@ public class BillOfMaterialsTest extends EdcTestUtil {
         userData.getBillOfMaterials().remove(deleteIndex);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT,
-                HTTP2Request.build(requestEntity).delete().getStatusCode());
+                HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
 
     @Test
@@ -67,7 +67,7 @@ public class BillOfMaterialsTest extends EdcTestUtil {
             .inlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).post().getStatusCode());
+            HTTPRequest.build(requestEntity).post().getStatusCode());
     }
 
     @Test

@@ -11,11 +11,10 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -93,7 +92,7 @@ public class CdsGetCustomerTests {
                     .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
                     .build());
 
-        ResponseWrapper<Customer> updatedEmail = HTTP2Request.build(requestEntity).patch();
+        ResponseWrapper<Customer> updatedEmail = HTTPRequest.build(requestEntity).patch();
 
         assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
     }

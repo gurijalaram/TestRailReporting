@@ -2,9 +2,9 @@ package com.apriori.apibase.utils;
 
 import com.apriori.apibase.enums.BaseAPIEnum;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -39,7 +39,7 @@ public class APIValue {
         RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.GET_TOLERANCE_VALUE, ToleranceValuesEntity.class)
             .headers(new APIAuthentication().initAuthorizationHeader(username));
 
-        String jsonResponse = HTTP2Request.build(requestEntity).get().getBody();
+        String jsonResponse = HTTPRequest.build(requestEntity).get().getBody();
 
         JsonNode node;
         try {

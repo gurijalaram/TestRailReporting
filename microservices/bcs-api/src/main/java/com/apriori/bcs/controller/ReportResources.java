@@ -6,10 +6,10 @@ import com.apriori.bcs.entity.response.ReportExport;
 import com.apriori.bcs.entity.response.ReportTemplates;
 import com.apriori.bcs.entity.response.Reports;
 import com.apriori.bcs.enums.BCSAPIEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.apache.http.HttpStatus;
@@ -24,21 +24,21 @@ public class ReportResources {
     public static <T> ResponseWrapper<T> getReports() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORTS, Reports.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getReportRepresentation(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_BY_ID, Report.class)
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> exportReport(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_EXPORT_BY_ID, ReportExport.class)
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> createReport(NewReportRequest nrr, int status, Class klass) {
@@ -55,7 +55,7 @@ public class ReportResources {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_REPORTS, klass)
             .body(body);
 
-        ResponseWrapper<T> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         Assert.assertEquals(status, responseWrapper.getStatusCode());
 
@@ -69,13 +69,13 @@ public class ReportResources {
     public static <T> ResponseWrapper<T> getReportTemplates() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_TEMPLATES, ReportTemplates.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getReportTemplatesPartReport() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_TEMPLATES_PART_REPORT, ReportTemplates.class)
             .urlEncodingEnabled(false);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 }

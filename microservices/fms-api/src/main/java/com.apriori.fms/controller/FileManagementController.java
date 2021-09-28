@@ -5,12 +5,12 @@ import com.apriori.fms.entity.response.FilesResponse;
 import com.apriori.fms.enums.FMSAPIEnum;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import java.util.HashMap;
@@ -22,7 +22,7 @@ public class FileManagementController {
         RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.GET_FILES, FilesResponse.class)
             .headers(initHeaders(token, false));
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static ResponseWrapper<FileResponse> getFileByIdentity(String token, String fileIdentity) {
@@ -30,7 +30,7 @@ public class FileManagementController {
             .headers(initHeaders(token, false))
             .inlineVariables(fileIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static ResponseWrapper<FileResponse> uploadFile(String token, ProcessGroupEnum processGroup, String fileName) {
@@ -43,7 +43,7 @@ public class FileManagementController {
                         .use("folder", "QAAutomationFolder")
             );
 
-        return HTTP2Request.build(requestEntity).postMultipart();
+        return HTTPRequest.build(requestEntity).postMultipart();
     }
 
     private static Map<String, String> initHeaders(String token, boolean addMultiPartFile) {

@@ -21,10 +21,10 @@ import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
 import com.apriori.cds.utils.Constants;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import java.util.Arrays;
@@ -38,7 +38,7 @@ public class CdsTestUtil extends TestUtil {
      * @return generic object
      */
     public <T> ResponseWrapper<T> getCommonRequest(CDSAPIEnum cdsapiEnum, Class klass, String... inlineVariables) {
-        return HTTP2Request.build(RequestEntityUtil.init(cdsapiEnum, klass).inlineVariables(inlineVariables))
+        return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, klass).inlineVariables(inlineVariables))
             .get();
     }
 
@@ -48,7 +48,7 @@ public class CdsTestUtil extends TestUtil {
      * @return responsewrapper
      */
     public ResponseWrapper<String> delete(CDSAPIEnum cdsapiEnum, String... inlineVariables) {
-        return HTTP2Request.build(RequestEntityUtil.init(cdsapiEnum, null).inlineVariables(inlineVariables)).delete();
+        return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, null).inlineVariables(inlineVariables)).delete();
 
     }
 
@@ -78,7 +78,7 @@ public class CdsTestUtil extends TestUtil {
                     .emailRegexPatterns(Arrays.asList(email + ".com", email + ".co.uk"))
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -106,7 +106,7 @@ public class CdsTestUtil extends TestUtil {
                         .createdBy("#SYSTEM00000").build())
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -126,7 +126,7 @@ public class CdsTestUtil extends TestUtil {
                         .supervisor("Moya Parker").build())
                     .build());
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
     }
 
     /**
@@ -148,7 +148,7 @@ public class CdsTestUtil extends TestUtil {
                     .active(true)
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -173,7 +173,7 @@ public class CdsTestUtil extends TestUtil {
                     .apVersion("2020 R1")
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -196,7 +196,7 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -233,7 +233,7 @@ public class CdsTestUtil extends TestUtil {
                     .apVersion("2020 R1")
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -252,7 +252,7 @@ public class CdsTestUtil extends TestUtil {
                     .cloudReference("eu-1")
                     .build());
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
 
     }
 
@@ -274,7 +274,7 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -296,7 +296,7 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -334,7 +334,7 @@ public class CdsTestUtil extends TestUtil {
                         .familyName(Constants.SAML_ATTRIBUTE_NAME_FAMILY_NAME).build())
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -358,7 +358,7 @@ public class CdsTestUtil extends TestUtil {
                     .contact(userIdentity)
                     .build());
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
     }
 
     /**
@@ -387,7 +387,7 @@ public class CdsTestUtil extends TestUtil {
                         .build())
                 .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
 
     }
 
@@ -410,6 +410,6 @@ public class CdsTestUtil extends TestUtil {
                     .roleIdentity(PropertiesContext.get("${env}.cds.identity_role"))
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 }

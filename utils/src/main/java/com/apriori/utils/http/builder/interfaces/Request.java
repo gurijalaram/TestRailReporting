@@ -1,4 +1,4 @@
-package com.apriori.utils.http2.builder.interfaces;
+package com.apriori.utils.http.builder.interfaces;
 
 import com.apriori.utils.http.utils.ResponseWrapper;
 

@@ -14,9 +14,9 @@ import com.apriori.entity.response.UpdateUser;
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -50,7 +50,7 @@ public class CasCustomersUsersTests {
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
-        ResponseWrapper<CustomerUsers> customerUsers = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMERS, CustomerUsers.class)
+        ResponseWrapper<CustomerUsers> customerUsers = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMERS, CustomerUsers.class)
             .token(token)
             .inlineVariables(customerIdentity, "users")).get();
 
@@ -59,7 +59,7 @@ public class CasCustomersUsersTests {
 
         String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        ResponseWrapper<CustomerUser> singleUser = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_USERS, CustomerUser.class)
+        ResponseWrapper<CustomerUser> singleUser = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_USERS, CustomerUser.class)
             .token(token)
             .inlineVariables(customerIdentity, userIdentity)).get();
 

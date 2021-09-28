@@ -10,9 +10,9 @@ import com.apriori.utils.enums.LengthEnum;
 import com.apriori.utils.enums.MassEnum;
 import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import io.qameta.allure.Issue;
 import org.slf4j.Logger;
@@ -53,7 +53,7 @@ public class AfterTestUtil {
             .body(new ToleranceValuesEntity().setToleranceMode("CAD")
                 .setUseCadToleranceThreshhold(false));
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
 
         resetToleranceValues(username);
     }
@@ -78,7 +78,7 @@ public class AfterTestUtil {
                 .setCustom(false))
             );
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -91,7 +91,7 @@ public class AfterTestUtil {
             .headers(apiAuthentication.initAuthorizationHeader(username))
             .customBody("2");
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -105,7 +105,7 @@ public class AfterTestUtil {
             .headers(apiAuthentication.initAuthorizationHeader(username))
             .customBody(ColourEnum.YELLOW.getColour());
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -119,7 +119,7 @@ public class AfterTestUtil {
             .headers(apiAuthentication.initAuthorizationHeader(username))
             .customBody("Initial");
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -139,7 +139,7 @@ public class AfterTestUtil {
                 .setBatchSizeMode(false)
             );
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -170,6 +170,6 @@ public class AfterTestUtil {
                 .setStraightnessOverride(null)
                 .setSymmetryOverride(null));
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 }

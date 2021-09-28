@@ -4,9 +4,9 @@ import com.apriori.apibase.services.ats.objects.Token;
 import com.apriori.apibase.services.ats.objects.TokenInformation;
 import com.apriori.apibase.services.ats.objects.TokenRequest;
 import com.apriori.ats.utils.enums.ATSAPIEnum;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
@@ -52,7 +52,7 @@ public class JwtTokenUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.POST_TOKEN, Token.class)
             .body(body);
 
-        Token token = (Token) HTTP2Request.build(requestEntity)
+        Token token = (Token) HTTPRequest.build(requestEntity)
             .postMultipart()
             .getResponseEntity();
 

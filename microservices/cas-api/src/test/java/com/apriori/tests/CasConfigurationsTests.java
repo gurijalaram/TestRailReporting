@@ -10,9 +10,9 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Configurations;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class CasConfigurationsTests extends TestUtil {
     @TestRail(testCaseId = {"5660"})
     @Description("Returns a list of all aP Versions.")
     public void getConfigurationsTest() {
-        ResponseWrapper<Configurations> configurationsResponse = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CONFIGURATIONS, Configurations.class)
+        ResponseWrapper<Configurations> configurationsResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CONFIGURATIONS, Configurations.class)
             .token(token)).get();
 
         assertThat(configurationsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));

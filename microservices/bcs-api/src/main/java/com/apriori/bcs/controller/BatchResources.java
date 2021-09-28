@@ -9,10 +9,10 @@ import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.entity.response.StartCosting;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.json.utils.JsonManager;
 
 import java.util.UUID;
@@ -22,14 +22,14 @@ public class BatchResources {
     public static <T> ResponseWrapper<T> getBatches() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCHES, Batches.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getBatchRepresentation(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_BY_ID, Batch.class)
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static Batch createNewBatch() {
@@ -46,7 +46,7 @@ public class BatchResources {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_BATCHES, Batch.class)
             .body(body);
 
-        return (Batch) HTTP2Request.build(requestEntity)
+        return (Batch) HTTPRequest.build(requestEntity)
             .post()
             .getResponseEntity();
     }
@@ -56,7 +56,7 @@ public class BatchResources {
             .inlineVariables(identity)
             .customBody("{}");
 
-        return (StartCosting) HTTP2Request.build(requestEntity)
+        return (StartCosting) HTTPRequest.build(requestEntity)
             .post()
             .getResponseEntity();
 
@@ -94,7 +94,7 @@ public class BatchResources {
             .inlineVariables(batchIdentity)
             .customBody("{}");
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     public static <T> ResponseWrapper<T> cancelBatchProccessing(String batchIdentity) {
@@ -102,6 +102,6 @@ public class BatchResources {
             .inlineVariables(batchIdentity)
             .customBody("{}");
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 }

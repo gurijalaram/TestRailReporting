@@ -4,10 +4,10 @@ import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -30,7 +30,7 @@ public class CostingTemplatesTest extends SDSTestUtil {
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
                 .inlineVariables(this.getFirstCostingTemplate().getIdentity());
 
-        ResponseWrapper<CostingTemplate> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 

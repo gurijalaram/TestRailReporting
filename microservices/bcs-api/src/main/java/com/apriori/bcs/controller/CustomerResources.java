@@ -9,61 +9,61 @@ import com.apriori.bcs.entity.response.ProcessGroups;
 import com.apriori.bcs.entity.response.UserDefinedAttributes;
 import com.apriori.bcs.entity.response.VPE;
 import com.apriori.bcs.enums.BCSAPIEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 public class CustomerResources {
 
     public static <T> ResponseWrapper<T> getCustomers() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_CUSTOMERS, Customers.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getCostingPreferences() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_COSTING_PREFERENCES, CostingPreferences.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static CostingPreferences patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PATCH_COSTING_PREFERENCES, CostingPreferences.class)
             .body(patchCostingPreferenceRequest);
 
-        return (CostingPreferences) HTTP2Request.build(requestEntity).patch()
+        return (CostingPreferences) HTTPRequest.build(requestEntity).patch()
             .getResponseEntity();
     }
 
     public static <T> ResponseWrapper<T> getProcessGroups() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getUserDefinedAttributes() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_USER_DEFINED_ATTRIBUTES, UserDefinedAttributes.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getVirtualProductEnvironments() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_VPEs, VPE.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getDigitalFactories() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactories.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getCustomAttributes() {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributes.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
 }
