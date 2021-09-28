@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -28,7 +27,16 @@ public class Scenario {
     private String identity;
     private String state;
     private String published;
+    private Integer annualVolume;
+    private Integer batchSize;
+    private String materialMode;
+    private String materialName;
+    private String processGroupName;
+    private Integer productionLife;
+    private String vpeName;
+    private List<String> propertiesToReset;
     private String locked;
+    private String ownedByName;
     private String scenarioName;
     private String scenarioType;
     private String scenarioState;
@@ -36,6 +44,8 @@ public class Scenario {
     private String previousScenarioState;
     private String notes;
     private String description;
+    private String createdByName;
+    private String updatedByName;
     private List<String> permissions;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)

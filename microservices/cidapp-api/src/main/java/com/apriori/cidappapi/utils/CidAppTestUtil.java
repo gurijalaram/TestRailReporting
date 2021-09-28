@@ -7,6 +7,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
+import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -424,14 +425,27 @@ public class CidAppTestUtil {
                 .token(getToken(userCredentials))
                 .inlineVariables(componentId, scenarioId)
                 .body("scenario", PublishRequest.builder()
-                    .assignedTo("A9DMC92LK859")
+                    .assignedTo(getCurrentUser(userCredentials).getIdentity())
                     .costMaturity("Initial".toUpperCase())
                     .override(false)
                     .status("New".toUpperCase())
                     .build()
                 );
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        HTTP2Request.build(requestEntity).post();
 
         return getScenarioRepresentation(item, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, userCredentials);
+    }
+
+    /**
+     * Get current user
+     * @param userCredentials - the user credentials
+     * @return user object
+     */
+    private User getCurrentUser(UserCredentials userCredentials) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_USER, User.class)
+            .token(getToken(userCredentials));
+
+        ResponseWrapper<User> userResponse =  HTTP2Request.build(requestEntity).get();
+        return userResponse.getResponseEntity();
     }
 }
