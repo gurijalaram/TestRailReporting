@@ -2,11 +2,10 @@ package com.apriori.sds.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.CustomAttributes;
 import com.apriori.sds.entity.request.CostRequest;
+import com.apriori.sds.entity.request.CustomAttributes;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -30,9 +29,10 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
+
     @Test
     @TestRail(testCaseId = {"6922"})
-    @Description("Find scenarios for a gfiven component matching a specified query.")
+    @Description("Find scenarios for a given component matching a specified query.")
     public void testGetScenarios() {
         this.getScenarios();
     }
@@ -166,7 +166,6 @@ public class ScenariosTest extends SDSTestUtil {
         assertEquals("Scenario description should be updated.",
             scenario.getDescription(), updatedDescription);
     }
-
 
     @Test
     @TestRail(testCaseId = "8433")
