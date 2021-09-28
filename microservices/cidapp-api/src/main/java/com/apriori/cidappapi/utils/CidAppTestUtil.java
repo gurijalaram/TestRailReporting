@@ -409,6 +409,15 @@ public class CidAppTestUtil {
         return response.getResponseEntity();
     }
 
+    /**
+     * Post publish scenario
+     *
+     * @param item            - the item
+     * @param componentId     - the component id
+     * @param scenarioId      - the scenario id
+     * @param userCredentials - the user credentials
+     * @return scenarioresponse object
+     */
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
