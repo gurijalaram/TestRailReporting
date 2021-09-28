@@ -26,7 +26,6 @@ import com.pageobjects.pages.explore.FileOpenError;
 import com.pageobjects.pages.explore.FileUploadPage;
 import com.pageobjects.pages.login.CidLoginPage;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -82,7 +81,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-60916")
     @TestRail(testCaseId = {"2655", "2647", "2643"})
     @Description("Uploaded STEP assembly and components can be recosted")
     public void costAssembly() {
@@ -169,7 +167,6 @@ public class AssemblyUploadTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1103")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"2652", "1351", "1353", "1354"})
     @Description("User can delete STEP Assembly Post-Costing")

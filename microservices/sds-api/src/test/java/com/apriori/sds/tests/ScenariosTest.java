@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
+import com.apriori.sds.entity.request.CustomAttributes;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -226,6 +227,7 @@ public class ScenariosTest extends SDSTestUtil {
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(scenario.getScenarioName())
             .override(false)
+            .customAttributes(CustomAttributes.builder().udaRegion("Europe").build())
             .updatedBy(getTestingComponent().getCreatedBy())
             .build();
 
@@ -368,6 +370,7 @@ public class ScenariosTest extends SDSTestUtil {
                     .processGroupName("Sheet Metal")
                     .productionLife(5.0)
                     .vpeName("aPriori USA")
+                    .customAttributes(CustomAttributes.builder().udaRegion("Europe").build())
                     .costingTemplateIdentity(getFirstCostingTemplate().getIdentity())
                     .deleteTemplateAfterUse(false)
                     .build()

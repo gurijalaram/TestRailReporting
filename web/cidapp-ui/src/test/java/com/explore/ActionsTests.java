@@ -54,7 +54,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
+    @Issue("BA-2043")
     @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -98,7 +98,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7197", "7198"})
     @Description("Validate status and cost maturity columns can be added")
@@ -148,7 +147,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7902", "5436"})
     @Description("User can lock and unlock a scenario")
@@ -193,7 +191,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7259", "7265", "7269", "7272"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
@@ -227,7 +224,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7258", "7263", "7267", "7270"})
     @Description("User can add scenario info and notes from input & notes tile")
     public void infoNotesPanel() {
@@ -262,7 +258,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
@@ -300,7 +295,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7174", "7173"})
     @Description("Validate the user can select an ASSIGN action in the Evaluate page view without opening for Edit")
     public void actionsAssignEvaluatePage() {
@@ -336,7 +330,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7178", "7262", "7910"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
@@ -353,6 +346,7 @@ public class ActionsTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -373,7 +367,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7187"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
@@ -419,7 +412,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7188"})
     @Description("Validate User can edit notes to a scenario but then cancel out without saving changes")
     public void cancelEditNotes() {
@@ -465,7 +457,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7186", "7191"})
     @Description("Validate User can delete notes to a scenario")
     public void deleteNotes() {
@@ -511,7 +502,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7911"})
     @Description("Be able to view and read notes added by other users")
     public void readUsersNotes() {
@@ -559,7 +549,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7199", "7912"})
     @Description("Validate Status & Cost maturity are searchable attributes")
     public void filterStatusCost() {
@@ -607,7 +596,6 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-1920")
     @TestRail(testCaseId = {"7266", "7913"})
     @Description("Validate the user can add a description in scenario information & notes, then delete the description text & progress")
     public void deleteDescription() {

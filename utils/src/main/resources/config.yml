@@ -53,6 +53,10 @@ default:
   css:
     api_url: https://css.${default.aws_region}.${env}.apriori.net/
 
+  edc:
+    ui_url: https://edc.${default.aws_region}.${env}.apriori.net/
+    api_url: https://edc-api.${default.aws_region}.${env}.apriori.net/
+
   fms:
     api_url: https://fms.${default.aws_region}.${env}.apriori.net/
 
@@ -64,6 +68,10 @@ default:
 
   vds:
     api_url: https://vds.${default.aws_region}.${env}.apriori.net/
+
+  cis:
+    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
+    api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
 
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
@@ -105,7 +113,7 @@ int-core:
 
   ci-connect:
     ui_url: https://ci-connect.core.int.apriori.net/
- 
+
   fms:
     api_url: https://fms.core.int.apriori.net/
 
@@ -132,10 +140,8 @@ qa-cid-perf:
     ui_url: ${qa-cid-perf.base_url}apriori/login
 
   bcs:
-    report_identity: 50A4DFJF3NC7
-    reportType_identity: 0J3JMAA4MCAJ
-    part_identity: 6E5GDN0CHB95
-    batch_identity: 6N92EN8EHM52
+    api_url: https://bcs.na-1.qa-cid-perf.apriori.net/
+    number_of_parts: 100
 
   cas:
     api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
@@ -152,9 +158,52 @@ qa-cid-perf:
 
   ci-connect:
     ui_url: https://ci-connect.na-1.qa-cid-perf.apriori.net/
+    second_page_starting_range_number: 26
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
+
+######################################################## QA-CID-PERF-SANDBOX ########################################################
+qa-cid-perf-sandbox:
+  name: qa-cid-perf-sandbox
+  secret_key: 502M4JBUCE36
+  ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 92E1E4E9DFCD
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  auth_target_cloud_context: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
+
+  bcs:
+    api_url: https://bcs.na-1.sandbox.qa-cid-perf.apriori.net/
+    number_of_parts: 100
+
+  sds:
+    api_url: https://sds.na-1.qa-cid-perf.apriori.net/
+
+  edc:
+    ui_url: https://edc.na-1.qa-cid-perf.apriori.net/
+    api_url: https://edc-api.na-1.qa-cid-perf.apriori.net/
+
+  vds:
+    api_url: https://vds.na-1.qa-cid-perf.apriori.net/
+
+######################################################## QA-CID-PERF-SANDBOX ########################################################
+qa-cid-perf-sandbox:
+  name: qa-cid-perf-sandbox
+  secret_key: 502M4JBUCE36
+  ap_user_context: eyJpZGVudGl0eSI6IjFGN0dBSTVETEkyQiIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwidXBkYXRlZEF0IjoiMjAyMS0wOC0xMFQxNDo1NVoiLCJ1c2VyUHJvZmlsZSI6eyJpZGVudGl0eSI6IjFGN0dBSTVFRDBCMyIsImNyZWF0ZWRCeSI6IiNTWVNURU0wMDAwMCIsImNyZWF0ZWRBdCI6IjIwMjEtMDctMjBUMTM6MDVaIiwiZ2l2ZW5OYW1lIjoiUUEiLCJmYW1pbHlOYW1lIjoiQXV0b21hdGlvbiBBY2NvdW50IDAxIn0sImVtYWlsIjoicWEtYXV0b21hdGlvbi0wMUBhcHJpb3JpLmNvbSIsInVzZXJuYW1lIjoicWEtYXV0b21hdGlvbi0wMSIsImFjdGl2ZSI6dHJ1ZSwic2l0ZXMiOltdLCJjdXN0b21BdHRyaWJ1dGVzIjp7IndvcmtzcGFjZUlkIjoyNTF9LCJjdXN0b21lcklkZW50aXR5IjoiOTJFMUU0RTlERkNEIiwidXNlclR5cGUiOiJBUF9DTE9VRF9VU0VSIiwibWZhUmVxdWlyZWQiOmZhbHNlfQ==
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 92E1E4E9DFCD
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+  auth_target_cloud_context: 92E1E4E9DFCDCNLKB29B4GN8DC1FGJIAH6IC1J8M416FBJ94
+
+  bcs:
+    api_url: https://bcs.na-1.sandbox.qa-cid-perf.apriori.net/
+    number_of_parts: 100
+
+
+  sds:
+    api_url: https://sds.na-1.sandbox.qa-cid-perf.apriori.net/
 
 ######################################################## QA-CIG-PERF ########################################################
 qa-cig-perf:
@@ -253,7 +302,7 @@ local:
 
   fms:
     api_url: ${local.base_url}:8806/
-    
+
   nts:
     api_url: ${local.base_url}:8807/
 

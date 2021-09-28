@@ -245,7 +245,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(1.0));
+        assertThat(materialProcessPage.getOverriddenPso("Masking"), is(1.0));
     }
 
     @Test
@@ -406,7 +406,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart");
 
 
-        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (77.36%)"));
+        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (77.35%)"));
     }
 
     @Test
@@ -1012,8 +1012,7 @@ public class SecondaryProcessTests extends TestBase {
 
         assertThat(secondaryPage.getSecondaryProcesses(), hasItems("No Processes Selected..."));
 
-        evaluatePage.goToSecondaryTab()
-            .openSecondaryProcesses()
+        evaluatePage = secondaryPage.openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
             .deselectAll()
@@ -1022,6 +1021,6 @@ public class SecondaryProcessTests extends TestBase {
             .deselectAll()
             .cancel();
 
-        assertThat(evaluatePage.getListOfSecondaryProcesses(), is("No Processes Selected..."));
+        assertThat(evaluatePage.getListOfSecondaryProcesses(), hasItem("No Processes Selected..."));
     }
 }

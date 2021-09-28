@@ -10,6 +10,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -63,6 +64,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-action-bar-action-assign")
     private WebElement assignButton;
 
+    @FindBy(id = "qa-action-bar-action-update-cad-file")
+    private WebElement cadFileButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -72,6 +76,7 @@ public class ExploreToolbar extends MainNavBar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//button[.='Explore']"));
         pageUtils.waitForElementAppear(newButton);
         pageUtils.waitForElementAppear(deleteButton);
     }
@@ -132,6 +137,17 @@ public class ExploreToolbar extends MainNavBar {
      */
     public EvaluatePage navigateToScenario(Item cssComponent) {
         driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Navigates to the scenario via url
+     *
+     * @param scenarioUrl - url for the scenario
+     * @return new page object
+     */
+    public EvaluatePage navigateToScenario(String scenarioUrl) {
+        driver.navigate().to(scenarioUrl);
         return new EvaluatePage(driver);
     }
 
@@ -254,5 +270,19 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(newButton);
         pageUtils.waitForElementAndClick(comparisonButton);
         return new ComparePage(driver);
+    }
+
+    /**
+     * Uploads a cad file and select submit
+     *
+     * @param filePath - location of the file
+     * @param klass-   the class name
+     * @param <T>      - generic type
+     * @return generic page object
+     */
+    public <T> T updateCadFile(File filePath, Class<T> klass) {
+        pageUtils.waitForElementAndClick(actionsButton);
+        pageUtils.waitForElementAndClick(cadFileButton);
+        return new FileUploadPage(driver).enterFilePath(filePath).submit(klass);
     }
 }

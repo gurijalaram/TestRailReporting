@@ -3,7 +3,6 @@ package com.apriori.vds.entity.response.process.group.materials.stock;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -15,7 +14,6 @@ import java.time.LocalDateTime;
 @Schema(location = "ProcessGroupMaterialStockResponse.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProcessGroupMaterialStock {
     private Double costPerUnit;
     private String costUnits;

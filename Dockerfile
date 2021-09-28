@@ -27,7 +27,7 @@ RUN if [ "$MODULE" = "cid-ui" ] && [ "$TEST_MODE" != "GRID" ]; then \
 	fi
 
 # Prepare build workspace.
-FROM gradle:6.1.1-jdk8 AS sdk
+FROM gradle:7.2.0-jdk8 AS sdk
 ARG MODULE
 ARG FOLDER
 WORKDIR /automation-workspace

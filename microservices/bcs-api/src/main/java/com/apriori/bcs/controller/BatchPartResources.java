@@ -16,6 +16,7 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
 import java.io.File;
 import java.util.HashMap;
@@ -44,6 +45,29 @@ public class BatchPartResources {
         return HTTPRequest.build(requestEntity).get();
     }
 
+
+    /**
+     * Create a part with no material
+     *
+     * @param npr
+     * @param batchIdentity
+     * @param <T>
+     * @return
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartNoMaterial(NewPartRequest npr, String batchIdentity) {
+        npr.setMaterialName(null);
+        return createNewBatchPart(npr, batchIdentity);
+    }
+
+    /**
+     * Creat a new part
+     *
+     * @param npr New part request
+     * @param batchIdentity
+     * @param processGroupValue
+     * @param <T>
+     * @return
+     */
     public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
                                                             ProcessGroupValue processGroupValue) {
         String processGroup;
@@ -74,17 +98,20 @@ public class BatchPartResources {
                 .use("data", partFile)
             )
             .formParams(new FormParams()
-                .use("filename", npr.getFilename())
-                .use("externalId", String.format(npr.getExternalId(), System.currentTimeMillis()))
-                .use("AnnualVolume", npr.getAnnualVolume().toString())
-                .use("BatchSize", npr.getBatchSize().toString())
-                .use("Description", npr.getDescription())
-                .use("ProcessGroup", processGroup)
-                .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
-                .use("VpeName", npr.getVpeName())
-                .use("MaterialName", npr.getMaterialName())
-                .use("generateWatchpointReport", "true")
-            );
+                        .use("filename", npr.getFilename())
+                        .use("externalId", String.format(npr.getExternalId(), System.currentTimeMillis()))
+                        .use("AnnualVolume", npr.getAnnualVolume().toString())
+                        .use("BatchSize", npr.getBatchSize().toString())
+                        .use("Description", npr.getDescription())
+                        //.use("PinnedRouting", npr.getPinnedRouting())
+                        .use("ProcessGroup", processGroup)
+                        //.use("ProductionLife", npr.getProductionLife().toString())
+                        .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
+                        .use("Udas", npr.getUdas())
+                        .use("VpeName", npr.getVpeName())
+                        .use("MaterialName", npr.getMaterialName())
+                        .use("generateWatchpointReport", "true")
+                );
 
         return HTTPRequest.build(requestEntity).postMultipart();
     }
@@ -98,7 +125,7 @@ public class BatchPartResources {
         Object partDetails;
         BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
-        while (count <= Constants.POLLING_TIMEOUT * 2) {
+        while (count <= Constants.BATCH_POLLING_TIMEOUT * 2) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
             try {
@@ -122,7 +149,7 @@ public class BatchPartResources {
         Object partDetails;
         BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
-        while (count <= Constants.POLLING_TIMEOUT) {
+        while (count <= Constants.BATCH_POLLING_TIMEOUT) {
             partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
             try {
@@ -141,4 +168,20 @@ public class BatchPartResources {
 
         return HTTPRequest.build(requestEntity).get();
     }
+
+
+    /**
+     * Generate a newpartrequest
+     *
+     * @return newPartRequest
+     */
+    public static NewPartRequest getNewPartRequest() {
+        NewPartRequest newPartRequest =
+                (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+        newPartRequest.setFilename("bracket_form.prt");
+
+        return newPartRequest;
+    }
+
 }

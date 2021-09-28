@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
@@ -20,7 +21,7 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     private static final Logger logger = LoggerFactory.getLogger(EvaluateToolbar.class);
 
-    @FindBy(css = "[id='qa-sub-header-cost-button']")
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
     private WebElement costButton;
 
     @FindBy(css = ".alert")
@@ -35,6 +36,7 @@ public class EvaluateToolbar extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+        pageUtils.waitForSteadinessOfElement(By.xpath("//button[.='Evaluate']"));
         pageUtils.waitForElementAppear(costButton);
     }
 
@@ -44,6 +46,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return new page object
      */
     public EvaluatePage costScenario() {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         checkForCostLabel(2);
         return new EvaluatePage(driver);
@@ -66,6 +69,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label contains/doesn't contain text
      */
     public void checkForCostLabel(int timeoutInMinutes) {
+        pageUtils.waitForElementToAppear(costLabel);
         pageUtils.textPresentInElement(costLabel, NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText());
         pageUtils.textNotPresentInElement(costLabel, NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText(), timeoutInMinutes);
     }

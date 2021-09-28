@@ -137,9 +137,9 @@ public class ComparisonTests extends TestBase {
         cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile, currentUser);
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
             .clickExplore()
             .selectFilter("Recent")
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
@@ -233,15 +233,14 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItem = new ExplorePage(driver).navigateToScenario(cssItem)
+        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
             .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        comparePage = new ExplorePage(driver).navigateToScenario(cssItemB)
-            .selectProcessGroup(processGroupEnum)
+        comparePage = new EvaluatePage(driver).selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
@@ -299,10 +298,10 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        comparePage = new ExplorePage(driver).navigateToScenario(cssItem)
-            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+        comparePage = new ExplorePage(driver).uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
+            .navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()

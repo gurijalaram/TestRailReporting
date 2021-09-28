@@ -2,9 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'com.apriori.qa'
-version '0.0.1-SNAPSHOT'
-
 sourceCompatibility = 1.8
 
 repositories {
@@ -14,7 +11,6 @@ repositories {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
-
     implementation project(':microservices:ats-api')
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'

@@ -18,6 +18,10 @@ public class MyProfileTests extends TestBase {
     private EdcAppLoginPage loginPage;
     private MyProfilePage myProfilePage;
 
+    public MyProfileTests() {
+        super();
+    }
+
     @Test
     @TestRail(testCaseId = {"1551"})
     @Description("Navigate to My Profile Test")
