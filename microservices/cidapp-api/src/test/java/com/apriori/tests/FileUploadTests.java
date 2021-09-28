@@ -1,5 +1,8 @@
 package com.apriori.tests;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
@@ -15,9 +18,10 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.List;
 
-public class FileUploadTests extends CidAppTestUtil {
+public class FileUploadTests {
+
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     @Test
     @Description("Upload, cost and publish a part")
@@ -30,16 +34,13 @@ public class FileUploadTests extends CidAppTestUtil {
         String materialName = "Aluminum, Cast, ANSI AL380.0";
         UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = cidAppTestUtil.postCssComponents(componentName, scenarioName, resourceFile, currentUser);
 
-        List<Item> costResponse = new CidAppTestUtil().postCostScenario(componentName, scenarioName, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), ProcessGroupEnum.CASTING_DIE, DigitalFactoryEnum.APRIORI_USA, mode, materialName, currentUser);
-        String costState = costResponse.get(0).getScenarioState();
+        cidAppTestUtil.postCostScenario(componentName, scenarioName, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), ProcessGroupEnum.CASTING_DIE, DigitalFactoryEnum.APRIORI_USA, mode, materialName, currentUser);
 
-        ResponseWrapper<ScenarioResponse> publishResponse = new CidAppTestUtil().postPublishScenario(componentResponse, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
-        String publishState = publishResponse.getResponseEntity().getScenarioState();
-        //new CidAppTestUtil().publishScenario(componentResponse.getComponentUpdatedBy(), componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
-        //publish();
+        ResponseWrapper<ScenarioResponse> publishResponse = cidAppTestUtil.postPublishScenario(componentResponse, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
+
+        assertThat(publishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
+        assertThat(publishResponse.getResponseEntity().getPublished(), is(true));
     }
-
-
 }
