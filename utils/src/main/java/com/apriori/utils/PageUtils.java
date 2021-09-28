@@ -676,7 +676,7 @@ public class PageUtils {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
             .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
+            .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
     }
 
     /**
