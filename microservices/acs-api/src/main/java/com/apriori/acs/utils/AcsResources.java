@@ -16,7 +16,6 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
-
 import com.apriori.utils.users.UserUtil;
 
 import org.slf4j.Logger;

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.entity.response.SubLicense;
 import com.apriori.cds.entity.response.SubLicenses;
@@ -16,7 +17,6 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociation;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;

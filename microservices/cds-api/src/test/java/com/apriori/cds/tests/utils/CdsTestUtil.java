@@ -187,8 +187,9 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplication.class)
             .inlineVariables(customerIdentity, siteIdentity)
             .headers(new HashMap<String, String>() {{
-                put("Content-Type", "application/json");
-            }})
+                    put("Content-Type", "application/json");
+                }
+            })
             .body("licensedApplication",
                 LicensedApplication.builder()
                     .applicationIdentity(appIdentity)
@@ -348,8 +349,9 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity, idpIdentity)
             .headers(new HashMap<String, String>() {{
-                put("Content-Type", "application/json");
-            }})
+                    put("Content-Type", "application/json");
+                }
+            })
             .body("identityProvider",
                 IdentityProviderRequest.builder()
                     .description("patch IDP using Automation")

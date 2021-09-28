@@ -16,6 +16,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.http2.builder.common.entity.RequestEntity;
 import com.apriori.utils.http2.builder.service.HTTP2Request;
 import com.apriori.utils.http2.utils.RequestEntityUtil;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -85,8 +86,8 @@ public class CdsGetCustomerTests {
             .inlineVariables(customerIdentity)
             .headers(new HashMap<String, String>() {{
                     put("Content-Type", "application/json");
-                }}
-            )
+                }
+            })
             .body("customer",
                 Customer.builder()
                     .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))

@@ -4,11 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.tests.utils.CdsTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
