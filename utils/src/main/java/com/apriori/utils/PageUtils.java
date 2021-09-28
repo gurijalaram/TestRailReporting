@@ -860,8 +860,7 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
-        waitForElementToAppear(dropdownSelector);
-        actionClick(dropdownSelector);
+        actionClick(waitForElementToAppear(dropdownSelector));
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
         waitForElementToAppear(byValue);
         actionClick(driver.findElement(byValue));
