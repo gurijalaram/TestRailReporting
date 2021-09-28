@@ -253,7 +253,6 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelPartName = "Die Casting Lower Control Arm (As Machined2)";
         currentUser = UserUtil.getUser();
 
-
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
         twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, source2PartName + ".SLDPRT");
         twoModelFile2 = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".SLDPRT");
