@@ -12,8 +12,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class
-EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
+public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
     private static final String loginPageUrl = PropertiesContext.get("${env}.edc.ui_url");
 
