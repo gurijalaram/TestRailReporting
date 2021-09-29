@@ -51,7 +51,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     public static String getAssociatedProcessGroupIdentity() {
         if (associatedProcessGroupIdentity == null) {
-            associatedProcessGroupIdentity = getPGAssociationIdByPGName(ProcessGroupEnum.CASTING_DIE);
+            associatedProcessGroupIdentity = getPGAssociationIdByPGName(ProcessGroupEnum.STOCK_MACHINING);
         }
         return associatedProcessGroupIdentity;
     }
