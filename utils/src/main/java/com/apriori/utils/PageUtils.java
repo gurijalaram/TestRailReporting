@@ -660,9 +660,9 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
+            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + waitForElementToAppear(locator).getText())
             .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+            .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
     }
 
     /**
@@ -674,9 +674,9 @@ public class PageUtils {
      */
     public boolean textNotPresentInElement(WebElement locator, String text, int timeoutInMinutes) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
-            .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
+            .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
+            .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
     }
 
     /**
@@ -860,8 +860,7 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
-        waitForElementToAppear(dropdownSelector);
-        actionClick(dropdownSelector);
+        actionClick(waitForElementToAppear(dropdownSelector));
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
         waitForElementToAppear(byValue);
         actionClick(driver.findElement(byValue));
@@ -876,8 +875,7 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
-        waitForElementToAppear(dropdownSelector);
-        actionClick(dropdownSelector);
+        actionClick(waitForElementToAppear(dropdownSelector));
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
         waitForElementToAppear(byValue);
         actionClick(driver.findElement(byValue));

@@ -4,7 +4,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -80,8 +79,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(sourcePartName));
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(testScenarioName));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, testScenarioName), is(true));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Source Component")
@@ -253,7 +251,6 @@ public class TwoModelMachiningTests extends TestBase {
         String twoModelPartName = "Die Casting Lower Control Arm (As Machined2)";
         currentUser = UserUtil.getUser();
 
-
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".SLDPRT");
         twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, source2PartName + ".SLDPRT");
         twoModelFile2 = FileResourceUtil.getCloudFile(processGroupEnumTwoModel, twoModelPartName + ".SLDPRT");
@@ -289,7 +286,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourcePartDetails(), is(equalTo(sourcePartName + "/" + sourceScenarioName)));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, sourceScenarioName), is(true));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
 
         evaluatePage.selectSourcePart()
@@ -299,7 +296,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourcePartDetails(), containsString(source2PartName + "/" + source2ScenarioName));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2PartName, source2ScenarioName), is(true));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(11.66, 1));
     }
 

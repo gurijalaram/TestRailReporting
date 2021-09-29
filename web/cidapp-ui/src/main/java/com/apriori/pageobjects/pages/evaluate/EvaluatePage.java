@@ -354,6 +354,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Checks if secondary process pencil is enabled
+     *
      * @return boolean
      */
     public boolean isSecondaryProcessButtonEnabled() {
@@ -636,14 +637,13 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets the source part details
+     * Checks the source part details is displayed
      *
-     * @return string
+     * @return boolean
      */
-    public String getSourcePartDetails() {
-        By sourcePart = By.cssSelector("[id='qa-source-model-modal-select-field'].input-group");
-        pageUtils.waitForElementToAppear(sourcePart);
-        return driver.findElement(sourcePart).getAttribute("textContent");
+    public boolean isSourcePartDetailsDisplayed(String componentName, String scenarioName) {
+        By byScenario = getByScenario(componentName, scenarioName);
+        return pageUtils.waitForElementToAppear(byScenario).isDisplayed();
     }
 
     /**
@@ -654,11 +654,21 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return a new page object
      */
     public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementAndClick(scenario);
-        pageUtils.waitForElementAndClick(scenario);
+        By byScenario = getByScenario(componentName, scenarioName);
+        pageUtils.waitForElementAndClick(byScenario);
+        pageUtils.waitForElementAndClick(byScenario);
         pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Get by scenario
+     * @param componentName - the component name
+     * @param scenarioName - the scenario name
+     * @return by
+     */
+    private By getByScenario(String componentName, String scenarioName) {
+        return By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
     }
 
     /**
@@ -681,6 +691,7 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Gets secondary processes
+     *
      * @return list of string
      */
     public List<String> getListOfSecondaryProcesses() {
