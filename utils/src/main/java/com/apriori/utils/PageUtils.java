@@ -660,9 +660,9 @@ public class PageUtils {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
 
         return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + locator.getText())
+            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + waitForElementToAppear(locator).getText())
             .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text));
+            .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
     }
 
     /**
@@ -674,9 +674,9 @@ public class PageUtils {
      */
     public boolean textNotPresentInElement(WebElement locator, String text, int timeoutInMinutes) {
         return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
-            .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
+            .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
+            .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
     }
 
     /**
