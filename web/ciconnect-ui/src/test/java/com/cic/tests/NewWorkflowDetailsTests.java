@@ -54,7 +54,7 @@ public class NewWorkflowDetailsTests extends TestBase {
     public void cleanup() {
         workflowPage.refreshPage();
         workflowNames.forEach(name -> {
-            workflowPage.sortBy("Last Modified By");
+            workflowPage.sortBy("Connector");
             workflowFeatures.deleteWorklow(name);
         });
     }
