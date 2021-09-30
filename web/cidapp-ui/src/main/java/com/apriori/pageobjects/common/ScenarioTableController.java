@@ -328,7 +328,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
         By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
 
-        while (!driver.findElement(byColumn).findElement(By.cssSelector("svg")).getAttribute("data-icon").equals(order.getOrder())) {
+        while (!pageUtils.waitForElementToAppear(byColumn).findElement(By.cssSelector("svg")).getAttribute("data-icon").equals(order.getOrder())) {
             pageUtils.waitForElementAndClick(byColumn);
         }
         return this;
