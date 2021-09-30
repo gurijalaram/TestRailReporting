@@ -535,7 +535,7 @@ public class ThreadTests extends TestBase {
         threadingPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
                 .selectProcessGroup(processGroupEnum.SHEET_METAL)
-                .costScenario()
+                .costScenario(5)
                 .openDesignGuidance()
                 .openThreadsTab()
                 .selectIssueTypeGcd("Simple Holes", "SimpleHole:15");
