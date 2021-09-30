@@ -4,7 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.edcapi.utils.EDCResources;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
+import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.pageobjects.pages.login.UploadedFilePage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
@@ -13,6 +15,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CostStatusEnum;
 import io.qameta.allure.Description;
+import org.junit.After;
 import org.junit.Test;
 
 import java.io.File;
@@ -22,9 +25,15 @@ public class FilterPartsTests extends TestBase {
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private UploadedFilePage uploadedFilePage;
+    private MatchedPartPage matchedPartPage;
 
     public FilterPartsTests() {
         super();
+    }
+
+    @After
+    public void cleanUp() {
+        EDCResources.deleteBillOfMaterialById(uploadedFilePage.getBillOfMaterialsId());
     }
 
     @Test

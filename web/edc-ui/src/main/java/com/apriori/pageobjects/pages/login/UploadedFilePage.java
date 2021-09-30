@@ -136,4 +136,16 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
     public String getMatchCompleteText() {
         return pageUtils.waitForElementToAppear(matchComplete).getAttribute("textContent");
     }
+
+    /**
+     * Gets the BOM Identity
+     *
+     * @return String
+     */
+    public String getBillOfMaterialsId() {
+        String currentUrl = driver.getCurrentUrl();
+        int billOfMaterialsIdPosition = 4;
+        String[] currMatArray = currentUrl.split("/");
+        return currMatArray[billOfMaterialsIdPosition];
+    }
 }
