@@ -10,7 +10,6 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -76,7 +75,6 @@ public class ExploreToolbar extends MainNavBar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForSteadinessOfElement(By.xpath("//button[.='Explore']"));
         pageUtils.waitForElementAppear(newButton);
         pageUtils.waitForElementAppear(deleteButton);
     }

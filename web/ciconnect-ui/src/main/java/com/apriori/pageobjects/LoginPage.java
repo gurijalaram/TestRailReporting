@@ -6,14 +6,13 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.workflows.GenericWorkflow;
 
+import lombok.Getter;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Constants;
 
 public class LoginPage {
     private static final Logger logger = LoggerFactory.getLogger(LoginPage.class);
@@ -27,9 +26,14 @@ public class LoginPage {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private UserCredentials userCredentials;
+
+    @Getter private static String userName;
 
     public LoginPage(WebDriver driver) {
         init(driver, true);
+        userCredentials = UserUtil.getUser();
+        userName = userCredentials.getUsername();
     }
 
     public void init(WebDriver driver, boolean loadNewPage) {
@@ -61,9 +65,7 @@ public class LoginPage {
      * @return new page object
      */
     public GenericWorkflow login() {
-        UserCredentials userCredentials = UserUtil.getUser();
-
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(this.userName, userCredentials.getPassword());
         return new GenericWorkflow(driver);
     }
 

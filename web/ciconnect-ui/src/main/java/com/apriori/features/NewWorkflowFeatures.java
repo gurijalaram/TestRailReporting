@@ -41,7 +41,7 @@ public class NewWorkflowFeatures {
         this.scheduleFactory = new ScheduleFactory();
         newWorkflowIteration = 1;
     }
-    
+
     /**
      * Retrieve the state of the fields on the "New Workflow Details" tab
      *
@@ -100,7 +100,7 @@ public class NewWorkflowFeatures {
      * @return
      */
     public Map<String, Object> doFieldInputInspection(String field, boolean useMinimum,
-                                                       boolean useSpecialCharacters, boolean useUnsuportedSpecial,
+                                                      boolean useSpecialCharacters, boolean useUnsuportedSpecial,
                                                       String testDescription) {
         values = new HashMap<>();
         String name = "";
@@ -132,6 +132,7 @@ public class NewWorkflowFeatures {
         newWorkflowIteration++;
 
         workflowPage.refreshPage();
+        workflowPage.sortBy("Connector");
         Boolean workflowExisits = workflowPage.workflowExists(name);
         values.put("workflowExists", workflowExisits);
         values.put("name", name);
@@ -198,7 +199,7 @@ public class NewWorkflowFeatures {
         wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName,
                 scheduleFactory.getMonthlySchedule(WorkflowSchedule.MonthlyOccurance.THIRD,
-                WorkflowSchedule.WeekDay.SATURDAY, 3, "01", "10"), "monthly");
+                        WorkflowSchedule.WeekDay.SATURDAY, 3, "01", "10"), "monthly");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
@@ -206,15 +207,15 @@ public class NewWorkflowFeatures {
         wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName,
                 scheduleFactory.getYearlySchedule(WorkflowSchedule.Month.DECEMBER, 3,
-                "01",
-                "10"), "yearly-every");
+                        "01",
+                        "10"), "yearly-every");
         workflows.add(workflow);
         workflowNames.add(wfName);
 
         wfName = UIUtils.saltStringUUID(scheduleName);
         workflow = setWorkflowScheduleAndName(wfName,
                 scheduleFactory.getYearlySchedule(WorkflowSchedule.MonthlyOccurance.FOURTH,
-                WorkflowSchedule.Month.FEBRUARY, WorkflowSchedule.WeekDay.MONDAY, "00", "00"), "yearly");
+                        WorkflowSchedule.Month.FEBRUARY, WorkflowSchedule.WeekDay.MONDAY, "00", "00"), "yearly");
         workflows.add(workflow);
         workflowNames.add(wfName);
 

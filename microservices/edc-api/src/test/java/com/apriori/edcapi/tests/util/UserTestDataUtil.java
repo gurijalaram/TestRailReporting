@@ -8,14 +8,14 @@ import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
@@ -85,7 +85,7 @@ public class UserTestDataUtil extends TestUtil {
             PartsAPIEnum.GET_LINE_ITEMS, MaterialsLineItemsWrapper.class)
             .inlineVariables(userDataEDC.getBillOfMaterial().getIdentity());
 
-        return (MaterialsLineItemsWrapper) HTTP2Request.build(requestEntity).get()
+        return (MaterialsLineItemsWrapper) HTTPRequest.build(requestEntity).get()
             .getResponseEntity();
     }
 
@@ -101,7 +101,7 @@ public class UserTestDataUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(
             BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class);
 
-        return (BillOfMaterialsWrapper) HTTP2Request.build(requestEntity).get()
+        return (BillOfMaterialsWrapper) HTTPRequest.build(requestEntity).get()
             .getResponseEntity();
 
     }
@@ -115,7 +115,7 @@ public class UserTestDataUtil extends TestUtil {
                 .inlineVariables(identity);
 
             workingBillOfMaterials.add(
-                ((BillOfSingleMaterialWrapper) HTTP2Request.build(requestEntity).get().getResponseEntity()).getBillOfMaterial()
+                ((BillOfSingleMaterialWrapper) HTTPRequest.build(requestEntity).get().getResponseEntity()).getBillOfMaterial()
             );
 
         });
@@ -131,7 +131,7 @@ public class UserTestDataUtil extends TestUtil {
                         .inlineVariables(identity);
 
                     validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT,
-                        HTTP2Request.build(requestEntity).delete().getStatusCode());
+                        HTTPRequest.build(requestEntity).delete().getStatusCode());
                 }
             );
         }
@@ -145,7 +145,7 @@ public class UserTestDataUtil extends TestUtil {
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", testData))
             .formParams(new FormParams().use("type", "WH"));
 
-        ResponseWrapper<BillOfSingleMaterialWrapper> response = HTTP2Request.build(requestEntity).postMultipart();
+        ResponseWrapper<BillOfSingleMaterialWrapper> response = HTTPRequest.build(requestEntity).postMultipart();
 
         return response.getResponseEntity().getBillOfMaterial().getIdentity();
     }

@@ -28,7 +28,7 @@ default:
   aws_region: na-1
 
   ats:
-    api_url: https://ats.${default.aws_region}.${env}.apriori.net
+    api_url: https://ats.${default.aws_region}.${env}.apriori.net/
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1

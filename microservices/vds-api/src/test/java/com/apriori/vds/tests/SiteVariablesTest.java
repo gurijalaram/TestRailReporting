@@ -4,10 +4,10 @@ import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.site.variable.SiteVariableRequest;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
@@ -47,7 +47,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 .inlineVariables(
                     this.getFirstSiteVariable().getIdentity()
                 );
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
     @Test
@@ -76,7 +76,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
                 .inlineVariables(siteVariableBeforeUpdate.getIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).patch();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
         validateUpdatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
@@ -91,7 +91,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(initUpdateRequestBody(siteVariable));
 
-        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTP2Request.build(requestEntity).put();
+        final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, updatedSiteVariableResponse.getStatusCode());
         validateCreatedObject(updatedSiteVariableResponse.getResponseEntity());
     }
@@ -100,7 +100,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(identity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
 
     private SiteVariable getFirstSiteVariable() {
@@ -113,7 +113,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     private List<SiteVariable> getSiteVariablesResponse() {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
 
-        ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, siteVariablesResponse.getStatusCode());
 
         return siteVariablesResponse.getResponseEntity().getItems();
@@ -132,7 +132,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
                     .build()
                 );
 
-        ResponseWrapper<SiteVariable> siteVariableResponse = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<SiteVariable> siteVariableResponse = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, siteVariableResponse.getStatusCode());
 
         return siteVariableResponse.getResponseEntity();

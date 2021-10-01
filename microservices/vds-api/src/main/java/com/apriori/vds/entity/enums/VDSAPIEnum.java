@@ -1,9 +1,9 @@
 package com.apriori.vds.entity.enums;
 
-import com.apriori.utils.http.enums.common.EdcQaAPI;
+import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
-public enum VDSAPIEnum implements EdcQaAPI {
+public enum VDSAPIEnum implements ExternalEndpointEnum {
 
     // Access Controls
     GET_GROUPS("groups"),

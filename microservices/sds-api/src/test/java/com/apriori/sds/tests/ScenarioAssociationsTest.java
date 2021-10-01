@@ -10,10 +10,10 @@ import com.apriori.sds.entity.response.ScenarioAssociationsItems;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -48,7 +48,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
                     getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(), getFirstAssociation().getIdentity()
                 );
 
-        ResponseWrapper<ScenarioAssociation> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -72,7 +72,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 
-        final ResponseWrapper<ScenarioAssociation> response = HTTP2Request.build(request).patch();
+        final ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(request).patch();
         final ScenarioAssociation scenarioAssociation = response.getResponseEntity();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -95,7 +95,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 
-        final ResponseWrapper<ScenarioAssociation> response = HTTP2Request.build(request).post();
+        final ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(request).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
 
         return response.getResponseEntity();
@@ -115,7 +115,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
                     getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity()
                 );
 
-        ResponseWrapper<ScenarioAssociationsItems> responseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioAssociationsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity().getItems();
@@ -127,7 +127,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
                 .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(),
                     associationIdentity);
 
-        ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
+        ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
 
         assertEquals(String.format("The association %s, was not removed", associationIdentity),
             HttpStatus.SC_NO_CONTENT, response.getStatusCode());

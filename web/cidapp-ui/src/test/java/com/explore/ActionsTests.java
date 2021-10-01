@@ -173,6 +173,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
@@ -560,7 +561,6 @@ public class ActionsTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
-
 
         loginPage = new CidAppLoginPage(driver);
         cssItem = loginPage.login(currentUser)

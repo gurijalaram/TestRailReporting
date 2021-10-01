@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.tests.utils.CdsTestUtil;
@@ -25,7 +26,6 @@ public class CdsCustomersTests {
     private String url;
 
     private String customerIdentity;
-    private String customerIdentityEndpoint;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
@@ -36,8 +36,8 @@ public class CdsCustomersTests {
 
     @After
     public void cleanUp() {
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -45,9 +45,7 @@ public class CdsCustomersTests {
     @TestRail(testCaseId = {"3252"})
     @Description("API returns a list of all the available customers in the CDS DB")
     public void getCustomers() {
-        url = String.format(url, "customers");
-
-        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -65,7 +63,6 @@ public class CdsCustomersTests {
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         assertThat(customer.getResponseEntity().getName(), is(equalTo(customerName)));
     }
