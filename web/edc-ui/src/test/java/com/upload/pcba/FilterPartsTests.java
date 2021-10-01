@@ -33,7 +33,8 @@ public class FilterPartsTests extends TestBase {
 
     @After
     public void cleanUp() {
-        EDCResources.deleteBillOfMaterialById(uploadedFilePage.getBillOfMaterialsId());
+        matchedPartPage = new MatchedPartPage(driver);
+        EDCResources.deleteBillOfMaterialById(matchedPartPage.getBillOfMaterialsId());
     }
 
     @Test
