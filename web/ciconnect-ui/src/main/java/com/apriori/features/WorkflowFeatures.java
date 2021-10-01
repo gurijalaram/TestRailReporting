@@ -146,7 +146,6 @@ public class WorkflowFeatures {
      */
     public Map<String, Object> deleteWorklow(String workflowName) {
         Map<String, Object> values = new HashMap();
-        workflowPage.refreshPage();
 
         workflowPage.selectWorkflow(workflowName);
         workflowPage.clickDeleteButton();
@@ -155,6 +154,7 @@ public class WorkflowFeatures {
 
         deleteWorkflowPage.deleteWorkflow();
         workflowPage.refreshPage();
+        workflowPage.sortBy("Connector");
 
         boolean exists = workflowPage.workflowExists(workflowName);
         values.put("workflowExists", exists);
