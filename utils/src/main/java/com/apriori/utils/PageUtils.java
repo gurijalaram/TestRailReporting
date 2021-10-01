@@ -409,6 +409,32 @@ public class PageUtils {
     }
 
     /**
+     * Checks element is not displayed by size
+     *
+     * @param element - the element
+     * @return size as int
+     */
+    public int waitForElementsToNotAppear(By element, long timeoutInMinutes) {
+        long startTime = System.currentTimeMillis() / 1000;
+        long maxWaitTime = 120L * timeoutInMinutes;
+        int elementSize = 0;
+
+        try {
+            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+            do {
+                elementSize = driver.findElements(element).size();
+            } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
+
+            if (elementSize > 0) {
+                throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
+            }
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        return elementSize;
+    }
+
+    /**
      * Checks element is displayed
      *
      * @param element - the element
@@ -416,13 +442,11 @@ public class PageUtils {
      */
     public WebElement waitForElementAppear(WebElement element) {
         long maxWaitTime = 120L;
-        long pollTime = 5L;
 
         try {
             logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
-                .pollingEvery(Duration.ofMillis(pollTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(visibilityOf(element));
 
@@ -439,13 +463,11 @@ public class PageUtils {
      */
     public WebElement waitForElementToAppear(WebElement element) {
         long maxWaitTime = 120L;
-        long pollTime = 5L;
 
         try {
             logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
-                .pollingEvery(Duration.ofMillis(pollTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(visibilityOf(element));
 
@@ -488,13 +510,11 @@ public class PageUtils {
      */
     public List<WebElement> waitForElementsToAppear(List<WebElement> element) {
         long maxWaitTime = 120L;
-        long pollTime = 5L;
 
         try {
             logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
-                .pollingEvery(Duration.ofMillis(pollTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(visibilityOfAllElements(element));
 
@@ -511,13 +531,11 @@ public class PageUtils {
      */
     public WebElement waitForElementToBeClickable(WebElement element) {
         long maxWaitTime = 120L;
-        long pollTime = 5L;
 
         try {
             logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
-                .pollingEvery(Duration.ofMillis(pollTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(elementToBeClickable(element));
 
@@ -534,13 +552,11 @@ public class PageUtils {
      */
     public WebElement waitForElementToBeClickable(By element) {
         long maxWaitTime = 120L;
-        long pollTime = 5L;
 
         try {
             logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
-                .pollingEvery(Duration.ofMillis(pollTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(elementToBeClickable(element));
 
