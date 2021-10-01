@@ -210,9 +210,19 @@ public class PageUtils {
             "return arguments[0].parentElement", element);
     }
 
+    /**
+     * Uses actions to click an element
+     *
+     * @param targetElement - the element
+     */
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
-        builder.click(targetElement).build().perform();
+
+        try {
+            builder.click(targetElement).build().perform();
+        } catch (StaleElementReferenceException | TimeoutException e) {
+            builder.click(targetElement).build().perform();
+        }
     }
 
     /**
@@ -516,6 +526,7 @@ public class PageUtils {
 
     /**
      * Wait for element to be clickable
+     *
      * @param element - the element
      * @return webelement
      */
@@ -538,6 +549,7 @@ public class PageUtils {
 
     /**
      * Wait for element to be clickable
+     *
      * @param element - the element
      * @return webelement
      */
