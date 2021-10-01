@@ -558,6 +558,25 @@ public class PageUtils {
         }
     }
 
+    /**
+     * Ignores exceptions and waits for the element to be clickable
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(WebElement locator) {
+        waitForElementToBeClickable(locator);
+        waitForElementToAppear(locator).click();
+    }
+
+    /**
+     * Ignores exceptions and waits for the element to be clickable
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(By locator) {
+        waitForElementToBeClickable(locator);
+        waitForElementToAppear(locator).click();
+    }
 
 //    public WebElement waitForElementAppear(WebElement element) {
 //        return waitForAppear(element);
@@ -807,26 +826,6 @@ public class PageUtils {
             .withMessage("\nNot expecting: " + text + "\nFound: " + locator.getText())
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).getText().contains(text)));
-    }
-
-    /**
-     * Ignores exceptions and waits for the element to be clickable
-     *
-     * @param locator - the locator of the element
-     */
-    public void waitForElementAndClick(WebElement locator) {
-        waitForElementToBeClickable(locator);
-        waitForElementToAppear(locator).click();
-    }
-
-    /**
-     * Ignores exceptions and waits for the element to be clickable
-     *
-     * @param locator - the locator of the element
-     */
-    public void waitForElementAndClick(By locator) {
-        waitForElementToBeClickable(locator);
-        waitForElementToAppear(locator).click();
     }
 
     /**
