@@ -295,12 +295,12 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     private Scenario getScenarioByIdentity(final String scenarioIdentity) {
-        return  getScenarioByCustomerScenarioIdentity(null, scenarioIdentity);
+        return getScenarioByCustomerScenarioIdentity(null, scenarioIdentity);
     }
 
 
-        private Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
-        if(componentIdentity == null) {
+    private Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
+        if (componentIdentity == null) {
             componentIdentity = getComponentId();
         }
 

@@ -2,7 +2,6 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.navtoolbars.help.HelpPage;
 import com.apriori.pageobjects.navtoolbars.myuser.MyUserPage;
-
 import com.apriori.pageobjects.pages.login.FileUploadPage;
 import com.apriori.utils.PageUtils;
 
