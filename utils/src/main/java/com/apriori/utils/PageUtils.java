@@ -559,7 +559,7 @@ public class PageUtils {
     }
 
     /**
-     * Ignores exceptions and waits for the element to be clickable
+     * Ignores exceptions, waits for the element to be clickable then clicks it
      *
      * @param locator - the locator of the element
      */
@@ -569,7 +569,7 @@ public class PageUtils {
     }
 
     /**
-     * Ignores exceptions and waits for the element to be clickable
+     * Ignores exceptions, waits for the element to be clickable then clicks it
      *
      * @param locator - the locator of the element
      */
