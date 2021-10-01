@@ -8,16 +8,13 @@
     "createdAt",
     "createdBy",
     "customerIdentity",
-    "description",
     "identity",
-    "location",
     "name",
     "ownerType",
     "permissions",
     "productionLife",
     "subjectIdentity",
-    "useType",
-    "vpeType"
+    "useType"
   ],
   "properties": {
     "active": {

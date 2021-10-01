@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class PostComponentRequest {
     private String filename;
     private String scenarioName;
-    private CustomAttributes customAttributes;
+    private CustomAttributesRequest customAttributesRequest;
     private String name;
     private Boolean override;
     private String fileContents;

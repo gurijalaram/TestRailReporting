@@ -35,15 +35,15 @@ public abstract class VDSTestUtil extends TestUtil {
         List<DigitalFactory> digitalFactories = digitalFactoriesItemsResponseWrapper.getResponseEntity().getItems();
         Assert.assertNotEquals("To get Digital Factory, response should contain it.", 0, digitalFactories.size());
 
-        return findDigitalFactoryByLocation(digitalFactories, "Germany");
+        return findDigitalFactoryByName(digitalFactories, "aPriori USA");
     }
 
-    private static DigitalFactory findDigitalFactoryByLocation(List<DigitalFactory> digitalFactories, final String location) {
+    private static DigitalFactory findDigitalFactoryByName(List<DigitalFactory> digitalFactories, final String name) {
         return digitalFactories.stream()
-            .filter(digitalFactory -> location.equals(digitalFactory.getLocation()))
+            .filter(digitalFactory -> name.equals(digitalFactory.getName()))
             .findFirst()
             .orElseThrow(
-                () -> new IllegalArgumentException(String.format("Digital Factory with location: %s, was not found.", location))
+                () -> new IllegalArgumentException(String.format("Digital Factory with location: %s, was not found.", name))
             );
     }
 
