@@ -12,12 +12,11 @@ import org.junit.Assert;
 
 public class AuthorizeUserUtil {
 
-    public static AuthorizationResponse authorizeUser(String secretKey, String url, String targetCloudContext,
+    public static AuthorizationResponse authorizeUser( String targetCloudContext,
                                                       String token, int statusCode) {
         AuthorizeRequest authorizeRequest = new AuthorizeRequest().setTargetCloudContext(targetCloudContext).setToken(token);
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AuthorizeUserEnum.POST_MULTIPART_AUTHORIZE_BY_BASE_URL_SECRET, AuthorizationResponse.class)
-            .inlineVariables(url, secretKey)
             .body(authorizeRequest);
 
         ResponseWrapper<AuthorizationResponse> responseWrapper = HTTPRequest.build(requestEntity).postMultipart();
