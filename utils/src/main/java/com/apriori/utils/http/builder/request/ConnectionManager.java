@@ -1,22 +1,13 @@
-package com.apriori.utils.http.builder.dao;
+package com.apriori.utils.http.builder.request;
 
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
-import static org.hamcrest.Matchers.isOneOf;
 
-import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
-import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
-import com.apriori.utils.http.builder.common.response.common.PayloadJSON;
-import com.apriori.utils.http.builder.service.RequestAreaClearRequest;
-import com.apriori.utils.http.builder.service.RequestInitService;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.http.enums.common.api.AuthEndpointEnum;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
 
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
@@ -34,44 +25,24 @@ import io.restassured.response.ValidatableResponse;
 import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.http.HttpStatus;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * {@link ConnectionManager} class has the following purposes:
- * - Holds your request parameters what you can set up using {@link RequestInitService} class.
  * - Creates {@link RequestSpecification}
  * - Connects to desired endpoint using
  * GET ({@link #get()}), POST ({@link #post()}), PUT ({@link #put()}), PATCH ({@link #patch()}) and DELETE ({@link #delete()}) methods
  * - Converts response JSON into the desired POJO object
  */
 @Slf4j
-public class ConnectionManager<T> {
-
-    private static final Logger logger = LoggerFactory.getLogger(ConnectionManager.class);
-    private static Map<String, String> sessionIds = new ConcurrentHashMap<>();
-    private static Map<String, String> authTokens = new ConcurrentHashMap<>();
+class ConnectionManager<T> {
     private Class<T> returnType;
     private RequestEntity requestEntity;
 
@@ -79,98 +50,16 @@ public class ConnectionManager<T> {
         this.requestEntity = requestEntity;
         this.returnType = returnType;
         RestAssured.defaultParser = Parser.JSON;
-        RestAssured.urlEncodingEnabled = requestEntity.isUrlEncodingEnabled();
+        RestAssured.urlEncodingEnabled = requestEntity.urlEncodingEnabled();
 
-    }
-
-    public static Object postMultiPartFormData(String uri, Map<String, String> params, Class klass, String cloudContext) throws IOException {
-        return postMultiPartFormData(uri, params, klass, null, cloudContext);
-
-    }
-
-    public static Object postMultiPartFormData(String uri, Map<String, String> params, Class klass, File file, String cloudContext)
-        throws IOException {
-        URL url = new URL(uri);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
-        conn.setRequestMethod("POST");
-        String boundary = "----------------------------544615151549871231842369";
-        conn.setDoOutput(true);
-        conn.setRequestProperty("Content-Type",
-            "multipart/form-data; boundary=" + boundary);
-        conn.setRequestProperty("ap-cloud-context", cloudContext);
-
-        OutputStream outputStream = conn.getOutputStream();
-        BufferedWriter bodyWriter = new BufferedWriter(new OutputStreamWriter(outputStream));
-
-        for (Object key : params.keySet()) {
-            bodyWriter.write("--" + boundary + "\r\n");
-            bodyWriter.write("Content-Disposition: form-data; name=\"" + key + "\"\r\n\r\n" + params.get(key));
-            bodyWriter.write("\r\n");
-            bodyWriter.flush();
-        }
-
-        if (file != null) {
-
-            bodyWriter.write("--" + boundary + "\r\n");
-            bodyWriter.write("Content-Disposition: form-data; name=\"attachment\"; filename=\""
-                + file.getName() + "\"");
-            bodyWriter.write("\r\n\r\n");
-            bodyWriter.flush();
-
-            InputStream istreamFile = new FileInputStream(file);
-            Integer bytesRead;
-            byte[] buffer = new byte[1024];
-            while ((bytesRead = istreamFile.read(buffer)) != -1) {
-                outputStream.write(buffer, 0, bytesRead);
-            }
-
-            outputStream.flush();
-        }
-
-
-        bodyWriter.write("--" + boundary + "-\r\n");
-        bodyWriter.flush();
-
-        outputStream.close();
-        bodyWriter.close();
-
-        int status = conn.getResponseCode();
-
-        InputStream inputStream;
-        if (status != HttpStatus.SC_CREATED) {
-            inputStream = conn.getErrorStream();
-            Assert.fail("Error code was not expected (" + status + ")");
-        } else {
-            inputStream = conn.getInputStream();
-        }
-
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-            inputStream, StandardCharsets.UTF_8));
-
-        String line;
-        StringBuilder sb = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            sb.append(line);
-            sb.append(System.getProperty("line.separator"));
-        }
-
-        reader.close();
-
-        Object response = JsonManager.deserializeJsonFromString(sb.toString(), klass);
-        return response;
     }
 
     private RequestSpecification createRequestSpecification() {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
-        List<Map<String, ?>> urlParams = requestEntity.getUrlParams();
-        MultiPartFiles multiPartFiles = requestEntity.getMultiPartFiles();
-        FormParams formParams = requestEntity.getFormParams();
-
-        if (requestEntity.isAutoLogin()) {
-            requestEntity.setHeaders(AuthorizationFormUtil.getTokenAuthorizationForm(this.getAuthToken()));
-        }
+        List<Map<String, ?>> urlParams = requestEntity.urlParams();
+        MultiPartFiles multiPartFiles = requestEntity.multiPartFiles();
+        FormParams formParams = requestEntity.formParams();
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
@@ -187,21 +76,25 @@ public class ConnectionManager<T> {
             urlParams.forEach(builder::addQueryParams);
         }
 
-        if (requestEntity.getHeaders() != null) {
-            builder.addHeaders(requestEntity.getHeaders());
+        if (requestEntity.headers() != null) {
+            builder.addHeaders(requestEntity.headers());
         }
 
-        if (requestEntity.getXwwwwFormUrlEncoded() != null && !requestEntity.getXwwwwFormUrlEncoded().isEmpty()) {
+        if (requestEntity.token() != null) {
+            builder.addHeader("Authorization", "Bearer " + requestEntity.token());
+        }
+
+        if (requestEntity.xwwwwFormUrlEncodeds() != null && !requestEntity.xwwwwFormUrlEncodeds().isEmpty()) {
             builder.setContentType(ContentType.URLENC);
-            requestEntity.getXwwwwFormUrlEncoded().forEach(builder::addFormParams);
+            requestEntity.xwwwwFormUrlEncodeds().forEach(builder::addFormParams);
         }
 
-        if (requestEntity.getCustomBody() != null) {
-            builder.setBody(requestEntity.getCustomBody());
+        if (requestEntity.customBody() != null) {
+            builder.setBody(requestEntity.customBody());
         }
 
-        if (requestEntity.getBody() != null) {
-            builder.setBody(requestEntity.getBody(), ObjectMapperType.JACKSON_2);
+        if (requestEntity.body() != null) {
+            builder.setBody(requestEntity.body(), ObjectMapperType.JACKSON_2);
         }
 
         /*
@@ -222,8 +115,8 @@ public class ConnectionManager<T> {
                 .setConfig(RestAssuredConfig.config()
                     .httpClient(
                         HttpClientConfig.httpClientConfig()
-                            .setParam("http.connection.timeout", requestEntity.getConnectionTimeout())
-                            .setParam("http.socket.timeout", requestEntity.getSocketTimeout())
+                            .setParam("http.connection.timeout", requestEntity.connectionTimeout())
+                            .setParam("http.socket.timeout", requestEntity.socketTimeout())
                     )
                     .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
                 )
@@ -232,70 +125,15 @@ public class ConnectionManager<T> {
             log.error("Error with URI" + e.getMessage());
         }
 
-
-        if (requestEntity.getStatusCode() != null) {
-            return RestAssured.given()
-                .spec(builder.build())
-                .expect().statusCode(isOneOf(requestEntity.getStatusCode())).request()
-                .redirects().follow(requestEntity.isFollowRedirection())
-                .log()
-                .all();
-        }
-
         return RestAssured.given()
             .spec(builder.build())
-
-            .redirects().follow(requestEntity.isFollowRedirection())
+            .redirects().follow(requestEntity.followRedirection())
             .log()
             .all();
     }
 
     private boolean ignoreSslCheck() {
         return !StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"));
-    }
-
-    // future: This is for future API support where we could have external API which user can call, get auth token and use end-points
-    private String getAuthToken() {
-
-        UserAuthenticationEntity userAuthenticationEntity = requestEntity.getUserAuthenticationEntity();
-
-        if (requestEntity.getToken() != null) {
-            return requestEntity.getToken();
-        }
-
-        if (authTokens.get(userAuthenticationEntity.getEmailAddress()) == null) {
-            logger.info("Missing auth id for: " + userAuthenticationEntity.getEmailAddress());
-            RequestEntity authEntity = RequestEntity
-                .initDefaultFormAuthorizationData(requestEntity.getUserAuthenticationEntity().getEmailAddress(),
-                    requestEntity.getUserAuthenticationEntity().getPassword()
-                )
-                .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(AuthEndpointEnum.POST_AUTH)
-                .setFollowRedirection(false);
-
-            String authToken =
-                ((AuthenticateJSON) GenericRequestUtil.post(authEntity, new RequestAreaClearRequest())
-                    .getResponseEntity()
-                ).getAccessToken();
-
-            authTokens.put(requestEntity.getUserAuthenticationEntity().getEmailAddress(), authToken);
-        }
-
-        return authTokens.get(requestEntity.getUserAuthenticationEntity().getEmailAddress());
-
-    }
-
-    private UserAuthenticationEntity initUserConnectionData(final String username, final String password) {
-        return new UserAuthenticationEntity(
-            username,
-            password,
-            null,
-            "password",
-            "apriori-web-cost",
-            "donotusethiskey",
-            "tenantGroup%3Ddefault%20tenant%3Ddefault",
-            false
-        );
     }
 
     private <T> ResponseWrapper<T> resultOf(ValidatableResponse response) {
@@ -321,7 +159,7 @@ public class ConnectionManager<T> {
             }
 
             ObjectMapper objectMapper = new Jackson2Mapper(((type, charset) ->
-                new com.apriori.utils.http.builder.dao.ObjectMapper())
+                new com.apriori.utils.http.builder.request.ObjectMapper())
             );
 
             T responseEntity = response.assertThat()
@@ -370,16 +208,14 @@ public class ConnectionManager<T> {
 
     /**
      * Sends request to desired endpoint with the desired specifications using HTTP POST method
-     * As a request it sends {@link MultiPartFiles} instead of {@link PayloadJSON}
+     * As a request it sends {@link MultiPartFiles}
      *
      * @return JSON POJO object instance of @returnType
      */
     public <T> ResponseWrapper<T> postMultiPart() {
         return resultOf(
-
             createRequestSpecification()
                 .given()
-
                 .config(
                     RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
                         ContentType.TEXT)))
@@ -408,6 +244,11 @@ public class ConnectionManager<T> {
         );
     }
 
+    /**
+     * Sends request to desired endpoint with the desired specifications using HTTP PATCH method
+     *
+     * @return JSON POJO object instance of @returnType
+     */
     public <T> ResponseWrapper<T> patch() {
         return resultOf(
             createRequestSpecification()

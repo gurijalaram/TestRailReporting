@@ -1,5 +1,6 @@
 package com.apriori.apibase.utils;
 
+import com.apriori.apibase.enums.BaseAPIEnum;
 import com.apriori.apibase.services.response.objects.DisplayPreferencesEntity;
 import com.apriori.apibase.services.response.objects.ProductionDefaultEntity;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
@@ -9,7 +10,9 @@ import com.apriori.utils.enums.LengthEnum;
 import com.apriori.utils.enums.MassEnum;
 import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
-import com.apriori.utils.http.builder.service.HTTPRequest;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import io.qameta.allure.Issue;
 import org.slf4j.Logger;
@@ -18,11 +21,11 @@ import org.slf4j.LoggerFactory;
 /**
  * @author mparker
  */
+// TODO ALL: test this functionality
 public class AfterTestUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(AfterTestUtil.class);
-    APIAuthentication apiAuthentication = new APIAuthentication();
-    private String baseUrl = System.getProperty("baseUrl");
+    private APIAuthentication apiAuthentication = new APIAuthentication();
 
     /**
      * Resets all settings
@@ -40,29 +43,17 @@ public class AfterTestUtil {
     }
 
     /**
-     * Resets only display preferences
-     *
-     * @param username - username of logged user
-     */
-    public void resetDisplayPreferencesUnits(String username) {
-        resetDisplayUnits(username);
-    }
-
-    /**
      * Resets the Tolerance settings back to default
      *
      * @param username - username of logged user
      */
     public void resetToleranceSettings(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/tolerance-policy-defaults")
-            .setBody(new ToleranceValuesEntity().setToleranceMode("CAD")
-                .setUseCadToleranceThreshhold(false))
-            .commitChanges()
-            .connect()
-            .post();
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_TOLERANCE_POLICY, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .body(new ToleranceValuesEntity().setToleranceMode("CAD")
+                .setUseCadToleranceThreshhold(false));
+
+        HTTPRequest.build(requestEntity).post();
 
         resetToleranceValues(username);
     }
@@ -74,11 +65,9 @@ public class AfterTestUtil {
      */
     @Issue("AP-57904")
     private void resetDisplayUnits(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/display-units")
-            .setBody(new DisplayPreferencesEntity().setUnitSystemSetting(new UnitSystemSettingEntity().setType("simple")
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_DISPLAY_UNITS, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .body(new DisplayPreferencesEntity().setUnitSystemSetting(new UnitSystemSettingEntity().setType("simple")
                 .setName(UnitsEnum.CUSTOM.getUnits())
                 .setMetric(true)
                 .setLength(LengthEnum.MILLIMETER.getLength())
@@ -86,10 +75,10 @@ public class AfterTestUtil {
                 .setTime(TimeEnum.SECOND.getTime())
                 .setDecimalPlaces(2)
                 .setSystem(true)
-                .setCustom(false)))
-            .commitChanges()
-            .connect()
-            .post();
+                .setCustom(false))
+            );
+
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -98,14 +87,11 @@ public class AfterTestUtil {
      * @param username - username of logged user
      */
     private void resetDecimalPlaces(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/preferences/preference?key=cost.table.decimal.places")
-            .setCustomBody("2")
-            .commitChanges()
-            .connect()
-            .post();
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_PREFERENCES, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .customBody("2");
+
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -115,14 +101,11 @@ public class AfterTestUtil {
      */
     @Issue("AP-57909")
     private void resetColour(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/preferences/preference?key=selectionColor")
-            .setCustomBody(ColourEnum.YELLOW.getColour())
-            .commitChanges()
-            .connect()
-            .post();
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_PREFERENCES_WITH_COLOR, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .customBody(ColourEnum.YELLOW.getColour());
+
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -132,14 +115,11 @@ public class AfterTestUtil {
      */
     @Issue("AP-57908")
     private void resetScenarioName(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/preferences/preference?key=defaultScenarioName")
-            .setCustomBody("Initial")
-            .commitChanges()
-            .connect()
-            .post();
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_PREFERENCES_SCENARIO_NAME, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .customBody("Initial");
+
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -149,19 +129,17 @@ public class AfterTestUtil {
      */
     @Issue("AP-57908")
     private void resetProductionDefaults(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/production-defaults")
-            .setBody(new ProductionDefaultEntity().setPg(null)
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_PRODUCTION_DEFAULTS, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .body(new ProductionDefaultEntity().setPg(null)
                 .setVpe(null)
                 .setMaterialCatalogName(null)
                 .setAnnualVolume(null)
                 .setProductionLife(null)
-                .setBatchSizeMode(false))
-            .commitChanges()
-            .connect()
-            .post();
+                .setBatchSizeMode(false)
+            );
+
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -170,11 +148,9 @@ public class AfterTestUtil {
      * @param username - username of logged user
      */
     private void resetToleranceValues(String username) {
-        new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(apiAuthentication.initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + "ws/workspace/users/me/tolerance-policy-defaults")
-            .setBody(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_TOLERANCE_DEFAULTS, null)
+            .headers(apiAuthentication.initAuthorizationHeader(username))
+            .body(new ToleranceValuesEntity().setMinCadToleranceThreshhold(5.55)
                 .setCadToleranceReplacement(5.55)
                 .setToleranceOverride(null)
                 .setRoughnessOverride(null)
@@ -192,9 +168,8 @@ public class AfterTestUtil {
                 .setRunoutOverride(null)
                 .setTotalRunoutOverride(null)
                 .setStraightnessOverride(null)
-                .setSymmetryOverride(null))
-            .commitChanges()
-            .connect()
-            .post();
+                .setSymmetryOverride(null));
+
+        HTTPRequest.build(requestEntity).post();
     }
 }

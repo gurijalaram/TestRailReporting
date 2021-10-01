@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Application;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customers;
@@ -21,22 +22,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CdsApplicationsTests {
-    private String url;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-
-    @Before
-    public void setServiceUrl() {
-        url = Constants.getServiceUrl();
-    }
-
 
     @Test
     @TestRail(testCaseId = {"3251"})
     @Description("API returns a list of all the available applications in the CDS DB")
     public void getAllApplications() {
-        url = String.format(url, "applications");
-
-        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(url, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_APPLICATION, Applications.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -47,9 +39,10 @@ public class CdsApplicationsTests {
     @TestRail(testCaseId = {"3700"})
     @Description("API returns an application's information based on the supplied identity")
     public void getApplicationById() {
-        url = String.format(url, String.format("applications/%s", Constants.getApProApplicationIdentity()));
-
-        ResponseWrapper<Application> response = cdsTestUtil.getCommonRequest(url, Application.class);
+        ResponseWrapper<Application> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_APPLICATION_BY_ID,
+            Application.class,
+            Constants.getApProApplicationIdentity()
+        );
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
@@ -59,9 +52,10 @@ public class CdsApplicationsTests {
     @TestRail(testCaseId = {"5811"})
     @Description(" API returns a paged list of customers authorized to use a particular application")
     public void getCustomersAuthorizedForApplication() {
-        url = String.format(url, String.format("applications/%s/customers", Constants.getApProApplicationIdentity()));
-
-        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(url, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_APPLICATION_BY_ID,
+            Customers.class,
+            Constants.getApProApplicationIdentity()
+        );
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

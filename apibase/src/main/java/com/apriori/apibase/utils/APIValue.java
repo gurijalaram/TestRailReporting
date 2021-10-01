@@ -1,7 +1,10 @@
 package com.apriori.apibase.utils;
 
+import com.apriori.apibase.enums.BaseAPIEnum;
 import com.apriori.apibase.services.response.objects.ToleranceValuesEntity;
-import com.apriori.utils.http.builder.service.HTTPRequest;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -9,11 +12,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO ALL: test it
 public class APIValue {
 
     private static final Logger logger = LoggerFactory.getLogger(APIValue.class);
-
-    private String baseUrl = System.getProperty("baseUrl");
 
     /**
      * Gets value from tolerance api
@@ -23,29 +25,21 @@ public class APIValue {
      * @return string representation of the api value
      */
     public String getToleranceValueFromEndpoint(String username, String path) {
-        return getValueFromAPI(username, "ws/workspace/users/me/tolerance-policy-defaults", ToleranceValuesEntity.class, path);
+        return getValueFromAPI(username, path);
     }
 
     /**
      * Queries API endpoint to get value of the path
      *
      * @param username    - logged in user username
-     * @param endpoint    - the end point
-     * @param entityClass - the entity class
      * @param apiPath     - the field
      * @return string representation of the api value
      */
-    private String getValueFromAPI(String username, String endpoint, Class entityClass, String apiPath) {
+    private String getValueFromAPI(String username, String apiPath) {
+        RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.GET_TOLERANCE_VALUE, ToleranceValuesEntity.class)
+            .headers(new APIAuthentication().initAuthorizationHeader(username));
 
-        String jsonResponse = new HTTPRequest()
-            .unauthorized()
-            .customizeRequest().setHeaders(new APIAuthentication().initAuthorizationHeader(username))
-            .setEndpoint(baseUrl + endpoint)
-            .setReturnType(entityClass)
-            .commitChanges()
-            .connect()
-            .get()
-            .getBody();
+        String jsonResponse = HTTPRequest.build(requestEntity).get().getBody();
 
         JsonNode node;
         try {

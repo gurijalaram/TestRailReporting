@@ -10,10 +10,10 @@ import com.apriori.utils.enums.LengthEnum;
 import com.apriori.utils.enums.MassEnum;
 import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
 
 import java.util.HashMap;
@@ -34,7 +34,7 @@ public class ResetSettingsUtil {
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
             .token(token);
 
-        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTP2Request.build(responseEntity).get();
+        ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
 
         List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
 
@@ -76,6 +76,6 @@ public class ResetSettingsUtil {
                 + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
     }
 }

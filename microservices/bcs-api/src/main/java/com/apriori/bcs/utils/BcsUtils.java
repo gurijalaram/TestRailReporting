@@ -33,10 +33,6 @@ public class BcsUtils extends ApiUtil {
             state = st;
         }
 
-        String getState() {
-            return state;
-        }
-
         static boolean contains(String objectsState) {
             for (State state : State.values()) {
                 if (state.name().equals(objectsState)) {
@@ -107,26 +103,6 @@ public class BcsUtils extends ApiUtil {
     }
 
     /**
-     * Gets the provided report identity
-     *
-     * @param obj   Report
-     * @param klass
-     * @return string
-     */
-    public static String getReportIdentity(Object obj, Class klass) {
-        String value = null;
-        try {
-            value = getPropertyValue(obj, klass, "getReportIdentity");
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
-        }
-
-        return value;
-    }
-
-
-    /**
      * Cancel any batch in a non-terminal state
      *
      * @param batch
@@ -181,6 +157,8 @@ public class BcsUtils extends ApiUtil {
      */
     public static State pollState(Object obj, Class klass) throws InterruptedException {
         String state = BcsUtils.getState(obj, klass);
+
+        // TODO ALL: should be refactored to switch
         if (state.toUpperCase().equals("COMPLETED")) {
             return State.COMPLETED;
         } else if (state.toUpperCase().equals("ERRORED")) {

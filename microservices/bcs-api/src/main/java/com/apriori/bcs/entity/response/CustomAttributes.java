@@ -11,6 +11,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 @JsonRootName("response")
@@ -28,15 +29,12 @@ public class CustomAttributes extends Pagination {
     private CustomAttributes[] items;
     private String defaultValue;
     private Integer precision;
-    private String[] options;
-    private String createdBy;
-    private String updatedBy;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
-    @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String createdBy;
+    private String updatedBy;
+    private List<String> options;
 }

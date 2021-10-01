@@ -4,6 +4,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
@@ -21,12 +23,10 @@ import org.junit.Test;
 
 public class CdsSitesApplicationsTests {
 
-    private static String customerIdentityEndpoint;
-    private static String licensedAppIdentityEndpoint;
+    private static IdentityHolder licensedAppIdentityHolder;
     private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private static String customerIdentity;
-    private static String url;
     private static String customerName;
     private static String cloudRef;
     private static String salesForceId;
@@ -39,7 +39,6 @@ public class CdsSitesApplicationsTests {
 
     @BeforeClass
     public static void setDetails() {
-        url = Constants.getServiceUrl();
 
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
@@ -48,7 +47,6 @@ public class CdsSitesApplicationsTests {
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         siteName = generateStringUtil.generateSiteName();
         siteID = generateStringUtil.generateSiteID();
@@ -59,11 +57,15 @@ public class CdsSitesApplicationsTests {
 
     @AfterClass
     public static void cleanUp() {
-        if (licensedAppIdentityEndpoint != null) {
-            cdsTestUtil.delete(licensedAppIdentityEndpoint);
+        if (licensedAppIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_LICENSED_APPLICATIONS_BY_CUSTOMER_SITE_LICENSED_IDS,
+                licensedAppIdentityHolder.customerIdentity(),
+                licensedAppIdentityHolder.siteIdentity(),
+                licensedAppIdentityHolder.licenseIdentity()
+            );
         }
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -77,7 +79,11 @@ public class CdsSitesApplicationsTests {
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
+        licensedAppIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licensedApplicationIdentity)
+            .build();
         assertThat(licensedApp.getResponseEntity().getApplication(), is(equalTo("aPriori Professional")));
     }
 
@@ -90,9 +96,18 @@ public class CdsSitesApplicationsTests {
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         assertThat(licensedApp.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licensedApplicationIdentity = licensedApp.getResponseEntity().getIdentity();
-        licensedAppIdentityEndpoint = String.format(url, String.format("customers/%s/sites/%s/licensed-applications/%s", customerIdentity, siteIdentity, licensedApplicationIdentity));
+        licensedAppIdentityHolder = IdentityHolder.builder()
+             .customerIdentity(customerIdentity)
+             .siteIdentity(siteIdentity)
+             .licenseIdentity(licensedApplicationIdentity)
+             .build();
 
-        ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(licensedAppIdentityEndpoint, LicensedApplication.class);
+        ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_LICENSED_APPLICATIONS_BY_CUSTOMER_SITE_LICENSED_IDS,
+            LicensedApplication.class,
+            customerIdentity,
+            siteIdentity,
+            licensedApplicationIdentity
+        );
         assertThat(licensedApplicationResponse.getResponseEntity().getApplication(), is(equalTo("Cost Insight Admin")));
         assertThat(licensedApplicationResponse.getResponseEntity().getApplicationIdentity(), is(equalTo(Constants.getCiaApplicationIdentity())));
     }

@@ -6,10 +6,10 @@ import com.apriori.sds.entity.response.SecondaryProcessesItems;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -37,7 +37,7 @@ public class SecondaryProcessesTest extends SDSTestUtil {
                 )
             .urlEncodingEnabled(true);
 
-        ResponseWrapper<SecondaryProcessesItems> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<SecondaryProcessesItems> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         response.getResponseEntity().getItems().forEach(item -> {

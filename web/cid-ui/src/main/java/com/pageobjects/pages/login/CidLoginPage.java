@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 public class CidLoginPage extends LoadableComponent<CidLoginPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CidLoginPage.class);
-    private static String loginPageUrl = PropertiesContext.get("{env}.base_url");
+    private static String loginPageUrl = PropertiesContext.get("${env}.cidapp.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
