@@ -4,7 +4,6 @@ import com.apriori.pageobjects.navtoolbars.NavigationBar;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +19,9 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
 
     @FindBy(css = ".paginator .left")
     private WebElement paginatorDropdown;
+
+    @FindBy(xpath = "//button[.='20']")
+    private WebElement paginator;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -59,7 +61,6 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      */
     public ElectronicsDataCollectionPage setPagination() {
         pageUtils.waitForElementAndClick(paginatorDropdown);
-        WebElement paginator = driver.findElement(By.xpath("//button[.='20']"));
         pageUtils.waitForElementAppear(paginator);
         pageUtils.javaScriptClick(paginator);
         return this;
