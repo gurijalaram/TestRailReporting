@@ -1,8 +1,8 @@
 package com.apriori.edcapi.tests.suite;
 
+import com.apriori.edc.tests.PartOfMaterialsTest;
 import com.apriori.edcapi.tests.AccountsTest;
 import com.apriori.edcapi.tests.BillOfMaterialsTest;
-import com.apriori.edcapi.tests.PartOfMaterialsTest;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import org.junit.runner.RunWith;

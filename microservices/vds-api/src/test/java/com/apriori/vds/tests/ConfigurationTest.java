@@ -1,10 +1,10 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.configuration.Configuration;
 import com.apriori.vds.entity.response.configuration.ConfigurationsItems;
@@ -39,7 +39,7 @@ public class ConfigurationTest extends VDSTestUtil {
             .inlineVariables(configurationsItems.getItems().get(0).getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).get().getStatusCode()
+            HTTPRequest.build(requestEntity).get().getStatusCode()
         );
     }
 
@@ -58,14 +58,14 @@ public class ConfigurationTest extends VDSTestUtil {
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED,
-            HTTP2Request.build(requestEntity).put().getStatusCode()
+            HTTPRequest.build(requestEntity).put().getStatusCode()
         );
     }
 
     private ConfigurationsItems getConfigurationsItems() {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_CONFIGURATIONS, ConfigurationsItems.class);
 
-        ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ConfigurationsItems> configurationsItemsResponse = HTTPRequest.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             configurationsItemsResponse.getStatusCode()

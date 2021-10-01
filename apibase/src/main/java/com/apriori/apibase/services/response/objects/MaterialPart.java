@@ -1,12 +1,11 @@
 package com.apriori.apibase.services.response.objects;
 
-import com.apriori.utils.http.builder.common.response.common.PayloadJSON;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Schema(location = "MaterialPartSchema.json")
-public class MaterialPart implements PayloadJSON {
+public class MaterialPart {
 
     @JsonProperty
     private Boolean isReadyForExport;

@@ -1,4 +1,4 @@
-package com.apriori.utils.http.builder.common.response.common;
+package com.apriori.apibase.services.response.objects;
 
 import com.apriori.utils.http.enums.Schema;
 
@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * @author kpatel
  */
 
-//https://www.jsonschema.net/
 @Schema(location = "AuthenticateJSONSchema.json")
 public class AuthenticateJSON {
 

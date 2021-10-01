@@ -1,13 +1,13 @@
-package com.apriori.edcapi.tests;
+package com.apriori.edc.tests;
 
 import com.apriori.apibase.services.response.objects.MaterialPart;
 import com.apriori.apibase.services.response.objects.MaterialPartWrapper;
 import com.apriori.edcapi.tests.util.EdcTestUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Severity;
@@ -31,7 +31,7 @@ public class PartOfMaterialsTest extends EdcTestUtil {
             );
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).get().getStatusCode());
+            HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
     @Test
@@ -45,7 +45,7 @@ public class PartOfMaterialsTest extends EdcTestUtil {
             .body(userData.getMaterialPart());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).post().getStatusCode());
+            HTTPRequest.build(requestEntity).post().getStatusCode());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class PartOfMaterialsTest extends EdcTestUtil {
             .body(costingIdentity);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).post().getStatusCode());
+            HTTPRequest.build(requestEntity).post().getStatusCode());
     }
 
     @Test
@@ -82,7 +82,7 @@ public class PartOfMaterialsTest extends EdcTestUtil {
                 userData.getLineItem().getIdentity())
             .body(userData.getMaterialPart().setAverageCost(5f));
 
-        final ResponseWrapper<MaterialPartWrapper> materialPartWrapper = HTTP2Request.build(requestEntity).post();
+        final ResponseWrapper<MaterialPartWrapper> materialPartWrapper = HTTPRequest.build(requestEntity).post();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, materialPartWrapper.getStatusCode());
 
@@ -104,7 +104,7 @@ public class PartOfMaterialsTest extends EdcTestUtil {
             .body(userData.getMaterialPart().setAverageCost(5f));
 
 
-        ResponseWrapper<MaterialPartWrapper> materialPartWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<MaterialPartWrapper> materialPartWrapper = HTTPRequest.build(requestEntity).post();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, materialPartWrapper.getStatusCode());
     }

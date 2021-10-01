@@ -48,5 +48,6 @@ public class ScenarioCostingDefaultsResponse {
     private String manualCurrencyVersion;
     private Boolean productionLifeOverridden;
     private Integer componentsPerProduct;
+    private CustomAttributesResponse customAttributesRequest;
     private List<ScenarioAvailableProcessGroupSelection> availableProcessGroupSelections;
 }

@@ -9,13 +9,11 @@ import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.AfterClass;
-import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -62,7 +60,6 @@ public class BatchPartResourcesTest extends TestUtil {
 
         BatchPartResources.createNewBatchPart(newPartRequestEmptyString, batch.getIdentity(),
                 BatchPartResources.ProcessGroupValue.USE_EMPTY_STRING);
-
     }
 
     @Test
