@@ -47,7 +47,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(searchInput);
+        pageUtils.waitForElementToAppear(searchInput);
     }
 
     /**

@@ -42,7 +42,7 @@ public class ThreadsPage extends LoadableComponent<ThreadsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(threadTabActive);
+        pageUtils.waitForElementToAppear(threadTabActive);
     }
 
     /**

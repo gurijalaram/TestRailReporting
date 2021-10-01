@@ -67,7 +67,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(issuesTabActive);
+        pageUtils.waitForElementToAppear(issuesTabActive);
     }
 
     /**

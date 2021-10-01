@@ -116,8 +116,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(processesTabActive);
-        pageUtils.waitForElementAppear(chartContainer);
+        pageUtils.waitForElementToAppear(processesTabActive);
+        pageUtils.waitForElementToAppear(chartContainer);
     }
 
     /**

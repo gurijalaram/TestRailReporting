@@ -77,7 +77,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(headerDialog);
+        pageUtils.waitForElementToAppear(headerDialog);
     }
 
     /**

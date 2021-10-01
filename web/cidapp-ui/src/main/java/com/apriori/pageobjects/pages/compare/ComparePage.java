@@ -62,7 +62,7 @@ public class ComparePage extends CompareToolbar {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementAppear(headerSections);
+        pageUtils.waitForElementToAppear(headerSections);
         pageUtils.invisibilityOfElements(comparisonLoader);
     }
 

@@ -530,7 +530,7 @@ public class EvaluatePage extends EvaluateToolbar {
             : element.equalsIgnoreCase("Material") ? materialName
             : null;
 
-        return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
+        return Color.fromString(pageUtils.waitForElementToAppear(elementColour).getCssValue("background-color")).asHex();
     }
 
     /**

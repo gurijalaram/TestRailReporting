@@ -35,7 +35,7 @@ public class EvaluateToolbar extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementAppear(costButton);
+        pageUtils.waitForElementToAppear(costButton);
     }
 
     /**
@@ -87,6 +87,6 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return hex code as string
      */
     public String getCostColour() {
-        return Color.fromString(pageUtils.waitForElementAppear(costLabel).getCssValue("background-color")).asHex();
+        return Color.fromString(pageUtils.waitForElementToAppear(costLabel).getCssValue("background-color")).asHex();
     }
 }

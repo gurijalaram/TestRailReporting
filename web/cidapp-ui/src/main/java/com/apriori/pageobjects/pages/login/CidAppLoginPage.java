@@ -98,9 +98,9 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(email);
-        pageUtils.waitForElementAppear(password);
-        pageUtils.waitForElementAppear(submitLogin);
+        pageUtils.waitForElementToAppear(email);
+        pageUtils.waitForElementToAppear(password);
+        pageUtils.waitForElementToAppear(submitLogin);
     }
 
     /**
