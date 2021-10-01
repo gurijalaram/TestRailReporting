@@ -27,8 +27,7 @@ public class AtsAuthorization extends TestUtil {
         String token = new JwtTokenUtil().retrieveJwtToken();
 
 
-        AuthorizationResponse response = AuthorizeUserUtil.authorizeUser(PropertiesContext.get("${env}.secret_key"),
-            PropertiesContext.get("${env}.ats.api_url"),
+        AuthorizationResponse response = AuthorizeUserUtil.authorizeUser(
             PropertiesContext.get("${env}.auth_target_cloud_context"),
             token,
             HttpStatus.SC_OK);

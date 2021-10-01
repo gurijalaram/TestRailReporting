@@ -137,12 +137,20 @@ Get user functionality has reference to `{environment}.properties` file.
 
 **`RequestEntity`** - it is a transfer object, which contain all needed information about the request
 
-- To init default RequestEntity use _init_ method:
-    - `init(String endpoint, final UserCredentials userCredentials, Class<?> returnType)` e.g.: `RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class);`
+- To init default RequestEntity use `com.apriori.utils.http.utils.RequestEntityUtil` :
 - You may add special parameters e.g.: 
-    - `RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class).setUrlEncoding(true).setInlineVariables("test")`
+    - `RequestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsWrapper.class)
+            .setUrlEncoding(true)
+            .setInlineVariables("test")`
 - If you don't want to validate and map response body, _returnType_ should be null e.g.:
-    - `RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), null);`
+    - `RequestEntityUtil.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, null);`
+    
+### To execute request
+To execute request use `com.apriori.utils.http.builder.request.HTTPRequest` it allows you to create the request. <br>
+`com.apriori.utils.http.builder.request.HTTPRequest` class <br>
+This class has single method, `build` that requires RequestEntity object with all request configurations.<br>
+After `HTTPRequest.build()` method you will be able to select a type of request, as results you will have:
+ - `HTTPRequest.build({requestEntity}).{type of request}`, e.g. `HTTPRequest.build(requestEntity).get()`
 
 **`ResponseWrapper`** - transfer object, which contain information about the response.
 _ResponseWrapper_ fields: <br>
@@ -150,31 +158,21 @@ _ResponseWrapper_ fields: <br>
     - body : String - Response body as String. <br>
     - responseEntity - mapped response entity. The type of mapping should be inserted in _RequestEntity_ as returnType
 
-**`RequestArea`** - requests specification. Contain templates and specific functions for HTTP request area.
- - `RequestAreaUiAuth` - provide capabilities to do HTTP requests which require UI authorization
-    - if `RequestEntity` - doesn't contain headers and token for username is not cached (first HTTP request from user), will do UI authorization and cache the token for this user. 
- - `RequestAreaCds` -  provide capabilities to do HTTP requests for CDS
- - `RequestAreaFms` -  provide capabilities to do HTTP requests for FMS
+### Final example of HTTP request: 
+```
+final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
+                .inlineVariables(
+                    getComponentId(), getScenarioId()
+                );
 
-**`ConnectionManager`** - class which send API requests and validate/extract results. The response is mapping into ResponseWrapper (see ResponseWrapper)
+        ResponseWrapper<ScenarioIterationItemsResponse> response = HTTPRequest.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+```
 
 _Validation:_
  * if RequestEntity contain _ReturnType_, the response will be validated by Schema and mapped to returnType
- * if RequestEntity contain _statusCode_, the response will be validated on presents of inserted status code.
  * if RequestEntity has _isUrlEncodingEnabled_ "true" - request URL will be encoded
- 
-**`GenericRequestUtil`** - Wrapper for HTTP requests, provide easy way, to do requests
-
-- To init request `GenericRequestUtil` use 
-`<request type get, post...>(RequestEntity requestEntity, RequestArea requestArea)`
-- Examples of usage:  
-`GenericRequestUtil.get(RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, userData.getUserCredentials(), BillOfMaterialsWrapper.class), new RequestAreaUiAuth());`
-- To provide more simple view you may split RequestEntity initialization and GenericRequestUtil :
-`RequestEntity requestEntity = RequestEntity.init(BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS,
-    userData.getUserCredentials(),
-    BillOfMaterialsWrapper.class)`
-`GenericRequestUtil.get(requestEntity, new RequestAreaUiAuth());`
-   
   
 
 ## Run Checkstyle analysis from command line

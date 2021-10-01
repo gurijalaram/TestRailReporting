@@ -9,9 +9,9 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Applications;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -31,7 +31,7 @@ public class ApplicationsTests {
     @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
-        ResponseWrapper<Applications> responseApplications = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Applications.class)
+        ResponseWrapper<Applications> responseApplications = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Applications.class)
             .token(token)).get();
 
         assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));

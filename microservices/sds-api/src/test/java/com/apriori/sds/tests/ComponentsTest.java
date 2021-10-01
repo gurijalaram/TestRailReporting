@@ -5,10 +5,10 @@ import com.apriori.sds.entity.response.Component;
 import com.apriori.sds.entity.response.ComponentsItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -23,7 +23,7 @@ public class ComponentsTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class);
 
-        ResponseWrapper<ComponentsItemsResponse> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ComponentsItemsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -35,7 +35,7 @@ public class ComponentsTest extends SDSTestUtil {
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class)
                 .inlineVariables(getComponentId());
 
-        ResponseWrapper<Component> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<Component> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 

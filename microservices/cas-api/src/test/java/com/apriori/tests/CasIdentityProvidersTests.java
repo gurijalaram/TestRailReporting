@@ -11,9 +11,9 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.SingleIdp;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -34,7 +34,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
 
-        ResponseWrapper<IdentityProviders> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, IdentityProviders.class)
+        ResponseWrapper<IdentityProviders> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, IdentityProviders.class)
             .token(token)
             .inlineVariables("L2H992828N8M/deployments")).get();
 
@@ -43,7 +43,7 @@ public class CasIdentityProvidersTests extends TestUtil {
 
         String identity = response.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        ResponseWrapper<SingleIdp> responseIdentity = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_DEPLOYMENT, SingleIdp.class)
+        ResponseWrapper<SingleIdp> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_DEPLOYMENT, SingleIdp.class)
             .token(token)
             .inlineVariables(identity)).get();
 

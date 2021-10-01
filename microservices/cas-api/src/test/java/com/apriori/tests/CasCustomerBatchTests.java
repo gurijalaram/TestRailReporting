@@ -14,9 +14,9 @@ import com.apriori.entity.response.PostBatch;
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -51,7 +51,7 @@ public class CasCustomerBatchTests {
         assertThat(batch.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(batch.getResponseEntity().getCustomerIdentity(), is(equalTo(customerIdentity)));
 
-        ResponseWrapper<CustomerBatches> customerBatches = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, CustomerBatches.class)
+        ResponseWrapper<CustomerBatches> customerBatches = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, CustomerBatches.class)
             .token(token)
             .inlineVariables("batches")).get();
 
@@ -80,7 +80,7 @@ public class CasCustomerBatchTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<CustomerBatch> customerBatch = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER_BATCHES, CustomerBatch.class)
+        ResponseWrapper<CustomerBatch> customerBatch = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER_BATCHES, CustomerBatch.class)
             .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity)).get();
 

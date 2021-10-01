@@ -1,23 +1,16 @@
 package com.apriori.vds.tests.util;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.bcs.entity.response.ProcessGroup;
-import com.apriori.bcs.entity.response.ProcessGroups;
-import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlGroup;
 import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactoriesItems;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
-import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
-import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociationsItems;
-import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterial;
-import com.apriori.vds.entity.response.process.group.materials.ProcessGroupMaterialsItems;
 
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -33,7 +26,7 @@ public abstract class VDSTestUtil extends TestUtil {
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
-        ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             digitalFactoriesItemsResponseWrapper.getStatusCode()
@@ -57,7 +50,7 @@ public abstract class VDSTestUtil extends TestUtil {
     protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
 
-        ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             accessControlGroupsResponse.getStatusCode()
         );

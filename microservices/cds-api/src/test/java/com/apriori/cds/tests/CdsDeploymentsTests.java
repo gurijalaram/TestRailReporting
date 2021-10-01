@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.Deployments;
@@ -29,8 +30,6 @@ public class CdsDeploymentsTests {
     private static String salesForceId;
     private static String emailPattern;
     private static String customerIdentity;
-    private static String url;
-    private static String customerIdentityEndpoint;
     private static ResponseWrapper<Customer> customer;
     private static String siteName;
     private static String siteID;
@@ -39,8 +38,6 @@ public class CdsDeploymentsTests {
 
     @BeforeClass
     public static void setDetails() {
-        url = Constants.getServiceUrl();
-
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
@@ -48,7 +45,6 @@ public class CdsDeploymentsTests {
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         siteName = generateStringUtil.generateSiteName();
         siteID = generateStringUtil.generateSiteID();
@@ -59,8 +55,8 @@ public class CdsDeploymentsTests {
 
     @AfterClass
     public static void cleanUp() {
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -78,11 +74,13 @@ public class CdsDeploymentsTests {
     @TestRail(testCaseId = {"5314"})
     @Description("Get a list of deployments for a customer")
     public void getCustomerDeployments() {
-        String deploymentsEndpoint = String.format(url, String.format("customers/%s/deployments", customerIdentity));
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(deploymentsEndpoint, Deployments.class);
+        ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_DEPLOYMENTS_BY_CUSTOMER_ID,
+            Deployments.class,
+            customerIdentity
+        );
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -96,9 +94,12 @@ public class CdsDeploymentsTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
-        String deploymentIdentityEndpoint = String.format(url, String.format("customers/%s/deployments/%s", customerIdentity, deploymentIdentity));
 
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(deploymentIdentityEndpoint, Deployment.class);
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS,
+            Deployment.class,
+            customerIdentity,
+            deploymentIdentity
+        );
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deployment.getResponseEntity().getResponse().getIdentity(), is(equalTo(deploymentIdentity)));

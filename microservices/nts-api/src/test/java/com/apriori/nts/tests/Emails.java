@@ -1,7 +1,7 @@
 package com.apriori.nts.tests;
 
 import com.apriori.apibase.services.PropertyStore;
-import com.apriori.nts.apicalls.NotificationService;
+import com.apriori.nts.apicalls.EmailService;
 import com.apriori.nts.entity.response.GetEmailResponse;
 import com.apriori.nts.entity.response.SendEmailResponse;
 import com.apriori.nts.utils.Constants;
@@ -16,7 +16,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class Emails {
-    private String cloudContext = PropertiesContext.get("${env}.auth_target_cloud_context");
     private PropertyStore propertyStore = new PropertyStore();
     private String baseUrl;
 
@@ -30,8 +29,8 @@ public class Emails {
     @Description("Send an email using the NTS API")
     public void sendEmail() {
         String subject = String.format("%s_%d", Constants.EMAIL_SUBJECT, System.currentTimeMillis());
-        NotificationService.sendEmail(baseUrl, subject, Constants.EMAIL_CONTENT, cloudContext);
-        Boolean emailExists = NotificationService.validateEmail(subject);
+        EmailService.sendEmail(baseUrl, subject, Constants.EMAIL_CONTENT);
+        Boolean emailExists = EmailService.validateEmail(subject);
         Assert.assertEquals(true, emailExists);
     }
 
@@ -40,7 +39,7 @@ public class Emails {
     @TestRail(testCaseId = {"3880"})
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
-        GetEmailResponse getEmailResponse = NotificationService.getEmails(baseUrl, cloudContext);
+        GetEmailResponse getEmailResponse = EmailService.getEmails();
         propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
         JsonManager.serializeJsonToFile(FileResourceUtil.getResourceAsFile("property-store.json").getPath(),
             propertyStore);
@@ -51,9 +50,8 @@ public class Emails {
     @Description("Get a single email using the NTS API")
     public void getEmail() {
         String subject = String.format("%s_%d", Constants.EMAIL_SUBJECT, System.currentTimeMillis());
-        SendEmailResponse sendEmailResponse = NotificationService.sendEmail(baseUrl, subject,
-            Constants.EMAIL_CONTENT,
-            cloudContext);
-        NotificationService.getEmail(baseUrl, sendEmailResponse.getIdentity(), cloudContext);
+        SendEmailResponse sendEmailResponse = EmailService.sendEmail(baseUrl, subject,
+            Constants.EMAIL_CONTENT);
+        EmailService.getEmail(sendEmailResponse.getIdentity());
     }
 }

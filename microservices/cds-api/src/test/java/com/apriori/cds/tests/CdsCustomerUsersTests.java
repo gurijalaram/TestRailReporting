@@ -9,16 +9,16 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.services.common.objects.ErrorMessage;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -36,14 +36,10 @@ public class CdsCustomerUsersTests {
     private static String salesForceId;
     private static String emailPattern;
     private static String customerIdentity;
-    private static String url;
-    private static String customerIdentityEndpoint;
-    private static String userIdentityEndpoint;
+    private static String userIdentity;
 
     @BeforeClass
     public static void setDetails() {
-        url = Constants.getServiceUrl();
-
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
@@ -51,16 +47,15 @@ public class CdsCustomerUsersTests {
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
     }
 
     @AfterClass
     public static void cleanUp() {
-        if (userIdentityEndpoint != null) {
-            cdsTestUtil.delete(userIdentityEndpoint);
+        if (customerIdentity != null && userIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -71,8 +66,7 @@ public class CdsCustomerUsersTests {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentity = user.getResponseEntity().getIdentity();
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
@@ -83,15 +77,13 @@ public class CdsCustomerUsersTests {
     @Description("Get a list of users for a customer")
     public void getCustomerUsers() {
         String userName = generateStringUtil.generateUserName();
-        String usersEndpoint = String.format(url, String.format("customers/%s/users", customerIdentity));
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(usersEndpoint, Users.class);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID, Users.class, customerIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -106,10 +98,9 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(userIdentityEndpoint, User.class);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS_BY_CUSTOMER_USER_IDS, User.class, customerIdentity, userIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
@@ -124,8 +115,7 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(customerIdentity, userIdentity);
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -140,12 +130,12 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
-        String wrongIdentityEndpoint = String.format(url, String.format("customers/%s/users/L2H992829CFB", customerIdentity));
+        userIdentity = user.getResponseEntity().getIdentity();
 
-        RequestEntity requestEntity = RequestEntity.init(wrongIdentityEndpoint, ErrorMessage.class);
-        ResponseWrapper<ErrorMessage> responseWrapper = GenericRequestUtil.delete(requestEntity, new RequestAreaApi());
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DELETE_USER_BY_CUSTOMER_ID, ErrorMessage.class)
+            .inlineVariables(customerIdentity);
+
+        ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
         assertThat(responseWrapper.getResponseEntity().getMessage(), is(containsString("Unable to get user with identity")));
     }

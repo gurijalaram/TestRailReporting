@@ -1,7 +1,7 @@
-package com.apriori.utils.http2.builder.service;
+package com.apriori.utils.http.builder.request;
 
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.interfaces.Request;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.interfaces.Request;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -13,7 +13,7 @@ import lombok.extern.slf4j.Slf4j;
  * @version 2.0
  */
 @Slf4j
-public class HTTP2Request {
+public class HTTPRequest {
 
     public static Request build(RequestEntity requestEntity) {
         log.debug("Request data:\n{}", requestEntity);

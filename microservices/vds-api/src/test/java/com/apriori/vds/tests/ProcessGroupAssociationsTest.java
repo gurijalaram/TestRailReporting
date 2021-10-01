@@ -5,10 +5,10 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.request.process.group.associations.ProcessGroupAssociationRequest;
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
@@ -58,7 +58,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PG_ASSOCIATIONS_BY_ID, ProcessGroupAssociation.class)
                 .inlineVariables(getFirstGroupAssociation().getIdentity());
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTP2Request.build(requestEntity).get().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
     @Test
@@ -92,7 +92,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
                 .inlineVariables(getTestingProcessGroupAssociation().getIdentity())
                 .body("processGroupAssociation", processGroupAssociationRequest);
 
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTP2Request.build(requestEntity).patch();
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, createProcessGroupAssociationResponse.getStatusCode());
 
         ProcessGroupAssociation updatedProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
@@ -120,7 +120,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest);
 
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTP2Request.build(requestEntity).put();
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, createProcessGroupAssociationResponse.getStatusCode());
 
         ProcessGroupAssociation createdProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
@@ -149,7 +149,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PUT_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest);
 
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTP2Request.build(requestEntity).put();
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).put();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, createProcessGroupAssociationResponse.getStatusCode());
 
         ProcessGroupAssociation updatedProcessGroupAssociation = createProcessGroupAssociationResponse.getResponseEntity();
@@ -164,7 +164,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_PG_ASSOCIATIONS_BY_ID, null)
                 .inlineVariables(associationId);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
 
         testingProcessGroupAssociation = null;
     }
@@ -174,7 +174,7 @@ public class ProcessGroupAssociationsTest extends ProcessGroupUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_PG_ASSOCIATIONS, ProcessGroupAssociation.class)
                 .body("processGroupAssociation", processGroupAssociationRequest);
 
-        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<ProcessGroupAssociation> createProcessGroupAssociationResponse = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, createProcessGroupAssociationResponse.getStatusCode());
 
         return createProcessGroupAssociationResponse.getResponseEntity();

@@ -5,15 +5,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -23,6 +23,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class CdsGetCustomerTests {
 
@@ -34,14 +35,10 @@ public class CdsGetCustomerTests {
     private static String salesForceId;
     private static String emailPattern;
     private static String customerIdentity;
-    private static String url;
-    private static String customerIdentityEndpoint;
     private static String updatedEmailPattern;
 
     @BeforeClass
     public static void setDetails() {
-        url = Constants.getServiceUrl();
-
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
@@ -50,13 +47,12 @@ public class CdsGetCustomerTests {
 
         customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
     }
 
     @AfterClass
     public static void cleanUp() {
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -64,7 +60,7 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(customerIdentityEndpoint, Customer.class);
+        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_BY_ID, Customer.class, customerIdentity);
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
@@ -73,9 +69,10 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5957"})
     @Description("Get customer applications")
     public void getCustomersApplications() {
-        String applicationsEndpoint = String.format(url, String.format("customers/%s/applications", customerIdentity));
-
-        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(applicationsEndpoint, Applications.class);
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_APPLICATION_BY_CUSTOMER_ID,
+            Applications.class,
+            customerIdentity
+        );
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(equalTo(0)));
     }
@@ -84,14 +81,18 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        RequestEntity requestEntity = RequestEntity.init(customerIdentityEndpoint, Customer.class)
-            .setHeaders("Content-Type", "application/json")
-            .setBody("customer",
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_CUSTOMERS_BY_ID, Customer.class)
+            .inlineVariables(customerIdentity)
+            .headers(new HashMap<String, String>() {{
+                    put("Content-Type", "application/json");
+                }
+            })
+            .body("customer",
                 Customer.builder()
                     .emailRegexPatterns(Arrays.asList(updatedEmailPattern + ".com", updatedEmailPattern + ".co.uk"))
                     .build());
 
-        ResponseWrapper<Customer> updatedEmail = GenericRequestUtil.patch(requestEntity, new RequestAreaApi());
+        ResponseWrapper<Customer> updatedEmail = HTTPRequest.build(requestEntity).patch();
 
         assertThat(updatedEmail.getResponseEntity().getEmailRegexPatterns(), hasItem(updatedEmailPattern + ".com"));
     }
