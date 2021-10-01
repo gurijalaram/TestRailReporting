@@ -18,8 +18,9 @@ import java.util.List;
 @JsonRootName(value = "response")
 public class ScenarioIteration {
     private String customerIdentity;
+    private String scenarioKey;
     private Object scenarioProcesses;
-    private String scenarioIterationKey;
+    private Object scenarioIterationKey;
     private String hasThumbnail;
     private Thumbnail thumbnail;
     private String costingMessage;

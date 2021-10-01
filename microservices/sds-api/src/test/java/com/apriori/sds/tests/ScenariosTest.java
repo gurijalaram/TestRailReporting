@@ -5,7 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.CustomAttributes;
+import com.apriori.sds.entity.request.CustomAttributesRequest;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
@@ -123,7 +123,7 @@ public class ScenariosTest extends SDSTestUtil {
         final Scenario copiedScenario = responseWrapper.getResponseEntity();
 
         assertEquals("Copied scenario should present for a component",
-            copiedScenarioName, this.getReadyToWorkScenario(copiedScenario.getIdentity()).getScenarioName());
+            copiedScenarioName, this.getReadyToWorkScenario(getComponentId(), copiedScenario.getIdentity()).getScenarioName());
 
         this.addScenarioToDelete(copiedScenario.getIdentity());
     }
@@ -198,7 +198,7 @@ public class ScenariosTest extends SDSTestUtil {
 
 
         assertEquals("Fork scenario should present for a component",
-            forkScenarioName, this.getReadyToWorkScenario(forkScenario.getIdentity()).getScenarioName()
+            forkScenarioName, this.getReadyToWorkScenario(getComponentId(), forkScenario.getIdentity()).getScenarioName()
         );
 
         addScenarioToDelete(forkScenario.getIdentity());
@@ -227,7 +227,7 @@ public class ScenariosTest extends SDSTestUtil {
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(scenario.getScenarioName())
             .override(false)
-            .customAttributes(CustomAttributes.builder().udaRegion("Europe").build())
+            .customAttributesRequest(CustomAttributesRequest.builder().udaRegion("Europe").build())
             .updatedBy(getTestingComponent().getCreatedBy())
             .build();
 
@@ -252,7 +252,7 @@ public class ScenariosTest extends SDSTestUtil {
         scenariosToDelete.remove(componentToDelete);
     }
 
-    private Scenario getReadyToWorkScenario(final String identity) {
+    private Scenario getReadyToWorkScenario(final String componentIdentity, final String scenarioIdentity) {
         final int attemptsCount = 15;
         final int secondsToWait = 10;
         int currentCount = 0;
@@ -260,7 +260,7 @@ public class ScenariosTest extends SDSTestUtil {
 
         do {
             this.doSleep(secondsToWait);
-            scenario = this.getScenarioByIdentity(identity);
+            scenario = this.getScenarioByCustomerScenarioIdentity(componentIdentity, scenarioIdentity);
 
             if (scenario.getScenarioState().toUpperCase().contains("FAILED")) {
                 throw new IllegalStateException(String.format("Scenario failed state: %s. Scenario Id: %s",
@@ -275,7 +275,7 @@ public class ScenariosTest extends SDSTestUtil {
 
         throw new IllegalArgumentException(
             String.format("Failed to get scenario by identity: %s, after %d attempts with period in %d seconds.",
-                identity, attemptsCount, secondsToWait)
+                scenarioIdentity, attemptsCount, secondsToWait)
         );
     }
 
@@ -295,10 +295,19 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     private Scenario getScenarioByIdentity(final String scenarioIdentity) {
+        return getScenarioByCustomerScenarioIdentity(null, scenarioIdentity);
+    }
+
+
+    private Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
+        if (componentIdentity == null) {
+            componentIdentity = getComponentId();
+        }
+
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(
-                    getComponentId(), scenarioIdentity
+                    componentIdentity, scenarioIdentity
                 );
 
         ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).get();
@@ -341,7 +350,7 @@ public class ScenariosTest extends SDSTestUtil {
         final Scenario publishedScenario = responseWrapper.getResponseEntity();
 
         assertEquals("Published scenario should present for a component",
-            publishScenarioName, this.getReadyToWorkScenario(publishedScenario.getIdentity()).getScenarioName()
+            publishScenarioName, this.getReadyToWorkScenario(testingComponent.getComponentIdentity(), publishedScenario.getIdentity()).getScenarioName()
         );
 
         scenariosToDelete.add(Item.builder()
@@ -355,7 +364,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     private Scenario costAndGetReadyScenario() {
         return this.getReadyToWorkScenario(
-            this.costScenario().getIdentity()
+            getComponentId(), this.costScenario().getIdentity()
         );
     }
 
@@ -370,7 +379,7 @@ public class ScenariosTest extends SDSTestUtil {
                     .processGroupName("Sheet Metal")
                     .productionLife(5.0)
                     .vpeName("aPriori USA")
-                    .customAttributes(CustomAttributes.builder().udaRegion("Europe").build())
+                    .customAttributes(CustomAttributesRequest.builder().udaRegion("Europe").build())
                     .costingTemplateIdentity(getFirstCostingTemplate().getIdentity())
                     .deleteTemplateAfterUse(false)
                     .build()
