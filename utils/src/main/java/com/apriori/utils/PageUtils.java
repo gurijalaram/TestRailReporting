@@ -391,6 +391,7 @@ public class PageUtils {
 
     /**
      * Checks the elements is displayed by size
+     *
      * @param element - the element
      * @return int
      */
@@ -657,12 +658,19 @@ public class PageUtils {
      * @return true/false
      */
     public boolean textPresentInElement(WebElement locator, String text) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 3;
+        boolean textPresent;
 
-        return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + waitForElementToAppear(locator).getText())
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
+        try {
+
+            textPresent = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+                .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + waitForElementToAppear(locator).getText())
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return textPresent;
     }
 
     /**
@@ -672,11 +680,20 @@ public class PageUtils {
      * @param text
      * @return true/false
      */
-    public boolean textNotPresentInElement(WebElement locator, String text, int timeoutInMinutes) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
-            .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
+    public boolean textNotPresentInElement(WebElement locator, String text, long timeoutInMinutes) {
+        boolean textPresent;
+
+        try {
+
+            textPresent = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
+                .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
+
+        } catch (TimeoutException e) {
+            throw new RuntimeException(e.getMessage());
+        }
+        return textPresent;
     }
 
     /**
