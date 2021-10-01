@@ -2,8 +2,8 @@ package com.apriori.apibase.utils;
 
 import com.apriori.apibase.enums.BaseAPIEnum;
 import com.apriori.apibase.services.response.objects.AuthenticateJSON;
+import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -13,7 +13,6 @@ import org.apache.commons.collections4.map.PassiveExpiringMap;
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
-// TODO ALL: test it
 public class APIAuthentication {
     private String accessToken = null;
     private int timeToLive = 0;
@@ -53,8 +52,9 @@ public class APIAuthentication {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
-            RequestEntity requestEntity = RequestEntityUtil.init(BaseAPIEnum.POST_AUTH_TOKEN, AuthenticateJSON.class)
-                .userAuthenticationEntity(new UserAuthenticationEntity(username, password));
+            RequestEntity requestEntity = RequestEntityUtil.initBuilder(BaseAPIEnum.POST_AUTH_TOKEN, AuthenticateJSON.class)
+                .xwwwwFormUrlEncoded(AuthorizationFormUtil.getDefaultAuthorizationForm(username,password))
+                .build();
 
             ResponseWrapper<AuthenticateJSON> tokenDetails = HTTPRequest.build(requestEntity).post();
 
