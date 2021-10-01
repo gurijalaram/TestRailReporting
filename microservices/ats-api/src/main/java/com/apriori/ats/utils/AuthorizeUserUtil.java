@@ -12,7 +12,7 @@ import org.junit.Assert;
 
 public class AuthorizeUserUtil {
 
-    public static AuthorizationResponse authorizeUser( String targetCloudContext,
+    public static AuthorizationResponse authorizeUser(String targetCloudContext,
                                                       String token, int statusCode) {
         AuthorizeRequest authorizeRequest = new AuthorizeRequest().setTargetCloudContext(targetCloudContext).setToken(token);
 
