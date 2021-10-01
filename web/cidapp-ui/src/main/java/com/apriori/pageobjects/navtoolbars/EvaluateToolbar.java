@@ -47,7 +47,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     public EvaluatePage costScenario() {
         pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
-        checkForCostLabel(2);
+        waitForCostLabel(2);
         return new EvaluatePage(driver);
     }
 
@@ -60,14 +60,14 @@ public class EvaluateToolbar extends ExploreToolbar {
     public EvaluatePage costScenario(int timeoutInMinutes) {
         pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
-        checkForCostLabel(timeoutInMinutes);
+        waitForCostLabel(timeoutInMinutes);
         return new EvaluatePage(driver);
     }
 
     /**
-     * Method to check cost label contains/doesn't contain text
+     * Method to check cost label doesn't contain text
      */
-    public void checkForCostLabel(int timeoutInMinutes) {
+    public void waitForCostLabel(int timeoutInMinutes) {
         this.isLoaded();
         pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
     }
