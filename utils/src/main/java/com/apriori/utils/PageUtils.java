@@ -572,7 +572,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(WebElement locator) {
         waitForElementToBeClickable(locator);
-        waitForElementToAppear(locator).click();
+        locator.click();
     }
 
     /**
@@ -582,7 +582,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(By locator) {
         waitForElementToBeClickable(locator);
-        waitForElementToAppear(locator).click();
+        driver.findElement(locator).click();
     }
 
     /**
