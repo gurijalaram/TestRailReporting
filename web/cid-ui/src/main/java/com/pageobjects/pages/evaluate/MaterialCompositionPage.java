@@ -114,7 +114,7 @@ public class MaterialCompositionPage extends LoadableComponent<MaterialCompositi
      * @return hashset as duplicates need to be removed
      */
     public HashSet<String> getListOfMaterialTypes() {
-        return new HashSet<>(Arrays.asList(pageUtils.waitForElementToAppear(typeDropdown, typeDropdown.getAttribute("innerText")).getText().split("\n")));
+        return new HashSet<>(Arrays.asList(pageUtils.waitForElementToAppear(typeDropdown).getAttribute("innerText").split("\n")));
     }
 
     /**
