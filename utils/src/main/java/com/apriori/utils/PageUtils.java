@@ -217,12 +217,7 @@ public class PageUtils {
      */
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
-
-        try {
-            builder.click(targetElement).build().perform();
-        } catch (StaleElementReferenceException | TimeoutException e) {
-            builder.click(targetElement).build().perform();
-        }
+        builder.click(waitForElementToAppear(targetElement)).build().perform();
     }
 
     /**
