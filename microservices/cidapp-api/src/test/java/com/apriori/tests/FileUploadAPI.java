@@ -62,7 +62,6 @@ public class FileUploadAPI {
                 String line = lineObj.toString();
                 String[] index = line.split(",(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
                 String fileName = index[0].replace("\"", "");
-//                String scenarioName = index[1].replace("\"", "");
                 String processGroup = index[1].replace("\"", "");
                 result.add(new Object[] {fileName, processGroup});
             }
