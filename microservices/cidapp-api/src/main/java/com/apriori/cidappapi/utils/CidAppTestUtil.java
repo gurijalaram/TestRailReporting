@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
@@ -14,7 +15,6 @@ import com.apriori.cidappapi.entity.response.componentiteration.ComponentIterati
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
-import com.apriori.sds.entity.request.PublishRequest;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.DigitalFactoryEnum;
