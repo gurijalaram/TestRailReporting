@@ -4,17 +4,17 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
+import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
-import com.apriori.sds.entity.request.CostRequest;
 import com.apriori.sds.entity.request.PublishRequest;
-import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -360,7 +360,7 @@ public class CidAppTestUtil {
                     .deleteTemplateAfterUse(true)
                     .build()
                 );
-        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
 
         return getCssComponent(componentName, scenarioName, ScenarioStateEnum.COST_COMPLETE, userCredentials);
     }
