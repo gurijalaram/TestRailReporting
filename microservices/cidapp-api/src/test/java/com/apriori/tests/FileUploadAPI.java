@@ -38,7 +38,7 @@ public class FileUploadAPI {
         String[] component = componentName.split("\\.", 2);
         ProcessGroupEnum pg = ProcessGroupEnum.fromString(processGroup);
         File resourceFile = FileResourceUtil.getCloudFile(pg, component[0] + "." + component[1]);
-        String scenarioName = "AutoAPI" + processGroup.replace(" ", "") + component[0].replace(" ", "");
+        String scenarioName = ("AutoAPI" + processGroup + component[0]).replace(" ", "");
         String mode = "manual";
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
