@@ -360,7 +360,7 @@ public class CidAppTestUtil {
                     .deleteTemplateAfterUse(true)
                     .build()
                 );
-        ResponseWrapper<Scenario> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         return getCssComponent(componentName, scenarioName, ScenarioStateEnum.COST_COMPLETE, userCredentials);
     }
@@ -405,7 +405,7 @@ public class CidAppTestUtil {
                     .propertiesToReset(null)
                     .build());
 
-        ResponseWrapper<Scenario> response = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
 
         return response.getResponseEntity();
     }
@@ -431,7 +431,7 @@ public class CidAppTestUtil {
                     .status("New".toUpperCase())
                     .build()
                 );
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
 
         return getScenarioRepresentation(item, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, userCredentials);
     }
@@ -445,7 +445,7 @@ public class CidAppTestUtil {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_USER, User.class)
             .token(getToken(userCredentials));
 
-        ResponseWrapper<User> userResponse =  HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<User> userResponse =  HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
     }
 }
