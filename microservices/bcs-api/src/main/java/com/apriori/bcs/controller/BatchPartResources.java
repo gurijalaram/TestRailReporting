@@ -107,7 +107,7 @@ public class BatchPartResources {
                         .use("ProcessGroup", processGroup)
                         //.use("ProductionLife", npr.getProductionLife().toString())
                         .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
-                        .use("Udas", npr.getUdas())
+                        //.use("Udas", npr.getUdas())
                         .use("VpeName", npr.getVpeName())
                         .use("MaterialName", npr.getMaterialName())
                         .use("generateWatchpointReport", "true")
