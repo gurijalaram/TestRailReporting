@@ -438,6 +438,7 @@ public class CidAppTestUtil {
 
     /**
      * Get current user
+     *
      * @param userCredentials - the user credentials
      * @return user object
      */
@@ -445,7 +446,7 @@ public class CidAppTestUtil {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_USER, User.class)
             .token(getToken(userCredentials));
 
-        ResponseWrapper<User> userResponse =  HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
     }
 }
