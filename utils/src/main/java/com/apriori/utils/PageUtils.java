@@ -221,6 +221,16 @@ public class PageUtils {
     }
 
     /**
+     * Uses actions to click an element
+     *
+     * @param targetElement - the element
+     */
+    public void actionClick(By targetElement) {
+        Actions builder = new Actions(driver);
+        builder.click(waitForElementToAppear(targetElement)).build().perform();
+    }
+
+    /**
      * Sets the value attribute to empty string
      *
      * @param targetElement - web element
@@ -911,8 +921,7 @@ public class PageUtils {
         waitForElementToAppear(dropdownSelector);
         waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
-        waitForElementToAppear(byValue);
-        waitForElementAndClick(byValue);
+        actionClick(byValue);
     }
 
     /**
@@ -927,8 +936,7 @@ public class PageUtils {
         waitForElementToAppear(dropdownSelector);
         waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
-        waitForElementToAppear(byValue);
-        waitForElementAndClick(byValue);
+        actionClick(byValue);
     }
 
     /**
