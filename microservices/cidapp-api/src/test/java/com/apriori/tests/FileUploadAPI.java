@@ -33,11 +33,12 @@ public class FileUploadAPI {
     @Test
     @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
     @Description("Upload, cost and publish a part")
-    public void uploadCostPublish(String componentName, String scenarioName, String processGroup) {
+    public void uploadCostPublish(String componentName, String processGroup) {
 
         String[] component = componentName.split("\\.", 2);
         ProcessGroupEnum pg = ProcessGroupEnum.fromString(processGroup);
         File resourceFile = FileResourceUtil.getCloudFile(pg, component[0] + "." + component[1]);
+        String scenarioName = "AutoAPI" + processGroup.replace(" ", "") + component[0].replace(" ", "");
         String mode = "manual";
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
@@ -61,9 +62,9 @@ public class FileUploadAPI {
                 String line = lineObj.toString();
                 String[] index = line.split(",(?=([^\\\"]|\\\"[^\\\"]*\\\")*$)");
                 String fileName = index[0].replace("\"", "");
-                String scenarioName = index[1].replace("\"", "");
-                String processGroup = index[2].replace("\"", "");
-                result.add(new Object[] {fileName, scenarioName, processGroup});
+//                String scenarioName = index[1].replace("\"", "");
+                String processGroup = index[1].replace("\"", "");
+                result.add(new Object[] {fileName, processGroup});
             }
             return result.toArray();
         }
