@@ -2,7 +2,7 @@ package com.apriori.bcs.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "ReportTypeSchema.json")
+@Schema(location = "ReportTypeResponseSchema.json")
 public class ReportType {
     private String identity;
     private String createdBy;

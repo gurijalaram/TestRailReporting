@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "ProcessGroupsSchema.json")
+@Schema(location = "ProcessGroupsItemsResponseSchema.json")
 public class ProcessGroups extends Pagination {
     private List<ProcessGroup> items;
 }
