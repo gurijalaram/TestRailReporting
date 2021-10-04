@@ -57,6 +57,7 @@
         "pieceAndPeriod",
         "pieceCost",
         "processGroupName",
+        "productionLife",
         "programmingCost",
         "programmingCostPerPart",
         "roughMass",
@@ -246,6 +247,9 @@
         },
         "processGroupName": {
           "type": "string"
+        },
+        "productionLife": {
+          "type": "number"
         },
         "programmingCost": {
           "type": "number"
