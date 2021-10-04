@@ -33,15 +33,16 @@ public class UploadComponentTests extends TestBase {
     public void testUploadComponent() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "Casting.prt");
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .uploadComponentAndSubmit(scenarioName, resourceFile, ExplorePage.class)
-            .clickSearch("CASTING")
+            .clickSearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("CASTING", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
 }
