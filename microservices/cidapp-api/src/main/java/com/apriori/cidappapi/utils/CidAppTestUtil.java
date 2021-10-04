@@ -20,12 +20,12 @@ import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -72,7 +72,7 @@ public class CidAppTestUtil {
                     .use("scenarioName", scenarioName))
                 .token(token);
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
@@ -98,7 +98,7 @@ public class CidAppTestUtil {
                     .use("scenarioName", scenarioName))
                 .token(token);
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
@@ -130,7 +130,7 @@ public class CidAppTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENTS, GetComponentResponse.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -144,7 +144,7 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -176,7 +176,7 @@ public class CidAppTestUtil {
         int axesEntries = 0;
 
         do {
-            axesEntriesResponse = HTTP2Request.build(requestEntity).get();
+            axesEntriesResponse = HTTPRequest.build(requestEntity).get();
             try {
                 axesEntries = axesEntriesResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size();
                 TimeUnit.MILLISECONDS.sleep(POLLING_INTERVAL);
@@ -210,7 +210,7 @@ public class CidAppTestUtil {
 
         waitSeconds(2);
         do {
-            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
             scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             waitSeconds(POLLING_INTERVAL);
         } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
@@ -260,7 +260,7 @@ public class CidAppTestUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
 
                 assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
@@ -318,7 +318,7 @@ public class CidAppTestUtil {
                         .build()
                 );
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -333,7 +333,7 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.GET_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

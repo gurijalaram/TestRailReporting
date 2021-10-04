@@ -13,9 +13,9 @@ import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -39,7 +39,7 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -50,14 +50,14 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .inlineVariables(customer.getIdentity())).get();
 
@@ -69,14 +69,14 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer identified by its name")
     public void getCustomerByName() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customers> responseName = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customers> responseName = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .urlEncodingEnabled(false)
             .inlineVariables("?name[CN]=" + customer.getName())).get();
@@ -89,7 +89,7 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5644"})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
-        ResponseWrapper<ErrorMessage> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<ErrorMessage> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .inlineVariables("76EA87KCHIKD")).get();
 
@@ -100,7 +100,7 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        ResponseWrapper<Customers> response = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .inlineVariables("?name[CN]=" + generateStringUtil.generateCustomerName())).get();
 
@@ -122,7 +122,7 @@ public class CasCustomersTests {
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        ResponseWrapper<Customers> responseName = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customers> responseName = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .urlEncodingEnabled(false)
             .inlineVariables("?name[CN]=" + customerName)).get();
@@ -137,7 +137,7 @@ public class CasCustomersTests {
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
 
-        ResponseWrapper<Customer> responseIdentity = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
             .token(token)
             .inlineVariables(identity)).get();
 

@@ -70,7 +70,7 @@ public class NavBarTests extends TestBase {
             .login()
             .expandUserInfoDropdown();
 
-        assertThat(pageHeader.getLoginID(), equalTo(Constants.USER_EMAIL));
+        assertThat(pageHeader.getLoginID(), equalTo(LoginPage.getUserName()));
         assertThat(pageHeader.getCurrentCompany(), equalTo("aPriori Internal"));
     }
 

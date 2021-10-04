@@ -1,9 +1,9 @@
 package com.apriori.vds.tests;
 
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlPermissionItems;
 import com.apriori.vds.tests.util.VDSTestUtil;
@@ -28,7 +28,7 @@ public class AccessControlsTest extends VDSTestUtil {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PERMISSIONS, AccessControlPermissionItems.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTP2Request.build(requestEntity).get().getStatusCode()
+            HTTPRequest.build(requestEntity).get().getStatusCode()
         );
     }
 
@@ -39,7 +39,7 @@ public class AccessControlsTest extends VDSTestUtil {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_SYNCHRONIZE, null);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT,
-            HTTP2Request.build(requestEntity).post().getStatusCode()
+            HTTPRequest.build(requestEntity).post().getStatusCode()
         );
     }
 }

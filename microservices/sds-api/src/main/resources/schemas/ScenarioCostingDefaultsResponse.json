@@ -43,6 +43,9 @@
         "materialBean": {
           "type": "object"
         },
+        "customAttributes": {
+          "type": "object"
+        },
         "annualVolume": {
           "type": "integer"
         },

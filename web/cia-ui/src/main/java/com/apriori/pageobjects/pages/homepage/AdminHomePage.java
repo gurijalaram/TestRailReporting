@@ -2,7 +2,6 @@ package com.apriori.pageobjects.pages.homepage;
 
 import com.apriori.pageobjects.header.PageHeader;
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.WebDriver;

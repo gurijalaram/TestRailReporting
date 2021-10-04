@@ -14,9 +14,9 @@ import com.apriori.entity.response.PostBatch;
 import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -50,7 +50,7 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
+        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
             .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
 
@@ -97,7 +97,7 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
+        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
             .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
 
@@ -105,7 +105,7 @@ public class CasBatchItemTests {
         String itemId = batchItem.getIdentity();
         String userName = batchItem.getUserName();
 
-        ResponseWrapper<BatchItem> getItem = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, BatchItem.class)
+        ResponseWrapper<BatchItem> getItem = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, BatchItem.class)
             .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemId)).get();
 
@@ -133,7 +133,7 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
+        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
             .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
 

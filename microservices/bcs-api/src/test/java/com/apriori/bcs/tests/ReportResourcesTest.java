@@ -66,7 +66,7 @@ public class ReportResourcesTest extends TestUtil {
             interval++;
         }
 
-        reportTemplates = (ReportTemplates) ReportResources.getReportTemplates("type[EQ]=PART_REPORT")
+        reportTemplates = (ReportTemplates) ReportResources.getReportTemplatesPartReport()
                 .getResponseEntity();
 
         ReportParameters reportParameters = new ReportParameters();

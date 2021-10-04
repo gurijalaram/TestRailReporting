@@ -46,11 +46,11 @@ import com.apriori.entity.response.upload.WorkorderCommands;
 import com.apriori.entity.response.upload.WorkorderDetailsResponse;
 import com.apriori.entity.response.upload.WorkorderRequest;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -317,8 +317,8 @@ public class FileUploadResources {
                 FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
             .formParams(new FormParams().use("filename", fileName));
 
-        assertThat(HTTP2Request.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
-        return (FileResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
+        assertThat(HTTPRequest.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
+        return (FileResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -339,7 +339,7 @@ public class FileUploadResources {
                 publishScenarioKey.getMasterName(),
                 publishScenarioKey.getStateName());
 
-        return (GetAdminInfoResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (GetAdminInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -361,7 +361,7 @@ public class FileUploadResources {
                 scenarioIterationKey.getScenarioKey().getStateName(),
                 scenarioIterationKey.getIteration().toString());
 
-        return (GetImageInfoResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (GetImageInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -378,7 +378,7 @@ public class FileUploadResources {
             .headers(headers)
             .inlineVariables(fileMetadataIdentity);
 
-        return (GetCadMetadataResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (GetCadMetadataResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -403,7 +403,7 @@ public class FileUploadResources {
                         inputs))
                 );
             int counter = 0;
-            while (HTTP2Request.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
+            while (HTTPRequest.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
                 counter++;
             }
         }
@@ -417,7 +417,7 @@ public class FileUploadResources {
                     inputs))
             );
 
-        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+        return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
     }
 
     /**
@@ -439,7 +439,7 @@ public class FileUploadResources {
                     inputs))
             );
 
-        return jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id");
+        return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
     }
 
     /**
@@ -456,7 +456,7 @@ public class FileUploadResources {
             .headers(headers)
             .inlineVariables(workorderId);
 
-        return HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -473,7 +473,7 @@ public class FileUploadResources {
             .headers(headers)
             .inlineVariables(imageId);
 
-        return HTTP2Request.build(requestEntity).get().getBody();
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 
     /**
@@ -568,7 +568,7 @@ public class FileUploadResources {
                 scenarioKey.getStateName(),
                 String.valueOf(getLatestIteration(scenarioKey)));
 
-        return Integer.parseInt(jsonNode(HTTP2Request.build(requestEntity).post().getBody(), "id"));
+        return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id"));
     }
 
     /**
@@ -590,7 +590,7 @@ public class FileUploadResources {
                 scenarioKey.getStateName()
             );
 
-        return Integer.parseInt(jsonNode(HTTP2Request.build(requestEntity).get().getBody(), "iteration"));
+        return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).get().getBody(), "iteration"));
     }
 
     /**
@@ -618,7 +618,7 @@ public class FileUploadResources {
                 .headers(token)
                 .inlineVariables(workorderId);
 
-            status = HTTP2Request.build(requestEntity).get().getBody().replace("\"", "");
+            status = HTTPRequest.build(requestEntity).get().getBody().replace("\"", "");
 
             try {
                 TimeUnit.SECONDS.sleep(1);
@@ -648,7 +648,7 @@ public class FileUploadResources {
             .body(new FileWorkOrder().setOrderIds(Collections.singletonList(orderId))
                 .setAction("SUBMIT"));
 
-        HTTP2Request.build(requestEntity).post();
+        HTTPRequest.build(requestEntity).post();
     }
 
     /**

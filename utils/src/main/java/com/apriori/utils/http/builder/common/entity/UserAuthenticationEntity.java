@@ -17,39 +17,10 @@ public class UserAuthenticationEntity {
     private String scope;
     private boolean alreadyLoggedIn;
 
-    public UserAuthenticationEntity() {
-
-    }
-
-    public static UserAuthenticationEntity initCloudInfo(final String token, final String cloudContext) {
-        return new UserAuthenticationEntity()
-                .setToken(token)
-                .setCloudContext(cloudContext);
-    }
-
-
     public UserAuthenticationEntity(String emailAddress, String password) {
         this.emailAddress = emailAddress;
         this.password = password;
         this.alreadyLoggedIn = false;
-    }
-
-
-    public UserAuthenticationEntity(String emailAddress, String sessionId, boolean alreadyLoggedIn) {
-        this.emailAddress = emailAddress;
-        this.sessionId = sessionId;
-        this.alreadyLoggedIn = alreadyLoggedIn;
-    }
-
-    public UserAuthenticationEntity(String emailAddress, String password, String sessionId, String grantType, String clientId, String clientSecret, String scope, boolean alreadyLoggedIn) {
-        this.emailAddress = emailAddress;
-        this.password = password;
-        this.sessionId = sessionId;
-        this.grantType = grantType;
-        this.clientId = clientId;
-        this.clientSecret = clientSecret;
-        this.scope = scope;
-        this.alreadyLoggedIn = alreadyLoggedIn;
     }
 
     public String getEmailAddress() {
@@ -151,15 +122,6 @@ public class UserAuthenticationEntity {
 
     public UserAuthenticationEntity setToken(String token) {
         this.token = token;
-        return this;
-    }
-
-    public String getCloudContext() {
-        return cloudContext;
-    }
-
-    public UserAuthenticationEntity setCloudContext(String cloudContext) {
-        this.cloudContext = cloudContext;
         return this;
     }
 

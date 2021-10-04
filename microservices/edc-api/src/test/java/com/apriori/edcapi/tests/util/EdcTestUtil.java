@@ -6,10 +6,11 @@ import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterials;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsItems;
 import com.apriori.edcapi.tests.BillOfMaterialsTest;
+
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -44,12 +45,12 @@ public class EdcTestUtil extends TestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
                 .inlineVariables(getBomIdentity());
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTP2Request.build(requestEntity).delete().getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
 
     protected static BillOfMaterials getBillOfMaterialsResponse() {
         RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItems.class);
-        ResponseWrapper<BillOfMaterialsItems> billOfMaterialsItemsResponseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<BillOfMaterialsItems> billOfMaterialsItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             billOfMaterialsItemsResponseWrapper.getStatusCode());

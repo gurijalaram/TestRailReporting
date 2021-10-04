@@ -1,9 +1,12 @@
 package com.apriori.apibase.utils;
 
-import com.apriori.utils.http.builder.common.response.common.AuthenticateJSON;
-import com.apriori.utils.http.builder.service.HTTPRequest;
+import com.apriori.apibase.enums.BaseAPIEnum;
+import com.apriori.apibase.services.response.objects.AuthenticateJSON;
+import com.apriori.utils.AuthorizationFormUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.properties.PropertiesContext;
 
 import org.apache.commons.collections4.map.PassiveExpiringMap;
 
@@ -11,10 +14,8 @@ import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 public class APIAuthentication {
-
     private String accessToken = null;
     private int timeToLive = 0;
-    private String baseUrl = PropertiesContext.get("${env}.base_url");
 
     /**
      * Fetch Authorization header for user
@@ -47,30 +48,15 @@ public class APIAuthentication {
         };
     }
 
-    /**
-     * Fetch Authorization header for user
-     *
-     * @return Authorization Header
-     */
-    public HashMap<String, String> initAuthorizationHeaderContent(String token) {
-        return new HashMap<String, String>() {
-            {
-                put("Authorization", "Bearer " + token);
-            }
-        };
-    }
-
     private String getCachedToken(String username) {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
-            ResponseWrapper<AuthenticateJSON> tokenDetails = new HTTPRequest().defaultFormAuthorization(username, password)
-                .customizeRequest()
-                .setReturnType(AuthenticateJSON.class)
-                .setEndpoint(baseUrl + "ws/auth/token")
-                .commitChanges()
-                .connect()
-                .post();
+            RequestEntity requestEntity = RequestEntityUtil.initBuilder(BaseAPIEnum.POST_AUTH_TOKEN, AuthenticateJSON.class)
+                .xwwwwFormUrlEncoded(AuthorizationFormUtil.getDefaultAuthorizationForm(username,password))
+                .build();
+
+            ResponseWrapper<AuthenticateJSON> tokenDetails = HTTPRequest.build(requestEntity).post();
 
             timeToLive = tokenDetails.getResponseEntity().getExpiresIn();
             accessToken = tokenDetails.getResponseEntity().getAccessToken();
