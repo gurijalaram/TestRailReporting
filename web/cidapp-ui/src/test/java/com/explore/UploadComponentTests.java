@@ -15,6 +15,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -28,6 +29,7 @@ public class UploadComponentTests extends TestBase {
     private ExplorePage explorePage;
 
     @Test
+    @Issue("MIC-3805")
     @Category(SanityTests.class)
     @Description("Test uploading a component")
     public void testUploadComponent() {
