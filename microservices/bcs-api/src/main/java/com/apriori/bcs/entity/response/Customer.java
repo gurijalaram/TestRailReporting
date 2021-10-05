@@ -17,7 +17,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "CustomerSchema.json")
+@Schema(location = "CustomerResponseSchema.json")
 public class Customer {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)

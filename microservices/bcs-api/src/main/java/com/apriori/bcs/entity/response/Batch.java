@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "CustomerBatchSchema.json")
+@Schema(location = "CustomerBatchResponseSchema.json")
 public class Batch {
     private String identity;
     private String createdBy;

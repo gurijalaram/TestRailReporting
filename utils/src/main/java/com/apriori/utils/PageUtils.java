@@ -919,8 +919,11 @@ public class PageUtils {
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
         waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
         waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
+        waitForElementToAppear(byValue);
         actionClick(byValue);
     }
 
@@ -934,8 +937,11 @@ public class PageUtils {
      */
     public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
         waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
         waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
+        waitForElementToAppear(byValue);
         actionClick(byValue);
     }
 
