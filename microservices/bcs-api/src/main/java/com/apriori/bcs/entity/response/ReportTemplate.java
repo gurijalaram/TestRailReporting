@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "ReportTemplateSchema.json")
+@Schema(location = "ReportTemplateResponseSchema.json")
 public class ReportTemplate {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)

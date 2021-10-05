@@ -5,7 +5,7 @@
   ],
   "properties": {
     "response": {
-      "$ref": "NtsGetEmailSchema.json"
+      "$ref": "CustomerSchema.json"
     }
   }
 }
