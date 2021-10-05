@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@Schema(location = "NtsGetNotificationsSchema.json")
+@Schema(location = "NtsGetNotificationsItemsSchema.json")
 @Data
 @Builder
 @AllArgsConstructor

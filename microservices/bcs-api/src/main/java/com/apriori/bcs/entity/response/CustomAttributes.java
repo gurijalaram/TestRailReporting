@@ -15,7 +15,7 @@ import java.util.List;
 
 @Data
 @JsonRootName("response")
-@Schema(location = "CustomAttributesSchema.json")
+@Schema(location = "CustomAttributesItemsResponseSchema.json")
 public class CustomAttributes extends Pagination {
     private String[] allowedValues;
     private Integer ordinal;

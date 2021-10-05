@@ -1,9 +1,9 @@
-package com.apriori.bcs.entity.response;
+package com.apriori.cidappapi.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -13,35 +13,31 @@ import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "UserSchema.json")
 @JsonRootName("response")
-@Schema(location = "ReportTemplateResponseSchema.json")
-public class ReportTemplate {
+@Data
+public class User {
+    private Boolean isSystemUser;
+    private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private String customerIdentity;
+    private UserProfile userProfile;
+    private String email;
+    private String username;
+    private Boolean active;
+    private Boolean mfaRequired;
+    private CustomAttributes customAttributes;
+    private CustomProperties customProperties;
+    private String userType;
+    private List<String> resourcesAllowedToCreate;
 
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private String deletedAt;
-
-    private String deletedBy;
-    private String description;
-    private String identity;
-    private String name;
-
-    @JsonProperty("public")
-    private Boolean isPublic;
-
-    private List<ReportTemplateParameter> reportTemplateParameters;
-    private String type;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private String updatedAt;
-
-    private String updatedBy;
+    public static class CustomProperties {
+    }
 }

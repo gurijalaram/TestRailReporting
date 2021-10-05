@@ -11,7 +11,7 @@ import lombok.Data;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "NtsNotificationSchema.json")
+@Schema(location = "NtsNotificationResponseSchema.json")
 @Data
 @Builder
 public class Notification {
