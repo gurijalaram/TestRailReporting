@@ -21,9 +21,17 @@ import java.time.LocalDateTime;
 public class FileResponse {
     private String identity;
     private String createdBy;
+    private String updatedBy;
+    private String deletedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime deletedAt;
     private String customerIdentity;
     private String deploymentIdentity;
     private String installationIdentity;

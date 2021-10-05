@@ -3,7 +3,6 @@ package com.apriori.sds.entity.response;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,17 +10,18 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(location = "CostingTemplateResponse.json")
 @Data
 @JsonRootName("response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class CostingTemplate {
     private String identity;
     private String createdBy;
     private String customerIdentity;
     private Boolean locked;
     private Boolean published;
+    private List<String> propertiesToReset;
     private Object customAttributes;
     private String materialName;
     private String pinnedRouting;
@@ -29,6 +29,8 @@ public class CostingTemplate {
     private Object processSetupOptions;
     private ScenarioSecondaryProcess secondaryProcess;
     private Object secondaryVpes;
+    private Object secondaryProcesses;
+    private Object secondaryDigitalFactories;
     private Object threads;
     private Object tolerances;
     private Object vpeName;

@@ -1,7 +1,7 @@
 package com.apriori.cds.objects.response;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -32,12 +32,12 @@ public class InstallationItems {
     private String clientSecret;
     private String cloudReference;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
     private String customerIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
     private String deletedBy;
     private String deploymentIdentity;
@@ -51,7 +51,7 @@ public class InstallationItems {
     private String tenantGroup;
     private String siteIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
     private String updatedBy;
     private String url;

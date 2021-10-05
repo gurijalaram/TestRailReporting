@@ -139,6 +139,17 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * Navigates to the scenario via url
+     *
+     * @param scenarioUrl - url for the scenario
+     * @return new page object
+     */
+    public EvaluatePage navigateToScenario(String scenarioUrl) {
+        driver.navigate().to(scenarioUrl);
+        return new EvaluatePage(driver);
+    }
+
+    /**
      * Collective method to upload a file then select Cancel
      *
      * @param scenarioName - the name of the scenario
@@ -262,9 +273,9 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Uploads a cad file and select submit
      *
-     * @param filePath     - location of the file
-     * @param klass-       the class name
-     * @param <T>          - generic type
+     * @param filePath - location of the file
+     * @param klass-   the class name
+     * @param <T>      - generic type
      * @return generic page object
      */
     public <T> T updateCadFile(File filePath, Class<T> klass) {

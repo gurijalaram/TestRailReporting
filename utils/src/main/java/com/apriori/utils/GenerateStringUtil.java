@@ -32,9 +32,13 @@ public class GenerateStringUtil {
         final int index = componentName.indexOf(".");
         final String randomSymbols = new Random().nextInt(1000) + "-" + System.nanoTime();
 
-        return componentName.substring(0, index)
-            + randomSymbols
-            + componentName.substring(index);
+        if (index != -1) {
+            return componentName.substring(0, index)
+                + randomSymbols
+                + componentName.substring(index);
+        }
+
+        return componentName + randomSymbols;
     }
 
     /**
@@ -164,5 +168,14 @@ public class GenerateStringUtil {
      */
     public String getRandomString() {
         return RandomStringUtils.randomAlphanumeric(12);
+    }
+
+    /**
+     * Generates a 12 character numeric string
+     *
+     * @return String
+     */
+    public String getRandomNumbers() {
+        return RandomStringUtils.randomNumeric(8);
     }
 }

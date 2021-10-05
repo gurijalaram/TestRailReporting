@@ -8,7 +8,7 @@ import lombok.Data;
 import java.util.List;
 
 
-@Schema(location = "NtsGetEmailsResponseSchema.json")
+@Schema(location = "NtsGetEmailsItemsResponseSchema.json")
 @Data
 public class GetEmailResponse extends Pagination {
     private GetEmailResponse response;

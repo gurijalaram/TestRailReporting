@@ -3,10 +3,10 @@ package com.apriori.vds.tests.util;
 import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.bcs.entity.response.ProcessGroups;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlGroup;
 import com.apriori.vds.entity.response.process.group.associations.ProcessGroupAssociation;
@@ -31,7 +31,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity());
 
-        final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTP2Request.build(requestEntity).get();
+        final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTPRequest.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             processGroupMaterialsItems.getStatusCode()
@@ -43,7 +43,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
     protected static List<ProcessGroup> getProcessGroupsResponse() {
         RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
 
-        ResponseWrapper<ProcessGroups> processGroupsResponse = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupsResponse.getStatusCode());
 
         return processGroupsResponse.getResponseEntity().getItems();
@@ -51,7 +51,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     public static String getAssociatedProcessGroupIdentity() {
         if (associatedProcessGroupIdentity == null) {
-            associatedProcessGroupIdentity = getPGAssociationIdByPGName(ProcessGroupEnum.CASTING_DIE);
+            associatedProcessGroupIdentity = getPGAssociationIdByPGName(ProcessGroupEnum.STOCK_MACHINING);
         }
         return associatedProcessGroupIdentity;
     }
@@ -82,7 +82,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class);
 
-        ResponseWrapper<ProcessGroupAssociationsItems> responseWrapper = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ProcessGroupAssociationsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity()

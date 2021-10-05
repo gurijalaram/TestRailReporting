@@ -14,10 +14,10 @@ import com.apriori.utils.EncodedFileUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
@@ -96,7 +96,7 @@ public abstract class SDSTestUtil extends TestUtil {
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
             .inlineVariables(componentId, scenarioId);
 
-        ResponseWrapper<String> response = HTTP2Request.build(requestEntity).delete();
+        ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
 
         assertEquals(String.format("The component with scenario %s, was not removed", scenarioId),
             HttpStatus.SC_NO_CONTENT, response.getStatusCode());
@@ -159,7 +159,7 @@ public abstract class SDSTestUtil extends TestUtil {
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", postComponentRequest);
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", postComponentRequest.getComponentName(), postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
@@ -181,7 +181,7 @@ public abstract class SDSTestUtil extends TestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
 
-        ResponseWrapper<CostingTemplatesItems> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();

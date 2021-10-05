@@ -11,9 +11,9 @@ import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.User;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -32,7 +32,7 @@ public class CasUsersTests extends TestUtil {
     @TestRail(testCaseId = {"5666"})
     @Description("Get the current representation of the user performing the request.")
     public void getCurrentUser() {
-        ResponseWrapper<User> user = HTTP2Request.build(RequestEntityUtil.init(CASAPIEnum.GET_CURRENT_USER, User.class)
+        ResponseWrapper<User> user = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CURRENT_USER, User.class)
             .token(token)).get();
 
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));

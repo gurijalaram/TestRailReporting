@@ -2,12 +2,11 @@ package com.apriori.vds.entity.response.customizations;
 
 import com.apriori.bcs.entity.response.ProcessGroup;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 import com.apriori.vds.entity.response.custom.attributes.CustomAttribute;
 import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 import com.apriori.vds.entity.response.process.group.site.variable.SiteVariable;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -20,7 +19,6 @@ import java.util.List;
 @Schema(location = "Customization.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Customization {
     private List<CustomAttribute> customAttributes;
     private String customerIdentity;
@@ -31,14 +29,14 @@ public class Customization {
     private List<SiteVariable> siteVariables;
 
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
 
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
 
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
 }

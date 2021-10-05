@@ -4,11 +4,12 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -17,32 +18,30 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 public class CdsAccessControlsTests  {
-    private String url;
-    private String userIdentityEndpoint;
-    private String customerIdentityEndpoint;
+    private String userIdentity;
+    private String customerIdentity;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private String accessControlIdentityEndpoint;
+    private IdentityHolder accessControlIdentityHolder;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
-    @Before
-    public void setServiceUrl() {
-        url = Constants.getServiceUrl();
-    }
 
     @After
     public void cleanUp() {
-        if (accessControlIdentityEndpoint != null) {
-            cdsTestUtil.delete(accessControlIdentityEndpoint);
+        if (accessControlIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_ACCESS_CONTROL_BY_CUSTOMER_USER_CONTROL_IDS,
+                accessControlIdentityHolder.customerIdentity(),
+                accessControlIdentityHolder.userIdentity(),
+                accessControlIdentityHolder.accessControlIdentity()
+            );
         }
-        if (userIdentityEndpoint != null) {
-            cdsTestUtil.delete(userIdentityEndpoint);
+        if (customerIdentity != null && userIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
-        if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(customerIdentityEndpoint);
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -59,17 +58,19 @@ public class CdsAccessControlsTests  {
         String userName = generateStringUtil.generateUserName();
 
         ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
-        String customerIdentity = customer.getResponseEntity().getIdentity();
-        customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
+        customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
-        String userIdentity = user.getResponseEntity().getIdentity();
-        userIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s", customerIdentity, userIdentity));
+        userIdentity = user.getResponseEntity().getIdentity();
 
         ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.addAccessControl(customerIdentity, userIdentity);
         String accessControlIdentity = accessControlResponse.getResponseEntity().getResponse().getIdentity();
 
-        accessControlIdentityEndpoint = String.format(url, String.format("customers/%s/users/%s/access-controls/%s", customerIdentity, userIdentity, accessControlIdentity));
+        accessControlIdentityHolder =  IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .accessControlIdentity(accessControlIdentity)
+            .build();
 
         assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(accessControlResponse.getResponseEntity().getResponse().getOutOfContext(), is(true));

@@ -5,10 +5,10 @@ import com.apriori.sds.entity.response.ScenarioIteration;
 import com.apriori.sds.entity.response.ScenarioIterationItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -26,7 +26,7 @@ public class IterationsTest extends SDSTestUtil {
                     getComponentId(), getScenarioId()
                 );
 
-        ResponseWrapper<ScenarioIterationItemsResponse> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioIterationItemsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -40,7 +40,7 @@ public class IterationsTest extends SDSTestUtil {
                     getComponentId(), getScenarioId()
                 );
 
-        ResponseWrapper<ScenarioIteration> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioIteration> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -54,7 +54,7 @@ public class IterationsTest extends SDSTestUtil {
                     getComponentId(), getScenarioId(), getIterationId()
                 );
 
-        ResponseWrapper<ScenarioIteration> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ScenarioIteration> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 }

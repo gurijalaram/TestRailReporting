@@ -200,7 +200,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)

@@ -2,10 +2,10 @@ package com.apriori.validators;
 
 import com.apriori.features.WorkflowFeatures;
 import com.apriori.pageobjects.WorkflowPage;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.junit.Assert;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
@@ -137,16 +137,30 @@ public class WorkflowValidator {
                 "pageSize"));
         Assert.assertEquals("Number of displayed workflows was incorrect", Constants.DEFAULT_PAGE_SIZE,
                 (int)valuesI.get("displayedWorkflows"));
-        Assert.assertEquals("Default row range is incorrect", Constants.DEFAULT_ROW_RANGE, values.get("rowRange").toString());
-        Assert.assertEquals("Next row range is incorrect", Constants.NEXT_ROW_RANGE,
-                values.get("nextRowRange").toString());
-        Assert.assertEquals("Previous row range is incorrect", Constants.DEFAULT_ROW_RANGE,
-                values.get("previousRowRange").toString());
-        Assert.assertEquals("Beginning row range is incorrect", Constants.DEFAULT_ROW_RANGE, values.get(
-                "beginningRowRange"));
-        Assert.assertEquals("Updated pagesize is incorrect", 5, (int)valuesI.get("changedMaxPageSize"));
-        Assert.assertTrue("Number of updated displayed workflows is greater than 100",
-                valuesI.get("displayedWorkflowsUpdated") <= 5);
 
+
+        if ((Integer)values.get("firstPageRowCount") != 25) {
+            String firstPageRowRange = "Rows1 - " + values.get("firstPageRowCount").toString();
+            Assert.assertEquals("Default row range is incorrect", firstPageRowRange,
+                    values.get("rowRange").toString());
+
+        } else {
+            Assert.assertEquals("Default row range is incorrect", Constants.DEFAULT_ROW_RANGE,
+                    values.get("rowRange").toString());
+
+            String secondPageRange =
+                    "Rows" + PropertiesContext.get("${env}.ci-connect.second_page_starting_range_number") +
+                            " - " + values.get("pageNextRowCount").toString();
+            Assert.assertEquals("Next row range is incorrect", secondPageRange,
+                    values.get("nextRowRange").toString());
+
+            Assert.assertEquals("Previous row range is incorrect", Constants.DEFAULT_ROW_RANGE,
+                    values.get("previousRowRange").toString());
+            Assert.assertEquals("Beginning row range is incorrect", Constants.DEFAULT_ROW_RANGE, values.get(
+                    "beginningRowRange"));
+            Assert.assertEquals("Updated pagesize is incorrect", 5, (int) valuesI.get("changedMaxPageSize"));
+            Assert.assertTrue("Number of updated displayed workflows is greater than 100",
+                    valuesI.get("displayedWorkflowsUpdated") <= 5);
+        }
     }
 }

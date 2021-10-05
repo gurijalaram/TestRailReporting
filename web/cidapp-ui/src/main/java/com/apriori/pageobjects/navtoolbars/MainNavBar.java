@@ -73,7 +73,6 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
         pageUtils.waitForElementAppear(settingsButton);
         pageUtils.waitForElementAppear(helpDropdown);
         pageUtils.waitForElementsToNotAppear(By.cssSelector("[role='status']"));
-        pageUtils.waitForSteadinessOfElement(By.xpath("//button[.='Explore']"));
     }
 
     /**
