@@ -39,8 +39,17 @@ public class ScenarioResponse {
     private String scenarioState;
     private String previousScenarioState;
     private String lastAction;
+    private String costMaturity;
+    private String status;
+    private String assignedTo;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
+    private LocalDateTime assignedAt;
+    private String assignedBy;
     private String ownedBy;
     private Boolean locked;
+    private String assignedToName;
+    private String assignedByName;
     private Boolean published;
     private String ownedByName;
     private String createdByName;

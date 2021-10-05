@@ -877,7 +877,8 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
-        actionClick(waitForElementToAppear(dropdownSelector));
+        waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
         waitForElementToAppear(byValue);
         actionClick(driver.findElement(byValue));
@@ -892,7 +893,8 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
-        actionClick(waitForElementToAppear(dropdownSelector));
+        waitForElementToAppear(dropdownSelector);
+        actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
         waitForElementToAppear(byValue);
         actionClick(driver.findElement(byValue));
