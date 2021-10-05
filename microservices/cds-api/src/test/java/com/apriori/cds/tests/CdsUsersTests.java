@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
@@ -21,21 +22,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class CdsUsersTests {
-    private String url;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
-
-    @Before
-    public void setServiceUrl() {
-        url = Constants.getServiceUrl();
-    }
-
 
     @Test
     @TestRail(testCaseId = {"3697"})
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
-        url = String.format(url, "users");
-        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(url, Users.class);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -47,13 +40,11 @@ public class CdsUsersTests {
     @TestRail(testCaseId = {"3698"})
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
-        String usersUrl = String.format(url, "users");
-        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(usersUrl, Users.class);
+        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
 
         String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        String identityUrl = String.format(url, String.format("users/%s", userIdentity));
-        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(identityUrl, User.class);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_BY_ID, User.class, userIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getCustomerIdentity(), is(not(emptyString())));
@@ -64,13 +55,11 @@ public class CdsUsersTests {
     @TestRail(testCaseId = {"5971"})
     @Description("API returns a user's credentials based on the supplied identity")
     public void getUsersCredentials() {
-        String usersUrl = String.format(url, "users");
-        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(usersUrl, Users.class);
+        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
 
         String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
-        String credentialsUrl = String.format(url, String.format("users/%s/credentials", userIdentity));
-        ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(credentialsUrl, CredentialsItems.class);
+        ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_CREDENTIALS_BY_ID, CredentialsItems.class, userIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getPasswordHash(), is(not(emptyString())));

@@ -16,11 +16,11 @@ import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -58,7 +58,7 @@ public class CasTestUtil extends TestUtil {
                     .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
                     .build());
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -77,7 +77,7 @@ public class CasTestUtil extends TestUtil {
                     .build())
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
     }
 
     /**
@@ -90,7 +90,7 @@ public class CasTestUtil extends TestUtil {
             .token(token)
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -103,7 +103,7 @@ public class CasTestUtil extends TestUtil {
             .token(token)
             .inlineVariables(customerIdentity, "users", identity);
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -119,7 +119,7 @@ public class CasTestUtil extends TestUtil {
                     .build())
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -139,7 +139,7 @@ public class CasTestUtil extends TestUtil {
                     .build())
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
 
@@ -166,7 +166,7 @@ public class CasTestUtil extends TestUtil {
                     .build())
             .inlineVariables(identity);
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -208,7 +208,7 @@ public class CasTestUtil extends TestUtil {
                         .setSupervisor("Ciene Frith"))
                     .build());
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
     }
 
 
@@ -224,7 +224,7 @@ public class CasTestUtil extends TestUtil {
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile))
             .inlineVariables(customerIdentity, "batches/");
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -236,7 +236,7 @@ public class CasTestUtil extends TestUtil {
             .token(token)
             .inlineVariables(customerIdentity, "batches", batchIdentity);
 
-        return HTTP2Request.build(requestEntity).delete();
+        return HTTPRequest.build(requestEntity).delete();
     }
 
 
@@ -253,7 +253,7 @@ public class CasTestUtil extends TestUtil {
                 .build())
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items");
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -275,6 +275,6 @@ public class CasTestUtil extends TestUtil {
                     .jobTitle("QA"))
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemIdentity);
 
-        return HTTP2Request.build(requestEntity).patch();
+        return HTTPRequest.build(requestEntity).patch();
     }
 }

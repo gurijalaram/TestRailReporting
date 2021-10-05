@@ -47,7 +47,7 @@ public class ReportResourcesTest extends TestUtil {
 
         part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
 
-        int intervals = Constants.POLLING_TIMEOUT;
+        int intervals = Constants.BATCH_POLLING_TIMEOUT;
         int interval = 0;
         BcsUtils.State isPartCompleted = BcsUtils.State.PROCESSING;
 
@@ -66,7 +66,7 @@ public class ReportResourcesTest extends TestUtil {
             interval++;
         }
 
-        reportTemplates = (ReportTemplates) ReportResources.getReportTemplates("type[EQ]=PART_REPORT")
+        reportTemplates = (ReportTemplates) ReportResources.getReportTemplatesPartReport()
                 .getResponseEntity();
 
         ReportParameters reportParameters = new ReportParameters();
@@ -105,7 +105,7 @@ public class ReportResourcesTest extends TestUtil {
     public void createNewReport() {
         Assert.assertNotNull("No report was created", report.getResponseEntity().getIdentity());
 
-        int intervals = Constants.POLLING_TIMEOUT;
+        int intervals = Constants.BATCH_POLLING_TIMEOUT;
         int interval = 0;
         BcsUtils.State reportState;
         while (interval <= intervals) {
@@ -162,7 +162,7 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4183"})
     @Description("Export a report using the CIS API")
     public void exportReport() {
-        int intervals = Constants.POLLING_TIMEOUT;
+        int intervals = Constants.BATCH_POLLING_TIMEOUT;
         int interval = 0;
         BcsUtils.State reportState;
         boolean isReportReady = false;
@@ -182,7 +182,7 @@ public class ReportResourcesTest extends TestUtil {
 
         if (!isReportReady) {
             Assert.fail(String.format("After %d seconds, the report hasn't completed processing (state = %s)",
-                    Constants.POLLING_TIMEOUT * 10,
+                    Constants.BATCH_POLLING_TIMEOUT * 10,
                     getReportState().toString()));
         }
 

@@ -3,7 +3,6 @@ package com.apriori.sds.entity.response;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -16,7 +15,6 @@ import java.util.List;
 @Schema(location = "SecondaryProcessResponse.json")
 @Data
 @JsonRootName("response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class SecondaryProcess {
     private List<Object> children;
     private String displayName;

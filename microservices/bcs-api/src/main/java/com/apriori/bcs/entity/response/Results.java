@@ -1,7 +1,7 @@
 package com.apriori.bcs.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZZZZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -52,7 +52,7 @@ public class Results {
     private Double laborTime;
 
     @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZZZZ.class)
     private LocalDateTime lastCosted;
 
     private Double length;
@@ -76,6 +76,7 @@ public class Results {
     private Double pieceAndPeriod;
     private Double pieceCost;
     private String processGroupName;
+    private Double productionLife;
     private Double programmingCost;
     private Double programmingCostPerPart;
     private Double roughMass;

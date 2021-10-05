@@ -13,10 +13,9 @@ import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSett
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
-
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserUtil;
 
 import org.slf4j.Logger;
@@ -54,7 +53,7 @@ public class AcsResources {
                         .missing(true)
                         .createdBy(Constants.USERNAME).build());
 
-        return (CreateMissingScenarioResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
+        return (CreateMissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
 
@@ -78,7 +77,7 @@ public class AcsResources {
                         scenarioIterationKey.getIteration().toString()
                 );
 
-        return (GetScenarioInfoByScenarioIterationKeyResponse) HTTP2Request
+        return (GetScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
                 .build(requestEntity).get().getResponseEntity();
     }
 
@@ -94,7 +93,7 @@ public class AcsResources {
                 .headers(token)
                 .inlineVariables(Constants.USERNAME);
 
-        return (GetDisplayUnitsResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (GetDisplayUnitsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -110,7 +109,7 @@ public class AcsResources {
                 .body(setDisplayUnitsInputs)
                 .inlineVariables(Constants.USERNAME);
 
-        return (SetDisplayUnitsResponse) HTTP2Request.build(requestEntity).post().getResponseEntity();
+        return (SetDisplayUnitsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -125,7 +124,7 @@ public class AcsResources {
                 .init(AcsApiEnum.GET_UNIT_VARIANT_SETTINGS, GetUnitVariantSettingsResponse.class)
                 .headers(token);
 
-        return (GetUnitVariantSettingsResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (GetUnitVariantSettingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -141,7 +140,7 @@ public class AcsResources {
                 .headers(token)
                 .inlineVariables(Constants.USERNAME);
 
-        return (UnitVariantSetting) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (UnitVariantSetting) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -156,6 +155,6 @@ public class AcsResources {
                 .init(AcsApiEnum.GET_ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
                 .headers(token);
 
-        return (CurrencyRateVersionResponse) HTTP2Request.build(requestEntity).get().getResponseEntity();
+        return (CurrencyRateVersionResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 }

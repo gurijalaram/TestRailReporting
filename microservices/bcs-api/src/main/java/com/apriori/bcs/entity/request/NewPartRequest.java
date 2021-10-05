@@ -1,7 +1,11 @@
 package com.apriori.bcs.entity.request;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.google.common.primitives.Bytes;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 @Data
 public class NewPartRequest {
@@ -18,6 +22,10 @@ public class NewPartRequest {
     private String scenarioName;
     private String udas;
     private String vpeName;
+
+    @Setter(onMethod_ = {@JsonSetter("UDARegion")})
+    @Getter(onMethod_ = {@JsonGetter("UDARegion")})
+    private String udaRegion;
 
     public void setVpeName(String vpeName) {
         if (vpeName == null) {

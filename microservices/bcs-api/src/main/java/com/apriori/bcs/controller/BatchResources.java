@@ -7,54 +7,32 @@ import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Batches;
 import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.entity.response.StartCosting;
+import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.dao.GenericRequestUtil;
-import com.apriori.utils.http.builder.service.RequestAreaApi;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
-import org.apache.http.HttpStatus;
-
 import java.util.UUID;
 
-public class BatchResources extends BcsBase {
-    private static final String endpointBatches = String.format(getBatchUrl(), "");
-    private static final String endpointBatchesWithIdentity = String.format(getBatchUrlWithIdentity(), "");
-    private static final String endPointBatchCosting = String.format(getBatchUrlWithIdentity(), "/start-costing");
+public class BatchResources {
 
     public static <T> ResponseWrapper<T> getBatches() {
-        return getBatches(null);
-    }
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCHES, Batches.class);
 
-    public static <T> ResponseWrapper<T> getBatches(String queries) {
-        if (queries != null) {
-            queries = "&" + queries;
-        } else {
-            queries = "";
-        }
-
-        String url = endpointBatches.concat(queries);
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, Batches.class),
-                new RequestAreaApi()
-        );
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getBatchRepresentation(String identity) {
-        String url = String.format(getBatchUrl(), "/" + identity);;
-        return GenericRequestUtil.get(
-                RequestEntity.init(url, Batch.class),
-                new RequestAreaApi()
-        );
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_BY_ID, Batch.class)
+            .inlineVariables(identity);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     public static Batch createNewBatch() {
-        return createNewBatch(Batch.class);
-    }
-
-    public static Batch createNewBatch(Class klass) {
-        String url = endpointBatches;
         Long currentMillis = System.currentTimeMillis();
 
         NewBatchRequest body = new NewBatchRequest();
@@ -65,23 +43,23 @@ public class BatchResources extends BcsBase {
         newBatch.setExportSetName("Auto-ExportSet-" + System.currentTimeMillis());
         body.setBatch(newBatch);
 
-        return (Batch) GenericRequestUtil.post(
-                RequestEntity.init(url, klass)
-                        .setBody(body)
-                        .setStatusCode(HttpStatus.SC_CREATED),
-                new RequestAreaApi()
-        ).getResponseEntity();
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_BATCHES, Batch.class)
+            .body(body);
+
+        return (Batch) HTTPRequest.build(requestEntity)
+            .post()
+            .getResponseEntity();
     }
 
     public static StartCosting startCosting(String identity) {
-        String url = String.format(getBatchUrlWithIdentity(identity), "/start-costing");
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_START_COSTING_BY_ID, StartCosting.class)
+            .inlineVariables(identity)
+            .customBody("{}");
 
-        return (StartCosting) GenericRequestUtil.post(
-                RequestEntity.init(url, StartCosting.class)
-                        .setBody("{}")
-                        .setStatusCode(HttpStatus.SC_ACCEPTED),
-                new RequestAreaApi()
-        ).getResponseEntity();
+        return (StartCosting) HTTPRequest.build(requestEntity)
+            .post()
+            .getResponseEntity();
+
     }
 
     /**
@@ -112,22 +90,18 @@ public class BatchResources extends BcsBase {
 
         }
 
-        String url = String.format(getBatchUrlWithIdentity(batchIdentity), "/cancel");
-        return GenericRequestUtil.post(
-                RequestEntity.init(url, Cancel.class)
-                        .setBody("{}")
-                        .setStatusCode(HttpStatus.SC_ACCEPTED),
-                new RequestAreaApi()
-        );
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_CANCEL_COSTING_BY_ID, Cancel.class)
+            .inlineVariables(batchIdentity)
+            .customBody("{}");
+
+        return HTTPRequest.build(requestEntity).post();
     }
 
     public static <T> ResponseWrapper<T> cancelBatchProccessing(String batchIdentity) {
-        String url = String.format(getBatchUrlWithIdentity(batchIdentity), "/cancel");
-        return GenericRequestUtil.post(
-                RequestEntity.init(url, Cancel.class)
-                        .setBody("{}")
-                        .setStatusCode(null),
-                new RequestAreaApi()
-        );
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_CANCEL_COSTING_BY_ID, Cancel.class)
+            .inlineVariables(batchIdentity)
+            .customBody("{}");
+
+        return HTTPRequest.build(requestEntity).post();
     }
 }

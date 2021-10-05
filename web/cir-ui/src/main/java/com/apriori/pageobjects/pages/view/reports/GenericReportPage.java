@@ -7,7 +7,6 @@ import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
-
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;

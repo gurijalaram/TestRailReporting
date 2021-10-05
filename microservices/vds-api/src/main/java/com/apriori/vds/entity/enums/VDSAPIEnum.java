@@ -1,9 +1,9 @@
 package com.apriori.vds.entity.enums;
 
-import com.apriori.utils.http.enums.common.EdcQaAPI;
+import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
-public enum VDSAPIEnum implements EdcQaAPI {
+public enum VDSAPIEnum implements ExternalEndpointEnum {
 
     // Access Controls
     GET_GROUPS("groups"),
@@ -26,7 +26,7 @@ public enum VDSAPIEnum implements EdcQaAPI {
 
 
     // Digital Factories
-    GET_DIGITAL_FACTORIES("digital-factories"),
+    GET_DIGITAL_FACTORIES("digital-factories?pageSize=100"),
     GET_DIGITAL_FACTORIES_BY_IDENTITY("digital-factories/%s"),
     GET_VPES("vpes"),
     GET_VPES_BY_IDENTITY("vpes/%s"),
@@ -66,7 +66,7 @@ public enum VDSAPIEnum implements EdcQaAPI {
     PATCH_SITE_VARIABLES_BY_ID("site-variables/%s"),
 
     // Process Group Associations,
-    GET_PG_ASSOCIATIONS("process-group-associations"),
+    GET_PG_ASSOCIATIONS("process-group-associations?pageSize=100"),
     POST_PG_ASSOCIATIONS("process-group-associations"),
     PUT_PG_ASSOCIATIONS("process-group-associations"),
     GET_PG_ASSOCIATIONS_BY_ID("process-group-associations/%s"),
@@ -95,7 +95,18 @@ public enum VDSAPIEnum implements EdcQaAPI {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.vds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.vds.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
+    }
+
+    private String addQuery(String endpointString) {
+        String querySymbol = "?";
+
+        if (endpointString.contains("?")) {
+            querySymbol = "&";
+        }
+
+        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
+
     }
 
 }

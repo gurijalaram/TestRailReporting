@@ -1,9 +1,9 @@
 package com.apriori.sds.entity.response;
 
+import com.apriori.css.entity.response.Thumbnail;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -11,21 +11,31 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(location = "ScenarioIterationResponse.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ScenarioIteration {
     private String customerIdentity;
+    private String scenarioKey;
     private Object scenarioProcesses;
+    private Object scenarioIterationKey;
     private String hasThumbnail;
+    private Thumbnail thumbnail;
     private String costingMessage;
     private String createdBy;
+    private String updatedBy;
     private String identity;
     private String iteration;
     private String hasWebImage;
+    private String hasCustomImage;
     private Object scenarioDtcIssues;
+    private Boolean isCadConnected;
+    private List<String> scenarioCustomAttributes;
+    private List<String> scenarioDesignInvestigations;
+    private List<String> scenarioDesignIssues;
+    private List<String> scenarioDesignNotices;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;

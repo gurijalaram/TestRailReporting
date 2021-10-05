@@ -5,10 +5,10 @@ import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -55,8 +55,7 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, String token, ScenarioStateEnum scenarioState) {
-        // TODO: 16/09/2021 cn - revert to 120000 within 5 working days
-        final int SOCKET_TIMEOUT = 240000;
+        final int SOCKET_TIMEOUT = 120000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
@@ -64,15 +63,14 @@ public class UncostedComponents {
             .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
-        // TODO: 16/09/2021 cn - revert to 120 within 5 working days
-        final int WAIT_TIME = 240;
+        final int WAIT_TIME = 120;
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+                ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
 
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());

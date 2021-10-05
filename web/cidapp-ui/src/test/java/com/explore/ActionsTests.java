@@ -27,6 +27,7 @@ import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -53,6 +54,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2043")
     @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
@@ -171,6 +173,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
@@ -344,6 +347,7 @@ public class ActionsTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
@@ -557,7 +561,6 @@ public class ActionsTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
-
 
         loginPage = new CidAppLoginPage(driver);
         cssItem = loginPage.login(currentUser)

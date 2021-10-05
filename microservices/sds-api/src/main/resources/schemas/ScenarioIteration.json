@@ -47,6 +47,10 @@
     },
     "scenarioIterationKey": {
       "$id": "#/properties/response/properties/scenarioIterationKey",
+      "type": "object"
+    },
+    "scenarioKey": {
+      "$id": "#/properties/response/properties/scenarioKey",
       "type": "string"
     },
     "costingInput": {

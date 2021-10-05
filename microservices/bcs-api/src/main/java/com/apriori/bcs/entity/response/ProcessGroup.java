@@ -14,7 +14,7 @@ import java.util.List;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
-@Schema(location = "ProcessGroupResponse.json")
+@Schema(location = "ProcessGroupResponseSchema.json")
 public class ProcessGroup {
     private String identity;
     private String name;

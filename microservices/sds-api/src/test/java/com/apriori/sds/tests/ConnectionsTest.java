@@ -6,10 +6,10 @@ import com.apriori.sds.entity.response.Connection;
 import com.apriori.sds.entity.response.ConnectionsItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
@@ -52,7 +52,7 @@ public class ConnectionsTest extends SDSTestUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class);
 
-        ResponseWrapper<ConnectionsItemsResponse> response = HTTP2Request.build(requestEntity).get();
+        ResponseWrapper<ConnectionsItemsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity().getItems();
@@ -90,7 +90,7 @@ public class ConnectionsTest extends SDSTestUtil {
                 .inlineVariables(postConnection().getIdentity())
                 .body("connection", connectionRequest);
 
-        ResponseWrapper<Void> response = HTTP2Request.build(requestEntity).patch();
+        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).patch();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 
@@ -111,7 +111,7 @@ public class ConnectionsTest extends SDSTestUtil {
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
                 .body("connection", connectionRequest);
 
-        ResponseWrapper<Connection> response = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<Connection> response = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
 
         connectionsToDelete.add(response.getResponseEntity().getIdentity());
@@ -140,7 +140,7 @@ public class ConnectionsTest extends SDSTestUtil {
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_CONNECTIONS_BY_ID, null)
                 .inlineVariables(identityToDelete);
 
-        ResponseWrapper<Void> response = HTTP2Request.build(requestEntity).delete();
+        ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).delete();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, response.getStatusCode());
 
         connectionsToDelete.remove(identityToDelete);

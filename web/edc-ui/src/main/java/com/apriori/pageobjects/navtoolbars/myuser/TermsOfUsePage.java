@@ -7,9 +7,10 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class TermsOfUsePage {
+public class TermsOfUsePage extends LoadableComponent<TermsOfUsePage> {
 
     @FindBy(xpath = "//p[@class='main-text']")
     private WebElement termsText;
@@ -22,6 +23,16 @@ public class TermsOfUsePage {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+    }
+
+    @Override
+    protected void load() {
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(termsText);
     }
 
     /**

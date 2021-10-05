@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.apriori.edc.tests.suite.TestSuiteAPI;
+import com.apriori.edcapi.tests.suite.TestSuiteAPI;
 
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;

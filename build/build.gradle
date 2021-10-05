@@ -108,9 +108,10 @@ subprojects {
             attributes 'Main-Class': 'testsuites.TestMain'
         }
 
+        duplicatesStrategy = 'include'
         from sourceSets.test.output
         from { configurations.runtimeClasspath.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
-        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA'
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.txt'
         with jar
     }
 

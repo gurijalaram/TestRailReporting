@@ -3,7 +3,6 @@ package com.apriori.vds.entity.response.process.group.materials;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -16,7 +15,6 @@ import java.time.LocalDateTime;
 @Schema(location = "ProcessGroupMaterialResponse.json")
 @Data
 @JsonRootName(value = "response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ProcessGroupMaterial {
     private Double angleBarCostPerUnit;
     private Double annealedTensileYieldStrength;

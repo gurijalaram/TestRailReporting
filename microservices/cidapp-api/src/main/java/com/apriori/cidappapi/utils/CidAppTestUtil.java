@@ -5,23 +5,27 @@ import static org.junit.Assert.assertEquals;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
+import com.apriori.cidappapi.entity.response.Scenario;
+import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.http2.builder.common.entity.RequestEntity;
-import com.apriori.utils.http2.builder.service.HTTP2Request;
-import com.apriori.utils.http2.utils.RequestEntityUtil;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
@@ -68,7 +72,7 @@ public class CidAppTestUtil {
                     .use("scenarioName", scenarioName))
                 .token(token);
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
@@ -94,7 +98,7 @@ public class CidAppTestUtil {
                     .use("scenarioName", scenarioName))
                 .token(token);
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTP2Request.build(requestEntity).post();
+        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
@@ -126,7 +130,7 @@ public class CidAppTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENTS, GetComponentResponse.class);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -140,7 +144,7 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -172,7 +176,7 @@ public class CidAppTestUtil {
         int axesEntries = 0;
 
         do {
-            axesEntriesResponse = HTTP2Request.build(requestEntity).get();
+            axesEntriesResponse = HTTPRequest.build(requestEntity).get();
             try {
                 axesEntries = axesEntriesResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size();
                 TimeUnit.MILLISECONDS.sleep(POLLING_INTERVAL);
@@ -206,7 +210,7 @@ public class CidAppTestUtil {
 
         waitSeconds(2);
         do {
-            scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
             scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             waitSeconds(POLLING_INTERVAL);
         } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
@@ -216,6 +220,7 @@ public class CidAppTestUtil {
 
     /**
      * Waits for specified time
+     *
      * @param seconds - the seconds
      */
     private void waitSeconds(long seconds) {
@@ -255,7 +260,7 @@ public class CidAppTestUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTP2Request.build(requestEntity).get();
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
 
                 assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
@@ -313,7 +318,7 @@ public class CidAppTestUtil {
                         .build()
                 );
 
-        return HTTP2Request.build(requestEntity).post();
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -328,6 +333,120 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.GET_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
-        return HTTP2Request.build(requestEntity).get();
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Post cost a scenario
+     *
+     * @param componentName      - the component name
+     * @param scenarioName       - the scenario name
+     * @param componentId        - the component id
+     * @param scenarioId         - the scenario id
+     * @param processGroupEnum   - the process group
+     * @param digitalFactoryEnum - the digital factory
+     * @param mode               - the material mode
+     * @param materialName       - the material name
+     * @param userCredentials    - the user credentials
+     * @return scenario object
+     */
+    public List<Item> postCostScenario(String componentName, String scenarioName, String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(getToken(userCredentials))
+                .inlineVariables(componentId, scenarioId)
+                .body("costingInputs", CostRequest.builder()
+                    .costingTemplateIdentity(getCostingTemplateId(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials).getIdentity())
+                    .deleteTemplateAfterUse(true)
+                    .build()
+                );
+        HTTPRequest.build(requestEntity).post();
+
+        return getCssComponent(componentName, scenarioName, ScenarioStateEnum.COST_COMPLETE, userCredentials);
+    }
+
+    /**
+     * Get costing template id
+     *
+     * @param processGroupEnum   - the process group
+     * @param digitalFactoryEnum - the digital factory
+     * @param mode               - the material mode
+     * @param materialName       - the material name
+     * @param userCredentials    - the user credentials
+     * @return scenario object
+     */
+    private Scenario getCostingTemplateId(ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
+        return postCostingTemplate(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials);
+    }
+
+
+    /**
+     * Post costing template
+     *
+     * @param processGroupEnum   - the process group
+     * @param digitalFactoryEnum - the digital factory
+     * @param mode               - the material mode
+     * @param materialName       - the material name
+     * @param userCredentials    - the user credentials
+     * @return scenario object
+     */
+    private Scenario postCostingTemplate(ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
+                .token(getToken(userCredentials))
+                .body("costingTemplate", CostRequest.builder()
+                    .processGroupName(processGroupEnum.getProcessGroup())
+                    .vpeName(digitalFactoryEnum.getDigitalFactory())
+                    .materialMode(mode.toUpperCase())
+                    .materialName(materialName)
+                    .annualVolume(5500)
+                    .productionLife(5.0)
+                    .batchSize(458)
+                    .propertiesToReset(null)
+                    .build());
+
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
+    }
+
+    /**
+     * Post publish scenario
+     *
+     * @param item            - the item
+     * @param componentId     - the component id
+     * @param scenarioId      - the scenario id
+     * @param userCredentials - the user credentials
+     * @return scenarioresponse object
+     */
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
+                .token(getToken(userCredentials))
+                .inlineVariables(componentId, scenarioId)
+                .body("scenario", PublishRequest.builder()
+                    .assignedTo(getCurrentUser(userCredentials).getIdentity())
+                    .costMaturity("Initial".toUpperCase())
+                    .override(false)
+                    .status("New".toUpperCase())
+                    .build()
+                );
+        HTTPRequest.build(requestEntity).post();
+
+        return getScenarioRepresentation(item, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, userCredentials);
+    }
+
+    /**
+     * Get current user
+     *
+     * @param userCredentials - the user credentials
+     * @return user object
+     */
+    private User getCurrentUser(UserCredentials userCredentials) {
+        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_USER, User.class)
+            .token(getToken(userCredentials));
+
+        ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
+        return userResponse.getResponseEntity();
     }
 }
