@@ -86,7 +86,8 @@ public class Item {
     private Integer iteration;
     private String iterationCostingMessage;
     private Boolean latest;
-    private String scenarioIterationKey;
+    private ScenarioIterationKey scenarioIterationKey;
+    private String  scenarioKey;
     private Boolean iterationHasCustomImage;
     private Boolean iterationHasWebImage;
     private Boolean iterationIsCadConnected;
