@@ -196,6 +196,9 @@
                   "scenarioIterationKey": {
                     "type": "object"
                   },
+                  "scenarioKey": {
+                    "type": "string"
+                  },
                   "iterationHasCustomImage": {
                     "type": "boolean"
                   },
