@@ -440,6 +440,27 @@ public class PageUtils {
     }
 
     /**
+     * Waits for the element to be invisible
+     *
+     * @param element - the element
+     * @return true/false
+     */
+    public boolean waitForElementsToNotAppear(List<WebElement> element) {
+        long maxWaitTime = 120L;
+
+        try {
+            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+
+            return new WebDriverWait(driver, maxWaitTime)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(ExpectedConditions.invisibilityOfAllElements(element));
+
+        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
+            throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
+        }
+    }
+
+    /**
      * Checks element is displayed
      *
      * @param element - the element
@@ -588,21 +609,6 @@ public class PageUtils {
     public void waitForElementAndClick(By locator) {
         waitForElementToBeClickable(locator);
         driver.findElement(locator).click();
-    }
-
-    /**
-     * Waits for the element to be invisible
-     *
-     * @param locator - the locator of the element
-     * @return true/false
-     */
-    public boolean invisibilityOfElements(List<WebElement> locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
-
-        return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nNot expecting: " + locator)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfAllElements(locator));
     }
 
     /**
