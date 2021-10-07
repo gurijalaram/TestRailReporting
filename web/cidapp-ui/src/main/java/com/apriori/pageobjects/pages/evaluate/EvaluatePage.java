@@ -668,7 +668,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName, scenarioName.trim()));
     }
 
     /**
