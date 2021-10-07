@@ -56,7 +56,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(componentTable);
-        pageUtils.invisibilityOfElements(componentTableSpinner);
+        pageUtils.waitForElementsToNotAppear(componentTableSpinner);
     }
 
     /**
