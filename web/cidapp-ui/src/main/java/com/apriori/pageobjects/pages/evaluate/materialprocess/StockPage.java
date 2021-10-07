@@ -44,8 +44,8 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(stockTabActive);
-        pageUtils.waitForElementAppear(panelHeading);
+        pageUtils.waitForElementToAppear(stockTabActive);
+        pageUtils.waitForElementToAppear(panelHeading);
     }
 
     /**

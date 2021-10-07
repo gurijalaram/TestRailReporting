@@ -54,7 +54,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(materialTabActive);
+        pageUtils.waitForElementToAppear(materialTabActive);
     }
 
     /**

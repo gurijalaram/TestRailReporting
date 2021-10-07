@@ -43,7 +43,7 @@ public class TolerancesPage extends LoadableComponent<TolerancesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(tolerancesTabActive);
+        pageUtils.waitForElementToAppear(tolerancesTabActive);
     }
 
     /**

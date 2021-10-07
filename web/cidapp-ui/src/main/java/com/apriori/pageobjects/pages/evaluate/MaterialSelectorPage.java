@@ -58,8 +58,8 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(materialTable);
-        pageUtils.waitForElementAppear(rowText);
+        pageUtils.waitForElementToAppear(materialTable);
+        pageUtils.waitForElementToAppear(rowText);
     }
 
     /**

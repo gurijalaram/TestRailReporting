@@ -1,7 +1,9 @@
 package com.apriori.utils;
 
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -13,6 +15,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.ScriptTimeoutException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -207,9 +210,24 @@ public class PageUtils {
             "return arguments[0].parentElement", element);
     }
 
+    /**
+     * Uses actions to click an element
+     *
+     * @param targetElement - the element
+     */
     public void actionClick(WebElement targetElement) {
         Actions builder = new Actions(driver);
-        builder.click(targetElement).build().perform();
+        builder.click(waitForElementToAppear(targetElement)).build().perform();
+    }
+
+    /**
+     * Uses actions to click an element
+     *
+     * @param targetElement - the element
+     */
+    public void actionClick(By targetElement) {
+        Actions builder = new Actions(driver);
+        builder.click(waitForElementToAppear(targetElement)).build().perform();
     }
 
     /**
@@ -345,26 +363,6 @@ public class PageUtils {
         }
     }
 
-    public WebElement waitForElementToAppear(By locator) {
-        return waitForElementToAppear(locator, "Element did not appear");
-    }
-
-    public WebElement waitForElementToAppear(By locator, String message) {
-        return waitForAppear(ExpectedConditions.visibilityOfElementLocated(locator), message);
-    }
-
-    public WebElement waitForElementToAppear(WebElement element) {
-        return waitForAppear(visibilityOf(element), "Element did not appear");
-    }
-
-    public WebElement waitForElementToAppear(WebElement element, String message) {
-        return waitForAppear(visibilityOf(element), message);
-    }
-
-    public List<WebElement> waitForElementsToAppear(List<WebElement> elements) {
-        return waitForAppear(ExpectedConditions.visibilityOfAllElements(elements), "Elements did not appear");
-    }
-
     /**
      * Checks the elements is displayed by size
      *
@@ -390,131 +388,221 @@ public class PageUtils {
     }
 
     /**
-     * Checks the elements is displayed by size
+     * Checks element is not displayed by size
      *
      * @param element - the element
-     * @return int
+     * @return size as int
      */
     public int waitForElementsToNotAppear(By element) {
         long startTime = System.currentTimeMillis() / 1000;
-        int secondsToWait = 1;
+        long maxWaitTime = 120L;
+        int elementSize = 0;
+
         try {
+            logger.info(String.format("Waiting for element '%s' to be invisible", element));
             do {
-                TimeUnit.SECONDS.sleep(secondsToWait);
-                driver.findElements(element);
-            } while (driver.findElements(element).size() > 0 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
+                elementSize = driver.findElements(element).size();
+            } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
 
-            return driver.findElements(element).size();
-
-        } catch (StaleElementReferenceException | InterruptedException e) {
-            logger.debug("Trying to recover from a stale element reference exception");
+            if (elementSize > 0) {
+                throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
+            }
+        } catch (TimeoutException e) {
+            e.printStackTrace();
         }
-        throw new AssertionError("Element is displayed");
+        return elementSize;
     }
 
+    /**
+     * Checks element is not displayed by size
+     *
+     * @param element - the element
+     * @return size as int
+     */
+    public int waitForElementsToNotAppear(By element, long timeoutInMinutes) {
+        long startTime = System.currentTimeMillis() / 1000;
+        long maxWaitTime = 120L * timeoutInMinutes;
+        int elementSize = 0;
+
+        try {
+            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+            do {
+                elementSize = driver.findElements(element).size();
+            } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
+
+            if (elementSize > 0) {
+                throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
+            }
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
+        return elementSize;
+    }
+
+    /**
+     * Checks element is displayed
+     *
+     * @param element - the element
+     * @return webelement
+     */
     public WebElement waitForElementAppear(WebElement element) {
-        return waitForAppear(element);
-    }
+        long maxWaitTime = 120L;
 
-    private WebElement waitForAppear(WebElement element) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * 2)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until(visibilityOf(element));
-    }
+        try {
+            logger.info(String.format("Attempting to locate element '%s'", element));
 
-    private <T> T waitForAppear(ExpectedCondition<T> condition, String message) {
-        int count = 0;
-        while (count < 12) {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
-                return wait.until(condition);
-            } catch (StaleElementReferenceException e) {
-                // e.toString();
-                logger.debug("Trying to recover from a stale element reference exception");
-                count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-            }
+            return new WebDriverWait(driver, maxWaitTime)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(visibilityOf(element));
+
+        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
+            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
         }
-        throw new AssertionError(message + ": " + condition);
     }
 
-    public WebElement waitForChildElementToAppear(WebElement parentElement, By childLocator) {
-        int count = 0;
-        while (count < 20) {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 20);
-                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
-            } catch (StaleElementReferenceException e) {
-                // e.toString();
-                logger.debug("Trying to recover from a stale element reference exception");
-                count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-                logger.debug("TimeoutException {}x", count);
-            } catch (NoSuchElementException e) {
-                count = count + 1;
-                logger.debug("NoSuchElementException {}x", count);
-                waitFor((BASIC_WAIT_TIME_IN_SECONDS / 20) * 1000);
-            }
+    /**
+     * Checks element is displayed
+     *
+     * @param element - the element
+     * @return webelement
+     */
+    public WebElement waitForElementToAppear(WebElement element) {
+        long maxWaitTime = 120L;
+
+        try {
+            logger.info(String.format("Attempting to locate element '%s'", element));
+
+            return new WebDriverWait(driver, maxWaitTime)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(visibilityOf(element));
+
+        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
+            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
         }
-        throw new AssertionError("Element did not appear: " + childLocator);
     }
 
-    public WebElement waitForChildElementToAppearWithCustomWaitTime(WebElement parentElement, By childLocator, int waitTimeInSecond) {
-        int count = 0;
-        while (count < 2) {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, waitTimeInSecond / 2);
-                return wait.until(visibilityOf(parentElement.findElement(childLocator)));
-            } catch (StaleElementReferenceException e) {
-                // e.toString();
-                logger.debug("Trying to recover from a stale element reference exception");
-                count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-            } catch (NoSuchElementException e) {
-                count = count + 1;
-                logger.debug("NoSuchElementException {}x", count);
-                waitFor((waitTimeInSecond / 2) * 1000);
+    /**
+     * Checks element is not displayed by size
+     *
+     * @param element - the element
+     * @return size as int
+     */
+    public WebElement waitForElementToAppear(By element) {
+        long startTime = System.currentTimeMillis() / 1000;
+        long maxWaitTime = 120L;
+        int elementSize;
+
+        try {
+            logger.info(String.format("Attempting to locate element '%s'", element));
+            do {
+                elementSize = driver.findElements(element).size();
+            } while (elementSize < 1 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
+
+            if (elementSize < 1) {
+                throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
             }
+        } catch (TimeoutException e) {
+            e.printStackTrace();
         }
-        throw new AssertionError("Element did not appear: " + childLocator);
+        return driver.findElement(element);
     }
 
-    public WebElement waitForElementToBeClickable(By locator) {
-        int count = 0;
-        while (count < 12) {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
-                return wait.until(ExpectedConditions.elementToBeClickable(locator));
-            } catch (StaleElementReferenceException e) {
-                // e.toString();
-                logger.debug("Trying to recover from a stale element reference exception");
-                count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-            }
-        }
+    /**
+     * Checks element is not displayed by size
+     *
+     * @param element - the element
+     * @return size as int
+     */
+    public List<WebElement> waitForElementsToAppear(List<WebElement> element) {
+        long maxWaitTime = 120L;
 
-        throw new AssertionError("Element is not clickable: " + locator);
+        try {
+            logger.info(String.format("Attempting to locate element '%s'", element));
+
+            return new WebDriverWait(driver, maxWaitTime)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(visibilityOfAllElements(element));
+
+        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
+            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
+        }
     }
 
+    /**
+     * Wait for element to be clickable
+     *
+     * @param element - the element
+     * @return webelement
+     */
     public WebElement waitForElementToBeClickable(WebElement element) {
-        int count = 0;
-        while (count < 12) {
-            try {
-                WebDriverWait wait = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 12);
-                return wait.until(ExpectedConditions.elementToBeClickable(element));
-            } catch (StaleElementReferenceException e) {
-                // e.toString();
-                logger.debug("Trying to recover from a stale element reference exception");
-                count = count + 1;
-            } catch (TimeoutException e) {
-                count = count + 1;
-            }
+        long maxWaitTime = 120L;
+
+        try {
+            logger.info(String.format("Attempting to locate element '%s'", element));
+
+            return new WebDriverWait(driver, maxWaitTime)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(elementToBeClickable(element));
+
+        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
+            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime));
         }
-        throw new AssertionError("Element is not clickable: " + element);
+    }
+
+    /**
+     * Wait for element to be clickable
+     *
+     * @param element - the element
+     * @return webelement
+     */
+    public WebElement waitForElementToBeClickable(By element) {
+        long maxWaitTime = 120L;
+
+        try {
+            logger.info(String.format("Attempting to locate element '%s'", element));
+
+            return new WebDriverWait(driver, maxWaitTime)
+                .ignoreAll(ignoredWebDriverExceptions)
+                .until(elementToBeClickable(element));
+
+        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
+            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime));
+        }
+    }
+
+    /**
+     * Ignores exceptions, waits for the element to be clickable then clicks it
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(WebElement locator) {
+        waitForElementToBeClickable(locator);
+        locator.click();
+    }
+
+    /**
+     * Ignores exceptions, waits for the element to be clickable then clicks it
+     *
+     * @param locator - the locator of the element
+     */
+    public void waitForElementAndClick(By locator) {
+        waitForElementToBeClickable(locator);
+        driver.findElement(locator).click();
+    }
+
+    /**
+     * Waits for the element to be invisible
+     *
+     * @param locator - the locator of the element
+     * @return true/false
+     */
+    public boolean invisibilityOfElements(List<WebElement> locator) {
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
+
+        return new WebDriverWait(driver, timeoutInMinutes)
+            .withMessage("\nNot expecting: " + locator)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOfAllElements(locator));
     }
 
     /**
@@ -697,38 +785,6 @@ public class PageUtils {
     }
 
     /**
-     * Ignores exceptions and waits for the element to be clickable
-     *
-     * @param locator - the locator of the element
-     */
-    public void waitForElementAndClick(WebElement locator) {
-        waitForElementToBeClickable(locator);
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .withMessage("Cannot click element locator: " + locator)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((WebDriver webDriver) -> {
-                locator.click();
-                return true;
-            });
-    }
-
-    /**
-     * Ignores exceptions and waits for the element to be clickable
-     *
-     * @param locator - the locator of the element
-     */
-    public void waitForElementAndClick(By locator) {
-        waitForElementToBeClickable(locator);
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
-            .withMessage("Cannot click element locator: " + locator)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until((WebDriver webDriver) -> {
-                driver.findElement(locator).click();
-                return true;
-            });
-    }
-
-    /**
      * Waits for the element and check attribute is empty
      *
      * @param locator - the locator of the element
@@ -740,21 +796,6 @@ public class PageUtils {
         return new WebDriverWait(driver, timeoutInMinutes)
             .withMessage("\nExpected attribute: " + attribute + "\t" + "\nFound: " + locator.getAttribute(attribute))
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
-    }
-
-    /**
-     * Waits for the element to be invisible
-     *
-     * @param locator - the locator of the element
-     * @return true/false
-     */
-    public boolean invisibilityOfElements(List<WebElement> locator) {
-        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
-
-        return new WebDriverWait(driver, timeoutInMinutes)
-            .withMessage("\nNot expecting: " + locator)
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfAllElements(locator));
     }
 
     /**
@@ -879,9 +920,11 @@ public class PageUtils {
     public void typeAheadSelect(WebElement dropdownSelector, String value) {
         waitForElementToAppear(dropdownSelector);
         actionClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
+        waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
         waitForElementToAppear(byValue);
-        actionClick(driver.findElement(byValue));
+        actionClick(byValue);
     }
 
     /**
@@ -895,9 +938,11 @@ public class PageUtils {
     public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
         waitForElementToAppear(dropdownSelector);
         actionClick(dropdownSelector);
+        waitForElementToAppear(dropdownSelector);
+        waitForElementAndClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
         waitForElementToAppear(byValue);
-        actionClick(driver.findElement(byValue));
+        actionClick(byValue);
     }
 
     /**

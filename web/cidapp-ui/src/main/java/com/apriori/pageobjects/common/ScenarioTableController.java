@@ -55,7 +55,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(componentTable);
+        pageUtils.waitForElementToAppear(componentTable);
         pageUtils.invisibilityOfElements(componentTableSpinner);
     }
 
@@ -326,10 +326,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController sortColumn(ColumnsEnum column, SortOrderEnum order) {
-        By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
-
-        while (!driver.findElement(byColumn).findElement(By.cssSelector("svg")).getAttribute("data-icon").equals(order.getOrder())) {
-            pageUtils.waitForElementAndClick(byColumn);
+        while (!getSortOrder(column).equals(order.getOrder())) {
+            pageUtils.waitForElementAndClick(By.xpath(String.format("//div[.='%s']//span", column.getColumns())));
         }
         return this;
     }
@@ -341,7 +339,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return string
      */
     public String getSortOrder(ColumnsEnum column) {
-        By byColumn = By.xpath(String.format("//div[.='%s']", column.getColumns()));
-        return pageUtils.waitForElementToAppear(driver.findElement(byColumn).findElement(By.cssSelector("svg"))).getAttribute("data-icon");
+        By byColumn = By.xpath(String.format("//div[.='%s']//div[@class]//*[local-name()='svg']", column.getColumns()));
+        return pageUtils.waitForElementToAppear(byColumn).getAttribute("data-icon");
     }
 }

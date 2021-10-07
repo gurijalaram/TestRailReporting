@@ -266,6 +266,6 @@ public class ProductionDefaultPage extends LoadableComponent<ProductionDefaultPa
      * @return hashset as duplicates need to be removed
      */
     public HashSet<String> getListOfMaterials() {
-        return new HashSet<>(Arrays.asList(pageUtils.waitForElementToAppear(materialDropdown, materialDropdown.getAttribute("innerText")).getText().split("\n")));
+        return new HashSet<>(Arrays.asList(pageUtils.waitForElementToAppear(materialDropdown).getAttribute("innerText").split("\n")));
     }
 }

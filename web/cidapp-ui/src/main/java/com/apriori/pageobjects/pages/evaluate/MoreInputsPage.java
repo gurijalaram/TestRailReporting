@@ -43,7 +43,7 @@ public class MoreInputsPage extends LoadableComponent<MoreInputsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(attributesText);
+        pageUtils.waitForElementToAppear(attributesText);
     }
 
     /**

@@ -17,6 +17,7 @@ import org.openqa.selenium.support.events.EventFiringWebDriver;
 import org.slf4j.MDC;
 
 import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author kpatel
@@ -66,6 +67,7 @@ public class TestBase extends TestHelper {
         TestHelper.logger.info("Current Operating System:" + os);
         TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
 
+        driver.manage().timeouts().setScriptTimeout(60, TimeUnit.SECONDS);
         driver.manage().window().setSize(new Dimension(1920,1080));
         driver.manage().window().maximize();
 

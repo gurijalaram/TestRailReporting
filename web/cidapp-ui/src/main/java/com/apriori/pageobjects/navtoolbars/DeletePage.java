@@ -39,7 +39,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(deleteHeader);
+        pageUtils.waitForElementToAppear(deleteHeader);
     }
 
     /**
@@ -48,7 +48,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return string
      */
     public String getScenarioName() {
-        return pageUtils.waitForElementAppear(deleteText).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(deleteText).getAttribute("textContent");
     }
 
     /**

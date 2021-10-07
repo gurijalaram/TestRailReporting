@@ -79,7 +79,6 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
-            .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
             .info()
@@ -90,7 +89,7 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .clickSearch(componentName)
-            .highlightScenario("M3CapScrew", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .info();
 
         assertThat(infoPage.getStatus(), is(equalTo("New")));
