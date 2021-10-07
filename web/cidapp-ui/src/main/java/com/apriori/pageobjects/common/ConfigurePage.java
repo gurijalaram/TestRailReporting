@@ -50,7 +50,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(stickyDropdown);
+        pageUtils.waitForElementToAppear(stickyDropdown);
     }
 
     /**

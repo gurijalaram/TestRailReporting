@@ -79,7 +79,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(processGroupDropdown);
+        pageUtils.waitForElementToAppear(processGroupDropdown);
     }
 
     /**

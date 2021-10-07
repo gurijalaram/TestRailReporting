@@ -53,7 +53,7 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(cardHeader);
+        pageUtils.waitForElementToAppear(cardHeader);
     }
 
     /**

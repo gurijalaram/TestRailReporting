@@ -61,7 +61,7 @@ public class ExplorePage extends ExploreToolbar {
         this.componentTableActions = new ComponentTableActions(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementAppear(scenarioCount);
+        pageUtils.waitForElementToAppear(scenarioCount);
     }
 
     /**
@@ -91,7 +91,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return string
      */
     public String getComponentsFound() {
-        return pageUtils.waitForElementAppear(scenarioCount).getText();
+        return pageUtils.waitForElementToAppear(scenarioCount).getText();
     }
 
     /**
@@ -227,7 +227,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return string
      */
     public String getScenarioMessage() {
-        return pageUtils.waitForElementAppear(noScenariosMessage).getText();
+        return pageUtils.waitForElementToAppear(noScenariosMessage).getText();
     }
 
     /**

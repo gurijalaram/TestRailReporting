@@ -41,7 +41,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(assigneeDropdown);
+        pageUtils.waitForElementToAppear(assigneeDropdown);
     }
 
     /**

@@ -67,7 +67,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      */
     public boolean isPageLogoDisplayed() {
         pageUtils.windowHandler(1);
-        return pageUtils.waitForElementAppear(aprioriLogo).isDisplayed();
+        return pageUtils.waitForElementToAppear(aprioriLogo).isDisplayed();
     }
 
     /**
