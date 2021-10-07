@@ -68,19 +68,12 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
         return uploadedBomTableActions.editSelectedBom(editButton);
     }
 
-    public String getPinCountHeaderText() {
-        return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
-    }
-
     /**
-     * Gets the BOM Identity
+     * Pin count text
      *
      * @return String
      */
-    public String getBillOfMaterialsId() {
-        String currentUrl = driver.getCurrentUrl();
-        int billOfMaterialsIdPosition = 4;
-        String[] currMatArray = currentUrl.split("/");
-        return currMatArray[billOfMaterialsIdPosition];
+    public String getPinCountHeaderText() {
+        return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
     }
 }

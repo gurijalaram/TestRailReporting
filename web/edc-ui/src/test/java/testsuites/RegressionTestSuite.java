@@ -8,6 +8,7 @@ import com.login.LoginTests;
 import com.login.LogoutTests;
 import com.myuser.MyProfileTests;
 import com.myuser.TermsOfUseTests;
+import com.upload.pcba.FilterPartsTests;
 import com.upload.pcba.UploadTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -20,7 +21,8 @@ import org.junit.runners.Suite;
     MyProfileTests.class,
     TermsOfUseTests.class,
     HelpTests.class,
-    UploadTests.class
+    UploadTests.class,
+    FilterPartsTests.class
 })
 public class RegressionTestSuite {
 }
