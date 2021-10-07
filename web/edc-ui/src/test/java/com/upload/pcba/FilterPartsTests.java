@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.edcapi.utils.EDCResources;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
-import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.pageobjects.pages.login.UploadedFilePage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
