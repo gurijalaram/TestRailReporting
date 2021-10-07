@@ -573,21 +573,21 @@ public class PageUtils {
     /**
      * Ignores exceptions, waits for the element to be clickable then clicks it
      *
-     * @param locator - the locator of the element
+     * @param element - the locator of the element
      */
-    public void waitForElementAndClick(WebElement locator) {
-        waitForElementToBeClickable(locator);
-        locator.click();
+    public void waitForElementAndClick(WebElement element) {
+        waitForElementToBeClickable(element);
+        waitForElementToAppear(element).click();
     }
 
     /**
      * Ignores exceptions, waits for the element to be clickable then clicks it
      *
-     * @param locator - the locator of the element
+     * @param element - the locator of the element
      */
-    public void waitForElementAndClick(By locator) {
-        waitForElementToBeClickable(locator);
-        driver.findElement(locator).click();
+    public void waitForElementAndClick(By element) {
+        waitForElementToBeClickable(element);
+        waitForElementToAppear(element).click();
     }
 
     /**
