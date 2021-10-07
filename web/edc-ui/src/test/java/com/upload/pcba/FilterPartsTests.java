@@ -14,6 +14,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CostStatusEnum;
+import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
@@ -25,7 +26,6 @@ public class FilterPartsTests extends TestBase {
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private UploadedFilePage uploadedFilePage;
-    private MatchedPartPage matchedPartPage;
 
     public FilterPartsTests() {
         super();
@@ -33,8 +33,7 @@ public class FilterPartsTests extends TestBase {
 
     @After
     public void cleanUp() {
-        matchedPartPage = new MatchedPartPage(driver);
-        EDCResources.deleteBillOfMaterialById(matchedPartPage.getBillOfMaterialsId());
+        EDCResources.deleteBillOfMaterialById(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
     }
 
     @Test
