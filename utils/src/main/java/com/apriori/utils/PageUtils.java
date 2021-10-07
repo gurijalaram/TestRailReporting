@@ -576,8 +576,7 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(WebElement element) {
-        waitForElementToBeClickable(element);
-        waitForElementToAppear(element).click();
+        waitForElementToBeClickable(element).click();
     }
 
     /**
@@ -586,8 +585,7 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(By element) {
-        waitForElementToBeClickable(element);
-        waitForElementToAppear(element).click();
+        waitForElementToBeClickable(element).click();
     }
 
     /**
