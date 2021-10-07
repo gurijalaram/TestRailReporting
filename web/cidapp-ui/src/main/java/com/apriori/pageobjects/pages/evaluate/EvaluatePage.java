@@ -169,8 +169,8 @@ public class EvaluatePage extends EvaluateToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        pageUtils.invisibilityOfElements(panelLoaders);
-        pageUtils.invisibilityOfElements(cogIcon);
+        pageUtils.waitForElementsToNotAppear(panelLoaders);
+        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**

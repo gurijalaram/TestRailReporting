@@ -153,7 +153,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      * @return true/false
      */
     public boolean isBasis(String partName, String scenarioName) {
-        return pageUtils.invisibilityOfElements(driver.findElements(findBasisButton(partName, scenarioName)));
+        return pageUtils.waitForElementsToNotAppear(driver.findElements(findBasisButton(partName, scenarioName)));
     }
 
     /**
@@ -176,7 +176,7 @@ public class ComparePage extends LoadableComponent<ComparePage> {
      */
     public boolean scenarioIsNotInComparisonView(String scenarioName, String partName) {
         By scenario = By.cssSelector(String.format("a[href*='#openFromSearch::sk,partState," + "%s" + "," + "%s" + "']", partName.toUpperCase(), scenarioName));
-        return pageUtils.invisibilityOfElements(driver.findElements(scenario));
+        return pageUtils.waitForElementsToNotAppear(driver.findElements(scenario));
     }
 
     private By findBasisButton(String partName, String scenarioName) {
