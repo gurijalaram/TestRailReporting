@@ -15,7 +15,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.EdcUiResources;
 import io.qameta.allure.Description;
 
 import org.junit.After;
@@ -31,13 +30,14 @@ public class UploadTests extends TestBase {
     private MatchedPartPage matchedPartPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
+
     public UploadTests() {
         super();
     }
 
     @After
     public void cleanUp() {
-        EDCResources.deleteBillOfMaterialById(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
+        EDCResources.deleteBillOfMaterialById(matchedPartPage.getBillOfMaterialsId());
     }
 
     @Test
