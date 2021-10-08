@@ -407,7 +407,7 @@ public class PageUtils {
             if (elementSize > 0) {
                 throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
             }
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return elementSize;
@@ -433,7 +433,7 @@ public class PageUtils {
             if (elementSize > 0) {
                 throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
             }
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return elementSize;
