@@ -61,7 +61,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(filterDropDown);
+        pageUtils.waitForElementToAppear(filterDropDown);
     }
 
     /**

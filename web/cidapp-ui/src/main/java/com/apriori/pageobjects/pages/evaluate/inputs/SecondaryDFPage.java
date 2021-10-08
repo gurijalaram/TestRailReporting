@@ -50,7 +50,7 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(secondaryForm);
+        pageUtils.waitForElementToAppear(secondaryForm);
     }
 
     /**

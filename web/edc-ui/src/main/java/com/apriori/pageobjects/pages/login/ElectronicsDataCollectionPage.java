@@ -17,6 +17,12 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
     @FindBy(css = "[id='qa-uploaded-bill-of-materials'] .title-left")
     private WebElement uploadedBillOfMaterials;
 
+    @FindBy(css = ".paginator .left")
+    private WebElement paginatorDropdown;
+
+    @FindBy(xpath = "//button[.='20']")
+    private WebElement paginator;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -46,5 +52,17 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      */
     public FileUploadPage uploadComponent(File resourceFile) {
         return new FileUploadPage(driver).inputComponentDetails(resourceFile);
+    }
+
+    /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ElectronicsDataCollectionPage setPagination() {
+        pageUtils.waitForElementAndClick(paginatorDropdown);
+        pageUtils.waitForElementAppear(paginator);
+        pageUtils.javaScriptClick(paginator);
+        return this;
     }
 }

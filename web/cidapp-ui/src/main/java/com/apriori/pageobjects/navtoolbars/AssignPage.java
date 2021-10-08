@@ -41,7 +41,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(assigneeDropdown);
+        pageUtils.waitForElementToAppear(assigneeDropdown);
     }
 
     /**
@@ -62,7 +62,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      */
     public boolean isAssigneeDisplayed(String assignee) {
         By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee));
-        pageUtils.invisibilityOfElements(driver.findElements(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']")));
+        pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
         return pageUtils.waitForElementToAppear(byAssignee).isDisplayed();
     }
 

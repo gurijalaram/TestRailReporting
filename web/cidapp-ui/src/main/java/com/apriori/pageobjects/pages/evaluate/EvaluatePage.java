@@ -169,8 +169,8 @@ public class EvaluatePage extends EvaluateToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        pageUtils.invisibilityOfElements(panelLoaders);
-        pageUtils.invisibilityOfElements(cogIcon);
+        pageUtils.waitForElementsToNotAppear(panelLoaders);
+        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**
@@ -531,7 +531,7 @@ public class EvaluatePage extends EvaluateToolbar {
             : element.equalsIgnoreCase("Material") ? materialName
             : null;
 
-        return Color.fromString(pageUtils.waitForElementAppear(elementColour).getCssValue("background-color")).asHex();
+        return Color.fromString(pageUtils.waitForElementToAppear(elementColour).getCssValue("background-color")).asHex();
     }
 
     /**
@@ -668,7 +668,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return by
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName, scenarioName.trim()));
     }
 
     /**

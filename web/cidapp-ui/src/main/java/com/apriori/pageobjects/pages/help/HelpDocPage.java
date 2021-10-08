@@ -38,7 +38,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(brandImage);
+        pageUtils.waitForElementToAppear(brandImage);
     }
 
     /**

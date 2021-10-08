@@ -5,6 +5,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
 import com.apriori.utils.enums.ColourEnum;
+import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.DecimalPlaceEnum;
 import com.apriori.utils.enums.LengthEnum;
 import com.apriori.utils.enums.MassEnum;
@@ -42,11 +43,14 @@ public class ResetSettingsUtil {
 
         preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
 
+        String areaIdentity = mappedResponse.get("display.areaUnits");
+        String currencyIdentity = mappedResponse.get("display.currency");
         String unitIdentity = mappedResponse.get("display.unitsGroup");
         String lengthIdentity = mappedResponse.get("display.lengthUnits");
         String massIdentity = mappedResponse.get("display.massUnits");
         String timeIdentity = mappedResponse.get("display.timeUnits");
         String decimalIdentity = mappedResponse.get("display.decimalPlaces");
+        String languageIdentity = mappedResponse.get("display.language");
         String colourIdentity = mappedResponse.get("display.selectionColor");
         String scenarioIdentity = mappedResponse.get("production.defaultScenarioName");
         String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
@@ -60,11 +64,14 @@ public class ResetSettingsUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(token)
             .customBody("{\"userPreferences\": {"
+                + "\"" + areaIdentity + "\":\"mm2\","
+                + "\"" + currencyIdentity + "\":\"" + CurrencyEnum.USD.getCurrency() + "\","
                 + "\"" + unitIdentity + "\":\"" + UnitsEnum.MMKS.getUnits() + "\","
                 + "\"" + lengthIdentity + "\":\"" + LengthEnum.MILLIMETER.getLength() + "\","
                 + "\"" + massIdentity + "\":\"" + MassEnum.KILOGRAM.getMass() + "\","
                 + "\"" + timeIdentity + "\":\"" + TimeEnum.SECOND.getTime() + "\","
                 + "\"" + decimalIdentity + "\":\"" + DecimalPlaceEnum.TWO.getDecimalPlaces() + "\","
+                + "\"" + languageIdentity + "\":\"en\","
                 + "\"" + colourIdentity + "\":\"" + ColourEnum.YELLOW.getColour() + "\","
                 + "\"" + scenarioIdentity + "\":\"Initial\","
                 + "\"" + proGroupIdentity + "\":\"" + null + "\","

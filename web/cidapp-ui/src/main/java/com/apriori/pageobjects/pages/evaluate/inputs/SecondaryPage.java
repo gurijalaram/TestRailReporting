@@ -60,7 +60,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(batchSizeInput);
+        pageUtils.waitForElementToAppear(batchSizeInput);
     }
 
     /**

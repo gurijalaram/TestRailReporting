@@ -359,6 +359,9 @@ local:
     automation_username: qa-automation-%s@apriori.com
     automation_password: TrumpetSnakeFridgeToasty18!%
 
+  cidapp:
+    ui_url: ${local.base_url}:3003
+    
   bcs:
     api_url: ${local.base_url}:8810/
 
