@@ -966,4 +966,27 @@ public class PageUtils {
             .pause(Duration.ofSeconds(1))
             .perform();
     }
+
+    /**
+     * highlights given element. This would be mainly used for debugging
+     *
+     * @param driver
+     * @param element
+     */
+    public static void highlightElement(WebDriver driver, WebElement element) {
+
+        // Original in Python: https://gist.github.com/3086536
+        String originalStyle = element.getAttribute("style");
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.debug("Failed to highlight element");
+        }
+        js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
+    }
 }
