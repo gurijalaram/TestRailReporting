@@ -399,7 +399,7 @@ public class PageUtils {
         int elementSize = 0;
 
         try {
-            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+
             do {
                 elementSize = driver.findElements(element).size();
             } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
@@ -425,7 +425,7 @@ public class PageUtils {
         int elementSize = 0;
 
         try {
-            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+
             do {
                 elementSize = driver.findElements(element).size();
             } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
@@ -449,7 +449,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Waiting for element '%s' to be invisible", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -470,7 +469,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -491,7 +489,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -514,7 +511,6 @@ public class PageUtils {
         int elementSize;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
             do {
                 elementSize = driver.findElements(element).size();
             } while (elementSize < 1 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
@@ -538,7 +534,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -559,7 +554,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -580,7 +574,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
