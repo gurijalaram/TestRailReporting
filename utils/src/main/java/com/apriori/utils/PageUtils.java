@@ -597,7 +597,23 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(WebElement element) {
-        waitForElementToBeClickable(element).click();
+        long maxWaitTime = 120L;
+        WebDriverWait wait = new WebDriverWait(driver, maxWaitTime);
+
+        waitForElementToBeClickable(element);
+
+        ExpectedCondition<Boolean> elementClickable = clickable -> {
+            try {
+                logger.info(String.format("Attempting to click element '%s'", element));
+
+                element.click();
+                return true;
+            } catch (Exception e) {
+                logger.info(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime));
+                return false;
+            }
+        };
+        wait.until(elementClickable);
     }
 
     /**
@@ -606,7 +622,23 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(By element) {
-        waitForElementToBeClickable(element).click();
+        long maxWaitTime = 120L;
+        WebDriverWait wait = new WebDriverWait(driver, maxWaitTime);
+
+        waitForElementToBeClickable(element);
+
+        ExpectedCondition<Boolean> elementClickable = clickable -> {
+            try {
+                logger.info(String.format("Attempting to click element '%s'", element));
+
+                driver.findElement(element).click();
+                return true;
+            } catch (Exception e) {
+                logger.info(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime));
+                return false;
+            }
+        };
+        wait.until(elementClickable);
     }
 
     /**
