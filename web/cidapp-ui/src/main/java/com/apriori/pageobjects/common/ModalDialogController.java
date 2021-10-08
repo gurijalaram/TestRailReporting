@@ -183,7 +183,7 @@ public class ModalDialogController {
      * @return current page object
      */
     public <T> T cost(Class<T> klass) {
-        pageUtils.waitForElementAppear(costButton);
+        pageUtils.waitForElementToAppear(costButton);
         return PageFactory.initElements(driver, klass);
     }
 

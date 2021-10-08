@@ -48,8 +48,8 @@ public class InvestigationPage extends LoadableComponent<InvestigationPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(investigationTabActive);
-        pageUtils.waitForElementAppear(topicsHeader);
+        pageUtils.waitForElementToAppear(investigationTabActive);
+        pageUtils.waitForElementToAppear(topicsHeader);
     }
 
     /**

@@ -43,7 +43,7 @@ public class TestHelper {
             return TestMode.LOCAL;
         }
 
-        switch (testMode) {
+        switch (testMode.toUpperCase()) {
             case "QA":
                 result = TestMode.QA;
                 break;

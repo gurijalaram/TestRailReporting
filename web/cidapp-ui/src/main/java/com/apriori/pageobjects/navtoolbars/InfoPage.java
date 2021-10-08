@@ -71,7 +71,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(statusLabel);
+        pageUtils.waitForElementToAppear(statusLabel);
     }
 
     /**

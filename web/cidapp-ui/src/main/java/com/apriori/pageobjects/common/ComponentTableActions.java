@@ -47,7 +47,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(searchInput);
+        pageUtils.waitForElementToAppear(searchInput);
     }
 
     /**
@@ -82,7 +82,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      */
     private ComponentTableActions search(String componentName) {
         pageUtils.waitForElementToAppear(searchIconButton);
-        searchInput.clear();
+        pageUtils.clear(searchInput);
         searchInput.sendKeys(componentName.toUpperCase());
         return this;
     }
@@ -140,7 +140,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
         pageUtils.waitForElementAndClick(paginatorDropdown);
         By paginator = By.xpath("//div[.='100']");
         pageUtils.waitForElementToAppear(paginator);
-        pageUtils.actionClick(driver.findElement(paginator));
+        pageUtils.waitForElementAndClick(paginator);
         return this;
     }
 }

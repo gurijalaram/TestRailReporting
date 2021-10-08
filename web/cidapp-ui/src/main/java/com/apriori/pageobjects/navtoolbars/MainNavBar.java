@@ -70,8 +70,8 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(settingsButton);
-        pageUtils.waitForElementAppear(helpDropdown);
+        pageUtils.waitForElementToAppear(settingsButton);
+        pageUtils.waitForElementToAppear(helpDropdown);
         pageUtils.waitForElementsToNotAppear(By.cssSelector("[role='status']"));
     }
 

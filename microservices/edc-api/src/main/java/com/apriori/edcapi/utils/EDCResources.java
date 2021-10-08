@@ -20,3 +20,4 @@ public class EDCResources {
         return HTTPRequest.build(requestEntity).delete();
     }
 }
+

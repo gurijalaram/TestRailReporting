@@ -61,7 +61,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(componentLabel);
+        pageUtils.waitForElementToAppear(componentLabel);
     }
 
     /**

@@ -44,8 +44,8 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(dialogTitle);
-        pageUtils.waitForElementAppear(scenarioNameInput);
+        pageUtils.waitForElementToAppear(dialogTitle);
+        pageUtils.waitForElementToAppear(scenarioNameInput);
     }
 
     /**
