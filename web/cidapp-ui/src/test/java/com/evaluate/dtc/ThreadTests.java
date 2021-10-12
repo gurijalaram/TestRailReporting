@@ -22,7 +22,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
