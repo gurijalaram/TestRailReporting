@@ -220,7 +220,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By byScenarioName(String componentName, String scenarioName) {
-        return By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//a[@class='scenario-display-name']//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By byScenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//a[@class='scenario-display-name']//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        return byScenario;
     }
 
     /**

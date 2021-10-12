@@ -642,7 +642,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isSourcePartDetailsDisplayed(String componentName, String scenarioName) {
-        By byScenario = getByScenario(componentName, scenarioName);
+        By byScenario = getByScenario(componentName.toUpperCase(), scenarioName);
         return pageUtils.waitForElementToAppear(byScenario).isDisplayed();
     }
 
