@@ -37,8 +37,8 @@ public class ConsoleLogHandler implements WebDriverEventListener {
      * @param levelOfThrowingAssertion choose one of four levels of throwing assertion:
      *                                 Level.OFF - every browser console log will be allowed
      *                                 Level.SEVERE - throws new {@link ConsoleLogError} if ERROR appears on browser console
-     *                                 Level.WARNING - throws new {@link ConsoleLogError} if WARNING appears on browser console
-     *                                 Level.INFO - throws new {@link ConsoleLogError} if INFO appears on browser console
+     *                                 Level.WARNING - every browser console log will be allowed
+     *                                 Level.INFO - every browser console log will be allowed
      */
     public ConsoleLogHandler(Level levelOfThrowingAssertion) {
         this.levelOfThrowingAssertion = levelOfThrowingAssertion;
@@ -61,9 +61,14 @@ public class ConsoleLogHandler implements WebDriverEventListener {
 
         List<LogEntry> errorEntries = logEntries.filter(levelOfThrowingAssertion);
         List<LogEntry> filteredErrorEntries = filterBlacklistedURLs(errorEntries);
-        if (!filteredErrorEntries.isEmpty()) {
+        if (!filteredErrorEntries.isEmpty() && levelOfThrowingAssertion.equals(Level.SEVERE)) {
             filteredErrorEntries.forEach(logEntry -> {
                 throw new ConsoleLogError("Browser console ERROR: \n" + logEntry.getMessage());
+            });
+        }
+        if (!filteredErrorEntries.isEmpty() && !levelOfThrowingAssertion.equals(Level.SEVERE)) {
+            filteredErrorEntries.forEach(logEntry -> {
+                logger.debug("Browser console ERROR: \n" + logEntry.getMessage());
             });
         }
     }
