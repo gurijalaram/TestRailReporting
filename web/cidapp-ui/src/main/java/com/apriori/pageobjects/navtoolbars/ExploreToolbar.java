@@ -30,23 +30,26 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-component']")
     private WebElement componentButton;
 
-    @FindBy(css = "[id='qa-sub-header-publish-button']")
+    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
     private WebElement publishButton;
 
     @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
 
-    @FindBy(css = "[id='qa-sub-header-delete-button']")
+    @FindBy(css = "[id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
 
     @FindBy(css = "[id='qa-action-bar-actions-dropdown']")
     private WebElement actionsButton;
 
-    @FindBy(css = "[id='qa-sub-header-edit-button']")
+    @FindBy(css = "[id='qa-sub-header-edit-button'] button")
     private WebElement editButton;
 
-    @FindBy(css = "[id='qa-sub-header-new-scenario']")
+    @FindBy(css = "[id='qa-sub-header-new-scenario'] button")
     private WebElement scenarioButton;
+
+    @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
+    private WebElement refreshButton;
 
     @FindBy(id = "qa-action-bar-action-info")
     private WebElement infoButton;
