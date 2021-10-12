@@ -344,6 +344,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Ignore("Ignoring until MIC-3672 is fixed")
     @TestRail(testCaseId = {"6308"})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
     public void saveAllTabs() {
