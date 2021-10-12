@@ -392,7 +392,6 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Ignore("Ignoring until mic-3672 is fixed")
     @TestRail(testCaseId = {"8904"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
@@ -428,7 +427,6 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @Ignore("Ignoring until MIC-3672 is fixed")
     @TestRail(testCaseId = {"8905"})
     @Description("Testing thread units persist when changed to centimetres")
     public void validateThreadUnitsCM() {
