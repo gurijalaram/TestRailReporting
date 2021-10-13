@@ -12,11 +12,9 @@ import java.util.stream.Collectors;
 
 public class TableUtils {
     private PageUtils pageUtils;
-    private WebDriver driver;
 
     public TableUtils(WebDriver driver) {
         this.pageUtils = new PageUtils(driver);
-        this.driver = driver;
     }
 
     /**
@@ -27,13 +25,7 @@ public class TableUtils {
      * @return True if the actual list contains all items in the expected list
      */
     public boolean actualListContainsAllItems(List<String> expectedList, List<String> actualList) {
-        for (String expected : expectedList) {
-            if (!actualList.contains(expected)) {
-                return false;
-            }
-        }
-
-        return true;
+        return expectedList.stream().allMatch(actualList::contains);
     }
 
     /**
@@ -181,11 +173,6 @@ public class TableUtils {
     public WebElement getColumnHeader(WebElement tableHeaders, String columnHeader) {
         pageUtils.waitForElementToBeClickable(tableHeaders);
         List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
-        for (WebElement column : columns) {
-            if (column.getText().equalsIgnoreCase(columnHeader)) {
-                return column;
-            }
-        }
-        return null;
+        return columns.stream().filter(column -> column.getText().equalsIgnoreCase(columnHeader)).findFirst().orElse(null);
     }
 }
