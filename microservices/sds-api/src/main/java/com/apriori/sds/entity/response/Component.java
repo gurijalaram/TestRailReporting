@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 public class Component {
     private String customerIdentity;
     private String componentType;
+    private String configurationName;
     private String createdBy;
     private String updatedBy;
     private String filename;
