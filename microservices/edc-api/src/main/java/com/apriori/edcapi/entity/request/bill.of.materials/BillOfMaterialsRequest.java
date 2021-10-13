@@ -24,15 +24,16 @@ import java.time.LocalDateTime;
 public class BillOfMaterialsRequest {
 
     private String identity;
-    private String createdAt;
     private String createdBy;
     private String name;
     private String filename;
     private String type;
-    private String numberOfLineItemsNoPartsMatched;
-    private String numberOfLineItemsIncomplete;
-    private String numberOfLineItemsReadyForExport;
-    private String totalNumberOfLineItems;
+    private String updatedBy;
+    private String deletedBy;
+    private Integer numberOfLineItemsNoPartsMatched;
+    private Integer numberOfLineItemsIncomplete;
+    private Integer numberOfLineItemsReadyForExport;
+    private Integer totalNumberOfLineItems;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -40,13 +41,9 @@ public class BillOfMaterialsRequest {
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime deletedBy;
+    private LocalDateTime createdAt;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedBy;
 }

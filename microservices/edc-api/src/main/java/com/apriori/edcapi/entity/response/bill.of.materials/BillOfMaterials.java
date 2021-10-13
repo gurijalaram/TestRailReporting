@@ -24,16 +24,21 @@ import java.time.LocalDateTime;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class BillOfMaterials {
 
-    private String identity;
-    private String createdAt;
     private String createdBy;
-    private String name;
+    private String deletedBy;
     private String filename;
+    private String identity;
+    private String name;
+    private Integer numberOfLineItemsIncomplete;
+    private Integer numberOfLineItemsNoPartsMatched;
+    private Integer numberOfLineItemsReadyForExport;
+    private Integer totalNumberOfLineItems;
     private String type;
-    private String numberOfLineItemsNoPartsMatched;
-    private String numberOfLineItemsIncomplete;
-    private String numberOfLineItemsReadyForExport;
-    private String totalNumberOfLineItems;
+    private String updatedBy;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -41,13 +46,5 @@ public class BillOfMaterials {
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime deletedBy;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedBy;
 }
