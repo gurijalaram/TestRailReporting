@@ -597,7 +597,7 @@ public class PageUtils {
         new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
             .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until((WebDriver webDriver) -> {
+            .until(d -> {
                 element.click();
                 return true;
             });
