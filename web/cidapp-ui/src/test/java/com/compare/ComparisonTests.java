@@ -239,14 +239,17 @@ public class ComparisonTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
+        new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
-            .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+            .clickExplore();
 
-        comparePage = new EvaluatePage(driver).selectProcessGroup(processGroupEnum)
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+
+        comparePage = new ExplorePage(driver).navigateToScenario(cssItemB)
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
