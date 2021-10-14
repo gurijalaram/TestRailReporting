@@ -4,21 +4,22 @@ import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "UsersSchema.json")
+@JsonRootName("response")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Users extends Pagination {
     private List<User> items;
-    private Users response;
-
-    public Users getResponse() {
-        return this.response;
-    }
-
-    public List<User> getItems() {
-        return this.items;
-    }
 }
 

@@ -86,8 +86,8 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID, Users.class, customerIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getIdentity(), is(not(emptyString())));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getItems().get(0).getIdentity(), is(not(emptyString())));
     }
 
     @Test
