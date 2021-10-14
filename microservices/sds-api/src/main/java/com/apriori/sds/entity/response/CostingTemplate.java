@@ -21,8 +21,11 @@ public class CostingTemplate {
     private String customerIdentity;
     private Boolean locked;
     private Boolean published;
+    private Integer annualVolume;
+    private Integer batchSize;
     private List<String> propertiesToReset;
     private Object customAttributes;
+    private String materialMode;
     private String materialName;
     private String pinnedRouting;
     private String processGroupName;

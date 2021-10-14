@@ -399,7 +399,7 @@ public class PageUtils {
         int elementSize = 0;
 
         try {
-            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+
             do {
                 elementSize = driver.findElements(element).size();
             } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
@@ -407,7 +407,7 @@ public class PageUtils {
             if (elementSize > 0) {
                 throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
             }
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return elementSize;
@@ -425,7 +425,7 @@ public class PageUtils {
         int elementSize = 0;
 
         try {
-            logger.info(String.format("Waiting for element '%s' to be invisible", element));
+
             do {
                 elementSize = driver.findElements(element).size();
             } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
@@ -433,7 +433,7 @@ public class PageUtils {
             if (elementSize > 0) {
                 throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
             }
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return elementSize;
@@ -449,7 +449,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Waiting for element '%s' to be invisible", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -470,7 +469,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -491,7 +489,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -514,7 +511,6 @@ public class PageUtils {
         int elementSize;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
             do {
                 elementSize = driver.findElements(element).size();
             } while (elementSize < 1 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
@@ -538,7 +534,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -559,7 +554,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -580,7 +574,6 @@ public class PageUtils {
         long maxWaitTime = 120L;
 
         try {
-            logger.info(String.format("Attempting to locate element '%s'", element));
 
             return new WebDriverWait(driver, maxWaitTime)
                 .ignoreAll(ignoredWebDriverExceptions)
@@ -597,7 +590,17 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(WebElement element) {
-        waitForElementToBeClickable(element).click();
+        long maxWaitTime = 60L;
+
+        waitForElementToBeClickable(element);
+
+        new WebDriverWait(driver, maxWaitTime)
+            .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(d -> {
+                element.click();
+                return true;
+            });
     }
 
     /**
@@ -606,7 +609,17 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(By element) {
-        waitForElementToBeClickable(element).click();
+        long maxWaitTime = 60L;
+
+        waitForElementToBeClickable(element);
+
+        new WebDriverWait(driver, maxWaitTime)
+            .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(d -> {
+                driver.findElement(element).click();
+                return true;
+            });
     }
 
     /**
@@ -972,5 +985,28 @@ public class PageUtils {
             .release()
             .pause(Duration.ofSeconds(1))
             .perform();
+    }
+
+    /**
+     * highlights given element. This would be mainly used for debugging
+     *
+     * @param driver
+     * @param element
+     */
+    public static void highlightElement(WebDriver driver, WebElement element) {
+
+        // Original in Python: https://gist.github.com/3086536
+        String originalStyle = element.getAttribute("style");
+
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('style', 'background: yellow; border: 2px solid red;');", element);
+
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            logger.debug("Failed to highlight element");
+        }
+        js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
     }
 }
