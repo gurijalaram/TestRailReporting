@@ -321,7 +321,7 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .signInUrl(Constants.SIGNIN_URL)
                     .signingCertificate(Constants.SIGNIN_CERT)
-                    .signingCertificateExpiresAt("2030-07-22T22:45Z")
+                    .signingCertificateExpiresAt("2030-07-22T22:45:45.245Z")
                     .signRequest(true)
                     .signRequestAlgorithm("RSA_SHA256")
                     .signRequestAlgorithmDigest("SHA256")
