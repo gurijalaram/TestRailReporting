@@ -264,7 +264,7 @@ public class ScenariosTest extends SDSTestUtil {
 
             if (scenario.getScenarioState().toUpperCase().contains("FAILED")) {
                 throw new IllegalStateException(String.format("Scenario failed state: %s. Scenario Id: %s",
-                    scenario.getIdentity(), scenario.getScenarioState())
+                    scenario.getScenarioState(), scenario.getIdentity())
                 );
             }
 
