@@ -159,6 +159,7 @@ qa-cid-perf:
   ci-connect:
     ui_url: https://ci-connect.na-1.qa-cid-perf.apriori.net/
     second_page_starting_range_number: 26
+    default_connector: Automation - NA - WC
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
