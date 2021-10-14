@@ -1,4 +1,5 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "response"
@@ -9,15 +10,13 @@
       "required": [
         "items"
       ],
-      "$ref": "common/PaginationSchema.json",
       "properties": {
-        "items": {
-          "type": "array",
-          "items": {
-            "$ref": "RoleSchema.json"
-          }
+        "response": {
+          "type": "object",
+          "$ref": "RoleSchema.json"
         }
       }
     }
   }
 }
+
