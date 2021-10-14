@@ -9,13 +9,11 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Role;
 import com.apriori.cds.objects.response.Roles;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.stream.Collectors;
@@ -30,8 +28,8 @@ public class CdsRolesTests {
         ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Roles.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(2));
-        assertThat(response.getResponseEntity().getResponse().getItems().stream().map(Role::getName).collect(Collectors.toList()), hasItems("USER", "ADMIN"));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(2));
+        assertThat(response.getResponseEntity().getItems().stream().map(Role::getName).collect(Collectors.toList()), hasItems("USER", "ADMIN"));
     }
 
     @Test
@@ -40,7 +38,7 @@ public class CdsRolesTests {
     public void getRoleById() {
         ResponseWrapper<Roles> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Roles.class);
 
-        String roleIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String roleIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<Role> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Role.class, roleIdentity);
 
