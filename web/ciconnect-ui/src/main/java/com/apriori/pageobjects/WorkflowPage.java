@@ -3,6 +3,7 @@ package com.apriori.pageobjects;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -389,6 +390,15 @@ public class WorkflowPage {
     }
 
     /**
+     * Select a workflow by connector name in the Schedule Workflow list
+     *
+     */
+    public WebElement selectWorkflowByConnector() {
+        pageUtils.waitForElementAppear(workflowList);
+        return tableUtils.selectRowByConnector(workflowList);
+    }
+
+    /**
      * Check if a workflow exists in the Schedule Workflow list. The search is by workflow name
      *
      * @param name Workflow name to check for
@@ -396,8 +406,14 @@ public class WorkflowPage {
      */
     public Boolean workflowExists(String name) {
         pageUtils.waitForElementToBeClickable(workflowList);
-        refreshPage();
-        sortBy("Last Modified By");
+        try {
+            sortBy("Last Modified By");
+        } catch (ElementClickInterceptedException elementClickInterceptedException) {
+            refreshPage();
+            sortBy("Last Modified By");
+
+        }
+
         return tableUtils.itemExistsInTable(workflowList, name);
     }
 
