@@ -792,11 +792,14 @@ public class NewWorkflowPage {
         WebElement ciConnectField = getIncrementedElement(ciConnectFieldCss, iteration);
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
         pageUtils.waitForElementAndClick(ciConnectField);
-        pageUtils.waitForElementAndClick(ciConnectFieldSelection);
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        pageUtils.waitForElementAndClick(ciConnectFieldSelection);
         WebElement valueDD = getIncrementedElement(valueDDCss, iteration);
+
+        pageUtils.waitFor(5000);
         pageUtils.waitForElementAndClick(valueDD);
         pageUtils.waitForElementAndClick(valueSelection);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
         pageUtils.waitForElementAndClick(queryPageNextButton);
     }
 
