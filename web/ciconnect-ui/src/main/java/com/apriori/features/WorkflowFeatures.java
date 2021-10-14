@@ -163,6 +163,32 @@ public class WorkflowFeatures {
     }
 
     /**
+     * Delete workflow for a specific connector
+     *
+     * @return value map of field states and values
+     */
+    public void deleteWorklowByConnector() {
+        boolean isNull = false;
+        WebElement row;
+
+        workflowPage.refreshPage();
+        while (!isNull) {
+            workflowPage.sortBy("Connector");
+
+            row = workflowPage.selectWorkflowByConnector();
+            if (row == null) {
+                break;
+            } else {
+                row.click();
+            }
+
+            workflowPage.clickDeleteButton();
+            deleteWorkflowPage.deleteWorkflow();
+            workflowPage.refreshPage();
+        }
+    }
+
+    /**
      * Checks the button states on workflow schedule page
      *
      * @return value map of field states and values

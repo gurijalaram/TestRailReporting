@@ -52,10 +52,9 @@ public class NewWorkflowDetailsTests extends TestBase {
 
     @After
     public void cleanup() {
-        //workflowPage.refreshPage();
         workflowNames.forEach(name -> {
             workflowPage.sortBy("Connector");
-            workflowFeatures.deleteWorklow(name);
+            workflowFeatures.deleteWorklowByConnector();
         });
     }
 

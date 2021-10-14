@@ -22,8 +22,17 @@
     "published": {
       "type": "boolean"
     },
+    "annualVolume": {
+      "type": "integer"
+    },
+    "batchSize": {
+      "type": "integer"
+    },
     "customAttributes": {
       "type": "object"
+    },
+    "materialMode": {
+      "type": "string"
     },
     "materialName": {
       "type": "string"
