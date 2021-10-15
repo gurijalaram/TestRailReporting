@@ -123,7 +123,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, processGroup.getProcessGroup());
+        pageUtils.typeAheadSelect(processGroupDropdown, "qa-production-defaults-process-group-select", processGroup.getProcessGroup());
         return this;
     }
 
