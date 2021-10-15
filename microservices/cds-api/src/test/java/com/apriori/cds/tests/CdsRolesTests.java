@@ -40,9 +40,9 @@ public class CdsRolesTests {
 
         String roleIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Role> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Role.class, roleIdentity);
+        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Roles.class, roleIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getName(), is("ADMIN"));
+        assertThat(response.getResponseEntity().getItems().get(0).getName(), is("ADMIN"));
     }
 }
