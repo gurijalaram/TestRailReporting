@@ -1,5 +1,6 @@
 package com.apriori.cds.objects.response;
 
+import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -14,8 +15,9 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "RoleSchema.json")
 @JsonRootName("response")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
