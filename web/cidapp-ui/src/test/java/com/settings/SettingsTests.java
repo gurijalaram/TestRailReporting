@@ -247,7 +247,7 @@ public class SettingsTests extends TestBase {
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .openMaterialSelectorTable()
             .selectMaterial("HIPS Extrusion")
-            .submit(DisplayPreferencesPage.class)
+            .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .openSettings()
             .goToProductionTab();
@@ -273,7 +273,7 @@ public class SettingsTests extends TestBase {
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005 Sponge")
-            .submit(DisplayPreferencesPage.class)
+            .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .logout()
             .login(currentUser)
