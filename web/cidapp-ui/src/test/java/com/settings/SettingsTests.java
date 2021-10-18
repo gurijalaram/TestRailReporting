@@ -136,7 +136,7 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.Apriori_Mexico.getDigitalFactory));
+        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
     }
 
     @Test
