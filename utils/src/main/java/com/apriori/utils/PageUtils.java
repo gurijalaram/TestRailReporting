@@ -450,7 +450,7 @@ public class PageUtils {
 
         try {
 
-            return new WebDriverWait(driver, maxWaitTime)
+            return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(ExpectedConditions.invisibilityOfAllElements(element));
 
@@ -470,7 +470,7 @@ public class PageUtils {
 
         try {
 
-            return new WebDriverWait(driver, maxWaitTime)
+            return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(visibilityOf(element));
 
@@ -490,7 +490,7 @@ public class PageUtils {
 
         try {
 
-            return new WebDriverWait(driver, maxWaitTime)
+            return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(visibilityOf(element));
 
@@ -535,7 +535,7 @@ public class PageUtils {
 
         try {
 
-            return new WebDriverWait(driver, maxWaitTime)
+            return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(visibilityOfAllElements(element));
 
@@ -555,7 +555,7 @@ public class PageUtils {
 
         try {
 
-            return new WebDriverWait(driver, maxWaitTime)
+            return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(elementToBeClickable(element));
 
@@ -575,7 +575,7 @@ public class PageUtils {
 
         try {
 
-            return new WebDriverWait(driver, maxWaitTime)
+            return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(elementToBeClickable(element));
 
@@ -594,7 +594,7 @@ public class PageUtils {
 
         waitForElementToBeClickable(element);
 
-        new WebDriverWait(driver, maxWaitTime)
+        new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
             .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
             .until(d -> {
@@ -613,7 +613,7 @@ public class PageUtils {
 
         waitForElementToBeClickable(element);
 
-        new WebDriverWait(driver, maxWaitTime)
+        new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
             .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
             .until(d -> {
@@ -628,7 +628,7 @@ public class PageUtils {
      */
     public boolean isElementClickable(WebElement element) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(element));
             return true;
         } catch (Exception ex) {
@@ -732,7 +732,7 @@ public class PageUtils {
      * @param dropdownOption - the dropdown option
      */
     public void selectDropdownOption(WebElement locator, String dropdownOption) {
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
             .ignoreAll(ignoredWebDriverExceptions)
             .until((WebDriver driver) -> {
                 new Select(locator).selectByVisibleText(dropdownOption);
@@ -750,7 +750,7 @@ public class PageUtils {
      * @return
      */
     public void waitForElementNotDisplayed(WebElement locator, int timeoutInMinutes) {
-        new WebDriverWait(driver, (BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
     }
@@ -767,7 +767,7 @@ public class PageUtils {
 
         try {
 
-            textPresent = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS)
+            textPresent = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS))
                 .withMessage("\nExpected: " + text.replace("\n", " ") + "\nFound: " + waitForElementToAppear(locator).getText())
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text));
@@ -790,7 +790,7 @@ public class PageUtils {
 
         try {
 
-            textPresent = new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes)
+            textPresent = new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
                 .withMessage("\nNot expecting: " + text + "\nFound: " + waitForElementToAppear(locator).getText())
                 .ignoreAll(ignoredWebDriverExceptions)
                 .until(not((ExpectedCondition<Boolean>) element -> (waitForElementToAppear(locator)).getText().contains(text)));
@@ -810,7 +810,7 @@ public class PageUtils {
     public boolean checkElementAttributeEmpty(WebElement locator, String attribute) {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
-        return new WebDriverWait(driver, timeoutInMinutes)
+        return new WebDriverWait(driver, Duration.ofSeconds(timeoutInMinutes))
             .withMessage("\nExpected attribute: " + attribute + "\t" + "\nFound: " + locator.getAttribute(attribute))
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).isEmpty());
     }
@@ -824,7 +824,7 @@ public class PageUtils {
     public <T> boolean checkElementVisibleByBoolean(List<T> locator) {
         final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS * 2;
 
-        return new WebDriverWait(driver, timeoutInMinutes)
+        return new WebDriverWait(driver, Duration.ofSeconds(timeoutInMinutes))
             .withMessage("\nElement not visible using locator: " + locator)
             .until((ExpectedCondition<Boolean>) element -> (locator).size() > 0);
     }
@@ -838,9 +838,9 @@ public class PageUtils {
      * @return - boolean
      */
     public boolean checkElementAttribute(WebElement locator, String attribute, String text) {
-        final int timeOut = BASIC_WAIT_TIME_IN_SECONDS / 2;
+        final int timeoutInMinutes = BASIC_WAIT_TIME_IN_SECONDS / 2;
 
-        return new WebDriverWait(driver, timeOut)
+        return new WebDriverWait(driver, Duration.ofSeconds(timeoutInMinutes))
             .withMessage("\nExpected: " + text + "\t" + "\nFound: " + locator.getAttribute(attribute))
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (locator).getAttribute(attribute).contains(text));
@@ -853,7 +853,7 @@ public class PageUtils {
      * @return
      */
     public boolean checkElementFirstOption(WebElement locator, String text) {
-        return new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+        return new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
             .withMessage("\nExpected option not in dropdown: " + text + "\nLocator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator)).getFirstSelectedOption().getText().equalsIgnoreCase(text));
@@ -866,7 +866,7 @@ public class PageUtils {
      * @param option  - the option
      */
     public void checkDropdownOptions(WebElement locator, String option) {
-        new WebDriverWait(driver, BASIC_WAIT_TIME_IN_SECONDS / 2)
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS / 2))
             .withMessage("\nExpected option not in dropdown: " + option + "\nLocator: " + locator)
             .ignoreAll(ignoredWebDriverExceptions)
             .until((ExpectedCondition<Boolean>) element -> (new Select(locator).getOptions().stream().anyMatch(dropdownOptions -> dropdownOptions.getText().contains(option))));
