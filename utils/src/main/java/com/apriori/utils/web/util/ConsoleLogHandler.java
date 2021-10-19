@@ -7,7 +7,6 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
-import org.openqa.selenium.logging.Logs;
 import org.openqa.selenium.support.events.WebDriverEventListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,11 +55,9 @@ public class ConsoleLogHandler implements WebDriverEventListener {
     }
 
     private void checkBrowserConsoleLogForErrors(WebDriver driver) {
-        Logs logs = driver.manage().logs();
-        LogEntries logEntries = logs.get(LogType.BROWSER);
+        LogEntries logEntries = driver.manage().logs().get(LogType.BROWSER);
 
-        List<LogEntry> errorEntries = logEntries.filter(levelOfThrowingAssertion);
-        List<LogEntry> filteredErrorEntries = filterBlacklistedURLs(errorEntries);
+        List<LogEntry> filteredErrorEntries = filterBlacklistedURLs(logEntries.getAll());
         if (!filteredErrorEntries.isEmpty() && levelOfThrowingAssertion.equals(Level.SEVERE)) {
             filteredErrorEntries.forEach(logEntry -> {
                 throw new ConsoleLogError("Browser console ERROR: \n" + logEntry.getMessage());
