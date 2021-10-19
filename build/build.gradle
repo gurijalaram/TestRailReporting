@@ -182,8 +182,8 @@ subprojects {
         implementation 'com.github.fge:json-schema-core:1.2.5'
         //tried to update io.rest-assured:json-schema-validator to 4.3.0 but this is causing errors when running api tests.
         //this should be updated and comment deleted as soon as we can
-        implementation 'io.rest-assured:json-schema-validator:3.2.0'
-        implementation 'io.rest-assured:rest-assured:4.2.0'
+        implementation 'io.rest-assured:json-schema-validator:4.4.0'
+        implementation 'io.rest-assured:rest-assured:4.3.3'
         implementation 'commons-io:commons-io:2.7'
         implementation 'commons-lang:commons-lang:2.6'
         implementation 'commons-cli:commons-cli:1.4'
