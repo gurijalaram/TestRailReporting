@@ -204,7 +204,7 @@ subprojects {
         implementation 'pl.pragmatists:JUnitParams:1.1.1'
         implementation 'org.assertj:assertj-core:3.21.0'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.0'
-        implementation "org.projectlombok:lombok:1.18.22"
+        implementation '"org.projectlombok:lombok:1.18.22'
 
         annotationProcessor 'org.projectlombok:lombok:1.18.22'
     }
