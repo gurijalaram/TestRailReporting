@@ -195,7 +195,7 @@ subprojects {
         implementation 'io.qameta.allure:allure-gradle:2.8.1'
         implementation 'io.qameta.allure:allure-junit4:2.13.5'
         implementation 'org.jsoup:jsoup:1.12.2'
-        implementation 'io.github.bonigarcia:webdrivermanager:4.2.1'
+        implementation 'io.github.bonigarcia:webdrivermanager:5.0.2'
         implementation 'com.google.code.gson:gson:2.8.2'
         implementation 'com.thomasjensen.checkstyle.addons:checkstyle-addons:6.0.0'
         implementation 'com.puppycrawl.tools:checkstyle:8.36.1'
