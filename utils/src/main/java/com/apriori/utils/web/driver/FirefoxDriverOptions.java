@@ -1,6 +1,7 @@
 package com.apriori.utils.web.driver;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -18,6 +19,7 @@ public class FirefoxDriverOptions {
 
     public FirefoxOptions getFirefoxOptions() {
         firefoxOptions.setAcceptInsecureCerts(true);
+        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.INFO);
 
         // Set custom download dir
         if (downloadPath == null) {

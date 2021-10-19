@@ -1,6 +1,7 @@
 package com.apriori.utils.web.driver;
 
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
@@ -26,6 +27,7 @@ public class ChromeDriverOptions {
 
         chromeOptions.setAcceptInsecureCerts(true);
         chromeOptions.addArguments("--allow-outdated-plugins");
+        chromeOptions.setLogLevel(ChromeDriverLogLevel.INFO);
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
 
         // Set custom download dir
