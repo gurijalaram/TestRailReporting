@@ -10,8 +10,6 @@ import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.UnreachableBrowserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.net.MalformedURLException;
@@ -25,10 +23,9 @@ import java.security.InvalidParameterException;
 @Slf4j
 public class RemoteWebDriverService extends BrowserManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverService.class);
 
     private RemoteWebDriver result;
-    MutableCapabilities capabilities = new MutableCapabilities();
+    private MutableCapabilities capabilities = new MutableCapabilities();
     private BrowserTypes browser;
     private String server;
     private Proxy proxy;
@@ -47,7 +44,7 @@ public class RemoteWebDriverService extends BrowserManager {
 
     @Override
     public WebDriver startService() {
-        logger.info("server: " + server);
+        log.info("server: " + server);
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
 
@@ -58,7 +55,7 @@ public class RemoteWebDriverService extends BrowserManager {
         try {
             switch (browser) {
                 case CHROME:
-                    logger.info("Starting ChromeDriver........ ");
+                    log.info("Starting ChromeDriver........ ");
 
                     ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
                     capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
@@ -66,14 +63,14 @@ public class RemoteWebDriverService extends BrowserManager {
                     break;
 
                 case FIREFOX:
-                    logger.info("Starting GeckoDriver........ ");
+                    log.info("Starting GeckoDriver........ ");
 
                     capabilities = new FirefoxDriverOptions(remoteDownloadPath, locale).getFirefoxOptions();
                     capabilities.setCapability("browserName", Browser.FIREFOX.browserName());
                     break;
 
                 case EDGE:
-                    logger.info("Starting EdgeDriver........ ");
+                    log.info("Starting EdgeDriver........ ");
 
                     capabilities.setCapability("browserName", Browser.EDGE.browserName());
                     break;
