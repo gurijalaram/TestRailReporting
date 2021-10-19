@@ -1,4 +1,4 @@
-package com.apriori.edc.tests;
+package com.apriori.edcapi.tests;
 
 import com.apriori.apibase.services.response.objects.MaterialPart;
 import com.apriori.apibase.services.response.objects.MaterialPartWrapper;
