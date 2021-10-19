@@ -203,9 +203,8 @@ subprojects {
         implementation 'commons-validator:commons-validator:1.7'
         implementation 'com.sun.mail:javax.mail:2.0.1'
                 implementation 'com.sun.mail:smtp:1.6.5'
-
         implementation 'pl.pragmatists:JUnitParams:1.1.1'
-        implementation 'org.assertj:assertj-core:3.20.1'
+        implementation 'org.assertj:assertj-core:3.21.0'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.12.4'
         implementation "org.projectlombok:lombok:1.18.6"
 
