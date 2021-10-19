@@ -517,7 +517,6 @@ public class ToleranceTests extends TestBase {
         assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY), is(12));
         assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY), is(12));
         assertThat(tolerancesPage.getGcdCount(ToleranceEnum.DIAMTOLERANCE), is(16));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.FLATNESS), is(14));
         assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM), is(26));
         assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY), is(26));
         assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE), is(27));

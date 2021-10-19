@@ -136,7 +136,7 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO));
+        assertThat(evaluatePage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
     }
 
     @Test
@@ -161,8 +161,8 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getAnnualVolume(), is("9,524"));
-        assertThat(evaluatePage.getProductionLife(), is("7.00"));
+        assertThat(evaluatePage.getAnnualVolume(), is("9524"));
+        assertThat(evaluatePage.getProductionLife(), is("7"));
     }
 
     @Ignore("Uncomment when ba-1955 is done")
@@ -247,7 +247,7 @@ public class SettingsTests extends TestBase {
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .openMaterialSelectorTable()
             .selectMaterial("HIPS Extrusion")
-            .submit(DisplayPreferencesPage.class)
+            .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .openSettings()
             .goToProductionTab();
@@ -273,7 +273,7 @@ public class SettingsTests extends TestBase {
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005 Sponge")
-            .submit(DisplayPreferencesPage.class)
+            .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .logout()
             .login(currentUser)
