@@ -12,13 +12,11 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
 import org.junit.Test;
 
 public class CdsUsersTests {
@@ -31,8 +29,8 @@ public class CdsUsersTests {
         ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getUserType(), is(not(emptyString())));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getItems().get(0).getUserType(), is(not(emptyString())));
     }
 
 
@@ -42,7 +40,7 @@ public class CdsUsersTests {
     public void getUserById() {
         ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
 
-        String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String userIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_BY_ID, User.class, userIdentity);
 
@@ -57,7 +55,7 @@ public class CdsUsersTests {
     public void getUsersCredentials() {
         ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
 
-        String userIdentity = responseWrapper.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String userIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_CREDENTIALS_BY_ID, CredentialsItems.class, userIdentity);
 

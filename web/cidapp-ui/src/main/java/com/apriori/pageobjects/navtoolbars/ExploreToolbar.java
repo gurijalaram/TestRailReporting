@@ -45,13 +45,13 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-edit-button'] button")
     private WebElement editButton;
 
-    @FindBy(css = "[id='qa-sub-header-new-scenario'] button")
+    @FindBy(css = "[id='qa-sub-header-new-scenario']")
     private WebElement scenarioButton;
 
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
 
-    @FindBy(id = "qa-action-bar-action-info")
+    @FindBy(css = "[id='qa-action-bar-action-info']")
     private WebElement infoButton;
 
     @FindBy(id = "qa-sub-header-action-lock")

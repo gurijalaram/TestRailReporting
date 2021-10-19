@@ -89,7 +89,7 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .clickSearch(componentName)
-            .highlightScenario(componentName, scenarioName)
+            .openScenario(componentName,scenarioName)
             .info();
 
         assertThat(infoPage.getStatus(), is(equalTo("New")));
@@ -539,7 +539,7 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .logout()
             .login(testUser2)
-            .selectFilter("Recent")
+            .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
@@ -581,15 +581,17 @@ public class ActionsTests extends TestBase {
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Status", "In", "Complete")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName), equalTo(1));
 
         explorePage.filter()
+            .newFilter()
             .inputName(filterName2)
-            .saveAs()
             .addCriteriaWithOption("Cost Maturity", "In", "Medium")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName), equalTo(1));
     }

@@ -8,7 +8,8 @@
     "updatedAt",
     "customerIdentity",
     "componentName",
-    "componentType"
+    "componentType",
+    "configurationName"
   ],
   "properties": {
     "identity": {
@@ -33,6 +34,9 @@
       "type": "string"
     },
     "componentType": {
+      "type": "string"
+    },
+    "configurationName": {
       "type": "string"
     }
   }
