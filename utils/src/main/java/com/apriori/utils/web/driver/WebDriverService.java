@@ -9,8 +9,6 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.security.InvalidParameterException;
 
@@ -20,8 +18,6 @@ import java.security.InvalidParameterException;
 
 @Slf4j
 public class WebDriverService extends BrowserManager {
-
-    private static final Logger logger = LoggerFactory.getLogger(WebDriverService.class);
 
     private WebDriver result;
     private MutableCapabilities capabilities = new MutableCapabilities();
