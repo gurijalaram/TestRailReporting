@@ -190,11 +190,11 @@ subprojects {
         implementation 'org.apache.commons:commons-collections4:4.3'
         implementation 'org.aeonbits.owner:owner:1.0.11'
         implementation 'org.apache.commons:commons-lang3:3.11'
-
-        implementation 'io.qameta.allure:allure-junit4:2.13.0'
-        implementation 'io.qameta.allure:allure-java-commons:2.13.0'
+        implementation 'io.qameta.allure:allure-junit4:2.14.0'
+        implementation 'io.qameta.allure:allure-java-commons:2.14.0'
         implementation 'io.qameta.allure:allure-gradle:2.8.1'
-        implementation 'io.qameta.allure:allure-junit4:2.13.5'
+        implementation 'io.qameta.allure:allure-junit4:2.14.0'
+
         implementation 'org.jsoup:jsoup:1.12.2'
         implementation 'io.github.bonigarcia:webdrivermanager:5.0.2'
         implementation 'com.google.code.gson:gson:2.8.2'
