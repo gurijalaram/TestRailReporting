@@ -36,16 +36,16 @@
       "type": "string"
     },
     "numberOfLineItemsIncomplete": {
-      "type": "number"
+      "type": "integer"
     },
     "numberOfLineItemsNoPartsMatched": {
-      "type": "number"
+      "type": "integer"
     },
     "numberOfLineItemsReadyForExport": {
-      "type": "number"
+      "type": "integer"
     },
     "totalNumberOfLineItems": {
-      "type": "number"
+      "type": "integer"
     },
     "type": {
       "type": "string"
