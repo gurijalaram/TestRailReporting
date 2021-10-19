@@ -17,7 +17,7 @@ public class FirefoxDriverOptions {
     }
 
     public FirefoxOptions getFirefoxOptions() {
-        firefoxOptions.setAcceptInsecureCerts(false);
+        firefoxOptions.setAcceptInsecureCerts(true);
 
         // Set custom download dir
         if (downloadPath == null) {
