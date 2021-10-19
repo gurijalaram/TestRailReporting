@@ -27,7 +27,6 @@ public class CdsAccessControlsTests  {
     private IdentityHolder accessControlIdentityHolder;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
-
     @After
     public void cleanUp() {
         if (accessControlIdentityHolder != null) {

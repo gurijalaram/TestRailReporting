@@ -1,40 +1,28 @@
 {
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
-    "response"
+    "identity",
+    "createdBy",
+    "createdAt",
+    "name",
+    "description"
   ],
   "properties": {
-    "response": {
-      "type": "object",
-      "required": [
-        "identity",
-        "createdBy",
-        "createdAt",
-        "name",
-        "description"
-      ],
-      "properties": {
-        "identity": {
-          "type": "string",
-          "pattern": "^(.*)$"
-        },
-        "createdBy": {
-          "type": "string",
-          "pattern": "^(.*)$"
-        },
-        "createdAt": {
-          "type": "string",
-          "pattern": "^(.*)$"
-        },
-        "name": {
-          "type": "string",
-          "pattern": "^(.*)$"
-        },
-        "description": {
-          "type": "string",
-          "pattern": "^(.*)$"
-        }
-      }
+    "identity": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
     }
   }
 }

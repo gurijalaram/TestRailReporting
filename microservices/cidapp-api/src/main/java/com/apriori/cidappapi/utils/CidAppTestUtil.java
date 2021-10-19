@@ -242,7 +242,7 @@ public class CidAppTestUtil {
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, ScenarioStateEnum terminalScenarioState, String lastAction, boolean published, UserCredentials userCredentials) {
-        final int SOCKET_TIMEOUT = 120000;
+        final int SOCKET_TIMEOUT = 240000;
         String componentName = cssItem.getComponentIdentity();
         String scenarioName = cssItem.getScenarioIdentity();
 
@@ -253,7 +253,7 @@ public class CidAppTestUtil {
                 .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
-        final int WAIT_TIME = 120;
+        final int WAIT_TIME = 240;
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {

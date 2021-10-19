@@ -1,8 +1,11 @@
 package utils;
 
+import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -15,8 +18,8 @@ public class TableUtils {
     private WebDriver driver;
 
     public TableUtils(WebDriver driver) {
-        this.pageUtils = new PageUtils(driver);
         this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
     }
 
     /**
@@ -27,13 +30,7 @@ public class TableUtils {
      * @return True if the actual list contains all items in the expected list
      */
     public boolean actualListContainsAllItems(List<String> expectedList, List<String> actualList) {
-        for (String expected : expectedList) {
-            if (!actualList.contains(expected)) {
-                return false;
-            }
-        }
-
-        return true;
+        return expectedList.stream().allMatch(actualList::contains);
     }
 
     /**
@@ -51,6 +48,30 @@ public class TableUtils {
                 .skip(1)
                 .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
+        if (rows.size() > 0) {
+            return rows.get(0);
+        } else {
+            return null;
+        }
+    }
+
+
+    /**
+     * Find an item in a table by connector
+     *
+     * @param table The table to search
+     * @return The webelement if found
+     */
+    public WebElement findTableItemByConnector(WebElement table) {
+        pageUtils.waitForElementToBeClickable(table);
+        String connector = PropertiesContext.get("${env}.ci-connect.default_connector");
+        List<WebElement> rows =
+                table.findElements(By.tagName("tr"))
+                        .stream()
+                        .skip(1)
+                        .filter(user -> user.findElements(By.tagName("td")).get(5).getText().equalsIgnoreCase(connector))
+                        .collect(Collectors.toList());
+
         if (rows.size() > 0) {
             return rows.get(0);
         } else {
@@ -142,6 +163,16 @@ public class TableUtils {
     }
 
     /**
+     * Select a row by item connector name
+     *
+     * @param table  The table to search
+     */
+    public  WebElement selectRowByConnector(WebElement table) {
+        return findTableItemByConnector(table);
+    }
+
+
+    /**
      * Check if a item exisits in the table. Search by item name
      *
      * @param table  The table to search
@@ -180,12 +211,28 @@ public class TableUtils {
      */
     public WebElement getColumnHeader(WebElement tableHeaders, String columnHeader) {
         pageUtils.waitForElementToBeClickable(tableHeaders);
-        List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
-        for (WebElement column : columns) {
-            if (column.getText().equalsIgnoreCase(columnHeader)) {
-                return column;
-            }
+        WebElement column;
+
+        try {
+            column = getColumn(tableHeaders, columnHeader);
+        } catch (StaleElementReferenceException staleElementReferenceException) {
+            WorkflowPage workflowPage = new WorkflowPage(driver);
+            workflowPage.refreshPage();
+            column = getColumn(tableHeaders, columnHeader);
         }
-        return null;
+
+        return column;
+    }
+
+    /**
+     * Returns a column element based on the column name
+     *
+     * @param tableHeaders Collection o column headers
+     * @param columnHeader Name of the column
+     * @return
+     */
+    private WebElement getColumn(WebElement tableHeaders, String columnHeader) {
+        List<WebElement> columns = tableHeaders.findElements(By.tagName("td"));
+        return columns.stream().filter(column -> column.getText().equalsIgnoreCase(columnHeader)).findFirst().orElse(null);
     }
 }

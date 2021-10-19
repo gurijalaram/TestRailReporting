@@ -47,7 +47,7 @@ public class WorkflowTests  extends TestBase {
     @After
     public void cleanup() {
         if (!skipDeletion) {
-            workflowNames.forEach(name -> workflowFeatures.deleteWorklow(name));
+            workflowNames.forEach(name -> workflowFeatures.deleteWorklowByConnector());
         }
     }
 
