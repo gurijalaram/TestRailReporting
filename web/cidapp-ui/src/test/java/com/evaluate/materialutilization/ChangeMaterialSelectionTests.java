@@ -194,7 +194,8 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
-            .selectFilter("Recent")
+            .selectFilter("Public")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName);
 

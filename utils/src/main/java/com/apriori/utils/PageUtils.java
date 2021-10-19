@@ -455,7 +455,7 @@ public class PageUtils {
                 .until(ExpectedConditions.invisibilityOfAllElements(element));
 
         } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
+            throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs.  See StrackTrace", element, maxWaitTime), e.getCause());
         }
     }
 
@@ -475,7 +475,7 @@ public class PageUtils {
                 .until(visibilityOf(element));
 
         } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
+            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs.  See StackTrace", element, maxWaitTime), e.getCause());
         }
     }
 
@@ -495,7 +495,7 @@ public class PageUtils {
                 .until(visibilityOf(element));
 
         } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
+            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs.  See StackTrace", element, maxWaitTime), e.getCause());
         }
     }
 
@@ -540,7 +540,7 @@ public class PageUtils {
                 .until(visibilityOfAllElements(element));
 
         } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
+            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs. See StackTrace", element, maxWaitTime), e.getCause());
         }
     }
 
@@ -560,7 +560,7 @@ public class PageUtils {
                 .until(elementToBeClickable(element));
 
         } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime));
+            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs. See StackTrace", element, maxWaitTime), e.getCause());
         }
     }
 
@@ -580,7 +580,7 @@ public class PageUtils {
                 .until(elementToBeClickable(element));
 
         } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime));
+            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs. See StackTrace", element, maxWaitTime), e.getCause());
         }
     }
 

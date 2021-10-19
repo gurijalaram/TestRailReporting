@@ -7,16 +7,7 @@
   "properties": {
     "response": {
       "type": "object",
-      "required": [
-        "items"
-      ],
-      "properties": {
-        "response": {
-          "type": "object",
-          "$ref": "RoleSchema.json"
-        }
-      }
+      "$ref": "Scenario.json"
     }
   }
 }
-

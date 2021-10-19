@@ -44,6 +44,7 @@ public class ScenarioCostingDefaultsResponse {
     private Boolean stagesAndMaterialsVisible;
     private String[] availableCurrencyVersions;
     private Integer annualVolume;
+    private CustomAttributes customAttributes;
     private Boolean cadModelLoaded;
     private String manualCurrencyVersion;
     private Boolean productionLifeOverridden;

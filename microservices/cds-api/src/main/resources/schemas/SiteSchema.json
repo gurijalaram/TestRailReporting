@@ -80,7 +80,7 @@
         "deployments": {
           "type": "array",
           "items": {
-            "anyOf": [
+            "optional": [
               {
                 "type": "object",
                 "required": [
@@ -123,7 +123,7 @@
                   "installations": {
                     "type": "array",
                     "items": {
-                      "anyOf": [
+                      "optional": [
                         {
                           "type": "object",
                           "required": [
@@ -207,7 +207,7 @@
                             "applications": {
                               "type": "array",
                               "items": {
-                                "anyOf": [
+                                "optional": [
                                   {
                                     "type": "object",
                                     "required": [
