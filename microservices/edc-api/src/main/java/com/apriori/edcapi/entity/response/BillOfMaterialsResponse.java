@@ -1,4 +1,4 @@
-package com.apriori.edcapi.entity.response.bill.of.materials;
+package com.apriori.edcapi.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;

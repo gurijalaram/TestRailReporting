@@ -2,7 +2,8 @@ package com.apriori.edcapi.tests;
 
 import com.apriori.apibase.services.response.objects.MaterialPart;
 import com.apriori.apibase.services.response.objects.MaterialPartWrapper;
-import com.apriori.edcapi.tests.util.EdcTestUtil;
+import com.apriori.apibase.utils.TestUtil;
+import com.apriori.edcapi.utils.UserDataEDC;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
@@ -18,7 +19,9 @@ import org.junit.Test;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class PartOfMaterialsTest extends EdcTestUtil {
+public class PartOfMaterialsTest extends TestUtil {
+
+    protected static UserDataEDC userData;
 
     @Test
     @Description("Get list of parts")

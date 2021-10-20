@@ -2,8 +2,8 @@ package com.apriori.edcapi.tests;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
-import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
-import com.apriori.edcapi.tests.util.BillOfMaterialsUtil;
+import com.apriori.edcapi.entity.response.BillOfMaterialsResponse;
+import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -21,13 +21,11 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @BeforeClass
     public static void setUp() {
-
         RequestEntityUtil.useTokenForRequests(new JwtTokenUtil().retrieveJwtToken());
     }
 
     @AfterClass
     public static void deleteTestingData() {
-
         if (testingBillOfMaterialsResponse != null) {
             deleteBomById(testingBillOfMaterialsResponse.getIdentity());
         }
@@ -37,13 +35,11 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @TestRail(testCaseId = "1506")
     @Description("DELETE a bill of material")
     public void testDeleteBomByIdentity() {
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
             .inlineVariables(getFirstBillOfMaterials().getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, HTTPRequest.build(requestEntity).get().getStatusCode());
     }
 
@@ -52,14 +48,13 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @Description("POST Upload a new bill of materials")
     public void testPostBillOfMaterials() {
         String filename = "Test BOM 5.csv";
-        createBillOfMaterials(filename);
+        createBillOfMaterials(filename,"pcba");
     }
 
     @Test
     @TestRail(testCaseId = "9414")
     @Description("GET the current representation of a bill of materials")
     public void testGetBillOfMaterialsById() {
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, BillOfMaterialsResponse.class)
                 .inlineVariables(getFirstBillOfMaterials().getIdentity());

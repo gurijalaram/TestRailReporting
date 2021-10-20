@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.edcapi.utils.EDCResources;
+import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.UploadedFilePage;
 import com.apriori.utils.FileResourceUtil;
@@ -32,7 +32,7 @@ public class FilterPartsTests extends TestBase {
 
     @After
     public void cleanUp() {
-        EDCResources.deleteBillOfMaterialById(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
+        BillOfMaterialsUtil.deleteBillOfMaterialById(EdcUiResources.getBillOfMaterialsId(driver.getCurrentUrl()));
     }
 
     @Test

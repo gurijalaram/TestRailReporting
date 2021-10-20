@@ -1,9 +1,10 @@
-package com.apriori.edcapi.tests.util;
+package com.apriori.edcapi.utils;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
-import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsItems;
-import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
+import com.apriori.edcapi.entity.response.BillOfMaterialsItemsResponse;
+import com.apriori.edcapi.entity.response.BillOfMaterialsResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -18,14 +19,13 @@ import java.util.List;
 
 public class BillOfMaterialsUtil extends TestUtil {
 
-    protected static BillOfMaterialsResponse createBillOfMaterials(String fileName) {
-
+    protected static BillOfMaterialsResponse createBillOfMaterials(String fileName, String type) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
                 .multiPartFiles(new MultiPartFiles()
                     .use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
                 .formParams(new FormParams()
-                    .use("type","pcba"));
+                    .use("type",type));
 
         ResponseWrapper<BillOfMaterialsResponse> createBillOfMaterialsResponse = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, createBillOfMaterialsResponse.getStatusCode());
@@ -33,12 +33,12 @@ public class BillOfMaterialsUtil extends TestUtil {
         return createBillOfMaterialsResponse.getResponseEntity();
     }
 
-    public static void deleteBomById() {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
-                .inlineVariables(getFirstBillOfMaterials().getIdentity());
+    public static ResponseWrapper<Object> deleteBillOfMaterialById(final String identity) {
+        RequestEntity requestEntity =
+                RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
+                        .inlineVariables(identity).token(new JwtTokenUtil().retrieveJwtToken());
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
+        return HTTPRequest.build(requestEntity).delete();
     }
 
     protected static BillOfMaterialsResponse getFirstBillOfMaterials() {
@@ -49,9 +49,9 @@ public class BillOfMaterialsUtil extends TestUtil {
 
     protected static List<BillOfMaterialsResponse> getAllBillOfMaterials() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItems.class);
+            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class);
 
-        ResponseWrapper<BillOfMaterialsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<BillOfMaterialsItemsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity()
