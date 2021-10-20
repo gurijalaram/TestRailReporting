@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: local
 
 # Define the global properties not related to environment
 global:
@@ -298,3 +298,6 @@ local:
 
   sds:
     api_url: ${local.base_url}:8811/
+
+  cis:
+    ui_url: ${local.base_url}:3004
