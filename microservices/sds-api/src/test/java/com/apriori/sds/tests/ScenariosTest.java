@@ -28,6 +28,7 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -67,6 +68,7 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
+    @Ignore("API that allow to create custom image, doesn't exist for CID. Custom image is user guided ")
     @TestRail(testCaseId = {"6925"})
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getCustomImage() {
