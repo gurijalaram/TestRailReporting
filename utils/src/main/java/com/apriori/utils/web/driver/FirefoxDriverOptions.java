@@ -1,7 +1,6 @@
 package com.apriori.utils.web.driver;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.firefox.FirefoxDriverLogLevel;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 
@@ -19,7 +18,8 @@ public class FirefoxDriverOptions {
 
     public FirefoxOptions getFirefoxOptions() {
         firefoxOptions.setAcceptInsecureCerts(true);
-        firefoxOptions.setLogLevel(FirefoxDriverLogLevel.INFO);
+        // TODO: 20/10/2021 commented because this doesn't work on vnc
+        //firefoxOptions.setLogLevel(FirefoxDriverLogLevel.INFO);
 
         // Set custom download dir
         if (downloadPath == null) {

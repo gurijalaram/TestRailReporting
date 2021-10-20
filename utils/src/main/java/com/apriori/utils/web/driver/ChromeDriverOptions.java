@@ -1,7 +1,6 @@
 package com.apriori.utils.web.driver;
 
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.chrome.ChromeDriverLogLevel;
 import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.HashMap;
@@ -27,7 +26,8 @@ public class ChromeDriverOptions {
 
         chromeOptions.setAcceptInsecureCerts(true);
         chromeOptions.addArguments("--allow-outdated-plugins");
-        chromeOptions.setLogLevel(ChromeDriverLogLevel.INFO);
+        // TODO: 20/10/2021 commented because this doesn't work on vnc
+        //chromeOptions.setLogLevel(ChromeDriverLogLevel.OFF);
         chromeOptions.setExperimentalOption("prefs", chromePrefs);
 
         // Set custom download dir
