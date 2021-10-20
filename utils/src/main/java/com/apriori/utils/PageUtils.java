@@ -4,6 +4,8 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
+import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
@@ -15,7 +17,6 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.ScriptTimeoutException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -35,7 +36,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author kpatel
@@ -364,53 +364,17 @@ public class PageUtils {
     }
 
     /**
-     * Checks the elements is displayed by size
-     *
-     * @param element - the element
-     * @return int
-     */
-    public int waitForElementsToAppear(By element) {
-        long startTime = System.currentTimeMillis() / 1000;
-
-        int secondsToWait = 1;
-        try {
-            do {
-                TimeUnit.SECONDS.sleep(secondsToWait);
-                driver.findElements(element);
-            } while (driver.findElements(element).size() < 1 && ((System.currentTimeMillis() / 1000) - startTime) < BASIC_WAIT_TIME_IN_SECONDS);
-
-            return driver.findElements(element).size();
-
-        } catch (StaleElementReferenceException | InterruptedException e) {
-            logger.debug("Trying to recover from a stale element reference exception");
-        }
-        throw new AssertionError("Element is not displayed");
-    }
-
-    /**
      * Checks element is not displayed by size
      *
      * @param element - the element
      * @return size as int
      */
-    public int waitForElementsToNotAppear(By element) {
-        long startTime = System.currentTimeMillis() / 1000;
+    public void waitForElementsToNotAppear(By element) {
         long maxWaitTime = 120L;
-        int elementSize = 0;
 
-        try {
-
-            do {
-                elementSize = driver.findElements(element).size();
-            } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
-
-            if (elementSize > 0) {
-                throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return elementSize;
+        new WebDriverWait(driver, maxWaitTime)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOfElementLocated(element));
     }
 
     /**
@@ -419,24 +383,12 @@ public class PageUtils {
      * @param element - the element
      * @return size as int
      */
-    public int waitForElementsToNotAppear(By element, long timeoutInMinutes) {
-        long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 120L * timeoutInMinutes;
-        int elementSize = 0;
+    public void waitForElementsToNotAppear(By element, long timeoutInMinutes) {
+        long maxWaitTime = 120L;
 
-        try {
-
-            do {
-                elementSize = driver.findElements(element).size();
-            } while (elementSize > 0 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
-
-            if (elementSize > 0) {
-                throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs", element, maxWaitTime));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return elementSize;
+        new WebDriverWait(driver, maxWaitTime * timeoutInMinutes)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOfElementLocated(element));
     }
 
     /**
@@ -445,18 +397,12 @@ public class PageUtils {
      * @param element - the element
      * @return true/false
      */
-    public boolean waitForElementsToNotAppear(List<WebElement> element) {
+    public void waitForElementsToNotAppear(List<WebElement> element) {
         long maxWaitTime = 120L;
 
-        try {
-
-            return new WebDriverWait(driver, maxWaitTime)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(ExpectedConditions.invisibilityOfAllElements(element));
-
-        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' should not be visible after %ssecs.  See StrackTrace", element, maxWaitTime), e.getCause());
-        }
+        new WebDriverWait(driver, maxWaitTime)
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOfAllElements(element));
     }
 
     /**
@@ -466,17 +412,22 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementAppear(WebElement element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 20L;
+        int retries = 0;
 
-        try {
+        while (retries < 6) {
+            try {
 
-            return new WebDriverWait(driver, maxWaitTime)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(visibilityOf(element));
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(visibilityOf(element));
 
-        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs.  See StackTrace", element, maxWaitTime), e.getCause());
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
         }
+        return element;
     }
 
     /**
@@ -486,17 +437,22 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToAppear(WebElement element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 20L;
+        int retries = 0;
 
-        try {
+        while (retries < 6) {
+            try {
 
-            return new WebDriverWait(driver, maxWaitTime)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(visibilityOf(element));
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(visibilityOf(element));
 
-        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | ScriptTimeoutException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs.  See StackTrace", element, maxWaitTime), e.getCause());
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
         }
+        return element;
     }
 
     /**
@@ -506,22 +462,47 @@ public class PageUtils {
      * @return size as int
      */
     public WebElement waitForElementToAppear(By element) {
-        long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 120L;
-        int elementSize;
+        long maxWaitTime = 20L;
+        int retries = 0;
 
-        try {
-            do {
-                elementSize = driver.findElements(element).size();
-            } while (elementSize < 1 && ((System.currentTimeMillis() / 1000) - startTime) < maxWaitTime);
+        while (retries < 6) {
+            try {
 
-            if (elementSize < 1) {
-                throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs", element, maxWaitTime));
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(visibilityOfElementLocated(element));
+
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
             }
-        } catch (TimeoutException e) {
-            e.printStackTrace();
         }
         return driver.findElement(element);
+    }
+
+    /**
+     * Checks the elements is displayed by size
+     *
+     * @param element - the element
+     * @return int
+     */
+    public List<WebElement> waitForElementsToAppear(By element) {
+        long maxWaitTime = 20L;
+        int retries = 0;
+
+        while (retries < 6) {
+            try {
+
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(visibilityOfAllElementsLocatedBy(element));
+
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
+        }
+        return driver.findElements(element);
     }
 
     /**
@@ -531,17 +512,22 @@ public class PageUtils {
      * @return size as int
      */
     public List<WebElement> waitForElementsToAppear(List<WebElement> element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 20L;
+        int retries = 0;
 
-        try {
+        while (retries < 6) {
+            try {
 
-            return new WebDriverWait(driver, maxWaitTime)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(visibilityOfAllElements(element));
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(visibilityOfAllElements(element));
 
-        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not displayed after %ssecs. See StackTrace", element, maxWaitTime), e.getCause());
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
         }
+        return element;
     }
 
     /**
@@ -551,17 +537,22 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToBeClickable(WebElement element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 20L;
+        int retries = 0;
 
-        try {
+        while (retries < 6) {
+            try {
 
-            return new WebDriverWait(driver, maxWaitTime)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(elementToBeClickable(element));
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(elementToBeClickable(element));
 
-        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs. See StackTrace", element, maxWaitTime), e.getCause());
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
         }
+        return element;
     }
 
     /**
@@ -571,17 +562,22 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToBeClickable(By element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 20L;
+        int retries = 0;
 
-        try {
+        while (retries < 6) {
+            try {
 
-            return new WebDriverWait(driver, maxWaitTime)
-                .ignoreAll(ignoredWebDriverExceptions)
-                .until(elementToBeClickable(element));
+                return new WebDriverWait(driver, maxWaitTime)
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(elementToBeClickable(element));
 
-        } catch (NoSuchElementException | StaleElementReferenceException | ElementNotInteractableException | TimeoutException e) {
-            throw new RuntimeException(String.format("Element '%s' was not clickable after %ssecs. See StackTrace", element, maxWaitTime), e.getCause());
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
         }
+        return driver.findElement(element);
     }
 
     /**
