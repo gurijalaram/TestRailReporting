@@ -1,5 +1,5 @@
 # Define the environment
-env: local
+env: qa-cid-perf
 
 # Define the global properties not related to environment
 global:
@@ -125,6 +125,9 @@ int-core:
 
   vds:
     api_url: https://vds.core.int.apriori.net/
+
+  cis:
+    ui_url: https://cis.core.int.apriori.net/
 
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
