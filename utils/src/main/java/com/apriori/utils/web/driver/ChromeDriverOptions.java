@@ -45,7 +45,6 @@ public class ChromeDriverOptions {
         // TODO: 28/02/2020 quick fix for running on linux. this will be reworked with major changes in the near future
         if (System.getProperty("os.name").toLowerCase().contains("linux")) {
             chromeOptions.addArguments("--no-sandbox");
-            chromeOptions.addArguments("--headless");
             chromeOptions.addArguments("--disable-gpu");
             chromeOptions.addArguments("--disable-dev-shm-usage");
         }
@@ -54,7 +53,9 @@ public class ChromeDriverOptions {
 
         if (headless) {
             // note: the window size in headless is not limited to the display size
-            chromeOptions.addArguments("headless", "disable-gpu", "window-size=1920,1080", "--no-sandbox");
+            chromeOptions.addArguments("--disable-gpu");
+            chromeOptions.addArguments("--window-size=1920,1080");
+            chromeOptions.addArguments("--no-sandbox");
         }
 
         if (StringUtils.isNotEmpty(locale)) {
