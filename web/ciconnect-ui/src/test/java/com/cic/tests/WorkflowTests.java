@@ -135,10 +135,12 @@ public class WorkflowTests  extends TestBase {
         loginPage.login();
 
         values = workflowFeatures.checkWorkflowListSorting();
-        workflowFeatures.deleteWorklow(values.get("lower-name").toString());
+        workflowPage.workflowExists(values.get("lower-name").toString());
         workflowPage.clickOnFirstColumn();
+        workflowPage.workflowExists(values.get("upper-name").toString());
         workflowPage.clickOnFirstColumn();
-        deleteWorkflow(values.get("upper-name").toString());
+        workflowNames.add(values.get("upper-name").toString());
+        workflowNames.add(values.get("lower-name").toString());
 
         validator.validateWorkflowListSorting(values);
     }
