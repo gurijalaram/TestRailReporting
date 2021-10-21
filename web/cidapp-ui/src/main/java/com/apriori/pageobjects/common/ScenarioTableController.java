@@ -138,7 +138,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenarios(String componentName, String scenarioName) {
-        return pageUtils.waitForElementsToAppear(byScenarioName(componentName, scenarioName));
+        return pageUtils.waitForElementsToAppear(byScenarioName(componentName, scenarioName)).size();
     }
 
 
@@ -220,7 +220,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By byScenarioName(String componentName, String scenarioName) {
-        By byScenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//a[@class='scenario-display-name']//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
+        By byScenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//a[@class]//div[.='%s']", componentName.toUpperCase().trim(), scenarioName.trim()));
         return byScenario;
     }
 

@@ -37,7 +37,7 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class SettingsTests extends TestBase {
-    File resourceFile;
+    private File resourceFile;
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
@@ -265,7 +265,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
