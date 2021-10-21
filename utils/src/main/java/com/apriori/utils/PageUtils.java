@@ -586,17 +586,27 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(WebElement element) {
-        long maxWaitTime = 60L;
+        long startTime = System.currentTimeMillis() / 1000;
+        long maxWaitTime = 10L;
+        long duration = 0;
+        Exception ex;
 
         waitForElementToBeClickable(element);
 
-        new WebDriverWait(driver, maxWaitTime)
-            .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until(d -> {
+        while (duration < startTime) {
+            try {
+
                 element.click();
-                return true;
-            });
+                break;
+
+            } catch (Exception e) {
+                ex = e;
+                duration = (System.currentTimeMillis() / 1000) - startTime;
+            }
+            if (duration > maxWaitTime) {
+                throw new RuntimeException(String.format("Unable to recover after '%ssecs' from exception: %s", maxWaitTime, ex.getClass().getName()));
+            }
+        }
     }
 
     /**
@@ -605,17 +615,27 @@ public class PageUtils {
      * @param element - the locator of the element
      */
     public void waitForElementAndClick(By element) {
-        long maxWaitTime = 60L;
+        long startTime = System.currentTimeMillis() / 1000;
+        long maxWaitTime = 10L;
+        long duration = 0;
+        Exception ex;
 
         waitForElementToBeClickable(element);
 
-        new WebDriverWait(driver, maxWaitTime)
-            .withMessage(String.format("Element '%s' was not clickable after %ssecs", element, maxWaitTime))
-            .ignoreAll(ignoredWebDriverExceptions)
-            .until(d -> {
+        while (duration < startTime) {
+            try {
+
                 driver.findElement(element).click();
-                return true;
-            });
+                break;
+
+            } catch (Exception e) {
+                ex = e;
+                duration = (System.currentTimeMillis() / 1000) - startTime;
+            }
+            if (duration > maxWaitTime) {
+                throw new RuntimeException(String.format("Unable to recover after '%ssecs' from exception: %s", maxWaitTime, ex.getClass().getName()));
+            }
+        }
     }
 
     /**
@@ -935,7 +955,7 @@ public class PageUtils {
         actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[.='%s']//div[@id]", value));
         waitForElementToAppear(byValue);
-        actionClick(byValue);
+        waitForElementAndClick(byValue);
     }
 
     /**
@@ -951,7 +971,7 @@ public class PageUtils {
         actionClick(dropdownSelector);
         By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
         waitForElementToAppear(byValue);
-        actionClick(byValue);
+        waitForElementAndClick(byValue);
     }
 
     /**
