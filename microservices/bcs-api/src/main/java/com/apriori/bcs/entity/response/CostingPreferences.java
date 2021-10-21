@@ -13,6 +13,7 @@ import java.util.List;
 public class CostingPreferences {
     private Integer annualVolume;
     private String batchMode;
+    private Integer batchSize;
     private Boolean cadTolerances;
     private Double cadToleranceReplacement;
     private Double minCadToleranceThreshold;
