@@ -8,6 +8,7 @@
       "type": "object",
       "required": [
         "batchMode",
+        "batchSize",
         "cadTolerances",
         "minCadToleranceThreshold",
         "multiBodyKeepFreeBodies",
@@ -24,6 +25,9 @@
         },
         "batchMode": {
           "type": "string"
+        },
+        "batchSize": {
+          "type": "integer"
         },
         "cadTolerances": {
           "type": "boolean"
