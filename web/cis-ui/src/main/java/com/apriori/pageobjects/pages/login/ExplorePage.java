@@ -4,11 +4,16 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class ExplorePage extends LoadableComponent<ExplorePage> {
+
+    @FindBy(css = ".icon-button")
+    private WebElement startComparison;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -27,7 +32,7 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(startComparison);
     }
 }
 
