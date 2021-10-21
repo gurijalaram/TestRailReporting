@@ -34,9 +34,6 @@ public class CostingInput {
     private Tolerances tolerances;
     private Thumbnail thumbnail;
 
-    public static class CustomAttributes {
-    }
-
     public static class ProcessSetupOptions {
     }
 
