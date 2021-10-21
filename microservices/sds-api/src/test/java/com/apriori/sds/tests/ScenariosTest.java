@@ -6,8 +6,8 @@ import static org.junit.Assert.assertNotEquals;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
-import com.apriori.sds.entity.request.CustomAttributesRequest;
 import com.apriori.sds.entity.request.PostComponentRequest;
+import com.apriori.sds.entity.request.PostWatchpointReportRequest;
 import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioCostingDefaultsResponse;
 import com.apriori.sds.entity.response.ScenarioHoopsImage;
@@ -36,8 +36,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
 
-    private static  Item testingScenario;
-    private static  Scenario testingWatchpoint;
+    private static Item testingScenario;
+    private static Item testingScenarioWithWatchpoint;
+    private static UserCredentials currentUser = UserUtil.getUser();
 
     @Test
     @TestRail(testCaseId = {"6922"})
@@ -68,7 +69,8 @@ public class ScenariosTest extends SDSTestUtil {
     }
 
     @Test
-    @Ignore("API that allow to create custom image, doesn't exist for CID. Custom image is user guided ")
+    //TODO should be resolved after adding an API to create a custom image for CID.
+    @Ignore("API that allow to create a custom image, doesn't exist for CID. Custom image is user guided.")
     @TestRail(testCaseId = {"6925"})
     @Description("Returns the scenario image containing a Base64 encoded SCS file for a scenario.")
     public void getCustomImage() {
@@ -224,12 +226,16 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"8590"})
     @Description("GET a completed watchpoint report for a scenario.")
     public void testGetWatchPoint() {
-        this.getCreatedWatchpoint();
+        Item scenarioWithCreatedWatchpoint = this.createWatchpoint();
+
+        new CidAppTestUtil().getScenarioRepresentation("processing", scenarioWithCreatedWatchpoint.getComponentIdentity(),
+            scenarioWithCreatedWatchpoint.getScenarioIdentity(), currentUser
+        );
 
         final RequestEntity requestEntity =
             RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .inlineVariables(
-                    getComponentId(), getScenarioId()
+                    scenarioWithCreatedWatchpoint.getComponentIdentity(), scenarioWithCreatedWatchpoint.getScenarioIdentity()
                 );
 
         ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
@@ -240,38 +246,31 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "8434")
     @Description("Create a watchpoint report.")
     public void testCreateWatchpointReport() {
-       this.createWatchpoint();
+        this.createWatchpoint();
     }
 
-    private Scenario getCreatedWatchpoint() {
-        if(testingWatchpoint != null) {
-            return testingWatchpoint;
+    private Item createWatchpoint() {
+
+        if (testingScenarioWithWatchpoint != null) {
+            return testingScenarioWithWatchpoint;
         }
 
-        return testingWatchpoint = this.createWatchpoint();
-    }
-
-    private Scenario createWatchpoint() {
         final Item scenario = this.costAndGetReadyScenario();
 
-        PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
-            .scenarioName(scenario.getScenarioName())
-            .override(false)
-            .customAttributesRequest(CustomAttributesRequest.builder().udaRegion("Europe").build())
-            .updatedBy(getTestingComponent().getCreatedBy())
+        PostWatchpointReportRequest watchpointReportRequest = PostWatchpointReportRequest.builder()
+            .watchpointTemplateName("CI_PartCost.watchpoints.xml")
+            .outputFileName("BRACKET_BASIC-PartCostReport.xlsx")
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .inlineVariables(getComponentId(), scenario.getIdentity());
-//                .body("scenario", scenarioRequestBody);
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
+                .inlineVariables(scenario.getComponentIdentity(), scenario.getScenarioIdentity())
+                .body("scenario", watchpointReportRequest);
 
         ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        addScenarioToDelete(responseWrapper.getResponseEntity().getIdentity());
-
-        return responseWrapper.getResponseEntity();
+        return testingScenarioWithWatchpoint = scenario;
     }
 
     @Test
@@ -390,7 +389,7 @@ public class ScenariosTest extends SDSTestUtil {
 
     private Item costAndGetReadyScenario() {
 
-        if(testingScenario != null) {
+        if (testingScenario != null) {
             return testingScenario;
         }
 
@@ -403,8 +402,6 @@ public class ScenariosTest extends SDSTestUtil {
 
         String mode = "manual";
         String materialName = "Use Default";
-        UserCredentials currentUser = UserUtil.getUser();
-
 
         List<Item> testingScenarios = new CidAppTestUtil().postCostScenario(componentName, scenarioName,
             componentId, scenarioId,
