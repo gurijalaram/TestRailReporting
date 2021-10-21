@@ -54,7 +54,7 @@ public class ChromeDriverOptions {
 
         if (headless) {
             // note: the window size in headless is not limited to the display size
-            options.addArguments("headless", "disable-gpu", "window-size=1920,1080", "--no-sandbox");
+            options.addArguments("--headless", "--disable-gpu", "--window-size=1920,1080", "--no-sandbox");
         }
 
         if (StringUtils.isNotEmpty(locale)) {
