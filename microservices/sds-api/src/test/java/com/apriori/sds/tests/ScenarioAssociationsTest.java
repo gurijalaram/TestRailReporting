@@ -36,7 +36,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
     @AfterClass
     public static void clearTestData() {
-        if(testingAssociation != null) {
+        if (testingAssociation != null) {
             removeTestingAssociation(testingAssociation.getIdentity());
         }
     }
@@ -99,7 +99,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
     private static ScenarioAssociation postAssociationForTestingRollup() {
 
-        if(testingAssociation != null) {
+        if (testingAssociation != null) {
             return testingAssociation;
         }
 
