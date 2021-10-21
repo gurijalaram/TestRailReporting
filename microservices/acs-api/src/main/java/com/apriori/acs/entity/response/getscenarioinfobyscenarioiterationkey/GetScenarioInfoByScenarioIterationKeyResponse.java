@@ -1,5 +1,6 @@
 package com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey;
 
+import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
@@ -20,4 +21,5 @@ public class GetScenarioInfoByScenarioIterationKeyResponse {
     private String createdAt;
     private String updateddBy;
     private String updatedAt;
+    private ScenarioIterationKey scenarioIterationKey;
 }
