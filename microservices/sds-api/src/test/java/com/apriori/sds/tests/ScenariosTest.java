@@ -36,9 +36,9 @@ import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
 
+    private static final UserCredentials currentUser = UserUtil.getUser();
     private static Item testingScenario;
     private static Item testingScenarioWithWatchpoint;
-    private static UserCredentials currentUser = UserUtil.getUser();
 
     @Test
     @TestRail(testCaseId = {"6922"})
@@ -249,30 +249,6 @@ public class ScenariosTest extends SDSTestUtil {
         this.createWatchpoint();
     }
 
-    private Item createWatchpoint() {
-
-        if (testingScenarioWithWatchpoint != null) {
-            return testingScenarioWithWatchpoint;
-        }
-
-        final Item scenario = this.costAndGetReadyScenario();
-
-        PostWatchpointReportRequest watchpointReportRequest = PostWatchpointReportRequest.builder()
-            .watchpointTemplateName("CI_PartCost.watchpoints.xml")
-            .outputFileName("BRACKET_BASIC-PartCostReport.xlsx")
-            .build();
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
-                .inlineVariables(scenario.getComponentIdentity(), scenario.getScenarioIdentity())
-                .body("scenario", watchpointReportRequest);
-
-        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
-
-        return testingScenarioWithWatchpoint = scenario;
-    }
-
     @Test
     @TestRail(testCaseId = "7246")
     @Description("Delete an existing scenario.")
@@ -308,6 +284,30 @@ public class ScenariosTest extends SDSTestUtil {
             String.format("Failed to get scenario by identity: %s, after %d attempts with period in %d seconds.",
                 scenarioIdentity, attemptsCount, secondsToWait)
         );
+    }
+
+    private Item createWatchpoint() {
+
+        if (testingScenarioWithWatchpoint != null) {
+            return testingScenarioWithWatchpoint;
+        }
+
+        final Item scenario = this.costAndGetReadyScenario();
+
+        PostWatchpointReportRequest watchpointReportRequest = PostWatchpointReportRequest.builder()
+            .watchpointTemplateName("CI_PartCost.watchpoints.xml")
+            .outputFileName("BRACKET_BASIC-PartCostReport.xlsx")
+            .build();
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
+                .inlineVariables(scenario.getComponentIdentity(), scenario.getScenarioIdentity())
+                .body("scenario", watchpointReportRequest);
+
+        ResponseWrapper<Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+
+        return testingScenarioWithWatchpoint = scenario;
     }
 
     private void doSleep(final int secondsToWait) {
