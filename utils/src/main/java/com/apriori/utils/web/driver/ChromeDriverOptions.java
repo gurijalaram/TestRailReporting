@@ -59,7 +59,7 @@ public class ChromeDriverOptions {
         }
 
         if (StringUtils.isNotEmpty(locale)) {
-            chromeOptions.addArguments("--lang=" + locale);
+            chromeOptions.addArguments(String.format("--lang=%s", locale));
         }
         return chromeOptions;
     }
