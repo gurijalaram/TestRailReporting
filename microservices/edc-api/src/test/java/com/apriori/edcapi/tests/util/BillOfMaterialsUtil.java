@@ -18,6 +18,12 @@ import java.util.List;
 
 public class BillOfMaterialsUtil extends TestUtil {
 
+    /**
+     * Create Bill of Materials
+     *
+     * @param fileName - the file name
+     * @return Bill of Materials Response instance
+     */
     protected static BillOfMaterialsResponse createBillOfMaterials(String fileName) {
 
         final RequestEntity requestEntity =
@@ -33,6 +39,10 @@ public class BillOfMaterialsUtil extends TestUtil {
         return createBillOfMaterialsResponse.getResponseEntity();
     }
 
+    /**
+     * Delete Bill of Materials by Identity
+     *
+     */
     public static void deleteBomById() {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
@@ -41,12 +51,22 @@ public class BillOfMaterialsUtil extends TestUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
 
+    /**
+     * Get the first Bill of Material
+     *
+     * @return Bill of Materials Response instance
+     */
     protected static BillOfMaterialsResponse getFirstBillOfMaterials() {
         List<BillOfMaterialsResponse> billOfMaterialResponses =  getAllBillOfMaterials();
 
         return billOfMaterialResponses.get(0);
     }
 
+    /**
+     * Get All Bill of Materials
+     *
+     * @return bill of materials object
+     */
     protected static List<BillOfMaterialsResponse> getAllBillOfMaterials() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItems.class);

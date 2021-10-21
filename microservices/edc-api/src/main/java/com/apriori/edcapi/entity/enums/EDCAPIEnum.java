@@ -27,7 +27,7 @@ public enum EDCAPIEnum implements ExternalEndpointEnum {
     //Parts
     GET_BILL_OF_MATERIALS_LINE_ITEMS_PARTS("bill-of-materials/%s/line-items/%s/parts"),
     POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS("bill-of-materials/%s/line-items/%s/parts"),
-    PATCH_BILL_OF_MATERIALS_LINE_ITEMS_PARTS("bill-of-materials/%s/line-items/%s/parts/%S"),
+    PATCH_BILL_OF_MATERIALS_LINE_ITEMS_PARTS("bill-of-materials/%s/line-items/%s/parts/%s"),
     POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT("bill-of-materials/%s/line-items/%s/parts/%S/select"),
     POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST("bill-of-materials/%s/line-items/%s/parts/cost"),
 
