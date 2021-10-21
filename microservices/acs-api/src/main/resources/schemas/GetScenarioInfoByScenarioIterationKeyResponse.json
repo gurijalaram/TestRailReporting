@@ -39,6 +39,14 @@
     },
     "updatedAt": {
       "type": "string"
+    },
+    "scenarioIterationKey": {
+      "scenarioKey": {
+        "stateName": "string",
+        "masterName": "string",
+        "typeName": "string",
+        "workspaceId": "integer"
+      }
     }
   },
   "required": [
