@@ -17,6 +17,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -25,10 +26,19 @@ import java.util.List;
 
 public class ScenarioAssociationsTest extends SDSTestUtil {
     private static Item testingRollUp;
+    private static ScenarioAssociation testingAssociation;
 
     @BeforeClass
     public static void init() {
         postAssociationForTestingRollup();
+    }
+
+
+    @AfterClass
+    public static void clearTestData() {
+        if (testingAssociation != null) {
+            removeTestingAssociation(testingAssociation.getIdentity());
+        }
     }
 
     @Test
@@ -84,10 +94,15 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     @Description("Remove an existing scenario association.")
     public void deleteScenarioAssociation() {
         removeTestingAssociation(postAssociationForTestingRollup().getIdentity());
+        testingAssociation = null;
     }
 
-
     private static ScenarioAssociation postAssociationForTestingRollup() {
+
+        if (testingAssociation != null) {
+            return testingAssociation;
+        }
+
         RequestEntity request = RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociation.class)
             .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getTestingRollUp().getScenarioIdentity())
@@ -98,7 +113,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
         final ResponseWrapper<ScenarioAssociation> response = HTTPRequest.build(request).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());
 
-        return response.getResponseEntity();
+        return testingAssociation = response.getResponseEntity();
     }
 
     private ScenarioAssociation getFirstAssociation() {
