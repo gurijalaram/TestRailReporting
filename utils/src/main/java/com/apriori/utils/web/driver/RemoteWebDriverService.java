@@ -9,10 +9,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.UnreachableBrowserException;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.InvalidParameterException;
 
@@ -47,43 +45,55 @@ public class RemoteWebDriverService extends BrowserManager {
         log.info("server: " + server);
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
+        int attempts = 0;
+        int maxAttempts = 3;
+        Exception ex = null;
 
         setDownloadFolder(downloadPath);
         setProxy(proxy);
         capabilities.setCapability("uuid", uuid.toLowerCase());
 
-        try {
-            switch (browser) {
-                case CHROME:
-                    log.info("Starting ChromeDriver........ ");
+        while (result == null && attempts <= maxAttempts) {
 
-                    ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
-                    capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                    capabilities.setCapability("browserName", Browser.CHROME.browserName());
-                    break;
+            try {
+                switch (browser) {
+                    case CHROME:
+                        log.info("Starting ChromeDriver........ ");
 
-                case FIREFOX:
-                    log.info("Starting GeckoDriver........ ");
+                        ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
+                        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                        capabilities.setCapability("browserName", Browser.CHROME.browserName());
+                        break;
 
-                    capabilities = new FirefoxDriverOptions(remoteDownloadPath, locale).getFirefoxOptions();
-                    capabilities.setCapability("browserName", Browser.FIREFOX.browserName());
-                    break;
+                    case FIREFOX:
+                        log.info("Starting GeckoDriver........ ");
 
-                case EDGE:
-                    log.info("Starting EdgeDriver........ ");
+                        capabilities = new FirefoxDriverOptions(remoteDownloadPath, locale).getFirefoxOptions();
+                        capabilities.setCapability("browserName", Browser.FIREFOX.browserName());
+                        break;
 
-                    capabilities.setCapability("browserName", Browser.EDGE.browserName());
-                    break;
+                    case EDGE:
+                        log.info("Starting EdgeDriver........ ");
 
-                default:
-                    throw new InvalidParameterException(String.format("Unexpected browser type: '%s' ", browser));
+                        capabilities.setCapability("browserName", Browser.EDGE.browserName());
+                        break;
+
+                    default:
+                        throw new InvalidParameterException(String.format("Unexpected browser type: '%s' ", browser));
+                }
+                result = new RemoteWebDriver(new URL(server), capabilities);
+                result.setFileDetector(new LocalFileDetector());
+                log.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+
+            } catch (Exception e) {
+                ex = e;
+                log.info(String.format("Exception caught: '%s'. Driver: '%s'. Attempting to recreate driver session!", e.getClass().getName(), result));
             }
-            result = new RemoteWebDriver(new URL(server), capabilities);
-            result.setFileDetector(new LocalFileDetector());
-            log.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+            attempts++;
 
-        } catch (UnreachableBrowserException | MalformedURLException e) {
-            e.printStackTrace();
+            if (attempts == maxAttempts) {
+                throw new RuntimeException(String.format("Driver session could not be created after '%s' attempts due to Exception:%s", maxAttempts, ex.getClass().getName()));
+            }
         }
         return result;
     }
