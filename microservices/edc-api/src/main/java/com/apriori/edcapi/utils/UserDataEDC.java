@@ -1,4 +1,4 @@
-package com.apriori.edcapi.tests.util;
+package com.apriori.edcapi.utils;
 
 import com.apriori.apibase.services.response.objects.BillOfMaterial;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;

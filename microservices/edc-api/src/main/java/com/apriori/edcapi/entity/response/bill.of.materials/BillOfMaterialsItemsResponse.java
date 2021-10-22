@@ -8,9 +8,9 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "BillOfMaterialsItems.json")
+@Schema(location = "BillOfMaterialsItemsResponse.json")
 @Data
 @JsonRootName("response")
-public class BillOfMaterialsItems extends Pagination {
+public class BillOfMaterialsItemsResponse extends Pagination {
     private List<BillOfMaterialsResponse> items;
 }

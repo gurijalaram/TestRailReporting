@@ -3,7 +3,7 @@ package com.apriori.edcapi.tests;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
-import com.apriori.edcapi.tests.util.BillOfMaterialsUtil;
+import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -40,7 +40,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
-            .inlineVariables(getFirstBillOfMaterials().getIdentity());
+                .inlineVariables(getFirstBillOfMaterials().getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
 

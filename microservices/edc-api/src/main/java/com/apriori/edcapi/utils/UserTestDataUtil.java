@@ -1,4 +1,4 @@
-package com.apriori.edcapi.tests.util;
+package com.apriori.edcapi.utils;
 
 import com.apriori.apibase.services.response.objects.BillOfMaterial;
 import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
@@ -138,7 +138,7 @@ public class UserTestDataUtil extends TestUtil {
     }
 
     public String uploadTestData(final UserDataEDC userDataEDC) {
-        final File testData = FileResourceUtil.getResourceAsFile("test_data", "Test BOM 5.csv");
+        final File testData = FileResourceUtil.getResourceAsFile("testdata", "testdata/Test BOM 5.csv");
 
         RequestEntity requestEntity = RequestEntityUtil.init(
             BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, BillOfSingleMaterialWrapper.class)

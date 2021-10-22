@@ -1,8 +1,9 @@
-package com.apriori.edcapi.tests.util;
+package com.apriori.edcapi.utils;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
-import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsItems;
+import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsItemsResponse;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -42,8 +43,9 @@ public class BillOfMaterialsUtil extends TestUtil {
     /**
      * Delete Bill of Materials by Identity
      *
+     * @param billOfMaterialsId
      */
-    public static void deleteBomById() {
+    public static void deleteBillOfMaterialById(String billOfMaterialsId) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
                 .inlineVariables(getFirstBillOfMaterials().getIdentity());
@@ -69,12 +71,26 @@ public class BillOfMaterialsUtil extends TestUtil {
      */
     protected static List<BillOfMaterialsResponse> getAllBillOfMaterials() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItems.class);
+            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class);
 
-        ResponseWrapper<BillOfMaterialsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<BillOfMaterialsItemsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         return responseWrapper.getResponseEntity()
             .getItems();
+    }
+
+    /**
+     * Delete a Bill of Materials in UI tests
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialByIdUi(final String identity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
+                .inlineVariables(identity).token(new JwtTokenUtil().retrieveJwtToken());
+
+        return HTTPRequest.build(requestEntity).delete();
     }
 }
