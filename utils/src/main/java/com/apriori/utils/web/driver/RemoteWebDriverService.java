@@ -45,55 +45,44 @@ public class RemoteWebDriverService extends BrowserManager {
         log.info("server: " + server);
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
-        int attempts = 0;
-        int maxAttempts = 3;
-        Exception ex = null;
 
         setDownloadFolder(downloadPath);
         setProxy(proxy);
         capabilities.setCapability("uuid", uuid.toLowerCase());
 
-        while (result == null && attempts <= maxAttempts) {
+        try {
+            switch (browser) {
+                case CHROME:
+                    log.info("Starting ChromeDriver........ ");
 
-            try {
-                switch (browser) {
-                    case CHROME:
-                        log.info("Starting ChromeDriver........ ");
+                    ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
+                    capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
+                    capabilities.setCapability("browserName", Browser.CHROME.browserName());
+                    break;
 
-                        ChromeOptions chromeOptions = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
-                        capabilities.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
-                        capabilities.setCapability("browserName", Browser.CHROME.browserName());
-                        break;
+                case FIREFOX:
+                    log.info("Starting GeckoDriver........ ");
 
-                    case FIREFOX:
-                        log.info("Starting GeckoDriver........ ");
+                    capabilities = new FirefoxDriverOptions(remoteDownloadPath, locale).getFirefoxOptions();
+                    capabilities.setCapability("browserName", Browser.FIREFOX.browserName());
+                    break;
 
-                        capabilities = new FirefoxDriverOptions(remoteDownloadPath, locale).getFirefoxOptions();
-                        capabilities.setCapability("browserName", Browser.FIREFOX.browserName());
-                        break;
+                case EDGE:
+                    log.info("Starting EdgeDriver........ ");
 
-                    case EDGE:
-                        log.info("Starting EdgeDriver........ ");
+                    capabilities.setCapability("browserName", Browser.EDGE.browserName());
+                    break;
 
-                        capabilities.setCapability("browserName", Browser.EDGE.browserName());
-                        break;
-
-                    default:
-                        throw new InvalidParameterException(String.format("Unexpected browser type: '%s' ", browser));
-                }
-                result = new RemoteWebDriver(new URL(server), capabilities);
-                result.setFileDetector(new LocalFileDetector());
-                log.info("Full list of Capabilities: " + (result).getCapabilities().toString());
-
-            } catch (Exception e) {
-                ex = e;
-                log.info(String.format("Exception caught: '%s'. Driver: '%s'. Attempting to recreate driver session!", e.getClass().getName(), result));
+                default:
+                    throw new InvalidParameterException(String.format("Unexpected browser type: '%s' ", browser));
             }
-            attempts++;
+            result = new RemoteWebDriver(new URL(server), capabilities);
+            result.setFileDetector(new LocalFileDetector());
+            log.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-            if (attempts == maxAttempts) {
-                throw new RuntimeException(String.format("Driver session could not be created after '%s' attempts due to Exception:%s", maxAttempts, ex.getClass().getName()));
-            }
+        } catch (Exception e) {
+            log.info(String.format("Exception caught. Driver is: '%s'.  Could not start a new session, possible causes are invalid address or Selenium Grid ran out of nodes", result));
+            e.printStackTrace();
         }
         return result;
     }
