@@ -9,10 +9,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.UnreachableBrowserException;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.InvalidParameterException;
 
@@ -82,7 +80,8 @@ public class RemoteWebDriverService extends BrowserManager {
             result.setFileDetector(new LocalFileDetector());
             log.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-        } catch (UnreachableBrowserException | MalformedURLException e) {
+        } catch (Exception e) {
+            log.info(String.format("Exception caught. Driver is: '%s'.  Could not start a new session, possible causes are invalid address or Selenium Grid ran out of nodes", result));
             e.printStackTrace();
         }
         return result;
