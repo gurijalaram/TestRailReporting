@@ -126,6 +126,9 @@ int-core:
   vds:
     api_url: https://vds.core.int.apriori.net/
 
+  cis:
+    ui_url: https://cis.core.int.apriori.net/
+
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
   name: qa-cid-perf
@@ -298,3 +301,6 @@ local:
 
   sds:
     api_url: ${local.base_url}:8811/
+
+  cis:
+    ui_url: ${local.base_url}:3004
