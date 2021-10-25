@@ -22,7 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Schema(location = "ScenarioResponseSchema.json")
+@Schema(location = "ScenarioResponse.json")
 public class ScenarioResponse {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)

@@ -37,7 +37,7 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class SettingsTests extends TestBase {
-    File resourceFile;
+    private File resourceFile;
     private CidAppLoginPage loginPage;
     private DisplayPreferencesPage displayPreferencesPage;
     private EvaluatePage evaluatePage;
@@ -247,7 +247,7 @@ public class SettingsTests extends TestBase {
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM)
             .openMaterialSelectorTable()
             .selectMaterial("HIPS Extrusion")
-            .submit(DisplayPreferencesPage.class)
+            .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .openSettings()
             .goToProductionTab();
@@ -265,7 +265,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.POWDER_METAL)
@@ -273,7 +273,7 @@ public class SettingsTests extends TestBase {
             .selectMaterialCatalog(DigitalFactoryEnum.APRIORI_MEXICO)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005 Sponge")
-            .submit(DisplayPreferencesPage.class)
+            .submit(ProductionDefaultsPage.class)
             .submit(ExplorePage.class)
             .logout()
             .login(currentUser)

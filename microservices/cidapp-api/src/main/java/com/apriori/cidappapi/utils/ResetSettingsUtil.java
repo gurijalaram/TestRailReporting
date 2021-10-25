@@ -60,6 +60,7 @@ public class ResetSettingsUtil {
         String prodLifeIdentity = mappedResponse.get("production.defaultProductionLife");
         String batchIdentity = mappedResponse.get("production.defaultBatchSize");
         String tolModeIdentity = mappedResponse.get("tolerance.toleranceMode");
+        String cadThresholdIdentity = mappedResponse.get("tolerance.useCadToleranceThreshold");
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(token)
@@ -80,7 +81,8 @@ public class ResetSettingsUtil {
                 + "\"" + annVolIdentity + "\":\"" + null + "\","
                 + "\"" + prodLifeIdentity + "\":\"" + null + "\","
                 + "\"" + batchIdentity + "\":\"" + null + "\","
-                + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
+                + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\","
+                + "\"" + cadThresholdIdentity + "\":\"" + false + "\""
                 + "}}");
 
         return HTTPRequest.build(requestEntity).patch();
