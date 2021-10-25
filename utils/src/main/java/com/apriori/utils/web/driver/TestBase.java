@@ -63,11 +63,11 @@ public class TestBase extends TestHelper {
 
         String os = System.getProperty("os.name");
         TestHelper.logger.info("Current Operating System:" + os);
-        TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth());
+        TestHelper.logger.info("Windows width before Maximize: " + driver.manage().window().getSize().getWidth() + driver.manage().window().getSize().getHeight());
 
         driver.manage().window().maximize();
 
-        TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth());
+        TestHelper.logger.info("Windows width after Maximize: " + driver.manage().window().getSize().getWidth() + driver.manage().window().getSize().getHeight());
         driver.manage().deleteAllCookies();
         TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
 

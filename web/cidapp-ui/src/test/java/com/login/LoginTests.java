@@ -53,12 +53,12 @@ public class LoginTests extends TestBase {
     public void testLogin() {
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        explorePage = loginPage.login(UserUtil.getUser()).setPagination();
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
-    @Test
+    //@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6646"})
     @Description("Test unsuccessful login with correct email, incorrect password")
@@ -70,7 +70,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    @Test
+    //@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6647"})
     @Description("Test unsuccessful login with incorrect email, correct password")
@@ -82,7 +82,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    @Test
+    //@Test
     @TestRail(testCaseId = {"6648"})
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
@@ -93,7 +93,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
 
-    @Test
+    //@Test
     @TestRail(testCaseId = {"6649"})
     @Description("Validate Login Dialog")
     public void loginDialog() {
@@ -106,7 +106,7 @@ public class LoginTests extends TestBase {
     }
 
     @Category(SmokeTests.class)
-    @Test
+    //@Test
     @TestRail(testCaseId = {"6650"})
     @Description("Validate forgotten password link")
     public void forgotPassword() {
@@ -117,7 +117,7 @@ public class LoginTests extends TestBase {
         assertThat(forgottenPasswordPage.getResetPassword(), containsString("Reset your password"));
     }
 
-    @Test
+    //@Test
     @TestRail(testCaseId = {"6651"})
     @Description("Validate Welcome Message")
     public void welcomeMessage() {
@@ -131,7 +131,7 @@ public class LoginTests extends TestBase {
         assertThat(privacyPolicyPage.getPageHeading(), containsString("aPriori Technologies, Inc. Privacy Policy"));
     }
 
-    @Test
+    //@Test
     @TestRail(testCaseId = {"6652"})
     @Description("Validate CAD association remains and attributes can be updated between CID sessions.")
     public void cadConnectionRemains() {
