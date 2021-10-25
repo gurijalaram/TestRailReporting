@@ -587,7 +587,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(WebElement element) {
         long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 3L;
+        long maxWaitTime = 10L;
         long duration = 0;
         Exception ex;
 
@@ -616,7 +616,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(By element) {
         long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 3L;
+        long maxWaitTime = 10L;
         long duration = 0;
         Exception ex;
 
