@@ -12,5 +12,7 @@ public class Constants {
     public static final int MULTIPART_THREAD_COUNT = 100;
     public static final int BATCH_POLLING_TIMEOUT = 25;
     public static final String SECRET_KEY = PropertiesContext.get("${env}.secret_key");
+
+    public static final String INVALID_IDENTITY = "12345ABCD";
 }
 

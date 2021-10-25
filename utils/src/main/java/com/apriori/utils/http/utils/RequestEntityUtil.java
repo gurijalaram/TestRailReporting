@@ -28,6 +28,15 @@ public class RequestEntityUtil {
             .token(token);
     }
 
+
+    public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType, String customer) {
+        return new RequestEntity()
+                .endpoint(endpoint)
+                .returnType(returnType)
+                .token(token);
+    }
+
+
     public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity()
             .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()))

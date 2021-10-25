@@ -52,13 +52,9 @@ public class ReportResourcesTest extends TestUtil {
         BcsUtils.State isPartCompleted = BcsUtils.State.PROCESSING;
 
         while (interval <= intervals) {
-            part = (Part)BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-                            part.getIdentity()).getResponseEntity();
-            try {
-                isPartCompleted = BcsUtils.pollState(part, Part.class);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+            part = (Part)BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), part.getIdentity(), Part.class)
+                    .getResponseEntity();
+            isPartCompleted = BcsUtils.pollState(part, Part.class);
 
             if (isPartCompleted.equals(BcsUtils.State.COMPLETED)) {
                 break;
@@ -204,14 +200,8 @@ public class ReportResourcesTest extends TestUtil {
      */
     private BcsUtils.State getReportState() {
         Report rpt =
-                (Report)ReportResources.getReportRepresentation(report.getResponseEntity().getIdentity()).getResponseEntity();
-        try {
-            return BcsUtils.pollState(rpt, Report.class);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        return null;
+                (Report) ReportResources.getReportRepresentation(report.getResponseEntity().getIdentity()).getResponseEntity();
+        return BcsUtils.pollState(rpt, Report.class);
     }
 
     /**

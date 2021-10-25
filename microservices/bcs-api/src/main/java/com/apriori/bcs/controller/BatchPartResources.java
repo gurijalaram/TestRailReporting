@@ -31,18 +31,76 @@ public class BatchPartResources {
         USE_PROCESS_GROUP
     }
 
-    public static <T> ResponseWrapper<T> getBatchParts(String batchIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, Parts.class)
-            .inlineVariables(batchIdentity);
+    /**
+     * Gets a list of all parts associated to a specific batch
+     *
+     * @param batchIdentity The batch identity to retireve parts for
+     * @param returnType The parts class object
+     * @param customer Customer identity
+     * @param <T> The object types in the response
+     * @return The response returned from the server
+     */
+    public static <T> ResponseWrapper<T> getBatchParts(String batchIdentity, Class returnType, String customer) {
+        if (!batchIdentity.isEmpty()) {
+            batchIdentity = batchIdentity + "/";
+        }
 
-        return HTTPRequest.build(requestEntity).get();
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS, returnType)
+                .inlineVariables(batchIdentity);
+
+        if (customer != null) {
+            return HTTPRequest.build(requestEntity).getWithCustomer(customer);
+        } else {
+            return HTTPRequest.build(requestEntity).get();
+        }
+    }
+
+    public static <T> ResponseWrapper<T> getBatchParts(String batchIdentity, Class returnType) {
+        return getBatchParts(batchIdentity, returnType, null);
+    }
+
+    public static <T> ResponseWrapper<T> getBatchParts(String batchIdentity) {
+        return getBatchParts(batchIdentity, Parts.class);
+    }
+
+    /**
+     * Gets a list of all parts associated to a specific batch
+     *
+     * @param batchIdentity The batch identity to retrieve parts for
+     * @param partIdentity The identity of the part to retrieve
+     * @param returnType The parts class object
+     * @param customer Customer identity
+     * @param <T> The object types in the response
+     * @return The response returned from the server
+     */
+    public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity,
+                                                                    Class returnType, String customer) {
+        if (!batchIdentity.isEmpty()) {
+            batchIdentity = batchIdentity + "/";
+        }
+
+        if (!partIdentity.isEmpty()) {
+            partIdentity = partIdentity + "/";
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PART_BY_BATCH_PART_IDS, returnType)
+            .inlineVariables(batchIdentity, partIdentity);
+
+        if (customer != null) {
+            return HTTPRequest.build(requestEntity).getWithCustomer(customer);
+        } else {
+            return HTTPRequest.build(requestEntity).get();
+        }
+    }
+
+    public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity,
+                                                                    Class returnType) {
+        return getBatchPartRepresentation(batchIdentity, partIdentity, returnType, null);
     }
 
     public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PART_REPRESENTATION_BY_BATCH_PART_IDS, Part.class)
-            .inlineVariables(batchIdentity, partIdentity);
 
-        return HTTPRequest.build(requestEntity).get();
+        return getBatchPartRepresentation(batchIdentity, partIdentity, Part.class);
     }
 
 
@@ -59,17 +117,26 @@ public class BatchPartResources {
         return createNewBatchPart(npr, batchIdentity);
     }
 
+    public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
+                                                            ProcessGroupValue processGroupValue) {
+        return createNewBatchPart(npr, batchIdentity, processGroupValue, Part.class, null);
+    }
+
     /**
-     * Creat a new part
+     * Create a new part
      *
      * @param npr New part request
-     * @param batchIdentity
-     * @param processGroupValue
+     * @param batchIdentity Batch identity
+     * @param processGroupValue Process group to use
+     * @param returnType The object class to return. If null, then the default
+     *                   response schema validation is bypassed
+     * @param customer The customer identity
      * @param <T>
      * @return
      */
     public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
-                                                            ProcessGroupValue processGroupValue) {
+                                                            ProcessGroupValue processGroupValue, Class returnType,
+                                                            String customer) {
         String processGroup;
         switch (processGroupValue) {
             case USE_PROCESS_GROUP:
@@ -89,9 +156,13 @@ public class BatchPartResources {
         headers.put("Content-Type", "multipart/form-data");
 
         File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(npr.getProcessGroup()),
-            npr.getFilename());
+                    npr.getFilename());
 
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_BATCH_PARTS_BY_ID, Part.class)
+        if (!batchIdentity.isEmpty()) {
+            batchIdentity = batchIdentity + "/";
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_BATCH_PARTS_BY_ID, returnType)
             .inlineVariables(batchIdentity)
             .headers(headers)
             .multiPartFiles(new MultiPartFiles()
@@ -105,7 +176,7 @@ public class BatchPartResources {
                         .use("Description", npr.getDescription())
                         //.use("PinnedRouting", npr.getPinnedRouting())
                         .use("ProcessGroup", processGroup)
-                        //.use("ProductionLife", npr.getProductionLife().toString())
+                        .use("ProductionLife", npr.getProductionLife().toString())
                         .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
                         //.use("Udas", npr.getUdas())
                         .use("VpeName", npr.getVpeName())
@@ -113,7 +184,11 @@ public class BatchPartResources {
                         .use("generateWatchpointReport", "true")
                 );
 
-        return HTTPRequest.build(requestEntity).postMultipart();
+        if (customer == null) {
+            return HTTPRequest.build(requestEntity).postMultipart();
+        } else {
+            return HTTPRequest.build(requestEntity).postMultipartWithCustomer(customer);
+        }
     }
 
     public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity) {
@@ -121,52 +196,133 @@ public class BatchPartResources {
     }
 
 
-    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity) {
-        Object partDetails;
-        BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
-        int count = 0;
-        while (count <= Constants.BATCH_POLLING_TIMEOUT * 2) {
-            partDetails =
-                    BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-            try {
+    public static <T> ResponseWrapper<T> getResultsNoPoll(String batchIdentity, String partIdentity,
+                                                    Class returnType, String customer) {
+        return  getResults(batchIdentity, partIdentity, returnType, customer, false);
+
+    }
+
+    /**
+     * Gets costing results a specific batch & part
+     *
+     * @param batchIdentity The batch identity to retrieve parts for
+     * @param partIdentity The identity of the part to retrieve
+     * @param returnType The parts class object
+     * @param customer Customer identity
+     * @param doPoll True will trigger polling the part state
+     * @param <T> The object types in the response
+     * @return The response returned from the server
+     */
+    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity,
+                                                    Class returnType, String customer, Boolean doPoll) {
+        if (doPoll) {
+            Object partDetails;
+            BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
+            int count = 0;
+            while (count <= Constants.BATCH_POLLING_TIMEOUT * 2) {
+                partDetails =
+                        BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
                 isPartComplete = BcsUtils.pollState(partDetails, Part.class);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
+
+                if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
+                    break;
+                }
+                count += 1;
             }
-            if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
-                break;
-            }
-            count += 1;
         }
 
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_RESULTS_BY_BATCH_PART_IDS, Results.class)
-            .inlineVariables(batchIdentity, partIdentity);
+        if (!batchIdentity.isEmpty()) {
+            batchIdentity = batchIdentity + "/";
+        }
 
-        return HTTPRequest.build(requestEntity).get();
+        if (!partIdentity.isEmpty()) {
+            partIdentity = partIdentity + "/";
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_RESULTS_BY_BATCH_PART_IDS, returnType)
+                .inlineVariables(batchIdentity, partIdentity);
+
+        if (customer != null) {
+            return HTTPRequest.build(requestEntity).getWithCustomer(customer);
+        } else {
+            return HTTPRequest.build(requestEntity).get();
+        }
+    }
+
+    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity,
+                                                    Class returnType) {
+        return getResults(batchIdentity, partIdentity, returnType, null, true);
+    }
+
+    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity) {
+        return getResults(batchIdentity, partIdentity, Results.class);
+    }
+
+    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity,
+                                                    Class returnType, String customer) {
+        return getResults(batchIdentity, partIdentity, returnType, customer, true);
+    }
+
+
+    public static <T> ResponseWrapper<T> getPartReportNoPoll(String batchIdentity, String partIdentity,
+                                                       Class returnType, String customer) {
+        return getPartReport(batchIdentity, partIdentity, returnType, customer, false);
+    }
+
+    /**
+     * Get report a specific batch & part
+     *
+     * @param batchIdentity The batch identity to retrieve parts for
+     * @param partIdentity The identity of the part to retrieve
+     * @param returnType The parts class object
+     * @param customer Customer identity
+     * @param <T> The object types in the response
+     * @return The response returned from the server
+     */
+    public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity,
+                                                       Class returnType, String customer, Boolean doPoll) {
+
+        if (doPoll) {
+            Object partDetails;
+            BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
+            int count = 0;
+            while (count <= Constants.BATCH_POLLING_TIMEOUT) {
+                partDetails =
+                        BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
+                isPartComplete = BcsUtils.pollState(partDetails, Part.class);
+
+                if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
+                    break;
+                }
+                count += 1;
+            }
+        }
+
+        if (!batchIdentity.isEmpty()) {
+            batchIdentity = batchIdentity + "/";
+        }
+
+        if (!partIdentity.isEmpty()) {
+            partIdentity = partIdentity + "/";
+        }
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, returnType)
+                .inlineVariables(batchIdentity, partIdentity);
+
+        if (customer != null) {
+            return HTTPRequest.build(requestEntity).getWithCustomer(customer);
+        } else {
+            return HTTPRequest.build(requestEntity).get();
+        }
+    }
+
+    public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity,
+                                                    Class returnType) {
+        return getPartReport(batchIdentity, partIdentity, returnType, null, true);
     }
 
     public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity) {
-        Object partDetails;
-        BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
-        int count = 0;
-        while (count <= Constants.BATCH_POLLING_TIMEOUT) {
-            partDetails =
-                    BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-            try {
-                isPartComplete = BcsUtils.pollState(partDetails, Part.class);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
-                break;
-            }
-            count += 1;
-        }
-
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
-            .inlineVariables(batchIdentity, partIdentity);
-
-        return HTTPRequest.build(requestEntity).get();
+        return getPartReport(batchIdentity, partIdentity, PartReport.class, null, true);
     }
 
 

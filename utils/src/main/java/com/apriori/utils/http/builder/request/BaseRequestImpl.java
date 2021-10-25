@@ -22,13 +22,28 @@ class BaseRequestImpl implements Request {
     }
 
     @Override
+    public <T> ResponseWrapper<T> getWithCustomer(String customer) {
+        return initRequestData().getWithCustomer(customer);
+    }
+
+    @Override
     public <T> ResponseWrapper<T> post() {
         return  initRequestData().post();
     }
 
     @Override
+    public <T> ResponseWrapper<T> postWithCustomer(String customer) {
+        return initRequestData().postWithCustomer(customer);
+    }
+
+    @Override
     public <T> ResponseWrapper<T> postMultipart() {
         return initRequestData().postMultiPart();
+    }
+
+    @Override
+    public <T> ResponseWrapper<T> postMultipartWithCustomer(String customer) {
+        return initRequestData().postMultiPartWithCustomer(customer);
     }
 
     @Override

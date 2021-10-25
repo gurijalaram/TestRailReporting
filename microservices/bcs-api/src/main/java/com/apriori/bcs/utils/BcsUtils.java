@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
+import com.apriori.bcs.entity.request.NewBatchProperties;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.utils.ApiUtil;
@@ -121,7 +122,7 @@ public class BcsUtils extends ApiUtil {
      *
      * @param batch
      * @return
-     * @throws InterruptedException
+     * @throws InterruptedException exception is thrown if Thread.sleep is interrupted
      */
     public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
         Object batchDetails;
@@ -155,7 +156,7 @@ public class BcsUtils extends ApiUtil {
      * @param klass
      * @return Costing Status
      */
-    public static State pollState(Object obj, Class klass) throws InterruptedException {
+    public static State pollState(Object obj, Class klass) {
         String state = BcsUtils.getState(obj, klass);
 
         // TODO ALL: should be refactored to switch
@@ -173,7 +174,6 @@ public class BcsUtils extends ApiUtil {
             } catch (Exception e) {
                 logger.error(e.getMessage());
                 logger.error(Arrays.toString(e.getStackTrace()));
-                throw e;
             }
         }
 
@@ -252,6 +252,47 @@ public class BcsUtils extends ApiUtil {
         }
 
 
+    }
+
+    /**
+     * Generate new batch properties
+     *
+     * @return
+     */
+    public static NewBatchProperties generateNewBatchProperties(
+            String externalId,
+            String name,
+            String scenarioName,
+            String exportSetName) {
+        Long currentMillis = System.currentTimeMillis();
+
+        if (externalId == null) {
+            externalId = "Auto-Batch-" + currentMillis;
+        }
+
+        if (name == null) {
+            name = "Auto-Name-" + currentMillis;
+        }
+
+        if (scenarioName == null) {
+            scenarioName = "Auto-Scenario-" + currentMillis;
+        }
+
+        if (exportSetName == null) {
+            exportSetName = "Auto-ExportSet-" + currentMillis;
+        }
+
+        NewBatchProperties newBatch = new NewBatchProperties();
+        newBatch.setExternalId(externalId);
+        newBatch.setRollupName(name);
+        newBatch.setRollupScenarioName(scenarioName);
+        newBatch.setExportSetName(exportSetName);
+
+        return newBatch;
+    }
+
+    public static NewBatchProperties generateNewBatchProperties() {
+        return generateNewBatchProperties(null, null, null, null);
     }
 
 
