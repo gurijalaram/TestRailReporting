@@ -1,6 +1,8 @@
 package com.apriori.utils.web.driver;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,12 +13,8 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.LocalFileDetector;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.UnreachableBrowserException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.InvalidParameterException;
 
@@ -24,12 +22,12 @@ import java.security.InvalidParameterException;
  * @author cfrith
  */
 
+@Slf4j
 public class RemoteWebDriverService extends BrowserManager {
 
-    private static final Logger logger = LoggerFactory.getLogger(RemoteWebDriverService.class);
 
     private RemoteWebDriver result;
-    private DesiredCapabilities dc = new DesiredCapabilities();
+    private MutableCapabilities capabilities = new MutableCapabilities();
     private BrowserTypes browser;
     private String server;
     private Proxy proxy;
@@ -48,19 +46,18 @@ public class RemoteWebDriverService extends BrowserManager {
 
     @Override
     public WebDriver startService() {
-        logger.info("server: " + server);
+        log.info("server: " + server);
 
         String uuid = StringUtils.isEmpty(System.getProperty("uuid")) ? "ParallelTestsRun" : System.getProperty("uuid");
 
         setDownloadFolder(downloadPath);
         setProxy(proxy);
-        logInfo(dc);
-        dc.setCapability("uuid", uuid.toLowerCase());
+        capabilities.setCapability("uuid", uuid.toLowerCase());
 
         try {
             switch (browser) {
                 case CHROME:
-                    logger.info("Starting ChromeDriver........ ");
+                    log.info("Starting ChromeDriver........ ");
 
                     ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
                     options.setAcceptInsecureCerts(true);
@@ -70,7 +67,7 @@ public class RemoteWebDriverService extends BrowserManager {
                     break;
 
                 case FIREFOX:
-                    logger.info("Starting GeckoDriver........ ");
+                    log.info("Starting GeckoDriver........ ");
 
                     FirefoxProfile fp = new FirefoxProfile();
                     fp.setAcceptUntrustedCertificates(true);
@@ -79,7 +76,7 @@ public class RemoteWebDriverService extends BrowserManager {
                     break;
 
                 case EDGE:
-                    logger.info("Starting EdgeDriver........ ");
+                    log.info("Starting EdgeDriver........ ");
 
                     EdgeOptions edgeOptions = new EdgeOptions();
                     edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
@@ -89,11 +86,12 @@ public class RemoteWebDriverService extends BrowserManager {
                 default:
                     throw new InvalidParameterException(String.format("Unexpected browser type: '%s' ", browser));
             }
-            result = new RemoteWebDriver(new URL(server), dc);
+            result = new RemoteWebDriver(new URL(server), capabilities);
             result.setFileDetector(new LocalFileDetector());
-            logger.info("Full list of Capabilities: " + (result).getCapabilities().toString());
+            log.info("Full list of Capabilities: " + (result).getCapabilities().toString());
 
-        } catch (UnreachableBrowserException | MalformedURLException e) {
+        } catch (Exception e) {
+            log.info(String.format("Exception caught. Driver is: '%s'.  Could not start a new session, possible causes are invalid address or Selenium Grid ran out of nodes", result));
             e.printStackTrace();
         }
         return result;

@@ -46,7 +46,7 @@ public class DriverFactory {
                 serverBuilder.append(seleniumPrefix);
                 server = serverBuilder.toString();
                 driver = testType.equals(TestType.EXPORT) ? new WebDriverService(browser, proxy, downloadPath, locale).startService()
-                    : new RemoteWebDriverService(browser, server, proxy, null, null, locale).startService();
+                    : new RemoteWebDriverService(browser, server, proxy, downloadPath, remoteDownloadPath, locale).startService();
                 break;
             case QA:
                 driver = new RemoteWebDriverService(browser, ("http://").concat("localhost").concat(":4444").concat("/wd/hub"), proxy, downloadPath, remoteDownloadPath, locale).startService();

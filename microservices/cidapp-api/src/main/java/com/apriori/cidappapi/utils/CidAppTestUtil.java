@@ -196,7 +196,38 @@ public class CidAppTestUtil {
      * @param scenarioIdentity  - the scenario identity
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+                .inlineVariables(componentIdentity, scenarioIdentity)
+            .token(getToken(userCredentials));
+
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long POLLING_INTERVAL = 5L;
+        final long MAX_WAIT_TIME = 180L;
+        String scenarioState;
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
+
+        waitSeconds(2);
+        do {
+            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
+            waitSeconds(POLLING_INTERVAL);
+        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
+        return scenarioRepresentation;
+    }
+
+    /**
+     * Gets the scenario representation
+     *
+     * @param transientState    - the impermanent state
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioStateEnum transientState, String componentIdentity, String scenarioIdentity) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -213,7 +244,7 @@ public class CidAppTestUtil {
             scenarioRepresentation = HTTPRequest.build(requestEntity).get();
             scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             waitSeconds(POLLING_INTERVAL);
-        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        } while (scenarioState.equals(transientState.getState()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return scenarioRepresentation;
     }
