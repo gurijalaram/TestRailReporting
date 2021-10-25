@@ -12,12 +12,16 @@ import java.util.List;
 @JsonRootName("response")
 public class ScenarioCostingDefaultsResponse {
     private String materialMode;
+    private String materialName;
+    private String materialStockName;
+    private String materialUtilizationMode;
     private String vpeName;
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     private String identity;
     private String[] availablePgNames;
     private Boolean machiningModeEnabled;
     private Integer computedBatchSize;
+    private Integer batchSize;
     private Boolean manuallyCosted;
     private Integer batchSizeOverride;
     private Boolean defaultToPrimaryVpe;
