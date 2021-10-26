@@ -19,6 +19,8 @@ import java.util.List;
 
 public class BillOfMaterialsUtil extends TestUtil {
 
+    private static String bomIdentity;
+
     /**
      * Create Bill of Materials
      *
@@ -34,21 +36,20 @@ public class BillOfMaterialsUtil extends TestUtil {
                 .formParams(new FormParams()
                     .use("type","pcba"));
 
-        ResponseWrapper<BillOfMaterialsResponse> createBillOfMaterialsResponse = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, createBillOfMaterialsResponse.getStatusCode());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, HTTPRequest.build(requestEntity).post().getStatusCode());
 
-        return createBillOfMaterialsResponse.getResponseEntity();
+        return (BillOfMaterialsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
      * Delete Bill of Materials by Identity
      *
-     * @param billOfMaterialsId
+     * @param billOfMaterialsId - Bill of Material Id
      */
     public static void deleteBillOfMaterialById(String billOfMaterialsId) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
-                .inlineVariables(getFirstBillOfMaterials().getIdentity());
+                .inlineVariables(billOfMaterialsId);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
@@ -58,10 +59,10 @@ public class BillOfMaterialsUtil extends TestUtil {
      *
      * @return Bill of Materials Response instance
      */
-    protected static BillOfMaterialsResponse getFirstBillOfMaterials() {
+    protected static String getFirstBillOfMaterials() {
         List<BillOfMaterialsResponse> billOfMaterialResponses =  getAllBillOfMaterials();
 
-        return billOfMaterialResponses.get(0);
+        return billOfMaterialResponses.get(0).getIdentity();
     }
 
     /**
@@ -92,5 +93,28 @@ public class BillOfMaterialsUtil extends TestUtil {
                 .inlineVariables(identity).token(new JwtTokenUtil().retrieveJwtToken());
 
         return HTTPRequest.build(requestEntity).delete();
+    }
+
+    /**
+     * Get Bill of Materials by Id
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, BillOfMaterialsResponse.class)
+            .inlineVariables(identity);
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    public static String getBomIdentity() {
+        if (bomIdentity == null) {
+            bomIdentity = getAllBillOfMaterials().get(0).getIdentity();
+        }
+        return bomIdentity;
     }
 }

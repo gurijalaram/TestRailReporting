@@ -15,9 +15,12 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     private static BillOfMaterialsResponse testingBillOfMaterialsResponse;
+    private String filename = "Test BOM 5.csv";
+    private String identity = createBillOfMaterials(filename).getIdentity();
 
     @BeforeClass
     public static void setUp() {
@@ -34,24 +37,16 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "1506")
+    @TestRail(testCaseId = {"1506", "9415"})
     @Description("DELETE a bill of material")
     public void testDeleteBomByIdentity() {
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
-                .inlineVariables(getFirstBillOfMaterials().getIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, HTTPRequest.build(requestEntity).get().getStatusCode());
+        deleteBillOfMaterialById(identity);
     }
 
     @Test
     @TestRail(testCaseId = "9413")
     @Description("POST Upload a new bill of materials")
     public void testPostBillOfMaterials() {
-        String filename = "Test BOM 5.csv";
         createBillOfMaterials(filename);
     }
 
@@ -59,12 +54,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @TestRail(testCaseId = "9414")
     @Description("GET the current representation of a bill of materials")
     public void testGetBillOfMaterialsById() {
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, BillOfMaterialsResponse.class)
-                .inlineVariables(getFirstBillOfMaterials().getIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+        getBillOfMaterialById(identity);
     }
 
     @Test
@@ -77,7 +67,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     private static void deleteBomById(String identity) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
-                .inlineVariables(identity);
+                .inlineVariables(getFirstBillOfMaterials(), identity);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
         testingBillOfMaterialsResponse = null;
