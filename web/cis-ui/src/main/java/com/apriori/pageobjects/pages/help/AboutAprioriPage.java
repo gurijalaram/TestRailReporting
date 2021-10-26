@@ -35,7 +35,7 @@ public class AboutAprioriPage extends LoadableComponent<AboutAprioriPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(aboutUs);
     }
 
     /**
