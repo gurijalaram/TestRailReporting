@@ -414,6 +414,7 @@ public class PageUtils {
     public WebElement waitForElementAppear(WebElement element) {
         long maxWaitTime = 20L;
         int retries = 0;
+        Exception ex;
 
         while (retries < 6) {
             try {
@@ -423,9 +424,15 @@ public class PageUtils {
                     .until(visibilityOf(element));
 
             } catch (Exception e) {
+                ex = e;
                 logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
                 retries++;
             }
+
+            if (retries == 6) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
+            }
+
         }
         return element;
     }
@@ -439,6 +446,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(WebElement element) {
         long maxWaitTime = 20L;
         int retries = 0;
+        Exception ex;
 
         while (retries < 6) {
             try {
@@ -448,8 +456,13 @@ public class PageUtils {
                     .until(visibilityOf(element));
 
             } catch (Exception e) {
+                ex = e;
                 logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
                 retries++;
+            }
+
+            if (retries == 6) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
         return element;
@@ -514,6 +527,7 @@ public class PageUtils {
     public List<WebElement> waitForElementsToAppear(List<WebElement> element) {
         long maxWaitTime = 20L;
         int retries = 0;
+        Exception ex;
 
         while (retries < 6) {
             try {
@@ -523,8 +537,13 @@ public class PageUtils {
                     .until(visibilityOfAllElements(element));
 
             } catch (Exception e) {
+                ex = e;
                 logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
                 retries++;
+            }
+
+            if (retries == 6) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
         return element;
@@ -539,6 +558,7 @@ public class PageUtils {
     public WebElement waitForElementToBeClickable(WebElement element) {
         long maxWaitTime = 20L;
         int retries = 0;
+        Exception ex;
 
         while (retries < 6) {
             try {
@@ -548,8 +568,13 @@ public class PageUtils {
                     .until(elementToBeClickable(element));
 
             } catch (Exception e) {
+                ex = e;
                 logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
                 retries++;
+            }
+
+            if (retries == 6) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
         return element;
