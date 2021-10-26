@@ -55,6 +55,7 @@ public class PanelController {
      */
     public HelpDocPage openHelp() {
         pageUtils.waitForElementAndClick(questionButton);
+        pageUtils.windowHandler(1);
         return new HelpDocPage(driver);
     }
 }
