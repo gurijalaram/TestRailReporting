@@ -53,7 +53,8 @@ public class LoginTests extends TestBase {
     public void testLogin() {
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        explorePage = loginPage.login(UserUtil.getUser())
+            .selectFilter("Ciene");
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }

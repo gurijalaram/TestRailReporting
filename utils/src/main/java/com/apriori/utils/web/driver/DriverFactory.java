@@ -49,7 +49,7 @@ public class DriverFactory {
                     : new RemoteWebDriverService(browser, server, proxy, downloadPath, remoteDownloadPath, locale).startService();
                 break;
             case QA:
-                driver = new RemoteWebDriverService(browser, ("http://").concat("localhost").concat(":4444").concat("/wd/hub"), proxy, downloadPath, remoteDownloadPath, locale).startService();
+                driver = new RemoteWebDriverService(browser, ("http://").concat("localhost").concat(":4444"), proxy, downloadPath, remoteDownloadPath, locale).startService();
                 break;
             case LOCAL:
                 driver = new WebDriverService(browser, proxy, downloadPath, locale).startService();
