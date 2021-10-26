@@ -63,7 +63,7 @@ public class ConsoleLogHandler implements WebDriverEventListener {
                 throw new ConsoleLogError("Browser console ERROR: \n" + logEntry.getMessage());
             });
         }
-        if (!filteredErrorEntries.isEmpty() && !levelOfThrowingAssertion.equals(Level.SEVERE)) {
+        if (!filteredErrorEntries.isEmpty() && !levelOfThrowingAssertion.equals(Level.SEVERE) && !levelOfThrowingAssertion.equals(Level.OFF)) {
             filteredErrorEntries.forEach(logEntry -> {
                 logger.debug("Browser console ERROR: \n" + logEntry.getMessage());
             });
