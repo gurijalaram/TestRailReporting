@@ -20,6 +20,10 @@
         </encoder>
     </appender>
 
+    <!-- Restrict logging for browser-level -->
+    <logger name="io.netty" level="OFF" />
+    <logger name="org.asynchttpclient.netty" level="OFF" />
+
     <root level="debug">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
