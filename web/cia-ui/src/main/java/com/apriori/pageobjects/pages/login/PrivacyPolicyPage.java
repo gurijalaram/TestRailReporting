@@ -1,4 +1,4 @@
-package com.pageobjects.pages.login;
+package com.apriori.pageobjects.pages.login;
 
 import com.apriori.utils.PageUtils;
 
