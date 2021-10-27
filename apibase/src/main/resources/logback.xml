@@ -34,7 +34,10 @@
 
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
-    <logger name="org.apache.http" level="info"/>
+    <logger name="org.apache.http" level="Info"/>
+
+    <logger name="io.netty" level="OFF" />
+    <logger name="org.asynchttpclient.netty" level="OFF" />
 
     <!-- if the mode is empty the tests are running localy. If the mode is defined usually it is given by a Jenkins job -->
     <if condition='property("mode").equals("")'>
