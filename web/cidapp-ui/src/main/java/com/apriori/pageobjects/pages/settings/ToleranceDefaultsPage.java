@@ -16,6 +16,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPage> {
 
+    @FindBy(css = ".user-preferences [type='submit']")
+    private WebElement submitButton;
+
     @FindBy(xpath = "//button[.='Tolerance Defaults']")
     private WebElement toleranceTab;
 
@@ -215,7 +218,7 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

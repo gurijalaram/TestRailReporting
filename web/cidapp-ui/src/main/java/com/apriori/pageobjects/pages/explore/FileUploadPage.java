@@ -39,6 +39,9 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(xpath = "//input[@name='scenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
 
+    @FindBy(css = ".form-action-buttons [type='submit']")
+    private WebElement submitButton;
+
     @FindBy(css = "h4")
     private WebElement fileInputError;
 
@@ -139,7 +142,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

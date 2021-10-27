@@ -32,6 +32,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
     @FindBy(css = ".selected-preview .pill-box")
     private WebElement selectedPreviewItems;
 
+    @FindBy(css = ".secondary-process-selector [type='submit']")
+    private WebElement submitButton;
+
     @FindBy(css = ".description .content")
     private WebElement description;
 
@@ -492,7 +495,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

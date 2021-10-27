@@ -20,6 +20,9 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     @FindBy(css = ".delete-confirmation-form")
     private WebElement deleteText;
 
+    @FindBy(css = ".delete-confirmation-form [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -57,7 +60,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

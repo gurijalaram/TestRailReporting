@@ -50,6 +50,9 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [id]")
     private WebElement costMaturityText;
 
+    @FindBy(css = ".scenario-info-form [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -211,7 +214,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

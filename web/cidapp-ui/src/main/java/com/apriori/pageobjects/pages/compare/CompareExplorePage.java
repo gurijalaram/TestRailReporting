@@ -48,6 +48,9 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
+    @FindBy(css = "placeholder...")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -178,7 +181,7 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

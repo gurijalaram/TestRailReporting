@@ -22,6 +22,9 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     @FindBy(css = ".assign-scenario-form .apriori-select input")
     private WebElement assigneeInput;
 
+    @FindBy(css = ".assign-scenario-form [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -72,7 +75,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
