@@ -8,7 +8,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +15,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author cfrith
@@ -52,6 +53,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
 
+    @FindBy(css = "[role='status']")
+    private List<WebElement> roleStatus;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -72,7 +76,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(settingsButton);
         pageUtils.waitForElementToAppear(helpDropdown);
-        pageUtils.waitForElementsToNotAppear(By.cssSelector("[role='status']"));
+        pageUtils.waitForElementsToNotAppear(roleStatus);
     }
 
     /**
