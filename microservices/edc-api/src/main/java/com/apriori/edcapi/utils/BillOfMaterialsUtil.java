@@ -19,50 +19,36 @@ import java.util.List;
 
 public class BillOfMaterialsUtil extends TestUtil {
 
-    private static String bomIdentity;
-
     /**
      * Create Bill of Materials
      *
      * @param fileName - the file name
      * @return Bill of Materials Response instance
      */
-    protected static BillOfMaterialsResponse createBillOfMaterials(String fileName) {
+    protected static ResponseWrapper<BillOfMaterialsResponse> postBillOfMaterials(String fileName) {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
                 .multiPartFiles(new MultiPartFiles()
                     .use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
                 .formParams(new FormParams()
-                    .use("type","pcba"));
+                    .use("type", "pcba"));
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, HTTPRequest.build(requestEntity).post().getStatusCode());
-
-        return (BillOfMaterialsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return HTTPRequest.build(requestEntity).postMultipart();
     }
 
     /**
      * Delete Bill of Materials by Identity
      *
      * @param billOfMaterialsId - Bill of Material Id
+     * @return
      */
-    public static void deleteBillOfMaterialById(String billOfMaterialsId) {
+    public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialById(String billOfMaterialsId) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
                 .inlineVariables(billOfMaterialsId);
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
-    }
-
-    /**
-     * Get the first Bill of Material
-     *
-     * @return Bill of Materials Response instance
-     */
-    protected static String getFirstBillOfMaterials() {
-        List<BillOfMaterialsResponse> billOfMaterialResponses =  getAllBillOfMaterials();
-
-        return billOfMaterialResponses.get(0).getIdentity();
+        return HTTPRequest.build(requestEntity).delete();
     }
 
     /**
@@ -74,11 +60,10 @@ public class BillOfMaterialsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class);
 
-        ResponseWrapper<BillOfMaterialsItemsResponse> responseWrapper = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
+        ResponseWrapper<BillOfMaterialsItemsResponse> getAllResponse = HTTPRequest.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllResponse.getStatusCode());
 
-        return responseWrapper.getResponseEntity()
-            .getItems();
+        return getAllResponse.getResponseEntity().getItems();
     }
 
     /**
@@ -102,19 +87,21 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, BillOfMaterialsResponse.class)
-            .inlineVariables(identity);
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
-
-        return HTTPRequest.build(requestEntity).get();
+        return getBillOfMaterialById(identity, BillOfMaterialsResponse.class);
     }
 
-    public static String getBomIdentity() {
-        if (bomIdentity == null) {
-            bomIdentity = getAllBillOfMaterials().get(0).getIdentity();
-        }
-        return bomIdentity;
+    /**
+     * Get Bill of Materials by Id
+     *
+     * @param klass    - the klass
+     * @param identity - the identity
+     * @return response object
+     */
+    public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity, Class klass) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, klass)
+                .inlineVariables(identity);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 }
