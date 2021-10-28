@@ -26,7 +26,6 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     protected static ResponseWrapper<BillOfMaterialsResponse> postBillOfMaterials(String fileName) {
-
         final RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
                 .multiPartFiles(new MultiPartFiles()

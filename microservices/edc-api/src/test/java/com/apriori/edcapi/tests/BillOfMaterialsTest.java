@@ -9,9 +9,17 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.error.ShouldHaveSizeGreaterThan;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.List;
+
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
@@ -20,14 +28,12 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @BeforeClass
     public static void setUp() {
-
         RequestEntityUtil.useTokenForRequests(new JwtTokenUtil().retrieveJwtToken());
         identity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 
     @AfterClass
     public static void deleteTestingData() {
-
         if (identity != null) {
             deleteBillOfMaterialById(identity);
         }
@@ -35,7 +41,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @Test
     @TestRail(testCaseId = "9415")
-    @Description("DELETE a bill of material")
+    @Description("DELETE a bill of materials")
     public void testDeleteBomByIdentity() {
         ResponseWrapper<BillOfMaterialsResponse> postResponse = postBillOfMaterials(filename);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
@@ -66,15 +72,15 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @TestRail(testCaseId = "9414")
     @Description("GET the current representation of a bill of materials")
     public void testGetBillOfMaterialsById() {
-
         ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
     }
 
     @Test
     @TestRail(testCaseId = "1504")
-    @Description("GET List the bill of materials matching a specified query.")
+    @Description("GET List of all bill of materials.")
     public void testGetAllBillOfMaterials() {
-        getAllBillOfMaterials();
+        List<BillOfMaterialsResponse> billOfMaterialsItems = getAllBillOfMaterials();
+        assertThat(billOfMaterialsItems.size(), is(greaterThan(0)));
     }
 }
