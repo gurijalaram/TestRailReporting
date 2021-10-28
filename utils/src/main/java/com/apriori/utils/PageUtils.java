@@ -416,7 +416,7 @@ public class PageUtils {
     public WebElement waitForElementAppear(WebElement element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 48;
+        int maxRetries = 12;
         Exception ex;
 
         while (retries < maxRetries) {
@@ -449,7 +449,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(WebElement element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 48;
+        int maxRetries = 12;
         Exception ex;
 
         while (retries < maxRetries) {
@@ -481,7 +481,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(By element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 48;
+        int maxRetries = 12;
 
         while (retries < maxRetries) {
             try {
