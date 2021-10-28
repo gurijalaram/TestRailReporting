@@ -32,6 +32,9 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = ".scenario-state-preview [data-icon='cog']")
     private List<WebElement> cogIcon;
 
+    @FindBy(css = ".message")
+    private List<WebElement> costingDialog;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -74,8 +77,8 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label is in correct state
      */
     public void waitForCostLabel(int timeoutInMinutes) {
-        this.isLoaded();
-        pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())));
+        pageUtils.waitForElementsToAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(costingDialog);
         pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
     }
 

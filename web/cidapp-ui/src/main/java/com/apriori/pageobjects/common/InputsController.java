@@ -47,9 +47,9 @@ public class InputsController {
      * @return current page object
      */
     public InputsController enterAnnualVolume(WebElement annualVolumeInput, String annualVolume) {
-        annualVolumeInput.clear();
-        annualVolumeInput.sendKeys(Keys.DELETE);
+        pageUtils.clear(annualVolumeInput);
         annualVolumeInput.sendKeys(annualVolume);
+        annualVolumeInput.sendKeys(Keys.TAB);
         return this;
     }
 
@@ -75,6 +75,7 @@ public class InputsController {
     public InputsController enterAnnualYears(WebElement productionLifeInput, String productionLife) {
         pageUtils.clear(productionLifeInput);
         productionLifeInput.sendKeys(productionLife);
+        productionLifeInput.sendKeys(Keys.TAB);
         return this;
     }
 
