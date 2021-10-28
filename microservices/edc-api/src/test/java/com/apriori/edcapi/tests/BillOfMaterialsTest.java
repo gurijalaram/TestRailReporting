@@ -1,5 +1,9 @@
 package com.apriori.edcapi.tests;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
@@ -9,17 +13,11 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.assertj.core.error.ShouldHaveSizeGreaterThan;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
-
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
