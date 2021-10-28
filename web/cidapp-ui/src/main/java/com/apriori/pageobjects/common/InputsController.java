@@ -100,6 +100,7 @@ public class InputsController {
     public InputsController enterBatchSize(WebElement batchSizeInput, String batchSize) {
         pageUtils.clear(batchSizeInput);
         batchSizeInput.sendKeys(batchSize);
+        batchSizeInput.sendKeys(Keys.TAB);
         return this;
     }
 
