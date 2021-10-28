@@ -23,7 +23,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * Create Bill of Materials
      *
      * @param fileName - the file name
-     * @return Bill of Materials Response instance
+     * @return response object
      */
     protected static ResponseWrapper<BillOfMaterialsResponse> postBillOfMaterials(String fileName) {
 
@@ -41,7 +41,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * Delete Bill of Materials by Identity
      *
      * @param billOfMaterialsId - Bill of Material Id
-     * @return
+     * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialById(String billOfMaterialsId) {
         final RequestEntity requestEntity =
@@ -54,7 +54,7 @@ public class BillOfMaterialsUtil extends TestUtil {
     /**
      * Get All Bill of Materials
      *
-     * @return bill of materials object
+     * @return response object
      */
     protected static List<BillOfMaterialsResponse> getAllBillOfMaterials() {
         RequestEntity requestEntity =
