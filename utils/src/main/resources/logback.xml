@@ -20,6 +20,11 @@
         </encoder>
     </appender>
 
+    <!-- Restrict logging for browser-level -->
+    <logger name="io.netty" level="OFF" />
+    <logger name="org.asynchttpclient.netty" level="OFF" />
+    <logger name="org.apache.http" level="Info"/>
+
     <root level="debug">
         <appender-ref ref="STDOUT"/>
         <appender-ref ref="FILE"/>
