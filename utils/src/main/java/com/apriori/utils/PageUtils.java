@@ -1,6 +1,8 @@
 package com.apriori.utils;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
@@ -374,7 +376,7 @@ public class PageUtils {
 
         new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfElementLocated(element));
+            .until(invisibilityOfElementLocated(element));
     }
 
     /**
@@ -388,7 +390,7 @@ public class PageUtils {
 
         new WebDriverWait(driver, Duration.ofSeconds(webDriverWait * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfElementLocated(element));
+            .until(invisibilityOfElementLocated(element));
     }
 
     /**
@@ -402,7 +404,7 @@ public class PageUtils {
 
         new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfAllElements(element));
+            .until(invisibilityOfAllElements(element));
     }
 
     /**
@@ -414,7 +416,7 @@ public class PageUtils {
     public WebElement waitForElementAppear(WebElement element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 12;
+        int maxRetries = 48;
         Exception ex;
 
         while (retries < maxRetries) {
@@ -447,7 +449,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(WebElement element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 12;
+        int maxRetries = 48;
         Exception ex;
 
         while (retries < maxRetries) {
@@ -479,7 +481,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(By element) {
         long webDriverWait = 5L;
         int retries = 0;
-        int maxRetries = 12;
+        int maxRetries = 48;
 
         while (retries < maxRetries) {
             try {
