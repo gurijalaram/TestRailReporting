@@ -45,9 +45,6 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".webviewer-canvas")
     private WebElement viewerCanvas;
 
-    @FindBy(css = ".scenario-state-preview [data-icon='cog']")
-    private List<WebElement> cogIcon;
-
     @FindBy(css = "svg[data-icon='home']")
     private WebElement homeButton;
 
@@ -170,7 +167,6 @@ public class EvaluatePage extends EvaluateToolbar {
         PageFactory.initElements(driver, this);
         this.get();
         pageUtils.waitForElementsToNotAppear(panelLoaders);
-        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**

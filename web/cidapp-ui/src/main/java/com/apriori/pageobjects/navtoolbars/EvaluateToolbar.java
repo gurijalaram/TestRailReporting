@@ -42,6 +42,7 @@ public class EvaluateToolbar extends ExploreToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(costButton);
+        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**
@@ -74,8 +75,8 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public void waitForCostLabel(int timeoutInMinutes) {
         this.isLoaded();
+        pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())));
         pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
-        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**

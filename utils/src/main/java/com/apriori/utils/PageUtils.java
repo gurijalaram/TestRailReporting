@@ -612,7 +612,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(WebElement element) {
         long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 10L;
+        long maxWaitTime = 30L;
         long duration = 0;
         Exception ex;
 
@@ -629,7 +629,7 @@ public class PageUtils {
                 duration = (System.currentTimeMillis() / 1000) - startTime;
             }
             if (duration >= maxWaitTime) {
-                throw new RuntimeException(String.format("Unable to recover after '%ssecs' from exception: %s", maxWaitTime, ex.getClass().getName()));
+                throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
         }
     }
@@ -641,7 +641,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(By element) {
         long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 10L;
+        long maxWaitTime = 30L;
         long duration = 0;
         Exception ex;
 
@@ -658,7 +658,7 @@ public class PageUtils {
                 duration = (System.currentTimeMillis() / 1000) - startTime;
             }
             if (duration >= maxWaitTime) {
-                throw new RuntimeException(String.format("Unable to recover after '%ssecs' from exception: %s", maxWaitTime, ex.getClass().getName()));
+                throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
         }
     }
