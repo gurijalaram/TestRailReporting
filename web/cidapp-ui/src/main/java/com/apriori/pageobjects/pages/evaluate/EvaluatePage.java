@@ -643,7 +643,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isSourcePartDetailsDisplayed(String componentName, String scenarioName) {
         By byScenario = getByScenario(componentName, scenarioName);
-        return pageUtils.waitForElementToAppear(byScenario).isDisplayed();
+        return driver.findElement(byScenario).isDisplayed();
     }
 
     /**
