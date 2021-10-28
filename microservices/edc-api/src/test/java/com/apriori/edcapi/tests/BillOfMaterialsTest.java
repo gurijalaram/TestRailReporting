@@ -1,88 +1,84 @@
 package com.apriori.edcapi.tests;
 
-import com.apriori.apibase.services.response.objects.BillOfMaterialsWrapper;
-import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper;
-import com.apriori.edcapi.tests.util.EdcTestUtil;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+
+import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
+import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Severity;
-import io.qameta.allure.SeverityLevel;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Random;
+import java.util.List;
 
+public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
-public class BillOfMaterialsTest extends EdcTestUtil {
+    private static String filename = "Test BOM 5.csv";
+    private static String identity;
 
-    @Test
-    @Description("Get list bill of materials")
-    @Severity(SeverityLevel.NORMAL)
-    public void getBillOfMaterials() {
-        RequestEntity requestEntity = RequestEntityUtil.init(
-            BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS, UserUtil.getUser(), BillOfMaterialsWrapper.class);
+    @BeforeClass
+    public static void setUp() {
+        RequestEntityUtil.useTokenForRequests(new JwtTokenUtil().retrieveJwtToken());
+        identity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
+    }
 
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                HTTPRequest.build(requestEntity).get().getStatusCode());
+    @AfterClass
+    public static void deleteTestingData() {
+        if (identity != null) {
+            deleteBillOfMaterialById(identity);
+        }
     }
 
     @Test
-    @Description("Get list bill of materials by identity")
-    @Severity(SeverityLevel.NORMAL)
-    public void getBillOfMaterialsByIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(
-            BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, userData.getUserCredentials(), BillOfSingleMaterialWrapper.class)
-                .inlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-                HTTPRequest.build(requestEntity).get().getStatusCode());
-    }
-
-    @Test
-    @Description("Delete list bill of materials by identity")
-    @Severity(SeverityLevel.NORMAL)
-    public void deleteBillOfMaterialsByIdentity() {
-        final int deleteIndex = new Random().nextInt(userData.getBillOfMaterials().size());
-
-        RequestEntity requestEntity = RequestEntityUtil.init(
-            BillOfMaterialsAPIEnum.GET_BILL_OF_MATERIALS_IDENTITY, null)
-            .inlineVariables(userData.getBillOfMaterials().get(deleteIndex).getIdentity());
-
-        userData.getBillOfMaterials().remove(deleteIndex);
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT,
-                HTTPRequest.build(requestEntity).delete().getStatusCode());
-    }
-
-    @Test
-    @Description("Export bill of material by identity")
-    @Severity(SeverityLevel.NORMAL)
-    public void exportBillOfMaterialsByIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BillOfMaterialsAPIEnum.EXPORT_BILL_OF_MATERIALS_IDENTITY, null)
-            .inlineVariables(userData.getBillOfMaterials().get(new Random().nextInt(userData.getBillOfMaterials().size())).getIdentity());
-
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
-            HTTPRequest.build(requestEntity).post().getStatusCode());
-    }
-
-    @Test
-    @Description("Post bill of material")
-    @Severity(SeverityLevel.NORMAL)
-    public void postBillOfMaterials() {
-        userTestDataUtil.uploadTestData(userData);
-    }
-
-    @Test
-    @TestRail(testCaseId = "1506")
-    @Description("Delete a bill of material")
+    @TestRail(testCaseId = "9415")
+    @Description("DELETE a bill of materials")
     public void testDeleteBomByIdentity() {
+        ResponseWrapper<BillOfMaterialsResponse> postResponse = postBillOfMaterials(filename);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+        String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
 
-        deleteBomById(getBomIdentity());
+        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(postResponseIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
+
+        ResponseWrapper<BillOfMaterialsResponse> deleteResponse = deleteBillOfMaterialById(postResponseIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, deleteResponse.getStatusCode());
+
+        ResponseWrapper<BillOfMaterialsResponse> getResponseDeleted = getBillOfMaterialById(postResponseIdentity, null);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, getResponseDeleted.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "9413")
+    @Description("POST Upload a new bill of materials")
+    public void testPostBillOfMaterials() {
+        ResponseWrapper<BillOfMaterialsResponse> postResponse = postBillOfMaterials(filename);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+
+        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(postResponse.getResponseEntity().getIdentity());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "9414")
+    @Description("GET the current representation of a bill of materials")
+    public void testGetBillOfMaterialsById() {
+        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1504")
+    @Description("GET List of all bill of materials.")
+    public void testGetAllBillOfMaterials() {
+        List<BillOfMaterialsResponse> billOfMaterialsItems = getAllBillOfMaterials();
+        assertThat(billOfMaterialsItems.size(), is(greaterThan(0)));
     }
 }
