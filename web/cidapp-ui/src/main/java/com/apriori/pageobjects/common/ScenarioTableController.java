@@ -341,6 +341,6 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public String getSortOrder(ColumnsEnum column) {
         By byColumn = By.xpath(String.format("//div[.='%s']//div[@class]//*[local-name()='svg']", column.getColumns()));
-        return pageUtils.waitForElementToAppear(byColumn).getAttribute("data-icon");
+        return driver.findElement(byColumn).getAttribute("data-icon");
     }
 }

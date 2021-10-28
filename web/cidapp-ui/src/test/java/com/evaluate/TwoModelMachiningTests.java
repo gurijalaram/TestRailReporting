@@ -128,7 +128,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario(5)
@@ -174,6 +174,7 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(twoModel1PartName, twoModel1ScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
+            .selectFilter("Recent")
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -184,16 +185,17 @@ public class TwoModelMachiningTests extends TestBase {
         assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1.93, 5)));
 
         evaluatePage.clickExplore()
-            .uploadComponentAndOpen(twoModel1PartName, twoModel2ScenarioName, twoModelFile2, currentUser)
+            .uploadComponentAndOpen(twoModel2PartName, twoModel2ScenarioName, twoModelFile2, currentUser)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
+            .selectFilter("Recent")
             .clickSearch(twoModel1PartName)
             .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getProcessesResult("Utilization"), (closeTo(83.78, 5)));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(30.67, 5));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(22.57, 5));
         assertThat(evaluatePage.getProcessesResult("Finish Mass"), (closeTo(1.62, 5)));
     }
 
