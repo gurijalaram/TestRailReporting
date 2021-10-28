@@ -73,8 +73,7 @@ public class InputsController {
      * @return current page object
      */
     public InputsController enterAnnualYears(WebElement productionLifeInput, String productionLife) {
-        productionLifeInput.clear();
-        productionLifeInput.sendKeys(Keys.DELETE);
+        pageUtils.clear(productionLifeInput);
         productionLifeInput.sendKeys(productionLife);
         return this;
     }
@@ -98,8 +97,7 @@ public class InputsController {
      * @return current page object
      */
     public InputsController enterBatchSize(WebElement batchSizeInput, String batchSize) {
-        batchSizeInput.clear();
-        batchSizeInput.sendKeys(Keys.DELETE);
+        pageUtils.clear(batchSizeInput);
         batchSizeInput.sendKeys(batchSize);
         return this;
     }
