@@ -158,7 +158,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @param emailAddress - the email address
      */
     private void enterEmail(String emailAddress) {
-        pageUtils.waitForElementAndClick(email);
+        email.click();
         pageUtils.clearInput(email);
         email.sendKeys(emailAddress);
     }
@@ -169,7 +169,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @param password - the password
      */
     private void enterPassword(String password) {
-        pageUtils.waitForElementAndClick(this.password);
+        this.password.click();
         pageUtils.clearInput(this.password);
         this.password.sendKeys(password);
     }
@@ -178,7 +178,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * Single action that login to cid
      */
     private void submitLogin() {
-        pageUtils.waitForElementAndClick(submitLogin);
+        submitLogin.click();
     }
 
     /**
