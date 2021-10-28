@@ -370,7 +370,7 @@ public class PageUtils {
      * @return size as int
      */
     public void waitForElementsToNotAppear(By element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 180L;
 
         new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
@@ -384,7 +384,7 @@ public class PageUtils {
      * @return size as int
      */
     public void waitForElementsToNotAppear(By element, long timeoutInMinutes) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 180L;
 
         new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
@@ -398,7 +398,7 @@ public class PageUtils {
      * @return true/false
      */
     public void waitForElementsToNotAppear(List<WebElement> element) {
-        long maxWaitTime = 120L;
+        long maxWaitTime = 180L;
 
         new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
@@ -412,7 +412,7 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementAppear(WebElement element) {
-        long maxWaitTime = 20L;
+        long maxWaitTime = 30L;
         int retries = 0;
         Exception ex;
 
@@ -444,7 +444,7 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToAppear(WebElement element) {
-        long maxWaitTime = 20L;
+        long maxWaitTime = 30L;
         int retries = 0;
         Exception ex;
 
@@ -475,7 +475,7 @@ public class PageUtils {
      * @return size as int
      */
     public WebElement waitForElementToAppear(By element) {
-        long maxWaitTime = 20L;
+        long maxWaitTime = 30L;
         int retries = 0;
 
         while (retries < 6) {
