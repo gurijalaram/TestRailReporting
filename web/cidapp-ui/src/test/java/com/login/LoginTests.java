@@ -1,27 +1,19 @@
 package com.login;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
-import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.StatusIconEnum;
+import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.ColumnsEnum;
-import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -33,7 +25,8 @@ public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
-    private CidAppLoginPage loginPage;
+    private AprioriLoginPage aprioriLoginPage;
+    private AprioriLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
@@ -52,8 +45,8 @@ public class LoginTests extends TestBase {
     @Description("Test successful login")
     public void testLogin() {
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        loginPage = new AprioriLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser(), ExplorePage.class);
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
@@ -64,13 +57,13 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
-        loginPage = new CidAppLoginPage(driver);
+        loginPage = new AprioriLoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    @Test
+    /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6647"})
     @Description("Test unsuccessful login with incorrect email, correct password")
@@ -163,5 +156,5 @@ public class LoginTests extends TestBase {
             .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
-    }
+    }*/
 }
