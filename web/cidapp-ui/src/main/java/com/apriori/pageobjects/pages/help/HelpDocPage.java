@@ -14,7 +14,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
 
-    @FindBy(css = ".navbar-brand")
+    @FindBy(css = ".ww_skin_search_form")
     private WebElement brandImage;
 
     @FindBy(xpath = "//div[@id='gdpr']//button[.='Yes I Agree']")
