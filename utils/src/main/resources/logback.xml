@@ -7,19 +7,34 @@
         </encoder>
     </appender>
 
-    <appender name="FILE"
-              class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>logs/%d/${methodName}.log</fileNamePattern>
-            <maxHistory>1</maxHistory>
-        </rollingPolicy>
-
-        <encoder>
-            <pattern>%date %level [%thread] %logger{10} [%file:%line] %msg%n
-            </pattern>
-        </encoder>
+    <appender name="FILE-THREAD" class="ch.qos.logback.classic.sift.SiftingAppender">
+        <discriminator>
+            <Key>methodName</Key>
+            <DefaultValue>notTestMethod</DefaultValue>
+        </discriminator>
+        <sift>
+            <appender name="FILE-${methodName}"
+                      class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                    <FileNamePattern>logs/%d/${methodName}.log</FileNamePattern>
+                    <maxHistory>30</maxHistory>
+                </rollingPolicy>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                    <Pattern>%d{ISO8601} - %-5level %C{1} [%M:%L] [%thread] - %msg%n%ex{full}</Pattern>
+                </layout>
+            </appender>
+        </sift>
     </appender>
 
+    <logger name="org.hibernate" level="info">
+        <!--<appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE-THREAD" />
+        -->
+    </logger>
+
+    <logger name="org.hibernate.SQL" level="OFF"/>
+    <logger name="org.hibernate.type" level="OFF"/>
+    
     <!-- Restrict logging for browser-level -->
     <logger name="io.netty" level="OFF" />
     <logger name="org.asynchttpclient.netty" level="OFF" />

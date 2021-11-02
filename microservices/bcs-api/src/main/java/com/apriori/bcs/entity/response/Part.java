@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
+import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
 
@@ -32,4 +33,5 @@ public class Part {
     private String url;
     private String partName;
     private String costingResult;
+    private String message;
 }

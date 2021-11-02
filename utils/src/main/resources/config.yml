@@ -144,8 +144,7 @@ qa-cid-perf:
 
   bcs:
     api_url: https://bcs.na-1.qa-cid-perf.apriori.net/
-    number_of_parts: 100
-
+    number_of_parts: 1
   cas:
     api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
 
@@ -179,7 +178,7 @@ qa-cid-perf-sandbox:
 
   bcs:
     api_url: https://bcs.na-1.sandbox.qa-cid-perf.apriori.net/
-    number_of_parts: 100
+    number_of_parts: 1
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/

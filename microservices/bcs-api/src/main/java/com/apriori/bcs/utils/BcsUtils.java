@@ -8,16 +8,14 @@ import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.utils.ApiUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 public class BcsUtils extends ApiUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(BcsUtils.class);
 
     public enum State {
         COMPLETED("COMPLETED"),
@@ -45,6 +43,31 @@ public class BcsUtils extends ApiUtil {
 
     }
 
+    public enum TerminalState {
+        COMPLETED("COMPLETED"),
+        ERRORED("ERRORED"),
+        REJECTED("REJECTED"),
+        CANCELED("CANCELLED");
+
+        private final String terminalState;
+
+        TerminalState(String ts) {
+            terminalState = ts;
+        }
+
+        public static boolean contains(String objectsState) {
+            for (BcsUtils.TerminalState state : BcsUtils.TerminalState.values()) {
+                if (state.name().equals(objectsState)) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+    }
+
+
     /**
      * Get the entity's identity
      *
@@ -57,8 +80,8 @@ public class BcsUtils extends ApiUtil {
         try {
             value = getPropertyValue(obj, klass, "getIdentity");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            log.error(e.getMessage());
+            log.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -76,8 +99,8 @@ public class BcsUtils extends ApiUtil {
         try {
             value = getPropertyValue(obj, klass, "getState");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            log.error(e.getMessage());
+            log.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -95,8 +118,8 @@ public class BcsUtils extends ApiUtil {
         try {
             value = getPropertyValue(obj, klass, "getErrors");
         } catch (Exception e) {
-            logger.error(e.getMessage());
-            logger.error(Arrays.toString(e.getStackTrace()));
+            log.error(e.getMessage());
+            log.error(Arrays.toString(e.getStackTrace()));
         }
 
         return value;
@@ -109,7 +132,8 @@ public class BcsUtils extends ApiUtil {
      * @return
      */
     public static boolean checkAndCancelBatch(Batch batch) {
-        if (!State.contains(batch.getState())) {
+        Batch currentBatch = (Batch)BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
+        if (!TerminalState.contains(currentBatch.getState())) {
             BatchResources.cancelBatchProccessing(batch.getIdentity());
             return true;
         }
@@ -121,7 +145,6 @@ public class BcsUtils extends ApiUtil {
      *
      * @param batch
      * @return
-     * @throws InterruptedException
      */
     public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
         Object batchDetails;
@@ -136,8 +159,8 @@ public class BcsUtils extends ApiUtil {
                     return state;
                 }
             } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
+                log.error(e.getMessage());
+                log.error(Arrays.toString(e.getStackTrace()));
                 throw e;
 
             }
@@ -171,8 +194,8 @@ public class BcsUtils extends ApiUtil {
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
+                log.error(e.getMessage());
+                log.error(Arrays.toString(e.getStackTrace()));
                 throw e;
             }
         }
@@ -195,8 +218,8 @@ public class BcsUtils extends ApiUtil {
             try {
                 Thread.sleep(10000);
             } catch (Exception e) {
-                logger.error(e.getMessage());
-                logger.error(Arrays.toString(e.getStackTrace()));
+                log.error(e.getMessage());
+                log.error(Arrays.toString(e.getStackTrace()));
                 throw e;
             }
         }
@@ -240,7 +263,7 @@ public class BcsUtils extends ApiUtil {
             String state = BcsUtils.getState(partDetails, Part.class);
             if (state.equalsIgnoreCase(BcsUtils.State.ERRORED.toString())) {
                 String errors = BcsUtils.getErrors(batchIdentity, Part.class);
-                logger.error(errors);
+                log.error(errors);
                 fail("Part was in state 'ERRORED'");
                 return;
             }
