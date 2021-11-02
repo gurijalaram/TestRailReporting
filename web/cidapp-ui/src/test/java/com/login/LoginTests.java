@@ -15,6 +15,7 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -40,12 +41,16 @@ public class LoginTests extends TestBase {
         super();
     }
 
+    @Before
+    public void setApplication() {
+        loginPage = new AprioriLoginPage(driver, "cidapp");
+    }
+
     @Test
     @TestRail(testCaseId = {"6645"})
     @Description("Test successful login")
     public void testLogin() {
 
-        loginPage = new AprioriLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser(), ExplorePage.class);
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
@@ -57,7 +62,6 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
-        loginPage = new AprioriLoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));

@@ -77,13 +77,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        if (url == null || url.isEmpty()) {
-            url = PropertiesContext.get("${env}." + System.getProperty("user.dir").split("web\\\\")[1].split("-ui")[0] + ".ui_url");
-            url = "https://cloud.na-1.qa-cid-perf.apriori.net/";
 
-        } else {
-            url = PropertiesContext.get("${env}." + System.getProperty("user.dir").split("web\\\\")[1].split("ui")[0] + ".ui_url");
-        }
+        url = application == null || application.isEmpty() ? PropertiesContext.get("${env}.cloud.ui_url") : PropertiesContext.get("${env}." + application + ".ui_url");
 
         if (loadNewPage) {
             driver.get(url);

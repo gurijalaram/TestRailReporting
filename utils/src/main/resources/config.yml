@@ -27,6 +27,9 @@ sprockets:
 default:
   aws_region: na-1
 
+  cloud:
+    ui_url: https://cloud.${default.aws_region}.${env}.apriori.net/
+
   ats:
     api_url: https://ats.${default.aws_region}.${env}.apriori.net/
     token_username: qa-automation-01
