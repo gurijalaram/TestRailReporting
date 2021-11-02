@@ -53,6 +53,9 @@
         },
         "costingResult": {
           "type": "string"
+        },
+        "message": {
+          "type": "string"
         }
       }
     }
