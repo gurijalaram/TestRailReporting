@@ -386,7 +386,7 @@ public class PageUtils {
      * @return size as int
      */
     public void waitForElementsToNotAppear(By element, long timeoutInMinutes) {
-        long webDriverWait = 60L;
+        long webDriverWait = 120L;
 
         new WebDriverWait(driver, Duration.ofSeconds(webDriverWait * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
