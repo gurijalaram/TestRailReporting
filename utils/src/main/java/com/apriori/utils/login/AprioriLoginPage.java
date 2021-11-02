@@ -62,21 +62,19 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     private String url;
 
     public AprioriLoginPage(WebDriver driver) {
-        init(driver, "", true);
-    }
-
-    public AprioriLoginPage(WebDriver driver, String application) {
-        init(driver, application, true);
+        init(driver, true);
     }
 
     public AprioriLoginPage(WebDriver driver, boolean loadNewPage) {
-        init(driver, "", loadNewPage);
+        init(driver, loadNewPage);
     }
 
-    public void init(WebDriver driver, String application, boolean loadNewPage) {
+    public void init(WebDriver driver,  boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+
+        String application = System.getProperty("user.dir").split("web\\\\")[1].split("-ui")[0];
 
         url = application == null || application.isEmpty() ? PropertiesContext.get("${env}.cloud.ui_url") : PropertiesContext.get("${env}." + application + ".ui_url");
 
