@@ -15,6 +15,9 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(xpath = "//button[.='Support']")
     private WebElement supportElement;
 
+    @FindBy(xpath = "//button[.='About aPriori']")
+    private WebElement aboutApriori;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -33,11 +36,26 @@ public class HelpPage extends LoadableComponent<HelpPage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(aboutApriori);
     }
 
+    /**
+     * Clicks the Support button
+     *
+     * @return new page object
+     */
     public ZendeskSignInPage clickSupport() {
         pageUtils.waitForElementAndClick(supportElement);
         return new ZendeskSignInPage(driver);
+    }
+
+    /**
+     * Clicks on the About aPriori button
+     *
+     * @return new page object
+     */
+    public AboutAprioriPage clickAboutApriori() {
+        pageUtils.waitForElementAndClick(aboutApriori);
+        return new AboutAprioriPage(driver);
     }
 }

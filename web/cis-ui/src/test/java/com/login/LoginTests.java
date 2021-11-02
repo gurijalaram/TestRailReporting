@@ -1,8 +1,10 @@
-package com.apriori.cis.tests;
+package com.login;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.login.ExplorePage;
 import com.apriori.utils.GenerateStringUtil;
@@ -21,15 +23,17 @@ public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
-    private ExplorePage explorePage;
     private CisLoginPage loginPage;
+    private ExploreTabToolbar exploreTabToolbar;
 
     @Test
     @TestRail(testCaseId = "9432")
     @Description("Successfully login with valid user")
     public void testLogin() {
         loginPage = new CisLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        exploreTabToolbar = loginPage.login(UserUtil.getUser());
+
+        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo("Production")));
     }
 
     @Test

@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpPage;
+import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -68,8 +69,23 @@ public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
         return new ComparePage(driver);
     }
 
-    public HelpPage clickHelpdropdown() {
+    /**
+     * Clicks on the Help dropdown
+     *
+     * @return new page object
+     */
+    public HelpPage clickHelpDropdown() {
         pageUtils.waitForElementAndClick(helpDropdown);
         return new HelpPage(driver);
+    }
+
+    /**
+     * Clicks on the User dropdown
+     *
+     * @return new page object
+     */
+    public MyUserPage clickUserDropdown() {
+        pageUtils.waitForElementAndClick(userDropdown);
+        return new MyUserPage(driver);
     }
 }
