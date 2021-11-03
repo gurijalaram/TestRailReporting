@@ -22,11 +22,19 @@ public final class SelectComponent extends CommonComponent<SelectComponent> {
         this.get();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     protected void load() {
         valueInput = this.getRoot().findElement(By.cssSelector("input"));
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @throws Error If the value input for this component cannot be found.
+     */
     @Override
     protected void isLoaded() throws Error {
         if (valueInput == null) {
