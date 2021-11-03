@@ -34,15 +34,26 @@
 
     <logger name="org.hibernate.SQL" level="OFF"/>
     <logger name="org.hibernate.type" level="OFF"/>
-    
-    <!-- Restrict logging for browser-level -->
-    <logger name="io.netty" level="OFF" />
-    <logger name="org.asynchttpclient.netty" level="OFF" />
     <logger name="org.apache.http" level="Info"/>
 
-    <root level="debug">
-        <appender-ref ref="STDOUT"/>
-        <appender-ref ref="FILE"/>
-    </root>
+    <logger name="io.netty" level="OFF" />
+    <logger name="org.asynchttpclient.netty" level="OFF" />
+
+    <!-- if the mode is empty the tests are running locally. If the mode is defined usually it is given by a Jenkins job -->
+    <if condition='property("mode").equals("")'>
+        <then>
+            <root level="debug">
+                <appender-ref ref="STDOUT"/>
+                <appender-ref ref="FILE-THREAD"/>
+            </root>
+        </then>
+
+        <else>
+            <root level="info">
+                <appender-ref ref="STDOUT"/>
+                <appender-ref ref="FILE-THREAD"/>
+            </root>
+        </else>
+    </if>
 
 </configuration>
