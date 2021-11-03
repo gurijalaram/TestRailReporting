@@ -13,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+
 /**
  * @author cfrith
  */
@@ -27,6 +29,12 @@ public class EvaluateToolbar extends ExploreToolbar {
     @FindBy(css = ".alert")
     private WebElement costLabel;
 
+    @FindBy(css = ".scenario-state-preview [data-icon='cog']")
+    private List<WebElement> cogIcon;
+
+    @FindBy(css = ".message")
+    private List<WebElement> costingDialog;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -37,6 +45,7 @@ public class EvaluateToolbar extends ExploreToolbar {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(costButton);
+        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**
@@ -65,10 +74,11 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
-     * Method to check cost label doesn't contain text
+     * Method to check cost label is in correct state
      */
     public void waitForCostLabel(int timeoutInMinutes) {
-        this.isLoaded();
+        pageUtils.waitForElementsToAppear(costingDialog);
+        pageUtils.waitForElementsToNotAppear(costingDialog);
         pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
     }
 

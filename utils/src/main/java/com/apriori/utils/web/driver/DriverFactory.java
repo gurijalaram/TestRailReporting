@@ -5,7 +5,6 @@ import com.apriori.utils.reader.BaseReader;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -20,7 +19,6 @@ public class DriverFactory {
     String seleniumPrefix = propertiesReader.getProperties().getProperty("prefix");
     private WebDriver driver;
     private String server = null;
-    private DesiredCapabilities dc = new DesiredCapabilities();
     private boolean headless = false;
 
     public DriverFactory(TestMode testMode, TestType testType, BrowserTypes browser, Proxy proxy, String downloadPath, String remoteDownloadPath, String locale) {
