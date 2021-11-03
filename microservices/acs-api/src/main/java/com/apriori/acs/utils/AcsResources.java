@@ -3,9 +3,12 @@ package com.apriori.acs.utils;
 import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
-import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
+//import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
+import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
@@ -79,6 +82,27 @@ public class AcsResources {
 
         return (GetScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
                 .build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get Scenarios Information (multiple scenarios, one api call)
+     *
+     * @param scenarioIterationKeyOne - first Scenario Iteration Key
+     * @param scenarioIterationKeyTwo - second Scenario Iteration Key
+     * @return instance of GetScenariosInfoResponse
+     */
+    public GetScenariosInfoResponse getScenariosInformation(ScenarioIterationKey scenarioIterationKeyOne,
+                                        ScenarioIterationKey scenarioIterationKeyTwo) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+                .headers(token)
+                .body(ScenarioIterationKeysInputs.builder()
+                        .scenarioIterationKeyOne(scenarioIterationKeyOne)
+                        .scenarioIterationKeyTwo(scenarioIterationKeyTwo))
+                .inlineVariables(Constants.USERNAME);
+
+        return (GetScenariosInfoResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
