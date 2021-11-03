@@ -12,21 +12,35 @@ import org.openqa.selenium.WebElement;
 public final class SelectFieldComponent extends CommonComponent<SelectFieldComponent> {
     private SelectComponent selectComponent;
 
+    /**
+     * @inheritDoc
+     */
     public SelectFieldComponent(WebDriver driver, WebElement root) {
         super(driver, root);
         this.get();
     }
 
+    /**
+     * Gets the underlying select component for this field.
+     *
+     * @return The select component for this field.
+     */
     public SelectComponent getSelect() {
         return this.selectComponent;
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     protected void load() {
         WebElement element = this.getRoot().findElement(By.cssSelector(".apriori-select"));
         this.selectComponent = new SelectComponent(getDriver(), element);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     protected void isLoaded() throws Error {
         if (selectComponent == null) {
