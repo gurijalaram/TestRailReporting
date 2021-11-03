@@ -39,7 +39,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("When the new customer button is clicked, I should be taken to the new customer form.")
-    @TestRail(testCaseId="C9598")
+    @TestRail(testCaseId = "C9598")
     public void testNewCustomerButtonRoutesToNewCustomerForm() {
 
         boolean actual = customerProfilePage.isProfileTabDisplayed();
@@ -48,7 +48,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("When creating a new customer, the tabs should be disabled.")
-    @TestRail(testCaseId="C9599")
+    @TestRail(testCaseId = "C9599")
     public void testNewCustomerTabsDisabled() {
 
         boolean actual = customerProfilePage.isUsersTabEnabled() ||
@@ -68,98 +68,98 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("The label for customer name should be Customer Name:")
-    @TestRail(testCaseId="C9600")
+    @TestRail(testCaseId = "C9600")
     public void testNewCustomerLabelCustomerNameAvailable() {
         testNewCustomerLabelAvailable("Customer Name:");
     }
 
     @Test
     @Description("The label for description should be Description:")
-    @TestRail(testCaseId="C9601")
+    @TestRail(testCaseId = "C9601")
     public void testNewCustomerLabelDescriptionAvailable() {
         testNewCustomerLabelAvailable("Description:");
     }
 
     @Test
     @Description("The label for customer type should be Customer Type:")
-    @TestRail(testCaseId="C9602")
+    @TestRail(testCaseId = "C9602")
     public void testNewCustomerLabelCustomerTypeAvailable() {
         testNewCustomerLabelAvailable("Customer Type:");
     }
 
     @Test
     @Description("The label for salesforce id should be Salesforce ID:")
-    @TestRail(testCaseId="C9603")
+    @TestRail(testCaseId = "C9603")
     public void testNewCustomerLabelSalesforceIdAvailable() {
         testNewCustomerLabelAvailable("Salesforce ID:");
     }
 
     @Test
     @Description("The label for cloud reference id should be Cloud Reference:")
-    @TestRail(testCaseId="C9604")
+    @TestRail(testCaseId = "C9604")
     public void testNewCustomerLabelCloudReferenceAvailable() {
         testNewCustomerLabelAvailable("Cloud Reference:");
     }
 
     @Test
     @Description("The label for email domains id should be Email Domains:")
-    @TestRail(testCaseId="C9605")
+    @TestRail(testCaseId = "C9605")
     public void testNewCustomerLabelEmailDomainsAvailable() {
         testNewCustomerLabelAvailable("Email Domains:");
     }
 
     @Test
     @Description("The label for cad file retention policy id should be CAD File Retention Policy (days):")
-    @TestRail(testCaseId="C9606")
+    @TestRail(testCaseId = "C9606")
     public void testNewCustomerLabelCadFileRetentionPolicyAvailable() {
         testNewCustomerLabelAvailable("CAD File Retention Policy (days):");
     }
 
     @Test
     @Description("The label for max cad file size should be Max CAD File Size:")
-    @TestRail(testCaseId="C9607")
+    @TestRail(testCaseId = "C9607")
     public void testNewCustomerLabelMaxCadFileSizeAvailable() {
         testNewCustomerLabelAvailable("Max CAD File Size:");
     }
 
     @Test
     @Description("The label for updated at should be Last Updated:")
-    @TestRail(testCaseId="C9608")
+    @TestRail(testCaseId = "C9608")
     public void testNewCustomerLabelUpdatedAtAvailable() {
         testNewCustomerLabelAvailable("Last Updated:");
     }
 
     @Test
     @Description("The label for updated by should be Updated By:")
-    @TestRail(testCaseId="C9609")
+    @TestRail(testCaseId = "C9609")
     public void testNewCustomerLabelUpdatedByAvailable() {
         testNewCustomerLabelAvailable("Updated By:");
     }
 
     @Test
     @Description("The label for created at should be Created At:")
-    @TestRail(testCaseId="C9610")
+    @TestRail(testCaseId = "C9610")
     public void testNewCustomerLabelCreatedAtAvailable() {
         testNewCustomerLabelAvailable("Created:");
     }
 
     @Test
     @Description("The label for created by should be Created By:")
-    @TestRail(testCaseId="C9611")
+    @TestRail(testCaseId = "C9611")
     public void testNewCustomerLabelCreatedByAvailable() {
         testNewCustomerLabelAvailable("Created By:");
     }
 
     @Test
     @Description("The label for authentication should be Authentication:")
-    @TestRail(testCaseId="C9612")
+    @TestRail(testCaseId = "C9612")
     public void testNewCustomerLabelAuthenticationAvailable() {
         testNewCustomerLabelAvailable("Authentication:");
     }
 
     @Test
     @Description("Clicking the cancel button returns the user to the customer list.")
-    @TestRail(testCaseId="C9613")
+    @TestRail(testCaseId = "C9613")
     public void testCancelReturnsTheUserToTheCustomerList() {
 
         CustomerAdminPage actual = customerProfilePage.cancel(CustomerAdminPage.class);
@@ -168,7 +168,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("The save button is disabled when the form is invalid.")
-    @TestRail(testCaseId="C9614")
+    @TestRail(testCaseId = "C9614")
     public void testSaveIsDisabledWhenTheFormIsInvalid() {
 
         boolean actual = customerProfilePage.enterDescription("Automation Test Customer")
@@ -181,7 +181,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("The save button is enabled when all fields have been entered and are valid.")
-    @TestRail(testCaseId="C9615")
+    @TestRail(testCaseId = "C9615")
     public void testSaveIsEnabledWhenAllOfTheFieldsAreValid() {
 
         boolean actual = customerProfilePage.enterCustomerName("QA Automation")
@@ -196,7 +196,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("The save button creates the new user and reloads the page in edit mode.")
-    @TestRail(testCaseId="C9616")
+    @TestRail(testCaseId = "C9616")
     public void testSaveCreatesTheNewUserAndThePageReloadsWithTheNewCustomer() {
 
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
@@ -214,7 +214,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Customer name is required.")
-    @TestRail(testCaseId="C9617")
+    @TestRail(testCaseId = "C9617")
     public void testCustomerNameRequired() {
 
         String actual = customerProfilePage
@@ -225,7 +225,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Customer name should be no more than 64 characters in length.")
-    @TestRail(testCaseId="C9618")
+    @TestRail(testCaseId = "C9618")
     public void testCustomerNameShouldBeNoMoreThan64Characters() {
 
         String nameTooLong = RandomStringUtils.randomAlphanumeric(65);
@@ -237,7 +237,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Description should be required.")
-    @TestRail(testCaseId="C9619")
+    @TestRail(testCaseId = "C9619")
     public void testDescriptionShouldBeRequired() {
 
         String actual = customerProfilePage
@@ -248,7 +248,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Customer type should be required.")
-    @TestRail(testCaseId="C9620")
+    @TestRail(testCaseId = "C9620")
     public void testCustomerTypeShouldBeRequired() {
 
         String actual = customerProfilePage
@@ -259,7 +259,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Salesforce ID is required.")
-    @TestRail(testCaseId="C9621")
+    @TestRail(testCaseId = "C9621")
     public void testSalesforceIdIsRequired() {
 
         String actual = customerProfilePage
@@ -270,7 +270,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Salesforce ID should be 15 or 18 characters.")
-    @TestRail(testCaseId="C9622")
+    @TestRail(testCaseId = "C9622")
     public void testSalesforceIdShouldBe15Or18Characters() {
 
         String salesforceId = RandomStringUtils.randomNumeric(14);
@@ -301,7 +301,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should be disabled for on premise customers.")
-    @TestRail(testCaseId="C9623")
+    @TestRail(testCaseId = "C9623")
     public void testCloudReferenceIsDisabledForOnPremiseCustomers() {
 
         boolean actual = customerProfilePage
@@ -312,7 +312,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should be enabled for cloud customers.")
-    @TestRail(testCaseId="C9624")
+    @TestRail(testCaseId = "C9624")
     public void testCloudReferenceIsEnabledForCloudCustomers() {
 
         boolean actual = customerProfilePage
@@ -323,7 +323,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should be enabled for cloud and on premise customers.")
-    @TestRail(testCaseId="C9625")
+    @TestRail(testCaseId = "C9625")
     public void testCloudReferenceIsEnabledForCloudAndOnPremiseCustomers() {
 
         boolean actual = customerProfilePage
@@ -334,7 +334,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should be required if it is enabled.")
-    @TestRail(testCaseId="C9626")
+    @TestRail(testCaseId = "C9626")
     public void testCloudReferenceIsRequiredIfEnabled() {
 
         String actual = customerProfilePage
@@ -346,7 +346,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should not be required for on premise customers.")
-    @TestRail(testCaseId="C9627")
+    @TestRail(testCaseId = "C9627")
     public void testCloudReferenceIsNotRequiredIfDisabled() {
 
         String actual = customerProfilePage
@@ -362,7 +362,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Email domains should be required.")
-    @TestRail(testCaseId="C9628")
+    @TestRail(testCaseId = "C9628")
     public void testEmailDomainsRequired() {
 
         String actual = customerProfilePage
@@ -373,7 +373,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Invalid emails should not be allowed.")
-    @TestRail(testCaseId="C9629")
+    @TestRail(testCaseId = "C9629")
     public void testEmailDomainsRequireValidEmails() {
 
         String actual = customerProfilePage
@@ -384,7 +384,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("CAD File Retention Policy is required.")
-    @TestRail(testCaseId="C9630")
+    @TestRail(testCaseId = "C9630")
     public void testCadFileRetentionPolicyIsRequired() {
 
         String actual = customerProfilePage
@@ -395,7 +395,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("CAD File Retention Policy requires at least one day.")
-    @TestRail(testCaseId="C9631")
+    @TestRail(testCaseId = "C9631")
     public void testCadFileRetentionPolicyRequiresAtLeastOneDay() {
 
         String actual = customerProfilePage
@@ -406,7 +406,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("CAD File Retention Policy has a maximum of 1095 days.")
-    @TestRail(testCaseId="C9632")
+    @TestRail(testCaseId = "C9632")
     public void testCadFileRetentionPolicyHasAMaximumOf1095Days() {
 
         String actual = customerProfilePage
@@ -417,7 +417,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Max Cad File Size is required.")
-    @TestRail(testCaseId="C9633")
+    @TestRail(testCaseId = "C9633")
     public void testMaxCadFileSizeIsRequired() {
 
         String actual = customerProfilePage
@@ -428,7 +428,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Max CAD File Size should be at least 10 MB.")
-    @TestRail(testCaseId="C9634")
+    @TestRail(testCaseId = "C9634")
     public void testMaxCadFileSizeShouldBeAtLeast10Mb() {
 
         String actual = customerProfilePage
@@ -439,7 +439,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Max CAD File Size should be at most 100 MB.")
-    @TestRail(testCaseId="C9635")
+    @TestRail(testCaseId = "C9635")
     public void testMaxCadFileSizeShouldBeAtMost100MB() {
 
         String actual = customerProfilePage
