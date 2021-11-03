@@ -28,6 +28,9 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
     @FindBy(xpath = "//span[.='No']")
     private WebElement noButton;
 
+    @FindBy(css = "placeholder...")
+    private WebElement submitButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
@@ -86,7 +89,7 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
