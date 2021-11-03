@@ -2,13 +2,14 @@ package com.apriori.newcustomer;
 
 import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.web.components.SelectFieldComponent;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -46,7 +47,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @FindBy(css = "input[name='name']")
     private WebElement customerNameInput;
 
-    @FindBy(className="invalid-feedback-for-name")
+    @FindBy(className = "invalid-feedback-for-name")
     private WebElement customerNameFeedback;
 
     @FindBy(css = "input[name='description']")
