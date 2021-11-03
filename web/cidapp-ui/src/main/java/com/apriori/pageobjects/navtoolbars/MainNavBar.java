@@ -54,7 +54,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     private WebElement logoutButton;
 
     @FindBy(css = "[role='status']")
-    private List<WebElement> roleStatus;
+    private List<WebElement> statusSpinner;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -76,6 +76,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(settingsButton);
         pageUtils.waitForElementToAppear(helpDropdown);
+        pageUtils.waitForElementsToNotAppear(statusSpinner);
     }
 
     /**
