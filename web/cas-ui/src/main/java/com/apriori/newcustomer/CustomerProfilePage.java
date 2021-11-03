@@ -95,6 +95,11 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     private WebDriver driver;
     private PageUtils pageUtils;
 
+    /**
+     * Initializes a new instance of this object.
+     *
+     * @param driver The web driver used to query the entire page.
+     */
     public CustomerProfilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
@@ -105,70 +110,163 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
         this.get();
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
     protected void load() {
     }
 
+    /**
+     * @inheritDoc
+     *
+     * @throws Error If the profile tab or users tab is missing
+     */
     @Override
     protected void isLoaded() throws Error {
         pageUtils.waitForElementAppear(profileTab);
         pageUtils.waitForElementAppear(usersTab);
     }
 
+    /**
+     * Gets a value that indicates if the profile tab is displayed.
+     *
+     * @return True if the profile tab is displayed.
+     */
     public boolean isProfileTabDisplayed() {
         return profileTab.isDisplayed();
     }
 
+    /**
+     * Gets a value that indicates if the users tab is enabled and can be clicked.
+     *
+     * @return A value that indicates if the users tab is enabled
+     */
     public boolean isUsersTabEnabled() {
         return pageUtils.isElementEnabledByAttribute(usersTab);
     }
 
+    /**
+     * Gets a value that indicates if the sites & licenses tab is enabled and can be clicked.
+     *
+     * @return A value that indicates if the sites & licenses tab is enabled
+     */
     public boolean isSitesAndLicensesEnabled() {
         return pageUtils.isElementEnabledByAttribute(siteLicenseTab);
     }
 
+    /**
+     * Gets a value that indicates if the infrastructure tab is enabled and can be clicked.
+     *
+     * @return A value that indicates if the infrastructure tab is enabled
+     */
     public boolean isInfrastructureEnabled() {
         return pageUtils.isElementEnabledByAttribute(infraStructTab);
     }
 
+    /**
+     * Gets a value that indicates if the security tab is enabled and can be clicked.
+     *
+     * @return A value that indicates if the security tab is enabled
+     */
     public boolean isSecurityEnabled() {
         return pageUtils.isElementEnabledByAttribute(securityTab);
     }
 
+    /**
+     * Gets a value that indicates if the system configuration tab is enabled and can be clicked.
+     *
+     * @return A value that indicates if the system configuration tab is enabled
+     */
     public boolean isSystemConfigurationEnabled() {
         return pageUtils.isElementEnabledByAttribute(systemConfigurationTab);
     }
 
+    /**
+     * Gets a value that indicates if the cloud reference input is enabled.
+     *
+     * @return A value that indicates if the cloud reference input is enabled
+     */
     public boolean isCloudReferenceEnabled() {
         return pageUtils.isElementEnabled(cloudRefInput);
     }
 
+    /**
+     * Gets the current validation feedback for the customer name.
+     *
+     * @return The current validation error for the customer name.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getCustomerNameFeedback() {
         return this.customerNameFeedback.getText();
     }
 
+    /**
+     * Gets the current validation feedback for the description.
+     *
+     * @return The current validation error for the description.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getDescriptionFeedback() {
         return this.descriptionFeedback.getText();
     }
 
+    /**
+     * Gets the current validation feedback for the customer type.
+     *
+     * @return The current validation error for the customer type.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getCustomerTypeFeedback() {
         return this.customerTypeFeedback.getText();
     }
 
+    /**
+     * Gets the current validation feedback for the salesforce ID.
+     *
+     * @return The current validation error for the salesforce ID.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getSalesforceIdFeedback() {
         return this.salesforceFeedback.getText();
     }
 
+    /**
+     * Gets the current validation feedback for the cloud reference.
+     *
+     * @return The current validation error for the cloud reference.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getCloudRefFeedback() {
         return this.cloudRefFeedback.getText();
     }
 
-    public String getEmailDomFeedback() { return this.emailDomFeedback.getText(); }
+    /**
+     * Gets the current validation feedback for the email domains.
+     *
+     * @return The current validation error for the email domains.  Returns the empty string
+     *         if the value is valid.
+     */
+    public String getEmailDomFeedback() {
+        return this.emailDomFeedback.getText();
+    }
 
+    /**
+     * Gets the current validation feedback for the cad file retention policy.
+     *
+     * @return The current validation error for the cad file retention policy.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getCadFileRetentionPolicyFeedback() {
         return this.cadFileRetentionDaysFeedback.getText();
     }
 
+    /**
+     * Gets the current validation feedback for the max cad file size.
+     *
+     * @return The current validation error for the max cad file size.  Returns the empty string
+     *         if the value is valid.
+     */
     public String getMaxCadFileSizeFeedback() {
         return this.maxCadFileSizeFeedback.getText();
     }
