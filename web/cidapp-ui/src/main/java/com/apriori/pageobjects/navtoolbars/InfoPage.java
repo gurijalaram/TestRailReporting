@@ -1,12 +1,13 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -50,6 +51,9 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [id]")
     private WebElement costMaturityText;
 
+    @FindBy(css = ".scenario-info-form [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
@@ -71,7 +75,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(statusLabel);
+        assertEquals("Scenario Notes dialog is not displayed", "Scenario Info & Notes", pageUtils.waitForElementToAppear(statusLabel).getAttribute("textContent"));
     }
 
     /**
@@ -103,9 +107,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage inputDescription(String description) {
-        pageUtils.waitForElementAndClick(descriptionInput);
-        pageUtils.clear(descriptionInput);
-        descriptionInput.sendKeys(description);
+        inputFields(descriptionInput, description);
         return this;
     }
 
@@ -116,9 +118,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage editDescription(String description) {
-        descriptionInput.sendKeys(Keys.CONTROL + "a");
-        descriptionInput.sendKeys(Keys.DELETE);
-        descriptionInput.sendKeys(description);
+        inputFields(descriptionInput, description);
         return this;
     }
 
@@ -129,9 +129,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage inputNotes(String notes) {
-        pageUtils.waitForElementAndClick(notesInput);
-        pageUtils.clear(notesInput);
-        notesInput.sendKeys(notes);
+        inputFields(notesInput, notes);
         return this;
     }
 
@@ -142,10 +140,20 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage editNotes(String notes) {
-        notesInput.sendKeys(Keys.CONTROL + "a");
-        notesInput.sendKeys(Keys.DELETE);
-        notesInput.sendKeys(notes);
+        inputFields(notesInput, notes);
         return this;
+    }
+
+    /**
+     * Input fields
+     *
+     * @param element     - the element
+     * @param description - the description
+     */
+    private void inputFields(WebElement element, String description) {
+        pageUtils.waitForElementAndClick(element);
+        pageUtils.clear(element);
+        element.sendKeys(description);
     }
 
     /**
@@ -211,7 +219,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
