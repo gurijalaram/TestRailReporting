@@ -233,6 +233,15 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
+     * Gets the value of the cloud ref field.
+     *
+     * @return The text value of the cloud ref field.
+     */
+    public String getCloudRefValue() {
+        return pageUtils.getValueOfElement(cloudRefInput);
+    }
+
+    /**
      * Gets the current validation feedback for the cloud reference.
      *
      * @return The current validation error for the cloud reference.  Returns the empty string
