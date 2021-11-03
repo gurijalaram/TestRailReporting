@@ -1,6 +1,5 @@
 package com.apriori.utils.web.components;
 
-import com.apriori.utils.PageUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -21,7 +20,9 @@ public abstract class CommonComponent<T extends LoadableComponent<T>> extends Lo
         this.root = root;
     }
 
-    protected WebDriver getDriver(){ return this.driver; }
+    protected WebDriver getDriver(){
+        return this.driver;
+    }
 
     protected WebElement getRoot() {
         return this.root;
