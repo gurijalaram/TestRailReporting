@@ -111,7 +111,7 @@ Those marked with a * are required or the job will not run
             }
         }
 
-        stage("Build") {
+        stage("Build & Test") {
             steps {
                 echo "Building.."
                 withCredentials([
@@ -175,16 +175,18 @@ Those marked with a * are required or the job will not run
                 echo "Publishing Results"
                 sh """
                     docker cp \
-                    ${buildInfo.name}-build-${uuid}:app/target/allure-results \
+                    ${buildInfo.name}-build-${uuid}:app/target \
                     .
                 """
-                allure includeProperties: false, jdk: "", results: [[path: "allure-results"]]
+                allure includeProperties: false, jdk: "", results: [[path: "target/allure-results"]]
             }
         }
     }
 
     post {
         always {
+            archiveArtifacts artifacts: 'target/*.csv', fingerprint: true
+            archiveArtifacts artifacts: 'target/*.txt', fingerprint: true
             echo "Cleaning up.."
             sh "docker rm -f ${buildInfo.name}-build-${uuid}"
             sh "docker rmi ${buildInfo.name}-build-${uuid}:latest"
