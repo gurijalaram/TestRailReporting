@@ -1,10 +1,9 @@
 package com.apriori.newcustomer;
 
-import com.apriori.customeradmin.CustomerAdminPage;
-import com.apriori.customeradmin.NavToolbar;
 import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.web.components.SelectFieldComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,49 +31,82 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @FindBy(xpath = "//a[.='Security']")
     private WebElement securityTab;
 
-    @FindBy(xpath = "//div[@class='d-flex align-items-center']//button[.='Edit']")
+    @FindBy(xpath = "//a[.='System Configuration']")
+    private WebElement systemConfigurationTab;
+
+    @FindBy(css = ".edit-read-form button.edit-button")
     private WebElement editButton;
 
-    @FindBy(xpath = "//div[@class='d-flex align-items-center']//button[.='Save']")
+    @FindBy(css = ".edit-read-form button[type='submit']")
     private WebElement saveButton;
 
-    @FindBy(xpath = "//div[@class='d-flex align-items-center']//button[.='Cancel']")
+    @FindBy(css = ".edit-read-form button.btn-secondary")
     private WebElement cancelButton;
 
     @FindBy(css = "input[name='name']")
     private WebElement customerNameInput;
 
+    @FindBy(className="invalid-feedback-for-name")
+    private WebElement customerNameFeedback;
+
     @FindBy(css = "input[name='description']")
     private WebElement descriptionInput;
 
-    @FindBy(css = "select[name='customerType']")
+    @FindBy(className = "invalid-feedback-for-description")
+    private WebElement descriptionFeedback;
+
+    @FindBy(className = "select-field-customer-type")
     private WebElement customerTypeDropdown;
+    private SelectFieldComponent customerTypeSelectField;
+
+    @FindBy(className = "invalid-feedback-for-customer-type")
+    private WebElement customerTypeFeedback;
 
     @FindBy(css = "input[name='salesforceId']")
     private WebElement salesforceInput;
 
+    @FindBy(className = "invalid-feedback-for-salesforce-id")
+    private WebElement salesforceFeedback;
+
     @FindBy(css = "input[name='cloudReference']")
     private WebElement cloudRefInput;
+
+    @FindBy(className = "invalid-feedback-for-cloud-reference")
+    private WebElement cloudRefFeedback;
 
     @FindBy(css = "input[name='emailDomains']")
     private WebElement emailDomInput;
 
+    @FindBy(className = "invalid-feedback-for-email-domains")
+    private WebElement emailDomFeedback;
+
+    @FindBy(css = "input[name='maxCadFileRetentionDays']")
+    private WebElement cadFileRetentionDaysInput;
+
+    @FindBy(className = "invalid-feedback-for-max-cad-file-retention-days")
+    private WebElement cadFileRetentionDaysFeedback;
+
+    @FindBy(css = "input[name='maxCadFileSize']")
+    private WebElement maxCadFileSizeInput;
+
+    @FindBy(className = "invalid-feedback-for-max-cad-file-size")
+    private WebElement maxCadFileSizeFeedback;
+
     private WebDriver driver;
     private PageUtils pageUtils;
-    private NavToolbar navToolbar;
 
     public CustomerProfilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.navToolbar = new NavToolbar(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
+
+        this.customerTypeSelectField = new SelectFieldComponent(driver, customerTypeDropdown);
         this.get();
     }
 
     @Override
     protected void load() {
-
     }
 
     @Override
@@ -83,38 +115,62 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
         pageUtils.waitForElementAppear(usersTab);
     }
 
-    /**
-     * Form fill customer details
-     *
-     * @param customerName - customer name
-     * @param description  - description
-     * @param customerType - customer type
-     * @param salesforceid - salesforce id
-     * @param emailDomains - email domains
-     * @return current page object
-     */
-    public CustomerProfilePage formFillNewCustomerDetails(String customerName, String description, String customerType, String salesforceid, String emailDomains) {
-        enterCustomerName(customerName)
-            .enterDescription(description)
-            .selectCustomerType(customerType)
-            .enterSalesforceId(salesforceid)
-            .enterEmailDomains(emailDomains);
-        return this;
+    public boolean isProfileTabDisplayed() {
+        return profileTab.isDisplayed();
     }
 
-    /**
-     * Form fill customer details
-     *
-     * @param customerName - customer name
-     * @param salesforceid - salesforce id
-     * @param emailDomains - email domains
-     * @return current page object
-     */
-    public CustomerProfilePage formFillNewCustomerDetails(String customerName, String salesforceid, String emailDomains) {
-        enterCustomerName(customerName)
-            .enterSalesforceId(salesforceid)
-            .enterEmailDomains(emailDomains);
-        return this;
+    public boolean isUsersTabEnabled() {
+        return pageUtils.isElementEnabledByAttribute(usersTab);
+    }
+
+    public boolean isSitesAndLicensesEnabled() {
+        return pageUtils.isElementEnabledByAttribute(siteLicenseTab);
+    }
+
+    public boolean isInfrastructureEnabled() {
+        return pageUtils.isElementEnabledByAttribute(infraStructTab);
+    }
+
+    public boolean isSecurityEnabled() {
+        return pageUtils.isElementEnabledByAttribute(securityTab);
+    }
+
+    public boolean isSystemConfigurationEnabled() {
+        return pageUtils.isElementEnabledByAttribute(systemConfigurationTab);
+    }
+
+    public boolean isCloudReferenceEnabled() {
+        return pageUtils.isElementEnabled(cloudRefInput);
+    }
+
+    public String getCustomerNameFeedback() {
+        return this.customerNameFeedback.getText();
+    }
+
+    public String getDescriptionFeedback() {
+        return this.descriptionFeedback.getText();
+    }
+
+    public String getCustomerTypeFeedback() {
+        return this.customerTypeFeedback.getText();
+    }
+
+    public String getSalesforceIdFeedback() {
+        return this.salesforceFeedback.getText();
+    }
+
+    public String getCloudRefFeedback() {
+        return this.cloudRefFeedback.getText();
+    }
+
+    public String getEmailDomFeedback() { return this.emailDomFeedback.getText(); }
+
+    public String getCadFileRetentionPolicyFeedback() {
+        return this.cadFileRetentionDaysFeedback.getText();
+    }
+
+    public String getMaxCadFileSizeFeedback() {
+        return this.maxCadFileSizeFeedback.getText();
     }
 
     /**
@@ -123,9 +179,8 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param customerName - customer name
      * @return current page object
      */
-    private CustomerProfilePage enterCustomerName(String customerName) {
-        pageUtils.waitForElementToAppear(customerNameInput).clear();
-        customerNameInput.sendKeys(customerName);
+    public CustomerProfilePage enterCustomerName(String customerName) {
+        pageUtils.setValueOfElement(customerNameInput, customerName);
         return this;
     }
 
@@ -135,9 +190,8 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param description - description
      * @return current page object
      */
-    private CustomerProfilePage enterDescription(String description) {
-        pageUtils.waitForElementToAppear(descriptionInput).clear();
-        descriptionInput.sendKeys(description);
+    public CustomerProfilePage enterDescription(String description) {
+        pageUtils.setValueOfElement(descriptionInput, description);
         return this;
     }
 
@@ -148,31 +202,65 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     private CustomerProfilePage selectCustomerType(String customerType) {
-        pageUtils.selectDropdownOption(customerTypeDropdown, customerType);
+        customerTypeSelectField.getSelect().select(customerType);
         return this;
+    }
+
+    /**
+     * Clears the customer type.
+     *
+     * @return This object
+     */
+    public CustomerProfilePage clearCustomerType() {
+        return selectCustomerType(null);
+    }
+
+    /**
+     * Selects the customer type, "On Premise"
+     *
+     * @return This object.
+     */
+    public CustomerProfilePage selectCustomerTypeOnPremise() {
+        return selectCustomerType("On Premise");
+    }
+
+    /**
+     * Selects the customer type, "Cloud"
+     *
+     * @return This object.
+     */
+    public CustomerProfilePage selectCustomerTypeCloud() {
+        return selectCustomerType("Cloud");
+    }
+
+    /**
+     * Selects the customer type, "Cloud & On Premise"
+     *
+     * @return This object.
+     */
+    public CustomerProfilePage selectCustomerTypeOnPremiseAndCloud() {
+        return selectCustomerType("Cloud & On Premise");
     }
 
     /**
      * Enter sales force info
      *
-     * @param salesforceid - sales force id
+     * @param salesforceId - sales force id
      * @return current page object
      */
-    private CustomerProfilePage enterSalesforceId(String salesforceid) {
-        pageUtils.waitForElementToAppear(salesforceInput).clear();
-        salesforceInput.sendKeys(salesforceid);
+    public CustomerProfilePage enterSalesforceId(String salesforceId) {
+        pageUtils.setValueOfElement(salesforceInput, salesforceId);
         return this;
     }
 
     /**
      * Enter cloud info
      *
-     * @param cloudref - cloud ref
+     * @param cloudReference - cloud ref
      * @return current page object
      */
-    public CustomerProfilePage enterCloudRef(String cloudref) {
-        pageUtils.waitForElementToAppear(cloudRefInput).clear();
-        cloudRefInput.sendKeys(cloudref);
+    public CustomerProfilePage enterCloudRef(String cloudReference) {
+        pageUtils.setValueOfElement(cloudRefInput, cloudReference);
         return this;
     }
 
@@ -182,9 +270,30 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param emailDomains - email
      * @return current page object
      */
-    private CustomerProfilePage enterEmailDomains(String emailDomains) {
-        pageUtils.waitForElementToAppear(emailDomInput).clear();
-        emailDomInput.sendKeys(emailDomains);
+    public CustomerProfilePage enterEmailDomains(String emailDomains) {
+        pageUtils.setValueOfElement(emailDomInput, emailDomains);
+        return this;
+    }
+
+    /**
+     * Enter the maximum cad file retention days.
+     *
+     * @param days Max Cad file retention policy in days
+     * @return current page object
+     */
+    public CustomerProfilePage enterCadFileRetentionPolicy(String days) {
+        pageUtils.setValueOfElement(cadFileRetentionDaysInput, days);
+        return this;
+    }
+
+    /**
+     * Enter the maximum cad file size.
+     *
+     * @param size Max cad file size
+     * @return current page object
+     */
+    public CustomerProfilePage enterMaxCadFileSize(String size) {
+        pageUtils.setValueOfElement(maxCadFileSizeInput, size);
         return this;
     }
 
@@ -238,13 +347,17 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
         return PageFactory.initElements(driver, klass);
     }
 
+    public boolean isSaveButtonEnabled() {
+        return pageUtils.isElementEnabled(saveButton);
+    }
+
     /**
      * Save customer info
      *
      * @return new page object
      */
-    public CustomerAdminPage save() {
+    public CustomerProfilePage save() {
         pageUtils.waitForElementAndClick(saveButton);
-        return new CustomerAdminPage(driver);
+        return new CustomerProfilePage(driver);
     }
 }
