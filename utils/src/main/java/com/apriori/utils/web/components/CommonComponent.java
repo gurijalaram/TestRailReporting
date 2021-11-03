@@ -15,15 +15,11 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 public abstract class CommonComponent<T extends LoadableComponent<T>> extends LoadableComponent<T> {
     private WebDriver driver;
     private WebElement root;
-    private PageUtils pageUtils;
 
     public CommonComponent(WebDriver driver, WebElement root) {
         this.driver = driver;
         this.root = root;
-        this.pageUtils = new PageUtils(driver);
     }
-
-    protected PageUtils getPageUtils(){ return this.pageUtils; }
 
     protected WebDriver getDriver(){ return this.driver; }
 

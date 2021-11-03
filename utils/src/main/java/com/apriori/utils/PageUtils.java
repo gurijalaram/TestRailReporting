@@ -183,7 +183,7 @@ public class PageUtils {
         try {
             String disabled = element.getAttribute("disabled");
             return !StringUtils.equalsIgnoreCase(disabled, "true");
-        } catch(NoSuchElementException | StaleElementReferenceException e) {
+        } catch (NoSuchElementException | StaleElementReferenceException e) {
             return false;
         }
     }
