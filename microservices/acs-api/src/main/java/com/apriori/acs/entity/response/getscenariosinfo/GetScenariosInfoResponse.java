@@ -7,13 +7,13 @@ import lombok.Data;
 @Data
 @Schema(location = "GetScenariosInfoResponse.json")
 public class GetScenariosInfoResponse {
-    public boolean initialized;
-    public boolean missing;
-    public boolean virtual;
+    public Boolean initialized;
+    public Boolean missing;
+    public Boolean virtual;
     public String componentName;
     public String componentType;
     public String scenarioName;
-    public boolean locked;
+    public Boolean locked;
     public String fileName;
     public String fileMetadataIdentity;
     public String createdAt;

@@ -5,14 +5,17 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.response.getscenariosinfo.GetScenarioInfoResponseTwo;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -45,8 +48,9 @@ public class GetScenariosInfoTests {
         );
         FileUploadOutputs fileUploadOutputsTwo = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponseTwo, testScenarioName);
 
+        ScenarioIterationKey keyOne = fileUploadOutputsOne.getScenarioIterationKey();
         AcsResources acsResources = new AcsResources();
-        GetScenariosInfoResponse response = acsResources.getScenariosInformation(
+        ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformation(
                 fileUploadOutputsOne.getScenarioIterationKey(),
                 fileUploadOutputsTwo.getScenarioIterationKey()
         );
