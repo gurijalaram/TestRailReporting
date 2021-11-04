@@ -4,6 +4,7 @@ import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -144,7 +145,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the users tab is enabled
      */
     public boolean isUsersTabEnabled() {
-        return pageUtils.isElementEnabledByAttribute(usersTab);
+        return !StringUtils.equalsIgnoreCase("true", usersTab.getAttribute("disabled"));
     }
 
     /**
@@ -153,7 +154,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the sites & licenses tab is enabled
      */
     public boolean isSitesAndLicensesEnabled() {
-        return pageUtils.isElementEnabledByAttribute(siteLicenseTab);
+        return !StringUtils.equalsIgnoreCase("true", siteLicenseTab.getAttribute("disabled"));
     }
 
     /**
@@ -162,7 +163,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the infrastructure tab is enabled
      */
     public boolean isInfrastructureEnabled() {
-        return pageUtils.isElementEnabledByAttribute(infraStructTab);
+        return !StringUtils.equalsIgnoreCase("true", infraStructTab.getAttribute("disabled"));
     }
 
     /**
@@ -171,7 +172,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the security tab is enabled
      */
     public boolean isSecurityEnabled() {
-        return pageUtils.isElementEnabledByAttribute(securityTab);
+        return !StringUtils.equalsIgnoreCase("true", securityTab.getAttribute("disabled"));
     }
 
     /**
@@ -180,7 +181,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the system configuration tab is enabled
      */
     public boolean isSystemConfigurationEnabled() {
-        return pageUtils.isElementEnabledByAttribute(systemConfigurationTab);
+        return !StringUtils.equalsIgnoreCase("true", systemConfigurationTab.getAttribute("disabled"));
     }
 
     /**
@@ -238,7 +239,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return The text value of the cloud ref field.
      */
     public String getCloudRefValue() {
-        return pageUtils.getValueOfElement(cloudRefInput);
+        return cloudRefInput.getAttribute("value");
     }
 
     /**
