@@ -24,7 +24,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @FindBy(xpath = "//a[.='Users']")
     private WebElement usersTab;
 
-    @FindBy(xpath = "//a[.='Site & License']")
+    @FindBy(xpath = "//a[.='Sites & Licenses']")
     private WebElement siteLicenseTab;
 
     @FindBy(xpath = "//a[.='Infrastructure']")
