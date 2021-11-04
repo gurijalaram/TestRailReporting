@@ -9,7 +9,6 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -167,27 +166,6 @@ public class PageUtils {
         }
     }
 
-    /**
-     * Does a similar check to isElementEnabled but will search
-     * for the disabled attribute.
-     *
-     * This enabled check also works on anchor tags and any other
-     * element that currently is not an input element.
-     *
-     * @param element The element to check.
-     *
-     * @return - True if the element has a disabled attribute that evaluates
-     *           to false.  False otherwise.
-     */
-    public boolean isElementEnabledByAttribute(WebElement element) {
-        try {
-            String disabled = element.getAttribute("disabled");
-            return !StringUtils.equalsIgnoreCase(disabled, "true");
-        } catch (NoSuchElementException | StaleElementReferenceException e) {
-            return false;
-        }
-    }
-
     public boolean isPageLoaded(WebElement element) {
         waitForElementToAppear(element);
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
@@ -289,25 +267,13 @@ public class PageUtils {
         // the text is deleted before and after the caret.  Note here that the +1 just
         // makes it so that it sends at least one of each character in the case that
         // the current value is already empty.
-        String currentValue = getValueOfElement(elementWithValue);
+        String currentValue = elementWithValue.getAttribute("value");
         Keys[] backspaces = new Keys[currentValue.length() + 1];
         Keys[] deletes = new Keys[currentValue.length() + 1];
         Arrays.fill(backspaces, Keys.BACK_SPACE);
         Arrays.fill(deletes, Keys.DELETE);
         elementWithValue.sendKeys(backspaces);
         elementWithValue.sendKeys(deletes);
-    }
-
-    /**
-     * Gets the value of an element with a value attribute.
-     *
-     * @param elementWithValue The element that contains the value attribute.
-     *
-     * @return The value of the value attribute.  Returns null if no such attribute
-     *         exists.
-     */
-    public String getValueOfElement(WebElement elementWithValue) {
-        return elementWithValue.getAttribute("value");
     }
 
     /**
