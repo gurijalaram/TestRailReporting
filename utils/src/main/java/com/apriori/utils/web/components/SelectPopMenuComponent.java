@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Represents the popup menu that is produced by a SelectComponent.
  */
-public final class SelectPopMenuComponent extends CommonComponent{
+public final class SelectPopMenuComponent extends CommonComponent {
     private List<WebElement> items;
 
     /**

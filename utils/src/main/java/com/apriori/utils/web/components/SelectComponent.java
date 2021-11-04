@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 /**
  * Represents the common select component in apriori-react-common.
  */
-public final class SelectComponent extends CommonComponent{
+public final class SelectComponent extends CommonComponent {
     private WebElement valueInput;
 
     /**
