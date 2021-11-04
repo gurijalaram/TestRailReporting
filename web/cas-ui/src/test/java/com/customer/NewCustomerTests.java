@@ -189,7 +189,6 @@ public class NewCustomerTests extends TestBase {
         assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
     }
 
-
     @Test
     @Description("Invalid emails should not be allowed.")
     @TestRail(testCaseId = "C9629")
