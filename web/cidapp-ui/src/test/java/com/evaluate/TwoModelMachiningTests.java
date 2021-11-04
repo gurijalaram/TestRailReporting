@@ -77,7 +77,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName.toUpperCase(), testScenarioName), is(true));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, testScenarioName), is(true));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Source Component")
