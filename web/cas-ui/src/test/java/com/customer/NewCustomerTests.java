@@ -16,6 +16,8 @@ import io.qameta.allure.Description;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
+import org.assertj.core.api.SoftAssertions;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -25,6 +27,7 @@ import org.openqa.selenium.WebElement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 
 public class NewCustomerTests extends TestBase {
@@ -42,32 +45,47 @@ public class NewCustomerTests extends TestBase {
     @TestRail(testCaseId = "C9600")
     public void testValidateThatTheFormLabelsAreCorrect() {
 
-        assertThat(customerProfilePage.isProfileTabDisplayed(), is(equalTo(true)));
-        assertThat(customerProfilePage.isUsersTabEnabled(), is(equalTo(false)));
-        assertThat(customerProfilePage.isSitesAndLicensesEnabled(), is(equalTo(false)));
-        assertThat(customerProfilePage.isInfrastructureEnabled(), is(equalTo(false)));
-        assertThat(customerProfilePage.isSecurityEnabled(), is(equalTo(false)));
-        assertThat(customerProfilePage.isSystemConfigurationEnabled(), is(equalTo(false)));
-        testNewCustomerLabelAvailable("Customer Name:");
-        testNewCustomerLabelAvailable("Description:");
-        testNewCustomerLabelAvailable("Customer Type:");
-        testNewCustomerLabelAvailable("Salesforce ID:");
-        testNewCustomerLabelAvailable("Cloud Reference:");
-        testNewCustomerLabelAvailable("Email Domains:");
-        testNewCustomerLabelAvailable("CAD File Retention Policy (days):");
-        testNewCustomerLabelAvailable("Max CAD File Size:");
-        testNewCustomerLabelAvailable("Last Updated:");
-        testNewCustomerLabelAvailable("Updated By:");
-        testNewCustomerLabelAvailable("Created:");
-        testNewCustomerLabelAvailable("Created By:");
-        testNewCustomerLabelAvailable("Authentication:");
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(customerProfilePage.isProfileTabDisplayed())
+            .overridingErrorMessage("The profile tab is missing")
+            .isTrue();
+        soft.assertThat(customerProfilePage.isUsersTabEnabled())
+            .overridingErrorMessage("The users tab is enabled on a new customer.")
+            .isFalse();
+        soft.assertThat(customerProfilePage.isSitesAndLicensesEnabled())
+            .overridingErrorMessage("The sites and licenses tab is enabled on a new customer.")
+            .isFalse();
+        soft.assertThat(customerProfilePage.isInfrastructureEnabled())
+            .overridingErrorMessage("The infrastructure tab is enabled on a new customer.")
+            .isFalse();
+        soft.assertThat(customerProfilePage.isSecurityEnabled())
+            .overridingErrorMessage("The security tab is visible on a new customer.")
+            .isFalse();
+        soft.assertThat(customerProfilePage.isSystemConfigurationEnabled())
+            .overridingErrorMessage("The system configuration tab is enabled on a new customer.")
+            .isFalse();
+
+        testNewCustomerLabelAvailable("Customer Name:", soft);
+        testNewCustomerLabelAvailable("Description:", soft);
+        testNewCustomerLabelAvailable("Customer Type:", soft);
+        testNewCustomerLabelAvailable("Salesforce ID:", soft);
+        testNewCustomerLabelAvailable("Cloud Reference:", soft);
+        testNewCustomerLabelAvailable("Email Domains:", soft);
+        testNewCustomerLabelAvailable("CAD File Retention Policy (days):", soft);
+        testNewCustomerLabelAvailable("Max CAD File Size:", soft);
+        testNewCustomerLabelAvailable("Last Updated:", soft);
+        testNewCustomerLabelAvailable("Updated By:", soft);
+        testNewCustomerLabelAvailable("Created:", soft);
+        testNewCustomerLabelAvailable("Created By:", soft);
+        testNewCustomerLabelAvailable("Authentication:", soft);
+        soft.assertAll();
     }
 
-    private void testNewCustomerLabelAvailable(String label) {
-        String query = String.format("//label[.='%s']", label);
-        WebElement element = driver.findElement(By.xpath(query));
-        boolean actual = element.isDisplayed();
-        assertThat(actual, is(equalTo(true)));
+    private void testNewCustomerLabelAvailable(String label, SoftAssertions soft) {
+        List<WebElement> elements = driver.findElements(By.xpath(String.format("//label[.='%s']", label)));
+        soft.assertThat(elements.size())
+            .overridingErrorMessage(String.format("Could not find the label, %s", label))
+            .isGreaterThan(0);
     }
 
     @Test
@@ -111,20 +129,29 @@ public class NewCustomerTests extends TestBase {
     @TestRail(testCaseId = "C9617")
     public void testTheNecessaryFieldsAreRequired() {
 
+        SoftAssertions soft = new SoftAssertions();
         customerProfilePage.enterCustomerName(null);
-        assertThat(customerProfilePage.getCustomerNameFeedback(), is(equalTo("Enter a customer name. This should be the company's official name or the name in Salesforce.")));
+        soft.assertThat(customerProfilePage.getCustomerNameFeedback())
+            .isEqualTo("Enter a customer name. This should be the company's official name or the name in Salesforce.");
         customerProfilePage.enterDescription(null);
-        assertThat(customerProfilePage.getDescriptionFeedback(), is(equalTo("Enter a description for the customer.")));
+        soft.assertThat(customerProfilePage.getDescriptionFeedback())
+            .isEqualTo("Enter a description for the customer.");
         customerProfilePage.clearCustomerType();
-        assertThat(customerProfilePage.getCustomerTypeFeedback(), is(equalTo("Select the customer type.")));
+        soft.assertThat(customerProfilePage.getCustomerTypeFeedback())
+            .isEqualTo("Select the customer type.");
         customerProfilePage.enterSalesforceId(null);
-        assertThat(customerProfilePage.getSalesforceIdFeedback(), is(equalTo("Please enter the salesforce id.")));
+        soft.assertThat(customerProfilePage.getSalesforceIdFeedback())
+            .isEqualTo("Please enter the salesforce id.");
         customerProfilePage.enterEmailDomains(null);
-        assertThat(customerProfilePage.getEmailDomFeedback(), is(equalTo("Enter email patterns using \",\" between items.")));
+        soft.assertThat(customerProfilePage.getEmailDomFeedback())
+            .isEqualTo("Enter email patterns using \",\" between items.");
         customerProfilePage.enterCadFileRetentionPolicy(null);
-        assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback(), is(equalTo("Enter the CAD retention policy.")));
+        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback())
+            .isEqualTo("Enter the CAD retention policy.");
         customerProfilePage.enterMaxCadFileSize(null);
-        assertThat(customerProfilePage.getMaxCadFileSizeFeedback(), is(equalTo("Enter the max CAD file size.")));
+        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback())
+            .isEqualTo("Enter the max CAD file size.");
+        soft.assertAll();
     }
 
     @Test
@@ -139,35 +166,25 @@ public class NewCustomerTests extends TestBase {
         assertThat(actual, is(equalTo("Should be no more than 64 characters in length.")));
     }
 
+    private void testSalesforceIdShouldBe15Or18Characters(int count, SoftAssertions soft) {
+        String salesforceId = RandomStringUtils.randomNumeric(14);
+        String actual = customerProfilePage
+            .enterSalesforceId(salesforceId)
+            .getSalesforceIdFeedback();
+        soft.assertThat(actual).isEqualTo("Should be 15 or 18 characters.");
+    }
+
     @Test
     @Description("Salesforce ID should be 15 or 18 characters.")
     @TestRail(testCaseId = "C9622")
     public void testSalesforceIdShouldBe15Or18Characters() {
 
-        String salesforceId = RandomStringUtils.randomNumeric(14);
-        String actual = customerProfilePage
-            .enterSalesforceId(salesforceId)
-            .getSalesforceIdFeedback();
-        assertThat(actual, is(equalTo("Should be 15 or 18 characters.")));
-
-        salesforceId = RandomStringUtils.randomNumeric(16);
-        actual = customerProfilePage
-            .enterSalesforceId(salesforceId)
-            .getSalesforceIdFeedback();
-        assertThat(actual, is(equalTo("Should be 15 or 18 characters.")));
-
-        salesforceId = RandomStringUtils.randomNumeric(17);
-        actual = customerProfilePage
-            .enterSalesforceId(salesforceId)
-            .getSalesforceIdFeedback();
-        assertThat(actual, is(equalTo("Should be 15 or 18 characters.")));
-
-        salesforceId = RandomStringUtils.randomNumeric(19);
-        actual = customerProfilePage
-            .enterSalesforceId(salesforceId)
-            .getSalesforceIdFeedback();
-        assertThat(actual, is(equalTo("Should be 15 or 18 characters.")));
-
+        SoftAssertions soft = new SoftAssertions();
+        testSalesforceIdShouldBe15Or18Characters(14, soft);
+        testSalesforceIdShouldBe15Or18Characters(16, soft);
+        testSalesforceIdShouldBe15Or18Characters(17, soft);
+        testSalesforceIdShouldBe15Or18Characters(19, soft);
+        soft.assertAll();
     }
 
     @Test
@@ -203,10 +220,12 @@ public class NewCustomerTests extends TestBase {
     @TestRail(testCaseId = "C9631")
     public void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days() {
 
+        SoftAssertions soft = new SoftAssertions();
         customerProfilePage.enterCadFileRetentionPolicy("0");
-        assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback(), is(equalTo("The retention policy requires at least 1 day.")));
+        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy requires at least 1 day.");
         customerProfilePage.enterCadFileRetentionPolicy("1096");
-        assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback(), is(equalTo("The retention policy allows at most 1095 days.")));
+        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy allows at most 1095 days.");
+        soft.assertAll();
     }
 
     @Test
@@ -214,9 +233,11 @@ public class NewCustomerTests extends TestBase {
     @TestRail(testCaseId = "C9634")
     public void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB() {
 
+        SoftAssertions soft = new SoftAssertions();
         customerProfilePage.enterMaxCadFileSize("9");
-        assertThat(customerProfilePage.getMaxCadFileSizeFeedback(), is(equalTo("You will require at least 10 MB for a CAD file.")));
+        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("You will require at least 10 MB for a CAD file.");
         customerProfilePage.enterMaxCadFileSize("101");
-        assertThat(customerProfilePage.getMaxCadFileSizeFeedback(), is(equalTo("The maximum CAD file size cannot exceed 100 MB.")));
+        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("The maximum CAD file size cannot exceed 100 MB.");
+        soft.assertAll();
     }
 }
