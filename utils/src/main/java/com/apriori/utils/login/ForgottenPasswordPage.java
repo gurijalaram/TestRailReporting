@@ -65,11 +65,10 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
      * Clicks the link to send the email
      *
      * @return new page object
-     */
     public AprioriLoginPage sendEmail() {
         sendEmail.click();
         return new AprioriLoginPage(driver, false);
-    }
+    }*/
 
     /**
      * Get reset password text

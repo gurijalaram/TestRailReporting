@@ -61,20 +61,18 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     private PageUtils pageUtils;
     private String url;
 
-    public AprioriLoginPage(WebDriver driver) {
-        init(driver, true);
+    public AprioriLoginPage(WebDriver driver, String application) {
+        init(driver, application, true);
     }
 
-    public AprioriLoginPage(WebDriver driver, boolean loadNewPage) {
-        init(driver, loadNewPage);
+    public AprioriLoginPage(WebDriver driver, String application, boolean loadNewPage) {
+        init(driver, application, loadNewPage);
     }
 
-    public void init(WebDriver driver,  boolean loadNewPage) {
+    public void init(WebDriver driver, String application, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-
-        String application = System.getProperty("user.dir").split("web\\\\")[1].split("-ui")[0];
 
         url = application == null || application.isEmpty() ? PropertiesContext.get("${env}.cloud.ui_url") : PropertiesContext.get("${env}." + application + ".ui_url");
 
@@ -129,10 +127,11 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param password - the password
      * @return the current page object
      */
-    public AprioriLoginPage failedLoginAs(String email, String password) {
+    public <T> T failedLoginAs(String email, String password, Class<T> klass) {
         executeLogin(email, password);
         pageUtils.waitForElementToAppear(loginErrorMsg);
         return new AprioriLoginPage(driver, false);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -181,7 +180,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return login error message
      */
-    public String getLoginErrorMessage() {
+    protected String getLoginErrorMessage() {
         return loginErrorMsg.getText();
     }
 
@@ -190,7 +189,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return current page object
      */
-    public AprioriLoginPage getUsernameAndPassword() {
+    protected AprioriLoginPage getUsernameAndPassword() {
         getEmail();
         getPassword();
         return this;
@@ -211,7 +210,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return new page object
      */
-    public PrivacyPolicyPage privacyPolicy() {
+    protected PrivacyPolicyPage privacyPolicy() {
         pageUtils.waitForElementAndClick(privacyPolicy);
         return new PrivacyPolicyPage(driver);
     }
@@ -239,7 +238,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return true/false
      */
-    public boolean isLogoDisplayed() {
+    protected boolean isLogoDisplayed() {
         return aprioriLogo.isDisplayed();
     }
 
@@ -248,7 +247,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    public String getMarketingText() {
+    protected String getMarketingText() {
         return marketingText.getText();
     }
 
@@ -257,7 +256,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    public String getWelcomeText() {
+    protected String getWelcomeText() {
         return welcomeText.getText();
     }
 }

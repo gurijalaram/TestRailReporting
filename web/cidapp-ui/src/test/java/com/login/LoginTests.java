@@ -6,18 +6,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -25,8 +23,7 @@ public class LoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
-    private AprioriLoginPage aprioriLoginPage;
-    private AprioriLoginPage loginPage;
+    private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ForgottenPasswordPage forgottenPasswordPage;
     private PrivacyPolicyPage privacyPolicyPage;
@@ -45,23 +42,23 @@ public class LoginTests extends TestBase {
     @Description("Test successful login")
     public void testLogin() {
 
-        loginPage = new AprioriLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser(), ExplorePage.class);
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser());
 
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
-    @Test
+    /*@Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6646"})
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
-        loginPage = new AprioriLoginPage(driver);
+        loginPage = new CidAppLoginPage(driver);
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
-    }
+    }*/
 
     /*@Test
     @Category(SmokeTests.class)
