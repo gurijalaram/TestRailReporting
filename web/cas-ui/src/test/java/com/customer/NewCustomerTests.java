@@ -21,8 +21,10 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import testsuites.categories.SmokeTest;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -42,7 +44,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Clicking the New Customer button takes me to the profile form and all displays are valid.")
-    @TestRail(testCaseId = "C9600")
+    @TestRail(testCaseId = {"9600"})
     public void testValidateThatTheFormLabelsAreCorrect() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -89,8 +91,9 @@ public class NewCustomerTests extends TestBase {
     }
 
     @Test
+    @Category({SmokeTest.class})
     @Description("Clicking the cancel button returns the user to the customer list.")
-    @TestRail(testCaseId = "C9613")
+    @TestRail(testCaseId = {"9613"})
     public void testCancelReturnsTheUserToTheCustomerListWhenCreatingANewCustomer() {
 
         CustomerAdminPage actual = customerProfilePage.cancel(CustomerAdminPage.class);
@@ -98,8 +101,9 @@ public class NewCustomerTests extends TestBase {
     }
 
     @Test
+    @Category({SmokeTest.class})
     @Description("The save button creates the new user and reloads the page in edit mode.")
-    @TestRail(testCaseId = "C9616")
+    @TestRail(testCaseId = {"9616"})
     public void testSaveCreatesTheNewUserAndThePageReloadsWithTheNewCustomer() {
 
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
@@ -126,7 +130,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("All enabled fields are required.")
-    @TestRail(testCaseId = "C9617")
+    @TestRail(testCaseId = {"9617"})
     public void testTheNecessaryFieldsAreRequired() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -156,7 +160,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Customer name should be no more than 64 characters in length.")
-    @TestRail(testCaseId = "C9618")
+    @TestRail(testCaseId = {"9618"})
     public void testCustomerNameShouldBeNoMoreThan64Characters() {
 
         String nameTooLong = RandomStringUtils.randomAlphanumeric(65);
@@ -176,7 +180,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Salesforce ID should be 15 or 18 characters.")
-    @TestRail(testCaseId = "C9622")
+    @TestRail(testCaseId = {"9622"})
     public void testSalesforceIdShouldBe15Or18Characters() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -189,7 +193,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Cloud reference should be disabled for on premise customers and required for cloud customers.")
-    @TestRail(testCaseId = "C9623")
+    @TestRail(testCaseId = {"9623"})
     public void testCloudReferenceIsDisabledForOnPremiseCustomers() {
 
         customerProfilePage.selectCustomerTypeOnPremise();
@@ -208,7 +212,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Invalid emails should not be allowed.")
-    @TestRail(testCaseId = "C9629")
+    @TestRail(testCaseId = {"9629"})
     public void testEmailDomainsRequireValidEmails() {
 
         customerProfilePage.enterEmailDomains("aa");
@@ -217,7 +221,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("CAD File Retention Policy requires at least one day and has a maximum of 1095 days.")
-    @TestRail(testCaseId = "C9631")
+    @TestRail(testCaseId = {"9631"})
     public void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days() {
 
         SoftAssertions soft = new SoftAssertions();
@@ -230,7 +234,7 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Description("Max CAD File Size should be between 10 MB and 100MB.")
-    @TestRail(testCaseId = "C9634")
+    @TestRail(testCaseId = {"9634"})
     public void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB() {
 
         SoftAssertions soft = new SoftAssertions();
