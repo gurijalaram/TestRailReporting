@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Represents the popup menu that is produced by a SelectComponent.
  */
-public class SelectPopMenuComponent extends CommonComponent<SelectPopMenuComponent> {
+public final class SelectPopMenuComponent extends CommonComponent{
     private List<WebElement> items;
 
     /**
@@ -19,7 +19,8 @@ public class SelectPopMenuComponent extends CommonComponent<SelectPopMenuCompone
      */
     public SelectPopMenuComponent(SelectComponent parent) {
         super(parent.getDriver(), parent.getRoot());
-        this.get();
+
+        items = getRoot().findElements(By.className("select-menu-item"));
     }
 
     /**
@@ -32,23 +33,5 @@ public class SelectPopMenuComponent extends CommonComponent<SelectPopMenuCompone
             .filter((element) -> StringUtils.equals(element.getText(), item))
             .findFirst()
             .ifPresent(WebElement::click);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
-    protected void load() {
-        items = getRoot().findElements(By.className("select-menu-item"));
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
-    protected void isLoaded() {
-        if (items == null) {
-            throw new Error("The items have not been loaded.");
-        }
     }
 }

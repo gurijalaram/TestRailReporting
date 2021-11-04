@@ -2,7 +2,6 @@ package com.apriori.utils.web.components;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 /**
  * Represents a common component in a web application that is used throughout
@@ -11,7 +10,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
  * These components are built by attaching the root of a WebElement on the page
  * to them.
  */
-public abstract class CommonComponent<T extends LoadableComponent<T>> extends LoadableComponent<T> {
+public abstract class CommonComponent {
     private WebDriver driver;
     private WebElement root;
 
@@ -20,8 +19,10 @@ public abstract class CommonComponent<T extends LoadableComponent<T>> extends Lo
      *
      * @param driver The overall global web driver that is querying different pages.
      * @param root The root element to attach for this component.
+     *
+     * @exception java.lang.Error Occurs if there is a problem loading child components.
      */
-    public CommonComponent(WebDriver driver, WebElement root) {
+    protected CommonComponent(WebDriver driver, WebElement root) {
         this.driver = driver;
         this.root = root;
     }

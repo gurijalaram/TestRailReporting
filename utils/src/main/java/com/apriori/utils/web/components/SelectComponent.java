@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 /**
  * Represents the common select component in apriori-react-common.
  */
-public final class SelectComponent extends CommonComponent<SelectComponent> {
+public final class SelectComponent extends CommonComponent{
     private WebElement valueInput;
 
     /**
@@ -16,27 +16,14 @@ public final class SelectComponent extends CommonComponent<SelectComponent> {
      *
      * @param driver The web driver
      * @param root The root element.
+     *
+     * @exception java.lang.Error Occurs if the underlying value input cannot be found.
      */
     public SelectComponent(final WebDriver driver, final WebElement root) {
         super(driver, root);
-        this.get();
-    }
 
-    /**
-     * @inheritDoc
-     */
-    @Override
-    protected void load() {
         valueInput = this.getRoot().findElement(By.cssSelector("input"));
-    }
 
-    /**
-     * @inheritDoc
-     *
-     * @throws Error If the value input for this component cannot be found.
-     */
-    @Override
-    protected void isLoaded() throws Error {
         if (valueInput == null) {
             throw new Error("The main input control for a select component was not found.");
         }

@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
  *
  * This is just a wrapper to the actual underlying select field.
  */
-public final class SelectFieldComponent extends CommonComponent<SelectFieldComponent> {
+public final class SelectFieldComponent extends CommonComponent {
     private SelectComponent selectComponent;
 
     /**
@@ -17,7 +17,9 @@ public final class SelectFieldComponent extends CommonComponent<SelectFieldCompo
      */
     public SelectFieldComponent(WebDriver driver, WebElement root) {
         super(driver, root);
-        this.get();
+
+        WebElement element = this.getRoot().findElement(By.cssSelector(".apriori-select"));
+        this.selectComponent = new SelectComponent(getDriver(), element);
     }
 
     /**
@@ -27,24 +29,5 @@ public final class SelectFieldComponent extends CommonComponent<SelectFieldCompo
      */
     public SelectComponent getSelect() {
         return this.selectComponent;
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
-    protected void load() {
-        WebElement element = this.getRoot().findElement(By.cssSelector(".apriori-select"));
-        this.selectComponent = new SelectComponent(getDriver(), element);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
-    protected void isLoaded() throws Error {
-        if (selectComponent == null) {
-            throw new Error("The underlying select component in a select field is missing.");
-        }
     }
 }
