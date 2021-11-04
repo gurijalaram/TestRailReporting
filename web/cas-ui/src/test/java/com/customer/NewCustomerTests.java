@@ -38,25 +38,29 @@ public class NewCustomerTests extends TestBase {
     }
 
     @Test
-    @Description("When the new customer button is clicked, I should be taken to the new customer form.")
-    @TestRail(testCaseId = "C9598")
-    public void testNewCustomerButtonRoutesToNewCustomerForm() {
+    @Description("Clicking the New Customer button takes me to the profile form and all displays are valid.")
+    @TestRail(testCaseId = "C9600")
+    public void testValidateThatTheFormLabelsAreCorrect() {
 
-        boolean actual = customerProfilePage.isProfileTabDisplayed();
-        assertThat(actual, is(equalTo(true)));
-    }
-
-    @Test
-    @Description("When creating a new customer, the tabs should be disabled.")
-    @TestRail(testCaseId = "C9599")
-    public void testNewCustomerTabsDisabled() {
-
-        boolean actual = customerProfilePage.isUsersTabEnabled() ||
-            customerProfilePage.isSitesAndLicensesEnabled() ||
-            customerProfilePage.isInfrastructureEnabled() ||
-            customerProfilePage.isSecurityEnabled() ||
-            customerProfilePage.isSystemConfigurationEnabled();
-        assertThat(actual, is(equalTo(false)));
+        assertThat(customerProfilePage.isProfileTabDisplayed(), is(equalTo(true)));
+        assertThat(customerProfilePage.isUsersTabEnabled(), is(equalTo(false)));
+        assertThat(customerProfilePage.isSitesAndLicensesEnabled(), is(equalTo(false)));
+        assertThat(customerProfilePage.isInfrastructureEnabled(), is(equalTo(false)));
+        assertThat(customerProfilePage.isSecurityEnabled(), is(equalTo(false)));
+        assertThat(customerProfilePage.isSystemConfigurationEnabled(), is(equalTo(false)));
+        testNewCustomerLabelAvailable("Customer Name:");
+        testNewCustomerLabelAvailable("Description:");
+        testNewCustomerLabelAvailable("Customer Type:");
+        testNewCustomerLabelAvailable("Salesforce ID:");
+        testNewCustomerLabelAvailable("Cloud Reference:");
+        testNewCustomerLabelAvailable("Email Domains:");
+        testNewCustomerLabelAvailable("CAD File Retention Policy (days):");
+        testNewCustomerLabelAvailable("Max CAD File Size:");
+        testNewCustomerLabelAvailable("Last Updated:");
+        testNewCustomerLabelAvailable("Updated By:");
+        testNewCustomerLabelAvailable("Created:");
+        testNewCustomerLabelAvailable("Created By:");
+        testNewCustomerLabelAvailable("Authentication:");
     }
 
     private void testNewCustomerLabelAvailable(String label) {
@@ -67,131 +71,12 @@ public class NewCustomerTests extends TestBase {
     }
 
     @Test
-    @Description("The label for customer name should be Customer Name:")
-    @TestRail(testCaseId = "C9600")
-    public void testNewCustomerLabelCustomerNameAvailable() {
-        testNewCustomerLabelAvailable("Customer Name:");
-    }
-
-    @Test
-    @Description("The label for description should be Description:")
-    @TestRail(testCaseId = "C9601")
-    public void testNewCustomerLabelDescriptionAvailable() {
-        testNewCustomerLabelAvailable("Description:");
-    }
-
-    @Test
-    @Description("The label for customer type should be Customer Type:")
-    @TestRail(testCaseId = "C9602")
-    public void testNewCustomerLabelCustomerTypeAvailable() {
-        testNewCustomerLabelAvailable("Customer Type:");
-    }
-
-    @Test
-    @Description("The label for salesforce id should be Salesforce ID:")
-    @TestRail(testCaseId = "C9603")
-    public void testNewCustomerLabelSalesforceIdAvailable() {
-        testNewCustomerLabelAvailable("Salesforce ID:");
-    }
-
-    @Test
-    @Description("The label for cloud reference id should be Cloud Reference:")
-    @TestRail(testCaseId = "C9604")
-    public void testNewCustomerLabelCloudReferenceAvailable() {
-        testNewCustomerLabelAvailable("Cloud Reference:");
-    }
-
-    @Test
-    @Description("The label for email domains id should be Email Domains:")
-    @TestRail(testCaseId = "C9605")
-    public void testNewCustomerLabelEmailDomainsAvailable() {
-        testNewCustomerLabelAvailable("Email Domains:");
-    }
-
-    @Test
-    @Description("The label for cad file retention policy id should be CAD File Retention Policy (days):")
-    @TestRail(testCaseId = "C9606")
-    public void testNewCustomerLabelCadFileRetentionPolicyAvailable() {
-        testNewCustomerLabelAvailable("CAD File Retention Policy (days):");
-    }
-
-    @Test
-    @Description("The label for max cad file size should be Max CAD File Size:")
-    @TestRail(testCaseId = "C9607")
-    public void testNewCustomerLabelMaxCadFileSizeAvailable() {
-        testNewCustomerLabelAvailable("Max CAD File Size:");
-    }
-
-    @Test
-    @Description("The label for updated at should be Last Updated:")
-    @TestRail(testCaseId = "C9608")
-    public void testNewCustomerLabelUpdatedAtAvailable() {
-        testNewCustomerLabelAvailable("Last Updated:");
-    }
-
-    @Test
-    @Description("The label for updated by should be Updated By:")
-    @TestRail(testCaseId = "C9609")
-    public void testNewCustomerLabelUpdatedByAvailable() {
-        testNewCustomerLabelAvailable("Updated By:");
-    }
-
-    @Test
-    @Description("The label for created at should be Created At:")
-    @TestRail(testCaseId = "C9610")
-    public void testNewCustomerLabelCreatedAtAvailable() {
-        testNewCustomerLabelAvailable("Created:");
-    }
-
-    @Test
-    @Description("The label for created by should be Created By:")
-    @TestRail(testCaseId = "C9611")
-    public void testNewCustomerLabelCreatedByAvailable() {
-        testNewCustomerLabelAvailable("Created By:");
-    }
-
-    @Test
-    @Description("The label for authentication should be Authentication:")
-    @TestRail(testCaseId = "C9612")
-    public void testNewCustomerLabelAuthenticationAvailable() {
-        testNewCustomerLabelAvailable("Authentication:");
-    }
-
-    @Test
     @Description("Clicking the cancel button returns the user to the customer list.")
     @TestRail(testCaseId = "C9613")
-    public void testCancelReturnsTheUserToTheCustomerList() {
+    public void testCancelReturnsTheUserToTheCustomerListWhenCreatingANewCustomer() {
 
         CustomerAdminPage actual = customerProfilePage.cancel(CustomerAdminPage.class);
         assertThat(actual, is(notNullValue()));
-    }
-
-    @Test
-    @Description("The save button is disabled when the form is invalid.")
-    @TestRail(testCaseId = "C9614")
-    public void testSaveIsDisabledWhenTheFormIsInvalid() {
-
-        boolean actual = customerProfilePage.enterDescription("Automation Test Customer")
-            .enterSalesforceId("000000000000000")
-            .enterEmailDomains("apriori.com")
-            .enterCustomerName(null)
-            .isSaveButtonEnabled();
-        assertThat(actual, is(equalTo(false)));
-    }
-
-    @Test
-    @Description("The save button is enabled when all fields have been entered and are valid.")
-    @TestRail(testCaseId = "C9615")
-    public void testSaveIsEnabledWhenAllOfTheFieldsAreValid() {
-
-        boolean actual = customerProfilePage.enterCustomerName("QA Automation")
-            .enterDescription("Automation Test Customer")
-            .enterSalesforceId("000000000000000000")
-            .enterEmailDomains("apriori.com")
-            .enterCustomerName(null)
-            .enterCustomerName("Automation Customer")
-            .isSaveButtonEnabled();
-        assertThat(actual, is(equalTo(true)));
     }
 
     @Test
@@ -203,24 +88,43 @@ public class NewCustomerTests extends TestBase {
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         String salesforceId = format.format(new Date());
         String customerName = String.format("QA Automation %s", salesforceId);
-        CustomerProfilePage editPage = customerProfilePage.enterCustomerName(customerName)
+        customerProfilePage
             .enterDescription("Automation Test Customer")
             .enterSalesforceId(salesforceId)
             .enterEmailDomains("apriori.com")
+            .enterCustomerName(customerName);
+
+        assertThat(customerProfilePage.isSaveButtonEnabled(), is(equalTo(true)));
+        customerProfilePage.enterCustomerName(null);
+        assertThat(customerProfilePage.isSaveButtonEnabled(), is(equalTo(false)));
+
+        CustomerProfilePage editPage = customerProfilePage
+            .enterCustomerName(customerName)
             .save()
             .edit();
+
         assertThat(editPage, is(notNullValue()));
     }
 
     @Test
-    @Description("Customer name is required.")
+    @Description("All enabled fields are required.")
     @TestRail(testCaseId = "C9617")
-    public void testCustomerNameRequired() {
+    public void testTheNecessaryFieldsAreRequired() {
 
-        String actual = customerProfilePage
-            .enterCustomerName(null)
-            .getCustomerNameFeedback();
-        assertThat(actual, is(equalTo("Enter a customer name. This should be the company's official name or the name in Salesforce.")));
+        customerProfilePage.enterCustomerName(null);
+        assertThat(customerProfilePage.getCustomerNameFeedback(), is(equalTo("Enter a customer name. This should be the company's official name or the name in Salesforce.")));
+        customerProfilePage.enterDescription(null);
+        assertThat(customerProfilePage.getDescriptionFeedback(), is(equalTo("Enter a description for the customer.")));
+        customerProfilePage.clearCustomerType();
+        assertThat(customerProfilePage.getCustomerTypeFeedback(), is(equalTo("Select the customer type.")));
+        customerProfilePage.enterSalesforceId(null);
+        assertThat(customerProfilePage.getSalesforceIdFeedback(), is(equalTo("Please enter the salesforce id.")));
+        customerProfilePage.enterEmailDomains(null);
+        assertThat(customerProfilePage.getEmailDomFeedback(), is(equalTo("Enter email patterns using \",\" between items.")));
+        customerProfilePage.enterCadFileRetentionPolicy(null);
+        assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback(), is(equalTo("Enter the CAD retention policy.")));
+        customerProfilePage.enterMaxCadFileSize(null);
+        assertThat(customerProfilePage.getMaxCadFileSizeFeedback(), is(equalTo("Enter the max CAD file size.")));
     }
 
     @Test
@@ -233,39 +137,6 @@ public class NewCustomerTests extends TestBase {
             .enterCustomerName(nameTooLong)
             .getCustomerNameFeedback();
         assertThat(actual, is(equalTo("Should be no more than 64 characters in length.")));
-    }
-
-    @Test
-    @Description("Description should be required.")
-    @TestRail(testCaseId = "C9619")
-    public void testDescriptionShouldBeRequired() {
-
-        String actual = customerProfilePage
-            .enterDescription(null)
-            .getDescriptionFeedback();
-        assertThat(actual, is(equalTo("Enter a description for the customer.")));
-    }
-
-    @Test
-    @Description("Customer type should be required.")
-    @TestRail(testCaseId = "C9620")
-    public void testCustomerTypeShouldBeRequired() {
-
-        String actual = customerProfilePage
-            .clearCustomerType()
-            .getCustomerTypeFeedback();
-        assertThat(actual, is(equalTo("Select the customer type.")));
-    }
-
-    @Test
-    @Description("Salesforce ID is required.")
-    @TestRail(testCaseId = "C9621")
-    public void testSalesforceIdIsRequired() {
-
-        String actual = customerProfilePage
-            .enterSalesforceId(null)
-            .getSalesforceIdFeedback();
-        assertThat(actual, is(equalTo("Please enter the salesforce id.")));
     }
 
     @Test
@@ -300,151 +171,53 @@ public class NewCustomerTests extends TestBase {
     }
 
     @Test
-    @Description("Cloud reference should be disabled for on premise customers.")
+    @Description("Cloud reference should be disabled for on premise customers and required for cloud customers.")
     @TestRail(testCaseId = "C9623")
     public void testCloudReferenceIsDisabledForOnPremiseCustomers() {
 
-        boolean actual = customerProfilePage
-            .selectCustomerTypeOnPremise()
-            .isCloudReferenceEnabled();
-        assertThat(actual, is(equalTo(false)));
+        customerProfilePage.selectCustomerTypeOnPremise();
+        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
+        customerProfilePage.selectCustomerTypeCloud();
+        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(true)));
+        customerProfilePage.selectCustomerTypeOnPremiseAndCloud();
+        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(true)));
+        customerProfilePage.enterCloudRef(null);
+        assertThat(customerProfilePage.getCloudRefFeedback(),  is(equalTo("Enter a cloud reference.")));
+        customerProfilePage.selectCustomerTypeOnPremise();
+        assertThat(customerProfilePage.getCloudRefFeedback(), is(equalTo("")));
+        assertThat(customerProfilePage.getCloudRefValue(), is(equalTo("")));
+        assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
     }
 
-    @Test
-    @Description("Cloud reference should be enabled for cloud customers.")
-    @TestRail(testCaseId = "C9624")
-    public void testCloudReferenceIsEnabledForCloudCustomers() {
-
-        boolean actual = customerProfilePage
-            .selectCustomerTypeCloud()
-            .isCloudReferenceEnabled();
-        assertThat(actual, is(equalTo(true)));
-    }
-
-    @Test
-    @Description("Cloud reference should be enabled for cloud and on premise customers.")
-    @TestRail(testCaseId = "C9625")
-    public void testCloudReferenceIsEnabledForCloudAndOnPremiseCustomers() {
-
-        boolean actual = customerProfilePage
-            .selectCustomerTypeOnPremiseAndCloud()
-            .isCloudReferenceEnabled();
-        assertThat(actual, is(equalTo(true)));
-    }
-
-    @Test
-    @Description("Cloud reference should be required if it is enabled.")
-    @TestRail(testCaseId = "C9626")
-    public void testCloudReferenceIsRequiredIfEnabled() {
-
-        String actual = customerProfilePage
-            .selectCustomerTypeCloud()
-            .enterCloudRef(null)
-            .getCloudRefFeedback();
-        assertThat(actual, is(equalTo("Enter a cloud reference.")));
-    }
-
-    @Test
-    @Description("Cloud reference should not be required for on premise customers.")
-    @TestRail(testCaseId = "C9627")
-    public void testCloudReferenceIsNotRequiredIfDisabled() {
-
-        String actual = customerProfilePage
-            .selectCustomerTypeCloud()
-            .enterCloudRef("cloud-reference")
-            .selectCustomerTypeOnPremise()
-            .getCloudRefFeedback();
-        assertThat(actual, is(equalTo("")));
-
-        actual = customerProfilePage.getCloudRefValue();
-        assertThat(actual, is(equalTo("")));
-    }
-
-    @Test
-    @Description("Email domains should be required.")
-    @TestRail(testCaseId = "C9628")
-    public void testEmailDomainsRequired() {
-
-        String actual = customerProfilePage
-            .enterEmailDomains(null)
-            .getEmailDomFeedback();
-        assertThat(actual, is(equalTo("Enter email patterns using \",\" between items.")));
-    }
 
     @Test
     @Description("Invalid emails should not be allowed.")
     @TestRail(testCaseId = "C9629")
     public void testEmailDomainsRequireValidEmails() {
 
-        String actual = customerProfilePage
-            .enterEmailDomains("aa")
-            .getEmailDomFeedback();
-        assertThat(actual, is(equalTo("Email domains must be comma separated, contain no spaces, and must include the top level domain of at least 2 characters.")));
+        customerProfilePage.enterEmailDomains("aa");
+        assertThat(customerProfilePage.getEmailDomFeedback(), is(equalTo("Email domains must be comma separated, contain no spaces, and must include the top level domain of at least 2 characters.")));
     }
 
     @Test
-    @Description("CAD File Retention Policy is required.")
-    @TestRail(testCaseId = "C9630")
-    public void testCadFileRetentionPolicyIsRequired() {
-
-        String actual = customerProfilePage
-            .enterCadFileRetentionPolicy(null)
-            .getCadFileRetentionPolicyFeedback();
-        assertThat(actual, is(equalTo("Enter the CAD retention policy.")));
-    }
-
-    @Test
-    @Description("CAD File Retention Policy requires at least one day.")
+    @Description("CAD File Retention Policy requires at least one day and has a maximum of 1095 days.")
     @TestRail(testCaseId = "C9631")
-    public void testCadFileRetentionPolicyRequiresAtLeastOneDay() {
+    public void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days() {
 
-        String actual = customerProfilePage
-            .enterCadFileRetentionPolicy("0")
-            .getCadFileRetentionPolicyFeedback();
-        assertThat(actual, is(equalTo("The retention policy requires at least 1 day.")));
+        customerProfilePage.enterCadFileRetentionPolicy("0");
+        assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback(), is(equalTo("The retention policy requires at least 1 day.")));
+        customerProfilePage.enterCadFileRetentionPolicy("1096");
+        assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback(), is(equalTo("The retention policy allows at most 1095 days.")));
     }
 
     @Test
-    @Description("CAD File Retention Policy has a maximum of 1095 days.")
-    @TestRail(testCaseId = "C9632")
-    public void testCadFileRetentionPolicyHasAMaximumOf1095Days() {
-
-        String actual = customerProfilePage
-            .enterCadFileRetentionPolicy("1096")
-            .getCadFileRetentionPolicyFeedback();
-        assertThat(actual, is(equalTo("The retention policy allows at most 1095 days.")));
-    }
-
-    @Test
-    @Description("Max Cad File Size is required.")
-    @TestRail(testCaseId = "C9633")
-    public void testMaxCadFileSizeIsRequired() {
-
-        String actual = customerProfilePage
-            .enterMaxCadFileSize(null)
-            .getMaxCadFileSizeFeedback();
-        assertThat(actual, is(equalTo("Enter the max CAD file size.")));
-    }
-
-    @Test
-    @Description("Max CAD File Size should be at least 10 MB.")
+    @Description("Max CAD File Size should be between 10 MB and 100MB.")
     @TestRail(testCaseId = "C9634")
-    public void testMaxCadFileSizeShouldBeAtLeast10Mb() {
+    public void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB() {
 
-        String actual = customerProfilePage
-            .enterMaxCadFileSize("9")
-            .getMaxCadFileSizeFeedback();
-        assertThat(actual, is(equalTo("You will require at least 10 MB for a CAD file.")));
-    }
-
-    @Test
-    @Description("Max CAD File Size should be at most 100 MB.")
-    @TestRail(testCaseId = "C9635")
-    public void testMaxCadFileSizeShouldBeAtMost100MB() {
-
-        String actual = customerProfilePage
-            .enterMaxCadFileSize("101")
-            .getMaxCadFileSizeFeedback();
-        assertThat(actual, is(equalTo("The maximum CAD file size cannot exceed 100 MB.")));
+        customerProfilePage.enterMaxCadFileSize("9");
+        assertThat(customerProfilePage.getMaxCadFileSizeFeedback(), is(equalTo("You will require at least 10 MB for a CAD file.")));
+        customerProfilePage.enterMaxCadFileSize("101");
+        assertThat(customerProfilePage.getMaxCadFileSizeFeedback(), is(equalTo("The maximum CAD file size cannot exceed 100 MB.")));
     }
 }
