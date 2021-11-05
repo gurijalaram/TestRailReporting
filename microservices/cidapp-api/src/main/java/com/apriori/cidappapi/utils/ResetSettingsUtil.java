@@ -56,11 +56,11 @@ public class ResetSettingsUtil {
         String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
         String digFacIdentity = mappedResponse.get("production.defaultDigitalFactory");
         String matCatalogIdentity = mappedResponse.get("production.defaultMaterialCatalogName");
+        String materialIdentity = mappedResponse.get("production.defaultMaterialName");
         String annVolIdentity = mappedResponse.get("production.defaultAnnualVolume");
         String prodLifeIdentity = mappedResponse.get("production.defaultProductionLife");
         String batchIdentity = mappedResponse.get("production.defaultBatchSize");
         String tolModeIdentity = mappedResponse.get("tolerance.toleranceMode");
-        String cadThresholdIdentity = mappedResponse.get("tolerance.useCadToleranceThreshold");
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(token)
@@ -78,9 +78,10 @@ public class ResetSettingsUtil {
                 + "\"" + proGroupIdentity + "\":\"" + null + "\","
                 + "\"" + digFacIdentity + "\":\"" + null + "\","
                 + "\"" + matCatalogIdentity + "\":\"" + null + "\","
-                + "\"" + annVolIdentity + "\":\"" + null + "\","
-                + "\"" + prodLifeIdentity + "\":\"" + null + "\","
-                + "\"" + batchIdentity + "\":\"" + null + "\","
+                + "\"" + materialIdentity + "\":\"Use Default\","
+                + "\"" + annVolIdentity + "\":\"" + 5500 + "\","
+                + "\"" + prodLifeIdentity + "\":\"" + 5 + "\","
+                + "\"" + batchIdentity + "\":\"" + 458 + "\","
                 + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 
