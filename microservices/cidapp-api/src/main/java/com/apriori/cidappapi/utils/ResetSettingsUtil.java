@@ -81,7 +81,6 @@ public class ResetSettingsUtil {
                 + "\"" + annVolIdentity + "\":\"" + null + "\","
                 + "\"" + prodLifeIdentity + "\":\"" + null + "\","
                 + "\"" + batchIdentity + "\":\"" + null + "\","
-                + "\"" + cadThresholdIdentity + "\":\"" + false + "\","
                 + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 
