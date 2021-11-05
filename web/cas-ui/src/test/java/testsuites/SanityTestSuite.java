@@ -11,7 +11,7 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import testsuites.categories.SanityTest;
+import com.apriori.testsuites.categories.SanityTest;
 
 @ProjectRunID("874")
 @RunWith(CategorySuiteRunner.class)
