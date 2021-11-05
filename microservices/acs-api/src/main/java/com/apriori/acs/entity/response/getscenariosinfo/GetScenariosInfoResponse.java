@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 @Data
 @Schema(location = "GetScenariosInfoResponse.json")
-public class GetScenariosInfoResponse extends ArrayList {
+public class GetScenariosInfoResponse extends ArrayList<GetScenariosInfoResponse> {
     public Boolean initialized;
     public Boolean missing;
     public Boolean virtual;

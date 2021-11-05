@@ -94,7 +94,7 @@ public class AcsResources {
      * @return instance of GetScenariosInfoResponse
      */
     public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation(ScenarioIterationKey scenarioIterationKeyOne,
-                                                                                   ScenarioIterationKey scenarioIterationKeyTwo) {
+                                                                             ScenarioIterationKey scenarioIterationKeyTwo) {
         token.put(contentType, applicationJson);
 
         ArrayList<ScenarioIterationKey> listOfKeys = new ArrayList<>();
