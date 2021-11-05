@@ -1,6 +1,8 @@
 package com.apriori.utils;
 
 import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
+import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
@@ -374,7 +376,7 @@ public class PageUtils {
 
         new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfElementLocated(element));
+            .until(invisibilityOfElementLocated(element));
     }
 
     /**
@@ -384,11 +386,11 @@ public class PageUtils {
      * @return size as int
      */
     public void waitForElementsToNotAppear(By element, long timeoutInMinutes) {
-        long maxWaitTime = 120L;
+        long webDriverWait = 120L;
 
-        new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime * timeoutInMinutes))
+        new WebDriverWait(driver, Duration.ofSeconds(webDriverWait * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfElementLocated(element));
+            .until(invisibilityOfElementLocated(element));
     }
 
     /**
@@ -398,11 +400,11 @@ public class PageUtils {
      * @return true/false
      */
     public void waitForElementsToNotAppear(List<WebElement> element) {
-        long maxWaitTime = 120L;
+        long webDriverWait = 120L;
 
-        new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+        new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
             .ignoreAll(ignoredWebDriverExceptions)
-            .until(ExpectedConditions.invisibilityOfAllElements(element));
+            .until(invisibilityOfAllElements(element));
     }
 
     /**
@@ -412,14 +414,15 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementAppear(WebElement element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
         Exception ex;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(visibilityOf(element));
 
@@ -429,7 +432,7 @@ public class PageUtils {
                 retries++;
             }
 
-            if (retries == 6) {
+            if (retries == maxRetries) {
                 throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
 
@@ -444,14 +447,15 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToAppear(WebElement element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
         Exception ex;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(visibilityOf(element));
 
@@ -461,7 +465,7 @@ public class PageUtils {
                 retries++;
             }
 
-            if (retries == 6) {
+            if (retries == maxRetries) {
                 throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
@@ -475,13 +479,14 @@ public class PageUtils {
      * @return size as int
      */
     public WebElement waitForElementToAppear(By element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(visibilityOfElementLocated(element));
 
@@ -500,13 +505,14 @@ public class PageUtils {
      * @return int
      */
     public List<WebElement> waitForElementsToAppear(By element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(visibilityOfAllElementsLocatedBy(element));
 
@@ -525,14 +531,15 @@ public class PageUtils {
      * @return size as int
      */
     public List<WebElement> waitForElementsToAppear(List<WebElement> element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
         Exception ex;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(visibilityOfAllElements(element));
 
@@ -542,7 +549,7 @@ public class PageUtils {
                 retries++;
             }
 
-            if (retries == 6) {
+            if (retries == maxRetries) {
                 throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
@@ -556,14 +563,15 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToBeClickable(WebElement element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
         Exception ex;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(elementToBeClickable(element));
 
@@ -573,7 +581,7 @@ public class PageUtils {
                 retries++;
             }
 
-            if (retries == 6) {
+            if (retries == maxRetries) {
                 throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
@@ -587,19 +595,26 @@ public class PageUtils {
      * @return webelement
      */
     public WebElement waitForElementToBeClickable(By element) {
-        long maxWaitTime = 20L;
+        long webDriverWait = 5L;
         int retries = 0;
+        int maxRetries = 12;
+        Exception ex;
 
-        while (retries < 6) {
+        while (retries < maxRetries) {
             try {
 
-                return new WebDriverWait(driver, Duration.ofSeconds(maxWaitTime))
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
                     .ignoreAll(ignoredWebDriverExceptions)
                     .until(elementToBeClickable(element));
 
             } catch (Exception e) {
+                ex = e;
                 logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
                 retries++;
+            }
+
+            if (retries == maxRetries) {
+                throw new RuntimeException(String.format("Exception caught: %s", ex.getMessage()));
             }
         }
         return driver.findElement(element);
@@ -612,7 +627,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(WebElement element) {
         long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 10L;
+        long maxWaitTime = 30L;
         long duration = 0;
         Exception ex;
 
@@ -629,7 +644,7 @@ public class PageUtils {
                 duration = (System.currentTimeMillis() / 1000) - startTime;
             }
             if (duration >= maxWaitTime) {
-                throw new RuntimeException(String.format("Unable to recover after '%ssecs' from exception: %s", maxWaitTime, ex.getClass().getName()));
+                throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
         }
     }
@@ -641,7 +656,7 @@ public class PageUtils {
      */
     public void waitForElementAndClick(By element) {
         long startTime = System.currentTimeMillis() / 1000;
-        long maxWaitTime = 10L;
+        long maxWaitTime = 30L;
         long duration = 0;
         Exception ex;
 
@@ -658,7 +673,7 @@ public class PageUtils {
                 duration = (System.currentTimeMillis() / 1000) - startTime;
             }
             if (duration >= maxWaitTime) {
-                throw new RuntimeException(String.format("Unable to recover after '%ssecs' from exception: %s", maxWaitTime, ex.getClass().getName()));
+                throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
         }
     }

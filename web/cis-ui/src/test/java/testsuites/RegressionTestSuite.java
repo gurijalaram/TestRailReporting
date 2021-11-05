@@ -1,15 +1,16 @@
-package com.apriori.cis.tests.suite;
+package testsuites;
 
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.login.LoginTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@ProjectRunID("")
+@ProjectRunID("867")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-
+    LoginTests.class,
 })
-public class CISApiSuite {
+public class RegressionTestSuite {
 }

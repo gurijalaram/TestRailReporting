@@ -34,6 +34,9 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
     @FindBy(id = "qa-scenario-selector-table-filter-button")
     private WebElement filterButton;
 
+    @FindBy(css = ".scenario-selector-table .action-buttons-container [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -99,7 +102,7 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
