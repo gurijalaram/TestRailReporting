@@ -48,10 +48,12 @@ public class GetScenariosInfoTests {
         FileUploadOutputs fileUploadOutputsTwo = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponseTwo, testScenarioName);
 
         ScenarioIterationKey keyOne = fileUploadOutputsOne.getScenarioIterationKey();
+        ScenarioIterationKey keyTwo = fileUploadOutputsTwo.getScenarioIterationKey();
+
         AcsResources acsResources = new AcsResources();
         ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformation(
-                fileUploadOutputsOne.getScenarioIterationKey(),
-                fileUploadOutputsTwo.getScenarioIterationKey()
+                keyOne,
+                keyTwo
         );
 
         assertThat(response, is(notNullValue()));

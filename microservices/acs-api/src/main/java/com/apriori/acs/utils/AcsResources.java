@@ -3,6 +3,7 @@ package com.apriori.acs.utils;
 import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
