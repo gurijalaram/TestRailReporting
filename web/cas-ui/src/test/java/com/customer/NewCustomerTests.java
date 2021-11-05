@@ -130,6 +130,7 @@ public class NewCustomerTests extends TestBase {
     }
 
     private void testTheNecessaryFieldsAreRequired(SoftAssertions soft) {
+
         customerProfilePage.enterCustomerName(null);
         soft.assertThat(customerProfilePage.getCustomerNameFeedback())
             .isEqualTo("Enter a customer name. This should be the company's official name or the name in Salesforce.");
@@ -163,6 +164,7 @@ public class NewCustomerTests extends TestBase {
     }
 
     private void testSalesforceIdShouldBe15Or18Characters(int count, SoftAssertions soft) {
+
         String salesforceId = RandomStringUtils.randomNumeric(14);
         String actual = customerProfilePage
             .enterSalesforceId(salesforceId)
