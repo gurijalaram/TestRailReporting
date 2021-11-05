@@ -18,6 +18,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaultsPage> {
 
+    @FindBy(css = ".user-preferences [type='submit']")
+    private WebElement submitButton;
+
     @FindBy(xpath = "//button[.='Production Defaults']")
     private WebElement productionsTab;
 
@@ -273,7 +276,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

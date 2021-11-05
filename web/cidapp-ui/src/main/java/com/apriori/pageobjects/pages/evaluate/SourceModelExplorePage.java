@@ -45,6 +45,9 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
+    @FindBy(css = ".scenario-selector-table .action-buttons-container [type='submit']")
+    private WebElement submitButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
@@ -124,7 +127,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return size of the element as int
      */
     private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[@class='scenario-selector-table']//div[.='%s']/ancestor::div//span[normalize-space(.)='%s']", scenarioName.trim(), componentName.toUpperCase().trim()));
+        return By.xpath(String.format("//a[.='%s']/ancestor::div[@role='row']//span[normalize-space(.)='%s']", scenarioName.trim(), componentName.toUpperCase().trim()));
     }
 
     /**
@@ -195,7 +198,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

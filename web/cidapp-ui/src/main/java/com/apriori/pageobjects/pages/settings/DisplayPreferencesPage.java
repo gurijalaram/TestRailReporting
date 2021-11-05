@@ -23,6 +23,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferencesPage> {
 
+    @FindBy(css = ".user-preferences [type='submit']")
+    private WebElement submitButton;
+
     @FindBy(xpath = "//button[.='Display Preferences']")
     private WebElement displayTab;
 
@@ -303,7 +306,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
