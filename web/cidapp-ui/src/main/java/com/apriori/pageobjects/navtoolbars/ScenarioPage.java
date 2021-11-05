@@ -24,6 +24,9 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
+    @FindBy(css = ".justify-content-end [type='submit']")
+    private WebElement submitButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -66,7 +69,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**

@@ -30,9 +30,6 @@ public class ModalDialogController {
     @FindBy(css = "button[title='Collapse all']")
     private WebElement collapseAllButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
-    private WebElement submitButton;
-
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
     private WebElement cancelButton;
 
@@ -72,8 +69,8 @@ public class ModalDialogController {
      *
      * @return generic page object
      */
-    public <T> T submit(Class<T> klass) {
-        pageUtils.waitForElementAndClick(submitButton);
+    public <T> T submit(WebElement button, Class<T> klass) {
+        pageUtils.waitForElementAndClick(button);
         return PageFactory.initElements(driver, klass);
     }
 

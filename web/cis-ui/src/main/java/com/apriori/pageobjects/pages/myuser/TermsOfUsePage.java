@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.pages.login;
+package com.apriori.pageobjects.pages.myuser;
 
 import com.apriori.utils.PageUtils;
 
@@ -10,15 +10,15 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class ExplorePage extends LoadableComponent<ExplorePage> {
+public class TermsOfUsePage extends LoadableComponent<TermsOfUsePage> {
 
-    @FindBy(css = ".icon-button")
-    private WebElement startComparison;
+    @FindBy(xpath = "//p[@class='main-text']")
+    private WebElement termsText;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    private final WebDriver driver;
+    private final PageUtils pageUtils;
 
-    public ExplorePage(WebDriver driver) {
+    public TermsOfUsePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -32,7 +32,6 @@ public class ExplorePage extends LoadableComponent<ExplorePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(startComparison);
+        pageUtils.waitForElementToAppear(termsText);
     }
 }
-

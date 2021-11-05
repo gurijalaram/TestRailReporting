@@ -1,39 +1,98 @@
-version: '2.0'
+# To execute this docker-compose yml file use `docker-compose -f docker-compose-v3.yml up`
+# Add the `-d` flag at the end for detached execution
+# Change "SE_NODE_GRID_URL=http://localhost:4444" to the URL/IP where the Grid is accesible.
+# To stop the execution, hit Ctrl+C, and then `docker-compose -f docker-compose-v3.yml down`
+version: "3"
 services:
-  selenium-hub:
-    image: selenium/hub:latest
-    container_name: selenium-hub
-    environment:
-      - GRID_TIMEOUT=2
-    ports:
-      - "4444:4444"
-
-  chrome:
-    image: selenium/node-chrome:latest
-    volumes:
-      - /dev/shm:/dev/shm
+  chrome_1:
+    image: selenium/node-chrome:4.0.0-20211025
+    shm_size: 2gb
     depends_on:
       - selenium-hub
     environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
-      - NODE_MAX_INSTANCES=5
-      - NODE_MAX_SESSION=5
-    restart: always
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=5
     ports:
-      - "5900:5900"
+      - "6900:5900"
+      - "7900:7900"
+
+  chrome_2:
+    image: selenium/node-chrome:4.0.0-20211025
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=5
+    ports:
+      - "6901:5900"
+      - "7901:7900"
+
+  chrome_3:
+    image: selenium/node-chrome:4.0.0-20211025
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=5
+    ports:
+      - "6902:5900"
+      - "7902:7900"
+
+  edge:
+    image: selenium/node-edge:4.0.0-20211025
+    shm_size: 2gb
+    depends_on:
+      - selenium-hub
+    environment:
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=5
+    ports:
+      - "6903:5900"
+      - "7903:7900"
 
   firefox:
-    image: selenium/node-firefox:latest
-    volumes:
-      - /dev/shm:/dev/shm
+    image: selenium/node-firefox:4.0.0-20211025
+    shm_size: 2gb
     depends_on:
       - selenium-hub
     environment:
-      - HUB_HOST=selenium-hub
-      - HUB_PORT=4444
-      - NODE_MAX_INSTANCES=5
-      - NODE_MAX_SESSION=5
-    restart: always
+      - SE_EVENT_BUS_HOST=selenium-hub
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - SE_NODE_GRID_URL=http://localhost:4444
+      - SE_NODE_OVERRIDE_MAX_SESSIONS=true
+      - SE_NODE_MAX_SESSIONS=5
     ports:
-      - "5901:5900"
+      - "6904:5900"
+      - "7904:7900"
+
+  selenium-hub:
+    image: selenium/hub:4.0.0-20211025
+    container_name: selenium-hub
+    restart: always
+    healthcheck:  
+      interval: "15"
+      timeout: "30" 
+      retries: "5"
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"

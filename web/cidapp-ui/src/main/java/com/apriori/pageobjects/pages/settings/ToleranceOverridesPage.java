@@ -81,8 +81,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        pageUtils.waitForElementAndClick(submitButton);
-        return PageFactory.initElements(driver, klass);
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
