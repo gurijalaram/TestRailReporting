@@ -1,4 +1,4 @@
-package com.apriori.cis.entity.enums;
+package com.entity.enums;
 
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
