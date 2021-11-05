@@ -215,11 +215,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     public void createBatchPartsMissingCustomer() {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
 
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-//                batch.getIdentity(),
-//                BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, ""
-//        );
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.POST_BATCH_PARTS_BY_ID, null)
             .inlineVariables(batch.getIdentity());
 
@@ -284,8 +279,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"4279"})
     @Description("Return a list of Parts for a specified Batch")
     public void getBatchParts() {
-//        BatchPartResources.getBatchParts(batch.getIdentity());
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(batch.getIdentity());
 
@@ -298,8 +291,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"8096"})
     @Description("API return a list of Parts with a missing batch")
     public void getBatchPartsMissingBatch() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts("", null);
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS, null);
 
         ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
@@ -313,7 +304,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"8094"})
     @Description("Attempt to return a list of Parts using an invalid batch")
     public void getBatchPartsInvalidBatch() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(INVALID_BATCH_IDENTITY, null);
 
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_BY_ID, null)
             .inlineVariables(INVALID_BATCH_IDENTITY);
@@ -328,9 +318,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"8063"})
     @Description("Attempt to return a list of Parts using an invalid customer")
     public void getBatchPartsInvalidCustomer() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartsForCustomers(batch.getIdentity(), null,
-//                INVALID_BATCH_IDENTITY);
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PARTS_BY_CUSTOMER_ID, null)
             .inlineVariables(INVALID_BATCH_IDENTITY, batch.getIdentity());
 
@@ -345,7 +332,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"8095"})
     @Description("Attempt to return a list of Parts using a missing customer")
     public void getBatchPartsMissingCustomer() {
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PARTS, null)
             .inlineVariables(batch.getIdentity());
 
@@ -360,8 +346,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"9552"})
     @Description("Return a list of Parts with mismatched identities")
     public void getBatchPartsMismatchedIdentities() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(batch2.getIdentity(), null);
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, null)
             .inlineVariables(batch2.getIdentity());
 
@@ -424,9 +408,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"9537"})
     @Description("Return a single Batch-Part using a missing customer")
     public void getBatchPartMissingCustomer() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-//                part.getIdentity(), null, "");
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PART_BY_BATCH_PART_IDS, null)
             .inlineVariables(batch.getIdentity(), part.getIdentity());
 
@@ -527,10 +508,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"9543"})
     @Description("Return the costing results for a part with a missing customer")
     public void getResultsMissingCustomer() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch.getIdentity(),
-//            part.getIdentity(),
-//            null, "");
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, null)
             .inlineVariables(batch.getIdentity(), part.getIdentity());
 
@@ -596,9 +573,6 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"9548"})
     @Description("Return the watchpoint report for a part with a missing customer")
     public void getPartReportMissingCustomer() {
-//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(batch.getIdentity(),
-//            part.getIdentity(), null, "");
-
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, null)
             .inlineVariables(batch.getIdentity(), part.getIdentity());
 
