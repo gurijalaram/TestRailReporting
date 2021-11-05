@@ -129,12 +129,7 @@ public class NewCustomerTests extends TestBase {
         assertThat(editPage, is(notNullValue()));
     }
 
-    @Test
-    @Description("All enabled fields are required.")
-    @TestRail(testCaseId = {"9617"})
-    public void testTheNecessaryFieldsAreRequired() {
-
-        SoftAssertions soft = new SoftAssertions();
+    private void testTheNecessaryFieldsAreRequired(SoftAssertions soft) {
         customerProfilePage.enterCustomerName(null);
         soft.assertThat(customerProfilePage.getCustomerNameFeedback())
             .isEqualTo("Enter a customer name. This should be the company's official name or the name in Salesforce.");
@@ -156,19 +151,15 @@ public class NewCustomerTests extends TestBase {
         customerProfilePage.enterMaxCadFileSize(null);
         soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback())
             .isEqualTo("Enter the max CAD file size.");
-        soft.assertAll();
     }
 
-    @Test
-    @Description("Customer name should be no more than 64 characters in length.")
-    @TestRail(testCaseId = {"9618"})
-    public void testCustomerNameShouldBeNoMoreThan64Characters() {
+    private void testCustomerNameShouldBeNoMoreThan64Characters(SoftAssertions soft) {
 
         String nameTooLong = RandomStringUtils.randomAlphanumeric(65);
         String actual = customerProfilePage
             .enterCustomerName(nameTooLong)
             .getCustomerNameFeedback();
-        assertThat(actual, is(equalTo("Should be no more than 64 characters in length.")));
+        soft.assertThat(actual).isEqualTo("Should be no more than 64 characters in length.");
     }
 
     private void testSalesforceIdShouldBe15Or18Characters(int count, SoftAssertions soft) {
@@ -179,16 +170,43 @@ public class NewCustomerTests extends TestBase {
         soft.assertThat(actual).isEqualTo("Should be 15 or 18 characters.");
     }
 
+    private void testEmailDomainsRequireValidEmails(SoftAssertions soft) {
+
+        customerProfilePage.enterEmailDomains("aa");
+        soft.assertThat(customerProfilePage.getEmailDomFeedback()).isEqualTo("Email domains must be comma separated, contain no spaces, and must include the top level domain of at least 2 characters.");
+    }
+
+    private void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days(SoftAssertions soft) {
+
+        customerProfilePage.enterCadFileRetentionPolicy("0");
+        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy requires at least 1 day.");
+        customerProfilePage.enterCadFileRetentionPolicy("1096");
+        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy allows at most 1095 days.");
+    }
+
+    private void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB(SoftAssertions soft) {
+
+        customerProfilePage.enterMaxCadFileSize("9");
+        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("You will require at least 10 MB for a CAD file.");
+        customerProfilePage.enterMaxCadFileSize("101");
+        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("The maximum CAD file size cannot exceed 100 MB.");
+    }
+
     @Test
-    @Description("Salesforce ID should be 15 or 18 characters.")
-    @TestRail(testCaseId = {"9622"})
-    public void testSalesforceIdShouldBe15Or18Characters() {
+    @Description("All expected validations show up.")
+    @TestRail(testCaseId = {"9617", "9618", "9622", "9629", "9631", "9634"})
+    public void testRequiredValidations() {
 
         SoftAssertions soft = new SoftAssertions();
+        testTheNecessaryFieldsAreRequired(soft);
+        testCustomerNameShouldBeNoMoreThan64Characters(soft);
         testSalesforceIdShouldBe15Or18Characters(14, soft);
         testSalesforceIdShouldBe15Or18Characters(16, soft);
         testSalesforceIdShouldBe15Or18Characters(17, soft);
         testSalesforceIdShouldBe15Or18Characters(19, soft);
+        testEmailDomainsRequireValidEmails(soft);
+        testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days(soft);
+        testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB(soft);
         soft.assertAll();
     }
 
@@ -209,40 +227,5 @@ public class NewCustomerTests extends TestBase {
         assertThat(customerProfilePage.getCloudRefFeedback(), is(equalTo("")));
         assertThat(customerProfilePage.getCloudRefValue(), is(equalTo("")));
         assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
-    }
-
-    @Test
-    @Description("Invalid emails should not be allowed.")
-    @TestRail(testCaseId = {"9629"})
-    public void testEmailDomainsRequireValidEmails() {
-
-        customerProfilePage.enterEmailDomains("aa");
-        assertThat(customerProfilePage.getEmailDomFeedback(), is(equalTo("Email domains must be comma separated, contain no spaces, and must include the top level domain of at least 2 characters.")));
-    }
-
-    @Test
-    @Description("CAD File Retention Policy requires at least one day and has a maximum of 1095 days.")
-    @TestRail(testCaseId = {"9631"})
-    public void testCadFileRetentionPolicyRequiresAtLeastOneDayAndAtMost1095Days() {
-
-        SoftAssertions soft = new SoftAssertions();
-        customerProfilePage.enterCadFileRetentionPolicy("0");
-        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy requires at least 1 day.");
-        customerProfilePage.enterCadFileRetentionPolicy("1096");
-        soft.assertThat(customerProfilePage.getCadFileRetentionPolicyFeedback()).isEqualTo("The retention policy allows at most 1095 days.");
-        soft.assertAll();
-    }
-
-    @Test
-    @Description("Max CAD File Size should be between 10 MB and 100MB.")
-    @TestRail(testCaseId = {"9634"})
-    public void testMaxCadFileSizeShouldBeAtLeast10MbAndAtMost100MB() {
-
-        SoftAssertions soft = new SoftAssertions();
-        customerProfilePage.enterMaxCadFileSize("9");
-        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("You will require at least 10 MB for a CAD file.");
-        customerProfilePage.enterMaxCadFileSize("101");
-        soft.assertThat(customerProfilePage.getMaxCadFileSizeFeedback()).isEqualTo("The maximum CAD file size cannot exceed 100 MB.");
-        soft.assertAll();
     }
 }
