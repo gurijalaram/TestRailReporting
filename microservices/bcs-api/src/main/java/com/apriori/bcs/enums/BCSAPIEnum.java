@@ -15,7 +15,8 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
     POST_REPORTS("reports"),
 
     // BATCHES
-    GET_BATCH_PARTS("batches/%sparts"),
+    GET_BATCH_PARTS_BY_ID("batches/%s/parts"),
+    GET_BATCH_PARTS("batches/parts"),
     GET_BATCH_BY_ID("batches/%s"),
     GET_BATCHES("batches"),
     GET_BATCH_PART_BY_BATCH_PART_IDS("batches/%sparts/%s"),
@@ -49,16 +50,6 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
     @Override
     public String getEndpoint(Object... variables) {
         return PropertiesContext.get("${env}.bcs.api_url") + "customers/" + PropertiesContext.get("${env}.customer_identity") + "/" +
-                String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
-    }
-
-    @Override
-    public String getEndpoint(String customer, Object... variables) {
-        if (!customer.isEmpty()) {
-            customer = customer + "/";
-        }
-
-        return PropertiesContext.get("${env}.bcs.api_url") + "customers/" + customer +
                 String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
     }
 }

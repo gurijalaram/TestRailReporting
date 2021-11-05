@@ -142,38 +142,6 @@ public class BcsUtils extends ApiUtil {
     }
 
     /**
-     * Wait for a batch to enter into a terminal state
-     *
-     * @param batch
-     * @return
-     * @throws InterruptedException exception is thrown if Thread.sleep is interrupted
-     */
-    public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
-        Object batchDetails;
-        Integer pollingInterval = 0;
-        State state;
-
-        while (pollingInterval <= Constants.BATCH_POLLING_TIMEOUT) {
-            batchDetails = BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
-            try {
-                state = pollState(batchDetails, Batch.class);
-                if (state != State.PROCESSING) {
-                    return state;
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                log.error(Arrays.toString(e.getStackTrace()));
-                throw e;
-
-            }
-
-            pollingInterval += 1;
-        }
-
-        return State.PROCESSING;
-    }
-
-    /**
      * Polls BCS to get a batch/part's costing status
      *
      * @param obj
@@ -198,7 +166,7 @@ public class BcsUtils extends ApiUtil {
             } catch (Exception e) {
                 log.error(e.getMessage());
                 log.error(Arrays.toString(e.getStackTrace()));
-                throw e;
+                throw new IllegalArgumentException();
             }
         }
 

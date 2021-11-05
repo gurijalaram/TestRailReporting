@@ -11,10 +11,6 @@ public interface ExternalEndpointEnum extends EndpointEnum {
         return System.getProperty("baseUrl") + "ws" + String.format(getEndpointString(), variables);
     }
 
-    default String getEndpoint(String customer, Object... variables) {
-        return System.getProperty("baseUrl") + "ws" + String.format(getEndpointString(), variables);
-    }
-
     default String getSchemaLocation() {
         return null;
     }

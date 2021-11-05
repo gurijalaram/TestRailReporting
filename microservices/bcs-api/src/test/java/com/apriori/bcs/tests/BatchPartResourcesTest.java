@@ -1,15 +1,24 @@
 package com.apriori.bcs.tests;
 
-import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
+import com.apriori.bcs.entity.response.Parts;
+import com.apriori.bcs.enums.BCSAPICustomersEnum;
+import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.utils.BCSTestUtils;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.builder.common.entity.RequestEntity;
+import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
@@ -20,17 +29,24 @@ import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
+
 public class BatchPartResourcesTest extends BCSTestUtils {
     private static Batch batch;
     private static Batch batch2;
     private static Part part;
+
+    public static final String INVALID_BATCH_IDENTITY = "12345ABCD";
+
 
     @BeforeClass
     public static void testSetup() {
         batch = BatchResources.createNewBatch();
         batch2 = BatchResources.createNewBatch();
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
-        part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
+        part = (Part) BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
     }
 
     @AfterClass
@@ -42,7 +58,8 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"4280"})
     @Description("Add a new part to a batch")
     public void createBatchParts() {
-        NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();;
+        NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
+        ;
         BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity());
     }
 
@@ -55,14 +72,14 @@ public class BatchPartResourcesTest extends BCSTestUtils {
         newPartRequestNull.setVpeName(null);
 
         BatchPartResources.createNewBatchPart(newPartRequestNull, batch.getIdentity(),
-                BatchPartResources.ProcessGroupValue.USE_NULL);
+            BatchPartResources.ProcessGroupValue.USE_NULL);
 
         NewPartRequest newPartRequestEmptyString = BatchPartResources.getNewPartRequest();
         newPartRequestEmptyString.setMaterialName("");
         newPartRequestEmptyString.setVpeName("");
 
         BatchPartResources.createNewBatchPart(newPartRequestEmptyString, batch.getIdentity(),
-                BatchPartResources.ProcessGroupValue.USE_EMPTY_STRING);
+            BatchPartResources.ProcessGroupValue.USE_EMPTY_STRING);
     }
 
 
@@ -159,9 +176,9 @@ public class BatchPartResourcesTest extends BCSTestUtils {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
 
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-                "", BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, null);
+            "", BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, null);
         Assert.assertEquals("Repsponse code didn't match expected code", partResponseWrapper.getStatusCode(),
-                HttpStatus.SC_METHOD_NOT_ALLOWED);
+            HttpStatus.SC_METHOD_NOT_ALLOWED);
     }
 
     @Test
@@ -171,11 +188,11 @@ public class BatchPartResourcesTest extends BCSTestUtils {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
 
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-                Constants.INVALID_IDENTITY,
-                BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, null
+            INVALID_BATCH_IDENTITY,
+            BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, null
         );
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -185,11 +202,11 @@ public class BatchPartResourcesTest extends BCSTestUtils {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
 
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-                batch.getIdentity(),
-                BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, Constants.INVALID_IDENTITY
-                );
+            batch.getIdentity(),
+            BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, INVALID_BATCH_IDENTITY
+        );
         Assert.assertEquals("Repsponse code didn't match expected code",
-                        partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -198,12 +215,54 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     public void createBatchPartsMissingCustomer() {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
 
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-                batch.getIdentity(),
-                BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, ""
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
+//                batch.getIdentity(),
+//                BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, ""
+//        );
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.POST_BATCH_PARTS_BY_ID, null)
+            .inlineVariables(batch.getIdentity());
+
+
+        requestEntity = this.prepareRequestToCreateBatch(requestEntity, newPartRequest,
+            BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP.name()
         );
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity)
+            .postMultipart();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+    }
+
+    private RequestEntity prepareRequestToCreateBatch(RequestEntity requestEntity, NewPartRequest npr, String processGroup) {
+        Map<String, String> headers = new HashMap<>();
+        headers.put("Content-Type", "multipart/form-data");
+
+        File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(npr.getProcessGroup()),
+            npr.getFilename());
+
+        requestEntity.headers(headers)
+            .multiPartFiles(new MultiPartFiles()
+                .use("data", partFile)
+            )
+            .formParams(new FormParams()
+                .use("filename", npr.getFilename())
+                .use("externalId", String.format(npr.getExternalId(), System.currentTimeMillis()))
+                .use("AnnualVolume", npr.getAnnualVolume().toString())
+                .use("BatchSize", npr.getBatchSize().toString())
+                .use("Description", npr.getDescription())
+                //.use("PinnedRouting", npr.getPinnedRouting())
+                .use("ProcessGroup", processGroup)
+                .use("ProductionLife", npr.getProductionLife().toString())
+                .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
+                //.use("Udas", npr.getUdas())
+                .use("VpeName", npr.getVpeName())
+                .use("MaterialName", npr.getMaterialName())
+                .use("generateWatchpointReport", "true")
+            );
+
+        return requestEntity;
     }
 
     @Ignore("Only one customer exists in CID-Perf")
@@ -214,27 +273,39 @@ public class BatchPartResourcesTest extends BCSTestUtils {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
 
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-                batch2.getIdentity(),
-                BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, ""
+            batch2.getIdentity(),
+            BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, ""
         );
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
     @TestRail(testCaseId = {"4279"})
     @Description("Return a list of Parts for a specified Batch")
     public void getBatchParts() {
-        BatchPartResources.getBatchParts(batch.getIdentity());
+//        BatchPartResources.getBatchParts(batch.getIdentity());
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, Parts.class)
+            .inlineVariables(batch.getIdentity());
+
+        ResponseWrapper<Parts> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partResponseWrapper.getStatusCode());
     }
 
     @Test
     @TestRail(testCaseId = {"8096"})
     @Description("API return a list of Parts with a missing batch")
     public void getBatchPartsMissingBatch() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts("", null);
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts("", null);
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS, null);
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
 
@@ -242,19 +313,31 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"8094"})
     @Description("Attempt to return a list of Parts using an invalid batch")
     public void getBatchPartsInvalidBatch() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(Constants.INVALID_IDENTITY, null);
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(INVALID_BATCH_IDENTITY, null);
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_BY_ID, null)
+            .inlineVariables(INVALID_BATCH_IDENTITY);
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
     @TestRail(testCaseId = {"8063"})
     @Description("Attempt to return a list of Parts using an invalid customer")
     public void getBatchPartsInvalidCustomer() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(batch.getIdentity(), null,
-                Constants.INVALID_IDENTITY);
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartsForCustomers(batch.getIdentity(), null,
+//                INVALID_BATCH_IDENTITY);
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PARTS_BY_CUSTOMER_ID, null)
+            .inlineVariables(INVALID_BATCH_IDENTITY, batch.getIdentity());
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
 
     }
 
@@ -262,10 +345,14 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"8095"})
     @Description("Attempt to return a list of Parts using a missing customer")
     public void getBatchPartsMissingCustomer() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(batch.getIdentity(), null,
-                "");
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PARTS, null)
+            .inlineVariables(batch.getIdentity());
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Ignore("Only one customer exists in CID-Perf")
@@ -273,9 +360,15 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @TestRail(testCaseId = {"9552"})
     @Description("Return a list of Parts with mismatched identities")
     public void getBatchPartsMismatchedIdentities() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(batch2.getIdentity(), null);
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchParts(batch2.getIdentity(), null);
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, null)
+            .inlineVariables(batch2.getIdentity());
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
 
@@ -292,19 +385,19 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return a single Batch-Part using an invalid part")
     public void getBatchPartInvalidPart() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-                Constants.INVALID_IDENTITY, null);
+            INVALID_BATCH_IDENTITY, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
     @TestRail(testCaseId = {"9538"})
     @Description("Return a single Batch-Part using an invalid batch")
     public void getBatchPartInvalidBatch() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(Constants.INVALID_IDENTITY,
-                part.getIdentity(), null);
+        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(INVALID_BATCH_IDENTITY,
+            part.getIdentity(), null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -312,9 +405,9 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return single Batch-Part using a missing batch")
     public void getBatchPartMissingBatch() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation("",
-                part.getIdentity(), null);
+            part.getIdentity(), null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
@@ -322,19 +415,25 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return a single Batch-Part using an invalid customer")
     public void getBatchPartInvalidCustomer() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-                part.getIdentity(), null, Constants.INVALID_IDENTITY);
+            part.getIdentity(), null, INVALID_BATCH_IDENTITY);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
     @TestRail(testCaseId = {"9537"})
     @Description("Return a single Batch-Part using a missing customer")
     public void getBatchPartMissingCustomer() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-                part.getIdentity(), null, "");
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
+//                part.getIdentity(), null, "");
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PART_BY_BATCH_PART_IDS, null)
+            .inlineVariables(batch.getIdentity(), part.getIdentity());
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
@@ -342,9 +441,9 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Returna single Batch-Part using mismatched identities")
     public void getBatchPartMismatchIdentities() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getBatchPartRepresentation(batch2.getIdentity(),
-                part.getIdentity(), null, "");
+            part.getIdentity(), null, "");
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
 
@@ -361,22 +460,22 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the costing results for a part with no results")
     public void getResultsNoResults() {
         setBatchPartProperties()
-                .createBatchPart();
+            .createBatchPart();
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(getBatchIdentity(),
-                getPartIdentity(),
-                null, null);
+            getPartIdentity(),
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(),HttpStatus.SC_CONFLICT);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_CONFLICT);
     }
 
     @Test
     @TestRail(testCaseId = {"9540"})
     @Description("Return the costing results for a part with an invalid batch")
     public void getResultsInvalidBatch() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(Constants.INVALID_IDENTITY,
-                part.getIdentity(), null, null);
+        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(INVALID_BATCH_IDENTITY,
+            part.getIdentity(), null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -384,9 +483,9 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the costing results for a part with a missing batch")
     public void getResultsMissingBatch() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll("", part.getIdentity(),
-                null, null);
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
@@ -394,10 +493,10 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the costing results for a part with an invalid customer")
     public void getResultsInvalidCustomer() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch.getIdentity(),
-                part.getIdentity(),
-                null, Constants.INVALID_IDENTITY);
+            part.getIdentity(),
+            null, INVALID_BATCH_IDENTITY);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -405,34 +504,40 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the costing results for a part with a missing customer")
     public void getResultsInvalidPart() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch.getIdentity(),
-                Constants.INVALID_IDENTITY,
-                null, null);
+            INVALID_BATCH_IDENTITY,
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                HttpStatus.SC_BAD_REQUEST, partResponseWrapper.getStatusCode());
+            HttpStatus.SC_BAD_REQUEST, partResponseWrapper.getStatusCode());
     }
 
     @Ignore(" This is not neccessarily a negative. A url wih a missing part " +
-            "will just return all parts for the specified batch. Need more info.")
+        "will just return all parts for the specified batch. Need more info.")
     @Test
     @TestRail(testCaseId = {"8128"})
     @Description("Return the costing results for a part with a missing part")
     public void getResultsMissingPart() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch.getIdentity(),
-                part.getIdentity(),
-                null, null);
+            part.getIdentity(),
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
     @TestRail(testCaseId = {"9543"})
     @Description("Return the costing results for a part with a missing customer")
     public void getResultsMissingCustomer() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch.getIdentity(),
-                part.getIdentity(),
-                null, "");
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch.getIdentity(),
+//            part.getIdentity(),
+//            null, "");
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, null)
+            .inlineVariables(batch.getIdentity(), part.getIdentity());
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
@@ -440,16 +545,29 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the costing results for a part with mismaiched identities")
     public void getResultsMismatchedIdentities() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getResultsNoPoll(batch2.getIdentity(),
-                part.getIdentity(), null, null);
+            part.getIdentity(), null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
     @TestRail(testCaseId = {"7958"})
     @Description("Return the watchpoint report for a part")
     public void getPartReport() {
-        BatchPartResources.getPartReport(batch.getIdentity(), part.getIdentity());
+
+        Object partDetails;
+        BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
+        int count = 0;
+        while (count <= Constants.BATCH_POLLING_TIMEOUT) {
+            partDetails =
+                BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), part.getIdentity()).getResponseEntity();
+            isPartComplete = BcsUtils.pollState(partDetails, Part.class);
+
+            if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
+                break;
+            }
+            count += 1;
+        }
     }
 
 
@@ -458,30 +576,36 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the watchpoint report for a part with a missing batch")
     public void getPartReporMissingBatch() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll("", part.getIdentity(),
-                null, null);
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
     @TestRail(testCaseId = {"9545"})
     @Description("Return the watchpoint report for a part with an invalid batch")
     public void getPartReportInvalidBatch() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(Constants.INVALID_IDENTITY,
-                part.getIdentity(),
-                null, null);
+        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(INVALID_BATCH_IDENTITY,
+            part.getIdentity(),
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
     @TestRail(testCaseId = {"9548"})
     @Description("Return the watchpoint report for a part with a missing customer")
     public void getPartReportMissingCustomer() {
-        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(batch.getIdentity(),
-                part.getIdentity(), null, "");
+//        ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(batch.getIdentity(),
+//            part.getIdentity(), null, "");
+
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, null)
+            .inlineVariables(batch.getIdentity(), part.getIdentity());
+
+        ResponseWrapper<Part> partResponseWrapper = HTTPRequest.build(requestEntity).get();
+
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_NOT_FOUND);
     }
 
     @Test
@@ -489,9 +613,9 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the watchpoint report for a part with an invalid customer")
     public void getPartReportInvalidCustomer() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(batch.getIdentity(), part.getIdentity(),
-                null, Constants.INVALID_IDENTITY);
+            null, INVALID_BATCH_IDENTITY);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -499,9 +623,9 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the watchpoint report for a part with a missing part")
     public void getPartReportMissingPart() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(batch.getIdentity(),
-                "", null, null);
+            "", null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                HttpStatus.SC_BAD_REQUEST, partResponseWrapper.getStatusCode());
+            HttpStatus.SC_BAD_REQUEST, partResponseWrapper.getStatusCode());
     }
 
     @Test
@@ -509,10 +633,10 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the watchpoint report for a part with an invalid part")
     public void getPartReportInvalidPart() {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(batch.getIdentity(),
-                Constants.INVALID_IDENTITY,
-                null, null);
+            INVALID_BATCH_IDENTITY,
+            null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_BAD_REQUEST);
     }
 
     @Test
@@ -520,21 +644,20 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Return the watchpoint report for a part with no report")
     public void getPartReportNoReport() {
         setBatchPartProperties()
-                .createBatchPart();
+            .createBatchPart();
 
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.getPartReportNoPoll(getBatchIdentity(),
-                getPartIdentity(), null, null);
+            getPartIdentity(), null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                partResponseWrapper.getStatusCode(), HttpStatus.SC_CONFLICT);
+            partResponseWrapper.getStatusCode(), HttpStatus.SC_CONFLICT);
     }
 
     private void testBadFormData(NewPartRequest newPartRequest) {
         ResponseWrapper<Part> partResponseWrapper = BatchPartResources.createNewBatchPart(newPartRequest,
-                batch.getIdentity(), BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, null);
+            batch.getIdentity(), BatchPartResources.ProcessGroupValue.USE_PROCESS_GROUP, null, null);
         Assert.assertEquals("Repsponse code didn't match expected code",
-                HttpStatus.SC_BAD_REQUEST, partResponseWrapper.getStatusCode());
+            HttpStatus.SC_BAD_REQUEST, partResponseWrapper.getStatusCode());
     }
-
 
 
 }

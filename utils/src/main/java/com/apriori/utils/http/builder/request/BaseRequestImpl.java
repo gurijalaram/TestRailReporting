@@ -18,22 +18,12 @@ class BaseRequestImpl implements Request {
 
     @Override
     public <T> ResponseWrapper<T> get() {
-        return  initRequestData().get();
-    }
-
-    @Override
-    public <T> ResponseWrapper<T> getWithCustomer(String customer) {
-        return initRequestData().getWithCustomer(customer);
+        return initRequestData().get();
     }
 
     @Override
     public <T> ResponseWrapper<T> post() {
-        return  initRequestData().post();
-    }
-
-    @Override
-    public <T> ResponseWrapper<T> postWithCustomer(String customer) {
-        return initRequestData().postWithCustomer(customer);
+        return initRequestData().post();
     }
 
     @Override
@@ -42,23 +32,18 @@ class BaseRequestImpl implements Request {
     }
 
     @Override
-    public <T> ResponseWrapper<T> postMultipartWithCustomer(String customer) {
-        return initRequestData().postMultiPartWithCustomer(customer);
-    }
-
-    @Override
     public <T> ResponseWrapper<T> put() {
-        return  initRequestData().put();
+        return initRequestData().put();
     }
 
     @Override
     public <T> ResponseWrapper<T> delete() {
-        return  initRequestData().delete();
+        return initRequestData().delete();
     }
 
     @Override
     public <T> ResponseWrapper<T> patch() {
-        return  initRequestData().patch();
+        return initRequestData().patch();
     }
 
     private ConnectionManager<?> initRequestData() {

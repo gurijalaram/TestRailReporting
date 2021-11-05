@@ -74,9 +74,4 @@ public class RequestEntity {
     public String buildEndpoint() {
         return this.inlineVariablesArray != null ? endpoint.getEndpoint(inlineVariablesArray) : endpoint.getEndpoint();
     }
-
-    public String buildEndpoint(String customer) {
-        return this.inlineVariablesArray != null ? endpoint.getEndpoint(customer, inlineVariablesArray) :
-                endpoint.getEndpoint();
-    }
 }

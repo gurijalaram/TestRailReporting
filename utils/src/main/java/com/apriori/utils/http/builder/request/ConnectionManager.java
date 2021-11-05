@@ -55,10 +55,6 @@ class ConnectionManager<T> {
     }
 
     private RequestSpecification createRequestSpecification() {
-        return createRequestSpecification(null);
-    }
-
-    private RequestSpecification createRequestSpecification(String customer) {
         RequestSpecBuilder builder = new RequestSpecBuilder();
 
         List<Map<String, ?>> urlParams = requestEntity.urlParams();
@@ -101,16 +97,6 @@ class ConnectionManager<T> {
             builder.setBody(requestEntity.body(), ObjectMapperType.JACKSON_2);
         }
 
-        /**
-         * If customer value is not null, use custom customer. Otherwise use the default customer
-         */
-        String endPoint;
-        if (customer != null) {
-            endPoint = requestEntity.buildEndpoint(customer);
-        } else {
-            endPoint = requestEntity.buildEndpoint();
-        }
-
         /*
          * /http.connection.timeout/
          * setConnectionTimeout :   Client tries to connect to the server. This denotes the time elapsed before the
@@ -134,7 +120,7 @@ class ConnectionManager<T> {
                     )
                     .sslConfig(ignoreSslCheck() ? new SSLConfig().allowAllHostnames() : new SSLConfig())
                 )
-                .setBaseUri(URLEncoder.encode(endPoint, StandardCharsets.UTF_8.toString()));
+                .setBaseUri(URLEncoder.encode(requestEntity.buildEndpoint(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException e) {
             log.error("Error with URI" + e.getMessage());
         }
@@ -205,23 +191,6 @@ class ConnectionManager<T> {
     }
 
     /**
-     * Sends request to desired endpoint with custom customer and the desired specifications using HTTP GET method
-     *
-     * @return JSON POJO object instance of @returnType
-     */
-    public <T> ResponseWrapper<T> getWithCustomer(String customer) {
-        return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .get(requestEntity.buildEndpoint(customer))
-                        .then()
-                        .log().all()
-        );
-    }
-
-
-    /**
      * Sends request to desired endpoint with the desired specifications using HTTP POST method
      *
      * @return JSON POJO object instance of @returnType
@@ -234,23 +203,6 @@ class ConnectionManager<T> {
                 .post(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
-        );
-    }
-
-
-    /**
-     * Sends request to desired endpoint with custom customer and the desired specifications using HTTP POST method
-     *
-     * @return JSON POJO object instance of @returnType
-     */
-    public <T> ResponseWrapper<T> postWithCustomer(String customer) {
-        return resultOf(
-                createRequestSpecification(customer)
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .post(requestEntity.buildEndpoint(customer))
-                        .then()
-                        .log().all()
         );
     }
 
@@ -273,29 +225,6 @@ class ConnectionManager<T> {
                 .post(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
-        );
-    }
-
-    /**
-     * Sends request to desired endpoint with the desired specifications using HTTP POST method
-     * As a request it sends {@link MultiPartFiles}
-     *
-     * @return JSON POJO object instance of @returnType
-     */
-    public <T> ResponseWrapper<T> postMultiPartWithCustomer(String customer) {
-
-        return resultOf(
-                createRequestSpecification()
-                        .given()
-                        .config(
-                                RestAssured.config().encoderConfig(EncoderConfig.encoderConfig().encodeContentTypeAs("multipart/form-data",
-                                        ContentType.TEXT)))
-                        .relaxedHTTPSValidation()
-                        .expect()
-                        .when()
-                        .post(requestEntity.buildEndpoint(customer))
-                        .then()
-                        .log().all()
         );
     }
 
