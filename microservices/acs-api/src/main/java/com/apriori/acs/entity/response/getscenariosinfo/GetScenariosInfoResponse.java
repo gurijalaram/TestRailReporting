@@ -2,11 +2,14 @@ package com.apriori.acs.entity.response.getscenariosinfo;
 
 import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
 import com.apriori.utils.http.enums.Schema;
+
 import lombok.Data;
+
+import java.util.ArrayList;
 
 @Data
 @Schema(location = "GetScenariosInfoResponse.json")
-public class GetScenariosInfoResponse {
+public class GetScenariosInfoResponse extends ArrayList {
     public Boolean initialized;
     public Boolean missing;
     public Boolean virtual;

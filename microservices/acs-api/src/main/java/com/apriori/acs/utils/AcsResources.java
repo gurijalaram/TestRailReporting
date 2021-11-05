@@ -3,9 +3,6 @@ package com.apriori.acs.utils;
 import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
-//import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
-import com.apriori.acs.entity.response.getscenariosinfo.GetScenarioInfoResponseTwo;
-import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
@@ -16,6 +13,7 @@ import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsRespons
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -28,7 +26,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 
 public class AcsResources {
 
@@ -96,7 +93,7 @@ public class AcsResources {
      * @return instance of GetScenariosInfoResponse
      */
     public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation(ScenarioIterationKey scenarioIterationKeyOne,
-                                                                            ScenarioIterationKey scenarioIterationKeyTwo) {
+                                                                                   ScenarioIterationKey scenarioIterationKeyTwo) {
         token.put(contentType, applicationJson);
 
         ArrayList<ScenarioIterationKey> listOfKeys = new ArrayList<>();

@@ -1,347 +1,99 @@
 {
   "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "array",
-  "title": "The root schema",
-  "description": "The root schema comprises the entire JSON document.",
-  "default": [],
-  "examples": [
-    [
-      {
-        "initialized": false,
-        "missing": false,
-        "virtual": false,
-        "componentName": "Casting",
-        "componentType": "PART",
-        "scenarioName": "AutoScenario512-28289255652044",
-        "locked": false,
-        "fileName": "casting.prt",
-        "fileMetadataIdentity": "9A9GL1GEEE0F",
-        "createdBy": "qa-automation-01",
-        "createdAt": "2021-11-04T16:28:39Z",
-        "updatedBy": "qa-automation-01",
-        "updatedAt": "2021-11-04T16:28:39Z",
-        "scenarioIterationKey": {
-          "scenarioKey": {
-            "stateName": "AutoScenario512-28289255652044",
-            "masterName": "CASTING",
-            "typeName": "partState",
-            "workspaceId": 251
-          },
-          "iteration": 285511
-        }
-      },
-      {
-        "initialized": false,
-        "missing": false,
-        "virtual": false,
-        "componentName": "tab_forms",
-        "componentType": "PART",
-        "scenarioName": "AutoScenario512-28289255652044",
-        "locked": false,
-        "fileName": "tab_forms.prt",
-        "fileMetadataIdentity": "9A9L3A165LHI",
-        "createdBy": "qa-automation-01",
-        "createdAt": "2021-11-04T16:29:07Z",
-        "updatedBy": "qa-automation-01",
-        "updatedAt": "2021-11-04T16:29:07Z",
-        "scenarioIterationKey": {
-          "scenarioKey": {
-            "stateName": "AutoScenario512-28289255652044",
-            "masterName": "TAB_FORMS",
-            "typeName": "partState",
-            "workspaceId": 251
-          },
-          "iteration": 285513
-        }
-      }
-    ]
-  ],
-  "additionalItems": true,
   "items": {
-    "$id": "#/items",
-    "anyOf": [
-      {
-        "$id": "#/items/anyOf/0",
+    "type": "object",
+    "required": [
+      "initialized",
+      "missing",
+      "virtual",
+      "componentName",
+      "componentType",
+      "scenarioName",
+      "locked",
+      "fileName",
+      "fileMetadataIdentity",
+      "createdBy",
+      "createdAt",
+      "updatedBy",
+      "updatedAt",
+      "scenarioIterationKey"
+    ],
+    "properties": {
+      "initialized": {
+        "type": "boolean"
+      },
+      "missing": {
+        "type": "boolean"
+      },
+      "virtual": {
+        "type": "boolean"
+      },
+      "componentName": {
+        "type": "string"
+      },
+      "componentType": {
+        "type": "string"
+      },
+      "scenarioName": {
+        "type": "string"
+      },
+      "locked": {
+        "type": "boolean"
+      },
+      "fileName": {
+        "type": "string"
+      },
+      "fileMetadataIdentity": {
+        "type": "string"
+      },
+      "createdBy": {
+        "type": "string"
+      },
+      "createdAt": {
+        "type": "string"
+      },
+      "updatedBy": {
+        "type": "string"
+      },
+      "updatedAt": {
+        "type": "string"
+      },
+      "scenarioIterationKey": {
         "type": "object",
-        "title": "The first anyOf schema",
-        "description": "An explanation about the purpose of this instance.",
-        "default": {},
-        "examples": [
-          {
-            "initialized": false,
-            "missing": false,
-            "virtual": false,
-            "componentName": "Casting",
-            "componentType": "PART",
-            "scenarioName": "AutoScenario512-28289255652044",
-            "locked": false,
-            "fileName": "casting.prt",
-            "fileMetadataIdentity": "9A9GL1GEEE0F",
-            "createdBy": "qa-automation-01",
-            "createdAt": "2021-11-04T16:28:39Z",
-            "updatedBy": "qa-automation-01",
-            "updatedAt": "2021-11-04T16:28:39Z",
-            "scenarioIterationKey": {
-              "scenarioKey": {
-                "stateName": "AutoScenario512-28289255652044",
-                "masterName": "CASTING",
-                "typeName": "partState",
-                "workspaceId": 251
-              },
-              "iteration": 285511
-            }
-          }
-        ],
         "required": [
-          "initialized",
-          "missing",
-          "virtual",
-          "componentName",
-          "componentType",
-          "scenarioName",
-          "locked",
-          "fileName",
-          "fileMetadataIdentity",
-          "createdBy",
-          "createdAt",
-          "updatedBy",
-          "updatedAt",
-          "scenarioIterationKey"
+          "scenarioKey",
+          "iteration"
         ],
         "properties": {
-          "initialized": {
-            "$id": "#/items/anyOf/0/properties/initialized",
-            "type": "boolean",
-            "title": "The initialized schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": false,
-            "examples": [
-              false
-            ]
-          },
-          "missing": {
-            "$id": "#/items/anyOf/0/properties/missing",
-            "type": "boolean",
-            "title": "The missing schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": false,
-            "examples": [
-              false
-            ]
-          },
-          "virtual": {
-            "$id": "#/items/anyOf/0/properties/virtual",
-            "type": "boolean",
-            "title": "The virtual schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": false,
-            "examples": [
-              false
-            ]
-          },
-          "componentName": {
-            "$id": "#/items/anyOf/0/properties/componentName",
-            "type": "string",
-            "title": "The componentName schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "Casting"
-            ]
-          },
-          "componentType": {
-            "$id": "#/items/anyOf/0/properties/componentType",
-            "type": "string",
-            "title": "The componentType schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "PART"
-            ]
-          },
-          "scenarioName": {
-            "$id": "#/items/anyOf/0/properties/scenarioName",
-            "type": "string",
-            "title": "The scenarioName schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "AutoScenario512-28289255652044"
-            ]
-          },
-          "locked": {
-            "$id": "#/items/anyOf/0/properties/locked",
-            "type": "boolean",
-            "title": "The locked schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": false,
-            "examples": [
-              false
-            ]
-          },
-          "fileName": {
-            "$id": "#/items/anyOf/0/properties/fileName",
-            "type": "string",
-            "title": "The fileName schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "casting.prt"
-            ]
-          },
-          "fileMetadataIdentity": {
-            "$id": "#/items/anyOf/0/properties/fileMetadataIdentity",
-            "type": "string",
-            "title": "The fileMetadataIdentity schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "9A9GL1GEEE0F"
-            ]
-          },
-          "createdBy": {
-            "$id": "#/items/anyOf/0/properties/createdBy",
-            "type": "string",
-            "title": "The createdBy schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "qa-automation-01"
-            ]
-          },
-          "createdAt": {
-            "$id": "#/items/anyOf/0/properties/createdAt",
-            "type": "string",
-            "title": "The createdAt schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "2021-11-04T16:28:39Z"
-            ]
-          },
-          "updatedBy": {
-            "$id": "#/items/anyOf/0/properties/updatedBy",
-            "type": "string",
-            "title": "The updatedBy schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "qa-automation-01"
-            ]
-          },
-          "updatedAt": {
-            "$id": "#/items/anyOf/0/properties/updatedAt",
-            "type": "string",
-            "title": "The updatedAt schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": "",
-            "examples": [
-              "2021-11-04T16:28:39Z"
-            ]
-          },
-          "scenarioIterationKey": {
-            "$id": "#/items/anyOf/0/properties/scenarioIterationKey",
+          "scenarioKey": {
             "type": "object",
-            "title": "The scenarioIterationKey schema",
-            "description": "An explanation about the purpose of this instance.",
-            "default": {},
-            "examples": [
-              {
-                "scenarioKey": {
-                  "stateName": "AutoScenario512-28289255652044",
-                  "masterName": "CASTING",
-                  "typeName": "partState",
-                  "workspaceId": 251
-                },
-                "iteration": 285511
-              }
-            ],
             "required": [
-              "scenarioKey",
-              "iteration"
+              "stateName",
+              "masterName",
+              "typeName",
+              "workspaceId"
             ],
             "properties": {
-              "scenarioKey": {
-                "$id": "#/items/anyOf/0/properties/scenarioIterationKey/properties/scenarioKey",
-                "type": "object",
-                "title": "The scenarioKey schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": {},
-                "examples": [
-                  {
-                    "stateName": "AutoScenario512-28289255652044",
-                    "masterName": "CASTING",
-                    "typeName": "partState",
-                    "workspaceId": 251
-                  }
-                ],
-                "required": [
-                  "stateName",
-                  "masterName",
-                  "typeName",
-                  "workspaceId"
-                ],
-                "properties": {
-                  "stateName": {
-                    "$id": "#/items/anyOf/0/properties/scenarioIterationKey/properties/scenarioKey/properties/stateName",
-                    "type": "string",
-                    "title": "The stateName schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "AutoScenario512-28289255652044"
-                    ]
-                  },
-                  "masterName": {
-                    "$id": "#/items/anyOf/0/properties/scenarioIterationKey/properties/scenarioKey/properties/masterName",
-                    "type": "string",
-                    "title": "The masterName schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "CASTING"
-                    ]
-                  },
-                  "typeName": {
-                    "$id": "#/items/anyOf/0/properties/scenarioIterationKey/properties/scenarioKey/properties/typeName",
-                    "type": "string",
-                    "title": "The typeName schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": "",
-                    "examples": [
-                      "partState"
-                    ]
-                  },
-                  "workspaceId": {
-                    "$id": "#/items/anyOf/0/properties/scenarioIterationKey/properties/scenarioKey/properties/workspaceId",
-                    "type": "integer",
-                    "title": "The workspaceId schema",
-                    "description": "An explanation about the purpose of this instance.",
-                    "default": 0,
-                    "examples": [
-                      251
-                    ]
-                  }
-                },
-                "additionalProperties": true
+              "stateName": {
+                "type": "string"
               },
-              "iteration": {
-                "$id": "#/items/anyOf/0/properties/scenarioIterationKey/properties/iteration",
-                "type": "integer",
-                "title": "The iteration schema",
-                "description": "An explanation about the purpose of this instance.",
-                "default": 0,
-                "examples": [
-                  285511
-                ]
+              "masterName": {
+                "type": "string"
+              },
+              "typeName": {
+                "type": "string"
+              },
+              "workspaceId": {
+                "type": "integer"
               }
-            },
-            "additionalProperties": true
+            }
+          },
+          "iteration": {
+            "type": "integer"
           }
-        },
-        "additionalProperties": true
+        }
       }
-    ]
+    }
   }
 }

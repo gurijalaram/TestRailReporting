@@ -1,11 +1,9 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.getscenariosinfo.GetScenarioInfoResponseTwo;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.entity.response.upload.FileResponse;
@@ -16,6 +14,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
