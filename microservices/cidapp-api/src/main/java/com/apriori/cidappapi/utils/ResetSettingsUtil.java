@@ -81,8 +81,8 @@ public class ResetSettingsUtil {
                 + "\"" + annVolIdentity + "\":\"" + null + "\","
                 + "\"" + prodLifeIdentity + "\":\"" + null + "\","
                 + "\"" + batchIdentity + "\":\"" + null + "\","
-                + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\","
-                + "\"" + cadThresholdIdentity + "\":\"" + false + "\""
+                + "\"" + cadThresholdIdentity + "\":\"" + false + "\","
+                + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 
         return HTTPRequest.build(requestEntity).patch();
