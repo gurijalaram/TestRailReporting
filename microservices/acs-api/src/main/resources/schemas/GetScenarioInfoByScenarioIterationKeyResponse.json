@@ -34,7 +34,7 @@
     "createdAt": {
       "type": "string"
     },
-    "updateddBy": {
+    "updatedBy": {
       "type": "string"
     },
     "updatedAt": {
@@ -61,7 +61,7 @@
     "fileName",
     "createdBy",
     "createdAt",
-    "updateddBy",
+    "updatedBy",
     "updatedAt"
   ]
 }

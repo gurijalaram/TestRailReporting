@@ -19,7 +19,7 @@ public class GetScenarioInfoByScenarioIterationKeyResponse {
     private String fileName;
     private String createdBy;
     private String createdAt;
-    private String updateddBy;
+    private String updatedBy;
     private String updatedAt;
     private ScenarioIterationKey scenarioIterationKey;
 }
