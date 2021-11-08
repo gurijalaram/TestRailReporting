@@ -74,7 +74,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      *
      * @return new page object
      */
-    public CustomerProfilePage createNewCustomer() {
+    public CustomerProfilePage clickNewCustomerButton() {
         pageUtils.waitForElementAndClick(newCustomerButton);
         return new CustomerProfilePage(driver);
     }

@@ -43,7 +43,7 @@ public class NewCustomerTests extends TestBase {
         cdsTestUtil = new CdsTestUtil();
         customerProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
-            .createNewCustomer();
+            .clickNewCustomerButton();
     }
 
     @After
@@ -105,7 +105,7 @@ public class NewCustomerTests extends TestBase {
     @TestRail(testCaseId = {"9613"})
     public void testCancelReturnsTheUserToTheCustomerListWhenCreatingANewCustomer() {
 
-        CustomerAdminPage actual = customerProfilePage.cancel(CustomerAdminPage.class);
+        CustomerAdminPage actual = customerProfilePage.clickCancelButton(CustomerAdminPage.class);
         assertThat(actual, is(notNullValue()));
     }
 
@@ -131,8 +131,8 @@ public class NewCustomerTests extends TestBase {
 
         CustomerProfilePage editPage = customerProfilePage
             .enterCustomerName(customerName)
-            .save()
-            .edit();
+            .clickSaveButton()
+            .clickEditButton();
 
         created.add(editPage.findCustomerIdentity());
 

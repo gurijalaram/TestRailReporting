@@ -456,7 +456,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      *
      * @return current page object
      */
-    public CustomerProfilePage edit() {
+    public CustomerProfilePage clickEditButton() {
         pageUtils.waitForElementAndClick(editButton);
         return this;
     }
@@ -466,7 +466,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      *
      * @return new page object
      */
-    public <T> T cancel(Class<T> klass) {
+    public <T> T clickCancelButton(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -480,7 +480,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      *
      * @return new page object
      */
-    public CustomerProfilePage save() {
+    public CustomerProfilePage clickSaveButton() {
         pageUtils.waitForElementAndClick(saveButton);
         return new CustomerProfilePage(driver);
     }
