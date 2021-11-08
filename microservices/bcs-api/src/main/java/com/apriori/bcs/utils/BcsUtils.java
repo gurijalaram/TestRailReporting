@@ -4,6 +4,7 @@ import static org.junit.Assert.fail;
 
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
+import com.apriori.bcs.entity.request.NewBatchProperties;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.utils.ApiUtil;
@@ -141,44 +142,13 @@ public class BcsUtils extends ApiUtil {
     }
 
     /**
-     * Wait for a batch to enter into a terminal state
-     *
-     * @param batch
-     * @return
-     */
-    public static State waitingForBatchProcessingComplete(Batch batch) throws InterruptedException {
-        Object batchDetails;
-        Integer pollingInterval = 0;
-        State state;
-
-        while (pollingInterval <= Constants.BATCH_POLLING_TIMEOUT) {
-            batchDetails = BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
-            try {
-                state = pollState(batchDetails, Batch.class);
-                if (state != State.PROCESSING) {
-                    return state;
-                }
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                log.error(Arrays.toString(e.getStackTrace()));
-                throw e;
-
-            }
-
-            pollingInterval += 1;
-        }
-
-        return State.PROCESSING;
-    }
-
-    /**
      * Polls BCS to get a batch/part's costing status
      *
      * @param obj
      * @param klass
      * @return Costing Status
      */
-    public static State pollState(Object obj, Class klass) throws InterruptedException {
+    public static State pollState(Object obj, Class klass) {
         String state = BcsUtils.getState(obj, klass);
 
         // TODO ALL: should be refactored to switch
@@ -196,7 +166,7 @@ public class BcsUtils extends ApiUtil {
             } catch (Exception e) {
                 log.error(e.getMessage());
                 log.error(Arrays.toString(e.getStackTrace()));
-                throw e;
+                throw new IllegalArgumentException();
             }
         }
 
@@ -275,6 +245,47 @@ public class BcsUtils extends ApiUtil {
         }
 
 
+    }
+
+    /**
+     * Generate new batch properties
+     *
+     * @return
+     */
+    public static NewBatchProperties generateNewBatchProperties(
+            String externalId,
+            String name,
+            String scenarioName,
+            String exportSetName) {
+        Long currentMillis = System.currentTimeMillis();
+
+        if (externalId == null) {
+            externalId = "Auto-Batch-" + currentMillis;
+        }
+
+        if (name == null) {
+            name = "Auto-Name-" + currentMillis;
+        }
+
+        if (scenarioName == null) {
+            scenarioName = "Auto-Scenario-" + currentMillis;
+        }
+
+        if (exportSetName == null) {
+            exportSetName = "Auto-ExportSet-" + currentMillis;
+        }
+
+        NewBatchProperties newBatch = new NewBatchProperties();
+        newBatch.setExternalId(externalId);
+        newBatch.setRollupName(name);
+        newBatch.setRollupScenarioName(scenarioName);
+        newBatch.setExportSetName(exportSetName);
+
+        return newBatch;
+    }
+
+    public static NewBatchProperties generateNewBatchProperties() {
+        return generateNewBatchProperties(null, null, null, null);
     }
 
 
