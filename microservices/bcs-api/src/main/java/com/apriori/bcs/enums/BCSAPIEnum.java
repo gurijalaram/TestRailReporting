@@ -16,15 +16,16 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
 
     // BATCHES
     GET_BATCH_PARTS_BY_ID("batches/%s/parts"),
+    GET_BATCH_PARTS("batches/parts"),
     GET_BATCH_BY_ID("batches/%s"),
     GET_BATCHES("batches"),
-    GET_BATCH_PART_REPRESENTATION_BY_BATCH_PART_IDS("batches/%s/parts/%s"),
-    GET_RESULTS_BY_BATCH_PART_IDS("batches/%s/parts/%s/results"),
-    GET_PART_REPORT_BY_BATCH_PART_IDS("batches/%s/parts/%s/part-report"),
+    GET_BATCH_PART_BY_BATCH_PART_IDS("batches/%sparts/%s"),
+    GET_RESULTS_BY_BATCH_PART_IDS("batches/%sparts/%sresults"),
+    GET_PART_REPORT_BY_BATCH_PART_IDS("batches/%sparts/%spart-report"),
     POST_START_COSTING_BY_ID("batches/%s/start-costing"),
     POST_CANCEL_COSTING_BY_ID("batches/%s/cancel"),
     POST_BATCHES("batches"),
-    POST_BATCH_PARTS_BY_ID("batches/%s/parts"),
+    POST_BATCH_PARTS_BY_ID("batches/%sparts"),
 
     GET_VPEs("virtual-production-environments"),
     GET_DIGITAL_FACTORIES("digital-factories"),
@@ -48,6 +49,7 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.bcs.api_url") + "customers/" + PropertiesContext.get("${env}.customer_identity") + "/" + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.bcs.api_url") + "customers/" + PropertiesContext.get("${env}.customer_identity") + "/" +
+                String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
     }
 }
