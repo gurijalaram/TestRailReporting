@@ -2,6 +2,7 @@ package com.apriori.newcustomer;
 
 import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +14,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.Arrays;
 
 public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> {
 
@@ -404,6 +407,18 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     public CustomerProfilePage enterMaxCadFileSize(String size) {
         pageUtils.setValueOfElement(maxCadFileSizeInput, size);
         return this;
+    }
+
+    /**
+     * Attempts to discover the customer identity.
+     *
+     * @return The customer identity for an existing customer, "new" for a new customer,
+     *         and the empty string if it cannot determine the identity.
+     */
+    public String findCustomerIdentity() {
+        String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
+        String url = driver.getCurrentUrl().replace(String.format("%s/customers/", baseUrl), "");
+        return Arrays.stream(url.split("/")).findFirst().orElse("");
     }
 
     /**

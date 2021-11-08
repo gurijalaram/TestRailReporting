@@ -5,29 +5,25 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.services.cas.Customer;
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-
 import org.apache.commons.lang3.RandomStringUtils;
-
 import org.assertj.core.api.SoftAssertions;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import com.apriori.testsuites.categories.SmokeTest;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -38,11 +34,13 @@ import java.util.TimeZone;
 
 public class NewCustomerTests extends TestBase {
     private CustomerProfilePage customerProfilePage;
-    private List<Customer> created;
+    private CdsTestUtil cdsTestUtil;
+    private List<String> created;
 
     @Before
     public void setup() {
         created = new ArrayList<>();
+        cdsTestUtil = new CdsTestUtil();
         customerProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .createNewCustomer();
@@ -50,9 +48,7 @@ public class NewCustomerTests extends TestBase {
 
     @After
     public void teardown() {
-        created.forEach((cus) -> {
-
-        });
+        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, identity));
     }
 
     @Test
@@ -138,6 +134,8 @@ public class NewCustomerTests extends TestBase {
             .save()
             .edit();
 
+        created.add(editPage.findCustomerIdentity());
+
         assertThat(editPage, is(notNullValue()));
     }
 
@@ -177,7 +175,7 @@ public class NewCustomerTests extends TestBase {
 
     private void testSalesforceIdShouldBe15Or18Characters(int count, SoftAssertions soft) {
 
-        String salesforceId = RandomStringUtils.randomNumeric(14);
+        String salesforceId = RandomStringUtils.randomNumeric(count);
         String actual = customerProfilePage
             .enterSalesforceId(salesforceId)
             .getSalesforceIdFeedback();
