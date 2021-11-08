@@ -10,6 +10,7 @@ import com.apriori.acs.utils.AcsResources;
 import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.ScenarioIterationKey;
+import com.apriori.entity.response.upload.ScenarioKey;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -29,16 +30,18 @@ public class GetScenariosInfoTests {
     @Description("Validate Get Scenarios Info")
     public void testGetScenariosInfo() {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String castingPartFileName = "Casting.prt";
+        String tabFormsPartFileName = "tab_forms.prt";
 
         FileUploadResources fileUploadResources = new FileUploadResources();
         FileResponse fileResponseOne = fileUploadResources.initialisePartUpload(
-                "Casting.prt",
+                castingPartFileName,
                 ProcessGroupEnum.CASTING.getProcessGroup()
         );
         FileUploadOutputs fileUploadOutputsOne = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponseOne, testScenarioName);
 
         FileResponse fileResponseTwo = fileUploadResources.initialisePartUpload(
-                "tab_forms.prt",
+                tabFormsPartFileName,
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
         FileUploadOutputs fileUploadOutputsTwo = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponseTwo, testScenarioName);
@@ -53,30 +56,45 @@ public class GetScenariosInfoTests {
         );
 
         GetScenariosInfoItem response1 = response.getResponseEntity().get(0);
+        ScenarioKey responseOneScenarioKey = response1.getScenarioIterationKey().getScenarioKey();
+
         GetScenariosInfoItem response2 = response.getResponseEntity().get(1);
+        ScenarioKey responseTwoScenarioKey = response2.getScenarioIterationKey().getScenarioKey();
+
+        String userToExpect = "qa-automation-01";
+        String componentTypeToExpect = "PART";
+        String typeNameToExpect = "partState";
 
         assertThat(response1.getInitialized(), is(equalTo(false)));
         assertThat(response1.getMissing(), is(equalTo(false)));
         assertThat(response1.getVirtual(), is(equalTo(false)));
         assertThat(response1.getLocked(), is(equalTo(false)));
-        assertThat(response1.getCreatedBy(), is(equalTo("qa-automation-01")));
-        assertThat(response1.getUpdatedBy(), is(equalTo("qa-automation-01")));
-        assertThat(response1.getComponentName(), is(equalTo("Casting")));
-        assertThat(response1.getComponentType(), is(equalTo("PART")));
-        assertThat(response1.getFileName(), is(equalTo("casting.prt")));
-        assertThat(response1.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("CASTING")));
-        assertThat(response1.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("partState")));
+
+        assertThat(response1.getCreatedBy(), is(equalTo(userToExpect)));
+        assertThat(response1.getUpdatedBy(), is(equalTo(userToExpect)));
+
+        assertThat(response1.getComponentName(), is(equalTo(castingPartFileName.substring(0, 7))));
+        assertThat(response1.getComponentType(), is(equalTo(componentTypeToExpect)));
+        assertThat(response1.getFileName(), is(equalTo(castingPartFileName.toLowerCase())));
+
+        assertThat(responseOneScenarioKey.getMasterName(),
+                is(equalTo(castingPartFileName.substring(0, 7).toUpperCase())));
+        assertThat(responseOneScenarioKey.getTypeName(), is(equalTo(typeNameToExpect)));
 
         assertThat(response2.getInitialized(), is(equalTo(false)));
         assertThat(response2.getMissing(), is(equalTo(false)));
         assertThat(response2.getVirtual(), is(equalTo(false)));
         assertThat(response2.getLocked(), is(equalTo(false)));
-        assertThat(response2.getCreatedBy(), is(equalTo("qa-automation-01")));
-        assertThat(response2.getUpdatedBy(), is(equalTo("qa-automation-01")));
-        assertThat(response2.getComponentName(), is(equalTo("tab_forms")));
-        assertThat(response2.getComponentType(), is(equalTo("PART")));
-        assertThat(response2.getFileName(), is(equalTo("tab_forms.prt")));
-        assertThat(response2.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("TAB_FORMS")));
-        assertThat(response2.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("partState")));
+
+        assertThat(response2.getCreatedBy(), is(equalTo(userToExpect)));
+        assertThat(response2.getUpdatedBy(), is(equalTo(userToExpect)));
+
+        assertThat(response2.getComponentName(), is(equalTo(tabFormsPartFileName.substring(0, 9))));
+        assertThat(response2.getComponentType(), is(equalTo(componentTypeToExpect)));
+        assertThat(response2.getFileName(), is(equalTo(tabFormsPartFileName)));
+
+        assertThat(responseTwoScenarioKey.getMasterName(),
+                is(equalTo(tabFormsPartFileName.substring(0, 9).toUpperCase())));
+        assertThat(responseTwoScenarioKey.getTypeName(), is(equalTo(typeNameToExpect)));
     }
 }
