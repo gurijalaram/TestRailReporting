@@ -1,9 +1,10 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoItem;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.entity.response.upload.FileResponse;
@@ -27,11 +28,6 @@ public class GetScenariosInfoTests {
     @TestRail(testCaseId = "9597")
     @Description("Validate Get Scenarios Info")
     public void testGetScenariosInfo() {
-        /*
-         * 1 - do file upload twice and save scenario iteration key each time
-         * 2 - call get scenarios info endpoint
-         * 3 - assert on get scenarios info response
-         */
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -56,6 +52,31 @@ public class GetScenariosInfoTests {
                 keyTwo
         );
 
-        assertThat(response, is(notNullValue()));
+        GetScenariosInfoItem response1 = response.getResponseEntity().get(0);
+        GetScenariosInfoItem response2 = response.getResponseEntity().get(1);
+
+        assertThat(response1.getInitialized(), is(equalTo(false)));
+        assertThat(response1.getMissing(), is(equalTo(false)));
+        assertThat(response1.getVirtual(), is(equalTo(false)));
+        assertThat(response1.getLocked(), is(equalTo(false)));
+        assertThat(response1.getCreatedBy(), is(equalTo("qa-automation-01")));
+        assertThat(response1.getUpdatedBy(), is(equalTo("qa-automation-01")));
+        assertThat(response1.getComponentName(), is(equalTo("Casting")));
+        assertThat(response1.getComponentType(), is(equalTo("PART")));
+        assertThat(response1.getFileName(), is(equalTo("casting.prt")));
+        assertThat(response1.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("CASTING")));
+        assertThat(response1.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("partState")));
+
+        assertThat(response2.getInitialized(), is(equalTo(false)));
+        assertThat(response2.getMissing(), is(equalTo(false)));
+        assertThat(response2.getVirtual(), is(equalTo(false)));
+        assertThat(response2.getLocked(), is(equalTo(false)));
+        assertThat(response2.getCreatedBy(), is(equalTo("qa-automation-01")));
+        assertThat(response2.getUpdatedBy(), is(equalTo("qa-automation-01")));
+        assertThat(response2.getComponentName(), is(equalTo("tab_forms")));
+        assertThat(response2.getComponentType(), is(equalTo("PART")));
+        assertThat(response2.getFileName(), is(equalTo("tab_forms.prt")));
+        assertThat(response2.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("TAB_FORMS")));
+        assertThat(response2.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("partState")));
     }
 }

@@ -1,15 +1,11 @@
 package com.apriori.acs.entity.response.getscenariosinfo;
 
 import com.apriori.entity.response.upload.ScenarioIterationKey;
-import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
 
-import java.util.ArrayList;
-
 @Data
-@Schema(location = "GetScenariosInfoResponse.json")
-public class GetScenariosInfoResponse extends ArrayList<GetScenariosInfoItem> {
+public class GetScenariosInfoItem {
     public Boolean initialized;
     public Boolean missing;
     public Boolean virtual;
