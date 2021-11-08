@@ -12,13 +12,13 @@ public class NewPartRequest {
     private String filename;
     private Bytes data;
     private String externalId;
-    private Integer annualVolume;
-    private Integer batchSize;
+    private Object annualVolume;
+    private Object batchSize;
     private String description;
     private String materialName;
     private String pinnedRouting;
     private String processGroup;
-    private Double productionLife;
+    private Object productionLife;
     private String scenarioName;
     private String udas;
     private String vpeName;
