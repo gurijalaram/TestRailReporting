@@ -39,7 +39,7 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-delete-button'] button")
     private WebElement deleteButton;
 
-    @FindBy(css = "[id='qa-action-bar-actions-dropdown']")
+    @FindBy(css = "[id='qa-action-bar-actions-dropdown'] .btn-secondary")
     private WebElement actionsButton;
 
     @FindBy(css = "[id='qa-sub-header-edit-button'] button")

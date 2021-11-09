@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
@@ -68,7 +69,6 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
         pageUtils.waitForElementAppear(email);
         pageUtils.waitForElementAppear(password);
         pageUtils.waitForElementAppear(submitLogin);
-
     }
 
     /**
@@ -77,9 +77,9 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public ExplorePage login(UserCredentials userCredentials) {
+    public ExploreTabToolbar login(UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new ExplorePage(driver);
+        return new ExploreTabToolbar(driver);
     }
 
     /**
@@ -143,5 +143,14 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      */
     public String getLoginErrorMessage() {
         return loginErrorMsg.getText();
+    }
+
+    /**
+     * Gets the page title
+     *
+     * @return boolean
+     */
+    public boolean verifyPageTitle(String pageTitle) {
+        return driver.getTitle().equalsIgnoreCase(pageTitle);
     }
 }

@@ -45,9 +45,6 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".webviewer-canvas")
     private WebElement viewerCanvas;
 
-    @FindBy(css = ".scenario-state-preview [data-icon='cog']")
-    private List<WebElement> cogIcon;
-
     @FindBy(css = "svg[data-icon='home']")
     private WebElement homeButton;
 
@@ -170,7 +167,6 @@ public class EvaluatePage extends EvaluateToolbar {
         PageFactory.initElements(driver, this);
         this.get();
         pageUtils.waitForElementsToNotAppear(panelLoaders);
-        pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
     /**
@@ -642,8 +638,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isSourcePartDetailsDisplayed(String componentName, String scenarioName) {
-        By byScenario = getByScenario(componentName.toUpperCase(), scenarioName);
-        return pageUtils.waitForElementToAppear(byScenario).isDisplayed();
+        By byScenario = getByScenario(componentName, scenarioName);
+        return driver.findElement(byScenario).isDisplayed();
     }
 
     /**
@@ -655,7 +651,6 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
         By byScenario = getByScenario(componentName, scenarioName);
-        pageUtils.waitForElementAndClick(byScenario);
         pageUtils.waitForElementAndClick(byScenario);
         pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
