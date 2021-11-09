@@ -34,6 +34,7 @@ public class CostingInput {
     private Threads threads;
     private Tolerances tolerances;
     private Thumbnail thumbnail;
+    private String materialUtilizationMode;
 
     public static class CustomAttributes {
         @JsonProperty("UserList")
