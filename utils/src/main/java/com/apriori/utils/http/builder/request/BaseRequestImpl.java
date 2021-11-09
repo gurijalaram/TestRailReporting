@@ -18,12 +18,12 @@ class BaseRequestImpl implements Request {
 
     @Override
     public <T> ResponseWrapper<T> get() {
-        return  initRequestData().get();
+        return initRequestData().get();
     }
 
     @Override
     public <T> ResponseWrapper<T> post() {
-        return  initRequestData().post();
+        return initRequestData().post();
     }
 
     @Override
@@ -33,17 +33,17 @@ class BaseRequestImpl implements Request {
 
     @Override
     public <T> ResponseWrapper<T> put() {
-        return  initRequestData().put();
+        return initRequestData().put();
     }
 
     @Override
     public <T> ResponseWrapper<T> delete() {
-        return  initRequestData().delete();
+        return initRequestData().delete();
     }
 
     @Override
     public <T> ResponseWrapper<T> patch() {
-        return  initRequestData().patch();
+        return initRequestData().patch();
     }
 
     private ConnectionManager<?> initRequestData() {
