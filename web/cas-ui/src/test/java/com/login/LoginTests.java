@@ -7,12 +7,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.testsuites.categories.SanityTest;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+
 
 public class LoginTests extends TestBase {
 
@@ -25,6 +28,7 @@ public class LoginTests extends TestBase {
     }
 
     @Test
+    @Category(SanityTest.class)
     @Description("Test successful login")
     public void testLogin() {
 

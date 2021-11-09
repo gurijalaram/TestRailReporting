@@ -1,4 +1,4 @@
-package com.apriori.cds.tests.utils;
+package com.apriori.cds.utils;
 
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
