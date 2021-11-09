@@ -127,11 +127,9 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param password - the password
      * @return the current page object
      */
-    public <T> T failedLoginAs(String email, String password, Class<T> klass) {
+    public String failedLoginAs(String email, String password) {
         executeLogin(email, password);
-        pageUtils.waitForElementToAppear(loginErrorMsg);
-        return new AprioriLoginPage(driver, false);
-        return PageFactory.initElements(driver, klass);
+        return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
     }
 
     /**
@@ -180,7 +178,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return login error message
      */
-    protected String getLoginErrorMessage() {
+    public String getLoginErrorMessage() {
         return loginErrorMsg.getText();
     }
 

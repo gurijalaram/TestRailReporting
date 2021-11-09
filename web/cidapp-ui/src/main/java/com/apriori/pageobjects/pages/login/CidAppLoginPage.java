@@ -30,6 +30,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     public CidAppLoginPage(WebDriver driver) {
         this.driver = driver;
+        this.pageUtils = new PageUtils(driver);
         this.aprioriLoginPage = new AprioriLoginPage(driver, "cidapp");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -63,7 +64,17 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @return the current page object
      */
     public CidAppLoginPage failedLoginAs(String email, String password) {
-        return aprioriLoginPage.failedLoginAs(email, password, CidAppLoginPage.class);
+        aprioriLoginPage.failedLoginAs(email, password);
+        return this;
+    }
+
+    /**
+     * Gets the login error message
+     *
+     * @return login error message
+     */
+    public String getLoginErrorMessage() {
+        return aprioriLoginPage.getLoginErrorMessage();
     }
 }
 

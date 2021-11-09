@@ -16,6 +16,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -48,7 +50,7 @@ public class LoginTests extends TestBase {
         assertThat(explorePage.isScenarioCountPresent(), is(true));
     }
 
-    /*@Test
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6646"})
     @Description("Test unsuccessful login with correct email, incorrect password")
@@ -58,7 +60,7 @@ public class LoginTests extends TestBase {
         loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
-    }*/
+    }
 
     /*@Test
     @Category(SmokeTests.class)
