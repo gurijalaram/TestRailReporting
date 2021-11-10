@@ -104,7 +104,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectMaterial(String materialName) {
-        By material = By.xpath(String.format("//div[@role='row']//div[contains(text(),'%s')]", materialName));
+        By material = By.xpath(String.format("//div[@class='cell-content']//div[.='%s']", materialName));
         pageUtils.waitForElementToAppear(material);
         pageUtils.scrollWithJavaScript(driver.findElement(material), true);
 
