@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.pageobjects.common.CisComponentTableActions;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,13 +19,18 @@ public class ExploreTabToolbar extends MainNavigationBar {
     @FindBy(css = ".deployment-connection-info")
     private WebElement deploymentInfo;
 
+    @FindBy(css = ".icon-button-group .disabled")
+    private WebElement disabledStartComparison;
+
     private WebDriver driver;
     private PageUtils pageUtils;
+    private CisComponentTableActions componentTableActions;
 
     public ExploreTabToolbar(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.componentTableActions = new CisComponentTableActions(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -33,8 +40,11 @@ public class ExploreTabToolbar extends MainNavigationBar {
      *
      * @return current page object
      */
-    public ExploreTabToolbar selectStartComparison() {
-        pageUtils.waitForElementAndClick(startComparison);
+    public ExploreTabToolbar clickStartComparison() {
+        pageUtils.waitForElementToAppear(startComparison);
+        if (pageUtils.isElementEnabled(startComparison)) {
+            pageUtils.waitForElementAndClick(startComparison);
+        }
         return this;
     }
 
@@ -45,5 +55,25 @@ public class ExploreTabToolbar extends MainNavigationBar {
      */
     public String getDeploymentInfo() {
         return pageUtils.waitForElementToAppear(deploymentInfo).getAttribute("textContent");
+    }
+
+    /**
+     * Check if the Start comparison button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isStartComparisonEnabled() {
+        return pageUtils.waitForElementToAppear(disabledStartComparison).isEnabled();
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName -the component
+     * @return new page object
+     */
+    public ExplorePage clickSearch(String componentName) {
+        componentTableActions.clickSearch(componentName);
+        return new ExplorePage(driver);
     }
 }

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
-import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
@@ -77,9 +77,9 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public ExploreTabToolbar login(UserCredentials userCredentials) {
+    public ExplorePage login(UserCredentials userCredentials) {
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new ExploreTabToolbar(driver);
+        return new ExplorePage(driver);
     }
 
     /**

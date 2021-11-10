@@ -4,11 +4,16 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class ComparePage extends LoadableComponent<ComparePage> {
+
+    @FindBy(css = "[data-icon='pencil-alt']")
+    private WebElement modifyButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -28,6 +33,6 @@ public class ComparePage extends LoadableComponent<ComparePage> {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.waitForElementToAppear(modifyButton);
     }
 }
