@@ -10,8 +10,7 @@ import org.openqa.selenium.WebElement;
  * the system.
  *
  * These components are built by attaching the root of a WebElement on the page
- * to them.  Note that any find parameters in the class are restricted through the
- * root element.
+ * to them.
  */
 public abstract class CommonComponent {
     private WebDriver driver;
