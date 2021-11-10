@@ -94,7 +94,7 @@ public class CostOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1956"})
     @Description("Min & Max costs filter works")
     public void testMinMaxAprioriCost() {
