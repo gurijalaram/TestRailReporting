@@ -1,9 +1,5 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoItem;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.utils.AcsResources;
@@ -18,6 +14,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
@@ -65,36 +62,38 @@ public class GetScenariosInfoTests {
         String componentTypeToExpect = "PART";
         String typeNameToExpect = "partState";
 
-        assertThat(response1.getInitialized(), is(equalTo(false)));
-        assertThat(response1.getMissing(), is(equalTo(false)));
-        assertThat(response1.getVirtual(), is(equalTo(false)));
-        assertThat(response1.getLocked(), is(equalTo(false)));
+        SoftAssertions softAssertions = new SoftAssertions();
 
-        assertThat(response1.getCreatedBy(), is(equalTo(userToExpect)));
-        assertThat(response1.getUpdatedBy(), is(equalTo(userToExpect)));
+        softAssertions.assertThat(!response1.getInitialized());
+        softAssertions.assertThat(!response1.getMissing());
+        softAssertions.assertThat(!response1.getVirtual());
+        softAssertions.assertThat(!response1.getLocked());
 
-        assertThat(response1.getComponentName(), is(equalTo(castingPartFileName.substring(0, 7))));
-        assertThat(response1.getComponentType(), is(equalTo(componentTypeToExpect)));
-        assertThat(response1.getFileName(), is(equalTo(castingPartFileName.toLowerCase())));
+        softAssertions.assertThat(response1.getCreatedBy().equals(userToExpect));
+        softAssertions.assertThat(response1.getUpdatedBy().equals(userToExpect));
 
-        assertThat(responseOneScenarioKey.getMasterName(),
-                is(equalTo(castingPartFileName.substring(0, 7).toUpperCase())));
-        assertThat(responseOneScenarioKey.getTypeName(), is(equalTo(typeNameToExpect)));
+        softAssertions.assertThat(response1.getComponentName().equals(castingPartFileName.substring(0, 7)));
+        softAssertions.assertThat(response1.getComponentType().equals(componentTypeToExpect));
+        softAssertions.assertThat(response1.getFileName().equals(castingPartFileName.toLowerCase()));
 
-        assertThat(response2.getInitialized(), is(equalTo(false)));
-        assertThat(response2.getMissing(), is(equalTo(false)));
-        assertThat(response2.getVirtual(), is(equalTo(false)));
-        assertThat(response2.getLocked(), is(equalTo(false)));
+        softAssertions.assertThat(responseOneScenarioKey.getMasterName().equals(castingPartFileName.substring(0, 7).toUpperCase()));
+        softAssertions.assertThat(responseOneScenarioKey.getTypeName().equals(typeNameToExpect));
 
-        assertThat(response2.getCreatedBy(), is(equalTo(userToExpect)));
-        assertThat(response2.getUpdatedBy(), is(equalTo(userToExpect)));
+        softAssertions.assertThat(!response2.getInitialized());
+        softAssertions.assertThat(!response2.getMissing());
+        softAssertions.assertThat(!response2.getVirtual());
+        softAssertions.assertThat(!response2.getLocked());
 
-        assertThat(response2.getComponentName(), is(equalTo(tabFormsPartFileName.substring(0, 9))));
-        assertThat(response2.getComponentType(), is(equalTo(componentTypeToExpect)));
-        assertThat(response2.getFileName(), is(equalTo(tabFormsPartFileName)));
+        softAssertions.assertThat(response2.getCreatedBy().equals(userToExpect));
+        softAssertions.assertThat(response2.getUpdatedBy().equals(userToExpect));
 
-        assertThat(responseTwoScenarioKey.getMasterName(),
-                is(equalTo(tabFormsPartFileName.substring(0, 9).toUpperCase())));
-        assertThat(responseTwoScenarioKey.getTypeName(), is(equalTo(typeNameToExpect)));
+        softAssertions.assertThat(response2.getComponentName().equals(tabFormsPartFileName.substring(0, 9)));
+        softAssertions.assertThat(response2.getComponentType().equals(componentTypeToExpect));
+        softAssertions.assertThat(response2.getFileName().equals(tabFormsPartFileName));
+
+        softAssertions.assertThat(responseTwoScenarioKey.getMasterName().equals(tabFormsPartFileName.substring(0, 9).toUpperCase()));
+        softAssertions.assertThat(responseTwoScenarioKey.getTypeName().equals(typeNameToExpect));
+
+        softAssertions.assertAll();
     }
 }
