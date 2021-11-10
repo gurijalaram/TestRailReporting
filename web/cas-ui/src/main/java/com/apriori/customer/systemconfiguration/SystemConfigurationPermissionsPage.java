@@ -7,12 +7,15 @@ import com.apriori.utils.web.components.SelectionTreeComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Represents the page object model of the system configuration permissions page.
  */
 public final class SystemConfigurationPermissionsPage extends EagerPageComponent<SystemConfigurationPermissionsPage> {
+    private static Logger logger = LoggerFactory.getLogger(SystemConfigurationPermissionsPage.class);
+
     @FindBy(css = ".system-configuration-permissions .selection-tree")
     private WebElement permissionsListRoot;
     private final SelectionTreeComponent permissionsList;
@@ -23,7 +26,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @param driver The web driver.
      */
     public SystemConfigurationPermissionsPage(WebDriver driver) {
-        super(driver, LoggerFactory.getLogger(SystemConfigurationPermissionsPage.class));
+        super(driver, logger);
         permissionsList = new SelectionTreeComponent(getDriver(), permissionsListRoot);
     }
 

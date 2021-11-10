@@ -5,12 +5,15 @@ import com.apriori.utils.web.components.EagerPageComponent;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Represents the page object model for the root of the system configurations tab under a customer.
  */
 public final class SystemConfigurationPage extends EagerPageComponent<SystemConfigurationPage> {
+    private static Logger logger = LoggerFactory.getLogger(SystemConfigurationPage.class);
+
     @FindBy(css = ".system-configuration-tab-groups a")
     private WebElement groupsTab;
 
@@ -23,7 +26,7 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      * @param driver The web driver.
      */
     public SystemConfigurationPage(WebDriver driver) {
-        super(driver, LoggerFactory.getLogger(SystemConfigurationPage.class));
+        super(driver, logger);
     }
 
     /**
