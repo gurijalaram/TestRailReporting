@@ -1,5 +1,7 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
@@ -8,11 +10,13 @@ import org.openqa.selenium.WebElement;
  * the system.
  *
  * These components are built by attaching the root of a WebElement on the page
- * to them.
+ * to them.  Note that any find parameters in the class are restricted through the
+ * root element.
  */
 public abstract class CommonComponent {
     private WebDriver driver;
     private WebElement root;
+    private PageUtils pageUtils;
 
     /**
      * Initializes a new instance of this object.
@@ -42,6 +46,19 @@ public abstract class CommonComponent {
      * @return The root element that contains this component.
      */
     protected WebElement getRoot() {
-        return this.root;
+        return root;
+    }
+
+    /**
+     * Gets the utilities for this page.
+     *
+     * The page utils for a common component are lazy loaded and
+     * only required when requested for the first time.
+     *
+     * @return The utilities for this page.
+     */
+    protected final PageUtils getPageUtils() {
+        this.pageUtils = this.pageUtils == null ? new PageUtils(getDriver()) : this.pageUtils;
+        return this.pageUtils;
     }
 }
