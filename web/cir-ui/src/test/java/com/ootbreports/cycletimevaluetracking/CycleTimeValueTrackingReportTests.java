@@ -58,7 +58,7 @@ public class CycleTimeValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2331"})
     @Description("Projects rollup drop list functionality test - Cycle Time Value Tracking Report")
     public void testProjectRollupDropdownList() {
