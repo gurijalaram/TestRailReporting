@@ -1,5 +1,6 @@
 package com.explore;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -89,6 +90,7 @@ public class PreviewPanelTests extends TestBase {
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(PLASTIC_MOLDING)
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
@@ -101,8 +103,8 @@ public class PreviewPanelTests extends TestBase {
             .openPreviewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
-        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
-        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.86, 1));
+        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(13.27, 1));
+        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(13.65, 1));
         assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10526.66, 2));
     }
 
