@@ -16,7 +16,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(CustomerAdminPage.class);
 
-    @FindBy(id = "qa-new-customer-link")
+    @FindBy(className = "customer-list-view-new-button")
     private WebElement newCustomerButton;
 
     @FindBy(id = "qa-customer-counter")
@@ -74,7 +74,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      *
      * @return new page object
      */
-    public CustomerProfilePage createNewCustomer() {
+    public CustomerProfilePage clickNewCustomerButton() {
         pageUtils.waitForElementAndClick(newCustomerButton);
         return new CustomerProfilePage(driver);
     }

@@ -251,6 +251,50 @@ public class PageUtils {
         element.sendKeys(Keys.CONTROL + "a" + Keys.BACK_SPACE);
     }
 
+    /**
+     * Clears the value of an element with a value attribute.
+     *
+     * This method works on all platforms regardless of the OS modifier key
+     * (CONTROL on Windows/Linux, COMMAND/META on OSX).
+     *
+     * @param elementWithValue The element that contains the value to delete.
+     */
+    public void clearValueOfElement(WebElement elementWithValue) {
+        waitForElementAndClick(elementWithValue);
+
+        // This little trick works on all OS's regardless of the command/control key.
+        // Since the element is clicked in the middle in selenium, we have to make sure
+        // the text is deleted before and after the caret.  Note here that the +1 just
+        // makes it so that it sends at least one of each character in the case that
+        // the current value is already empty.
+        String currentValue = elementWithValue.getAttribute("value");
+        Keys[] backspaces = new Keys[currentValue.length() + 1];
+        Keys[] deletes = new Keys[currentValue.length() + 1];
+        Arrays.fill(backspaces, Keys.BACK_SPACE);
+        Arrays.fill(deletes, Keys.DELETE);
+        elementWithValue.sendKeys(backspaces);
+        elementWithValue.sendKeys(deletes);
+    }
+
+    /**
+     * Sets the value of an element by sending it keys.
+     *
+     * This will fully clear the element first before sending any keys. It will
+     * also tab out of the element to make sure any form validation is raised.
+     *
+     * @param elementWithValue The element to set the value for.
+     * @param value The value to set.
+     */
+    public void setValueOfElement(WebElement elementWithValue, String value) {
+        clearValueOfElement(elementWithValue);
+
+        if (value != null) {
+            elementWithValue.sendKeys(value);
+        }
+
+        elementWithValue.sendKeys(Keys.TAB);
+    }
+
     public Dimension getWindowDimension() {
         return driver.manage().window().getSize();
     }

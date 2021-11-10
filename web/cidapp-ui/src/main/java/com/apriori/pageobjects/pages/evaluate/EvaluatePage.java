@@ -652,7 +652,6 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
         By byScenario = getByScenario(componentName, scenarioName);
         pageUtils.waitForElementAndClick(byScenario);
-        pageUtils.waitForElementAndClick(byScenario);
         pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
     }
