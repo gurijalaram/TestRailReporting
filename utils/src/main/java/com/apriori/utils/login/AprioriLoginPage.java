@@ -18,6 +18,9 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
+    @FindBy(css = ".auth0-lock-name")
+    private WebElement pageTitle;
+
     @FindBy(css = "input[name='email']")
     private WebElement email;
 
@@ -97,6 +100,15 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     }
 
     /**
+     * Gets title of current login page
+     *
+     * @return string
+     */
+    public String getPageTitle() {
+        return pageTitle.getAttribute("textContent");
+    }
+
+    /**
      * Login to cid
      *
      * @param email    - the email
@@ -127,7 +139,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param password - the password
      * @return the current page object
      */
-    public String failedLoginAs(String email, String password) {
+    private String failedLoginAs(String email, String password) {
         executeLogin(email, password);
         return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
     }
@@ -178,7 +190,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return login error message
      */
-    public String getLoginErrorMessage() {
+    private String getLoginErrorMessage() {
         return loginErrorMsg.getText();
     }
 
@@ -187,7 +199,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return current page object
      */
-    protected AprioriLoginPage getUsernameAndPassword() {
+    private AprioriLoginPage getUsernameAndPassword() {
         getEmail();
         getPassword();
         return this;
@@ -198,7 +210,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return new page object
      */
-    public ForgottenPasswordPage forgottenPassword() {
+    private ForgottenPasswordPage forgottenPassword() {
         pageUtils.waitForElementAndClick(forgotPassword);
         return new ForgottenPasswordPage(driver);
     }
@@ -208,7 +220,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return new page object
      */
-    protected PrivacyPolicyPage privacyPolicy() {
+    private PrivacyPolicyPage privacyPolicy() {
         pageUtils.waitForElementAndClick(privacyPolicy);
         return new PrivacyPolicyPage(driver);
     }
@@ -236,7 +248,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return true/false
      */
-    protected boolean isLogoDisplayed() {
+    private boolean isLogoDisplayed() {
         return aprioriLogo.isDisplayed();
     }
 
@@ -245,7 +257,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    protected String getMarketingText() {
+    private String getMarketingText() {
         return marketingText.getText();
     }
 
@@ -254,7 +266,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    protected String getWelcomeText() {
+    private String getWelcomeText() {
         return welcomeText.getText();
     }
 }

@@ -1,23 +1,13 @@
 package com.login;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.login.ForgottenPasswordPage;
 import com.apriori.pageobjects.pages.login.PrivacyPolicyPage;
-import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-
-import io.qameta.allure.Description;
-import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
@@ -39,7 +29,7 @@ public class LoginTests extends TestBase {
         super();
     }
 
-    @Test
+    /*@Test
     @TestRail(testCaseId = {"6645"})
     @Description("Test successful login")
     public void testLogin() {
@@ -62,7 +52,7 @@ public class LoginTests extends TestBase {
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }
 
-    /*@Test
+    @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6647"})
     @Description("Test unsuccessful login with incorrect email, correct password")

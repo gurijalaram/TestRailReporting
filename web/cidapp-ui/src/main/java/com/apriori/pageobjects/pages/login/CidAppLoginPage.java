@@ -9,8 +9,6 @@ import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
@@ -20,9 +18,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
-
-    @FindBy(css = "[title='Cost Insight Design PRODUCTION (NA-1)']")
-    private WebElement pageTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -43,7 +38,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CID login page was not displayed", pageTitle.getAttribute("textContent").contains("Cost Insight Design"));
+        assertTrue("CID login page was not displayed", aprioriLoginPage.getPageTitle().contains("Cost Insight Design"));
     }
 
     /**
@@ -54,27 +49,6 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      */
     public ExplorePage login(final UserCredentials userCredentials) {
         return aprioriLoginPage.login(userCredentials, ExplorePage.class);
-    }
-
-    /**
-     * Failed login to cid
-     *
-     * @param email    - the email
-     * @param password - the password
-     * @return the current page object
-     */
-    public CidAppLoginPage failedLoginAs(String email, String password) {
-        aprioriLoginPage.failedLoginAs(email, password);
-        return this;
-    }
-
-    /**
-     * Gets the login error message
-     *
-     * @return login error message
-     */
-    public String getLoginErrorMessage() {
-        return aprioriLoginPage.getLoginErrorMessage();
     }
 }
 
