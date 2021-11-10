@@ -22,6 +22,7 @@ public class CostingInput {
     private String machiningMode;
     private String materialMode;
     private String materialName;
+    private String materialStockName;
     private String processGroupName;
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
     private String vpeName;
