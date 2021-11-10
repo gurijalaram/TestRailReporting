@@ -11,14 +11,13 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cds.entity.response.CustomerAssociationItems;
 import com.apriori.cds.entity.response.CustomerAssociationResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
-import com.apriori.cds.tests.utils.CdsTestUtil;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
 import org.junit.Test;
 
 public class CdsCustomerAssociationTests {
