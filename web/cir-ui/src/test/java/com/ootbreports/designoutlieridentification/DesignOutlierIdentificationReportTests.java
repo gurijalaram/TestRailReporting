@@ -197,6 +197,10 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
                 .clickOk(true, GenericReportPage.class);
 
+        genericReportPage.clickInputControlsButton().waitForInputControlsLoad()
+                .selectExportSetDtcTests(ExportSetEnum.ROLL_UP_A.getExportSetName())
+                .clickOk(true, GenericReportPage.class);
+
         genericReportPage.setReportName(
                 ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION.getReportName().concat(" 2")
         );
@@ -207,6 +211,6 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
                 "FBC Value"
         );
 
-        assertThat(fbcValue.compareTo(new BigDecimal("9883.65")), is(equalTo(0)));
+        assertThat(fbcValue.compareTo(new BigDecimal("10429.19")), is(equalTo(0)));
     }
 }
