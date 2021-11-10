@@ -132,7 +132,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario(5)
             .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName.toUpperCase()), is(true));
+        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
 
     @Test
