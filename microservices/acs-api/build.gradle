@@ -10,6 +10,7 @@ repositories {
 
 dependencies {
     implementation project(':apibase')
+    implementation project(':microservices:cid-api')
     implementation project(':utils')
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
