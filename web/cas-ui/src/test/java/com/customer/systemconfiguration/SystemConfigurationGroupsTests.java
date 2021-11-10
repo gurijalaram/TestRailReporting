@@ -8,12 +8,14 @@ import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
-import com.apriori.utils.web.components.SelectionTreeItem;
+import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 public class SystemConfigurationGroupsTests extends TestBase {
     private SystemConfigurationGroupsPage systemConfigurationGroupsPage;
@@ -33,8 +35,8 @@ public class SystemConfigurationGroupsTests extends TestBase {
     @TestRail(testCaseId = {"9880", "9883", "9881"})
     public void testValidateShouldDisplayGroupsForTheCustomer() {
 
-        SelectionTreeItem first = systemConfigurationGroupsPage.getRootGroup();
-        SelectionTreeItem selected = systemConfigurationGroupsPage.getSelectedGroup();
-        assertThat(selected, is(equalTo(first)));
+        List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getHierarchy();
+        SelectionTreeItemComponent firstGroup = groups.stream().findFirst().orElse(null);
+        assertThat(firstGroup.isSelected(), is(true));
     }
 }
