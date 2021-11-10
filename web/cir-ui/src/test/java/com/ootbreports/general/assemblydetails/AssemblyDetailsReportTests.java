@@ -85,7 +85,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CustomerSmokeTests.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, CustomerSmokeTests.class})
     @TestRail(testCaseId = {"1922"})
     @Description("Verifies that the currency code works properly")
     public void testCurrencyCodeWorks() {

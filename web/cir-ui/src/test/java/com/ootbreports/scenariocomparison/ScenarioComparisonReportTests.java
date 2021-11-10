@@ -104,7 +104,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3305"})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
