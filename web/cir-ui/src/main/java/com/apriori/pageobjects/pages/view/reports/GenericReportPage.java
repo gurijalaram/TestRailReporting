@@ -846,18 +846,13 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectMassMetric(String massMetric) {
         pageUtils.scrollWithJavaScript(massMetricDropdown, true);
         if (!massMetricDropdown.getAttribute("title").equals(massMetric)) {
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriCostMin']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriCostMax']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriMassMin']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='aPrioriMassMax']//input"));
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='outlierLines']//input"));
             pageUtils.waitForElementToAppear(okButton);
             pageUtils.waitForElementToAppear(applyButton);
             pageUtils.waitForElementToAppear(resetButton);
             pageUtils.waitForElementToAppear(cancelButton);
             pageUtils.waitForElementToAppear(massMetricDropdown);
 
-            pageUtils.waitForElementAndClick(massMetricDropdown);
+            massMetricDropdown.click();
             pageUtils.waitForElementAndClick(driver.findElement(By.xpath(
                     String.format("//li[@title='%s']/div/a", massMetric))));
         }

@@ -440,7 +440,6 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSetDtcTests(exportSet)
-            .selectExportSet(exportSet, GenericReportPage.class)
             .waitForExportSetSelection(exportSet)
             .selectMassMetric(massMetric)
             .clickOk(true, GenericReportPage.class)
