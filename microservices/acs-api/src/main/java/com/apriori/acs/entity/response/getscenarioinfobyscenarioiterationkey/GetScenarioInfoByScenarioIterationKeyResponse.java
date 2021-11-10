@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey;
 
-import com.apriori.acs.entity.response.createmissingscenario.ScenarioIterationKey;
+import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
@@ -19,7 +19,7 @@ public class GetScenarioInfoByScenarioIterationKeyResponse {
     private String fileName;
     private String createdBy;
     private String createdAt;
-    private String updateddBy;
+    private String updatedBy;
     private String updatedAt;
     private ScenarioIterationKey scenarioIterationKey;
 }
