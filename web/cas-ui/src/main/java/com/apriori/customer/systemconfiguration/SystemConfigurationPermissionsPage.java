@@ -12,10 +12,10 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents the page object model of the system configuration permissions page.
  */
-public class SystemConfigurationPermissionsPage extends EagerPageComponent<SystemConfigurationPermissionsPage> {
+public final class SystemConfigurationPermissionsPage extends EagerPageComponent<SystemConfigurationPermissionsPage> {
     @FindBy(css = ".system-configuration-permissions .selection-tree")
     private WebElement permissionsListRoot;
-    private SelectionTreeComponent permissionsList;
+    private final SelectionTreeComponent permissionsList;
 
     /**
      * Initializes a new instance of this object.

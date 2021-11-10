@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Represents the page object model for the root of the system configurations tab under a customer.
  */
-public class SystemConfigurationPage extends EagerPageComponent<SystemConfigurationPage> {
+public final class SystemConfigurationPage extends EagerPageComponent<SystemConfigurationPage> {
     @FindBy(css = ".system-configuration-tab-groups a")
     private WebElement groupsTab;
 

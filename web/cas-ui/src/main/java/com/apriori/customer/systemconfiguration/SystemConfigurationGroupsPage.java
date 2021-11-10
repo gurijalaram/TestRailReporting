@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
 public final class SystemConfigurationGroupsPage extends EagerPageComponent<SystemConfigurationGroupsPage> {
     @FindBy(css = ".system-configuration-groups .selection-tree")
     private WebElement selectionTreeRoot;
-    private SelectionTreeComponent groupsTree;
+    private final SelectionTreeComponent groupsTree;
 
     /**
      * Initializes a new instance of this object.
