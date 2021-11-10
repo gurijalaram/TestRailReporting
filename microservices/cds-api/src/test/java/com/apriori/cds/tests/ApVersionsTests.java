@@ -9,14 +9,12 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.ApVersions;
-import com.apriori.cds.tests.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.Before;
 import org.junit.Test;
 
 public class ApVersionsTests {
