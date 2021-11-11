@@ -65,23 +65,21 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     private String url;
 
     public AprioriLoginPage(WebDriver driver, String application) {
-        init(driver, application, true);
+        init(driver, application);
     }
 
-    public AprioriLoginPage(WebDriver driver, String application, boolean loadNewPage) {
+    /*public AprioriLoginPage(WebDriver driver, String application, boolean loadNewPage) {
         init(driver, application, loadNewPage);
-    }
+    }*/
 
-    public void init(WebDriver driver, String application, boolean loadNewPage) {
+    public void init(WebDriver driver, String application) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
 
         url = application == null || application.isEmpty() ? PropertiesContext.get("${env}.cloud.ui_url") : PropertiesContext.get("${env}." + application + ".ui_url");
 
-        if (loadNewPage) {
-            driver.get(url);
-        }
+        driver.get(url);
 
         log.info("CURRENTLY ON INSTANCE: " + application);
         PageFactory.initElements(driver, this);
@@ -106,19 +104,6 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      */
     public String getPageTitle() {
         return pageTitle.getAttribute("textContent");
-    }
-
-    /**
-     * Login to cid
-     *
-     * @param email    - the email
-     * @param password - the password
-     * @return new page object
-     */
-    @Deprecated
-    public <T> T login(String email, String password, Class<T> klass) {
-        executeLogin(email, password);
-        return PageFactory.initElements(driver, klass);
     }
 
     /**
