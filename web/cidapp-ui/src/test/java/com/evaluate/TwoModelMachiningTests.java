@@ -77,7 +77,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, testScenarioName), is(true));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName.toUpperCase(), testScenarioName), is(true));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Source Component")
@@ -130,7 +130,7 @@ public class TwoModelMachiningTests extends TestBase {
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario(5)
-            .openSourceScenario(sourcePartName, sourceScenarioName);
+            .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -219,7 +219,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .clickExplore()
-            .uploadComponent(sourcePartName, twoModelScenarioName, resourceFile, currentUser);
+            .uploadComponent(twoModelPartName, twoModelScenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnumTwoModel)

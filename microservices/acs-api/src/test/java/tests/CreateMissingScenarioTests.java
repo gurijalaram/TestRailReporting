@@ -54,7 +54,7 @@ public class CreateMissingScenarioTests {
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), is(startsWith(currentDate)));
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdateddBy(), is(equalTo(Constants.USERNAME)));
+        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), is(equalTo(Constants.USERNAME)));
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), is(startsWith(currentDate)));
 

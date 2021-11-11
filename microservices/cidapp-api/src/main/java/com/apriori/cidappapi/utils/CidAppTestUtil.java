@@ -299,7 +299,7 @@ public class CidAppTestUtil {
                 final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
 
                 if (scenarioResponse.getScenarioState().contains("FAILED")) {
-                    throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
+                    throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentName, scenarioName));
                 }
                 if (scenarioResponse.getScenarioState().equals(terminalScenarioState.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
