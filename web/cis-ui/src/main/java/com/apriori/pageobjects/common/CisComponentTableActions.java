@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class CisComponentTableActions extends LoadableComponent<CisScenarioTableController> {
+public class CisComponentTableActions extends LoadableComponent<CisComponentTableActions> {
 
     @FindBy(css = "input[name='search']")
     private WebElement searchInput;

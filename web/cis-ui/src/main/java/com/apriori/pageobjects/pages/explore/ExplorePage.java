@@ -81,6 +81,11 @@ public class ExplorePage extends ExploreTabToolbar {
         return this;
     }
 
+    public ExplorePage openFirstScenario() {
+        scenarioTableController.openFirstScenario();
+        return this;
+    }
+
     /**
      * Check if the Start comparison button is enabled
      *

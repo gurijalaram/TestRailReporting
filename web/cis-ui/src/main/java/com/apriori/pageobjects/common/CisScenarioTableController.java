@@ -18,6 +18,10 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
     @FindBy(css = ".apriori-table.scenario-iteration-table")
     private WebElement componentTable;
 
+    @FindBy(xpath = "(//div[@class='table-body']/div)[1]//div[@class='scenario-thumbnail small']")
+    private WebElement scenarioLocator;
+
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -84,10 +88,9 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
     /**
      * Opens the first scenario
      *
-     * @return a new page object
+     * @return current page object
      */
     public CisScenarioTableController openFirstScenario() {
-        By scenarioLocator = By.xpath("(//div[@class='table-body']/div)[1]//div[@class='scenario-thumbnail small']");
         pageUtils.waitForElementAndClick(scenarioLocator);
         return this;
     }
@@ -97,7 +100,7 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
-     * @return webelement
+     * @return webElement
      */
     private WebElement elementScenarioName(String componentName, String scenarioName) {
         return pageUtils.waitForElementToAppear(byScenarioName(componentName, scenarioName));

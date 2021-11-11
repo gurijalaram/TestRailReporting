@@ -24,7 +24,6 @@ public class StartComparisonTests extends TestBase {
     private ExploreTabToolbar exploreTabToolbar;
     private ExplorePage explorePage;
 
-
     @Test
     @TestRail(testCaseId = "9411")
     @Description("Verify Sub Header for Explore View")
@@ -38,13 +37,9 @@ public class StartComparisonTests extends TestBase {
     @Test
     @Description("Verify Start Comparison button is enabled")
     public void testCreateStartComparison() {
-        String componentName = "SS - HOURLY: 2021-11-05T02:57:16";
-        String scenarioName = "CIG_06d49e7fa28d";
-
         loginPage = new CisLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .clickSearch(componentName)
-            .highlightScenario(componentName, scenarioName);
+            .openFirstScenario();
 
         assertThat(explorePage.isStartComparisonEnabled(), is(true));
 
