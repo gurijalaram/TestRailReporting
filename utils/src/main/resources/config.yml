@@ -89,7 +89,7 @@ int-core:
     ui_url: ${int-core.base_url}apriori/login
 
   ats:
-    api_url: https://ats.core.int.apriori.net
+    api_url: https://ats.core.int.apriori.net/
 
   bcs:
     api_url: https://bcs.core.int.apriori.net/
