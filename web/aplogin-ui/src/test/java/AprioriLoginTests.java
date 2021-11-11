@@ -21,21 +21,21 @@ public class AprioriLoginTests extends TestBase {
     private AprioriLoginPage aprioriLoginPage = new AprioriLoginPage(driver);
     private PrivacyPolicyPage privacyPolicyPage;
     private ForgottenPasswordPage forgottenPasswordPage;
-    private CloudHomePage cloudHomePage;
+//    private CloudHomePage cloudHomePage;
 
     public AprioriLoginTests() {
         super();
     }
 
-    @Test
-    @TestRail(testCaseId = {"6645"})
-    @Description("Test successful login")
-    public void testLogin() {
-
-        cloudHomePage = aprioriLoginPage.login(UserUtil.getUser(), CloudHomePage.class);
-
-        assertThat(cloudHomePage.isScenarioCountPresent(), is(true));
-    }
+//    @Test
+//    @TestRail(testCaseId = {"6645"})
+//    @Description("Test successful login")
+//    public void testLogin() {
+//
+//        cloudHomePage = aprioriLoginPage.login(UserUtil.getUser(), CloudHomePage.class);
+//
+//        assertThat(cloudHomePage.isScenarioCountPresent(), is(true));
+//    }
 
     @Test
     @TestRail(testCaseId = {"6646"})
