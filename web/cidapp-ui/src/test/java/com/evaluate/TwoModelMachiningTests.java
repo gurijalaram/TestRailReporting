@@ -218,7 +218,8 @@ public class TwoModelMachiningTests extends TestBase {
             .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .clickExplore()
+            .publishScenario()
+            .publish(cssItem, currentUser, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
