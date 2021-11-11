@@ -2,23 +2,21 @@ package com.apriori.utils.login;
 
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author cfrith
  */
 
+@Slf4j
 public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ForgottenPasswordPage.class);
-
-    @FindBy(css = ".auth0-lock-name")
+    @FindBy(css = ".animated.fadeInUp")
     private WebElement resetPasswordText;
 
     @FindBy(css = "input[name='email']")
@@ -36,7 +34,7 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
     public ForgottenPasswordPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -65,10 +63,11 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
      * Clicks the link to send the email
      *
      * @return new page object
-    public AprioriLoginPage sendEmail() {
+     */
+    public ForgottenPasswordPage sendEmail() {
         sendEmail.click();
-        return new AprioriLoginPage(driver, false);
-    }*/
+        return this;
+    }
 
     /**
      * Get reset password text
