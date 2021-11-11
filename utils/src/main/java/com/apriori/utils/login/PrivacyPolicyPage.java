@@ -4,21 +4,19 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author cfrith
  */
 
+@Slf4j
 public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(PrivacyPolicyPage.class);
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -35,7 +33,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     public PrivacyPolicyPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
