@@ -1,7 +1,6 @@
 package com.customer.systemconfiguration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
@@ -40,6 +39,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
         List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getHierarchy();
         SelectionTreeItemComponent firstGroup = groups.stream().findFirst().orElse(null);
-        assertThat(firstGroup.isSelected(), is(true));
+        boolean isSelected = firstGroup == null || firstGroup.isSelected();
+        assertThat(isSelected, is(true));
     }
 }

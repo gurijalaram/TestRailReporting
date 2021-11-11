@@ -35,7 +35,7 @@ public class SystemConfigurationPermissionsTests extends TestBase {
         List<SelectionTreeItemComponent> permissions = systemConfigurationPermissionsPage
             .getPermissionsList()
             .getHierarchy();
-        List<String> order = permissions.stream().map((p) -> p.getText()).collect(Collectors.toList());
+        List<String> order = permissions.stream().map(SelectionTreeItemComponent::getText).collect(Collectors.toList());
         soft.assertThat(ListUtils.isSorted(order, Comparator.nullsFirst(Comparator.naturalOrder())))
             .overridingErrorMessage("The list of permissions is not sorted.")
             .isTrue();
