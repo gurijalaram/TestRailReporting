@@ -2,18 +2,16 @@ package com.apriori.customer.systemconfiguration;
 
 import com.apriori.utils.web.components.EagerPageComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the page object model for the root of the system configurations tab under a customer.
  */
+@Slf4j
 public final class SystemConfigurationPage extends EagerPageComponent<SystemConfigurationPage> {
-    private static Logger logger = LoggerFactory.getLogger(SystemConfigurationPage.class);
-
     @FindBy(css = ".system-configuration-tab-groups a")
     private WebElement groupsTab;
 
@@ -26,7 +24,7 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      * @param driver The web driver.
      */
     public SystemConfigurationPage(WebDriver driver) {
-        super(driver, logger);
+        super(driver, log);
     }
 
     /**

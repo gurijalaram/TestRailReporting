@@ -4,18 +4,16 @@ import com.apriori.utils.web.components.EagerPageComponent;
 
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the page object model of the system configuration permissions page.
  */
+@Slf4j
 public final class SystemConfigurationPermissionsPage extends EagerPageComponent<SystemConfigurationPermissionsPage> {
-    private static Logger logger = LoggerFactory.getLogger(SystemConfigurationPermissionsPage.class);
-
     @FindBy(css = ".system-configuration-permissions .selection-tree")
     private WebElement permissionsListRoot;
     private final SelectionTreeComponent permissionsList;
@@ -26,7 +24,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @param driver The web driver.
      */
     public SystemConfigurationPermissionsPage(WebDriver driver) {
-        super(driver, logger);
+        super(driver, log);
         permissionsList = new SelectionTreeComponent(getDriver(), permissionsListRoot);
     }
 

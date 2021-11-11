@@ -3,18 +3,14 @@ package com.apriori.newcustomer;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+@Slf4j
 public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomerProfilePage.class);
-
     @FindBy(className = "customer-profile")
     private WebElement root;
 
@@ -83,7 +79,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * @param driver The web driver used to query the entire page.
      */
     public CustomerProfilePage(WebDriver driver) {
-        super(driver, logger);
+        super(driver, log);
         this.customerTypeSelectField = new SelectFieldComponent(driver, customerTypeDropdown);
     }
 

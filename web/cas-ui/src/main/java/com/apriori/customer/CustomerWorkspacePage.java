@@ -8,22 +8,20 @@ import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Arrays;
 import java.util.function.Supplier;
 
 /**
- * Represents the root of the customer page that contains all of the tabs for customer editing.
+ * Represents the root of the customer page that contains all the tabs for customer editing.
  */
+@Slf4j
 public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspacePage> {
-    private static Logger logger = LoggerFactory.getLogger(CustomerWorkspacePage.class);
-
     @FindBy(xpath = "//a[.='Profile']")
     private WebElement profileTab;
 
@@ -48,7 +46,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @param driver The web driver that the page exists on.
      */
     public CustomerWorkspacePage(WebDriver driver) {
-        super(driver, logger);
+        super(driver, log);
     }
 
     /**

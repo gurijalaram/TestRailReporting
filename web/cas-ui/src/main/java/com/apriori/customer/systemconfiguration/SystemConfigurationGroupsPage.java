@@ -3,18 +3,16 @@ package com.apriori.customer.systemconfiguration;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Represents the page object model for the system configuration groups.
  */
+@Slf4j
 public final class SystemConfigurationGroupsPage extends EagerPageComponent<SystemConfigurationGroupsPage> {
-    private static Logger logger = LoggerFactory.getLogger(SystemConfigurationGroupsPage.class);
-
     @FindBy(css = ".system-configuration-groups .selection-tree")
     private WebElement selectionTreeRoot;
     private final SelectionTreeComponent groupsTree;
@@ -25,7 +23,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @param driver The web driver.
      */
     public SystemConfigurationGroupsPage(WebDriver driver) {
-        super(driver, logger);
+        super(driver, log);
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
     }
 
