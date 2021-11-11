@@ -1,4 +1,4 @@
-package com.tests.suite;
+package com.apriori.cis.tests.suite;
 
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;

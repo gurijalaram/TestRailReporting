@@ -1,0 +1,60 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "createdAt",
+    "createdBy",
+    "createdByName",
+    "deletedAt",
+    "deletedBy",
+    "deletedByName",
+    "identity",
+    "name",
+    "type",
+    "updatedAt",
+    "updatedBy",
+    "updatedByName",
+    "value"
+  ],
+  "properties": {
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdByName": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "deletedByName": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    },
+    "updatedByName": {
+      "type": "string"
+    },
+    "value": {
+      "type": ["string", "integer", "boolean", "number"]
+    }
+  }
+}
