@@ -2,6 +2,7 @@ package com.customer.systemconfiguration;
 
 import com.apriori.customer.systemconfiguration.SystemConfigurationPermissionsPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.ListUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
@@ -12,6 +13,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.util.Comparator;
 import java.util.List;
@@ -50,6 +52,7 @@ public class SystemConfigurationPermissionsTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTest.class)
     @Description("System Configuration Permissions should be displayed and sorted in alphabetical order.  The first permission should also be selected.")
     @TestRail(testCaseId = {"9880", "9883", "9882"})
     public void testValidateShouldDisplayPermissions() {
