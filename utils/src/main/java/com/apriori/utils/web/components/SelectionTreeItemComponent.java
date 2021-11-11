@@ -52,7 +52,11 @@ public class SelectionTreeItemComponent extends CommonComponent {
      *         returns null.
      */
     private WebElement getSubTree() {
-        return this.getRoot().findElements(By.className("selection-subtree")).stream().findFirst().orElse(null);
+        return this.getRoot()
+            .findElements(By.className("selection-subtree"))
+            .stream()
+            .findFirst()
+            .orElse(null);
     }
 
     /**
@@ -79,7 +83,7 @@ public class SelectionTreeItemComponent extends CommonComponent {
      * @return True if an expander is displayed for this item, false otherwise.
      */
     public boolean isExpandable() {
-        return getExpander() != null;
+        return getExpander().isDisplayed();
     }
 
     /**
@@ -94,12 +98,15 @@ public class SelectionTreeItemComponent extends CommonComponent {
 
     /**
      * Clicks the expander if this item is expandable.
+     *
+     * @return This object
      */
     public SelectionTreeItemComponent toggle() {
         if (!isExpandable()) {
             return this;
         }
 
+        scrollIntoView();
         getExpander().click();
         return this;
     }
@@ -108,6 +115,8 @@ public class SelectionTreeItemComponent extends CommonComponent {
      * Clicks the expander if this item is in the collapsed state.
      *
      * Otherwise, this does nothing.
+     *
+     * @return This object
      */
     public SelectionTreeItemComponent expand() {
         if (isExpanded()) {
@@ -121,12 +130,25 @@ public class SelectionTreeItemComponent extends CommonComponent {
      * Clicks the expander if this item is in the expanded state.
      *
      * Otherwise, this does nothing.
+     *
+     * @return This object.
      */
     public SelectionTreeItemComponent collapse() {
         if (!isExpanded()) {
             return this;
         }
         return toggle();
+    }
+
+    /**
+     * Clicks on the root item to select it.
+     *
+     * @return This object
+     */
+    public SelectionTreeItemComponent select() {
+        this.scrollIntoView();
+        this.getRoot().click();
+        return this;
     }
 
     /**
@@ -139,7 +161,11 @@ public class SelectionTreeItemComponent extends CommonComponent {
             return Collections.emptyList();
         }
 
-        List<WebElement> children = this.getSubTree().findElements(By.cssSelector(">.selection-tree-node"));
-        return children.stream().map((ch) -> new SelectionTreeItemComponent(getDriver(), ch)).collect(Collectors.toList());
+        List<WebElement> children = this.getRoot().findElements(By.xpath("*"));
+
+        return children.stream()
+            .filter((ch) -> getPageUtils().doesElementHaveClass(ch, "selection-tree-node"))
+            .map((ch) -> new SelectionTreeItemComponent(getDriver(), ch))
+            .collect(Collectors.toList());
     }
 }
