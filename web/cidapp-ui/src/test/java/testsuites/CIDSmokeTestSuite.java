@@ -33,7 +33,6 @@ import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
 import com.explore.UploadTests;
 import com.help.HelpTests;
-import com.login.LoginTests;
 import com.settings.DecimalPlaceTests;
 import com.settings.SettingsTests;
 import org.junit.experimental.categories.Categories;
@@ -60,7 +59,6 @@ import testsuites.suiteinterface.SmokeTests;
     UploadComponentTests.class,
     UploadTests.class,
     HelpTests.class,
-    LoginTests.class,
     DecimalPlaceTests.class,
     UploadAssembliesTests.class,
     PublishExistingCostedTests.class,

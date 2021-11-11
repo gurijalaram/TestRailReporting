@@ -68,9 +68,9 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
         init(driver, application);
     }
 
-    /*public AprioriLoginPage(WebDriver driver, String application, boolean loadNewPage) {
-        init(driver, application, loadNewPage);
-    }*/
+    public AprioriLoginPage(WebDriver driver) {
+        init(driver, "");
+    }
 
     public void init(WebDriver driver, String application) {
         this.driver = driver;
@@ -124,7 +124,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @param password - the password
      * @return the current page object
      */
-    private String failedLoginAs(String email, String password) {
+    public String failedLoginAs(String email, String password) {
         executeLogin(email, password);
         return pageUtils.waitForElementToAppear(loginErrorMsg).getText();
     }
