@@ -5,14 +5,14 @@ import com.apriori.pageobjects.LoginPage;
 import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.validators.NotificationValidator;
 
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
-import utils.UIUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +24,7 @@ public class NotificationTests extends TestBase {
     private WorkflowPage workflowPage;
     private NewWorkflowPage newWorkflowPage;
     private Map<String, Object> values;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     public NotificationTests() {
         super();
@@ -38,7 +39,7 @@ public class NotificationTests extends TestBase {
         validator = new NotificationValidator(driver);
         notificationsFeature = new NotificationsFeature(driver);
 
-        loginPage.login();
+        loginPage.login(currentUser);
         notificationsFeature.gotoNotifications();
     }
 
