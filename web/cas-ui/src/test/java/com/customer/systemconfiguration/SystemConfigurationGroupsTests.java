@@ -14,7 +14,6 @@ import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
@@ -25,7 +24,6 @@ import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Slf4j
 public class SystemConfigurationGroupsTests extends TestBase {
     private SystemConfigurationGroupsPage systemConfigurationGroupsPage;
 
