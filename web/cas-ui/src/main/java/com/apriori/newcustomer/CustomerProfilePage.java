@@ -1,40 +1,18 @@
 package com.apriori.newcustomer;
 
-import com.apriori.newcustomer.users.UsersListPage;
-import com.apriori.utils.PageUtils;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-
-import java.util.Arrays;
 
 @Slf4j
-public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> {
-
-    @FindBy(xpath = "//a[.='Profile']")
-    private WebElement profileTab;
-
-    @FindBy(xpath = "//a[.='Users']")
-    private WebElement usersTab;
-
-    @FindBy(xpath = "//a[.='Sites & Licenses']")
-    private WebElement siteLicenseTab;
-
-    @FindBy(xpath = "//a[.='Infrastructure']")
-    private WebElement infraStructTab;
-
-    @FindBy(xpath = "//a[.='Security']")
-    private WebElement securityTab;
-
-    @FindBy(xpath = "//a[.='System Configuration']")
-    private WebElement systemConfigurationTab;
+public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage> {
+    @FindBy(className = "customer-profile")
+    private WebElement root;
 
     @FindBy(css = ".edit-read-form button.edit-button")
     private WebElement editButton;
@@ -94,8 +72,6 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @FindBy(className = "invalid-feedback-for-max-cad-file-size")
     private WebElement maxCadFileSizeFeedback;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
 
     /**
      * Initializes a new instance of this object.
@@ -103,84 +79,18 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param driver The web driver used to query the entire page.
      */
     public CustomerProfilePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-
+        super(driver, log);
         this.customerTypeSelectField = new SelectFieldComponent(driver, customerTypeDropdown);
-        this.get();
     }
 
     /**
      * @inheritDoc
-     */
-    @Override
-    protected void load() {
-    }
-
-    /**
+     *
      * @throws Error If the profile tab or users tab is missing
-     * @inheritDoc
      */
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(profileTab);
-        pageUtils.waitForElementAppear(usersTab);
-    }
-
-    /**
-     * Gets a value that indicates if the profile tab is displayed.
-     *
-     * @return True if the profile tab is displayed.
-     */
-    public boolean isProfileTabDisplayed() {
-        return profileTab.isDisplayed();
-    }
-
-    /**
-     * Gets a value that indicates if the users tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the users tab is enabled
-     */
-    public boolean isUsersTabEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", usersTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the sites & licenses tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the sites & licenses tab is enabled
-     */
-    public boolean isSitesAndLicensesEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", siteLicenseTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the infrastructure tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the infrastructure tab is enabled
-     */
-    public boolean isInfrastructureEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", infraStructTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the security tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the security tab is enabled
-     */
-    public boolean isSecurityEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", securityTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the system configuration tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the system configuration tab is enabled
-     */
-    public boolean isSystemConfigurationEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", systemConfigurationTab.getAttribute("disabled"));
+        getPageUtils().waitForElementToAppear(root);
     }
 
     /**
@@ -189,7 +99,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the cloud reference input is enabled
      */
     public boolean isCloudReferenceEnabled() {
-        return pageUtils.isElementEnabled(cloudRefInput);
+        return getPageUtils().isElementEnabled(cloudRefInput);
     }
 
     /**
@@ -288,7 +198,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterCustomerName(String customerName) {
-        pageUtils.setValueOfElement(customerNameInput, customerName);
+        getPageUtils().setValueOfElement(customerNameInput, customerName);
         return this;
     }
 
@@ -299,7 +209,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterDescription(String description) {
-        pageUtils.setValueOfElement(descriptionInput, description);
+        getPageUtils().setValueOfElement(descriptionInput, description);
         return this;
     }
 
@@ -357,7 +267,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterSalesforceId(String salesforceId) {
-        pageUtils.setValueOfElement(salesforceInput, salesforceId);
+        getPageUtils().setValueOfElement(salesforceInput, salesforceId);
         return this;
     }
 
@@ -368,7 +278,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterCloudRef(String cloudReference) {
-        pageUtils.setValueOfElement(cloudRefInput, cloudReference);
+        getPageUtils().setValueOfElement(cloudRefInput, cloudReference);
         return this;
     }
 
@@ -379,7 +289,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterEmailDomains(String emailDomains) {
-        pageUtils.setValueOfElement(emailDomInput, emailDomains);
+        getPageUtils().setValueOfElement(emailDomInput, emailDomains);
         return this;
     }
 
@@ -390,7 +300,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterCadFileRetentionPolicy(String days) {
-        pageUtils.setValueOfElement(cadFileRetentionDaysInput, days);
+        getPageUtils().setValueOfElement(cadFileRetentionDaysInput, days);
         return this;
     }
 
@@ -401,50 +311,8 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterMaxCadFileSize(String size) {
-        pageUtils.setValueOfElement(maxCadFileSizeInput, size);
+        getPageUtils().setValueOfElement(maxCadFileSizeInput, size);
         return this;
-    }
-
-    /**
-     * Attempts to discover the customer identity.
-     *
-     * @return The customer identity for an existing customer, "new" for a new customer,
-     * and the empty string if it cannot determine the identity.
-     */
-    public String findCustomerIdentity() {
-        String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
-        String url = driver.getCurrentUrl().replace(String.format("%s/customers/", baseUrl), "");
-        return Arrays.stream(url.split("/")).findFirst().orElse("");
-    }
-
-    /**
-     * Go to users tab
-     *
-     * @return new page object
-     */
-    public UsersListPage goToUsersList() {
-        pageUtils.waitForElementAndClick(usersTab);
-        return new UsersListPage(driver);
-    }
-
-    /**
-     * Go to sites and licenses tab
-     *
-     * @return new page object
-     */
-    public SitesLicensesPage goToSitesLicenses() {
-        pageUtils.waitForElementAndClick(siteLicenseTab);
-        return new SitesLicensesPage(driver);
-    }
-
-    /**
-     * Go to infrastructure tab
-     *
-     * @return new page object
-     */
-    public InfrastructurePage goToInfrastructure() {
-        pageUtils.waitForElementAndClick(infraStructTab);
-        return new InfrastructurePage(driver);
     }
 
     /**
@@ -453,7 +321,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage clickEditButton() {
-        pageUtils.waitForElementAndClick(editButton);
+        getPageUtils().waitForElementAndClick(editButton);
         return this;
     }
 
@@ -463,12 +331,12 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return new page object
      */
     public <T> T clickCancelButton(Class<T> klass) {
-        pageUtils.waitForElementAndClick(cancelButton);
-        return PageFactory.initElements(driver, klass);
+        getPageUtils().waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(getDriver(), klass);
     }
 
     public boolean isSaveButtonEnabled() {
-        return pageUtils.isElementEnabled(saveButton);
+        return getPageUtils().isElementEnabled(saveButton);
     }
 
     /**
@@ -477,7 +345,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return new page object
      */
     public CustomerProfilePage clickSaveButton() {
-        pageUtils.waitForElementAndClick(saveButton);
-        return new CustomerProfilePage(driver);
+        getPageUtils().waitForElementAndClick(saveButton);
+        return new CustomerProfilePage(getDriver());
     }
 }
