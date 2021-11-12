@@ -63,7 +63,7 @@ public class UncostedComponents {
             .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
+        final int WAIT_TIME = 320;
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {

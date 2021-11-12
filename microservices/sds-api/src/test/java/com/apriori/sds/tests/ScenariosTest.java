@@ -121,7 +121,7 @@ public class ScenariosTest extends SDSTestUtil {
         final String copiedScenarioName = new GenerateStringUtil().generateScenarioName();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
-            .name(copiedScenarioName)
+            .scenarioName(copiedScenarioName)
             .createdBy(getTestingComponent().getComponentCreatedBy())
             .build();
 
