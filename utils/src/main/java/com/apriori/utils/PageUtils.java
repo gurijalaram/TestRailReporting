@@ -9,6 +9,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllE
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
@@ -171,6 +172,21 @@ public class PageUtils {
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
     }
 
+    /**
+     * Determines if an element contains a class.
+     *
+     * @param element The element that contains the class list to search.
+     * @param wantedClass The desired class.
+     *
+     * @return True if the element contains the wantedClass.  False otherwise.
+     */
+    public boolean doesElementHaveClass(WebElement element, String wantedClass) {
+        String classList = element.getAttribute("class");
+        classList = classList == null ? "" : classList;
+        String[] classes = classList.split(" ");
+        return Arrays.stream(classes).anyMatch((currentClass) -> StringUtils.equals(currentClass, wantedClass));
+    }
+
     public void mouseMove(WebElement element) {
         Actions act = new Actions(driver);
         act.moveToElement(element).build().perform();
@@ -284,15 +300,50 @@ public class PageUtils {
      *
      * @param elementWithValue The element to set the value for.
      * @param value The value to set.
+     *
      */
     public void setValueOfElement(WebElement elementWithValue, String value) {
+        setValueOfElement(elementWithValue, value, Keys.TAB);
+    }
+
+    /**
+     * Sets the value of an element by sending it keys.
+     *
+     * This will fully clear the element first before sending any keys. It will
+     * also tab out of the element to make sure any form validation is raised.
+     *
+     * @param elementWithValue The element to set the value for.
+     * @param value The value to set.
+     * @param endOfInput The last key to send.  This is usually something like Keys.TAB or Keys.ENTER.
+     *                   You can set this to null to not send anything.
+     *
+     */
+    public void setValueOfElement(WebElement elementWithValue, String value, CharSequence endOfInput) {
+        setValueOfElement(elementWithValue, value, new CharSequence[]{ endOfInput });
+    }
+
+    /**
+     * Sets the value of an element by sending it keys.
+     *
+     * This will fully clear the element first before sending any keys. It will
+     * also tab out of the element to make sure any form validation is raised.
+     *
+     * @param elementWithValue The element to set the value for.
+     * @param value The value to set.
+     * @param endOfInput The last set of keys to send.  This is usually something like Keys.TAB or Keys.ENTER.
+     *                   You can set this to null to not send anything.
+     *
+     */
+    public void setValueOfElement(WebElement elementWithValue, String value, CharSequence[] endOfInput) {
         clearValueOfElement(elementWithValue);
 
         if (value != null) {
             elementWithValue.sendKeys(value);
         }
 
-        elementWithValue.sendKeys(Keys.TAB);
+        if (endOfInput != null && endOfInput.length > 0) {
+            elementWithValue.sendKeys(endOfInput);
+        }
     }
 
     public Dimension getWindowDimension() {
