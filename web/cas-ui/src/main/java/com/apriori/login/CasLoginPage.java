@@ -71,7 +71,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
     public CasLoginPage(WebDriver driver) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "cidapp");
+        this.aprioriLoginPage = new AprioriLoginPage(driver, "cas");
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
