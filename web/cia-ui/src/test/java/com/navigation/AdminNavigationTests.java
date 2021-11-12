@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -31,6 +32,8 @@ public class AdminNavigationTests extends TestBase {
     private AdminHomePage homePage;
     private AdminLogoutPage logout;
 
+    private UserCredentials userCredentials;
+
     public AdminNavigationTests() {
         super();
     }
@@ -41,7 +44,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the Manage Scenario Export Link works")
     public void testManageScenarioExportNavigation() {
         scenarioExport = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToManageScenarioExport();
 
         assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
@@ -54,7 +57,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the Manage System Data Export Link works")
     public void testManageSystemDataExportNavigation() {
         systemDataExport = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToManageSystemDataExport();
 
         assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
@@ -67,7 +70,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
     public void testHelpCostInsightReportGuideNavigation() throws Exception {
         cirUserGuide = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToHelpReportsGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -83,7 +86,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the Help Cost Insight Admin Guide Link works")
     public void testHelpCostInsightAdminGuideNavigation() {
         ciaUserGuide = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToHelpAdminGuide();
 
         assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
@@ -97,7 +100,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the Scenario Export Chapter Link works")
     public void testHelpScenarioExportChapterNavigation() {
         ciaUserGuide = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToScenarioExportChapterPage();
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
@@ -113,7 +116,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the CI Admin Logout Link works")
     public void testCIAdminLogoutNavigation() {
         logout = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToAdminLogout();
 
         assertThat(logout.isLoginButtonDisplayedAndEnabled(), is(equalTo(true)));
@@ -127,7 +130,7 @@ public class AdminNavigationTests extends TestBase {
     @Description("Ensure that the link from Admin to Reports works")
     public void testAdminToReportNavigation() {
         homePage = new AdminLoginPage(driver)
-            .login()
+            .login(userCredentials)
             .navigateToReports();
 
         String urlToCheck = homePage.getUrlToCheck();
