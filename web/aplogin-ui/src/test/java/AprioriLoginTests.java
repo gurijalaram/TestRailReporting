@@ -23,7 +23,7 @@ public class AprioriLoginTests extends TestBase {
     private AprioriLoginPage aprioriLoginPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private ForgottenPasswordPage forgottenPasswordPage;
-//  private CloudHomePage cloudHomePage;
+    //private CloudHomePage cloudHomePage;
 
     public AprioriLoginTests() {
         super();
@@ -34,15 +34,15 @@ public class AprioriLoginTests extends TestBase {
         aprioriLoginPage = new AprioriLoginPage(driver);
     }
 
-//    @Test
-//    @TestRail(testCaseId = {"6645"})
-//    @Description("Test successful login")
-//    public void testLogin() {
-//
-//        cloudHomePage = aprioriLoginPage.login(UserUtil.getUser(), CloudHomePage.class);
-//
-//        assertThat(cloudHomePage.isScenarioCountPresent(), is(true));
-//    }
+    /*@Test
+    @TestRail(testCaseId = {"6645"})
+    @Description("Test successful login")
+    public void testLogin() {
+
+        cloudHomePage = aprioriLoginPage.login(UserUtil.getUser(), CloudHomePage.class);
+
+        assertThat(cloudHomePage.isScenarioCountPresent(), is(true));
+    }*/
 
     @Test
     @TestRail(testCaseId = {"6646"})
@@ -59,7 +59,7 @@ public class AprioriLoginTests extends TestBase {
     @Description("Test unsuccessful login with incorrect email, correct password")
     public void testIncorrectEmail() {
 
-         aprioriLoginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), UserUtil.getUser().getPassword());
+        aprioriLoginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), UserUtil.getUser().getPassword());
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(aprioriLoginPage.getLoginErrorMessage()));
     }
@@ -69,7 +69,7 @@ public class AprioriLoginTests extends TestBase {
     @Description("Test unsuccessful login with incorrect email, and incorrect password")
     public void testIncorrectEmailPassword() {
 
-         aprioriLoginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), "fakePassword");
+        aprioriLoginPage.failedLoginAs(new GenerateStringUtil().generateEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(aprioriLoginPage.getLoginErrorMessage())));
     }
