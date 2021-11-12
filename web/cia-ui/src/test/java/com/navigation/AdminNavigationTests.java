@@ -14,6 +14,7 @@ import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -32,7 +33,7 @@ public class AdminNavigationTests extends TestBase {
     private AdminHomePage homePage;
     private AdminLogoutPage logout;
 
-    private UserCredentials userCredentials;
+    private UserCredentials userCredentials = UserUtil.getUser();
 
     public AdminNavigationTests() {
         super();
