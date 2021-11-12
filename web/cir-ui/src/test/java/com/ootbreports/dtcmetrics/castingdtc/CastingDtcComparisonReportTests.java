@@ -236,7 +236,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7390"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Casting DTC Comparison Report")
     public void testMassMetricInputControlRoughMass() {

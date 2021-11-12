@@ -186,7 +186,7 @@ public class DesignOutlierIdentificationReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2006"})
     @Description("Validate the reports correct with user overrides")
     public void testReportFunctionsWithUserCostOverride() {
