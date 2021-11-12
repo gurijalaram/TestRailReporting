@@ -52,7 +52,7 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
     }
 
     /**
-     * Login to edc
+     * Login to EDC
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object

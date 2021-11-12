@@ -42,7 +42,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
     }
 
     /**
-     * Login to cid
+     * Login to CID
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object

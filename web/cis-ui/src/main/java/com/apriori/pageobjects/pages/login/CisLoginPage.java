@@ -39,7 +39,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
     }
 
     /**
-     * Login to cis
+     * Login to CIS
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object

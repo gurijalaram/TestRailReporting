@@ -42,7 +42,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
     }
 
     /**
-     * Login
+     * Login to CAS
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object

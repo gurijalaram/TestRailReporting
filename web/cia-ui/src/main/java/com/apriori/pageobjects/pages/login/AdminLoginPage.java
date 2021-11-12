@@ -40,7 +40,7 @@ public class AdminLoginPage extends AdminHeader {
     }
 
     /**
-     * Login
+     * Login to CIA
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object

@@ -107,7 +107,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     }
 
     /**
-     * Login to cid
+     * Login
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object

@@ -41,7 +41,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
     }
 
     /**
-     * Login to cid
+     * Login to CIR
      *
      * @return new page object
      */
