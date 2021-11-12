@@ -2,7 +2,6 @@ package com.apriori.cisapi.entity.response.user.preferences;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -28,9 +27,6 @@ public class UserPreferencesResponse {
     private String name;
     private String type;
     private String value;
-    private String deletedBy;
-    private String deletedByName;
-
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
@@ -39,9 +35,5 @@ public class UserPreferencesResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime createdAt;
-
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
-    private LocalDateTime deletedAt;
 }
 

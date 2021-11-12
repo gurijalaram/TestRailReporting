@@ -5,16 +5,9 @@
     "createdAt",
     "createdBy",
     "createdByName",
-    "deletedAt",
-    "deletedBy",
-    "deletedByName",
     "identity",
     "name",
-    "type",
-    "updatedAt",
-    "updatedBy",
-    "updatedByName",
-    "value"
+    "type"
   ],
   "properties": {
     "createdAt": {
@@ -26,15 +19,6 @@
     "createdByName": {
       "type": "string"
     },
-    "deletedAt": {
-      "type": "string"
-    },
-    "deletedBy": {
-      "type": "string"
-    },
-    "deletedByName": {
-      "type": "string"
-    },
     "identity": {
       "type": "string"
     },
@@ -42,15 +26,6 @@
       "type": "string"
     },
     "type": {
-      "type": "string"
-    },
-    "updatedAt": {
-      "type": "string"
-    },
-    "updatedBy": {
-      "type": "string"
-    },
-    "updatedByName": {
       "type": "string"
     },
     "value": {
