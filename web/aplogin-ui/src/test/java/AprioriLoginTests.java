@@ -13,19 +13,25 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.junit.Before;
 import org.junit.Test;
 
 public class AprioriLoginTests extends TestBase {
 
     private static String loginPageErrorMessage = "We're sorry, something went wrong when attempting to log in.";
 
-    private AprioriLoginPage aprioriLoginPage = new AprioriLoginPage(driver);
+    private AprioriLoginPage aprioriLoginPage;
     private PrivacyPolicyPage privacyPolicyPage;
     private ForgottenPasswordPage forgottenPasswordPage;
 //  private CloudHomePage cloudHomePage;
 
     public AprioriLoginTests() {
         super();
+    }
+
+    @Before
+    public void setup() {
+        aprioriLoginPage = new AprioriLoginPage(driver);
     }
 
 //    @Test
