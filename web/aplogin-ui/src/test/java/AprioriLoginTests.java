@@ -1,3 +1,4 @@
+
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -21,7 +22,7 @@ public class AprioriLoginTests extends TestBase {
     private AprioriLoginPage aprioriLoginPage = new AprioriLoginPage(driver);
     private PrivacyPolicyPage privacyPolicyPage;
     private ForgottenPasswordPage forgottenPasswordPage;
-//    private CloudHomePage cloudHomePage;
+//  private CloudHomePage cloudHomePage;
 
     public AprioriLoginTests() {
         super();
