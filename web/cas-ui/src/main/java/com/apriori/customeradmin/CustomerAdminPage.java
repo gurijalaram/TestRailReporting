@@ -1,9 +1,10 @@
 package com.apriori.customeradmin;
 
-import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,8 +32,11 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
     @FindBy(css = "div[class='input-group select-input customer-type']")
     private WebElement custTypeDropdown;
 
-    @FindBy(css = "[aria-label='Search']")
-    private WebElement custSearchInput;
+    @FindBy(css = ".customer-list-view input[name='search']")
+    private WebElement customerSearchInput;
+
+    @FindBy(css = ".customer-list-view .loader")
+    private WebElement customerListLoader;
 
     @FindBy(id = "qa-page-size-dropdown")
     private WebElement pageSizeDropdown;
@@ -74,9 +78,19 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      *
      * @return new page object
      */
-    public CustomerProfilePage clickNewCustomerButton() {
+    public CustomerWorkspacePage clickNewCustomerButton() {
         pageUtils.waitForElementAndClick(newCustomerButton);
-        return new CustomerProfilePage(driver);
+        return new CustomerWorkspacePage(driver);
+    }
+
+    /**
+     * Same as searchForCustomer("aPriori Internal").selectCustomer("aPriori Internal")
+     *
+     * @return The profile page for aPriori Internal
+     */
+    public CustomerWorkspacePage openAprioriInternal() {
+        String name = "aPriori Internal";
+        return searchForCustomer(name).selectCustomer(name);
     }
 
     /**
@@ -85,10 +99,10 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      * @param customerName - customer name
      * @return new page object
      */
-    public CustomerProfilePage selectCustomer(String customerName) {
+    public CustomerWorkspacePage selectCustomer(String customerName) {
         By customer = By.xpath(String.format("//a[.='%s']", customerName));
         pageUtils.waitForElementAndClick(customer);
-        return new CustomerProfilePage(driver);
+        return new CustomerWorkspacePage(driver);
     }
 
     /**
@@ -109,7 +123,7 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      * @return current page object
      */
     public CustomerAdminPage searchForCustomer(String customer) {
-        pageUtils.waitForElementToAppear(custSearchInput).sendKeys(customer);
+        pageUtils.setValueOfElement(customerSearchInput, customer, Keys.ENTER);
         return this;
     }
 
