@@ -40,9 +40,9 @@ public class ChromeDriverOptions {
         chromePrefs.put("download.prompt_for_download", false);
         chromePrefs.put("download.directory_upgrade", true);
 
-        options.addArguments("--ignore-ssl-errors=yes");
-        options.addArguments("--ignore-certificate-errors");
-        options.addArguments("--allow-outdated-plugins");
+        chromeOptions.addArguments("--ignore-ssl-errors=yes");
+        chromeOptions.addArguments("--ignore-certificate-errors");
+        chromeOptions.addArguments("--allow-outdated-plugins");
         if (!StringUtils.isEmpty(System.getProperty("ignoreSslCheck")) && Boolean.parseBoolean(System.getProperty("ignoreSslCheck"))) {
             chromeOptions.addArguments("--ignore-certificate-errors");
         }

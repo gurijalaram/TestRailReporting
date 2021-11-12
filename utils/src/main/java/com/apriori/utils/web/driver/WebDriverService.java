@@ -48,7 +48,6 @@ public class WebDriverService extends BrowserManager {
                     ChromeOptions chromeOptions = new ChromeOptions();
                     chromeOptions.setCapability("browser.download.dir", downloadPath);
                     chromeOptions.setCapability("intl.accept.languages", locale);
-                    chromeOptions.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
                     chromeOptions.setCapability(ChromeOptions.CAPABILITY, chromeOptions);
                     chromeOptions.setAcceptInsecureCerts(true);
 

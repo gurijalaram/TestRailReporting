@@ -61,9 +61,9 @@ public class RemoteWebDriverService extends BrowserManager {
 
                     ChromeOptions options = new ChromeDriverOptions(remoteDownloadPath, locale).getChromeOptions();
                     options.setAcceptInsecureCerts(true);
-                    dc.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-                    dc.setCapability(ChromeOptions.CAPABILITY, options);
-                    dc.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
+                    options.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+                    options.setCapability(ChromeOptions.CAPABILITY, options);
+                    //options.setBrowserName(DesiredCapabilities.chrome().getBrowserName());
                     break;
 
                 case FIREFOX:
@@ -71,8 +71,8 @@ public class RemoteWebDriverService extends BrowserManager {
 
                     FirefoxProfile fp = new FirefoxProfile();
                     fp.setAcceptUntrustedCertificates(true);
-                    dc.setCapability(FirefoxDriver.PROFILE, fp);
-                    dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
+                    //dc.setCapability(FirefoxDriver.PROFILE, fp);
+                    //dc.setBrowserName(DesiredCapabilities.firefox().getBrowserName());
                     break;
 
                 case EDGE:
@@ -80,7 +80,7 @@ public class RemoteWebDriverService extends BrowserManager {
 
                     EdgeOptions edgeOptions = new EdgeOptions();
                     edgeOptions.setCapability(CapabilityType.ACCEPT_INSECURE_CERTS, true);
-                    dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
+                    //dc.setBrowserName(DesiredCapabilities.edge().getBrowserName());
                     break;
 
                 default:
