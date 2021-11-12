@@ -1,8 +1,10 @@
 package com.apriori.login;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.customeradmin.CustomerAdminPage;
-import com.apriori.utils.Constants;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
@@ -64,30 +66,13 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private AprioriLoginPage aprioriLoginPage;
 
     public CasLoginPage(WebDriver driver) {
-        init(driver, "", true);
-    }
-
-    public CasLoginPage(WebDriver driver, String url) {
-        init(driver, url, true);
-    }
-
-    public CasLoginPage(WebDriver driver, boolean loadNewPage) {
-        init(driver, "", loadNewPage);
-    }
-
-    public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
+        this.aprioriLoginPage = new AprioriLoginPage(driver, "cidapp");
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        if (url == null || url.isEmpty()) {
-            url = loginPageUrl;
-        }
-        if (loadNewPage) {
-            driver.get(url);
-        }
-        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -98,22 +83,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(email);
-        pageUtils.waitForElementAppear(password);
-        pageUtils.waitForElementAppear(submitLogin);
-    }
-
-    /**
-     * Login to cid
-     *
-     * @param email    - the email
-     * @param password - the password
-     * @return new page object
-     */
-    @Deprecated
-    public CasLoginPage login(String email, String password) {
-        executeLogin(email, password);
-        return new CasLoginPage(driver);
+        assertTrue("CAS login page was not displayed", aprioriLoginPage.getPageTitle().contains("Customer Admin"));
     }
 
     /**
@@ -123,126 +93,6 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      * @return new page object
      */
     public CustomerAdminPage login(final UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new CustomerAdminPage(driver);
-    }
-
-    /**
-     * Failed login to cid
-     *
-     * @param email    - the email
-     * @param password - the password
-     * @return the current page object
-     */
-    public CasLoginPage failedLoginAs(String email, String password) {
-        executeLogin(email, password);
-        pageUtils.waitForElementToAppear(loginErrorMsg);
-        return new CasLoginPage(driver, false);
-    }
-
-    /**
-     * Execute actions to login
-     *
-     * @param email    - the email
-     * @param password - the password
-     */
-    private void executeLogin(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        submitLogin();
-    }
-
-    /**
-     * Enters the email details
-     *
-     * @param emailAddress - the email address
-     */
-    private void enterEmail(String emailAddress) {
-        email.click();
-        pageUtils.clearInput(email);
-        email.sendKeys(emailAddress);
-    }
-
-    /**
-     * Enters the password
-     *
-     * @param password - the password
-     */
-    private void enterPassword(String password) {
-        this.password.click();
-        pageUtils.clearInput(this.password);
-        this.password.sendKeys(password);
-    }
-
-    /**
-     * Single action that login to cid
-     */
-    private void submitLogin() {
-        submitLogin.click();
-    }
-
-    /**
-     * Gets the login error message
-     *
-     * @return login error message
-     */
-    public String getLoginErrorMessage() {
-        return loginErrorMsg.getText();
-    }
-
-    /**
-     * Gets both username and password
-     *
-     * @return current page object
-     */
-    public CasLoginPage getUsernameAndPassword() {
-        getEmail();
-        getPassword();
-        return this;
-    }
-
-    /**
-     * Gets the email
-     *
-     * @return string
-     */
-    private String getEmail() {
-        return email.getText();
-    }
-
-    /**
-     * Gets the password
-     *
-     * @return string
-     */
-    private String getPassword() {
-        return this.password.getText();
-    }
-
-    /**
-     * Checks apriori logo is displayed
-     *
-     * @return true/false
-     */
-    public boolean isLogoDisplayed() {
-        return aprioriLogo.isDisplayed();
-    }
-
-    /**
-     * Gets marketing text
-     *
-     * @return string
-     */
-    public String getMarketingText() {
-        return marketingText.getText();
-    }
-
-    /**
-     * Gets welcome text
-     *
-     * @return string
-     */
-    public String getWelcomeText() {
-        return welcomeText.getText();
+        return aprioriLoginPage.login(userCredentials, CustomerAdminPage.class);
     }
 }

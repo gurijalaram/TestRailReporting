@@ -5,6 +5,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,14 +13,10 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Arrays;
 
+@Slf4j
 public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomerProfilePage.class);
 
     @FindBy(xpath = "//a[.='Profile']")
     private WebElement profileTab;
@@ -108,7 +105,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     public CustomerProfilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
 
         this.customerTypeSelectField = new SelectFieldComponent(driver, customerTypeDropdown);
@@ -123,9 +120,8 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     }
 
     /**
-     * @inheritDoc
-     *
      * @throws Error If the profile tab or users tab is missing
+     * @inheritDoc
      */
     @Override
     protected void isLoaded() throws Error {
@@ -200,7 +196,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the customer name.
      *
      * @return The current validation error for the customer name.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerNameFeedback() {
         return this.customerNameFeedback.getText();
@@ -210,7 +206,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the description.
      *
      * @return The current validation error for the description.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getDescriptionFeedback() {
         return this.descriptionFeedback.getText();
@@ -220,7 +216,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the customer type.
      *
      * @return The current validation error for the customer type.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerTypeFeedback() {
         return this.customerTypeFeedback.getText();
@@ -230,7 +226,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the salesforce ID.
      *
      * @return The current validation error for the salesforce ID.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getSalesforceIdFeedback() {
         return this.salesforceFeedback.getText();
@@ -249,7 +245,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the cloud reference.
      *
      * @return The current validation error for the cloud reference.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCloudRefFeedback() {
         return this.cloudRefFeedback.getText();
@@ -259,7 +255,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the email domains.
      *
      * @return The current validation error for the email domains.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getEmailDomFeedback() {
         return this.emailDomFeedback.getText();
@@ -269,7 +265,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the cad file retention policy.
      *
      * @return The current validation error for the cad file retention policy.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCadFileRetentionPolicyFeedback() {
         return this.cadFileRetentionDaysFeedback.getText();
@@ -279,7 +275,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the max cad file size.
      *
      * @return The current validation error for the max cad file size.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getMaxCadFileSizeFeedback() {
         return this.maxCadFileSizeFeedback.getText();
@@ -413,7 +409,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Attempts to discover the customer identity.
      *
      * @return The customer identity for an existing customer, "new" for a new customer,
-     *         and the empty string if it cannot determine the identity.
+     * and the empty string if it cannot determine the identity.
      */
     public String findCustomerIdentity() {
         String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
