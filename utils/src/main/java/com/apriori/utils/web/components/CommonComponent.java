@@ -58,14 +58,4 @@ public abstract class CommonComponent {
         this.pageUtils = this.pageUtils == null ? new PageUtils(getDriver()) : this.pageUtils;
         return this.pageUtils;
     }
-
-    /**
-     * Scrolls this item into view if it exists within
-     * a parent container with a scrollbar.
-     *
-     * This aligns the component to the top of the scroll container at most.
-     */
-    protected final void scrollIntoView() {
-        getPageUtils().scrollWithJavaScript(this.getRoot(), true);
-    }
 }
