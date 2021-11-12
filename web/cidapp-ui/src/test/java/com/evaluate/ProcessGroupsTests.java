@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.ROTO_BLOW_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -254,6 +255,7 @@ public class ProcessGroupsTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")
@@ -261,7 +263,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("2 Axis Lathe"));
     }
 
     @Test
