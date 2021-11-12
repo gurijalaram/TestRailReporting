@@ -73,8 +73,6 @@ public class AprioriLoginTests extends TestBase {
     @Description("Validate Login Dialog")
     public void loginDialog() {
 
-        assertThat(aprioriLoginPage.getMarketingText(), containsString("aPriori Cost Insight\n" +
-            "Explore the Possible"));
         assertThat(aprioriLoginPage.isLogoDisplayed(), is(true));
     }
 

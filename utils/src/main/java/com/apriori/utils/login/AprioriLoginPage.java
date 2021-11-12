@@ -238,15 +238,6 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     }
 
     /**
-     * Gets marketing text
-     *
-     * @return string
-     */
-    public String getMarketingText() {
-        return marketingText.getText();
-    }
-
-    /**
      * Gets welcome text
      *
      * @return string
