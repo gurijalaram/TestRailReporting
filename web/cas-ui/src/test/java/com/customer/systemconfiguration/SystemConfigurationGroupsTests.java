@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
@@ -19,7 +20,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
 import java.util.List;
@@ -63,7 +63,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
         boolean areAllGroupsExpanded = expandable.stream().allMatch(SelectionTreeItemComponent::isExpanded);
         soft.assertThat(areAllGroupsExpanded)
             .overridingErrorMessage("There are groups that are not expanded by default.")
-            .isFalse();
+            .isTrue();
     }
 
     @Test
@@ -120,19 +120,21 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
     private void validateHeaderChangesToReflectTheSelectedGroup(SoftAssertions soft) {
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofMillis(500));
+        PageUtils utils = new PageUtils(driver);
         List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getFlatHierarchy();
         int someGroupInTheMiddle = groups.size() / 2;
         SelectionTreeItemComponent groupToSelect = groups.get(someGroupInTheMiddle);
-
         String groupName = groupToSelect.select().getText();
-        String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
-        final String detailsGroupName = detailsHeader.replace("GROUP DETAILS -", "").trim();
 
         try {
-            wait.until((d) -> groupName.toUpperCase().startsWith(detailsGroupName.toUpperCase()));
+            utils.waitForCondition(() -> {
+                String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
+                String detailsGroupName = detailsHeader.replace("GROUP DETAILS -", "").trim();
+                return groupName.toUpperCase().startsWith(detailsGroupName.toUpperCase());
+            }, Duration.ofMillis(500));
             soft.succeeded();
         } catch (TimeoutException e) {
+            String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
             soft.fail("Expected the header for selected group, %s, to be GROUP DETAILS - %s.\nActual value was %s.", groupName, groupName.toUpperCase(), detailsHeader);
         }
     }

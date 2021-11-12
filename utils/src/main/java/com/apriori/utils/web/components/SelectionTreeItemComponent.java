@@ -106,8 +106,8 @@ public class SelectionTreeItemComponent extends CommonComponent {
             return this;
         }
 
-        scrollIntoView();
-        getExpander().click();
+        getPageUtils().scrollWithJavaScript(getRoot(), true);
+        getPageUtils().waitForElementAndClick(getExpander());
         return this;
     }
 
@@ -146,8 +146,8 @@ public class SelectionTreeItemComponent extends CommonComponent {
      * @return This object
      */
     public SelectionTreeItemComponent select() {
-        this.scrollIntoView();
-        this.getRoot().click();
+        getPageUtils().scrollWithJavaScript(this.getRoot(), true);
+        getPageUtils().waitForElementAndClick(this.getRoot());
         return this;
     }
 
