@@ -4,7 +4,6 @@ import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -20,6 +19,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
 
     @FindBy(className = "system-configuration-group-details-card")
     private WebElement groupDetailsRoot;
+    private final SystemConfigurationGroupDetailsComponent groupDetails;
 
     /**
      * Initializes a new instance of this object.
@@ -29,6 +29,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     public SystemConfigurationGroupsPage(WebDriver driver) {
         super(driver, log);
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
+        groupDetails = new SystemConfigurationGroupDetailsComponent(getDriver(), groupDetailsRoot);
     }
 
     /**
@@ -41,12 +42,12 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the current detail's header text.
+     * Gets the group details that describes what is selected in the groups tree.
      *
-     * @return The current detail's header text
+     * @return The group details component that describes what is selected in the groups tree.
      */
-    public String getDetailsHeader() {
-        return groupDetailsRoot.findElement(By.className("card-header")).getText();
+    public SystemConfigurationGroupDetailsComponent getGroupDetails() {
+        return groupDetails;
     }
 
     /**
