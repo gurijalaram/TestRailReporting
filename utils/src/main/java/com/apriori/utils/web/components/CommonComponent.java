@@ -13,8 +13,8 @@ import org.openqa.selenium.WebElement;
  * to them.
  */
 public abstract class CommonComponent {
-    private WebDriver driver;
-    private WebElement root;
+    private final WebDriver driver;
+    private final WebElement root;
     private PageUtils pageUtils;
 
     /**
@@ -22,10 +22,8 @@ public abstract class CommonComponent {
      *
      * @param driver The overall global web driver that is querying different pages.
      * @param root The root element to attach for this component.
-     *
-     * @exception java.lang.Error Occurs if there is a problem loading child components.
      */
-    protected CommonComponent(WebDriver driver, WebElement root) {
+    protected CommonComponent(final WebDriver driver, final WebElement root) {
         this.driver = driver;
         this.root = root;
     }
@@ -35,7 +33,7 @@ public abstract class CommonComponent {
      *
      * @return The web driver for this component.
      */
-    protected WebDriver getDriver() {
+    protected final WebDriver getDriver() {
         return this.driver;
     }
 
@@ -44,7 +42,7 @@ public abstract class CommonComponent {
      *
      * @return The root element that contains this component.
      */
-    protected WebElement getRoot() {
+    protected final WebElement getRoot() {
         return root;
     }
 

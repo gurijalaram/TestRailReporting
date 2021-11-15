@@ -56,6 +56,7 @@ public class ResetSettingsUtil {
         String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
         String digFacIdentity = mappedResponse.get("production.defaultDigitalFactory");
         String matCatalogIdentity = mappedResponse.get("production.defaultMaterialCatalogName");
+        String cadThresholdIdentity = mappedResponse.get("tolerance.useCadToleranceThreshold");
         String materialIdentity = mappedResponse.get("production.defaultMaterialName");
         String annVolIdentity = mappedResponse.get("production.defaultAnnualVolume");
         String prodLifeIdentity = mappedResponse.get("production.defaultProductionLife");
@@ -82,6 +83,7 @@ public class ResetSettingsUtil {
                 + "\"" + annVolIdentity + "\":\"" + 5500 + "\","
                 + "\"" + prodLifeIdentity + "\":\"" + 5 + "\","
                 + "\"" + batchIdentity + "\":\"" + 458 + "\","
+                + "\"" + cadThresholdIdentity + "\":\"" + false + "\","
                 + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 
