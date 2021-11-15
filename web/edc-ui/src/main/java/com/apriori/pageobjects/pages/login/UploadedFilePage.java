@@ -91,6 +91,7 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      * @return same page object
      */
     public UploadedFilePage costStatusDropdown() {
+        pageUtils.moveAndClick(costStatusDropdown);
         pageUtils.waitForElementAndClick(costStatusDropdown);
         return this;
     }
