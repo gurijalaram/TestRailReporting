@@ -21,11 +21,6 @@ public class AboutAprioriPage extends EagerPageComponent<AboutAprioriPage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(aboutUs);
     }

@@ -18,11 +18,6 @@ public class MyProfilePage extends EagerPageComponent<MyProfilePage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(myProfile);
     }

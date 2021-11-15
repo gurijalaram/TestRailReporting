@@ -21,11 +21,6 @@ public class HelpPage extends EagerPageComponent<HelpPage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(aboutApriori);
     }

@@ -24,11 +24,6 @@ public class CisScenarioTableController extends EagerPageComponent<CisScenarioTa
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(componentTable);
 

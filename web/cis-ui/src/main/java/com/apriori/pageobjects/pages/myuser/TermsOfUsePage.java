@@ -18,11 +18,6 @@ public class TermsOfUsePage extends EagerPageComponent<TermsOfUsePage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(termsText);
     }

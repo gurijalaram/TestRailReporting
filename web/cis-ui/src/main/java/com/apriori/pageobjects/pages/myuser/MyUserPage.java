@@ -25,11 +25,6 @@ public class MyUserPage extends EagerPageComponent<MyUserPage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(myProfileButton);
     }

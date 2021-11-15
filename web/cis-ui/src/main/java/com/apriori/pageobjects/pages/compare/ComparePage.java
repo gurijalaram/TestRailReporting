@@ -18,11 +18,6 @@ public class ComparePage extends EagerPageComponent<ComparePage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(modifyButton);
     }

@@ -18,11 +18,6 @@ public class ZendeskSignInPage extends EagerPageComponent<ZendeskSignInPage> {
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(email);
     }

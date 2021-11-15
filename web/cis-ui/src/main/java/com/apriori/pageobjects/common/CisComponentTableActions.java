@@ -27,11 +27,6 @@ public class CisComponentTableActions extends EagerPageComponent<CisComponentTab
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(searchInput);
     }
