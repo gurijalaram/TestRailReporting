@@ -1,6 +1,6 @@
 package testsuites;
 
-import com.tests.suite.CISApiSuite;
+import com.apriori.cis.tests.suite.CISApiSuite;
 
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
