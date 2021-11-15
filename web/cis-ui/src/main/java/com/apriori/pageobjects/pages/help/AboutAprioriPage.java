@@ -1,16 +1,14 @@
 package com.apriori.pageobjects.pages.help;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class AboutAprioriPage extends LoadableComponent<AboutAprioriPage> {
+public class AboutAprioriPage extends EagerPageComponent<AboutAprioriPage> {
 
     @FindBy(id = "about_us_section")
     private WebElement aboutUs;
@@ -18,14 +16,8 @@ public class AboutAprioriPage extends LoadableComponent<AboutAprioriPage> {
     @FindBy(css = ".red-btn")
     private WebElement termsButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-
     public AboutAprioriPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
     }
 
     @Override
@@ -35,7 +27,7 @@ public class AboutAprioriPage extends LoadableComponent<AboutAprioriPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(aboutUs);
+        getPageUtils().waitForElementToAppear(aboutUs);
     }
 
     /**
@@ -44,7 +36,7 @@ public class AboutAprioriPage extends LoadableComponent<AboutAprioriPage> {
      * @return page object
      */
     public AboutAprioriPage agreeTermsAndCondition() {
-        pageUtils.waitForElementAndClick(termsButton);
+        getPageUtils().waitForElementAndClick(termsButton);
         return this;
     }
 
@@ -54,7 +46,7 @@ public class AboutAprioriPage extends LoadableComponent<AboutAprioriPage> {
      * @return page object
      */
     public AboutAprioriPage switchTab() {
-        pageUtils.windowHandler(1);
+        getPageUtils().windowHandler(1);
         return this;
     }
 }

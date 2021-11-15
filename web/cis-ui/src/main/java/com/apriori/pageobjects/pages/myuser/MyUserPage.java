@@ -1,17 +1,15 @@
 package com.apriori.pageobjects.pages.myuser;
 
 import com.apriori.pageobjects.pages.login.CisLoginPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class MyUserPage extends LoadableComponent<MyUserPage> {
+public class MyUserPage extends EagerPageComponent<MyUserPage> {
 
     @FindBy(xpath = "//button[.='My Profile']")
     private WebElement myProfileButton;
@@ -22,15 +20,8 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
     @FindBy(xpath = "//button[.='Logout']")
     private WebElement logoutButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-
     public MyUserPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver, log);
     }
 
     @Override
@@ -40,7 +31,7 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(myProfileButton);
+        getPageUtils().waitForElementToAppear(myProfileButton);
     }
 
     /**
@@ -49,8 +40,8 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
      * @retun new page object
      */
     public CisLoginPage logout() {
-        pageUtils.waitForElementAndClick(logoutButton);
-        return new CisLoginPage(driver);
+        getPageUtils().waitForElementAndClick(logoutButton);
+        return new CisLoginPage(getDriver());
     }
 
     /**
@@ -59,8 +50,8 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
      * @return new page object
      */
     public MyProfilePage selectMyProfile() {
-        pageUtils.waitForElementAndClick(myProfileButton);
-        return new MyProfilePage(driver);
+        getPageUtils().waitForElementAndClick(myProfileButton);
+        return new MyProfilePage(getDriver());
     }
 
     /**
@@ -69,8 +60,7 @@ public class MyUserPage extends LoadableComponent<MyUserPage> {
      * @return new page object
      */
     public TermsOfUsePage selectTermsOfUse() {
-        pageUtils.waitForElementAndClick(termsOfUseButton);
-        return new TermsOfUsePage(driver);
+        getPageUtils().waitForElementAndClick(termsOfUseButton);
+        return new TermsOfUsePage(getDriver());
     }
-
 }

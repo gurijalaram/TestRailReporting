@@ -1,19 +1,17 @@
 package com.apriori.pageobjects.common;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.Arrays;
 
 @Slf4j
-public class CisScenarioTableController extends LoadableComponent<CisScenarioTableController> {
+public class CisScenarioTableController extends EagerPageComponent<CisScenarioTableController> {
 
     @FindBy(css = ".apriori-table.scenario-iteration-table")
     private WebElement componentTable;
@@ -21,16 +19,8 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
     @FindBy(xpath = "(//div[@class='table-body']/div)[1]//div[@class='scenario-thumbnail small']")
     private WebElement scenarioLocator;
 
-
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     public CisScenarioTableController(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver, log);
     }
 
     @Override
@@ -40,7 +30,7 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(componentTable);
+        getPageUtils().waitForElementToAppear(componentTable);
 
     }
 
@@ -54,8 +44,8 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
         By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//div[@class='checkbox-icon']",
             componentName.toUpperCase().trim(), scenarioName.trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        getPageUtils().waitForElementToAppear(scenario);
+        return getPageUtils().scrollWithJavaScript(getDriver().findElement(scenario), true);
     }
 
     /**
@@ -91,7 +81,7 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
      * @return current page object
      */
     public CisScenarioTableController openFirstScenario() {
-        pageUtils.waitForElementAndClick(scenarioLocator);
+        getPageUtils().waitForElementAndClick(scenarioLocator);
         return this;
     }
 
@@ -103,7 +93,7 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
      * @return webElement
      */
     private WebElement elementScenarioName(String componentName, String scenarioName) {
-        return pageUtils.waitForElementToAppear(byScenarioName(componentName, scenarioName));
+        return getPageUtils().waitForElementToAppear(byScenarioName(componentName, scenarioName));
     }
 
     /**
@@ -141,8 +131,8 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
      * @return current page object
      */
     private CisScenarioTableController moveToScenario(String componentName, String scenarioName) {
-        pageUtils.scrollWithJavaScript(elementScenarioName(componentName, scenarioName), true);
-        pageUtils.mouseMove(elementScenarioName(componentName, scenarioName));
+        getPageUtils().scrollWithJavaScript(elementScenarioName(componentName, scenarioName), true);
+        getPageUtils().mouseMove(elementScenarioName(componentName, scenarioName));
         return this;
     }
 
@@ -155,7 +145,7 @@ public class CisScenarioTableController extends LoadableComponent<CisScenarioTab
      */
     public CisScenarioTableController highlightScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        pageUtils.waitForElementAndClick(byComponentName(componentName, scenarioName));
+        getPageUtils().waitForElementAndClick(byComponentName(componentName, scenarioName));
         return this;
     }
 }

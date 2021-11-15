@@ -4,17 +4,16 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
+import org.slf4j.Logger;
 
 @Slf4j
-public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
+public class MainNavigationBar extends EagerPageComponent<MainNavigationBar> {
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
@@ -28,25 +27,18 @@ public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
     @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     public MainNavigationBar(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        this(driver, log);
     }
 
-    @Override
-    protected void load() {
+    public MainNavigationBar(WebDriver driver, Logger logger) {
+        super(driver, logger);
 
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(helpDropdown);
+        getPageUtils().waitForElementToAppear(helpDropdown);
     }
 
     /**
@@ -55,8 +47,8 @@ public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
      * @return new page object
      */
     public ExplorePage clickExplore() {
-        pageUtils.waitForElementAndClick(exploreButton);
-        return new ExplorePage(driver);
+        getPageUtils().waitForElementAndClick(exploreButton);
+        return new ExplorePage(getDriver());
     }
 
     /**
@@ -65,8 +57,8 @@ public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
      * @return new page object
      */
     public ComparePage clickCompare() {
-        pageUtils.waitForElementAndClick(compareButton);
-        return new ComparePage(driver);
+        getPageUtils().waitForElementAndClick(compareButton);
+        return new ComparePage(getDriver());
     }
 
     /**
@@ -75,8 +67,8 @@ public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
      * @return new page object
      */
     public HelpPage clickHelpDropdown() {
-        pageUtils.waitForElementAndClick(helpDropdown);
-        return new HelpPage(driver);
+        getPageUtils().waitForElementAndClick(helpDropdown);
+        return new HelpPage(getDriver());
     }
 
     /**
@@ -85,7 +77,7 @@ public class MainNavigationBar extends LoadableComponent<MainNavigationBar> {
      * @return new page object
      */
     public MyUserPage clickUserDropdown() {
-        pageUtils.waitForElementAndClick(userDropdown);
-        return new MyUserPage(driver);
+        getPageUtils().waitForElementAndClick(userDropdown);
+        return new MyUserPage(getDriver());
     }
 }

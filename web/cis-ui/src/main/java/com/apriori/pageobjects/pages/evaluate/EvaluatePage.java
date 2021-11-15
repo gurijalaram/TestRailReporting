@@ -1,23 +1,24 @@
 package com.apriori.pageobjects.pages.evaluate;
 
 import com.apriori.pageobjects.navtoolbars.EvaluateTabToolbar;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
-public class EvaluatePage extends EvaluateTabToolbar {
+public class EvaluatePage extends EagerPageComponent<EvaluatePage> {
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    private EvaluateTabToolbar evaluateTabToolbar;
 
     public EvaluatePage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
+        evaluateTabToolbar =  new EvaluateTabToolbar(driver);
+
+    }
+
+    @Override
+    protected void isLoaded() throws Error {
+
     }
 }

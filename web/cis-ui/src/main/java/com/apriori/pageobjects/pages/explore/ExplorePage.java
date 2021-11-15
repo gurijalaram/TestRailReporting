@@ -3,13 +3,11 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.common.CisComponentTableActions;
 import com.apriori.pageobjects.common.CisScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
-import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
 public class ExplorePage extends ExploreTabToolbar {
@@ -20,19 +18,13 @@ public class ExplorePage extends ExploreTabToolbar {
     @FindBy(css = "[data-icon='filter']")
     private WebElement filter;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
     private CisScenarioTableController scenarioTableController;
     private CisComponentTableActions componentTableActions;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
         this.scenarioTableController = new CisScenarioTableController(driver);
         this.componentTableActions = new CisComponentTableActions(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
     }
 
     /**
@@ -81,6 +73,11 @@ public class ExplorePage extends ExploreTabToolbar {
         return this;
     }
 
+    /**
+     * Clicks on the first scenario
+     *
+     * @return current page object
+     */
     public ExplorePage openFirstScenario() {
         scenarioTableController.openFirstScenario();
         return this;
@@ -92,6 +89,6 @@ public class ExplorePage extends ExploreTabToolbar {
      * @return boolean
      */
     public boolean isStartComparisonEnabled() {
-        return pageUtils.waitForElementToAppear(enabledStartComparison).isEnabled();
+        return getPageUtils().waitForElementToAppear(enabledStartComparison).isEnabled();
     }
 }
