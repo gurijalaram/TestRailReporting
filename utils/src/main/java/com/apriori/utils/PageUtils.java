@@ -39,6 +39,7 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Supplier;
 
 /**
  * @author kpatel
@@ -458,6 +459,17 @@ public class PageUtils {
         } catch (InterruptedException e1) {
             Thread.currentThread().interrupt();
         }
+    }
+
+    /**
+     * Waits for a maximum of forHowLong for a given predicate to be true.
+     *
+     * @param toBeTrue The predicate to check for truth.
+     * @param forHowLong The duration of how long to wait before throwing an exception.
+     */
+    public void waitForCondition(Supplier<Boolean> toBeTrue, Duration forHowLong) {
+        WebDriverWait wait = new WebDriverWait(driver, forHowLong);
+        wait.until((d) -> toBeTrue.get());
     }
 
     /**
