@@ -12,6 +12,16 @@ import org.openqa.selenium.WebElement;
 import java.time.Duration;
 import java.util.function.Function;
 
+/**
+ * Represents the group details that renders a selected group in the system configuration groups page.
+ *
+ * This component is always displayed, but it's content changes based on the context of the group that
+ * is selected.  Therefore, this component is not immutable and an invocation to one of the underlying methods
+ * can yield different results without doing another query of the dom for the root card.
+ *
+ * This component is also stricter as to where things are located, often using a parent dom element to search
+ * for the necessary children.
+ */
 @Slf4j
 public class SystemConfigurationGroupDetailsComponent extends CommonComponent {
     /**
