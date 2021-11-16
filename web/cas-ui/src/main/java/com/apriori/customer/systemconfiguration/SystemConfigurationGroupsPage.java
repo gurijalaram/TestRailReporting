@@ -250,6 +250,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(selectionTreeRoot);
+        getPageUtils().waitForElementToAppear(groupDetailsHeader);
         getPageUtils().waitForElementToAppear(groupDetailsLeft);
         getPageUtils().waitForElementToAppear(groupDetailsRight);
     }
