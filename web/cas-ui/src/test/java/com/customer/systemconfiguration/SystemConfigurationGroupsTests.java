@@ -127,13 +127,13 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
         try {
             utils.waitForCondition(() -> {
-                String detailsHeader = systemConfigurationGroupsPage.getGroupDetails().getHeader();
+                String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
                 String detailsGroupName = detailsHeader.replace("GROUP DETAILS -", "").trim();
                 return groupName.toUpperCase().startsWith(detailsGroupName.toUpperCase());
             }, Duration.ofMillis(500));
             soft.succeeded();
         } catch (TimeoutException e) {
-            String detailsHeader = systemConfigurationGroupsPage.getGroupDetails().getHeader();
+            String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
             soft.fail("Expected the header for selected group, %s, to be GROUP DETAILS - %s.\nActual value was %s.", groupName, groupName.toUpperCase(), detailsHeader);
         }
     }
@@ -147,62 +147,62 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
         // Note here that the identity is the most important and everything will just fail if the identity
         // cannot be found.
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getIdentityLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getIdentityLabel())
             .overridingErrorMessage("The identity label was not found or is in the wrong panel.")
             .isNotNull();
 
-        String identity = systemConfigurationGroupsPage.getGroupDetails().getIdentity();
+        String identity = systemConfigurationGroupsPage.getIdentity();
         assertThat("The group identity could not be found.", identity, is(notNullValue()));
         assertThat("The group identity was empty.", identity.trim().length(), is(greaterThan((0))));
 
         // The values need to be compared with those of the api once the api is actually ready.
         // TODO: Get the group by id from the api and compare those values once ready
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getNumberOfPermissionsLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfPermissionsLabel())
             .overridingErrorMessage("The number of permissions label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getNumberOfPermissions())
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfPermissions())
             .overridingErrorMessage("The number of permissions value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getNumberOfSubgroupsLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfSubgroupsLabel())
             .overridingErrorMessage("The number of subgroups label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getNumberOfSubgroups())
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfSubgroups())
             .overridingErrorMessage("The number of subgroups value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getCreatedAtLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedAtLabel())
             .overridingErrorMessage("The created at label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getCreatedAt())
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedAt())
             .overridingErrorMessage("The created at value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getCreatedByLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedByLabel())
             .overridingErrorMessage("The created by label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getCreatedBy())
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedBy())
             .overridingErrorMessage("The created by value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getUpdatedAtLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedAtLabel())
             .overridingErrorMessage("The updated at label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getUpdatedAt())
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedAt())
             .overridingErrorMessage("The updated at value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getUpdatedByLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedByLabel())
             .overridingErrorMessage("The updated by label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getUpdatedBy())
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedBy())
             .overridingErrorMessage("The updated by label was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getDescriptionLabel())
+        soft.assertThat(systemConfigurationGroupsPage.getDescriptionLabel())
             .overridingErrorMessage("The description label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationGroupsPage.getGroupDetails().getDescription())
+        soft.assertThat(systemConfigurationGroupsPage.getDescription())
             .overridingErrorMessage("The description value was not found.")
             .isNotNull();
     }
