@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
