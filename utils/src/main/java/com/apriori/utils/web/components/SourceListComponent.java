@@ -1,17 +1,23 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.Obligation;
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.time.Duration;
 
 /**
  * Represents the source list component.
  */
 public final class SourceListComponent extends CommonComponent implements ComponentWithSpinner {
+
+    private static final By BY_TITLE = By.className("apriori-source-list-title");
+    private static final By BY_SEARCH_FIELD = By.cssSelector(".apriori-source-list-search");
+    private static final By BY_TABLE = By.className("apriori-table");
+    private static final By BY_PAGINATOR = By.className("paginator");
+    private static final By BY_REFRESH = By.className("apriori-source-list-refresh-button");
+
     /**
      * @inheritDoc
      */
@@ -25,9 +31,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @return The title text.  Returns the empty string if no such title exists.
      */
     public String getTitle() {
-        By query = By.className("apriori-source-list-title");
-        Duration timeToWait = Duration.ofMillis(100);
-        WebElement title = getPageUtils().waitForElementToAppearOptional(query, timeToWait, getRoot());
+        WebElement title = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_TITLE, PageUtils.DURATION_FAST, getRoot()));
         return title == null ? "" : title.getText();
     }
 
@@ -38,59 +42,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
      */
     @Override
     public boolean isStable() {
-        return !getPageUtils().doesElementExist(By.className("loader"), getRoot());
-    }
-
-    /**
-     * Gets the search input if it exists.
-     *
-     * @return The search input element, or null if this source list does not support search.
-     */
-    private WebElement getSearchInput() {
-        return getPageUtils().waitForElementToAppearOptional(
-            By.cssSelector(".apriori-source-list-search input"),
-            Duration.ofMillis(100),
-            getRoot()
-        );
-    }
-
-    /**
-     * Gets a value that determines if this source list can run the search operation.
-     *
-     * @return True if this list can search, false otherwise.
-     */
-    public boolean canSearch() {
-        return getSearchInput() != null;
-    }
-
-    /**
-     * Gets the placeholder for the search input.
-     *
-     * @return The search placeholder.  Returns the empty string if search is not supported.
-     */
-    public String getSearchPlaceholder() {
-        WebElement search = getSearchInput();
-        return search == null ? "" : search.getAttribute("placeholder");
-    }
-
-    /**
-     * Enters text into the search field and runs the search.
-     *
-     * @return This component.
-     *
-     * @throws NoSuchElementException If the search is not available.
-     */
-    public SourceListComponent search(final String text) {
-        WebElement search = getSearchInput();
-
-        if (search == null) {
-            throw new NoSuchElementException("The source list component you are accessing does not support search.");
-        }
-
-        getPageUtils().setValueOfElement(search, text, Keys.ENTER);
-        getPageUtils().waitForCondition(this::isStable, Duration.ofSeconds(5));
-
-        return this;
+        return getPageUtils().findLoader(getRoot()) == null;
     }
 
     /**
@@ -99,7 +51,17 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @return True if the refresh button is visible, false otherwise.
      */
     public boolean canRefresh() {
-        return getPageUtils().doesElementExist(By.className("apriori-source-list-refresh-button"), getRoot());
+        return Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_REFRESH, PageUtils.DURATION_INSTANT, getRoot())) != null;
+    }
+
+    /**
+     * Gets the search input if it exists.
+     *
+     * @return The search input element, or null if this source list does not support search.
+     */
+    public SearchFieldComponent getSearch() {
+        WebElement search = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_SEARCH_FIELD, PageUtils.DURATION_INSTANT, getRoot()));
+        return search == null ? null : new SearchFieldComponent(getDriver(), search);
     }
 
     /**
@@ -108,27 +70,8 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @return The table component.  Returns null if this list is using a card list layout.
      */
     public TableComponent getTable() {
-        By query = By.className("apriori-table");
-        Duration timeToWait = Duration.ofSeconds(1);
-        WebElement tableRoot = getPageUtils().waitForElementToAppearOptional(query, timeToWait, getRoot());
+        WebElement tableRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_TABLE, PageUtils.DURATION_SLOW, getRoot()));
         return tableRoot == null ? null : new TableComponent(getDriver(), tableRoot);
-    }
-
-    /**
-     * Same as getTable(), but throws an exception if it is missing.
-     *
-     * @return The table component.
-     *
-     * @throws NoSuchElementException If the table component does not exist.
-     */
-    public TableComponent requireTable() {
-        TableComponent table = getTable();
-
-        if (table == null) {
-            throw new NoSuchElementException("The table component is missing.");
-        }
-
-        return table;
     }
 
     /**
@@ -137,9 +80,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @return The paginator component.  Returns null if the paginator is turned off.
      */
     public PaginatorComponent getPaginator() {
-        By query = By.className("paginator");
-        Duration timeToWait = Duration.ofMillis(100);
-        WebElement paginatorRoot = getPageUtils().waitForElementToAppearOptional(query, timeToWait, getRoot());
+        WebElement paginatorRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_PAGINATOR, PageUtils.DURATION_FAST, getRoot()));
         return paginatorRoot == null ? null : new PaginatorComponent(getDriver(), paginatorRoot);
     }
 }
