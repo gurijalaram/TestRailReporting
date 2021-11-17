@@ -41,8 +41,36 @@ public final class SourceListComponent extends CommonComponent implements Compon
         return !getPageUtils().doesElementExist(By.className("loader"), getRoot());
     }
 
+    /**
+     * Gets the search input if it exists.
+     *
+     * @return The search input element, or null if this source list does not support search.
+     */
+    private WebElement getSearchInput() {
+        return getPageUtils().waitForElementToAppearOptional(
+            By.cssSelector(".apriori-source-list-search input"),
+            Duration.ofMillis(100),
+            getRoot()
+        );
+    }
+
+    /**
+     * Gets a value that determines if this source list can run the search operation.
+     *
+     * @return True if this list can search, false otherwise.
+     */
     public boolean canSearch() {
-        return getPageUtils().doesElementExist(By.cssSelector(".apriori-source-list-search input"), getRoot());
+        return getSearchInput() != null;
+    }
+
+    /**
+     * Gets the placeholder for the search input.
+     *
+     * @return The search placeholder.  Returns the empty string if search is not supported.
+     */
+    public String getSearchPlaceholder() {
+        WebElement search = getSearchInput();
+        return search == null ? "" : search.getAttribute("placeholder");
     }
 
     /**
@@ -53,11 +81,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @throws NoSuchElementException If the search is not available.
      */
     public SourceListComponent search(final String text) {
-        WebElement search = getPageUtils().waitForElementToAppearOptional(
-            By.cssSelector(".apriori-source-list-search input"),
-            Duration.ofMillis(100),
-            getRoot()
-        );
+        WebElement search = getSearchInput();
 
         if (search == null) {
             throw new NoSuchElementException("The source list component you are accessing does not support search.");
