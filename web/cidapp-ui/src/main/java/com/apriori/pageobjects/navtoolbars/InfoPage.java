@@ -152,7 +152,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     private void inputFields(WebElement element, String description) {
         pageUtils.waitForElementAndClick(element);
-        pageUtils.clear(element);
+        pageUtils.clearValueOfElement(element);
         element.sendKeys(description);
     }
 
