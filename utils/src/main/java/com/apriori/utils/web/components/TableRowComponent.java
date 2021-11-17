@@ -1,14 +1,17 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.time.Duration;
 
 /**
  * Represents a row in a table
  */
 public final class TableRowComponent extends CommonComponent {
+    private static final String ATTRIBUTE_HEADER_ID = "data-header-id";
+    private static final String CSS_CELL = ".table-cell";
+
     /**
      * Initializes a new instance of this object.
      *
@@ -27,12 +30,12 @@ public final class TableRowComponent extends CommonComponent {
      * @return The cell with the given id header.
      */
     public TableCellComponent getCell(String header) {
-        String queryByHeaderId = String.format(".table-cell[data-header-id=%s]", header);
-        WebElement cell = getPageUtils().waitForElementToAppearOptional(
+        String queryByHeaderId = String.format("%s[%s=%s]", CSS_CELL, ATTRIBUTE_HEADER_ID, header);
+        WebElement cell = getPageUtils().waitForElementToAppear(
             By.cssSelector(queryByHeaderId),
-            Duration.ofMillis(10),
+            PageUtils.DURATION_INSTANT,
             getRoot()
         );
-        return cell == null ? null : new TableCellComponent(this, cell);
+        return new TableCellComponent(this, cell);
     }
 }
