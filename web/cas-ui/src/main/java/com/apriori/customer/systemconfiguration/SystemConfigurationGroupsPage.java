@@ -1,5 +1,6 @@
 package com.apriori.customer.systemconfiguration;
 
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
@@ -77,7 +78,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     private WebElement getLabel(String name, WebElement panel) {
         try {
             By query = By.xpath(String.format("//label[.='%s']", name));
-            getPageUtils().waitForCondition(() -> panel.findElements(query).size() > 0, Duration.ofMillis(500));
+            getPageUtils().waitForCondition(() -> panel.findElements(query).size() > 0, PageUtils.DURATION_SLOW);
             return panel.findElement(query);
         } catch (TimeoutException | NoSuchElementException e) {
             return null;
@@ -94,11 +95,10 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     private <T> T getValue(String name, WebElement panel, Function<String, T> parse) {
         try {
             By elementQuery = By.className(String.format("read-field-%s", name));
-            getPageUtils().waitForCondition(() -> panel.findElements(elementQuery).size() > 0, Duration.ofMillis(500));
+            getPageUtils().waitForCondition(() -> panel.findElements(elementQuery).size() > 0, PageUtils.DURATION_SLOW);
             // It's possible that underneath the value there is a loading indicator.  Wait for that to go away.
             WebElement value = panel.findElement(elementQuery);
-            By loaderQuery = By.className("read-field-loading");
-            getPageUtils().waitForCondition(() -> value.findElements(loaderQuery).size() == 0, Duration.ofSeconds(10));
+            getPageUtils().waitForCondition(() -> getPageUtils().findLoader(value) == null, PageUtils.DURATION_LOADING);
             return parse.apply(value.getText());
         } catch (TimeoutException | NoSuchElementException | IllegalArgumentException e) {
             return null;
