@@ -115,6 +115,23 @@ public final class SourceListComponent extends CommonComponent implements Compon
     }
 
     /**
+     * Same as getTable(), but throws an exception if it is missing.
+     *
+     * @return The table component.
+     *
+     * @throws NoSuchElementException If the table component does not exist.
+     */
+    public TableComponent requireTable() {
+        TableComponent table = getTable();
+
+        if (table == null) {
+            throw new NoSuchElementException("The table component is missing.");
+        }
+
+        return table;
+    }
+
+    /**
      * Gets the paginator component.
      *
      * @return The paginator component.  Returns null if the paginator is turned off.
