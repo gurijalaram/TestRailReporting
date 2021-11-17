@@ -4,9 +4,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 
 @Slf4j
-public class CompareTabToolbar extends MainNavigationBar {
+public class EvaluateTabToolbar extends MainNavigationBar {
 
-    public CompareTabToolbar(WebDriver driver) {
+    public EvaluateTabToolbar(WebDriver driver) {
         super(driver, log);
     }
 }
