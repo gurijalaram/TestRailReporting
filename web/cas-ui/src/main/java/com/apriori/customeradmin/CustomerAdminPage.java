@@ -2,11 +2,15 @@ package com.apriori.customeradmin;
 
 import com.apriori.customer.CustomerWorkspacePage;
 
+import com.apriori.utils.Obligation;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,6 +20,8 @@ import org.openqa.selenium.support.FindBy;
  */
 @Slf4j
 public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
+
+    private static final String CUSTOMER_APRIORI_INTERNAL = "aPriori Internal";
 
     @FindBy(className = "customer-list-view-new-button")
     private WebElement newCustomerButton;
@@ -51,9 +57,11 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
      * @return The profile page for aPriori Internal
      */
     public CustomerWorkspacePage openAprioriInternal() {
-        String name = "aPriori Internal";
-        getSourceList().search(name);
-        return selectCustomer(name);
+        SourceListComponent list = getSourceList();
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, () -> new NoSuchElementException("The customer search is missing."));
+        search.search(CUSTOMER_APRIORI_INTERNAL);
+        getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
+        return selectCustomer(CUSTOMER_APRIORI_INTERNAL);
     }
 
     /**
