@@ -1,76 +1,38 @@
 package com.apriori.customeradmin;
 
 import com.apriori.customer.CustomerWorkspacePage;
-import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.utils.web.components.SourceListComponent;
+
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomerAdminPage.class);
+/**
+ * Represents the root customer list.
+ */
+@Slf4j
+public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
 
     @FindBy(className = "customer-list-view-new-button")
     private WebElement newCustomerButton;
 
-    @FindBy(id = "qa-customer-counter")
-    private WebElement customerCount;
-
-    @FindBy(css = "svg[data-icon='list']")
-    private WebElement listViewButton;
-
-    @FindBy(css = "svg[data-icon='th']")
-    private WebElement tileViewButton;
-
-    @FindBy(css = "div[class='input-group select-input customer-type']")
-    private WebElement custTypeDropdown;
-
-    @FindBy(css = ".customer-list-view input[name='search']")
-    private WebElement customerSearchInput;
-
-    @FindBy(css = ".customer-list-view .loader")
-    private WebElement customerListLoader;
-
-    @FindBy(id = "qa-page-size-dropdown")
-    private WebElement pageSizeDropdown;
-
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private NavToolbar navToolbar;
+    @FindBy(className = "customer-list-view-source-list")
+    private WebElement sourceListRoot;
+    private SourceListComponent customerSourceList;
 
     public CustomerAdminPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        this.navToolbar = new NavToolbar(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
+        super(driver, log);
+        this.customerSourceList = new SourceListComponent(getDriver(), sourceListRoot);
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(newCustomerButton);
-    }
-
-    /**
-     * Checks the customers button is present
-     *
-     * @return true/false
-     */
-    public boolean isNewCustomerButtonPresent() {
-        return pageUtils.waitForElementToAppear(newCustomerButton).isDisplayed();
+        getPageUtils().waitForElementToAppear(sourceListRoot);
+        getPageUtils().waitForElementAppear(newCustomerButton);
     }
 
     /**
@@ -79,8 +41,8 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      * @return new page object
      */
     public CustomerWorkspacePage clickNewCustomerButton() {
-        pageUtils.waitForElementAndClick(newCustomerButton);
-        return new CustomerWorkspacePage(driver);
+        getPageUtils().waitForElementAndClick(newCustomerButton);
+        return new CustomerWorkspacePage(getDriver());
     }
 
     /**
@@ -90,49 +52,28 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      */
     public CustomerWorkspacePage openAprioriInternal() {
         String name = "aPriori Internal";
-        return searchForCustomer(name).selectCustomer(name);
+        getSourceList().search(name);
+        return selectCustomer(name);
     }
 
     /**
-     * Select a customer
+     * Select a customer on the current page
      *
      * @param customerName - customer name
      * @return new page object
      */
     public CustomerWorkspacePage selectCustomer(String customerName) {
         By customer = By.xpath(String.format("//a[.='%s']", customerName));
-        pageUtils.waitForElementAndClick(customer);
-        return new CustomerWorkspacePage(driver);
+        getPageUtils().waitForElementAndClick(customer);
+        return new CustomerWorkspacePage(getDriver());
     }
 
     /**
-     * Select customer type
+     * Gets the underlying source list for the admin page.
      *
-     * @param customerType - customer type
-     * @return current page object
+     * @return The source list for the admin page.
      */
-    public CustomerAdminPage selectCustomerType(String customerType) {
-        pageUtils.selectDropdownOption(custTypeDropdown, customerType);
-        return this;
-    }
-
-    /**
-     * Search for customer
-     *
-     * @param customer - customer details
-     * @return current page object
-     */
-    public CustomerAdminPage searchForCustomer(String customer) {
-        pageUtils.setValueOfElement(customerSearchInput, customer, Keys.ENTER);
-        return this;
-    }
-
-    /**
-     * Get customer count
-     *
-     * @return string
-     */
-    public String getCustomerCount() {
-        return pageUtils.waitForElementToAppear(customerCount).getText();
+    public SourceListComponent getSourceList() {
+        return customerSourceList;
     }
 }
