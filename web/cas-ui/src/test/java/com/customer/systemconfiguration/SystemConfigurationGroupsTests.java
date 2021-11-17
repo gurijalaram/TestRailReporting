@@ -13,6 +13,8 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.components.SourceListComponent;
+import com.apriori.utils.web.components.TableComponent;
+import com.apriori.utils.web.components.TableHeaderComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -227,7 +229,6 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
     private void validateAssociatedPermissionsArePageableSortableAndRefreshable(SoftAssertions soft) {
 
-        selectSomeGroupInTheMiddle();
         SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
         soft.assertThat(list.getPaginator())
             .overridingErrorMessage("The associated permissions table has no pagination.")
@@ -240,12 +241,52 @@ public class SystemConfigurationGroupsTests extends TestBase {
             .isTrue();
     }
 
+    private void validateColumnHeaderIsCorrect(String expectedName, String id, TableComponent forTable, SoftAssertions soft) {
+
+        TableHeaderComponent header = forTable.getHeader(id);
+        soft.assertThat(header)
+            .overridingErrorMessage("The '%s' column is missing.", expectedName)
+            .isNotNull();
+        String name = header.getName();
+        soft.assertThat(name)
+            .overridingErrorMessage("The '%s' column is incorrectly named '%s'", expectedName, name)
+            .isEqualTo(expectedName);
+        soft.assertThat(header.canSort())
+            .overridingErrorMessage("The '%s' column is not sortable.")
+            .isTrue();
+    }
+
+    private void validateAssociatedPermissionsHasCorrectColumns(SoftAssertions soft) {
+
+        SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
+        TableComponent table = list.requireTable();
+
+        validateColumnHeaderIsCorrect("Name", "name", table, soft);
+        validateColumnHeaderIsCorrect("Action", "actions", table, soft);
+        validateColumnHeaderIsCorrect("Resource", "resourceType", table, soft);
+        validateColumnHeaderIsCorrect("Rule", "cslRule", table, soft);
+        validateColumnHeaderIsCorrect("Grant", "normalGrant", table, soft);
+        validateColumnHeaderIsCorrect("Deny", "normalDeny", table, soft);
+        validateColumnHeaderIsCorrect("Description", "description", table, soft);
+    }
+
+    private void validateAssociatedPermissionsHasCorrectSearchPlaceholder(SoftAssertions soft) {
+
+        String expected = "Search Name or Description...";
+        SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
+        String actual = list.getSearchPlaceholder();
+        soft.assertThat(actual).isEqualTo(expected);
+    }
+
     @Test
     @TestRail(testCaseId = {"9953", "9954", "9955"})
     public void testValidateGroupAssociatedPermissionsHasCorrectDetails() {
         SoftAssertions soft = new SoftAssertions();
         validateThereIsAtLeastOneGroup();
+        selectSomeGroupInTheMiddle();
         validateAssociatedPermissionsArePageableSortableAndRefreshable(soft);
+        validateAssociatedPermissionsHasCorrectColumns(soft);
+        validateAssociatedPermissionsHasCorrectSearchPlaceholder(soft);
         soft.assertAll();
     }
 }
