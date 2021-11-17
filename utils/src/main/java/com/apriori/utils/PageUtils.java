@@ -20,6 +20,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -186,6 +187,18 @@ public class PageUtils {
         classList = classList == null ? "" : classList;
         String[] classes = classList.split(" ");
         return Arrays.stream(classes).anyMatch((currentClass) -> StringUtils.equals(currentClass, wantedClass));
+    }
+
+    /**
+     * Determines if an element exists.
+     *
+     * @param by The search criteria.
+     * @param search The context to search under.
+     *
+     * @return True if the element exists.  False otherwise.
+     */
+    public boolean doesElementExist(By by, SearchContext search) {
+        return search.findElements(by).size() > 0;
     }
 
     public void mouseMove(WebElement element) {
@@ -468,8 +481,34 @@ public class PageUtils {
      * @param forHowLong The duration of how long to wait before throwing an exception.
      */
     public void waitForCondition(Supplier<Boolean> toBeTrue, Duration forHowLong) {
+        waitForCondition(toBeTrue, forHowLong, 1);
+    }
+
+    /**
+     * Waits for a maximum of forHowLong for a given predicate to be true.
+     *
+     * This will attempt to wait for maxAttempts before fully failing.
+     *
+     * @param toBeTrue The predicate to check for truth.
+     * @param forHowLong The duration of how long to wait before throwing an exception.
+     * @param maxAttempts The maximum number of attempts to make before fully failing.
+     */
+    public void waitForCondition(Supplier<Boolean> toBeTrue, Duration forHowLong, int maxAttempts) {
         WebDriverWait wait = new WebDriverWait(driver, forHowLong);
-        wait.until((d) -> toBeTrue.get());
+
+        int attempts = 0;
+
+        do {
+            attempts++;
+            try {
+                wait.until((d) -> toBeTrue.get());
+                return;
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+            }
+        } while (attempts < maxAttempts);
+
+        throw new TimeoutException("Unable to meet the required condition in the given timeframe.");
     }
 
     /**
@@ -586,6 +625,7 @@ public class PageUtils {
      * @return size as int
      */
     public WebElement waitForElementToAppear(By element) {
+        // TODO: This can be refactored to use waitForElementToAppear(element, Duration.ofSeconds(5L), 12);
         long webDriverWait = 5L;
         int retries = 0;
         int maxRetries = 12;
@@ -603,6 +643,94 @@ public class PageUtils {
             }
         }
         return driver.findElement(element);
+    }
+
+    /**
+     * Waits for an element to become visible.
+     *
+     * This will use the driver as the search context and will only make 1 attempt.
+     *
+     * @param by The search query to search the context for.
+     * @param forHowLong The maximum amount of time to wait.
+     *
+     * @return The WebElement that was found.
+     *
+     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
+     *                                              query.
+     */
+    public WebElement waitForElementToAppear(By by, Duration forHowLong) {
+        return waitForElementToAppear(by, forHowLong, 1);
+    }
+
+    /**
+     * Waits for an element to become visible.
+     *
+     * This will use the driver as the search context.
+     *
+     * @param by The search query to search the context for.
+     * @param forHowLong The maximum amount of time to wait.
+     * @param maxAttempts The maximum attempts to make before failing.
+     *
+     * @return The WebElement that was found.
+     *
+     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
+     *                                              query.
+     */
+    public WebElement waitForElementToAppear(By by, Duration forHowLong, int maxAttempts) {
+        return waitForElementToAppear(by, forHowLong, maxAttempts, driver);
+    }
+
+    /**
+     * Waits for an element to become visible.
+     *
+     * This will only make 1 attempt
+     *
+     * @param by The search query to search the context for.
+     * @param forHowLong The maximum amount of time to wait.
+     * @param search The parent context to search under.
+     *
+     * @return The WebElement that was found.
+     *
+     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
+     *                                              query.
+     */
+    public WebElement waitForElementToAppear(By by, Duration forHowLong, SearchContext search) {
+        return waitForElementToAppear(by, forHowLong, 1, search);
+    }
+
+    /**
+     * Waits for an element to become visible.
+     *
+     * @param by The search query to search the context for.
+     * @param forHowLong The maximum amount of time to wait.
+     * @param maxAttempts The maximum attempts to make before failing.
+     * @param search The parent context to search under.
+     *
+     * @return The WebElement that was found.
+     *
+     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
+     *                                              query.
+     */
+    public WebElement waitForElementToAppear(By by, Duration forHowLong, int maxAttempts, SearchContext search) {
+        waitForCondition(() -> search.findElement(by).isDisplayed(), forHowLong, maxAttempts);
+        return search.findElement(by);
+    }
+
+    /**
+     * Waits for an element to become visible but does not fail if it never does.
+     *
+     * @param by The search query to search the context for.
+     * @param duration The maximum amount of time to wait.
+     * @param search The parent context to search under.
+     *
+     * @return The WebElement that was found or null if the web element cannot be found.
+     */
+    public WebElement waitForElementToAppearOptional(By by, Duration duration, SearchContext search) {
+        try {
+            return waitForElementToAppear(by, duration, search);
+        } catch (TimeoutException t) {
+            return null;
+        }
     }
 
     /**
