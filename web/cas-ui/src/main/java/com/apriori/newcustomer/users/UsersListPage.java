@@ -16,8 +16,14 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(UsersListPage.class);
 
-    @FindBy(css = "a[name='userImport']")
+    @FindBy(xpath = "//a[.='Customer Staff']")
+    private WebElement customerStaffTab;
+
+    @FindBy(xpath = "//a[.='Import']")
     private WebElement importTab;
+
+    @FindBy(xpath = "//a[.='aPriori Staff']")
+    private WebElement aPrioriStaffTab;
 
     @FindBy(css = "a[name='userAppsConfiguration']")
     private WebElement appGrantTab;
@@ -57,8 +63,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(updateButton);
-        pageUtils.waitForElementAppear(addButton);
+        pageUtils.waitForElementAppear(customerStaffTab);
+        pageUtils.waitForElementAppear(importTab);
     }
 
     /**
@@ -67,6 +73,15 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      */
     public ImportPage goToImport() {
         pageUtils.waitForElementAndClick(importTab);
+        return new ImportPage(driver);
+    }
+
+    /**
+     * Go to import tab
+     * @return new page object
+     */
+    public ImportPage goToaPrioriStaff() {
+        pageUtils.waitForElementAndClick(aPrioriStaffTab);
         return new ImportPage(driver);
     }
 

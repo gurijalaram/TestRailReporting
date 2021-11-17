@@ -195,7 +195,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      */
     public String findCustomerIdentity() {
         String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
-        String url = getDriver().getCurrentUrl().replace(String.format("%s/customers/", baseUrl), "");
+        String url = getDriver().getCurrentUrl().replace(String.format("%scustomers/", baseUrl), "");
         return Arrays.stream(url.split("/")).findFirst().orElse("");
     }
 }

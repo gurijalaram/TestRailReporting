@@ -173,6 +173,11 @@ public class PageUtils {
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
     }
 
+    public boolean isPageLoaded(By element) {
+        waitForElementToAppear(element);
+        return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
+    }
+
     /**
      * Determines if an element contains a class.
      *
