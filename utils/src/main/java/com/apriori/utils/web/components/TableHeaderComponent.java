@@ -1,6 +1,9 @@
 package com.apriori.utils.web.components;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+
+import java.time.Duration;
 
 /**
  * Represents a header component in the table.
@@ -14,6 +17,24 @@ public class TableHeaderComponent extends CommonComponent {
      */
     public TableHeaderComponent(TableComponent table, WebElement root) {
         super(table.getDriver(), root);
+    }
+
+    /**
+     * Gets the content element of the cell.
+     *
+     * @return The content element of the cell.
+     */
+    private WebElement getCellContent() {
+        return getPageUtils().waitForElementToAppear(By.className("cell-content"), Duration.ofMillis(100), getRoot());
+    }
+
+    /**
+     * Gets a value that determines if the header can be sorted.
+     *
+     * @return True if this header can be sorted, false otherwise.
+     */
+    public boolean canSort() {
+        return !getPageUtils().doesElementHaveClass(getCellContent(), "sort-disabled");
     }
 
     /**
