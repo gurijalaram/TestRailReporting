@@ -3,6 +3,8 @@ package com.apriori.customer.systemconfiguration;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
+import com.apriori.utils.web.components.SourceListComponent;
+
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +20,10 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     private WebElement selectionTreeRoot;
     private final SelectionTreeComponent groupsTree;
 
+    @FindBy(className = "associated-permissions")
+    private WebElement associatedPermissionsRoot;
+    private final SourceListComponent associatedPermissions;
+
     @FindBy(className = "system-configuration-group-details-card")
     private WebElement groupDetailsRoot;
 
@@ -29,6 +35,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     public SystemConfigurationGroupsPage(WebDriver driver) {
         super(driver, log);
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
+        associatedPermissions = new SourceListComponent(getDriver(), associatedPermissionsRoot);
     }
 
     /**
@@ -38,6 +45,15 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      */
     public SelectionTreeComponent getGroupsTree() {
         return groupsTree;
+    }
+
+    /**
+     * Gets the associated permissions for the selected group.
+     *
+     * @return The associated permissions for the selected group.
+     */
+    public SourceListComponent getAssociatedPermissions() {
+        return associatedPermissions;
     }
 
     /**
