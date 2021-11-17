@@ -12,6 +12,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
+import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -44,6 +45,13 @@ public class SystemConfigurationGroupsTests extends TestBase {
         SelectionTreeItemComponent firstGroup = groups.stream().findFirst().orElse(null);
         assertThat("There are no groups to verify anything on", firstGroup, is(notNullValue()));
         return firstGroup;
+    }
+
+    private SelectionTreeItemComponent selectSomeGroupInTheMiddle() {
+        List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getFlatHierarchy();
+        int someGroupInTheMiddle = groups.size() / 2;
+        SelectionTreeItemComponent groupToSelect = groups.get(someGroupInTheMiddle);
+        return groupToSelect.select();
     }
 
     private void validateFirstGroupIsSelected(SoftAssertions soft) {
@@ -120,10 +128,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     private void validateHeaderChangesToReflectTheSelectedGroup(SoftAssertions soft) {
 
         PageUtils utils = new PageUtils(driver);
-        List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getFlatHierarchy();
-        int someGroupInTheMiddle = groups.size() / 2;
-        SelectionTreeItemComponent groupToSelect = groups.get(someGroupInTheMiddle);
-        String groupName = groupToSelect.select().getText();
+        String groupName = selectSomeGroupInTheMiddle().getText();
 
         try {
             utils.waitForCondition(() -> {
@@ -217,6 +222,30 @@ public class SystemConfigurationGroupsTests extends TestBase {
         validateThereIsAtLeastOneGroup();
         validateHeaderChangesToReflectTheSelectedGroup(soft);
         validateSelectedGroupInformation(soft);
+        soft.assertAll();
+    }
+
+    private void validateAssociatedPermissionsArePageableSortableAndRefreshable(SoftAssertions soft) {
+
+        selectSomeGroupInTheMiddle();
+        SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
+        soft.assertThat(list.getPaginator())
+            .overridingErrorMessage("The associated permissions table has no pagination.")
+            .isNotNull();
+        soft.assertThat(list.canSearch())
+            .overridingErrorMessage("The associated permissions table is missing search.")
+            .isTrue();
+        soft.assertThat(list.canRefresh())
+            .overridingErrorMessage("The associated permissions table is missing the refresh button.")
+            .isTrue();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9953", "9954", "9955"})
+    public void testValidateGroupAssociatedPermissionsHasCorrectDetails() {
+        SoftAssertions soft = new SoftAssertions();
+        validateThereIsAtLeastOneGroup();
+        validateAssociatedPermissionsArePageableSortableAndRefreshable(soft);
         soft.assertAll();
     }
 }
