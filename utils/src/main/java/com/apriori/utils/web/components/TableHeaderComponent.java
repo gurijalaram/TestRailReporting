@@ -1,14 +1,18 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-
-import java.time.Duration;
 
 /**
  * Represents a header component in the table.
  */
 public class TableHeaderComponent extends CommonComponent {
+    private static final String ATTRIBUTE_HEADER_ID = "data-header-id";
+    private static final By BY_CELL_CONTENT = By.className("cell-content");
+    private static final String CLASS_SORT_DISABLED = "sort-disabled";
+
     /**
      * Initializes a new instance of this object.
      *
@@ -25,7 +29,7 @@ public class TableHeaderComponent extends CommonComponent {
      * @return The content element of the cell.
      */
     private WebElement getCellContent() {
-        return getPageUtils().waitForElementToAppear(By.className("cell-content"), Duration.ofMillis(100), getRoot());
+        return getPageUtils().waitForElementToAppear(BY_CELL_CONTENT, PageUtils.DURATION_INSTANT, getRoot());
     }
 
     /**
@@ -34,7 +38,7 @@ public class TableHeaderComponent extends CommonComponent {
      * @return True if this header can be sorted, false otherwise.
      */
     public boolean canSort() {
-        return !getPageUtils().doesElementHaveClass(getCellContent(), "sort-disabled");
+        return !getPageUtils().doesElementHaveClass(getCellContent(), CLASS_SORT_DISABLED);
     }
 
     /**
@@ -52,6 +56,6 @@ public class TableHeaderComponent extends CommonComponent {
      * @return The id of this table header.
      */
     public String getId() {
-        return getRoot().getAttribute("data-header-id");
+        return getRoot().getAttribute(ATTRIBUTE_HEADER_ID);
     }
 }
