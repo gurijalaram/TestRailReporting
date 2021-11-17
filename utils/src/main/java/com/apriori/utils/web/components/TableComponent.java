@@ -1,10 +1,11 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -13,6 +14,12 @@ import java.util.stream.Stream;
  * Represents a table component.
  */
 public final class TableComponent extends CommonComponent implements ComponentWithSpinner {
+    private static final String ATTRIBUTE_DATA_HEADER_ID = "data-header-id";
+    private static final String CSS_HEADERS = ".table-head .table-cell";
+
+    private static final By BY_HEADERS = By.cssSelector(CSS_HEADERS);
+    private static final By BY_ROWS = By.cssSelector(".table-body .table-row");
+
     /**
      * @inheritDoc
      */
@@ -25,7 +32,7 @@ public final class TableComponent extends CommonComponent implements ComponentWi
      */
     @Override
     public boolean isStable() {
-        return !getPageUtils().doesElementExist(By.className("loader"), getRoot());
+        return getPageUtils().findLoader(getRoot()) == null;
     }
 
     /**
@@ -46,7 +53,7 @@ public final class TableComponent extends CommonComponent implements ComponentWi
      * @return The collection of table headers.
      */
     public List<TableHeaderComponent> getHeaders() {
-        return getHeadersStream(By.cssSelector(".table-head .table-cell")).collect(Collectors.toList());
+        return getHeadersStream(BY_HEADERS).collect(Collectors.toList());
     }
 
     /**
@@ -57,7 +64,7 @@ public final class TableComponent extends CommonComponent implements ComponentWi
      * @return The table component header that holds the id or null if no such header exists.
      */
     public TableHeaderComponent getHeader(String id) {
-        By query = By.cssSelector(String.format(".table-head .table-cell[data-header-id=%s]", id));
+        By query = By.cssSelector(String.format("%s[%s=%s]", CSS_HEADERS, ATTRIBUTE_DATA_HEADER_ID, id));
         return getHeadersStream(query).findFirst().orElse(null);
     }
 
@@ -69,8 +76,8 @@ public final class TableComponent extends CommonComponent implements ComponentWi
      * @return The collection of the rows on the table.
      */
     public List<TableRowComponent> getRows() {
-        getPageUtils().waitForCondition(this::isStable, Duration.ofSeconds(5));
-        return getRoot().findElements(By.cssSelector(".table-body .table-row")).stream()
+        getPageUtils().waitForCondition(this::isStable, PageUtils.DURATION_LOADING);
+        return getRoot().findElements(BY_ROWS).stream()
             .map((row) -> new TableRowComponent(this, row))
             .collect(Collectors.toList());
     }
