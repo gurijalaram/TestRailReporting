@@ -47,6 +47,30 @@ import java.util.function.Supplier;
  */
 public class PageUtils {
 
+    /**
+     * A duration that is meant to be used when you just want to make sure the
+     * UI is synchronized to the web element.  This is just a pince slower than
+     * Duration.ZERO.
+     */
+    public static final Duration DURATION_INSTANT = Duration.ofMillis(10);
+    /**
+     * A duration that is meant to be used when you are expecting a component load that
+     * may take a bit longer than an instant render.  This will always be under one second.
+     */
+    public static final Duration DURATION_FAST = Duration.ofMillis(100);
+    /**
+     * A duration that is meant to be used when you are expecting a component load that
+     * may take longer to render than a simple input.
+     */
+    public static final Duration DURATION_SLOW = Duration.ofSeconds(1);
+    /**
+     * A duration that you should wait when you are waiting on a spinner.
+     * <p>
+     * If your component doesn't stabilize within this time frame, then it's time to consider that
+     * there may be a performance problem.
+     */
+    public static final Duration DURATION_LOADING = Duration.ofSeconds(5);
+
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
     private static PageUtils instance = null;
@@ -189,18 +213,6 @@ public class PageUtils {
         return Arrays.stream(classes).anyMatch((currentClass) -> StringUtils.equals(currentClass, wantedClass));
     }
 
-    /**
-     * Determines if an element exists.
-     *
-     * @param by The search criteria.
-     * @param search The context to search under.
-     *
-     * @return True if the element exists.  False otherwise.
-     */
-    public boolean doesElementExist(By by, SearchContext search) {
-        return search.findElements(by).size() > 0;
-    }
-
     public void mouseMove(WebElement element) {
         Actions act = new Actions(driver);
         act.moveToElement(element).build().perform();
@@ -330,7 +342,6 @@ public class PageUtils {
      * @param value The value to set.
      * @param endOfInput The last key to send.  This is usually something like Keys.TAB or Keys.ENTER.
      *                   You can set this to null to not send anything.
-     *
      */
     public void setValueOfElement(WebElement elementWithValue, String value, CharSequence endOfInput) {
         setValueOfElement(elementWithValue, value, new CharSequence[]{ endOfInput });
@@ -481,34 +492,8 @@ public class PageUtils {
      * @param forHowLong The duration of how long to wait before throwing an exception.
      */
     public void waitForCondition(Supplier<Boolean> toBeTrue, Duration forHowLong) {
-        waitForCondition(toBeTrue, forHowLong, 1);
-    }
-
-    /**
-     * Waits for a maximum of forHowLong for a given predicate to be true.
-     *
-     * This will attempt to wait for maxAttempts before fully failing.
-     *
-     * @param toBeTrue The predicate to check for truth.
-     * @param forHowLong The duration of how long to wait before throwing an exception.
-     * @param maxAttempts The maximum number of attempts to make before fully failing.
-     */
-    public void waitForCondition(Supplier<Boolean> toBeTrue, Duration forHowLong, int maxAttempts) {
         WebDriverWait wait = new WebDriverWait(driver, forHowLong);
-
-        int attempts = 0;
-
-        do {
-            attempts++;
-            try {
-                wait.until((d) -> toBeTrue.get());
-                return;
-            } catch (Exception e) {
-                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
-            }
-        } while (attempts < maxAttempts);
-
-        throw new TimeoutException("Unable to meet the required condition in the given timeframe.");
+        wait.until((d) -> toBeTrue.get());
     }
 
     /**
@@ -625,7 +610,6 @@ public class PageUtils {
      * @return size as int
      */
     public WebElement waitForElementToAppear(By element) {
-        // TODO: This can be refactored to use waitForElementToAppear(element, Duration.ofSeconds(5L), 12);
         long webDriverWait = 5L;
         int retries = 0;
         int maxRetries = 12;
@@ -648,89 +632,20 @@ public class PageUtils {
     /**
      * Waits for an element to become visible.
      *
-     * This will use the driver as the search context and will only make 1 attempt.
-     *
-     * @param by The search query to search the context for.
-     * @param forHowLong The maximum amount of time to wait.
-     *
-     * @return The WebElement that was found.
-     *
-     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
-     *                                              query.
-     */
-    public WebElement waitForElementToAppear(By by, Duration forHowLong) {
-        return waitForElementToAppear(by, forHowLong, 1);
-    }
-
-    /**
-     * Waits for an element to become visible.
-     *
-     * This will use the driver as the search context.
-     *
-     * @param by The search query to search the context for.
-     * @param forHowLong The maximum amount of time to wait.
-     * @param maxAttempts The maximum attempts to make before failing.
-     *
-     * @return The WebElement that was found.
-     *
-     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
-     *                                              query.
-     */
-    public WebElement waitForElementToAppear(By by, Duration forHowLong, int maxAttempts) {
-        return waitForElementToAppear(by, forHowLong, maxAttempts, driver);
-    }
-
-    /**
-     * Waits for an element to become visible.
-     *
-     * This will only make 1 attempt
-     *
      * @param by The search query to search the context for.
      * @param forHowLong The maximum amount of time to wait.
      * @param search The parent context to search under.
      *
      * @return The WebElement that was found.
      *
-     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
-     *                                              query.
+     * @throws TimeoutException If there is never an element that becomes visible.
      */
     public WebElement waitForElementToAppear(By by, Duration forHowLong, SearchContext search) {
-        return waitForElementToAppear(by, forHowLong, 1, search);
-    }
-
-    /**
-     * Waits for an element to become visible.
-     *
-     * @param by The search query to search the context for.
-     * @param forHowLong The maximum amount of time to wait.
-     * @param maxAttempts The maximum attempts to make before failing.
-     * @param search The parent context to search under.
-     *
-     * @return The WebElement that was found.
-     *
-     * @throws org.openqa.selenium.TimeoutException If there is never an element that becomes visible with the given
-     *                                              query.
-     */
-    public WebElement waitForElementToAppear(By by, Duration forHowLong, int maxAttempts, SearchContext search) {
-        waitForCondition(() -> search.findElement(by).isDisplayed(), forHowLong, maxAttempts);
+        waitForCondition(() -> {
+            WebElement element = search.findElements(by).stream().findFirst().orElse(null);
+            return element != null && element.isDisplayed();
+        }, forHowLong);
         return search.findElement(by);
-    }
-
-    /**
-     * Waits for an element to become visible but does not fail if it never does.
-     *
-     * @param by The search query to search the context for.
-     * @param duration The maximum amount of time to wait.
-     * @param search The parent context to search under.
-     *
-     * @return The WebElement that was found or null if the web element cannot be found.
-     */
-    public WebElement waitForElementToAppearOptional(By by, Duration duration, SearchContext search) {
-        try {
-            return waitForElementToAppear(by, duration, search);
-        } catch (TimeoutException t) {
-            return null;
-        }
     }
 
     /**
@@ -1299,5 +1214,25 @@ public class PageUtils {
             logger.debug("Failed to highlight element");
         }
         js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
+    }
+
+    /**
+     * Attempts to find a supported loader element.
+     *
+     * @param search The search root to search for a loader under.
+     *
+     * @return An element that this utilities object thinks is a loader.  Null otherwise.
+     */
+    public WebElement findLoader(SearchContext search) {
+        final By aprioriLoaderQuery = By.className("loader");
+        final WebElement aPrioriLoader = Obligation.optional(() -> waitForElementToAppear(aprioriLoaderQuery, DURATION_INSTANT, search));
+
+        if (aPrioriLoader != null) {
+            return aPrioriLoader;
+        }
+
+        final By fontAwesomeSpinnerQuery = By.cssSelector(".fa-spinner.fa-spin");
+        final WebElement fontAwesomeSpinner = Obligation.optional(() -> waitForElementToAppear(fontAwesomeSpinnerQuery, DURATION_INSTANT, search));
+        return fontAwesomeSpinner;
     }
 }
