@@ -7,9 +7,14 @@ import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.time.Duration;
+import java.util.function.Function;
 
 /**
  * Represents the page object model for the system configuration groups.
@@ -24,8 +29,14 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     private WebElement associatedPermissionsRoot;
     private final SourceListComponent associatedPermissions;
 
-    @FindBy(className = "system-configuration-group-details-card")
-    private WebElement groupDetailsRoot;
+    @FindBy(css = ".system-configuration-group-details-card .card-header")
+    private WebElement groupDetailsHeader;
+
+    @FindBy(className = "group-details-left")
+    private WebElement groupDetailsLeft;
+
+    @FindBy(className = "group-details-right")
+    private WebElement groupDetailsRight;
 
     /**
      * Initializes a new instance of this object.
@@ -57,21 +68,206 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the current detail's header text.
+     * Gets the label for a value in a given section.
      *
-     * @return The current detail's header text
+     * @param name The name of the label to search for.
+     * @param panel The parent search context element.
+     * @return The web element found or null if no such element appears within a reasonable timeframe.
      */
-    public String getDetailsHeader() {
-        return groupDetailsRoot.findElement(By.className("card-header")).getText();
+    private WebElement getLabel(String name, WebElement panel) {
+        try {
+            By query = By.xpath(String.format("//label[.='%s']", name));
+            getPageUtils().waitForCondition(() -> panel.findElements(query).size() > 0, Duration.ofMillis(500));
+            return panel.findElement(query);
+        } catch (TimeoutException | NoSuchElementException e) {
+            return null;
+        }
     }
 
     /**
-     * Checks to make sure that the selection tree is available.
+     * Gets the value element given a name.
+     * @param name The name of the field element.
+     * @param panel The panel that the value is expected to be in.
      *
-     * @throws Error If the selection tree cannot be found.
+     * @return The parsed value or null if the value cannot be parsed.
+     */
+    private <T> T getValue(String name, WebElement panel, Function<String, T> parse) {
+        try {
+            By elementQuery = By.className(String.format("read-field-%s", name));
+            getPageUtils().waitForCondition(() -> panel.findElements(elementQuery).size() > 0, Duration.ofMillis(500));
+            // It's possible that underneath the value there is a loading indicator.  Wait for that to go away.
+            WebElement value = panel.findElement(elementQuery);
+            By loaderQuery = By.className("read-field-loading");
+            getPageUtils().waitForCondition(() -> value.findElements(loaderQuery).size() == 0, Duration.ofSeconds(10));
+            return parse.apply(value.getText());
+        } catch (TimeoutException | NoSuchElementException | IllegalArgumentException e) {
+            return null;
+        }
+    }
+
+    /**
+     * Gets the label for number of permissions.
+     *
+     * @return The label for number of permissions or null if it cannot be found.
+     */
+    public WebElement getNumberOfPermissionsLabel() {
+        return getLabel("Number of Permissions:", groupDetailsLeft);
+    }
+
+    /**
+     * Gets the number of permissions.
+     *
+     * @return The number of permissions or null if the value cannot be found.
+     */
+    public Long getNumberOfPermissions() {
+        return getValue("permissionNumber", groupDetailsLeft, Long::parseLong);
+    }
+
+    /**
+     * Gets the label for the number of subgroups.
+     *
+     * @return The label for the total number of subgroups or null if it cannot be found.
+     */
+    public WebElement getNumberOfSubgroupsLabel() {
+        return getLabel("Number of Subgroups:", groupDetailsLeft);
+    }
+
+    /**
+     * Gets the number of subgroups.
+     *
+     * @return The number of subgroups or null if the value cannot be found.
+     */
+    public Long getNumberOfSubgroups() {
+        return getValue("subgroupNumber", groupDetailsLeft, Long::parseLong);
+    }
+
+    /**
+     * Gets the label for who created the group.
+     *
+     * @return The label for who created the group or null if it cannot be found.
+     */
+    public WebElement getCreatedByLabel() {
+        return getLabel("Created By:", groupDetailsLeft);
+    }
+
+    /**
+     * Gets the user that created the group.
+     *
+     * @return The user that created the group.
+     */
+    public String getCreatedBy() {
+        return getValue("createdByName", groupDetailsLeft, (v) -> v);
+    }
+
+    /**
+     * Gets the label for who created the group.
+     *
+     * @return The label for when the group was created or null if it cannot be found.
+     */
+    public WebElement getCreatedAtLabel() {
+        return getLabel("Created At:", groupDetailsLeft);
+    }
+
+    /**
+     * Gets the created at value.
+     *
+     * @return The created at value or null if the value cannot be found.
+     */
+    public String getCreatedAt() {
+        return getValue("createdAt", groupDetailsLeft, (v) -> v);
+    }
+
+    /**
+     * Gets the label for the group identity.
+     *
+     * @return The label for the group identity or null if it cannot be found.
+     */
+    public WebElement getIdentityLabel() {
+        return getLabel("Identity:", groupDetailsRight);
+    }
+
+    /**
+     * Gets the identity of the group.
+     *
+     * @return The identity of the group or null if it cannot be found.
+     */
+    public String getIdentity() {
+        return getValue("identity", groupDetailsRight, (v) -> v);
+    }
+
+    /**
+     * Gets the label for the last person to update the group.
+     *
+     * @return The label for the last person to update the group.
+     */
+    public WebElement getUpdatedByLabel() {
+        return getLabel("Updated By:", groupDetailsRight);
+    }
+
+    /**
+     * Gets the user who last updated the group.
+     *
+     * @return The user that last updated the group or null if it cannot be found.  This will
+     *         be the empty string if the value exists but nobody ever updated the group.
+     */
+    public String getUpdatedBy() {
+        return getValue("updatedByName", groupDetailsRight, (v) -> v);
+    }
+
+    /**
+     * Gets the label for the last time the group was updated.
+     *
+     * @return The label for the last time the group was updated.
+     */
+    public WebElement getUpdatedAtLabel() {
+        return getLabel("Updated At:", groupDetailsRight);
+    }
+
+    /**
+     * Gets the last time the group was updated.
+     *
+     * @return The last time the group was updated or null if the value cannot be found.  This will
+     *         return the empty string if the value exists but nobody ever updated the group.
+     */
+    public String getUpdatedAt() {
+        return getValue("updatedAt", groupDetailsRight, (v) -> v);
+    }
+
+    /**
+     * Gets the label for the description.
+     *
+     * @return The label for the description.
+     */
+    public WebElement getDescriptionLabel() {
+        return getLabel("Description:", groupDetailsRight);
+    }
+
+    /**
+     * Gets the description of the group.
+     *
+     * @return The description value or null if it cannot be found.
+     */
+    public String getDescription() {
+        return getValue("description", groupDetailsRight, (v) -> v);
+    }
+
+    /**
+     * Gets the header element of the details panel.
+     *
+     * @return The header text of the details panel.
+     */
+    public String getDetailsHeader() {
+        return groupDetailsHeader.getText();
+    }
+
+    /**
+     * @inheritDoc
      */
     @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(selectionTreeRoot);
+        getPageUtils().waitForElementToAppear(groupDetailsHeader);
+        getPageUtils().waitForElementToAppear(groupDetailsLeft);
+        getPageUtils().waitForElementToAppear(groupDetailsRight);
     }
 }
