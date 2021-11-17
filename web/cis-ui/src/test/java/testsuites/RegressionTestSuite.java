@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.explore.StartComparisonTests;
 import com.login.LoginTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -11,6 +12,7 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     LoginTests.class,
+    StartComparisonTests.class,
 })
 public class RegressionTestSuite {
 }

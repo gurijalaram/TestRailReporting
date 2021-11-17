@@ -1,12 +1,12 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.pageobjects.common.CisComponentTableActions;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
 public class ExploreTabToolbar extends MainNavigationBar {
@@ -17,15 +17,14 @@ public class ExploreTabToolbar extends MainNavigationBar {
     @FindBy(css = ".deployment-connection-info")
     private WebElement deploymentInfo;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    @FindBy(css = ".icon-button-group .disabled")
+    private WebElement disabledStartComparison;
+
+    private CisComponentTableActions componentTableActions;
 
     public ExploreTabToolbar(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
+        this.componentTableActions = new CisComponentTableActions(driver);
     }
 
     /**
@@ -33,8 +32,11 @@ public class ExploreTabToolbar extends MainNavigationBar {
      *
      * @return current page object
      */
-    public ExploreTabToolbar selectStartComparison() {
-        pageUtils.waitForElementAndClick(startComparison);
+    public ExploreTabToolbar clickStartComparison() {
+        getPageUtils().waitForElementToAppear(startComparison);
+        if (getPageUtils().isElementEnabled(startComparison)) {
+            getPageUtils().waitForElementAndClick(startComparison);
+        }
         return this;
     }
 
@@ -44,6 +46,26 @@ public class ExploreTabToolbar extends MainNavigationBar {
      * @return String
      */
     public String getDeploymentInfo() {
-        return pageUtils.waitForElementToAppear(deploymentInfo).getAttribute("textContent");
+        return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
+    }
+
+    /**
+     * Check if the Start comparison button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isStartComparisonEnabled() {
+        return getPageUtils().waitForElementToAppear(disabledStartComparison).isEnabled();
+    }
+
+    /**
+     * Search for component
+     *
+     * @param componentName -the component
+     * @return new page object
+     */
+    public ExplorePage clickSearch(String componentName) {
+        componentTableActions.clickSearch(componentName);
+        return new ExplorePage(getDriver());
     }
 }

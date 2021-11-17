@@ -37,4 +37,16 @@ public final class SelectionTreeComponent extends CommonComponent {
             .map((e) -> new SelectionTreeItemComponent(getDriver(), e))
             .collect(Collectors.toList());
     }
+
+    /**
+     * Gets every item in the tree flattened in the order they are displayed.
+     *
+     * @return The hierarchy flattened into a single list.
+     */
+    public List<SelectionTreeItemComponent> getFlatHierarchy() {
+        List<WebElement> elements = this.getRoot().findElements(By.className("selection-tree-node"));
+        return elements.stream()
+            .map((e) -> new SelectionTreeItemComponent(getDriver(), e))
+            .collect(Collectors.toList());
+    }
 }

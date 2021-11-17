@@ -47,7 +47,7 @@ public class InputsController {
      * @return current page object
      */
     public InputsController enterAnnualVolume(WebElement annualVolumeInput, String annualVolume) {
-        pageUtils.clear(annualVolumeInput);
+        pageUtils.clearValueOfElement(annualVolumeInput);
         annualVolumeInput.sendKeys(annualVolume);
         annualVolumeInput.sendKeys(Keys.TAB);
         return this;
@@ -73,7 +73,7 @@ public class InputsController {
      * @return current page object
      */
     public InputsController enterAnnualYears(WebElement productionLifeInput, String productionLife) {
-        pageUtils.clear(productionLifeInput);
+        pageUtils.clearValueOfElement(productionLifeInput);
         productionLifeInput.sendKeys(productionLife);
         productionLifeInput.sendKeys(Keys.TAB);
         return this;
@@ -98,7 +98,7 @@ public class InputsController {
      * @return current page object
      */
     public InputsController enterBatchSize(WebElement batchSizeInput, String batchSize) {
-        pageUtils.clear(batchSizeInput);
+        pageUtils.clearValueOfElement(batchSizeInput);
         batchSizeInput.sendKeys(batchSize);
         batchSizeInput.sendKeys(Keys.TAB);
         return this;
