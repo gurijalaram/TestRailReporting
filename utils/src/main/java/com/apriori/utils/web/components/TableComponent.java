@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 /**
  * Represents a table component.
  */
-public final class TableComponent extends CommonComponent implements LoadingComponent {
+public final class TableComponent extends CommonComponent implements ComponentWithSpinner {
     /**
      * @inheritDoc
      */
@@ -20,9 +20,12 @@ public final class TableComponent extends CommonComponent implements LoadingComp
         super(driver, root);
     }
 
+    /**
+     * @inheritDoc
+     */
     @Override
-    public boolean isLoading() {
-        return getPageUtils().doesElementExist(By.className("loader"), getRoot());
+    public boolean isStable() {
+        return !getPageUtils().doesElementExist(By.className("loader"), getRoot());
     }
 
     /**
@@ -66,7 +69,7 @@ public final class TableComponent extends CommonComponent implements LoadingComp
      * @return The collection of the rows on the table.
      */
     public List<TableRowComponent> getRows() {
-        getPageUtils().waitForCondition(() -> !isLoading(), Duration.ofSeconds(5));
+        getPageUtils().waitForCondition(this::isStable, Duration.ofSeconds(5));
         return getRoot().findElements(By.cssSelector(".table-body .table-row")).stream()
             .map((row) -> new TableRowComponent(this, row))
             .collect(Collectors.toList());
