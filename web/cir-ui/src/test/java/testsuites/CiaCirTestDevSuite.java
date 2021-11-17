@@ -2,6 +2,7 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.ootbreports.costoutlieridentification.CostOutlierIdentificationDetailsReportTests;
 import com.ootbreports.dtcmetrics.castingdtc.CastingDtcComparisonReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -11,7 +12,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        CastingDtcComparisonReportTests.class
+        CostOutlierIdentificationDetailsReportTests.class
 })
 
 public class CiaCirTestDevSuite {

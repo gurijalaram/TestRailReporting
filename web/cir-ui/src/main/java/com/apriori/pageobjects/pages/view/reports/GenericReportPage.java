@@ -561,13 +561,14 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public <T> T selectExportSet(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        //pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementAndClick(resetButton);
         waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "0");
-        //pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementToAppear(locator);
         driver.findElement(locator).click();
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+
+        waitForCorrectAvailableSelectedCount(ListNameEnum.EXPORT_SET.getListName(), "Selected: ", "1");
+
         return PageFactory.initElements(driver, className);
     }
 

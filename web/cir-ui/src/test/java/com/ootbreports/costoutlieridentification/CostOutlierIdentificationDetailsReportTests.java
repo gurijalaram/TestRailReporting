@@ -130,7 +130,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1965"})
     @Description("Validate details report generates")
     public void testDetailsReportGenerates() {
@@ -143,14 +143,6 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .clickOk(true, CostOutlierIdentificationReportPage.class);
 
         costOutlierIdentificationReportPage.waitForReportToLoad();
-        if (driver.findElement(By.xpath("//span[contains(text(), 'Rollup')]/../following-sibling::td[2]/span"))
-                .getText().contains("SHEET METAL DTC")) {
-            costOutlierIdentificationReportPage.clickInputControlsButton()
-                    .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName())
-                    .clickOk(true, GenericReportPage.class)
-                    .waitForReportToLoad();
-            costOutlierIdentificationReportPage.waitForSvgToRender();
-        }
 
         assertThat(costOutlierIdentificationReportPage.isCostOutlierSvgDisplayedAndEnabled("1"),
                 is(equalTo(true))
