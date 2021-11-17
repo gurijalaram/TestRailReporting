@@ -3,6 +3,7 @@ package com.navigation;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.users.UsersListPage;
+import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;
@@ -13,6 +14,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
 
 public class NavigationTests extends TestBase {
@@ -78,6 +80,7 @@ public class NavigationTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTest.class)
     @Description("Test that the URL updates when navigating between pages")
     @TestRail(testCaseId = {"9908"})
     public void testURLUpdatesWithPageChange() {

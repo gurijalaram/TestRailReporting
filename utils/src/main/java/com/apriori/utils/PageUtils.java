@@ -173,6 +173,12 @@ public class PageUtils {
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
     }
 
+    /**
+     * Tests whether a page has completed loading.
+     *
+     * @param element - By
+     * @return - returns whether page is loaded or not
+     */
     public boolean isPageLoaded(By element) {
         waitForElementToAppear(element);
         return ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete");
