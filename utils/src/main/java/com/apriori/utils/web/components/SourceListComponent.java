@@ -41,21 +41,8 @@ public final class SourceListComponent extends CommonComponent implements Compon
         return !getPageUtils().doesElementExist(By.className("loader"), getRoot());
     }
 
-    /**
-     * Gets the search input element.
-     *
-     * @return The search input element.  Returns null if searching is not available.
-     */
-    private WebElement getSearchInput() {
-        return getPageUtils().waitForElementToAppearOptional(
-            By.cssSelector(".apriori-source-list-search input"),
-            Duration.ofMillis(100),
-            getRoot()
-        );
-    }
-
     public boolean canSearch() {
-        return getSearchInput() != null;
+        return getPageUtils().doesElementExist(By.cssSelector(".apriori-source-list-search input"), getRoot());
     }
 
     /**
@@ -66,7 +53,11 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @throws NoSuchElementException If the search is not available.
      */
     public SourceListComponent search(final String text) {
-        WebElement search = getSearchInput();
+        WebElement search = getPageUtils().waitForElementToAppearOptional(
+            By.cssSelector(".apriori-source-list-search input"),
+            Duration.ofMillis(100),
+            getRoot()
+        );
 
         if (search == null) {
             throw new NoSuchElementException("The source list component you are accessing does not support search.");
@@ -79,25 +70,12 @@ public final class SourceListComponent extends CommonComponent implements Compon
     }
 
     /**
-     * Gets the refresh button element.
-     *
-     * @return The refresh button element or null if no such element exists.
-     */
-    private WebElement getRefreshButton() {
-        return getPageUtils().waitForElementToAppearOptional(
-            By.className("apriori-source-list-refresh-button"),
-            Duration.ofMillis(100),
-            getRoot()
-        );
-    }
-
-    /**
      * Gets a value that indicates whether this list can be refreshed.
      *
      * @return True if the refresh button is visible, false otherwise.
      */
     public boolean canRefresh() {
-        return getRefreshButton() != null;
+        return getPageUtils().doesElementExist(By.className("apriori-source-list-refresh-button"), getRoot());
     }
 
     /**
