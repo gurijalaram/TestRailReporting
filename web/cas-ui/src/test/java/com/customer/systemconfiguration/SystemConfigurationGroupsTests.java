@@ -8,23 +8,27 @@ import static org.hamcrest.Matchers.notNullValue;
 import com.apriori.customer.systemconfiguration.SystemConfigurationGroupsPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.components.TableHeaderComponent;
+import com.apriori.utils.web.components.TableRowComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -137,7 +141,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
                 String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
                 String detailsGroupName = detailsHeader.replace("GROUP DETAILS -", "").trim();
                 return groupName.toUpperCase().startsWith(detailsGroupName.toUpperCase());
-            }, Duration.ofMillis(500));
+            }, PageUtils.DURATION_SLOW);
             soft.succeeded();
         } catch (TimeoutException e) {
             String detailsHeader = systemConfigurationGroupsPage.getDetailsHeader();
@@ -219,7 +223,6 @@ public class SystemConfigurationGroupsTests extends TestBase {
     @TestRail(testCaseId = {"9906", "9942"})
     public void testValidateGroupSelectionUpdatesTheSelectedDetails() {
 
-        // TODO: when a group selection changes, put the rest of the test cases in this method to verify the different data sets
         SoftAssertions soft = new SoftAssertions();
         validateThereIsAtLeastOneGroup();
         validateHeaderChangesToReflectTheSelectedGroup(soft);
@@ -233,9 +236,9 @@ public class SystemConfigurationGroupsTests extends TestBase {
         soft.assertThat(list.getPaginator())
             .overridingErrorMessage("The associated permissions table has no pagination.")
             .isNotNull();
-        soft.assertThat(list.canSearch())
+        soft.assertThat(list.getSearch())
             .overridingErrorMessage("The associated permissions table is missing search.")
-            .isTrue();
+            .isNotNull();
         soft.assertThat(list.canRefresh())
             .overridingErrorMessage("The associated permissions table is missing the refresh button.")
             .isTrue();
@@ -259,7 +262,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     private void validateAssociatedPermissionsHasCorrectColumns(SoftAssertions soft) {
 
         SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
-        TableComponent table = list.requireTable();
+        TableComponent table = Obligation.mandatory(list::getTable, () -> new NoSuchElementException("The table is missing"));
 
         validateColumnHeaderIsCorrect("Name", "name", table, soft);
         validateColumnHeaderIsCorrect("Action", "actions", table, soft);
@@ -274,7 +277,8 @@ public class SystemConfigurationGroupsTests extends TestBase {
 
         String expected = "Search Name or Description...";
         SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
-        String actual = list.getSearchPlaceholder();
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, () -> new NoSuchElementException("The associated permissions table is missing the search box."));
+        String actual = search.getPlaceholder();
         soft.assertThat(actual).isEqualTo(expected);
     }
 
@@ -287,6 +291,52 @@ public class SystemConfigurationGroupsTests extends TestBase {
         validateAssociatedPermissionsArePageableSortableAndRefreshable(soft);
         validateAssociatedPermissionsHasCorrectColumns(soft);
         validateAssociatedPermissionsHasCorrectSearchPlaceholder(soft);
+        soft.assertAll();
+    }
+
+    private void validateSearchBySearchesOnFields(String[] fields, SourceListComponent list, boolean byClick, SoftAssertions soft) {
+
+        PageUtils utils = new PageUtils(driver);
+        TableComponent table = Obligation.mandatory(list::getTable, () -> new NoSuchElementException("The table is missing."));
+        TableRowComponent sample = table.getRows().stream().findFirst().orElseThrow(() -> new NoSuchElementException("The table has no rows."));
+
+        final String text = sample.getCell(fields[0]).getAsText();
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, () -> new NoSuchElementException("The table is missing the search feature."));
+
+        if (byClick) {
+            search.clickSearch(text);
+        } else {
+            search.search(text);
+        }
+
+        utils.waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
+
+        boolean matched = table.getRows().stream().allMatch((row) -> {
+            for (String field : fields) {
+                String actual = row.getCell(field).getAsText();
+
+                if (StringUtils.containsIgnoreCase(actual, text)) {
+                    return true;
+                }
+            }
+            return false;
+        });
+
+        soft.assertThat(matched)
+            .overridingErrorMessage("There were rows that did not match the search on the fields.")
+            .isTrue();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9956"})
+    public void testValidateGroupAssociatedPermissionsSearch() {
+
+        SoftAssertions soft = new SoftAssertions();
+        validateThereIsAtLeastOneGroup();
+        selectSomeGroupInTheMiddle();
+        SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
+        validateSearchBySearchesOnFields(new String[]{"name", "description"}, list, false, soft);
+        validateSearchBySearchesOnFields(new String[]{"description", "name"}, list, true, soft);
         soft.assertAll();
     }
 }
