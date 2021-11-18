@@ -24,6 +24,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
 
@@ -95,7 +96,7 @@ public class TargetAndQuotedCostValueTrackingReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3365"})
     @Description("Validate Currency Code Input Control Functionality")
     public void testCurrencyCodeInputControl() {
