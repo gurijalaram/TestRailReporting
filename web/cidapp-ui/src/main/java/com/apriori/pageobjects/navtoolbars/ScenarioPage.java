@@ -58,7 +58,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
      * @return current page object
      */
     public ScenarioPage enterScenarioName(String scenarioName) {
-        pageUtils.clear(scenarioNameInput);
+        pageUtils.clearValueOfElement(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
         return this;
     }
