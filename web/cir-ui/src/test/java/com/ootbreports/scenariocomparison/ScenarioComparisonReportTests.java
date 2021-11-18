@@ -140,7 +140,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3249"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -151,7 +151,6 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
-        scenarioComparisonReportPage.waitForScenarioFilter();
         String rowOneScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(1);
         String rowTwoScenarioName = scenarioComparisonReportPage.getScenariosToCompareName(2);
 

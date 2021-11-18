@@ -131,7 +131,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3358"})
     @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricFbc() {
@@ -144,7 +144,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7423"})
     @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricPpc() {
