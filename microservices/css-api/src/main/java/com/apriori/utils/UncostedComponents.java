@@ -55,7 +55,7 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, String token, ScenarioStateEnum scenarioState) {
-        final int SOCKET_TIMEOUT = 270000;
+        final int SOCKET_TIMEOUT = 240000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
