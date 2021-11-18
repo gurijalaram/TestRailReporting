@@ -2,6 +2,7 @@ package com.apriori.newcustomer.users;
 
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -141,5 +142,18 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     public UsersListPage searchForUser(String userName) {
         pageUtils.waitForElementToAppear(userNameSearch).sendKeys(userName);
         return this;
+    }
+
+    /**
+     * Retrieves UsersListPage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return UsersListPage
+     */
+    public static UsersListPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/customer-staff";
+        driver.navigate().to(String.format(url, customer));
+        return new UsersListPage(driver);
     }
 }

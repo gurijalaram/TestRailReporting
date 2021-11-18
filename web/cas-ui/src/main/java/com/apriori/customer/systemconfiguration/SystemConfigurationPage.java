@@ -1,5 +1,7 @@
 package com.apriori.customer.systemconfiguration;
 
+import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -56,5 +58,18 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
     protected void isLoaded() throws Error {
         this.getPageUtils().waitForElementToAppear(groupsTab);
         this.getPageUtils().waitForElementToAppear(permissionsTab);
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return SystemConfigurationPage
+     */
+    public static SystemConfigurationPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/system-configuration/";
+        driver.navigate().to(String.format(url, customer));
+        return new SystemConfigurationPage(driver);
     }
 }

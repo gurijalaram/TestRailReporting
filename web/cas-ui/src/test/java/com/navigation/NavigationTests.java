@@ -1,10 +1,13 @@
 package com.navigation;
 
 import com.apriori.customer.CustomerWorkspacePage;
+import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.newcustomer.SitesLicensesPage;
+import com.apriori.newcustomer.users.ImportPage;
 import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.testsuites.categories.SmokeTest;
-import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserUtil;
@@ -15,25 +18,20 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.By;
+import org.openqa.selenium.support.ui.LoadableComponent;
 
 public class NavigationTests extends TestBase {
 
     private CustomerWorkspacePage customerProfilePage;
-    private String customerURL;
-    private PageUtils pageUtils;
+    private String customerID;
 
     @Before
     public void setup() {
-        pageUtils = new PageUtils(driver);
         customerProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .searchForCustomer("aPriori Internal")
             .selectCustomer("aPriori Internal");
-        String customerID = customerProfilePage.findCustomerIdentity();
-        String customerBase = String.format("customers/%s", customerID);
-        String baseURL = PropertiesContext.get("${env}.cas.ui_url");
-        customerURL = String.format("%s%s", baseURL, customerBase);
+        customerID = customerProfilePage.findCustomerIdentity();
     }
 
     @Test
@@ -41,42 +39,28 @@ public class NavigationTests extends TestBase {
     @TestRail(testCaseId = {"9907"})
     public void testAccessPagesViaDirectURL() {
         SoftAssertions soft = new SoftAssertions();
+        String errorMessage = "Navigating to %s URL doesn't load expected page content";
 
-        validatePageContainsClass(
-            soft,
-            String.format("%s%s", customerURL, "/profile"),
-            "customer-profile"
-        );
-        validatePageContainsClass(
-            soft,
-            String.format("%s%s", customerURL, "/users/customer-staff"),
-            "user-table"
-        );
-        validatePageContainsClass(
-            soft,
-            String.format("%s%s", customerURL, "/users/import"),
-            "batch-item-list"
-        );
-        validatePageContainsClass(
-            soft,
-            String.format("%s%s", customerURL, "/sites-and-licenses"),
-            "license-workspace"
-        );
-        validatePageContainsClass(
-            soft,
-            String.format("%s%s", customerURL, "/infrastructure"),
-            "infrastructure-workspace"
-        );
+        soft.assertThat(CustomerWorkspacePage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "CustomerWorkspacePage")
+            .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(UsersListPage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "UsersListPage")
+            .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(ImportPage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "ImportPage")
+            .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(SitesLicensesPage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "SitesLicensesPage")
+            .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(InfrastructurePage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "InfrastructurePage")
+            .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(SystemConfigurationPage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "SystemConfigurationPage")
+            .isInstanceOf(LoadableComponent.class);
 
         soft.assertAll();
-    }
-
-    private void validatePageContainsClass(SoftAssertions soft, String url, String definingElementClass) {
-        driver.navigate().to(url);
-        pageUtils.isPageLoaded(By.className(definingElementClass));
-        soft.assertThat(getDriver().findElements(By.className(definingElementClass)))
-            .overridingErrorMessage("Navigating to %s doesn't load expected content %s", url, definingElementClass)
-            .isNotEmpty();
     }
 
     @Test
@@ -87,23 +71,24 @@ public class NavigationTests extends TestBase {
 
         SoftAssertions soft = new SoftAssertions();
 
-        validatePageURLMatches(soft,  "/profile");
+        validateOnPageURL(soft,  "/profile");
 
         // Click through different menus
         UsersListPage usersListPage = customerProfilePage.goToUsersList();
-        validatePageURLMatches(soft, "/users/customer-staff");
+        validateOnPageURL(soft, "/users/customer-staff");
         usersListPage.goToImport();
-        validatePageURLMatches(soft,  "/users/import");
+        validateOnPageURL(soft,  "/users/import");
         customerProfilePage.goToSitesLicenses();
-        validatePageURLMatches(soft, "/sites-and-licenses");
+        validateOnPageURL(soft, "/sites-and-licenses");
         customerProfilePage.goToInfrastructure();
-        validatePageURLMatches(soft, "/infrastructure");
+        validateOnPageURL(soft, "/infrastructure");
 
         soft.assertAll();
     }
 
-    private void validatePageURLMatches(SoftAssertions soft, String pageURL) {
-        String expected = String.format("%s%s", customerURL, pageURL);
+    private void validateOnPageURL(SoftAssertions soft, String pageURL) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s";
+        String expected = String.format("%s%s", String.format(url, customerID), pageURL);
         soft.assertThat(driver.getCurrentUrl())
             .overridingErrorMessage("Current clicked through page %s not expected page %s",
                 driver.getCurrentUrl(), expected)
