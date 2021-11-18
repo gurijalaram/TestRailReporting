@@ -140,7 +140,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3249"})
     @Description("Verify scenario name input control functions correctly")
     public void testScenarioNameInputControl() {
@@ -374,7 +374,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3306"})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
@@ -385,15 +385,16 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .waitForInputControlsLoad()
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
-        scenarioComparisonReportPage.waitForScenarioFilter();
         String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(true);
+        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "230");
+        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIO_NAME.getListName(), "Selected: ", "1");
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("6,443")));
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available"), is(equalTo("1")));
         assertThat(scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(false),
-                is(equalTo("0200613 (Initial) [part]")));
+                is(equalTo("0000000008___3 (Initial) [part]")));
     }
 }

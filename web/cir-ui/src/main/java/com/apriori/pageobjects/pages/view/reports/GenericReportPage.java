@@ -1275,7 +1275,9 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(inputLocator);
 
         pageUtils.waitForSteadinessOfElement(inputLocator);
+        driver.findElement(inputLocator).clear();
         driver.findElement(inputLocator).sendKeys("Initial");
+        //driver.findElement(inputLocator).sendKeys("Init");
 
         By locator = By.xpath("//li[@title='Initial']/div/a");
         pageUtils.waitForElementAndClick(locator);
