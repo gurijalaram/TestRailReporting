@@ -46,7 +46,7 @@ public class TargetQuotedCostTrendReportPage extends GenericReportPage {
     @FindBy(xpath = "(//span[contains(text(), 'Export Date')])[1]/../following-sibling::td[2]/span")
     private WebElement exportDateAboveChart;
 
-    @FindBy(xpath = "//table[@class='jrPage']//tr[16]/td[17]/span")
+    @FindBy(xpath = "//table[@class='jrPage']//tr[17]/td[17]/span")
     private WebElement costAvoidedFinal;
 
     @FindBy(xpath = "//table[contains(@class, 'jrPage')]//tr[15]/td[10]/span")

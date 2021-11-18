@@ -131,9 +131,9 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3358"})
-    @Description("Validate Cost Metric Input Control - PPC")
+    @Description("Validate Cost Metric Input Control - FBC")
     public void testCostMetricFbc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
@@ -144,9 +144,9 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7423"})
-    @Description("Validate Cost Metric Input Control - FBC")
+    @Description("Validate Cost Metric Input Control - PPC")
     public void testCostMetricPpc() {
         inputControlsTests = new InputControlsTests(driver);
         inputControlsTests.testCostMetricInputControlTargetQuotedCostTrendReports(
@@ -157,7 +157,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3359"})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {

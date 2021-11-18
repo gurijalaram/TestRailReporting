@@ -389,7 +389,7 @@ public class InputControlsTests extends TestBase {
 
         assertThat(targetQuotedCostTrendReportPage.getCostMetricValueFromAboveChart(),
                 is(equalTo(costMetric)));
-        String costAvoidedFinalValue = costMetric.contains("Fully") ? "(0.56)" : "(0.31)";
+        String costAvoidedFinalValue = costMetric.contains("Fully") ? "(0.19)" : "(0.11)";
         assertThat(targetQuotedCostTrendReportPage.getCostAvoidedFinal(), is(equalTo(costAvoidedFinalValue)));
     }
 
