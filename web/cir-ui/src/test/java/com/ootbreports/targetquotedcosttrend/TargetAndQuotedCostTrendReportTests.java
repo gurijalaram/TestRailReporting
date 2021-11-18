@@ -20,6 +20,7 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsTest;
 
 public class TargetAndQuotedCostTrendReportTests extends TestBase {
@@ -156,7 +157,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3359"})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
