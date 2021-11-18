@@ -3,6 +3,7 @@ package com.apriori.newcustomer.users;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.FileImport;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -110,5 +111,18 @@ public class ImportPage extends LoadableComponent<ImportPage> {
     public ImportPage refreshList() {
         pageUtils.waitForElementAndClick(refreshButton);
         return this;
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return ImportPage
+     */
+    public static ImportPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/import";
+        driver.navigate().to(String.format(url, customer));
+        return new ImportPage(driver);
     }
 }
