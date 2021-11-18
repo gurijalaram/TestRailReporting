@@ -1,7 +1,6 @@
 package com.apriori.newcustomer.users;
 
 import com.apriori.customeradmin.NavToolbar;
-import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.utils.FileImport;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;

@@ -1,6 +1,5 @@
 package com.apriori.customer.systemconfiguration;
 
-import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 
