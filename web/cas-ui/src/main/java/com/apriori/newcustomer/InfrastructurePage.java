@@ -2,6 +2,7 @@ package com.apriori.newcustomer;
 
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -15,6 +16,9 @@ import org.slf4j.LoggerFactory;
 public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
     private static final Logger logger = LoggerFactory.getLogger(InfrastructurePage.class);
+
+    @FindBy(className = "infrastructure-workspace")
+    private WebElement infrastructureWorkspace;
 
     @FindBy(xpath = "//div[contains(text(),'Please select infrastructure within the Tree View')]")
     private WebElement noContentMessage;
@@ -39,7 +43,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(noContentMessage);
+        pageUtils.waitForElementAppear(infrastructureWorkspace);
     }
 
     /**
@@ -77,5 +81,18 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     public String getApplicationDetails(String field) {
         By fieldName = By.xpath(String.format("//div[contains(text(),'%s')]/ancestor::div[@class='py-2 ']", field));
         return pageUtils.waitForElementToAppear(fieldName).getText();
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return InfrastructurePage
+     */
+    public static InfrastructurePage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/infrastructure";
+        driver.navigate().to(String.format(url, customer));
+        return new InfrastructurePage(driver);
     }
 }
