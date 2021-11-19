@@ -57,12 +57,12 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
      */
     public CustomerWorkspacePage openAprioriInternal() {
         SourceListComponent list = getSourceList();
-        SearchFieldComponent search = Obligation.mandatory(list::getSearch, () -> new NoSuchElementException("The customer search is missing."));
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The customer search is missing.");
         search.search(CUSTOMER_APRIORI_INTERNAL);
         getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
 
         list.selectTableLayout();
-        Obligation.mandatory(list::getTable, () -> new NoSuchElementException("The table layout is not active"))
+        Obligation.mandatory(list::getTable, "The table layout is not active")
             .getRows()
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException("aPriori Internal is missing."))
