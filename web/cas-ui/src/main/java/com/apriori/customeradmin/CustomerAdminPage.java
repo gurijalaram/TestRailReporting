@@ -9,7 +9,6 @@ import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -28,7 +27,7 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
 
     @FindBy(className = "customer-list-view-source-list")
     private WebElement sourceListRoot;
-    private SourceListComponent customerSourceList;
+    private final SourceListComponent customerSourceList;
 
     public CustomerAdminPage(WebDriver driver) {
         super(driver, log);
@@ -61,18 +60,15 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
         SearchFieldComponent search = Obligation.mandatory(list::getSearch, () -> new NoSuchElementException("The customer search is missing."));
         search.search(CUSTOMER_APRIORI_INTERNAL);
         getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
-        return selectCustomer(CUSTOMER_APRIORI_INTERNAL);
-    }
 
-    /**
-     * Select a customer on the current page
-     *
-     * @param customerName - customer name
-     * @return new page object
-     */
-    public CustomerWorkspacePage selectCustomer(String customerName) {
-        By customer = By.xpath(String.format("//a[.='%s']", customerName));
-        getPageUtils().waitForElementAndClick(customer);
+        list.selectTableLayout();
+        Obligation.mandatory(list::getTable, () -> new NoSuchElementException("The table layout is not active"))
+            .getRows()
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException("aPriori Internal is missing."))
+            .getCell("name")
+            .click();
+
         return new CustomerWorkspacePage(getDriver());
     }
 
