@@ -1,11 +1,25 @@
 package com.apriori.utils;
 
+import org.openqa.selenium.NoSuchElementException;
+
 import java.util.function.Supplier;
 
 /**
  * Represents a helper class that can be used to force a null or non-null value.
  */
 public abstract class Obligation {
+
+    /**
+     * Forces an exception on a null value.
+     *
+     * @param factory The factory object that will supply the object to retrieve.
+     * @param <T> The type of data to return.
+     *
+     * @return The value from factory.  If this value is null, then a NoSuchElementException will be thrown.
+     */
+    public static <T> T mandatory(Supplier<T> factory, String errorIfMissing) throws NoSuchElementException {
+        return mandatory(factory, () -> new NoSuchElementException(errorIfMissing));
+    }
 
     /**
      * Forces an exception on a null value.
