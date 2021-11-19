@@ -12,21 +12,17 @@ import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.users.UserUtil;
-import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.components.TableHeaderComponent;
-import com.apriori.utils.web.components.TableRowComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang3.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 
 import java.util.List;
@@ -54,6 +50,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     }
 
     private SelectionTreeItemComponent selectSomeGroupInTheMiddle() {
+
         List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getFlatHierarchy();
         int someGroupInTheMiddle = groups.size() / 2;
         SelectionTreeItemComponent groupToSelect = groups.get(someGroupInTheMiddle);
@@ -236,9 +233,6 @@ public class SystemConfigurationGroupsTests extends TestBase {
         soft.assertThat(list.getPaginator())
             .overridingErrorMessage("The associated permissions table has no pagination.")
             .isNotNull();
-        soft.assertThat(list.getSearch())
-            .overridingErrorMessage("The associated permissions table is missing search.")
-            .isNotNull();
         soft.assertThat(list.canRefresh())
             .overridingErrorMessage("The associated permissions table is missing the refresh button.")
             .isTrue();
@@ -262,7 +256,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     private void validateAssociatedPermissionsHasCorrectColumns(SoftAssertions soft) {
 
         SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
-        TableComponent table = Obligation.mandatory(list::getTable, () -> new NoSuchElementException("The table is missing"));
+        TableComponent table = Obligation.mandatory(list::getTable, "The associated permissions table is missing");
 
         validateColumnHeaderIsCorrect("Name", "name", table, soft);
         validateColumnHeaderIsCorrect("Action", "actions", table, soft);
@@ -273,24 +267,28 @@ public class SystemConfigurationGroupsTests extends TestBase {
         validateColumnHeaderIsCorrect("Description", "description", table, soft);
     }
 
-    private void validateAssociatedPermissionsHasCorrectSearchPlaceholder(SoftAssertions soft) {
+    private void validateAssociatedPermissionsHasCorrectDefaultPageSize(SoftAssertions soft) {
 
-        String expected = "Search Name or Description...";
         SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
-        SearchFieldComponent search = Obligation.mandatory(list::getSearch, () -> new NoSuchElementException("The associated permissions table is missing the search box."));
-        String actual = search.getPlaceholder();
-        soft.assertThat(actual).isEqualTo(expected);
+
+        String pageSize = Obligation.mandatory(list::getPaginator, "The associated permissions must support pagination.")
+            .getPageSize()
+            .getSelected();
+        soft.assertThat(pageSize)
+            .overridingErrorMessage("The default selected page size for the associated permissions should be 20.")
+            .isEqualTo("20");
     }
 
     @Test
     @TestRail(testCaseId = {"9953", "9954", "9955"})
     public void testValidateGroupAssociatedPermissionsHasCorrectDetails() {
+
         SoftAssertions soft = new SoftAssertions();
         validateThereIsAtLeastOneGroup();
         selectSomeGroupInTheMiddle();
         validateAssociatedPermissionsArePageableSortableAndRefreshable(soft);
         validateAssociatedPermissionsHasCorrectColumns(soft);
-        validateAssociatedPermissionsHasCorrectSearchPlaceholder(soft);
+        validateAssociatedPermissionsHasCorrectDefaultPageSize(soft);
         soft.assertAll();
     }
 }
