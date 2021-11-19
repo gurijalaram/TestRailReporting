@@ -11,7 +11,7 @@ import org.openqa.selenium.WebElement;
  * Represents the common select component in apriori-react-common.
  */
 public final class SelectComponent extends CommonComponent {
-    private static By BY_VALUE_INPUT = By.cssSelector("input");
+    private static By BY_VALUE_INPUT = By.tagName("input");
 
     /**
      * Initializes a new instance of this object.
