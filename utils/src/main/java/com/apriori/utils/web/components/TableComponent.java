@@ -69,16 +69,13 @@ public final class TableComponent extends CommonComponent implements ComponentWi
     }
 
     /**
-     * Gets the collection of table rows.
+     * Gets the row stream.
      *
-     * This will wait for the table to finish loading.
-     *
-     * @return The collection of the rows on the table.
+     * @return The row stream.
      */
-    public List<TableRowComponent> getRows() {
+    public Stream<TableRowComponent> getRows() {
         getPageUtils().waitForCondition(this::isStable, PageUtils.DURATION_LOADING);
         return getRoot().findElements(BY_ROWS).stream()
-            .map((row) -> new TableRowComponent(this, row))
-            .collect(Collectors.toList());
+            .map((row) -> new TableRowComponent(this, row));
     }
 }
