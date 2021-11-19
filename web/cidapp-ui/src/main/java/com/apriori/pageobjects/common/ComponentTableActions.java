@@ -82,7 +82,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      */
     private ComponentTableActions search(String componentName) {
         pageUtils.waitForElementToAppear(searchIconButton);
-        pageUtils.clear(searchInput);
+        pageUtils.clearValueOfElement(searchInput);
         searchInput.sendKeys(componentName.toUpperCase());
         return this;
     }

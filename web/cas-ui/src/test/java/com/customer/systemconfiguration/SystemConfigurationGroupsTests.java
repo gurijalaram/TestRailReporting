@@ -1,6 +1,7 @@
 package com.customer.systemconfiguration;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
@@ -137,15 +138,85 @@ public class SystemConfigurationGroupsTests extends TestBase {
         }
     }
 
+    private void validateSelectedGroupInformation(SoftAssertions soft) {
+
+        List<SelectionTreeItemComponent> groups = systemConfigurationGroupsPage.getGroupsTree().getFlatHierarchy();
+        int someGroupInTheMiddle = groups.size() / 2;
+        SelectionTreeItemComponent groupToSelect = groups.get(someGroupInTheMiddle);
+        groupToSelect.select();
+
+        // Note here that the identity is the most important and everything will just fail if the identity
+        // cannot be found.
+        soft.assertThat(systemConfigurationGroupsPage.getIdentityLabel())
+            .overridingErrorMessage("The identity label was not found or is in the wrong panel.")
+            .isNotNull();
+
+        String identity = systemConfigurationGroupsPage.getIdentity();
+        assertThat("The group identity could not be found.", identity, is(notNullValue()));
+        assertThat("The group identity was empty.", identity.trim().length(), is(greaterThan((0))));
+
+        // The values need to be compared with those of the api once the api is actually ready.
+        // TODO: Get the group by id from the api and compare those values once ready
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfPermissionsLabel())
+            .overridingErrorMessage("The number of permissions label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfPermissions())
+            .overridingErrorMessage("The number of permissions value was not found.")
+            .isNotNull();
+
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfSubgroupsLabel())
+            .overridingErrorMessage("The number of subgroups label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getNumberOfSubgroups())
+            .overridingErrorMessage("The number of subgroups value was not found.")
+            .isNotNull();
+
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedAtLabel())
+            .overridingErrorMessage("The created at label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedAt())
+            .overridingErrorMessage("The created at value was not found.")
+            .isNotNull();
+
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedByLabel())
+            .overridingErrorMessage("The created by label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getCreatedBy())
+            .overridingErrorMessage("The created by value was not found.")
+            .isNotNull();
+
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedAtLabel())
+            .overridingErrorMessage("The updated at label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedAt())
+            .overridingErrorMessage("The updated at value was not found.")
+            .isNotNull();
+
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedByLabel())
+            .overridingErrorMessage("The updated by label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getUpdatedBy())
+            .overridingErrorMessage("The updated by label was not found.")
+            .isNotNull();
+
+        soft.assertThat(systemConfigurationGroupsPage.getDescriptionLabel())
+            .overridingErrorMessage("The description label was not found.")
+            .isNotNull();
+        soft.assertThat(systemConfigurationGroupsPage.getDescription())
+            .overridingErrorMessage("The description value was not found.")
+            .isNotNull();
+    }
+
     @Test
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"9906"})
+    @TestRail(testCaseId = {"9906", "9942"})
     public void testValidateGroupSelectionUpdatesTheSelectedDetails() {
 
         // TODO: when a group selection changes, put the rest of the test cases in this method to verify the different data sets
         SoftAssertions soft = new SoftAssertions();
         validateThereIsAtLeastOneGroup();
         validateHeaderChangesToReflectTheSelectedGroup(soft);
+        validateSelectedGroupInformation(soft);
         soft.assertAll();
     }
 }
