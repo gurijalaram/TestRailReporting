@@ -633,7 +633,7 @@ public class PageUtils {
     public WebElement waitForElementToAppear(By by, Duration forHowLong, SearchContext search) {
         waitForCondition(() -> {
             WebElement element = search.findElements(by).stream().findFirst().orElse(null);
-            return element != null && element.isDisplayed();
+            return element != null;
         }, forHowLong);
         return search.findElement(by);
     }
