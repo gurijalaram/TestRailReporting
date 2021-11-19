@@ -8,6 +8,7 @@ import com.customer.NewCustomerTests;
 import com.customer.systemconfiguration.SystemConfigurationGroupsTests;
 import com.customer.systemconfiguration.SystemConfigurationPermissionsTests;
 import com.login.LoginTests;
+import com.navigation.NavigationTests;
 
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -19,6 +20,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
     NewCustomerTests.class,
     LoginTests.class,
+    NavigationTests.class,
     SystemConfigurationGroupsTests.class,
     SystemConfigurationPermissionsTests.class
 })
