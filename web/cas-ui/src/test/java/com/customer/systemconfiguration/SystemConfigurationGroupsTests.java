@@ -280,7 +280,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9953", "9954", "9955"})
+    @TestRail(testCaseId = {"9953", "9954", "9955", "9968"})
     public void testValidateGroupAssociatedPermissionsHasCorrectDetails() {
 
         SoftAssertions soft = new SoftAssertions();
