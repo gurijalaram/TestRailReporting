@@ -17,6 +17,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
     private static final By BY_TABLE = By.className("apriori-table");
     private static final By BY_PAGINATOR = By.className("paginator");
     private static final By BY_REFRESH = By.className("apriori-source-list-refresh-button");
+    private static final By BY_LAYOUT_TABLE = By.className("apriori-source-list-layout-table-button");
 
     /**
      * @inheritDoc
@@ -52,6 +53,30 @@ public final class SourceListComponent extends CommonComponent implements Compon
      */
     public boolean canRefresh() {
         return Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_REFRESH, PageUtils.DURATION_INSTANT, getRoot())) != null;
+    }
+
+    /**
+     * Selects a specific layout.
+     *
+     * @param layout The query for the layout to select.
+     *
+     * @return This component.
+     */
+    private SourceListComponent selectLayout(final By layout) {
+        WebElement button = getPageUtils().waitForElementToAppear(layout);
+        button.click();
+        return this;
+    }
+
+    /**
+     * Selects the table layout.
+     *
+     * If the table layout is already selected, then this method does nothing.
+     *
+     * @return This component.
+     */
+    public SourceListComponent selectTableLayout() {
+        return selectLayout(BY_LAYOUT_TABLE);
     }
 
     /**
