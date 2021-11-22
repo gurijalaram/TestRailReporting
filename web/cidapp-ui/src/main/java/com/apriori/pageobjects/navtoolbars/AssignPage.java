@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.users.UserCredentials;
@@ -15,7 +17,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class AssignPage extends LoadableComponent<AssignPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(AssignPage.class);
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     @FindBy(css = ".assign-scenario-form .apriori-select")
     private WebElement assigneeDropdown;
@@ -55,7 +57,8 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return current page object
      */
     public AssignPage selectAssignee(UserCredentials assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, assignee.getUsername());
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 
