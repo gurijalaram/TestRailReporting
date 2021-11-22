@@ -1,5 +1,7 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -26,7 +28,7 @@ public class PaginatorComponent extends CommonComponent {
      * @return The page size drop-down.
      */
     public SelectComponent getPageSize() {
-        WebElement pageSizeDrop = getPageUtils().waitForElementToAppear(BY_PAGE_SIZE);
+        WebElement pageSizeDrop = getPageUtils().waitForElementToAppear(BY_PAGE_SIZE, PageUtils.DURATION_INSTANT, getRoot());
         return new SelectComponent(getDriver(), pageSizeDrop);
     }
 }
