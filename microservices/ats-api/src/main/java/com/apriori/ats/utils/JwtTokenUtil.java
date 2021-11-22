@@ -22,7 +22,7 @@ public class JwtTokenUtil {
     private String subject = PropertiesContext.get("${customer}.token_subject");
 
     public JwtTokenUtil(UserCredentials userCredentials) {
-        this.username = userCredentials.getEmail().split("@")[0];
+        this.username = userCredentials.getUsername();
         this.email = userCredentials.getEmail();
     }
 

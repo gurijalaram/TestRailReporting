@@ -8,6 +8,8 @@ public class UserCredentials {
 
     private String token;
 
+    private String username;
+
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
     }
@@ -45,6 +47,15 @@ public class UserCredentials {
 
     public UserCredentials setEmail(String email) {
         this.email = email;
+        return this;
+    }
+
+    public String getUsername() {
+        return email.split("@")[0];
+    }
+
+    public UserCredentials setUsername(String username) {
+        this.username = username;
         return this;
     }
 
