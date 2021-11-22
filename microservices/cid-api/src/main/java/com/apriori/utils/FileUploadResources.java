@@ -74,7 +74,7 @@ public class FileUploadResources {
     private static final long WAIT_TIME = 180;
 
     private static final HashMap<String, String> token = new APIAuthentication()
-        .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
+        .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
     private static final HashMap<String, String> headers = new HashMap<>();
 
     private static final ObjectMapper objectMapper = new ObjectMapper();

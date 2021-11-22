@@ -43,7 +43,7 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
-        loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
+        loginPage = loginPage.failedLoginAs(UserUtil.getUser().getEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
