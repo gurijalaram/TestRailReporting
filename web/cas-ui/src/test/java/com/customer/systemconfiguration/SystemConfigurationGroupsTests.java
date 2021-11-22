@@ -340,4 +340,36 @@ public class SystemConfigurationGroupsTests extends TestBase {
         validateMembersHasCorrectDefaultPageSize(soft);
         soft.assertAll();
     }
+
+    private void validateAttributesAreRefreshable(SoftAssertions soft) {
+        SourceListComponent list = systemConfigurationGroupsPage.getAttributes();
+        soft.assertThat(list.getPaginator())
+            .overridingErrorMessage("The attributes table should not be pageable.")
+            .isNull();
+        soft.assertThat(list.canRefresh())
+            .overridingErrorMessage("The attributes table is missing the refresh button.")
+            .isTrue();
+    }
+
+    private void validateAttributesHasCorrectColumns(SoftAssertions soft) {
+
+        SourceListComponent list = systemConfigurationGroupsPage.getAttributes();
+        TableComponent table = Obligation.mandatory(list::getTable, "The attributes table is missing");
+
+        validateColumnHeaderIsCorrect("Name", "name", table, soft);
+        validateColumnHeaderIsCorrect("Type", "type", table, soft);
+        validateColumnHeaderIsCorrect("Value", "value", table, soft);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10006", "10007"})
+    public void testValidateGroupAttributesHasCorrectDetails() {
+
+        SoftAssertions soft = new SoftAssertions();
+        validateThereIsAtLeastOneGroup();
+        selectSomeGroupInTheMiddle();
+        validateAttributesAreRefreshable(soft);
+        validateAttributesHasCorrectColumns(soft);
+        soft.assertAll();
+    }
 }
