@@ -1785,8 +1785,9 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage deselectAllDtcScores() {
         By deselectLocator = By.xpath(String.format(genericDeselectLocator, "DTC Score"));
         pageUtils.scrollWithJavaScript(driver.findElement(deselectLocator), true);
-        pageUtils.waitForElementToAppear(deselectLocator);
-        pageUtils.waitForElementAndClick(deselectLocator);
+        //pageUtils.waitForElementToAppear(deselectLocator);
+        driver.findElement(deselectLocator).click();
+        //pageUtils.waitForElementAndClick(deselectLocator);
         return this;
     }
 

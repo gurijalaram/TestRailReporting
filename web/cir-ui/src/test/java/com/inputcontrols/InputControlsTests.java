@@ -27,6 +27,8 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import org.assertj.core.api.BooleanAssert;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -555,11 +557,12 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSetWithoutReset(exportSetName, GenericReportPage.class)
+                .selectExportSet(exportSetName, GenericReportPage.class)
                 .deselectAllDtcScores()
-                .clickOk(true, GenericReportPage.class);
+                .deselectAllDtcScores();
 
         String listName = "dtcScore";
+
         assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
         assertThat(genericReportPage.getListWarningText(listName), is(equalTo(Constants.WARNING_TEXT)));
     }

@@ -97,7 +97,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3039"})
     @Description("Verify earliest and latest export date calendar widgets correctly filter the list of export sets")
     public void testExportSetDateFilterDatePicker() {
@@ -185,7 +185,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"3043"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -224,7 +224,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7398"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Sheet Metal DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -264,7 +264,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3046"})
     @Description("Verify Currency Code input control functions correctly - Sheet Metal DTC Report")
     public void testCurrencyCodeInputControl() {
@@ -276,7 +276,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7445"})
     @Description("Verify process group input control functionality - No Selection - Sheet Metal DTC Report")
     public void testProcessGroupInputControlNoSelection() {
@@ -326,7 +326,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7532"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
@@ -339,7 +339,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7535"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Report")
     public void testDtcScoreMedium() {
@@ -352,7 +352,7 @@ public class SheetMetalDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7538"})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Report")
     public void testDtcScoreHigh() {
