@@ -37,6 +37,7 @@ public class TwoModelMachiningTests extends TestBase {
     private File twoModelFile2;
     private UserCredentials currentUser;
     private Item cssItem;
+    private Item cssItemB;
     private GuidanceIssuesPage guidanceIssuesPage;
 
     public TwoModelMachiningTests() {
@@ -215,7 +216,9 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cssItem = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
+            .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
+
+        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
@@ -231,7 +234,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssItem, currentUser, EvaluatePage.class)
+            .publish(cssItemB, currentUser, EvaluatePage.class)
             .openSourceScenario(sourcePartName, sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));

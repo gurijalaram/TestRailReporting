@@ -32,12 +32,12 @@ public class ExploreTabToolbar extends MainNavigationBar {
      *
      * @return current page object
      */
-    public ExploreTabToolbar clickStartComparison() {
+    public CompareTabToolbar clickStartComparison() {
         getPageUtils().waitForElementToAppear(startComparison);
         if (getPageUtils().isElementEnabled(startComparison)) {
             getPageUtils().waitForElementAndClick(startComparison);
         }
-        return this;
+        return new CompareTabToolbar(getDriver());
     }
 
     /**

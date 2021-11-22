@@ -1,10 +1,13 @@
 package com.explore;
 
 import static org.hamcrest.CoreMatchers.not;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import com.apriori.pageobjects.navtoolbars.CompareTabToolbar;
 import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
+import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.utils.TestRail;
@@ -23,6 +26,8 @@ public class StartComparisonTests extends TestBase {
     private CisLoginPage loginPage;
     private ExploreTabToolbar exploreTabToolbar;
     private ExplorePage explorePage;
+    private CompareTabToolbar compareTabToolbar;
+    private ModifyComparisonPage modifyComparisonPage;
 
     @Test
     @TestRail(testCaseId = "9411")
@@ -35,6 +40,7 @@ public class StartComparisonTests extends TestBase {
     }
 
     @Test
+    @TestRail(testCaseId = "9410")
     @Description("Verify Start Comparison button is enabled")
     public void testCreateStartComparison() {
         loginPage = new CisLoginPage(driver);
@@ -43,6 +49,10 @@ public class StartComparisonTests extends TestBase {
 
         assertThat(explorePage.isStartComparisonEnabled(), is(true));
 
-        exploreTabToolbar = explorePage.clickStartComparison();
+        modifyComparisonPage = explorePage
+            .clickStartComparison()
+            .clickModify();
+
+        assertThat(modifyComparisonPage.getModifyComparisonHeaderText(), startsWith("Modify Comparison"));
     }
 }
