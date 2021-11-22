@@ -67,9 +67,10 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return true/false
      */
     public boolean isAssigneeDisplayed(UserCredentials assignee) {
-        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee.getUsername()));
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", currentPerson.getGivenName() + " " + currentPerson.getFamilyName()));
         pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
-        return pageUtils.waitForElementToAppear(byAssignee).isDisplayed();
+        return driver.findElement(byAssignee).isDisplayed();
     }
 
     /**
