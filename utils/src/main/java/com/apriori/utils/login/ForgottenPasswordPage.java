@@ -55,7 +55,7 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
      * @param emailAddress - the email address
      */
     public void enterEmail(String emailAddress) {
-        pageUtils.clear(email);
+        pageUtils.clearValueOfElement(email);
         email.sendKeys(emailAddress);
     }
 
