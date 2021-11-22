@@ -33,6 +33,10 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     private WebElement membersRoot;
     private final SourceListComponent members;
 
+    @FindBy(className = "associated-attributes")
+    private WebElement attributesRoot;
+    private final SourceListComponent attributes;
+
     @FindBy(css = ".system-configuration-group-details-card .card-header")
     private WebElement groupDetailsHeader;
 
@@ -52,6 +56,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
         associatedPermissions = new SourceListComponent(getDriver(), associatedPermissionsRoot);
         members = new SourceListComponent(getDriver(), membersRoot);
+        attributes = new SourceListComponent(getDriver(), attributesRoot);
     }
 
     /**
@@ -79,6 +84,15 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      */
     public SourceListComponent getMembers() {
         return members;
+    }
+
+    /**
+     * Gets the attributes for the selected group.
+     *
+     * @return The attributes for the selected group.
+     */
+    public SourceListComponent getAttributes() {
+        return attributes;
     }
 
     /**
@@ -284,5 +298,6 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
         getPageUtils().waitForElementToAppear(groupDetailsRight);
         getPageUtils().waitForElementToAppear(associatedPermissionsRoot);
         getPageUtils().waitForElementToAppear(membersRoot);
+        getPageUtils().waitForElementToAppear(attributesRoot);
     }
 }
