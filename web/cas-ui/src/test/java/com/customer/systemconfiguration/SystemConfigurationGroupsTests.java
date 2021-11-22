@@ -57,6 +57,24 @@ public class SystemConfigurationGroupsTests extends TestBase {
         return groupToSelect.select();
     }
 
+    private void validateColumnHeaderIsCorrect(String expectedName, String id, TableComponent forTable, SoftAssertions soft) {
+
+        TableHeaderComponent header = forTable.getHeader(id);
+        soft.assertThat(header)
+            .overridingErrorMessage("The '%s' column is missing.", expectedName)
+            .isNotNull();
+
+        if (header != null) {
+            String name = header.getName();
+            soft.assertThat(name)
+                .overridingErrorMessage("The '%s' column is incorrectly named '%s'", expectedName, name)
+                .isEqualTo(expectedName);
+            soft.assertThat(header.canSort())
+                .overridingErrorMessage("The '%s' column is not sortable.")
+                .isTrue();
+        }
+    }
+
     private void validateFirstGroupIsSelected(SoftAssertions soft) {
 
         SelectionTreeItemComponent firstGroup = validateThereIsAtLeastOneGroup();
@@ -227,7 +245,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
         soft.assertAll();
     }
 
-    private void validateAssociatedPermissionsArePageableSortableAndRefreshable(SoftAssertions soft) {
+    private void validateAssociatedPermissionsArePageableAndRefreshable(SoftAssertions soft) {
 
         SourceListComponent list = systemConfigurationGroupsPage.getAssociatedPermissions();
         soft.assertThat(list.getPaginator())
@@ -235,21 +253,6 @@ public class SystemConfigurationGroupsTests extends TestBase {
             .isNotNull();
         soft.assertThat(list.canRefresh())
             .overridingErrorMessage("The associated permissions table is missing the refresh button.")
-            .isTrue();
-    }
-
-    private void validateColumnHeaderIsCorrect(String expectedName, String id, TableComponent forTable, SoftAssertions soft) {
-
-        TableHeaderComponent header = forTable.getHeader(id);
-        soft.assertThat(header)
-            .overridingErrorMessage("The '%s' column is missing.", expectedName)
-            .isNotNull();
-        String name = header.getName();
-        soft.assertThat(name)
-            .overridingErrorMessage("The '%s' column is incorrectly named '%s'", expectedName, name)
-            .isEqualTo(expectedName);
-        soft.assertThat(header.canSort())
-            .overridingErrorMessage("The '%s' column is not sortable.")
             .isTrue();
     }
 
@@ -280,15 +283,61 @@ public class SystemConfigurationGroupsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"9953", "9954", "9955", "9968"})
+    @TestRail(testCaseId = {"9953", "9954", "9968"})
     public void testValidateGroupAssociatedPermissionsHasCorrectDetails() {
 
         SoftAssertions soft = new SoftAssertions();
         validateThereIsAtLeastOneGroup();
         selectSomeGroupInTheMiddle();
-        validateAssociatedPermissionsArePageableSortableAndRefreshable(soft);
+        validateAssociatedPermissionsArePageableAndRefreshable(soft);
         validateAssociatedPermissionsHasCorrectColumns(soft);
         validateAssociatedPermissionsHasCorrectDefaultPageSize(soft);
+        soft.assertAll();
+    }
+
+    private void validateMembersArePageableAndRefreshable(SoftAssertions soft) {
+        SourceListComponent list = systemConfigurationGroupsPage.getMembers();
+        soft.assertThat(list.getPaginator())
+            .overridingErrorMessage("The members table has no pagination.")
+            .isNotNull();
+        soft.assertThat(list.canRefresh())
+            .overridingErrorMessage("The members table is missing the refresh button.")
+            .isTrue();
+    }
+
+    private void validateMembersHasCorrectColumns(SoftAssertions soft) {
+
+        SourceListComponent list = systemConfigurationGroupsPage.getMembers();
+        TableComponent table = Obligation.mandatory(list::getTable, "The members table is missing");
+
+        validateColumnHeaderIsCorrect("Login ID", "user.username", table, soft);
+        validateColumnHeaderIsCorrect("Given Name", "user.userProfile.givenName", table, soft);
+        validateColumnHeaderIsCorrect("Family Name", "user.userProfile.familyName", table, soft);
+        validateColumnHeaderIsCorrect("Department", "department", table, soft);
+    }
+
+    private void validateMembersHasCorrectDefaultPageSize(SoftAssertions soft) {
+
+        SourceListComponent list = systemConfigurationGroupsPage.getMembers();
+
+        String pageSize = Obligation.mandatory(list::getPaginator, "The members table must support pagination.")
+            .getPageSize()
+            .getSelected();
+        soft.assertThat(pageSize)
+            .overridingErrorMessage("The default selected page size for the members table should be 20.")
+            .isEqualTo("20");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9999", "10000", "10001"})
+    public void testValidateGroupMembersHasCorrectDetails() {
+
+        SoftAssertions soft = new SoftAssertions();
+        validateThereIsAtLeastOneGroup();
+        selectSomeGroupInTheMiddle();
+        validateMembersArePageableAndRefreshable(soft);
+        validateMembersHasCorrectColumns(soft);
+        validateMembersHasCorrectDefaultPageSize(soft);
         soft.assertAll();
     }
 }
