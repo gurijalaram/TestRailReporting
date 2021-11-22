@@ -2,6 +2,8 @@ package com.apriori.pageobjects.common;
 
 import com.apriori.utils.web.components.EagerPageComponent;
 
+import com.utils.CisColumnsEnum;
+import com.utils.CisSortOrderEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -9,6 +11,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public class CisScenarioTableController extends EagerPageComponent<CisScenarioTableController> {
@@ -18,6 +23,9 @@ public class CisScenarioTableController extends EagerPageComponent<CisScenarioTa
 
     @FindBy(xpath = "(//div[@class='table-body']/div)[1]//div[@class='scenario-thumbnail small']")
     private WebElement scenarioLocator;
+
+    @FindBy(css = ".scenario-iteration-table .table-head")
+    private WebElement tableHeaders;
 
     public CisScenarioTableController(WebDriver driver) {
         super(driver, log);
@@ -81,7 +89,7 @@ public class CisScenarioTableController extends EagerPageComponent<CisScenarioTa
     }
 
     /**
-     * Gets the scenario 'webelement' locator
+     * Gets the scenario 'webElement' locator
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
@@ -142,5 +150,39 @@ public class CisScenarioTableController extends EagerPageComponent<CisScenarioTa
         moveToScenario(componentName, scenarioName);
         getPageUtils().waitForElementAndClick(byComponentName(componentName, scenarioName));
         return this;
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Sorts the column in order
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public CisScenarioTableController sortColumn(CisColumnsEnum column, CisSortOrderEnum order) {
+        while (!getSortOrder(column).equals(order.getOrder())) {
+            getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[.='%s']//span", column.getColumns())));
+        }
+        return this;
+    }
+
+    /**
+     * Gets sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(CisColumnsEnum column) {
+        By byColumn = By.xpath(String.format("//div[.='%s']//div[@class]//*[local-name()='svg']", column.getColumns()));
+        return getDriver().findElement(byColumn).getAttribute("data-icon");
     }
 }

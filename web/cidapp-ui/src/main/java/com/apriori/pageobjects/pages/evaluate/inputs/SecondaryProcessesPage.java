@@ -444,7 +444,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage search(String searchTerm) {
-        pageUtils.clear(searchInput);
+        pageUtils.clearValueOfElement(searchInput);
         searchInput.sendKeys(searchTerm);
         return this;
     }

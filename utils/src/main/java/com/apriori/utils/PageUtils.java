@@ -259,16 +259,6 @@ public class PageUtils {
     }
 
     /**
-     * Clears a text input area
-     *
-     * @param element - the webelement
-     */
-    public void clear(WebElement element) {
-        waitForElementAndClick(element);
-        element.sendKeys(Keys.CONTROL + "a" + Keys.BACK_SPACE);
-    }
-
-    /**
      * Clears the value of an element with a value attribute.
      *
      * This method works on all platforms regardless of the OS modifier key

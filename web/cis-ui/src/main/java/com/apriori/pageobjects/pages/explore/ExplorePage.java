@@ -4,10 +4,14 @@ import com.apriori.pageobjects.common.CisComponentTableActions;
 import com.apriori.pageobjects.common.CisScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
 
+import com.utils.CisColumnsEnum;
+import com.utils.CisSortOrderEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 @Slf4j
 public class ExplorePage extends ExploreTabToolbar {
@@ -90,5 +94,36 @@ public class ExplorePage extends ExploreTabToolbar {
      */
     public boolean isStartComparisonEnabled() {
         return getPageUtils().waitForElementToAppear(enabledStartComparison).isEnabled();
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return scenarioTableController.getTableHeaders();
+    }
+
+    /**
+     * Sorts the column
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ExplorePage sortColumn(CisColumnsEnum column, CisSortOrderEnum order) {
+        scenarioTableController.sortColumn(column, order);
+        return this;
+    }
+
+    /**
+     * Gets the sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(CisColumnsEnum column) {
+        return scenarioTableController.getSortOrder(column);
     }
 }
