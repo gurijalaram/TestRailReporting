@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.AssemblyDetailsReportPage;
+import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -31,6 +32,7 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -183,7 +185,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3067"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -194,7 +196,8 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
+            .waitForCorrectAssemblyInDropdownAd(AssemblySetEnum.SUB_ASSEMBLY_FULL.getAssemblySetName())
             .clickOk(true, AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY_LOWERCASE.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
@@ -237,7 +240,7 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -289,7 +292,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -339,7 +342,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), AssemblyDetailsReportPage.class)
             .clickOk(true, AssemblyDetailsReportPage.class)
             .waitForCorrectAssembly(AssemblySetEnum.SUB_ASSEMBLY.getAssemblySetName())
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
@@ -388,7 +391,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -439,7 +442,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.ASSEMBLY_DETAILS.getReportName(), AssemblyDetailsReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName());
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class);
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
                 ListNameEnum.SCENARIO_NAME.getListName(),
@@ -585,7 +588,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1918"})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -613,7 +616,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"1920"})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
@@ -906,7 +909,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+            .selectExportSetDtcTests(ExportSetEnum.SUB_SUB_ASM.getExportSetName(), AssemblyDetailsReportPage.class)
             .waitForExportSetSelection(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
             .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .clickOk(true, GenericReportPage.class)

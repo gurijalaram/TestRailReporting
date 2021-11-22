@@ -74,7 +74,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -98,7 +98,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -128,7 +128,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
@@ -155,7 +155,7 @@ public class ComponentCostReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
                 .waitForComponentFilter()
                 .selectDefaultScenarioName(ComponentCostReportPage.class);
 

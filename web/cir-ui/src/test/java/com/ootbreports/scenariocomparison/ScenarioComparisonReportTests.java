@@ -22,7 +22,6 @@ import com.navigation.CommonReportTests;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -79,7 +78,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), GenericReportPage.class)
                 .waitForExportSetSelection(ExportSetEnum.TOP_LEVEL.getExportSetName());
 
         genericReportPage.waitForCorrectAvailableSelectedCount(
@@ -118,7 +117,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(ReportNamesEnum.SCENARIO_COMPARISON.getReportName(), GenericReportPage.class)
                 .waitForInputControlsLoad()
-                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+                .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ScenarioComparisonReportPage.class)
                 .selectFirstTwoComparisonScenarios()
                 .clickOk(true, GenericReportPage.class)
                 .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), ScenarioComparisonReportPage.class);
@@ -374,7 +373,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3306"})
     @Description("Verify Part Number Search Criteria input control works correctly")
     public void testPartNumberSearchCriteriaFunctionality() {
@@ -386,8 +385,10 @@ public class ScenarioComparisonReportTests extends TestBase {
                 .selectDefaultScenarioName(ScenarioComparisonReportPage.class);
 
         String nameToInput = scenarioComparisonReportPage.getNameOfFirstScenarioToCompare(true);
-        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "230");
-        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.SCENARIO_NAME.getListName(), "Selected: ", "1");
+        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIOS_TO_COMPARE.getListName(), "Available: ", "230");
+        scenarioComparisonReportPage.waitForCorrectAvailableSelectedCount(
+                ListNameEnum.SCENARIO_NAME.getListName(), "Selected: ", "1");
         scenarioComparisonReportPage.inputPartNumberSearchCriteria(nameToInput);
 
         assertThat(scenarioComparisonReportPage.getCountOfListAvailableOrSelectedItems(

@@ -439,7 +439,7 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSetDtcTests(exportSet)
+            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
             .waitForExportSetSelection(exportSet)
             .selectMassMetric(massMetric)
             .clickOk(true, GenericReportPage.class)
@@ -466,7 +466,7 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, genericReportPageClass)
             .waitForInputControlsLoad()
             .selectExportSet(exportSet, genericReportPageClass)
-            .selectExportSetDtcTests(exportSet)
+            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
             .setProcessGroup(processGroupName)
             .clickOk(true, genericReportPageClass);
 
@@ -1136,7 +1136,7 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName());
+                .selectExportSetDtcTests(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), GenericReportPage.class);
 
         boolean costReport = reportName.contains("Cost");
         genericReportPage.inputMaxOrMinCostOrMass(
@@ -1245,7 +1245,7 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSetDtcTests(exportSet)
+            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
             .selectCostMetric(costMetric)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -1260,7 +1260,7 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSet(exportSetName, GenericReportPage.class)
-            .selectExportSetDtcTests(exportSetName)
+            .selectExportSetDtcTests(exportSetName, GenericReportPage.class)
             .clickOk(true, GenericReportPage.class);
 
         WebElement exportSetValueElement = driver.findElement(
@@ -1303,7 +1303,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(exportSet)
+            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
             .waitForCorrectRollup("ALL CASTING (Initial)")
             .setDtcScore(dtcScore)
             .clickOk(true, GenericReportPage.class)

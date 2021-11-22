@@ -572,12 +572,18 @@ public class GenericReportPage extends ReportsPageHeader {
         return PageFactory.initElements(driver, className);
     }
 
+    /**
+     * Selects export set without a reset
+     *
+     * @param exportSet - String
+     * @param className - String
+     * @param <T> - class
+     * @return instance of specified class
+     */
     public <T> T selectExportSetWithoutReset(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
-        //pageUtils.waitForElementAndClick(locator);
         pageUtils.waitFor(1000);
         driver.findElement(locator).click();
-        //pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
         return PageFactory.initElements(driver, className);
     }
 
@@ -587,11 +593,12 @@ public class GenericReportPage extends ReportsPageHeader {
      * @param exportSet String
      * @return instance of GenericReportPage
      */
-    public ComponentCostReportPage selectExportSetDtcTests(String exportSet) {
+    public <T> T selectExportSetDtcTests(String exportSet, Class<T> className) {
         By locator = By.xpath(String.format("//li[@title='%s']/div/a", exportSet));
         pageUtils.waitForElementAndClick(locator);
         pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
-        return new ComponentCostReportPage(driver);
+
+        return PageFactory.initElements(driver, className);
     }
 
     /**
@@ -1353,7 +1360,8 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public void deselectExportSet() {
         String expectedCount = String.valueOf(getSelectedExportSetCount() - 1);
-        pageUtils.waitForElementAndClick(exportSetToSelect);
+        //pageUtils.waitForElementAndClick(exportSetToSelect);
+        pageUtils.waitForElementAndClick(By.xpath("(//div[@id='exportSetName']//ul[@class='jr-mSelectlist jr']//a)[2]"));
         waitForCorrectAvailableSelectedCount(
                 ListNameEnum.EXPORT_SET.getListName(),
                 "Selected: ",

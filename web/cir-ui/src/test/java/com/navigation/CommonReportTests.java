@@ -481,7 +481,7 @@ public class CommonReportTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, CastingDtcReportPage.class)
-                .selectExportSetDtcTests(exportSet)
+                .selectExportSetDtcTests(exportSet, GenericReportPage.class)
                 .selectSortOrder(sortOrder)
                 .clickOk(true, CastingDtcReportPage.class);
 
@@ -492,8 +492,8 @@ public class CommonReportTests extends TestBase {
                 && reportName.equals(ReportNamesEnum.CASTING_DTC_COMPARISON.getReportName())
                 && sortOrder.equals(SortOrderEnum.CASTING_ISSUES.getSortOrderEnum())) {
             castingDtcReportPage.clickInputControlsButton()
-                    .selectExportSetDtcTests(exportSet)
-                    .selectExportSetDtcTests(exportSet)
+                    .selectExportSetDtcTests(exportSet, GenericReportPage.class)
+                    .selectExportSetDtcTests(exportSet, GenericReportPage.class)
                     .waitForExportSetSelection(exportSet)
                     .clickOk(true, GenericReportPage.class);
             castingDtcReportPage.waitForReportToLoad();
