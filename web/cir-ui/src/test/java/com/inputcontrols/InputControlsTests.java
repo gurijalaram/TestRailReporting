@@ -555,7 +555,7 @@ public class InputControlsTests extends TestBase {
                 .login()
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
-                .selectExportSet(exportSetName, GenericReportPage.class)
+                .selectExportSetWithoutReset(exportSetName, GenericReportPage.class)
                 .deselectAllDtcScores()
                 .clickOk(true, GenericReportPage.class);
 
