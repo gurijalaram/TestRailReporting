@@ -58,7 +58,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      */
     public AssignPage selectAssignee(UserCredentials assignee) {
         PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
-        pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
+        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 
