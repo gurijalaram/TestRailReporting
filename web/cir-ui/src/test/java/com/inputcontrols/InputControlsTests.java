@@ -83,7 +83,6 @@ public class InputControlsTests extends TestBase {
         Integer availableExportSetCount = Integer.parseInt(genericReportPage.getCountOfExportSets());
 
         genericReportPage.setExportDateUsingPicker(true)
-            .setExportDateUsingPicker(false)
             .waitForCorrectExportSetListCount(ListNameEnum.EXPORT_SET.getListName(), "0");
 
         assertThat(Integer.parseInt(genericReportPage.getCountOfExportSets()), is(not(availableExportSetCount)));
@@ -557,7 +556,8 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName, GenericReportPage.class)
-                .deselectAllDtcScores();
+                .deselectAllDtcScores()
+                .clickOk(true, GenericReportPage.class);
 
         String listName = "dtcScore";
         assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
@@ -1244,7 +1244,9 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
+            .selectExportSet(exportSet, GenericReportPage.class)
+            .waitForCorrectRollup(RollupEnum.SHEET_METAL_DTC.getRollupName())
+            .selectCostMetric(costMetric)
             .selectCostMetric(costMetric)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
