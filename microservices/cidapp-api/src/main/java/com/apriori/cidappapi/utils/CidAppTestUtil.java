@@ -491,7 +491,7 @@ public class CidAppTestUtil {
     public PeopleResponse getCurrentPerson(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_PERSON, PeopleResponse.class)
             .token(getToken(userCredentials))
-            .inlineVariables(userCredentials.getUsername().split("@")[0]);
+            .inlineVariables(userCredentials.getUsername());
 
         ResponseWrapper<PeopleResponse> peopleResponse = HTTPRequest.build(requestEntity).get();
         return peopleResponse.getResponseEntity();
