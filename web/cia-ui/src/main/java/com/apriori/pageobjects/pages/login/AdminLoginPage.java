@@ -148,7 +148,7 @@ public class AdminLoginPage extends AdminHeader {
      * @return new page object
      */
     public AdminHomePage login(UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new AdminHomePage(driver);
     }
 
@@ -159,7 +159,7 @@ public class AdminLoginPage extends AdminHeader {
      */
     public AdminHomePage login() {
         UserCredentials userCredentials = UserUtil.getUser();
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new AdminHomePage(driver);
     }
 

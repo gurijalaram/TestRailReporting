@@ -64,7 +64,7 @@ public class UserUtil {
     }
 
     private static void logInfo(UserCredentials user) {
-        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getUsername(), user.getPassword(), user.getAccessLevel()));
+        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel()));
     }
 
 }

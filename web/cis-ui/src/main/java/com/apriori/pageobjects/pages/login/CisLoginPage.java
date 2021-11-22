@@ -78,7 +78,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @return new page object
      */
     public ExplorePage login(UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new ExplorePage(driver);
     }
 
