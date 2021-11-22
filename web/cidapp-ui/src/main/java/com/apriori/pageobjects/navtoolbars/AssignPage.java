@@ -67,8 +67,8 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      *
      * @return true/false
      */
-    public boolean isAssigneeDisplayed(String assignee) {
-        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee));
+    public boolean isAssigneeDisplayed(UserCredentials assignee) {
+        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee.getUsername()));
         pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
         return pageUtils.waitForElementToAppear(byAssignee).isDisplayed();
     }

@@ -326,7 +326,7 @@ public class ActionsTests extends TestBase {
             .submit(EvaluatePage.class)
             .assign();
 
-        assertThat(assignPage.isAssigneeDisplayed("Sinead Plunkett"), is(true));
+        assertThat(assignPage.isAssigneeDisplayed(currentUser), is(true));
     }
 
     @Test
