@@ -1152,11 +1152,11 @@ public class GenericReportPage extends ReportsPageHeader {
         setYearValuePicker(String.format("%d", newDt.getYear()));
         pickerTrigger.click();
 
-        if (datePickerDiv.getAttribute("style").contains("display: block;")) {
+        /*if (datePickerDiv.getAttribute("style").contains("display: block;")) {
             datePickerCloseButton.click();
             By locator = By.cssSelector("span[class='button picker calTriggerWrapper']");
             pageUtils.waitForElementToAppear(locator);
-        }
+        }*/
 
         return this;
     }
