@@ -29,7 +29,10 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     POST_PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),
 
     //USER
-    GET_CURRENT_USER("users/current");
+    GET_CURRENT_USER("users/current"),
+
+    //PEOPLE
+    GET_CURRENT_PEOPLE("/people?username[EQ]=%s");
 
     private final String endpoint;
 
