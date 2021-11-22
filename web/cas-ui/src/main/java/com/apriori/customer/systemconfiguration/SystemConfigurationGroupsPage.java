@@ -14,7 +14,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.time.Duration;
 import java.util.function.Function;
 
 /**
@@ -29,6 +28,10 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     @FindBy(className = "associated-permissions")
     private WebElement associatedPermissionsRoot;
     private final SourceListComponent associatedPermissions;
+
+    @FindBy(className = "associated-members")
+    private WebElement membersRoot;
+    private final SourceListComponent members;
 
     @FindBy(css = ".system-configuration-group-details-card .card-header")
     private WebElement groupDetailsHeader;
@@ -48,6 +51,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
         super(driver, log);
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
         associatedPermissions = new SourceListComponent(getDriver(), associatedPermissionsRoot);
+        members = new SourceListComponent(getDriver(), membersRoot);
     }
 
     /**
@@ -66,6 +70,15 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      */
     public SourceListComponent getAssociatedPermissions() {
         return associatedPermissions;
+    }
+
+    /**
+     * Gets the members for the selected group.
+     *
+     * @return The members for the selected group.
+     */
+    public SourceListComponent getMembers() {
+        return members;
     }
 
     /**
@@ -269,5 +282,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
         getPageUtils().waitForElementToAppear(groupDetailsHeader);
         getPageUtils().waitForElementToAppear(groupDetailsLeft);
         getPageUtils().waitForElementToAppear(groupDetailsRight);
+        getPageUtils().waitForElementToAppear(associatedPermissionsRoot);
+        getPageUtils().waitForElementToAppear(membersRoot);
     }
 }
