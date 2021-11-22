@@ -538,8 +538,7 @@ public class InputControlsTests extends TestBase {
                 .navigateToLibraryPage()
                 .navigateToReport(reportName, GenericReportPage.class)
                 .selectExportSet(exportSetName, GenericReportPage.class)
-                .deselectAllProcessGroups()
-                .clickOk(true, GenericReportPage.class);
+                .deselectAllProcessGroups();
 
         String listName = "processGroup";
         assertThat(genericReportPage.isListWarningDisplayedAndEnabled(listName), is(equalTo(true)));
@@ -1304,7 +1303,8 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(exportSet, GenericReportPage.class)
-            .waitForCorrectRollup("ALL CASTING (Initial)")
+            //.waitForCorrectRollup("ALL CASTING (Initial)")
+            .waitForCorrectRollup("SHEET METAL DTC (Initial)")
             .setDtcScore(dtcScore)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);

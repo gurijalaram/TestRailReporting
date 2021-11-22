@@ -32,7 +32,6 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -185,7 +184,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     @Test
     @Issue("AP-58059")
     @Issue("AP-53537")
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3067"})
     @Description("Verify totals calculations for Sub Assembly")
     public void testTotalCalculationsForSubAssembly() {
@@ -588,7 +587,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1918"})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -616,7 +615,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1920"})
     @Description("Export set count is correct")
     public void testExportSetSelectionOptions() {
