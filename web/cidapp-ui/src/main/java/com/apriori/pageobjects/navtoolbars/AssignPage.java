@@ -2,6 +2,7 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -53,8 +54,8 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public AssignPage selectAssignee(String assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, assignee);
+    public AssignPage selectAssignee(UserCredentials assignee) {
+        pageUtils.typeAheadSelect(assigneeDropdown, assignee.getUsername());
         return this;
     }
 

@@ -286,7 +286,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .assign()
-            .selectAssignee("Moya Parker")
+            .selectAssignee(currentUser)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
             .info();
@@ -322,7 +322,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
             .assign()
-            .selectAssignee("Sinead Plunkett")
+            .selectAssignee(currentUser)
             .submit(EvaluatePage.class)
             .assign();
 
