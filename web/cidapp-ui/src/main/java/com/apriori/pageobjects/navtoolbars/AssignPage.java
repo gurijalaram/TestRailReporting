@@ -17,8 +17,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class AssignPage extends LoadableComponent<AssignPage> {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
-
     @FindBy(css = ".assign-scenario-form .apriori-select")
     private WebElement assigneeDropdown;
 
@@ -31,6 +29,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     public AssignPage(WebDriver driver) {
         this.driver = driver;
