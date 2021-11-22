@@ -22,8 +22,8 @@ public class JwtTokenUtil {
     private String subject = PropertiesContext.get("${customer}.token_subject");
 
     public JwtTokenUtil(UserCredentials userCredentials) {
-        this.username = userCredentials.getUsername().split("@")[0];
-        this.email = userCredentials.getUsername();
+        this.username = userCredentials.getEmail().split("@")[0];
+        this.email = userCredentials.getEmail();
     }
 
     public JwtTokenUtil() {
