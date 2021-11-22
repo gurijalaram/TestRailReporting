@@ -64,7 +64,7 @@ public final class TableComponent extends CommonComponent implements ComponentWi
      * @return The table component header that holds the id or null if no such header exists.
      */
     public TableHeaderComponent getHeader(String id) {
-        By query = By.cssSelector(String.format("%s[%s=%s]", CSS_HEADERS, ATTRIBUTE_DATA_HEADER_ID, id));
+        By query = By.cssSelector(String.format("%s[%s=\"%s\"]", CSS_HEADERS, ATTRIBUTE_DATA_HEADER_ID, id));
         return getHeadersStream(query).findFirst().orElse(null);
     }
 
