@@ -39,7 +39,7 @@ public class CisComponentTableActions extends EagerPageComponent<CisComponentTab
      */
     private CisComponentTableActions search(String componentName) {
         getPageUtils().waitForElementToAppear(searchIconButton);
-        getPageUtils().clear(searchInput);
+        getPageUtils().clearValueOfElement(searchInput);
         searchInput.sendKeys(componentName.toUpperCase());
         return this;
     }

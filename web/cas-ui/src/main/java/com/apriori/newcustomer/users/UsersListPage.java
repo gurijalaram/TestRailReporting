@@ -2,6 +2,7 @@ package com.apriori.newcustomer.users;
 
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -16,8 +17,14 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(UsersListPage.class);
 
-    @FindBy(css = "a[name='userImport']")
+    @FindBy(xpath = "//a[.='Customer Staff']")
+    private WebElement customerStaffTab;
+
+    @FindBy(xpath = "//a[.='Import']")
     private WebElement importTab;
+
+    @FindBy(xpath = "//a[.='aPriori Staff']")
+    private WebElement aPrioriStaffTab;
 
     @FindBy(css = "a[name='userAppsConfiguration']")
     private WebElement appGrantTab;
@@ -57,8 +64,8 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(updateButton);
-        pageUtils.waitForElementAppear(addButton);
+        pageUtils.waitForElementAppear(customerStaffTab);
+        pageUtils.waitForElementAppear(importTab);
     }
 
     /**
@@ -67,6 +74,15 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      */
     public ImportPage goToImport() {
         pageUtils.waitForElementAndClick(importTab);
+        return new ImportPage(driver);
+    }
+
+    /**
+     * Go to import tab
+     * @return new page object
+     */
+    public ImportPage goToaPrioriStaff() {
+        pageUtils.waitForElementAndClick(aPrioriStaffTab);
         return new ImportPage(driver);
     }
 
@@ -126,5 +142,18 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     public UsersListPage searchForUser(String userName) {
         pageUtils.waitForElementToAppear(userNameSearch).sendKeys(userName);
         return this;
+    }
+
+    /**
+     * Retrieves UsersListPage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return UsersListPage
+     */
+    public static UsersListPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/customer-staff";
+        driver.navigate().to(String.format(url, customer));
+        return new UsersListPage(driver);
     }
 }
