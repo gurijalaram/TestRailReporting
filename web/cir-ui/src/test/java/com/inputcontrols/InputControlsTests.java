@@ -1302,7 +1302,7 @@ public class InputControlsTests extends TestBase {
                 By.xpath("//span[contains(text(), 'Process Group:')]/../following-sibling::td[2]/span")
         );
         if (!exportSetValueElement.getText().equals(exportSetName)
-                && processGroupValueElement.getText().equals(processGroupName)) {
+                && !processGroupValueElement.getText().equals(processGroupName)) {
             genericReportPage.clickInputControlsButton()
                     .waitForInputControlsLoad()
                     .selectExportSetWithoutReset(exportSetName, GenericReportPage.class)
