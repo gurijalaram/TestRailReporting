@@ -26,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 
@@ -421,5 +422,17 @@ public class MachiningDtcDetailsReportTests extends TestBase {
             is(equalTo("MACHININGDESIGN_TO_COST")));
         assertThat(genericReportPage.getPartNameCastingSheetMetalDtcDetails(false),
             is(equalTo("PUNCH")));
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = {"10011"})
+    @Description("Verify Currency Code input control functions correctly - Machining DTC Details Report")
+    public void testCurrencyCodeInputControl() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
+        );
     }
 }

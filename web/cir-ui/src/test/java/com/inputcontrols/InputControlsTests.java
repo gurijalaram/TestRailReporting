@@ -262,7 +262,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSet(exportSetName, GenericReportPage.class)
+            .selectExportSetWithoutReset(exportSetName, GenericReportPage.class)
             .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -299,6 +299,34 @@ public class InputControlsTests extends TestBase {
 
         assertThat(genericReportPage.getCurrentCurrency(), is(equalTo(CurrencyEnum.GBP.getCurrency())));
         assertThat(gbpGrandTotal, is(not(usdGrandTotal)));
+    }
+
+    /**
+     * Generic test for currency code input control on dtc comparison reports
+     * @param reportName - String
+     * @param exportSetName - String
+     */
+    public void testCurrencyCodeDtcComparisonReports(String reportName, String exportSetName) {
+        genericReportPage = new ReportsLoginPage(driver)
+                .login()
+                .navigateToLibraryPage()
+                .navigateToReport(reportName, GenericReportPage.class)
+                .waitForInputControlsLoad()
+                .selectExportSetDtcTests(exportSetName, GenericReportPage.class)
+                .selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
+                .clickOk(true, GenericReportPage.class)
+                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        String currencyCurrency = genericReportPage.getCurrentCurrency();
+
+        genericReportPage.clickInputControlsButton()
+                .waitForInputControlsLoad()
+                .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
+                .clickOk(true, GenericReportPage.class);
+
+        String newCurrency = genericReportPage.getCurrentCurrency();
+
+        assertThat(currencyCurrency, is(equalTo(newCurrency)));
     }
 
     /**

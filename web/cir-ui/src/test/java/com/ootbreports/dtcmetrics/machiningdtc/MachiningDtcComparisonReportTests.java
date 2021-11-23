@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.pageobjects.pages.view.reports.MachiningDtcReportPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -27,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 
@@ -35,7 +35,6 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     private MachiningDtcReportPage machiningDtcReportPage;
     private InputControlsTests inputControlsTests;
     private CommonReportTests commonReportTests;
-    private GenericReportPage genericReportPage;
 
     public MachiningDtcComparisonReportTests() {
         super();
@@ -404,6 +403,18 @@ public class MachiningDtcComparisonReportTests extends TestBase {
             ReportNamesEnum.MACHINING_DTC_COMPARISON.getReportName(),
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
             partNames
+        );
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = {"10012"})
+    @Description("Verify Currency Code input control functions correctly - Machining DTC Comparison Report")
+    public void testCurrencyCodeInputControl() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCodeDtcComparisonReports(
+                ReportNamesEnum.MACHINING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName()
         );
     }
 }

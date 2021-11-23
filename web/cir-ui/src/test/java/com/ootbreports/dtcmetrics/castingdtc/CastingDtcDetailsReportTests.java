@@ -8,7 +8,6 @@ import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
-import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
@@ -28,6 +27,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -39,7 +39,6 @@ public class CastingDtcDetailsReportTests extends TestBase {
     private CastingDtcReportPage castingDtcReportPage;
     private CommonReportTests commonReportTests;
     private InputControlsTests inputControlsTests;
-    private GenericReportPage genericReportPage;
 
     public CastingDtcDetailsReportTests() {
         super();
@@ -179,7 +178,7 @@ public class CastingDtcDetailsReportTests extends TestBase {
         String partName = castingDtcReportPage.getPartNameDtcReports();
         String holeIssueNumReports = castingDtcReportPage.getHoleIssuesFromDetailsReport();
 
-        genericReportPage.openNewCidTabAndFocus(1);
+        castingDtcReportPage.openNewCidTabAndFocus(1);
         GuidanceIssuesPage guidanceIssuesPage = new ExplorePage(driver)
                 .filter()
                 .saveAs()
@@ -429,5 +428,17 @@ public class CastingDtcDetailsReportTests extends TestBase {
     public void testDtcIssueCountsAreCorrect() {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.testCastingDtcIssueCounts(ReportNamesEnum.CASTING_DTC_DETAILS.getReportName());
+    }
+
+    @Test
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @TestRail(testCaseId = {"10010"})
+    @Description("Verify Currency Code input control functions correctly - Casting DTC Details Report")
+    public void testCurrencyCodeInputControl() {
+        inputControlsTests = new InputControlsTests(driver);
+        inputControlsTests.testCurrencyCodeDtcReports(
+                ReportNamesEnum.CASTING_DTC_DETAILS.getReportName(),
+                ExportSetEnum.CASTING_DTC.getExportSetName()
+        );
     }
 }
