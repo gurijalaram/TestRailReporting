@@ -330,7 +330,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3025"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDesignStandards() {
@@ -406,7 +406,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3025"})
     @Description("Verify Sort Order input control functions correctly")
     public void testSortOrderInputControlDtcRank() {
@@ -425,7 +425,7 @@ public class MachiningDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"10011"})
     @Description("Verify Currency Code input control functions correctly - Machining DTC Details Report")
     public void testCurrencyCodeInputControl() {

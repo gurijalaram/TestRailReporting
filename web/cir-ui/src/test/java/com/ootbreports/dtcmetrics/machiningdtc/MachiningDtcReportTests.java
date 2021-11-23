@@ -73,7 +73,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"3026"})
     @Description("Verify currency code input control functions correctly - Machining DTC Report")
     public void testCurrencyChange() {
@@ -169,7 +169,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"2026"})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetSelectionAndAvailability() {
@@ -281,7 +281,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7456"})
     @Description("Verify process group input control functionality - 2 Model and Stock Machining - Machining DTC Report")
     public void testProcessGroupSandAndDieCasting() {
