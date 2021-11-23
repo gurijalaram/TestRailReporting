@@ -225,7 +225,7 @@ public class TwoModelMachiningTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -235,7 +235,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
-            .openSourceScenario(sourcePartName, sourceScenarioName);
+            .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -291,7 +291,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, sourceScenarioName), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(7.40, 3));
 
         evaluatePage.selectSourcePart()
             .selectFilter("Recent")
@@ -301,7 +301,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2PartName, source2ScenarioName), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(11.66, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(8.17, 3));
     }
 
     @Test

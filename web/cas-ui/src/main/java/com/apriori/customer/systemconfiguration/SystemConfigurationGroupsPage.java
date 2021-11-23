@@ -4,6 +4,8 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
+import com.apriori.utils.web.components.SourceListComponent;
+
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
@@ -12,7 +14,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
-import java.time.Duration;
 import java.util.function.Function;
 
 /**
@@ -23,6 +24,18 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     @FindBy(css = ".system-configuration-groups .selection-tree")
     private WebElement selectionTreeRoot;
     private final SelectionTreeComponent groupsTree;
+
+    @FindBy(className = "associated-permissions")
+    private WebElement associatedPermissionsRoot;
+    private final SourceListComponent associatedPermissions;
+
+    @FindBy(className = "associated-members")
+    private WebElement membersRoot;
+    private final SourceListComponent members;
+
+    @FindBy(className = "associated-attributes")
+    private WebElement attributesRoot;
+    private final SourceListComponent attributes;
 
     @FindBy(css = ".system-configuration-group-details-card .card-header")
     private WebElement groupDetailsHeader;
@@ -43,6 +56,9 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     public SystemConfigurationGroupsPage(WebDriver driver) {
         super(driver, log);
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
+        associatedPermissions = new SourceListComponent(getDriver(), associatedPermissionsRoot);
+        members = new SourceListComponent(getDriver(), membersRoot);
+        attributes = new SourceListComponent(getDriver(), attributesRoot);
         pageUtils = getPageUtils();
     }
 
@@ -56,6 +72,33 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
+     * Gets the associated permissions for the selected group.
+     *
+     * @return The associated permissions for the selected group.
+     */
+    public SourceListComponent getAssociatedPermissions() {
+        return associatedPermissions;
+    }
+
+    /**
+     * Gets the members for the selected group.
+     *
+     * @return The members for the selected group.
+     */
+    public SourceListComponent getMembers() {
+        return members;
+    }
+
+    /**
+     * Gets the attributes for the selected group.
+     *
+     * @return The attributes for the selected group.
+     */
+    public SourceListComponent getAttributes() {
+        return attributes;
+    }
+
+    /**
      * Gets the value element given a name.
      * @param name The name of the field element.
      * @param panel The panel that the value is expected to be in.
@@ -65,11 +108,10 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     private <T> T getValue(String name, WebElement panel, Function<String, T> parse) {
         try {
             By elementQuery = By.className(String.format("read-field-%s", name));
-            getPageUtils().waitForCondition(() -> panel.findElements(elementQuery).size() > 0, Duration.ofMillis(500));
+            getPageUtils().waitForCondition(() -> panel.findElements(elementQuery).size() > 0, PageUtils.DURATION_SLOW);
             // It's possible that underneath the value there is a loading indicator.  Wait for that to go away.
             WebElement value = panel.findElement(elementQuery);
-            By loaderQuery = By.className("read-field-loading");
-            getPageUtils().waitForCondition(() -> value.findElements(loaderQuery).size() == 0, Duration.ofSeconds(10));
+            getPageUtils().waitForCondition(() -> getPageUtils().findLoader(value) == null, PageUtils.DURATION_LOADING);
             return parse.apply(value.getText());
         } catch (TimeoutException | NoSuchElementException | IllegalArgumentException e) {
             return null;
@@ -240,5 +282,8 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
         getPageUtils().waitForElementToAppear(groupDetailsHeader);
         getPageUtils().waitForElementToAppear(groupDetailsLeft);
         getPageUtils().waitForElementToAppear(groupDetailsRight);
+        getPageUtils().waitForElementToAppear(associatedPermissionsRoot);
+        getPageUtils().waitForElementToAppear(membersRoot);
+        getPageUtils().waitForElementToAppear(attributesRoot);
     }
 }

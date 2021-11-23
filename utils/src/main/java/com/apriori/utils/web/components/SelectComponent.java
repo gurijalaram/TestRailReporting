@@ -1,5 +1,7 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.PageUtils;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -9,7 +11,7 @@ import org.openqa.selenium.WebElement;
  * Represents the common select component in apriori-react-common.
  */
 public final class SelectComponent extends CommonComponent {
-    private WebElement valueInput;
+    private static By BY_VALUE_INPUT = By.tagName("input");
 
     /**
      * Initializes a new instance of this object.
@@ -21,12 +23,24 @@ public final class SelectComponent extends CommonComponent {
      */
     public SelectComponent(final WebDriver driver, final WebElement root) {
         super(driver, root);
+    }
 
-        valueInput = this.getRoot().findElement(By.cssSelector("input"));
+    /**
+     * Gets the underlying value input for this component.
+     *
+     * @return The value input for this component.
+     */
+    private WebElement getValueInput() {
+        return getPageUtils().waitForElementToAppear(BY_VALUE_INPUT, PageUtils.DURATION_INSTANT, getRoot());
+    }
 
-        if (valueInput == null) {
-            throw new Error("The main input control for a select component was not found.");
-        }
+    /**
+     * Gets the selected value.
+     *
+     * @return The string text of the selected value.
+     */
+    public String getSelected() {
+        return getRoot().getText();
     }
 
     /**
@@ -45,7 +59,7 @@ public final class SelectComponent extends CommonComponent {
         }
 
         this.open().select(value);
-        this.valueInput.sendKeys(Keys.TAB);
+        this.getValueInput().sendKeys(Keys.TAB);
         return this;
     }
 
@@ -56,7 +70,9 @@ public final class SelectComponent extends CommonComponent {
      */
     public SelectComponent clear() {
         // This method works regardless of whether the clear indicator is displayed or not.
-        getRoot().click();
+        getPageUtils().waitForElementAndClick(getRoot());
+
+        WebElement valueInput = getValueInput();
         // This actual clears the value if there is one.
         valueInput.sendKeys(Keys.DELETE);
         // Close the drop-down.

@@ -291,7 +291,7 @@ public class ActionsTests extends TestBase {
             .openScenario(componentName, scenarioName)
             .info();
 
-        assertThat(infoPage.getScenarioInfo("Assignee"), is("Moya Parker"));
+        assertThat(infoPage.isScenarioInfo("Assignee", currentUser), is(true));
     }
 
     @Test
