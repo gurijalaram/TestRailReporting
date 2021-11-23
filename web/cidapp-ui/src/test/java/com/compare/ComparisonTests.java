@@ -605,7 +605,7 @@ public class ComparisonTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssItem = loginPage.login(currentUser)
+        cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);

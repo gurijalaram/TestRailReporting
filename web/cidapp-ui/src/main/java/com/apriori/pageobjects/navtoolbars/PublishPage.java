@@ -111,7 +111,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectAssignee(UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
         pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }

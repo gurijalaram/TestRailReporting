@@ -29,8 +29,7 @@ public class NavigationTests extends TestBase {
     public void setup() {
         customerProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
-            .searchForCustomer("aPriori Internal")
-            .selectCustomer("aPriori Internal");
+            .openAprioriInternal();
         customerID = customerProfilePage.findCustomerIdentity();
     }
 

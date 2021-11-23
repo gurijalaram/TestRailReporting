@@ -20,6 +20,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -45,6 +46,30 @@ import java.util.function.Supplier;
  * @author kpatel
  */
 public class PageUtils {
+
+    /**
+     * A duration that is meant to be used when you just want to make sure the
+     * UI is synchronized to the web element.  This is just a pince slower than
+     * Duration.ZERO.
+     */
+    public static final Duration DURATION_INSTANT = Duration.ofMillis(10);
+    /**
+     * A duration that is meant to be used when you are expecting a component load that
+     * may take a bit longer than an instant render.  This will always be under one second.
+     */
+    public static final Duration DURATION_FAST = Duration.ofMillis(100);
+    /**
+     * A duration that is meant to be used when you are expecting a component load that
+     * may take longer to render than a simple input.
+     */
+    public static final Duration DURATION_SLOW = Duration.ofSeconds(1);
+    /**
+     * A duration that you should wait when you are waiting on a spinner.
+     * <p>
+     * If your component doesn't stabilize within this time frame, then it's time to consider that
+     * there may be a performance problem.
+     */
+    public static final Duration DURATION_LOADING = Duration.ofSeconds(5);
 
     public static final int BASIC_WAIT_TIME_IN_SECONDS = 60;
     static final Logger logger = LoggerFactory.getLogger(PageUtils.class);
@@ -307,7 +332,6 @@ public class PageUtils {
      * @param value The value to set.
      * @param endOfInput The last key to send.  This is usually something like Keys.TAB or Keys.ENTER.
      *                   You can set this to null to not send anything.
-     *
      */
     public void setValueOfElement(WebElement elementWithValue, String value, CharSequence endOfInput) {
         setValueOfElement(elementWithValue, value, new CharSequence[]{ endOfInput });
@@ -593,6 +617,25 @@ public class PageUtils {
             }
         }
         return driver.findElement(element);
+    }
+
+    /**
+     * Waits for an element to become visible.
+     *
+     * @param by The search query to search the context for.
+     * @param forHowLong The maximum amount of time to wait.
+     * @param search The parent context to search under.
+     *
+     * @return The WebElement that was found.
+     *
+     * @throws TimeoutException If there is never an element that becomes visible.
+     */
+    public WebElement waitForElementToAppear(By by, Duration forHowLong, SearchContext search) {
+        waitForCondition(() -> {
+            WebElement element = search.findElements(by).stream().findFirst().orElse(null);
+            return element != null;
+        }, forHowLong);
+        return search.findElement(by);
     }
 
     /**
@@ -1163,5 +1206,25 @@ public class PageUtils {
             logger.debug("Failed to highlight element");
         }
         js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
+    }
+
+    /**
+     * Attempts to find a supported loader element.
+     *
+     * @param search The search root to search for a loader under.
+     *
+     * @return An element that this utilities object thinks is a loader.  Null otherwise.
+     */
+    public WebElement findLoader(SearchContext search) {
+        final By aprioriLoaderQuery = By.className("loader");
+        final WebElement aPrioriLoader = Obligation.optional(() -> waitForElementToAppear(aprioriLoaderQuery, DURATION_INSTANT, search));
+
+        if (aPrioriLoader != null) {
+            return aPrioriLoader;
+        }
+
+        final By fontAwesomeSpinnerQuery = By.cssSelector(".fa-spinner.fa-spin");
+        final WebElement fontAwesomeSpinner = Obligation.optional(() -> waitForElementToAppear(fontAwesomeSpinnerQuery, DURATION_INSTANT, search));
+        return fontAwesomeSpinner;
     }
 }
