@@ -638,7 +638,7 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .highlightScenario(componentName, scenarioName)
             .publishScenario()
-            .publish(cssItemB, currentUser, ExplorePage.class)
+            .publish(cssItemA, currentUser, ExplorePage.class)
             .clickCompare()
             .openBasisScenario();
 
