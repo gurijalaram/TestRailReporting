@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -61,6 +62,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     public PublishPage(WebDriver driver) {
         this.driver = driver;
@@ -108,8 +110,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public PublishPage selectAssignee(String assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, assignee);
+    public PublishPage selectAssignee(UserCredentials assignee) {
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 

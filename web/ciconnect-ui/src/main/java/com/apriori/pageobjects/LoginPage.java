@@ -33,7 +33,7 @@ public class LoginPage {
     public LoginPage(WebDriver driver) {
         init(driver, true);
         userCredentials = UserUtil.getUser();
-        userName = userCredentials.getUsername();
+        userName = userCredentials.getEmail();
     }
 
     public void init(WebDriver driver, boolean loadNewPage) {

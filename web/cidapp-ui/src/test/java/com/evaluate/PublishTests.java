@@ -97,7 +97,7 @@ public class PublishTests extends TestBase {
             .publishScenario()
             .selectStatus("Analysis")
             .selectCostMaturity("Low")
-            .selectAssignee("Abe Chaves")
+            .selectAssignee(currentUser)
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()

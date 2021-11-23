@@ -43,7 +43,7 @@ public class LoginTests extends TestBase {
     public void testIncorrectPwd() {
 
         loginPage = new CasLoginPage(driver);
-        loginPage = loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
+        loginPage = loginPage.failedLoginAs(UserUtil.getUser().getEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(equalTo(loginPage.getLoginErrorMessage())));
     }
