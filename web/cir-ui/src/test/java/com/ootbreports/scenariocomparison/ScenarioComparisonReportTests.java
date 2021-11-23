@@ -93,7 +93,7 @@ public class ScenarioComparisonReportTests extends TestBase {
                 ListNameEnum.CREATED_BY.getListName(), "Available"), is(equalTo("1")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("2")));
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available"), is(equalTo("3")));
 
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.SCENARIO_NAME.getListName(), "Available"), is(equalTo("1")));
