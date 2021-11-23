@@ -608,9 +608,14 @@ public class ComparisonTests extends TestBase {
         cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItemA)
+                .selectProcessGroup(processGroupEnum)
+                .costScenario()
+                .clickExplore();
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
+        cssItemB = explorePage.uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+
+        evaluatePage = explorePage.navigateToScenario(cssItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .clickExplore()
@@ -635,7 +640,7 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .highlightScenario(componentName, scenarioName)
             .publishScenario()
-            .publish(cssItemB, currentUser, ExplorePage.class)
+            .publish(cssItemA, currentUser, ExplorePage.class)
             .clickCompare()
             .openBasisScenario();
 
