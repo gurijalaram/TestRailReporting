@@ -1,20 +1,21 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.users.UserCredentials;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class AssignPage extends LoadableComponent<AssignPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(AssignPage.class);
 
     @FindBy(css = ".assign-scenario-form .apriori-select")
     private WebElement assigneeDropdown;
@@ -28,12 +29,13 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     public AssignPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -53,8 +55,9 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public AssignPage selectAssignee(String assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, assignee);
+    public AssignPage selectAssignee(UserCredentials assignee) {
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 
@@ -63,10 +66,11 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      *
      * @return true/false
      */
-    public boolean isAssigneeDisplayed(String assignee) {
-        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee));
+    public boolean isAssigneeDisplayed(UserCredentials assignee) {
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", currentPerson.getGivenName() + " " + currentPerson.getFamilyName()));
         pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
-        return pageUtils.waitForElementToAppear(byAssignee).isDisplayed();
+        return driver.findElement(byAssignee).isDisplayed();
     }
 
     /**

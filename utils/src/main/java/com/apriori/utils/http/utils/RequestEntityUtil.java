@@ -31,7 +31,7 @@ public class RequestEntityUtil {
 
     public static RequestEntity init(EndpointEnum endpoint, final UserCredentials userCredentials, Class<?> returnType) {
         return new RequestEntity()
-            .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getUsername(), userCredentials.getPassword()))
+            .userAuthenticationEntity(new UserAuthenticationEntity(userCredentials.getEmail(), userCredentials.getPassword()))
             .returnType(returnType)
             .endpoint(endpoint)
             .token(token);

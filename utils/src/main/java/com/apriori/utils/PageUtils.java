@@ -740,6 +740,7 @@ public class PageUtils {
                 ex = e;
                 duration = (System.currentTimeMillis() / 1000) - startTime;
             }
+
             if (duration >= maxWaitTime) {
                 throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
@@ -769,6 +770,7 @@ public class PageUtils {
                 ex = e;
                 duration = (System.currentTimeMillis() / 1000) - startTime;
             }
+
             if (duration >= maxWaitTime) {
                 throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
