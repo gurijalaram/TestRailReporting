@@ -196,7 +196,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return string
      */
     public boolean isScenarioInfo(String label, UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
         By byLabel = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
         return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent").equals(currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
     }
