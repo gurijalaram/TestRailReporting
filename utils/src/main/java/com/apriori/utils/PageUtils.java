@@ -1219,7 +1219,7 @@ public class PageUtils {
     public WebElement findElementByText(String tag, String text, SearchContext root) {
         try {
             By query = By.xpath(String.format("//%s[.='%s']", tag, text));
-            waitForCondition(() -> root.findElements(query).size() > 0, Duration.ofMillis(500));
+            waitForCondition(() -> root.findElements(query).size() > 0, DURATION_FAST);
             return root.findElement(query);
         } catch (TimeoutException | NoSuchElementException e) {
             return null;

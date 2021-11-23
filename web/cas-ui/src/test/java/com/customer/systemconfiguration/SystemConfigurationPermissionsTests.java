@@ -120,49 +120,49 @@ public class SystemConfigurationPermissionsTests extends TestBase {
 
         // The values need to be compared with those of the api once the api is actually ready.
         // TODO: Get the permission by id from the api and compare those values once ready
-        soft.assertThat(systemConfigurationPermissionsPage.getResourceLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("Resource: "))
             .overridingErrorMessage("The resource label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationPermissionsPage.getResource())
+        soft.assertThat(systemConfigurationPermissionsPage.getValue("resource"))
             .overridingErrorMessage("The resource value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationPermissionsPage.getDescriptionLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("Description: "))
             .overridingErrorMessage("The description label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationPermissionsPage.getDescription())
+        soft.assertThat(systemConfigurationPermissionsPage.getValue("description"))
             .overridingErrorMessage("The description value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationPermissionsPage.getActionLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("Action: "))
             .overridingErrorMessage("The action label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationPermissionsPage.getActions())
+        soft.assertThat(systemConfigurationPermissionsPage.getValue("actions"))
             .overridingErrorMessage("The action value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationPermissionsPage.getGrantLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("Grant: "))
             .overridingErrorMessage("The grant label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationPermissionsPage.getGrant())
+        soft.assertThat(systemConfigurationPermissionsPage.getValue("grant"))
             .overridingErrorMessage("The grant value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationPermissionsPage.getDenyLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("Deny: "))
             .overridingErrorMessage("The deny label was not found.")
             .isNotNull();
-        soft.assertThat(systemConfigurationPermissionsPage.getDeny())
+        soft.assertThat(systemConfigurationPermissionsPage.getValue("deny"))
             .overridingErrorMessage("The deny value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationPermissionsPage.getCSLRuleLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("CSL Rule: "))
             .overridingErrorMessage("The CSL Rule label was not found.")
             .isNotNull();
         soft.assertThat(systemConfigurationPermissionsPage.getCSLRule())
             .overridingErrorMessage("The CSL Rule value was not found.")
             .isNotNull();
 
-        soft.assertThat(systemConfigurationPermissionsPage.getJSRuleLabel())
+        soft.assertThat(systemConfigurationPermissionsPage.getLabel("JavaScript:"))
             .overridingErrorMessage("The JavaScript Rule label was not found.")
             .isNotNull();
         soft.assertThat(systemConfigurationPermissionsPage.getJSRule())
