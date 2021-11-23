@@ -1,5 +1,6 @@
 package com.apriori.customer.systemconfiguration;
 
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
@@ -32,6 +33,8 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     @FindBy(className = "group-details-right")
     private WebElement groupDetailsRight;
 
+    private PageUtils pageUtils;
+
     /**
      * Initializes a new instance of this object.
      *
@@ -40,6 +43,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     public SystemConfigurationGroupsPage(WebDriver driver) {
         super(driver, log);
         groupsTree = new SelectionTreeComponent(getDriver(), selectionTreeRoot);
+        pageUtils = getPageUtils();
     }
 
     /**
@@ -49,23 +53,6 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      */
     public SelectionTreeComponent getGroupsTree() {
         return groupsTree;
-    }
-
-    /**
-     * Gets the label for a value in a given section.
-     *
-     * @param name The name of the label to search for.
-     * @param panel The parent search context element.
-     * @return The web element found or null if no such element appears within a reasonable timeframe.
-     */
-    private WebElement getLabel(String name, WebElement panel) {
-        try {
-            By query = By.xpath(String.format("//label[.='%s']", name));
-            getPageUtils().waitForCondition(() -> panel.findElements(query).size() > 0, Duration.ofMillis(500));
-            return panel.findElement(query);
-        } catch (TimeoutException | NoSuchElementException e) {
-            return null;
-        }
     }
 
     /**
@@ -95,7 +82,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for number of permissions or null if it cannot be found.
      */
     public WebElement getNumberOfPermissionsLabel() {
-        return getLabel("Number of Permissions:", groupDetailsLeft);
+        return pageUtils.findElementByText("label", "Number of Permissions:", groupDetailsLeft);
     }
 
     /**
@@ -113,7 +100,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for the total number of subgroups or null if it cannot be found.
      */
     public WebElement getNumberOfSubgroupsLabel() {
-        return getLabel("Number of Subgroups:", groupDetailsLeft);
+        return pageUtils.findElementByText("label", "Number of Subgroups:", groupDetailsLeft);
     }
 
     /**
@@ -131,7 +118,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for who created the group or null if it cannot be found.
      */
     public WebElement getCreatedByLabel() {
-        return getLabel("Created By:", groupDetailsLeft);
+        return pageUtils.findElementByText("label", "Created By:", groupDetailsLeft);
     }
 
     /**
@@ -149,7 +136,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for when the group was created or null if it cannot be found.
      */
     public WebElement getCreatedAtLabel() {
-        return getLabel("Created At:", groupDetailsLeft);
+        return pageUtils.findElementByText("label", "Created At:", groupDetailsLeft);
     }
 
     /**
@@ -167,7 +154,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for the group identity or null if it cannot be found.
      */
     public WebElement getIdentityLabel() {
-        return getLabel("Identity:", groupDetailsRight);
+        return pageUtils.findElementByText("label", "Identity:", groupDetailsRight);
     }
 
     /**
@@ -185,7 +172,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for the last person to update the group.
      */
     public WebElement getUpdatedByLabel() {
-        return getLabel("Updated By:", groupDetailsRight);
+        return pageUtils.findElementByText("label", "Updated By:", groupDetailsRight);
     }
 
     /**
@@ -204,7 +191,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for the last time the group was updated.
      */
     public WebElement getUpdatedAtLabel() {
-        return getLabel("Updated At:", groupDetailsRight);
+        return pageUtils.findElementByText("label", "Updated At:", groupDetailsRight);
     }
 
     /**
@@ -223,7 +210,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      * @return The label for the description.
      */
     public WebElement getDescriptionLabel() {
-        return getLabel("Description:", groupDetailsRight);
+        return pageUtils.findElementByText("label", "Description:", groupDetailsRight);
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.apriori.customer.systemconfiguration;
 
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectionTreeComponent;
 
@@ -22,7 +23,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
     @FindBy(css = ".system-configuration-permissions .selection-tree")
     private WebElement permissionsListRoot;
 
-    @FindBy(css = ".system-configuration-permissions .right-details .card-header .left")
+    @FindBy(css = ".system-configuration-permissions .right-details .card-header")
     private WebElement permissionDetailsHeader;
 
     @FindBy(className = "left-tree-title-count")
@@ -39,6 +40,8 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
 
     private final SelectionTreeComponent permissionsList;
 
+    private PageUtils pageUtils;
+
     /**
      * Initializes a new instance of this object.
      *
@@ -47,6 +50,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
     public SystemConfigurationPermissionsPage(WebDriver driver) {
         super(driver, log);
         permissionsList = new SelectionTreeComponent(getDriver(), permissionsListRoot);
+        pageUtils = getPageUtils();
     }
 
     /**
@@ -56,23 +60,6 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      */
     public SelectionTreeComponent getPermissionsList() {
         return permissionsList;
-    }
-
-    /**
-     * Gets the label for a value in a given section.
-     *
-     * @param name The name of the label to search for.
-     * @param panel The parent search context element.
-     * @return The web element found or null if no such element appears within a reasonable timeframe.
-     */
-    private WebElement getLabel(String name, WebElement panel) {
-        try {
-            By query = By.xpath(String.format("//label[.='%s']", name));
-            getPageUtils().waitForCondition(() -> panel.findElements(query).size() > 0, Duration.ofMillis(500));
-            return panel.findElement(query);
-        } catch (TimeoutException | NoSuchElementException e) {
-            return null;
-        }
     }
 
     /**
@@ -102,7 +89,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the description.
      */
     public WebElement getDescriptionLabel() {
-        return getLabel("Description: ", permissionContent);
+        return pageUtils.findElementByText("label", "Description: ", permissionContent);
     }
 
     /**
@@ -120,7 +107,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the Resource.
      */
     public WebElement getResourceLabel() {
-        return getLabel("Resource: ", permissionContent);
+        return pageUtils.findElementByText("label", "Resource: ", permissionContent);
     }
 
     /**
@@ -138,7 +125,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the Action.
      */
     public WebElement getActionLabel() {
-        return getLabel("Action: ", permissionContent);
+        return pageUtils.findElementByText("label", "Action: ", permissionContent);
     }
 
     /**
@@ -156,7 +143,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the Grant.
      */
     public WebElement getGrantLabel() {
-        return getLabel("Grant: ", permissionContent);
+        return pageUtils.findElementByText("label", "Grant: ", permissionContent);
     }
 
     /**
@@ -174,7 +161,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the Deny.
      */
     public WebElement getDenyLabel() {
-        return getLabel("Deny: ", permissionContent);
+        return pageUtils.findElementByText("label", "Deny: ", permissionContent);
     }
 
     /**
@@ -192,7 +179,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the CSL Rule.
      */
     public WebElement getCSLRuleLabel() {
-        return getLabel("CSL Rule: ", permissionContent);
+        return pageUtils.findElementByText("label", "CSL Rule: ", permissionContent);
     }
 
     /**
@@ -210,7 +197,7 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
      * @return The label for the JS Rule.
      */
     public WebElement getJSRuleLabel() {
-        return getLabel("JavaScript:", permissionContent);
+        return pageUtils.findElementByText("label", "JavaScript:", permissionContent);
     }
 
     /**
@@ -236,10 +223,10 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
     /**
      * Gets the header element of the details panel.
      *
-     * @return The header text of the details panel.
+     * @return The header of the details panel.
      */
-    public String getDetailsHeader() {
-        return permissionDetailsHeader.getText();
+    public WebElement getDetailsHeader() {
+        return permissionDetailsHeader;
     }
 
     /**

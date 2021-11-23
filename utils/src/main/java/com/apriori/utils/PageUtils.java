@@ -20,6 +20,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoAlertPresentException;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.Point;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -1164,4 +1165,23 @@ public class PageUtils {
         }
         js.executeScript("arguments[0].setAttribute('style', '" + originalStyle + "');", element);
     }
+
+    /**
+     * Gets the label for a value in a given section.
+     *
+     * @param tag The HTML tag of the target element.
+     * @param text The text of the element to search for.
+     * @param root The parent search context element.
+     * @return The web element found or null if no such element appears within a reasonable timeframe.
+     */
+    public WebElement findElementByText(String tag, String text, SearchContext root) {
+        try {
+            By query = By.xpath(String.format("//%s[.='%s']", tag, text));
+            waitForCondition(() -> root.findElements(query).size() > 0, Duration.ofMillis(500));
+            return root.findElement(query);
+        } catch (TimeoutException | NoSuchElementException e) {
+            return null;
+        }
+    }
+
 }

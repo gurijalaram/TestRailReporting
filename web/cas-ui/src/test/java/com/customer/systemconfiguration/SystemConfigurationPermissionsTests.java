@@ -19,9 +19,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import org.openqa.selenium.TimeoutException;
 
-import java.time.Duration;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -103,17 +101,13 @@ public class SystemConfigurationPermissionsTests extends TestBase {
         SelectionTreeItemComponent permissionsToSelect = permissions.get(somePermissionInTheMiddle);
         String permissionName = permissionsToSelect.select().getText();
 
-        try {
-            utils.waitForCondition(() -> {
-                String detailsHeader = systemConfigurationPermissionsPage.getDetailsHeader();
-                return permissionName.equalsIgnoreCase(detailsHeader);
-            }, Duration.ofMillis(500));
-            soft.succeeded();
-        } catch (TimeoutException e) {
-            String detailsHeader = systemConfigurationPermissionsPage.getDetailsHeader();
-            soft.fail("Expected the header for selected permission, %s, to be %s.\nActual value was %s.", permissionName,
-                permissionName.toUpperCase(), detailsHeader);
-        }
+        String actual = utils.findElementByText("div", permissionName,
+            systemConfigurationPermissionsPage.getDetailsHeader()).getText();
+
+        soft.assertThat(actual.toUpperCase())
+            .overridingErrorMessage("Expected the header for selected permission, %s, to be %s.\nActual value was %s.", permissionName,
+                permissionName.toUpperCase(), actual)
+            .isEqualTo(permissionName.toUpperCase());
     }
 
     private void validateSelectedPermissionInformation(SoftAssertions soft) {
@@ -182,8 +176,6 @@ public class SystemConfigurationPermissionsTests extends TestBase {
     @TestRail(testCaseId = {"9966"})
     public void testValidatePermissionSelectionUpdatesTheSelectedDetails() {
 
-        // TODO: when a permission selection changes, put the rest of the test cases in this method to verify the
-        //  different data sets
         SoftAssertions soft = new SoftAssertions();
         validateThereIsAtLeastOnePermission();
         validateHeaderChangesToReflectTheSelectedPermission(soft);
