@@ -286,7 +286,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .assign()
-            .selectAssignee("Moya Parker")
+            .selectAssignee(currentUser)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
             .info();
@@ -322,11 +322,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
             .assign()
-            .selectAssignee("Sinead Plunkett")
+            .selectAssignee(currentUser)
             .submit(EvaluatePage.class)
             .assign();
 
-        assertThat(assignPage.isAssigneeDisplayed("Sinead Plunkett"), is(true));
+        assertThat(assignPage.isAssigneeDisplayed(currentUser), is(true));
     }
 
     @Test
@@ -354,7 +354,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .selectStatus("New")
             .selectCostMaturity("Low")
-            .selectAssignee("Ciene Frith")
+            .selectAssignee(currentUser)
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -574,7 +574,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
-            .selectAssignee("Moya Parker")
+            .selectAssignee(currentUser)
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()

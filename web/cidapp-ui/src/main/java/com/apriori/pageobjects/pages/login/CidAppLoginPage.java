@@ -123,7 +123,7 @@ public class CidAppLoginPage extends LoadableComponent<CidAppLoginPage> {
      * @return new page object
      */
     public ExplorePage login(final UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new ExplorePage(driver);
     }
 

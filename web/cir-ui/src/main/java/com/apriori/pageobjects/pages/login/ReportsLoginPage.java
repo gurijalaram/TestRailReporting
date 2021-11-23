@@ -12,7 +12,6 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import utils.Constants;
 
 public class ReportsLoginPage extends ReportsPageHeader {
 
@@ -151,7 +150,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public ReportsPageHeader login(UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new ReportsPageHeader(driver);
     }
 
@@ -162,7 +161,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      */
     public ReportsPageHeader login() {
         UserCredentials userCredentials = UserUtil.getUser();
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new ReportsPageHeader(driver);
     }
 

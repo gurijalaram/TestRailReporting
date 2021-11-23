@@ -1,7 +1,6 @@
 package com.apriori.login;
 
 import com.apriori.customeradmin.CustomerAdminPage;
-import com.apriori.utils.Constants;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
@@ -123,7 +122,7 @@ public class CasLoginPage extends LoadableComponent<CasLoginPage> {
      * @return new page object
      */
     public CustomerAdminPage login(final UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return new CustomerAdminPage(driver);
     }
 
