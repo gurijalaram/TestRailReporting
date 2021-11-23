@@ -113,7 +113,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      * @return new page object
      */
     public <T> T login(final UserCredentials userCredentials, Class<T> klass) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
         return PageFactory.initElements(driver, klass);
     }
 
