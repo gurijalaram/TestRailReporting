@@ -4,6 +4,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -112,6 +113,7 @@ public class FileResourceUtil {
 
         S3Client s3Client = S3Client.builder()
             .region(S3_REGION_NAME)
+            .credentialsProvider(ProfileCredentialsProvider.create())
             .build();
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
