@@ -225,7 +225,7 @@ public class TwoModelMachiningTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -235,7 +235,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
-            .openSourceScenario(sourcePartName, sourceScenarioName);
+            .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
