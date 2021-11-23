@@ -36,7 +36,7 @@ public class UserTestDataUtil extends TestUtil {
     public UserDataEDC initEmptyUser() {
         UserCredentials userNamePass = UserUtil.getUser();
 
-        return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
+        return new UserDataEDC(userNamePass.getEmail(), userNamePass.getPassword());
     }
 
     public String getToken() {

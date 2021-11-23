@@ -51,7 +51,7 @@ public class LoginTests extends TestBase {
     @Description("Test unsuccessful login with correct email and incorrect password")
     public void testEmailAndIncorrectPassword() {
         loginPage = new EdcAppLoginPage(driver);
-        loginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
+        loginPage.failedLoginAs(UserUtil.getUser().getEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(loginPage.getLoginErrorMessage()));
     }

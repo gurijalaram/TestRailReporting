@@ -35,7 +35,7 @@ public class UserDataEDC {
     }
 
     public UserDataEDC(final UserCredentials userCredentials) {
-        this.username = userCredentials.getUsername();
+        this.username = userCredentials.getEmail();
         this.password = userCredentials.getPassword();
     }
 
