@@ -138,7 +138,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      */
     public ComponentTableActions setPagination() {
         pageUtils.waitForElementAndClick(paginatorDropdown);
-        By paginator = By.xpath("//div[.='100']");
+        By paginator = By.xpath("//div[.='50']");
         pageUtils.waitForElementToAppear(paginator);
         pageUtils.waitForElementAndClick(paginator);
         return this;
