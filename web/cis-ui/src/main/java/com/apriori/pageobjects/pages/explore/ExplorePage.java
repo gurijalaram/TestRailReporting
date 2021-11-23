@@ -19,9 +19,6 @@ public class ExplorePage extends ExploreTabToolbar {
     @FindBy(css = ".icon-button-group .background-animation")
     private WebElement enabledStartComparison;
 
-    @FindBy(css = "[data-icon='filter']")
-    private WebElement filter;
-
     @FindBy(css = "div[id=qa-scenario-explorer-filter-selector]")
     private WebElement presetFilterDropdown;
 
@@ -166,6 +163,11 @@ public class ExplorePage extends ExploreTabToolbar {
         return scenarioTableController.getSortOrder(column);
     }
 
+    /**
+     * Gets the Preset filter type
+     *
+     * @return String
+     */
     public String getPresetFilterType() {
         return getPageUtils().waitForElementToAppear(presetFilter).getAttribute("textContent");
     }

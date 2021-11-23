@@ -33,5 +33,25 @@ public class SearchTests extends TestBase {
             .enterKeySearch(componentName);
 
         assertThat(explorePage.getPresetFilterType(), is(equalTo("All")));
+
+        explorePage = explorePage.selectPresetFilter("Private")
+            .enterKeySearch(componentName);
+
+        assertThat(explorePage.getPresetFilterType(), is(equalTo("Private")));
+
+        explorePage = explorePage.selectPresetFilter("Public")
+            .enterKeySearch(componentName);
+
+        assertThat(explorePage.getPresetFilterType(), is(equalTo("Public")));
+
+        explorePage = explorePage.selectPresetFilter("Assigned To Me")
+            .enterKeySearch(componentName);
+
+        assertThat(explorePage.getPresetFilterType(), is(equalTo("Assigned To Me")));
+
+        explorePage = explorePage.selectPresetFilter("Recent")
+            .enterKeySearch(componentName);
+
+        assertThat(explorePage.getPresetFilterType(), is(equalTo("Recent")));
     }
 }
