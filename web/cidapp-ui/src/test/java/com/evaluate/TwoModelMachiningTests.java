@@ -291,7 +291,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, sourceScenarioName), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(7.40, 3));
 
         evaluatePage.selectSourcePart()
             .selectFilter("Recent")
@@ -301,7 +301,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2PartName, source2ScenarioName), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(11.66, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(8.17, 3));
     }
 
     @Test
