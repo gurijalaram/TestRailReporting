@@ -70,7 +70,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3246"})
     @Description("Verify Export Set input control functions correctly")
     public void testExportSetFilterFunctionality() {
@@ -174,7 +174,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3307"})
     @Description("Verify created by input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testCreatedByFilterOperation() {
@@ -215,7 +215,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, ReportsSmokeTest.class})
+    @Category({ReportsTest.class, ReportsSmokeTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7667"})
     @Description("Verify Created By input control buttons work - Scenario Comparison Report")
     public void testCreatedByFilterButtons() {
@@ -240,7 +240,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3349"})
     @Description("Verify Last Modified By input control works correctly - Filter Operation - Scenario Comparison Report")
     public void testLastModifiedByFilterOperation() {
@@ -274,7 +274,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7666"})
     @Description("Verify Last Modified By input control buttons work - Scenario Comparison Report")
     public void testLastModifiedByFilterButtons() {
@@ -287,7 +287,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3247"})
     @Description("Verify Scenarios to Compare input control functions correctly")
     public void testScenariosToCompareInputControlFunctionality() {
@@ -348,7 +348,7 @@ public class ScenarioComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3304"})
     @Description("Verify export date input controls functions correctly")
     public void testExportSetInputControlEarliestDateFilterFunctionality() {
