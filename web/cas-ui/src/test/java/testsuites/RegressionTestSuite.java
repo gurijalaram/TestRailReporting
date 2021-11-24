@@ -4,6 +4,7 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.customer.NewCustomerTests;
+import com.customer.users.UsersStaffAssociationTests;
 import com.login.LoginTests;
 import com.navigation.NavigationTests;
 
@@ -16,6 +17,7 @@ import org.junit.runners.Suite;
     NewCustomerTests.class,
     LoginTests.class,
     NavigationTests.class,
+    UsersTestSuite.class,
     SystemConfigurationTestSuite.class
 })
 public final class RegressionTestSuite {
