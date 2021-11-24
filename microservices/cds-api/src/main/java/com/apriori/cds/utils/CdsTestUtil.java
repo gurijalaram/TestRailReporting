@@ -13,6 +13,7 @@ import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.Deployment;
 import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.LicensedApplication;
@@ -20,7 +21,6 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserProfile;
-import com.apriori.cds.utils.Constants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -28,7 +28,9 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 
 public class CdsTestUtil extends TestUtil {
 
@@ -37,7 +39,7 @@ public class CdsTestUtil extends TestUtil {
      * @param <T>   - generic object
      * @return generic object
      */
-    public <T> ResponseWrapper<T> getCommonRequest(CDSAPIEnum cdsapiEnum, Class klass, String... inlineVariables) {
+    public <T> ResponseWrapper<T> getCommonRequest(CDSAPIEnum cdsapiEnum, Class<?> klass, String... inlineVariables) {
         return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, klass).inlineVariables(inlineVariables))
             .get();
     }
@@ -45,7 +47,7 @@ public class CdsTestUtil extends TestUtil {
     /**
      * Calls the delete method
      *
-     * @return responsewrapper
+     * @return The response of what was deleted
      */
     public ResponseWrapper<String> delete(CDSAPIEnum cdsapiEnum, String... inlineVariables) {
         return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, null).inlineVariables(inlineVariables)).delete();
@@ -81,20 +83,34 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    public Customer getAprioriInternal() {
+        Map<String, Object> args = new HashMap<>();
+        args.put("name[EQ]", "aPriori Internal");
+
+        Customers current = findCustomers(args).getResponseEntity();
+        return current.getItems().size() > 0 ? current.getItems().get(0) : null;
+    }
+
+    public ResponseWrapper<Customers> findCustomers(Map<String, ?> params) {
+        RequestEntity request = RequestEntityUtil.init(CDSAPIEnum.GET_CUSTOMERS, Customers.class)
+            .urlParams(Collections.singletonList(params));
+        return HTTPRequest.build(request).get();
+    }
+
     /**
      * POST call to add a customer
      *
      * @param customerIdentity - the customer id
-     * @param userName         - the user name
-     * @param customerName     - the customer name
+     * @param userName         - the username
+     * @param domain     - the customer name
      * @return new object
      */
-    public ResponseWrapper<User> addUser(String customerIdentity, String userName, String customerName) {
+    public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_USERS, User.class)
             .inlineVariables(customerIdentity)
             .body("user",
                 User.builder().username(userName)
-                    .email(userName + "@" + customerName + ".com")
+                    .email(userName + "@" + domain + ".com")
                     .createdBy("#SYSTEM00000")
                     .active(true)
                     .userType("AP_CLOUD_USER")
@@ -228,7 +244,7 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .cidGlobalKey("donotusethiskey")
                     .siteIdentity(siteIdentity)
-                    .applications(Arrays.asList(Constants.getApProApplicationIdentity()))
+                    .applications(Collections.singletonList(Constants.getApProApplicationIdentity()))
                     .cloudReference(cloudReference)
                     .apVersion("2020 R1")
                     .build());
@@ -278,12 +294,12 @@ public class CdsTestUtil extends TestUtil {
     }
 
     /**
-     * POST call to add sub license association user
+     * POST call to add a sub-license association user
      *
      * @param customerIdentity   - the customer id
      * @param siteIdentity       - the site id
      * @param licenseIdentity    - the license id
-     * @param subLicenseIdentity - the sub license id
+     * @param subLicenseIdentity - the sub-license id
      * @param userIdentity       - the user id
      * @return new object
      */
@@ -314,7 +330,7 @@ public class CdsTestUtil extends TestUtil {
                 IdentityProviderRequest.builder().contact(userIdentity)
                     .name(customerName + "-idp")
                     .displayName(customerName + "SAML")
-                    .idpDomains(Arrays.asList(customerName + ".com"))
+                    .idpDomains(Collections.singletonList(customerName + ".com"))
                     .identityProviderPlatform("Azure AD")
                     .description("Create IDP using CDS automation")
                     .active(true)
