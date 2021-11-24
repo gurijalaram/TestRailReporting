@@ -7,15 +7,14 @@ import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.utils.web.components.RoutingComponent;
 
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import java.util.Arrays;
-import java.util.function.Supplier;
 
 /**
  * Represents the root of the customer page that contains all the tabs for customer editing.
@@ -23,22 +22,28 @@ import java.util.function.Supplier;
 @Slf4j
 public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspacePage> {
     @FindBy(xpath = "//a[.='Profile']")
-    private WebElement profileTab;
+    private WebElement profileTabRoot;
+    private RoutingComponent profileTab;
 
     @FindBy(xpath = "//a[.='Users']")
-    private WebElement usersTab;
+    private WebElement usersTabRoot;
+    private RoutingComponent usersTab;
 
     @FindBy(xpath = "//a[.='Sites & Licenses']")
-    private WebElement siteLicenseTab;
+    private WebElement siteLicenseTabRoot;
+    private RoutingComponent siteLicenseTab;
 
     @FindBy(xpath = "//a[.='Infrastructure']")
-    private WebElement infrastructureTab;
+    private WebElement infrastructureTabRoot;
+    private RoutingComponent infrastructureTab;
 
     @FindBy(xpath = "//a[.='Security']")
-    private WebElement securityTab;
+    private WebElement securityTabRoot;
+    private RoutingComponent securityTab;
 
     @FindBy(xpath = "//a[.='System Configuration']")
-    private WebElement systemConfigurationTab;
+    private WebElement systemConfigurationTabRoot;
+    private RoutingComponent systemConfigurationTab;
 
     /**
      * Initializes a new instance of this object.
@@ -47,6 +52,16 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      */
     public CustomerWorkspacePage(WebDriver driver) {
         super(driver, log);
+
+        // Required Tabs
+        profileTab = new RoutingComponent(getDriver(), profileTabRoot);
+        usersTab = new RoutingComponent(getDriver(), usersTabRoot);
+        siteLicenseTab = new RoutingComponent(getDriver(), siteLicenseTabRoot);
+        infrastructureTab = new RoutingComponent(getDriver(), infrastructureTabRoot);
+        systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
+
+        // Optional Tabs
+        securityTab = getPageUtils().isElementDisplayed(securityTabRoot) ? new RoutingComponent(getDriver(), securityTabRoot) : null;
     }
 
     /**
@@ -56,90 +71,65 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      */
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementAppear(profileTab);
-        getPageUtils().waitForElementAppear(usersTab);
-        getPageUtils().waitForElementToAppear(siteLicenseTab);
-        getPageUtils().waitForElementToAppear(infrastructureTab);
-        getPageUtils().waitForElementToAppear(systemConfigurationTab);
+        getPageUtils().waitForElementAppear(profileTabRoot);
+        getPageUtils().waitForElementAppear(usersTabRoot);
+        getPageUtils().waitForElementToAppear(siteLicenseTabRoot);
+        getPageUtils().waitForElementToAppear(infrastructureTabRoot);
+        getPageUtils().waitForElementToAppear(systemConfigurationTabRoot);
     }
 
     /**
-     * Gets a value that indicates if the profile tab is displayed.
+     * Gets the profile tab.
      *
-     * @return True if the profile tab is displayed.
+     * @return The profile tab.
      */
-    public boolean isProfileTabDisplayed() {
-        return profileTab.isDisplayed();
+    public RoutingComponent getProfileTab() {
+        return profileTab;
     }
 
     /**
-     * Gets a value that indicates if the users tab is enabled and can be clicked.
+     * Gets the users tab.
      *
-     * @return A value that indicates if the users tab is enabled
+     * @return The users tab.
      */
-    public boolean isUsersTabEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", usersTab.getAttribute("disabled"));
+    public RoutingComponent getUsersTab() {
+        return usersTab;
     }
 
     /**
-     * Gets a value that indicates if the sites & licenses tab is enabled and can be clicked.
+     * Gets the sites and licenses tab.
      *
-     * @return A value that indicates if the sites & licenses tab is enabled
+     * @return The sites and licenses tab.
      */
-    public boolean isSitesAndLicensesEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", siteLicenseTab.getAttribute("disabled"));
+    public RoutingComponent getSiteLicenseTab() {
+        return siteLicenseTab;
     }
 
     /**
-     * Gets a value that indicates if the infrastructure tab is enabled and can be clicked.
+     * Gets the infrastructure tab.
      *
-     * @return A value that indicates if the infrastructure tab is enabled
+     * @return The infrastructure tab.
      */
-    public boolean isInfrastructureEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", infrastructureTab.getAttribute("disabled"));
+    public RoutingComponent getInfrastructureTab() {
+        return infrastructureTab;
     }
 
     /**
-     * Gets a value that indicates if the security tab is enabled and can be clicked.
+     * Gets the system configuration tab.
      *
-     * @return A value that indicates if the security tab is enabled
+     * @return The system configuration tab.
      */
-    public boolean isSecurityEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", securityTab.getAttribute("disabled"));
+    public RoutingComponent getSystemConfigurationTab() {
+        return systemConfigurationTab;
     }
 
     /**
-     * Gets a value that indicates if the system configuration tab is enabled and can be clicked.
+     * Gets the security tab.
      *
-     * @return A value that indicates if the system configuration tab is enabled
+     * @return The security tab.
      */
-    public boolean isSystemConfigurationEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", systemConfigurationTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Moves to a specific tab.
-     *
-     * If the requested tab is already active, then this method does nothing.
-     *
-     * @param tab The root element of the tab to move to.
-     * @param factory The factory that constructs the page object model for the content under the tab.
-     * @param <T> The type that represents the page object model under the wanted tab.
-     *
-     * @return The page object model for the tab content.
-     */
-    private <T> T goToTab(WebElement tab, Supplier<T> factory) {
-        // It's possible that this is the only tab that can be viewed;
-        // it may be disabled - this is true for new customers.  If we are already on
-        // the tab, then we can just return the profile page.
-
-        boolean isTabActive = getPageUtils().doesElementHaveClass(tab, "active");
-
-        if (!isTabActive) {
-            getPageUtils().waitForElementAndClick(tab);
-        }
-
-        return factory.get();
+    public RoutingComponent getSecurityTab() {
+        return securityTab;
     }
 
     /**
@@ -148,7 +138,8 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @return The profile page.
      */
     public CustomerProfilePage goToProfile() {
-        return goToTab(profileTab, () -> new CustomerProfilePage(getDriver()));
+        profileTab.navigate();
+        return new CustomerProfilePage(getDriver());
     }
 
     /**
@@ -157,7 +148,8 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @return new page object
      */
     public UsersListPage goToUsersList() {
-        return goToTab(usersTab, () -> new UsersListPage(getDriver()));
+        usersTab.navigate();
+        return new UsersListPage(getDriver());
     }
 
     /**
@@ -166,7 +158,8 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @return new page object
      */
     public SitesLicensesPage goToSitesLicenses() {
-        return goToTab(siteLicenseTab, () -> new SitesLicensesPage(getDriver()));
+        siteLicenseTab.navigate();
+        return new SitesLicensesPage(getDriver());
     }
 
     /**
@@ -175,7 +168,8 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @return new page object
      */
     public InfrastructurePage goToInfrastructure() {
-        return goToTab(infrastructureTab, () -> new InfrastructurePage(getDriver()));
+        infrastructureTab.navigate();
+        return new InfrastructurePage(getDriver());
     }
 
     /**
@@ -184,7 +178,8 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      * @return The POM for the system configuration.
      */
     public SystemConfigurationPage goToSystemConfiguration() {
-        return goToTab(systemConfigurationTab, () -> new SystemConfigurationPage(getDriver()));
+        systemConfigurationTab.navigate();
+        return new SystemConfigurationPage(getDriver());
     }
 
     /**
@@ -204,10 +199,10 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      *
      * @param driver - WebDriver
      * @param customer - Customer ID
-     * @return CustomerProfilePage
+     * @return CustomerWorkspacePage
      */
     public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
-        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/profile";
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s";
         driver.navigate().to(String.format(url, customer));
         return new CustomerWorkspacePage(driver);
     }
