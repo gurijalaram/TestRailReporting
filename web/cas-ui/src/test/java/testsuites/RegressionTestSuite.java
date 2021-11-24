@@ -4,7 +4,6 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.customer.NewCustomerTests;
-import com.customer.users.UsersStaffAssociationTests;
 import com.login.LoginTests;
 import com.navigation.NavigationTests;
 
