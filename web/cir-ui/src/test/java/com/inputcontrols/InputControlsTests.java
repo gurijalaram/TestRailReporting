@@ -697,6 +697,8 @@ public class InputControlsTests extends TestBase {
 
         for (String buttonName : buttonNames) {
             genericReportPage.clickListPanelButton(listName, buttonName);
+            genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.LAST_MODIFIED_BY.getListName(),
+                    "Selected: ", availableValue);
 
             if (buttonName.equals("Select All") || buttonName.equals("Invert")) {
                 genericReportPage.waitForCorrectAvailableSelectedCount(listName, "Selected: ", availableValue);
