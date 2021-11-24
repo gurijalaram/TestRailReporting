@@ -4,7 +4,11 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.AwsCredentialsProviderChain;
+import software.amazon.awssdk.auth.credentials.ContainerCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.InstanceProfileCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.SystemPropertyCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
@@ -113,12 +117,19 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
-        S3Client s3Client = S3Client.builder()
-            .region(S3_REGION_NAME)
-            .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-            .credentialsProvider(SystemPropertyCredentialsProvider.create())
-            .credentialsProvider(ProfileCredentialsProvider.create())
+        S3Client s3Client;
+
+        if (System.getProperty("AWS_ACCESS_KEY_ID") != null) {
+            s3Client = S3Client.builder()
+                .region(S3_REGION_NAME)
+                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
             .build();
+        } else {
+            s3Client = S3Client.builder()
+                .region(S3_REGION_NAME)
+                .credentialsProvider(ProfileCredentialsProvider.create())
+                .build();
+        }
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
