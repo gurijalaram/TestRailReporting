@@ -15,18 +15,6 @@ import org.junit.Test;
 
 public class AtsAuthorization extends TestUtil {
 
-
-    @Test
-    public void getTo() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "M3CapScrew";
-        String componentName2 = "Push Pin";
-        FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-    }
-
-
     @Test
     @TestRail(testCaseId = {"3581"})
     @Description("Retrieve a JWT from the ATS Token endpoint")

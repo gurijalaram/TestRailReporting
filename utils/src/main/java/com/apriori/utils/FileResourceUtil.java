@@ -117,19 +117,13 @@ public class FileResourceUtil {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
-        S3Client s3Client;
-
-        if (System.getenv("AWS_ACCESS_KEY_ID") != null) {
-            s3Client = S3Client.builder()
+        S3Client s3Client = S3Client.builder()
                 .region(S3_REGION_NAME)
-                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+                    ? EnvironmentVariableCredentialsProvider.create()
+                    : ProfileCredentialsProvider.create()
+                )
             .build();
-        } else {
-            s3Client = S3Client.builder()
-                .region(S3_REGION_NAME)
-                .credentialsProvider(ProfileCredentialsProvider.create())
-                .build();
-        }
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
