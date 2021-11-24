@@ -5,6 +5,7 @@ import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
 import com.apriori.testsuites.categories.SmokeTest;
@@ -45,6 +46,9 @@ public class NavigationTests extends TestBase {
             .isInstanceOf(LoadableComponent.class);
         soft.assertThat(UsersListPage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "UsersListPage")
+            .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(CustomerProfilePage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "CustomerProfilePage")
             .isInstanceOf(LoadableComponent.class);
         soft.assertThat(ImportPage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "ImportPage")
