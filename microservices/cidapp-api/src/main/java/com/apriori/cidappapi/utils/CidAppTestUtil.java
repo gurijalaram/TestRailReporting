@@ -9,6 +9,7 @@ import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PeopleResponse;
+import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.User;
@@ -488,12 +489,12 @@ public class CidAppTestUtil {
      * @param userCredentials - the user credentials
      * @return person object
      */
-    public PeopleResponse getCurrentPerson(UserCredentials userCredentials) {
+    public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_PERSON, PeopleResponse.class)
             .token(getToken(userCredentials))
             .inlineVariables(userCredentials.getUsername());
 
         ResponseWrapper<PeopleResponse> peopleResponse = HTTPRequest.build(requestEntity).get();
-        return peopleResponse.getResponseEntity();
+        return peopleResponse.getResponseEntity().getItems().get(0);
     }
 }
