@@ -1,22 +1,22 @@
 package com.apriori.utils.login;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 /**
  * @author cfrith
  */
 
 @Slf4j
-public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPage> {
+public class ForgottenPasswordPage extends EagerPageComponent<ForgottenPasswordPage> {
 
-    @FindBy(css = ".animated.fadeInUp")
+    @FindBy(css = ".auth0-lock-name")
     private WebElement resetPasswordText;
 
     @FindBy(css = "input[name='email']")
@@ -28,25 +28,19 @@ public class ForgottenPasswordPage extends LoadableComponent<ForgottenPasswordPa
     @FindBy(css = ".auth0-lock-back-button")
     private WebElement backButton;
 
-    private WebDriver driver;
     private PageUtils pageUtils;
 
     public ForgottenPasswordPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
+        super(driver, log);
+        pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(backButton);
+        getPageUtils().waitForElementToAppear(backButton);
     }
 
     /**
