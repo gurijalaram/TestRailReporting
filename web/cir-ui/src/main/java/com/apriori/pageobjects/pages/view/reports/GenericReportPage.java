@@ -1242,7 +1242,7 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public String getCountOfListAvailableOrSelectedItems(String listName, String option) {
         int substringVal = option.equals("Available") ? 11 : 10;
-        By locator = By.xpath(String.format("//div[@title='%s']//span[contains(@title, '%s')]", listName, option));
+        By locator = By.xpath(String.format("//div[contains(@title, '%s')]//span[contains(@title, '%s')]", listName, option));
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText().substring(substringVal);
     }
