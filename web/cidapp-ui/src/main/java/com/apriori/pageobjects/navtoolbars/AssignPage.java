@@ -56,8 +56,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return current page object
      */
     public AssignPage selectAssignee(UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
-        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
+        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", getPersonResponse(assignee));
         return this;
     }
 
@@ -67,10 +66,20 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return true/false
      */
     public boolean isAssigneeDisplayed(UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee).getItems().get(0);
-        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", currentPerson.getGivenName() + " " + currentPerson.getFamilyName()));
+        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", getPersonResponse(assignee)));
         pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
         return driver.findElement(byAssignee).isDisplayed();
+    }
+
+    /**
+     * Gets a person object from api
+     *
+     * @param assignee - the assignee
+     * @return string
+     */
+    private String getPersonResponse(UserCredentials assignee) {
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
+        return currentPerson.getGivenName() + " " + currentPerson.getFamilyName();
     }
 
     /**

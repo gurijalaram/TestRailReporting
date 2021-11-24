@@ -169,7 +169,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage inputAnnualVolume(String annualVolume) {
-        pageUtils.clearInput(annualVolumeInput);
+        pageUtils.clearValueOfElement(annualVolumeInput);
         annualVolumeInput.sendKeys(annualVolume);
         return this;
     }
@@ -181,7 +181,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage inputYears(String years) {
-        pageUtils.clearInput(yearsInput);
+        pageUtils.clearValueOfElement(yearsInput);
         yearsInput.sendKeys(years);
         return this;
     }
@@ -193,7 +193,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage inputBatchSize(String batchSize) {
-        pageUtils.clearInput(batchSizeInput);
+        pageUtils.clearValueOfElement(batchSizeInput);
         batchSizeInput.sendKeys(batchSize);
         return this;
     }

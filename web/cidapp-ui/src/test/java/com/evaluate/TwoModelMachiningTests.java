@@ -225,7 +225,7 @@ public class TwoModelMachiningTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -235,7 +235,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
-            .openSourceScenario(sourcePartName, sourceScenarioName);
+            .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -338,7 +338,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
