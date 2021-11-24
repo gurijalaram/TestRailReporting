@@ -2,6 +2,7 @@ package com.apriori.customer;
 
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.UsersListPage;
+import com.apriori.customer.users.UsersPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
@@ -147,9 +148,9 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      *
      * @return new page object
      */
-    public UsersListPage goToUsersList() {
+    public UsersPage goToUsersPage() {
         usersTab.navigate();
-        return new UsersListPage(getDriver());
+        return new UsersPage(getDriver());
     }
 
     /**

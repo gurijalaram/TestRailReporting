@@ -4,6 +4,7 @@ import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
+import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
@@ -77,9 +78,9 @@ public class NavigationTests extends TestBase {
         validateOnPageURL(soft,  "/profile");
 
         // Click through different menus
-        UsersListPage usersListPage = customerProfilePage.goToUsersList();
+        UsersPage usersPage = customerProfilePage.goToUsersPage();
         validateOnPageURL(soft, "/users/customer-staff");
-        usersListPage.goToImport();
+        usersPage.goToImport();
         validateOnPageURL(soft,  "/users/import");
         customerProfilePage.goToSitesLicenses();
         validateOnPageURL(soft, "/sites-and-licenses");
