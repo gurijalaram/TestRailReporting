@@ -142,7 +142,7 @@ Those marked with a * are required or the job will not run
                     docker run \
                         -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
                         -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-                        -e AWS_PROFILE='default' \
+                        -e AWS_PROFILE='development' \
                         -e AWS_DEFAULT_REGION='us-east-1' \
                         -itd \
                         --name ${buildInfo.name}-build-${uuid} \
