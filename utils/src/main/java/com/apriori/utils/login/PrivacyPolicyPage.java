@@ -3,20 +3,19 @@ package com.apriori.utils.login;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 /**
  * @author cfrith
  */
 
 @Slf4j
-public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
+public class PrivacyPolicyPage extends EagerPageComponent<PrivacyPolicyPage> {
 
     @FindBy(id = "menu-main-menu")
     private WebElement mainMenu;
@@ -27,20 +26,11 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
     @FindBy(css = "a img[alt='aPriori']")
     private WebElement aprioriLogo;
 
-    private WebDriver driver;
     private PageUtils pageUtils;
 
     public PrivacyPolicyPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
+        super(driver, log);
+        log.debug(getPageUtils().currentlyOnPage(this.getClass().getSimpleName()));
     }
 
     @Override
@@ -54,7 +44,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - string
      */
     public String getPageHeading() {
-        pageUtils.windowHandler(1);
+        getPageUtils().windowHandler(1);
         return aprioriHeading.getText();
     }
 
@@ -64,8 +54,8 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - webelement
      */
     public boolean isPageLogoDisplayed() {
-        pageUtils.windowHandler(1);
-        return pageUtils.waitForElementToAppear(aprioriLogo).isDisplayed();
+        getPageUtils().windowHandler(1);
+        return getPageUtils().waitForElementToAppear(aprioriLogo).isDisplayed();
     }
 
     /**
@@ -74,7 +64,7 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return - string
      */
     public String getChildWindowURL() {
-        return pageUtils.getTabTwoUrl();
+        return getPageUtils().getTabTwoUrl();
     }
 
     /**
@@ -83,6 +73,6 @@ public class PrivacyPolicyPage extends LoadableComponent<PrivacyPolicyPage> {
      * @return int - open tab count
      */
     public int getTabCount() {
-        return pageUtils.getCountOfOpenTabs();
+        return getPageUtils().getCountOfOpenTabs();
     }
 }

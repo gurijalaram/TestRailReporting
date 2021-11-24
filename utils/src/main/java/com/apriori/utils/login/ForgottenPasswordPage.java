@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 /**
  * @author cfrith
@@ -32,10 +31,7 @@ public class ForgottenPasswordPage extends EagerPageComponent<ForgottenPasswordP
 
     public ForgottenPasswordPage(WebDriver driver) {
         super(driver, log);
-        pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        log.debug(getPageUtils().currentlyOnPage(this.getClass().getSimpleName()));
     }
 
     @Override
@@ -48,9 +44,10 @@ public class ForgottenPasswordPage extends EagerPageComponent<ForgottenPasswordP
      *
      * @param emailAddress - the email address
      */
-    public void enterEmail(String emailAddress) {
-        pageUtils.clearValueOfElement(email);
+    public ForgottenPasswordPage enterEmail(String emailAddress) {
+        getPageUtils().clearValueOfElement(email);
         email.sendKeys(emailAddress);
+        return this;
     }
 
     /**
@@ -59,7 +56,7 @@ public class ForgottenPasswordPage extends EagerPageComponent<ForgottenPasswordP
      * @return new page object
      */
     public ForgottenPasswordPage sendEmail() {
-        pageUtils.waitForElementAndClick(sendEmail);
+        getPageUtils().waitForElementAndClick(sendEmail);
         return this;
     }
 
