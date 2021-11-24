@@ -2,11 +2,11 @@ package com.navigation;
 
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
+import com.apriori.customer.users.ImportPage;
+import com.apriori.customer.users.UsersListPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
-import com.apriori.newcustomer.users.ImportPage;
-import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;

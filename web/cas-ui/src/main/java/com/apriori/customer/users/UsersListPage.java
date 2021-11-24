@@ -1,6 +1,8 @@
-package com.apriori.newcustomer.users;
+package com.apriori.customer.users;
 
 import com.apriori.customeradmin.NavToolbar;
+import com.apriori.newcustomer.users.ApplicationGrantsPage;
+import com.apriori.newcustomer.users.NewUserPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
