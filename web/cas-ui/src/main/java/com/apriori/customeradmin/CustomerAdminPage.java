@@ -56,9 +56,20 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
      * @return The profile page for aPriori Internal
      */
     public CustomerWorkspacePage openAprioriInternal() {
+        return openCustomer(CUSTOMER_APRIORI_INTERNAL);
+    }
+
+    /**
+     * Searches for and opens an existing customer.
+     *
+     * @param identityNameOrSalesforce The identity, name, or salesforce id of the customer to open.
+     *
+     * @return The profile page for the given customer.
+     */
+    public CustomerWorkspacePage openCustomer(final String identityNameOrSalesforce) {
         SourceListComponent list = getSourceList();
         SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The customer search is missing.");
-        search.search(CUSTOMER_APRIORI_INTERNAL);
+        search.search(identityNameOrSalesforce);
         getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
 
         list.selectTableLayout();
