@@ -1,9 +1,5 @@
 package com.explore;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.utils.TestRail;
@@ -11,6 +7,9 @@ import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class SearchTests extends TestBase {
@@ -21,6 +20,17 @@ public class SearchTests extends TestBase {
 
     private CisLoginPage loginPage;
     private ExplorePage explorePage;
+    private SoftAssertions softAssertions;
+
+    @Before
+    public void setUp() {
+        softAssertions = new SoftAssertions();
+    }
+
+    @After
+    public void tearDown() {
+        softAssertions.assertAll();
+    }
 
     @Test
     @TestRail(testCaseId = "9556")
@@ -32,26 +42,26 @@ public class SearchTests extends TestBase {
             .selectPresetFilter("All")
             .enterKeySearch(componentName);
 
-        assertThat(explorePage.getPresetFilterType(), is(equalTo("All")));
+        softAssertions.assertThat(explorePage.getPresetFilterType()).isEqualTo("All");
 
         explorePage = explorePage.selectPresetFilter("Private")
             .enterKeySearch(componentName);
 
-        assertThat(explorePage.getPresetFilterType(), is(equalTo("Private")));
+        softAssertions.assertThat(explorePage.getPresetFilterType()).isEqualTo("Private");
 
         explorePage = explorePage.selectPresetFilter("Public")
             .enterKeySearch(componentName);
 
-        assertThat(explorePage.getPresetFilterType(), is(equalTo("Public")));
+        softAssertions.assertThat(explorePage.getPresetFilterType()).isEqualTo("Public");
 
         explorePage = explorePage.selectPresetFilter("Assigned To Me")
             .enterKeySearch(componentName);
 
-        assertThat(explorePage.getPresetFilterType(), is(equalTo("Assigned To Me")));
+        softAssertions.assertThat(explorePage.getPresetFilterType()).isEqualTo("Assigned To Me");
 
         explorePage = explorePage.selectPresetFilter("Recent")
             .enterKeySearch(componentName);
 
-        assertThat(explorePage.getPresetFilterType(), is(equalTo("Recent")));
+        softAssertions.assertThat(explorePage.getPresetFilterType()).isEqualTo("Recent");
     }
 }
