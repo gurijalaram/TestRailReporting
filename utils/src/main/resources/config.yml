@@ -286,7 +286,7 @@ local:
     api_url: ${local.base_url}:8810/
 
   cas:
-    ui_url: ${local.base_url}:3002
+    ui_url: ${local.base_url}:3002/
     api_url: ${local.base_url}:8818/%s
 
   cds:

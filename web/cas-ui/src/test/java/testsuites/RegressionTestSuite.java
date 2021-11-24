@@ -4,8 +4,9 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.customer.NewCustomerTests;
-import com.customer.systemconfiguration.SystemConfigurationGroupsTests;
-import com.customer.systemconfiguration.SystemConfigurationPermissionsTests;
+import com.login.LoginTests;
+import com.navigation.NavigationTests;
+
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -13,8 +14,9 @@ import org.junit.runners.Suite;
 @RunWith(CategorySuiteRunner.class)
 @Suite.SuiteClasses({
     NewCustomerTests.class,
-    SystemConfigurationGroupsTests.class,
-    SystemConfigurationPermissionsTests.class
+    LoginTests.class,
+    NavigationTests.class,
+    SystemConfigurationTestSuite.class
 })
 public final class RegressionTestSuite {
 }
