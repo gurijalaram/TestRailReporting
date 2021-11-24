@@ -194,10 +194,9 @@ public class ScenarioComparisonReportTests extends TestBase {
 
         genericReportPage.waitForCorrectAvailableSelectedCount(ListNameEnum.CREATED_BY.getListName(), "Selected: ", "1");
         assertThat(genericReportPage.getCountOfListAvailableOrSelectedItems(ListNameEnum.CREATED_BY.getListName(), "Selected"), is(equalTo("1")));
-
-        String expectedLastModifiedCount = PropertiesContext.get("${env}.name").equals("qa-cid-perf") ? "1" : "2";
+        
         genericReportPage.waitForCorrectAvailableSelectedCount(
-                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", expectedLastModifiedCount);
+                ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available: ", "2");
         String lastModifiedByAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
                 ListNameEnum.LAST_MODIFIED_BY.getListName(), "Available");
         String scenarioNameAvailableCountPostSelection = genericReportPage.getCountOfListAvailableOrSelectedItems(
