@@ -119,7 +119,7 @@ public class FileResourceUtil {
 
         S3Client s3Client;
 
-        if (System.getProperty("AWS_ACCESS_KEY_ID") != null) {
+        if (System.getenv("AWS_ACCESS_KEY_ID") != null) {
             s3Client = S3Client.builder()
                 .region(S3_REGION_NAME)
                 .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
