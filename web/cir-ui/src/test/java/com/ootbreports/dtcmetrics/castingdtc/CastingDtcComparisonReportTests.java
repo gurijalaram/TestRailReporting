@@ -333,7 +333,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.CASTING_ISSUES.getSortOrderEnum(),
             SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.CYLINDER.getSortOrderItemName()
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -346,7 +346,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MACHINING_ISSUES.getSortOrderEnum(),
             SortOrderItemsEnum.DTC_SAND.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -359,7 +359,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.MATERIAL_SCRAP.getSortOrderEnum(),
             SortOrderItemsEnum.OBSTRUCTED_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.BARCO_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.B2.getSortOrderItemName()
         );
     }
 
@@ -371,8 +371,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.TOLERANCES.getSortOrderEnum(),
-            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -384,8 +384,8 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests = new CommonReportTests(driver);
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SLOW_OPERATIONS.getSortOrderEnum(),
-            SortOrderItemsEnum.DTC_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.JEEP_INITIAL.getSortOrderItemName(),
+            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
         );
     }
 
@@ -398,7 +398,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.SPECIAL_TOOLING.getSortOrderEnum(),
             SortOrderItemsEnum.DU_TWO_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.GEAR_HOUSING_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.DU_THREE.getSortOrderItemName()
         );
     }
 
@@ -411,7 +411,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
         commonReportTests.castingDtcComparisonSortOrderTest(
             SortOrderEnum.ANNUAL_SPEND.getSortOrderEnum(),
             SortOrderItemsEnum.E3_INITIAL.getSortOrderItemName(),
-            SortOrderItemsEnum.DU_INITIAL.getSortOrderItemName()
+            SortOrderItemsEnum.MLDES.getSortOrderItemName()
         );
     }
 
