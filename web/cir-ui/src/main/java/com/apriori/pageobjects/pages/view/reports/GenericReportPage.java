@@ -1745,14 +1745,16 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage selectComponent(String componentName) {
         pageUtils.scrollWithJavaScript(componentSelectDropdown, true);
-        pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a"));
+        /*pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a"));
         pageUtils.waitForElementToAppear(currencyDropdown);
         pageUtils.waitForElementToAppear(By.xpath(String.format(genericDeselectLocator, "Scenario Name")));
         pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Select All']/a"));
-        pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Invert']/a"));
+        pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Invert']/a"));*/
+        pageUtils.waitForElementToAppear(componentSelectDropdown);
         componentSelectDropdown.click();
         componentSelectSearchInput.sendKeys(componentName);
-        pageUtils.waitForElementAndClick(By.xpath(String.format("//a[contains(text(), '%s')]", componentName)));
+        driver.findElement(By.xpath(String.format("//a[contains(text(), '%s')]", componentName))).click();
+        //pageUtils.waitForElementAndClick(By.xpath(String.format("//a[contains(text(), '%s')]", componentName)));
         return this;
     }
 

@@ -32,7 +32,6 @@ import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.CustomerSmokeTests;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -137,7 +136,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3205"})
     @Description("Verifies that currency change and then reversion works")
     public void testCurrencyCodeReversion() {
@@ -502,7 +501,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1930"})
     @Description("Test Export Set with costing failures costing incomplete")
     public void testExportSetWithCostingFailuresCostingIncomplete() {
@@ -588,7 +587,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1918"})
     @Description("Verify Export set of a part file is not available for selection")
     public void testAssemblySelectDropdown() {
@@ -868,7 +867,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1928"})
     @Description("Validate report content aligns to aP desktop values (many levels inside BOM)")
     public void testLevelsInsideBOM() {
@@ -900,7 +899,7 @@ public class AssemblyDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1933"})
     @Description("Verify component subassembly report details")
     public void testComponentSubAssemblyReportDetails() {
@@ -911,6 +910,7 @@ public class AssemblyDetailsReportTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(ExportSetEnum.SUB_SUB_ASM.getExportSetName(), AssemblyDetailsReportPage.class)
             .waitForExportSetSelection(ExportSetEnum.SUB_SUB_ASM.getExportSetName())
+            .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .selectComponent(AssemblySetEnum.SUB_SUB_ASM.getAssemblySetName())
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), AssemblyDetailsReportPage.class);
