@@ -468,7 +468,7 @@ public class InputControlsTests extends TestBase {
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
-            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
+            .selectExportSet(exportSet, GenericReportPage.class)
             .waitForExportSetSelection(exportSet)
             .selectMassMetric(massMetric)
             .clickOk(true, GenericReportPage.class)
@@ -495,7 +495,6 @@ public class InputControlsTests extends TestBase {
             .navigateToReport(reportName, genericReportPageClass)
             .waitForInputControlsLoad()
             .selectExportSet(exportSet, genericReportPageClass)
-            .selectExportSetDtcTests(exportSet, GenericReportPage.class)
             .setProcessGroup(processGroupName)
             .clickOk(true, genericReportPageClass);
 
@@ -1276,8 +1275,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSet, GenericReportPage.class)
-            .waitForCorrectRollup(RollupEnum.SHEET_METAL_DTC.getRollupName())
-            .selectCostMetric(costMetric)
+            .waitForCorrectRollup(RollupEnum.DTC_MACHINING_DATASET.getRollupName())
             .selectCostMetric(costMetric)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -1337,7 +1335,7 @@ public class InputControlsTests extends TestBase {
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(exportSet, GenericReportPage.class)
             //.waitForCorrectRollup("ALL CASTING (Initial)")
-            .waitForCorrectRollup("SHEET METAL DTC (Initial)")
+            .waitForCorrectRollup("DTC_MACHININGDATASET (Initial)")
             .setDtcScore(dtcScore)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);

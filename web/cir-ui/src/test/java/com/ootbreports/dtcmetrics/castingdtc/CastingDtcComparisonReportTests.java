@@ -27,6 +27,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -324,7 +325,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7643"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Casting - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingCastingIssues() {
@@ -337,7 +338,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7637"})
     @Description("Verify Sort Order input control functions correctly - Manufacturing Machining - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderManufacturingMachiningIssues() {
@@ -350,7 +351,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7638"})
     @Description("Verify Sort Order input control functions correctly - Material Scrap - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderMaterialScrap() {
@@ -363,7 +364,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7639"})
     @Description("Verify Sort Order input control functions correctly - Tolerances - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderTolerances() {
@@ -376,7 +377,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7640"})
     @Description("Verify Sort Order input control functions correctly - Slow Operations - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderSlowOperations() {
@@ -389,7 +390,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7641"})
     @Description("Verify Sort Order input control functions correctly - Special Tooling - Casting DTC Comparison Report ")
     public void testCastingDtcComparisonSortOrderSpecialTooling() {
@@ -402,7 +403,7 @@ public class CastingDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7642"})
     @Description("Verify Sort Order input control functions correctly - Annual Spend - Casting DTC Comparison Report")
     public void testCastingDtcComparisonSortOrderAnnualSpend() {

@@ -27,7 +27,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -103,7 +102,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3565"})
     @Description("Verify export date filters correctly filters export sets - Input - Machining DTC Report ")
     public void testBothExportDatesUsingInputField() {
@@ -123,7 +122,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7330"})
     @Description("Verify apply button functionality - Machining DTC Report")
     public void testApplyButton() {
@@ -169,7 +168,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2026"})
     @Description("Verify Export Sets are available for selection")
     public void testExportSetSelectionAndAvailability() {
@@ -203,7 +202,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3023"})
     @Description("Verify cost metric input control functions correctly - PPC - Machining DTC Report")
     public void testCostMetricInputControlPpc() {
@@ -216,7 +215,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7413"})
     @Description("Verify cost metric input control functions correctly - FBC - Machining DTC Report")
     public void testCostMetricInputControlFbc() {
@@ -229,7 +228,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3024"})
     @Description("Verify Mass Metric input control functions correctly - Finish Mass - Machining DTC Report")
     public void testMassMetricInputControlFinishMass() {
@@ -242,7 +241,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7393"})
     @Description("Verify Mass Metric input control functions correctly - Rough Mass - Machining DTC Report")
     public void testMassMetricInputControlRoughMass() {
@@ -255,7 +254,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7452"})
     @Description("Verify process group input control functionality - Stock Machining - Machining DTC Report")
     public void testProcessGroupStockMachiningOnly() {
@@ -268,7 +267,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7451"})
     @Description("Verify process group input control functionality - 2 Model Machining - Machining DTC Report")
     public void testProcessGroupTwoModelMachiningOnly() {
@@ -281,7 +280,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7456"})
     @Description("Verify process group input control functionality - 2 Model and Stock Machining - Machining DTC Report")
     public void testProcessGroupSandAndDieCasting() {
@@ -290,7 +289,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7457"})
     @Description("Verify DTC Score Input Control - No Selection - Machining DTC Report")
     public void testDtcScoreNoSelection() {
@@ -302,7 +301,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7460"})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Report")
     public void testDtcScoreLow() {
@@ -315,7 +314,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7498"})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Report")
     public void testDtcScoreMedium() {
@@ -328,7 +327,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7501"})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Report")
     public void testDtcScoreHigh() {
@@ -341,7 +340,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"2039"})
     @Description("Validate links to component cost detail report (incl. headers etc.)")
     public void testComponentCostDetailReportLink() {
@@ -446,7 +445,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"3027"})
     @Description("Verify Minimum Annual Spend input control functions correctly")
     public void testMinimumAnnualSpend() {
@@ -478,7 +477,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7659"})
     @Description("Verify Select Parts list is correctly filtered by input control - Export Set - Machining DTC Report")
     public void testPartListFilterByInputControlsExportSets() {

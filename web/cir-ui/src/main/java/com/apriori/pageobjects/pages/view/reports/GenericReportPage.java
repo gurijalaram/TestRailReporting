@@ -727,14 +727,13 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage setProcessGroup(String processGroupOption) {
         deselectAllProcessGroups();
-        deselectAllProcessGroups();
-        pageUtils.waitForElementToAppear(
-                By.xpath(String.format("//div[@id='processGroup']//span[@title='Selected: %s']", 0)));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
 
+        pageUtils.waitForSteadinessOfElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption)));
         driver.findElement(By.xpath(String.format("(//li[@title='%s'])[1]/div/a", processGroupOption))).click();
 
-        pageUtils.waitForElementToAppear(
-                By.xpath(String.format("//div[@id='processGroup']//span[@title='Selected: %s']", 1)));
+        pageUtils.waitForElementNotDisplayed(loadingPopup, 1);
+        pageUtils.waitForElementToAppear(By.xpath("//div[@id='processGroup']//span[@title='Selected: 1']"));
         return this;
     }
 
@@ -747,8 +746,6 @@ public class GenericReportPage extends ReportsPageHeader {
     public boolean isListWarningDisplayedAndEnabled(String listName) {
         By locator = By.xpath(
                 String.format("//div[@id='%s']//span[contains(text(), 'This field is mandatory')]", listName));
-        /*WebElement elementToClick = listName.equals("processGroup") ? dtcScoreControlTitle : selectPartsControlTitle;
-        elementToClick.click();*/
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).isDisplayed() && driver.findElement(locator).isEnabled();
     }
