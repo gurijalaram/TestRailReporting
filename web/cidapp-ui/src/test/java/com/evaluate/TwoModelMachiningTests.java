@@ -19,7 +19,9 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -72,6 +74,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
@@ -127,6 +130,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -174,6 +178,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -188,6 +193,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(twoModel1PartName)
             .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
             .submit(EvaluatePage.class)
@@ -229,6 +235,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -285,6 +292,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -295,6 +303,7 @@ public class TwoModelMachiningTests extends TestBase {
 
         evaluatePage.selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(source2PartName)
             .highlightScenario(source2PartName, source2ScenarioName)
             .submit(EvaluatePage.class)
@@ -333,6 +342,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(wrongSourcePartName)
             .highlightScenario(wrongSourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
