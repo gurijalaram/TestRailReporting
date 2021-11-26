@@ -5,8 +5,11 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -72,6 +75,18 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
      */
     public ModifyComparisonPage selectFilter(String filter) {
         pageUtils.typeAheadSelect(filterDropdown, filter);
+        return this;
+    }
+
+    /**
+     * Sorts the column
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ModifyComparisonPage sortColumn(ColumnsEnum column, SortOrderEnum order) {
+        scenarioTableController.sortColumn(column, order);
         return this;
     }
 
