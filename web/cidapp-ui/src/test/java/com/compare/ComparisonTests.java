@@ -37,6 +37,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -124,6 +125,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"5778"})
     @Description("In comparison view, user can access any scenario included in the comparison (private and public)")
     public void accessAnyScenario() {
@@ -441,6 +443,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"7033"})
     @Description("Validate user can drag and drop rows of comparison")
     public void dragAndDropCard() {
@@ -471,6 +474,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"5797"})
     @Description("All Design Guidance from scenarios respected in comparison when scenario is added")
     public void designGuidanceInComparison() {
@@ -591,6 +595,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"5800"})
     @Description("Publish private scenarios that are included in the comparison")
     public void publishScenarioOfComparison() {
@@ -650,6 +655,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"7020"})
     @Description("Validate arrows are correct colour and direction in comparisons")
     public void validateArrowsInComparison() {
@@ -687,6 +693,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"7021"})
     @Description("Validate percentages are correct in comparison")
     public void validatePercentageInComparison() {

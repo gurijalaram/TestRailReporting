@@ -21,6 +21,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -89,6 +90,7 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"6103"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {

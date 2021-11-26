@@ -20,6 +20,7 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -151,6 +152,7 @@ public class DTCMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"6444"})
     @Description("Testing DTC Machining Missing Setups")
     public void testDTCMissingSetup() {

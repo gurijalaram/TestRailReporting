@@ -24,6 +24,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -96,6 +97,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @Issue("BA-2139")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
@@ -201,6 +203,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @Issue("BA-2139")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})
@@ -244,6 +247,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Category(AdhocTests.class)
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
