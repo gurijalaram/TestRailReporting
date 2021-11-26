@@ -100,7 +100,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @Issue("BA-2139")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
@@ -209,7 +208,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @Issue("BA-2139")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})

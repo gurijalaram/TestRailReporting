@@ -90,7 +90,6 @@ public class ReCostScenarioTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"6103"})
     @Description("Test recosting a cad file - Partially Automated Machining")
     public void testRecostPartiallyAutomatedMachining() {

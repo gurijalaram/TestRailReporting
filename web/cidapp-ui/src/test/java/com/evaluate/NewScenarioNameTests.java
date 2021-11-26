@@ -113,7 +113,6 @@ public class NewScenarioNameTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
     public void multipleUpload() {

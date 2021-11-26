@@ -139,7 +139,6 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @Issue("BA-2136")
     @TestRail(testCaseId = {"6211"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")

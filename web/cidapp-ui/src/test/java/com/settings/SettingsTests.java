@@ -90,7 +90,6 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @TestRail(testCaseId = {"6281", "5442"})
     @Description("User can change the default Process group")
     public void defaultPG() {
