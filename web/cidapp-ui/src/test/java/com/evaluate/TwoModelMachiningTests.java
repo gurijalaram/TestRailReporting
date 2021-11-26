@@ -252,7 +252,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Category(AdhocTests.class)
     @Description("Validate the user can switch the source part")
     @TestRail(testCaseId = {"6467", "7873", "7874"})
     public void switchSourcePart() {
