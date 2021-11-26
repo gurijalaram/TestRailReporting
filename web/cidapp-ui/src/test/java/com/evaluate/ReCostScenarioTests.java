@@ -103,6 +103,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
