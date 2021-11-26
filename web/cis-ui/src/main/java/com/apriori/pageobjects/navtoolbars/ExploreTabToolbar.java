@@ -49,6 +49,15 @@ public class ExploreTabToolbar extends MainNavigationBar {
         return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
     }
 
+    public String deploymentInfo(String info) {
+        if (info.equalsIgnoreCase("Production")){
+            return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
+        }else if (info.equalsIgnoreCase("Sandbox")){
+            return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
+        }
+        return info;
+    }
+
     /**
      * Check if the Start comparison button is enabled
      *

@@ -29,10 +29,12 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = "9432")
     @Description("Successfully login with valid user")
     public void testLogin() {
+        String info = "Production";
         loginPage = new CisLoginPage(driver);
         exploreTabToolbar = loginPage.login(UserUtil.getUser());
 
-        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo("Production")));
+        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo(info)));
+        assertThat(exploreTabToolbar.deploymentInfo(info), is(equalTo(info)));
     }
 
     @Test
