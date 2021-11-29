@@ -157,7 +157,7 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3359"})
     @Description("Validate Currency drop-down Input Control")
     public void testCurrencyCodeInputControl() {
@@ -168,15 +168,15 @@ public class TargetAndQuotedCostTrendReportTests extends TestBase {
                         TargetQuotedCostTrendReportPage.class);
 
         targetQuotedCostTrendReportPage.selectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetQuotedCostTrendReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
+                .clickOk(true, TargetQuotedCostTrendReportPage.class);
+                //.waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String usdFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
         targetQuotedCostTrendReportPage.clickInputControlsButton()
                 .selectCurrency(CurrencyEnum.GBP.getCurrency(), GenericReportPage.class)
-                .clickOk(true, TargetQuotedCostTrendReportPage.class)
-                .waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
+                .clickOk(true, TargetQuotedCostTrendReportPage.class);
+                //.waitForCorrectCurrency(CurrencyEnum.GBP.getCurrency(), TargetQuotedCostTrendReportPage.class);
 
         String gbpFinalAprioriCost = targetQuotedCostTrendReportPage.getFinalAprioriCost();
 
