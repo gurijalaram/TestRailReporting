@@ -27,6 +27,7 @@ import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.enums.reports.RollupEnum;
 import com.apriori.utils.web.driver.TestBase;
 
+import net.sf.saxon.functions.GenerateId_1;
 import org.assertj.core.api.BooleanAssert;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
@@ -1279,6 +1280,12 @@ public class InputControlsTests extends TestBase {
             .selectCostMetric(costMetric)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
+
+        genericReportPage.clickInputControlsButton()
+                .waitForInputControlsLoad()
+                .selectCostMetric(costMetric)
+                .selectCostMetric(costMetric)
+                .clickOk(true, GenericReportPage.class);
 
         assertThat(genericReportPage.getCostMetricValueFromAboveChart(), is(equalTo(String.format("%s", costMetric))));
     }

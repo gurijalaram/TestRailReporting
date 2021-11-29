@@ -608,7 +608,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of GenericReportPage.java
      */
     public GenericReportPage waitForCorrectRollup(String rollup) {
-        By locator = By.xpath(String.format("//div[@id='rollup']//a[@title='%s ']", rollup));
+        By locator = By.xpath(String.format("//div[@id='rollup']//a[contains(@title, '%s')]", rollup));
         pageUtils.waitForElementToAppear(locator);
         return this;
     }
@@ -823,7 +823,7 @@ public class GenericReportPage extends ReportsPageHeader {
     public GenericReportPage selectCostMetric(String costMetric) {
         pageUtils.scrollWithJavaScript(costMetricDropdown, true);
         if (!costMetricDropdown.getAttribute("title").equals(costMetric)) {
-            pageUtils.waitForElementToAppear(By.xpath("//div[@id='sortOrder']"));
+            /*pageUtils.waitForElementToAppear(By.xpath("//div[@id='sortOrder']"));
             pageUtils.waitForElementToAppear(applyButton);
             pageUtils.waitForElementToAppear(okButton);
             pageUtils.waitForElementToAppear(resetButton);
@@ -834,10 +834,11 @@ public class GenericReportPage extends ReportsPageHeader {
             pageUtils.waitForElementToAppear(inputControlsButton);
             pageUtils.waitForElementToAppear(zoomInButton);
             pageUtils.waitForElementToAppear(zoomOutButton);
-            pageUtils.waitForElementToAppear(zoomValueDropdown);
-
+            pageUtils.waitForElementToAppear(zoomValueDropdown);*/
             pageUtils.waitForElementAndClick(costMetricDropdown);
             pageUtils.waitForElementAndClick(By.xpath(String.format("//li[@title='%s']/div/a", costMetric)));
+            pageUtils.waitForElementToAppear(
+                    By.xpath(String.format("//div[@id='costMetric']//a[@title='%s']", costMetric)));
         }
         return this;
     }

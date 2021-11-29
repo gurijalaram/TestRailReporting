@@ -26,6 +26,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -182,7 +183,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7421"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
@@ -195,7 +196,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7422"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
