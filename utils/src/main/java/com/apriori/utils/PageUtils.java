@@ -1209,6 +1209,24 @@ public class PageUtils {
     }
 
     /**
+     * Gets the label for a value in a given section.
+     *
+     * @param tag The HTML tag of the target element.
+     * @param text The text of the element to search for.
+     * @param root The parent search context element.
+     * @return The web element found or null if no such element appears within a reasonable timeframe.
+     */
+    public WebElement findElementByText(String tag, String text, SearchContext root) {
+        try {
+            By query = By.xpath(String.format("//%s[.='%s']", tag, text));
+            waitForCondition(() -> root.findElements(query).size() > 0, DURATION_FAST);
+            return root.findElement(query);
+        } catch (TimeoutException | NoSuchElementException e) {
+            return null;
+        }
+    }
+
+    /**
      * Attempts to find a supported loader element.
      *
      * @param search The search root to search for a loader under.
