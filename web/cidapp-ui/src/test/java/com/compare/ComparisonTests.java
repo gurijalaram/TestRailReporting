@@ -37,6 +37,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -146,6 +147,7 @@ public class ComparisonTests extends TestBase {
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .openBasisScenario();
@@ -158,6 +160,7 @@ public class ComparisonTests extends TestBase {
             .publish(cssItemA, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(componentName2, scenarioName2)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -323,6 +326,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .modify()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .selectScenario(componentName3, scenarioName3)
             .submit(ComparePage.class);
 
@@ -330,6 +334,7 @@ public class ComparisonTests extends TestBase {
 
         comparePage.modify()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .selectScenario(componentName4, scenarioName4)
             .submit(ComparePage.class);
 
@@ -460,6 +465,7 @@ public class ComparisonTests extends TestBase {
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
@@ -496,6 +502,7 @@ public class ComparisonTests extends TestBase {
 
         comparePage = evaluatePage.clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
@@ -523,10 +530,12 @@ public class ComparisonTests extends TestBase {
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
             .delete()
             .submit(ExplorePage.class)
@@ -573,6 +582,7 @@ public class ComparisonTests extends TestBase {
             .publish(cssItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "", "" + componentName + ", " + scenarioName + "")
             .createComparison()
             .clickExplore()
@@ -618,10 +628,12 @@ public class ComparisonTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
             .publishScenario()
             .publish(cssItemB, currentUser, ExplorePage.class)
@@ -636,6 +648,7 @@ public class ComparisonTests extends TestBase {
 
         evaluatePage = comparePage.clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .publishScenario()
             .publish(cssItemA, currentUser, ExplorePage.class)
@@ -673,6 +686,7 @@ public class ComparisonTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
@@ -710,6 +724,7 @@ public class ComparisonTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 

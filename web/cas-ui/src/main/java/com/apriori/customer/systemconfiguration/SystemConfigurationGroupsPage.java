@@ -9,6 +9,7 @@ import com.apriori.utils.web.components.SourceListComponent;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.SearchContext;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -46,6 +47,8 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     @FindBy(className = "group-details-right")
     private WebElement groupDetailsRight;
 
+    private PageUtils pageUtils;
+
     /**
      * Initializes a new instance of this object.
      *
@@ -57,6 +60,7 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
         associatedPermissions = new SourceListComponent(getDriver(), associatedPermissionsRoot);
         members = new SourceListComponent(getDriver(), membersRoot);
         attributes = new SourceListComponent(getDriver(), attributesRoot);
+        pageUtils = getPageUtils();
     }
 
     /**
@@ -96,23 +100,6 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the label for a value in a given section.
-     *
-     * @param name The name of the label to search for.
-     * @param panel The parent search context element.
-     * @return The web element found or null if no such element appears within a reasonable timeframe.
-     */
-    private WebElement getLabel(String name, WebElement panel) {
-        try {
-            By query = By.xpath(String.format("//label[.='%s']", name));
-            getPageUtils().waitForCondition(() -> panel.findElements(query).size() > 0, PageUtils.DURATION_SLOW);
-            return panel.findElement(query);
-        } catch (TimeoutException | NoSuchElementException e) {
-            return null;
-        }
-    }
-
-    /**
      * Gets the value element given a name.
      * @param name The name of the field element.
      * @param panel The panel that the value is expected to be in.
@@ -133,12 +120,21 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the label for number of permissions.
+     * Gets the label for the given name in left side of group details.
      *
-     * @return The label for number of permissions or null if it cannot be found.
+     * @return The label for the given name.
      */
-    public WebElement getNumberOfPermissionsLabel() {
-        return getLabel("Number of Permissions:", groupDetailsLeft);
+    public WebElement getLeftLabel(String name) {
+        return pageUtils.findElementByText("label", name + ":", groupDetailsLeft);
+    }
+
+    /**
+     * Gets the label for the given name in left side of group details.
+     *
+     * @return The label for the given name.
+     */
+    public WebElement getRightLabel(String name) {
+        return pageUtils.findElementByText("label", name + ":", groupDetailsRight);
     }
 
     /**
@@ -151,30 +147,12 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the label for the number of subgroups.
-     *
-     * @return The label for the total number of subgroups or null if it cannot be found.
-     */
-    public WebElement getNumberOfSubgroupsLabel() {
-        return getLabel("Number of Subgroups:", groupDetailsLeft);
-    }
-
-    /**
      * Gets the number of subgroups.
      *
      * @return The number of subgroups or null if the value cannot be found.
      */
     public Long getNumberOfSubgroups() {
         return getValue("subgroupNumber", groupDetailsLeft, Long::parseLong);
-    }
-
-    /**
-     * Gets the label for who created the group.
-     *
-     * @return The label for who created the group or null if it cannot be found.
-     */
-    public WebElement getCreatedByLabel() {
-        return getLabel("Created By:", groupDetailsLeft);
     }
 
     /**
@@ -187,15 +165,6 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the label for who created the group.
-     *
-     * @return The label for when the group was created or null if it cannot be found.
-     */
-    public WebElement getCreatedAtLabel() {
-        return getLabel("Created At:", groupDetailsLeft);
-    }
-
-    /**
      * Gets the created at value.
      *
      * @return The created at value or null if the value cannot be found.
@@ -205,30 +174,12 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the label for the group identity.
-     *
-     * @return The label for the group identity or null if it cannot be found.
-     */
-    public WebElement getIdentityLabel() {
-        return getLabel("Identity:", groupDetailsRight);
-    }
-
-    /**
      * Gets the identity of the group.
      *
      * @return The identity of the group or null if it cannot be found.
      */
     public String getIdentity() {
         return getValue("identity", groupDetailsRight, (v) -> v);
-    }
-
-    /**
-     * Gets the label for the last person to update the group.
-     *
-     * @return The label for the last person to update the group.
-     */
-    public WebElement getUpdatedByLabel() {
-        return getLabel("Updated By:", groupDetailsRight);
     }
 
     /**
@@ -242,15 +193,6 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
     }
 
     /**
-     * Gets the label for the last time the group was updated.
-     *
-     * @return The label for the last time the group was updated.
-     */
-    public WebElement getUpdatedAtLabel() {
-        return getLabel("Updated At:", groupDetailsRight);
-    }
-
-    /**
      * Gets the last time the group was updated.
      *
      * @return The last time the group was updated or null if the value cannot be found.  This will
@@ -258,15 +200,6 @@ public final class SystemConfigurationGroupsPage extends EagerPageComponent<Syst
      */
     public String getUpdatedAt() {
         return getValue("updatedAt", groupDetailsRight, (v) -> v);
-    }
-
-    /**
-     * Gets the label for the description.
-     *
-     * @return The label for the description.
-     */
-    public WebElement getDescriptionLabel() {
-        return getLabel("Description:", groupDetailsRight);
     }
 
     /**
