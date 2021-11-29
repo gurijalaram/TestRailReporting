@@ -1,11 +1,11 @@
 package com.apriori;
 
-import com.apriori.apibase.services.PropertyStore;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.entity.response.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
+
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.json.utils.JsonManager;
@@ -14,7 +14,7 @@ import io.qameta.allure.Description;
 import junitparams.FileParameters;
 import junitparams.JUnitParamsRunner;
 import junitparams.mappers.IdentityMapper;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -24,12 +24,6 @@ import java.util.List;
 
 @RunWith(JUnitParamsRunner.class)
 public class CidWorkorderAPITests extends TestUtil {
-
-    @BeforeClass
-    public static void testSetup() {
-        JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile("property-store.json").getPath(), PropertyStore.class);
-    }
 
     @Test
     @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")

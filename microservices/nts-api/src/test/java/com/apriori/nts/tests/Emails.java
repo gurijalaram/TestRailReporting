@@ -5,9 +5,7 @@ import com.apriori.nts.apicalls.EmailService;
 import com.apriori.nts.entity.response.GetEmailResponse;
 import com.apriori.nts.entity.response.SendEmailResponse;
 import com.apriori.nts.utils.Constants;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
@@ -41,8 +39,6 @@ public class Emails {
     public void getEmails() {
         GetEmailResponse getEmailResponse = EmailService.getEmails();
         propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
-        JsonManager.serializeJsonToFile(FileResourceUtil.getResourceAsFile("property-store.json").getPath(),
-            propertyStore);
     }
 
     @Test
