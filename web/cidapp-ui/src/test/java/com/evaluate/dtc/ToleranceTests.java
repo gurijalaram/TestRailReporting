@@ -720,6 +720,7 @@ public class ToleranceTests extends TestBase {
             .logout()
             .login(currentUser)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openSettings()
             .goToToleranceTab();
 
