@@ -1,4 +1,4 @@
-package com.apriori.newcustomer.users;
+package com.apriori.customer.users.profile;
 
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.customeradmin.NavToolbar;
