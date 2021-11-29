@@ -608,7 +608,7 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return instance of GenericReportPage.java
      */
     public GenericReportPage waitForCorrectRollup(String rollup) {
-        By locator = By.xpath(String.format("//div[@id='rollup']//a[@title='%s']", rollup));
+        By locator = By.xpath(String.format("//div[@id='rollup']//a[@title='%s ']", rollup));
         pageUtils.waitForElementToAppear(locator);
         return this;
     }

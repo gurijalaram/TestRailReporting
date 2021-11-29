@@ -1275,7 +1275,7 @@ public class InputControlsTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .selectExportSet(exportSet, GenericReportPage.class)
-            .waitForCorrectRollup(RollupEnum.DTC_MACHINING_DATASET.getRollupName())
+            .waitForCorrectRollup(RollupEnum.SHEET_METAL_DTC.getRollupName())
             .selectCostMetric(costMetric)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
