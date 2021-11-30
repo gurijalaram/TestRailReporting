@@ -1,6 +1,6 @@
 package com.settings;
 
-import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
+import static com.apriori.utils.enums.ScenarioStateEnum.COSTING_FAILED;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -111,7 +111,7 @@ public class SettingsTests extends TestBase {
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .costScenario()
             .publishScenario()
-            .publish(cssItem, PROCESSING_FAILED, currentUser, EvaluatePage.class);
+            .publish(cssItem, COSTING_FAILED, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
