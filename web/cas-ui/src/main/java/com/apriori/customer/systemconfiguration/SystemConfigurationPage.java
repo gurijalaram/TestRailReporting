@@ -2,6 +2,7 @@ package com.apriori.customer.systemconfiguration;
 
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.utils.web.components.RoutingComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -14,10 +15,12 @@ import org.openqa.selenium.support.FindBy;
 @Slf4j
 public final class SystemConfigurationPage extends EagerPageComponent<SystemConfigurationPage> {
     @FindBy(css = ".system-configuration-tab-groups a")
-    private WebElement groupsTab;
+    private WebElement groupsTabRoot;
+    private final RoutingComponent groupsTab;
 
     @FindBy(css = ".system-configuration-tab-permissions a")
-    private WebElement permissionsTab;
+    private WebElement permissionsTabRoot;
+    private final RoutingComponent permissionsTab;
 
     /**
      * Initializes a new instance of this object.
@@ -26,6 +29,8 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      */
     public SystemConfigurationPage(WebDriver driver) {
         super(driver, log);
+        groupsTab = new RoutingComponent(getDriver(), groupsTabRoot);
+        permissionsTab = new RoutingComponent(getDriver(), permissionsTabRoot);
     }
 
     /**
@@ -34,7 +39,7 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      * @return The groups page object model.
      */
     public SystemConfigurationGroupsPage goToGroupsPage() {
-        this.getPageUtils().waitForElementAndClick(groupsTab);
+        groupsTab.navigate();
         return new SystemConfigurationGroupsPage(getDriver());
     }
 
@@ -44,7 +49,7 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      * @return The permissions page object model.
      */
     public SystemConfigurationPermissionsPage goToPermissionsPage() {
-        this.getPageUtils().waitForElementAndClick(permissionsTab);
+        permissionsTab.navigate();
         return new SystemConfigurationPermissionsPage(getDriver());
     }
 
@@ -55,8 +60,8 @@ public final class SystemConfigurationPage extends EagerPageComponent<SystemConf
      */
     @Override
     protected void isLoaded() throws Error {
-        this.getPageUtils().waitForElementToAppear(groupsTab);
-        this.getPageUtils().waitForElementToAppear(permissionsTab);
+        this.getPageUtils().waitForElementToAppear(groupsTabRoot);
+        this.getPageUtils().waitForElementToAppear(permissionsTabRoot);
     }
 
     /**
