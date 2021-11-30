@@ -26,11 +26,11 @@ public final class StaffAddModal extends ModalComponent<StaffAddModal> implement
     }
 
     /**
-     * Gets the underlying users source list.
+     * Gets the underlying user candidates source list.
      *
-     * @return The users source list.
+     * @return The user candidates source list.
      */
-    public SourceListComponent getUsers() {
+    public SourceListComponent getCandidates() {
         WebElement root = getPageUtils().waitForElementToAppear(BY_SOURCE_LIST, PageUtils.DURATION_FAST, getBodyRoot());
         SourceListComponent users = new SourceListComponent(getDriver(), root);
         getPageUtils().waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
