@@ -168,7 +168,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7519"})
     @Description("Verify DTC Score Input Control - No Selection - Plastic DTC Details Report")
     public void testDtcScoreNoSelection() {
@@ -180,7 +180,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7522"})
     @Description("Verify DTC Score Input Control - Low Selection - Plastic DTC Details Report")
     public void testDtcScoreLow() {
@@ -193,7 +193,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7525"})
     @Description("Verify DTC Score Input Control - Medium Selection - Plastic DTC Details Report")
     public void testDtcScoreMedium() {
@@ -206,7 +206,7 @@ public class PlasticDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7528"})
     @Description("Verify DTC Score Input Control - High Selection - Plastic DTC Details Report")
     public void testDtcScoreHigh() {
