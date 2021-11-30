@@ -64,7 +64,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         } while (batchPartsInProcess.size() != 0 || countOfAttempts == Constants.POLLING_INTERVALS);
 
 
-        if(erroredBatchParts.size() != 0) {
+        if (erroredBatchParts.size() != 0) {
             StringBuilder errorLog = new StringBuilder("Errored parts: \n");
             erroredBatchParts.forEach(part -> {
                 errorLog.append("Part identity: ")
