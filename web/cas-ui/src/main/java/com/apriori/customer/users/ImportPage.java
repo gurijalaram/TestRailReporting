@@ -1,4 +1,4 @@
-package com.apriori.newcustomer.users;
+package com.apriori.customer.users;
 
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.FileImport;
