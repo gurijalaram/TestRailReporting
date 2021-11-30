@@ -55,7 +55,7 @@ public class SettingsTests extends TestBase {
         }
     }
 
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6283"})
     @Description("User can change the default Production Defaults")
