@@ -31,6 +31,7 @@ import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -79,6 +80,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
             .info()
@@ -88,6 +90,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName,scenarioName)
             .info();
@@ -122,6 +125,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -437,6 +441,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -446,6 +451,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -491,6 +497,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -621,6 +628,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -630,6 +638,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -668,6 +677,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
