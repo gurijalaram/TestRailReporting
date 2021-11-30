@@ -1,6 +1,5 @@
 package com.settings;
 
-import static com.apriori.utils.enums.ScenarioStateEnum.COSTING_FAILED;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -33,7 +32,6 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -57,7 +55,7 @@ public class SettingsTests extends TestBase {
         }
     }
 
-    @Category({SmokeTests.class})
+    @Category( {SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6283"})
     @Description("User can change the default Production Defaults")
@@ -112,7 +110,7 @@ public class SettingsTests extends TestBase {
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .costScenario()
             .publishScenario()
-            .publish(cssItem, COSTING_FAILED, currentUser, EvaluatePage.class);
+            .publish(cssItem, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }

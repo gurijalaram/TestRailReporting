@@ -5,7 +5,6 @@ import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
@@ -177,25 +176,10 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public <T> T publish(Item cssItem, UserCredentials currentUser, Class<T> klass) {
         modalDialogController.publish(klass);
-        new CidAppTestUtil().getScenarioRepresentation(cssItem, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, currentUser);
+        new CidAppTestUtil().getScenarioRepresentation(cssItem, "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
     }
 
-
-    /**
-     * Select the publish button
-     *
-     * @param cssItem       - the css item
-     * @param scenarioState - the scenario state
-     * @param currentUser   - the current user
-     * @param <T>           - the object type
-     * @return generic page object
-     */
-    public <T> T publish(Item cssItem, ScenarioStateEnum scenarioState, UserCredentials currentUser, Class<T> klass) {
-        modalDialogController.publish(klass);
-        new CidAppTestUtil().getScenarioRepresentation(cssItem, scenarioState, "PUBLISH", true, currentUser);
-        return PageFactory.initElements(driver, klass);
-    }
 
     /**
      * Select the continue button
