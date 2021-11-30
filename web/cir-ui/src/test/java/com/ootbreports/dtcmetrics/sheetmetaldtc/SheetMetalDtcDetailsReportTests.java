@@ -183,7 +183,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7421"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricPpc() {
@@ -196,7 +196,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7422"})
     @Description("Verify cost metric input control functions correctly - PPC - Sheet Metal DTC Details Report")
     public void testCostMetricFbc() {
@@ -417,7 +417,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7534"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreLow() {
@@ -430,7 +430,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7537"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreMedium() {
@@ -443,7 +443,7 @@ public class SheetMetalDtcDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7540"})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Details Report")
     public void testDtcScoreHigh() {

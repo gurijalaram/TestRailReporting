@@ -37,18 +37,22 @@ import utils.Constants;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class InputControlsTests extends TestBase {
 
     private TargetQuotedCostTrendReportPage targetQuotedCostTrendReportPage;
     private SheetMetalDtcReportPage sheetMetalDtcReportPage;
+    private Map<String, String> rollupMap = new HashMap<>();
     private GenericReportPage genericReportPage;
     private final WebDriver driver;
 
     public InputControlsTests(WebDriver driver) {
         super();
         this.driver = driver;
+        initialiseRollupMap();
     }
 
     /**
@@ -1335,14 +1339,15 @@ public class InputControlsTests extends TestBase {
     }
 
     private void dtcScoreTestCore(String reportName, String exportSet, String dtcScore) {
+        String rollupToExpect = getRollupToExpect(exportSet);
+
         genericReportPage = new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage()
             .navigateToReport(reportName, GenericReportPage.class)
             .waitForInputControlsLoad()
             .selectExportSetDtcTests(exportSet, GenericReportPage.class)
-            //.waitForCorrectRollup("ALL CASTING (Initial)")
-            .waitForCorrectRollup("DTC_MACHININGDATASET (Initial)")
+            .waitForCorrectRollup(rollupToExpect)
             .setDtcScore(dtcScore)
             .clickOk(true, GenericReportPage.class)
             .waitForCorrectCurrency(CurrencyEnum.USD.getCurrency(), GenericReportPage.class);
@@ -1375,5 +1380,17 @@ public class InputControlsTests extends TestBase {
 
     private void assertIsTooltipElementVisible(String tooltipKey) {
         assertThat(genericReportPage.isTooltipElementVisible(tooltipKey), is(true));
+    }
+
+    private void initialiseRollupMap() {
+        rollupMap.put(ExportSetEnum.CASTING_DTC.getExportSetName(), RollupEnum.UC_CASTING_DTC_ALL.getRollupName());
+        rollupMap.put(ExportSetEnum.MACHINING_DTC_DATASET.getExportSetName(),
+                RollupEnum.DTC_MACHINING_DATASET.getRollupName());
+        rollupMap.put(ExportSetEnum.ROLL_UP_A.getExportSetName(), RollupEnum.ROLL_UP_A.getRollupName());
+        rollupMap.put(ExportSetEnum.SHEET_METAL_DTC.getExportSetName(), RollupEnum.SHEET_METAL_DTC.getRollupName());
+    }
+
+    private String getRollupToExpect(String exportSet) {
+        return rollupMap.get(exportSet);
     }
 }

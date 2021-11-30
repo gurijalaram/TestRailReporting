@@ -2,7 +2,6 @@ package com.apriori.pageobjects.pages.view.reports;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
@@ -37,7 +36,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private final Map<String, WebElement> costDesignOutlierMap = new HashMap<>();
     private final Map<String, WebElement> dtcScoreBubbleMap = new HashMap<>();
     private final Map<String, WebElement> tooltipElementMap = new HashMap<>();
-    private final Map<String, WebElement> currencyMap = new HashMap<>();
     private final Map<String, WebElement> partNameMap = new HashMap<>();
     private final Map<String, WebElement> bubbleMap = new HashMap<>();
     private String reportName = "";
@@ -537,7 +535,6 @@ public class GenericReportPage extends ReportsPageHeader {
         initialiseCostDesignOutlierMap();
         initialiseTooltipElementMap();
         initialiseDtcScoreBubbleMap();
-        initialiseCurrencyMap();
         initialisePartNameMap();
         initialiseBubbleMap();
     }
@@ -1743,16 +1740,10 @@ public class GenericReportPage extends ReportsPageHeader {
      */
     public GenericReportPage selectComponent(String componentName) {
         pageUtils.scrollWithJavaScript(componentSelectDropdown, true);
-        /*pageUtils.waitForElementToAppear(By.xpath("//label[@title='Component Select']//a"));
-        pageUtils.waitForElementToAppear(currencyDropdown);
-        pageUtils.waitForElementToAppear(By.xpath(String.format(genericDeselectLocator, "Scenario Name")));
-        pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Select All']/a"));
-        pageUtils.waitForElementToAppear(By.xpath("//div[@title='Scenario Name']//li[@title='Invert']/a"));*/
         pageUtils.waitForElementToAppear(componentSelectDropdown);
         componentSelectDropdown.click();
         componentSelectSearchInput.sendKeys(componentName);
-        driver.findElement(By.xpath(String.format("//a[contains(text(), '%s')]", componentName))).click();
-        //pageUtils.waitForElementAndClick(By.xpath(String.format("//a[contains(text(), '%s')]", componentName)));
+        driver.findElement(By.xpath(String.format("//li[@title='%s']", componentName))).click();
         return this;
     }
 
@@ -2327,14 +2318,6 @@ public class GenericReportPage extends ReportsPageHeader {
     private void setYearValuePicker(String valueToSelect) {
         Select yearSelect = new Select(datePickerYearSelect);
         yearSelect.selectByValue(valueToSelect);
-    }
-
-    /**
-     * Initialises export set hash map
-     */
-    private void initialiseCurrencyMap() {
-        currencyMap.put(CurrencyEnum.GBP.getCurrency(), gbpCurrencyOption);
-        currencyMap.put(CurrencyEnum.USD.getCurrency(), usdCurrencyOption);
     }
 
     /**
