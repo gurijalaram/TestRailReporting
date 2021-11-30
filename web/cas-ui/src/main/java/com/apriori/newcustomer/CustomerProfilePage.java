@@ -1,5 +1,7 @@
 package com.apriori.newcustomer;
 
+import com.apriori.customer.CustomerWorkspacePage;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
@@ -347,5 +349,18 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     public CustomerProfilePage clickSaveButton() {
         getPageUtils().waitForElementAndClick(saveButton);
         return new CustomerProfilePage(getDriver());
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return CustomerWorkspacePage
+     */
+    public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/profile";
+        driver.navigate().to(String.format(url, customer));
+        return new CustomerWorkspacePage(driver);
     }
 }
