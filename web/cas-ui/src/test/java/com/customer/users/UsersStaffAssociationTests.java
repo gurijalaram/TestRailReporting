@@ -166,7 +166,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
     @Test
     @Description("Verify enable and disable.")
-    @TestRail(testCaseId = {"5592, 5593"})
+    @TestRail(testCaseId = {"5592", "5593"})
     public void testVerifyAssociatedStaffCanBeDisabledAndEnabled() {
 
         populateStaffTestUsers(2);
