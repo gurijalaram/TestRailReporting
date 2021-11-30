@@ -113,10 +113,6 @@ public class CostingScenarioTest extends TestUtil {
         PropertyStore propertyStore = new PropertyStore();
         propertyStore.setBatchIdentity(batchIdentity);
         propertyStore.setPartIdentity(partIdentity);
-
-        JsonManager.serializeJsonToFile(
-            FileResourceUtil.getResourceAsFile("property-store.json").getPath(), propertyStore);
-
     }
 
     private Boolean pollState(Object obj, Class klass) {
