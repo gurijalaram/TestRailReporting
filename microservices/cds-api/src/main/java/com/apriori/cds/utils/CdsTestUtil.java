@@ -3,6 +3,7 @@ package com.apriori.cds.utils;
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
+import com.apriori.apibase.services.common.objects.Paged;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -27,9 +28,11 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CdsTestUtil extends TestUtil {
@@ -42,6 +45,106 @@ public class CdsTestUtil extends TestUtil {
     public <T> ResponseWrapper<T> getCommonRequest(CDSAPIEnum cdsapiEnum, Class<?> klass, String... inlineVariables) {
         return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, klass).inlineVariables(inlineVariables))
             .get();
+    }
+
+    /**
+     * Invokes a find operation and returns all items.
+     *
+     * @param cdsApiEnum The api to invoke.
+     * @param klass The type of data to return.
+     * @param filter Filter parameters
+     * @param sort Sort parameters
+     * @param inlineVariables The optional variables for the api
+     * @param <P> The pagination type.
+     * @param <T> The data type for an individual item
+     *
+     * @return The list of all entities across all pages.
+     */
+    public <T, P extends Paged<T>> List<T> find(
+        CDSAPIEnum cdsApiEnum,
+        Class<P> klass,
+        Map<String, ?> filter,
+        Map<String, String> sort,
+        String... inlineVariables) {
+
+        List<T> entities = new ArrayList<>();
+        int pageNumber = 1;
+        int pageSize = 1000;
+        long read = 0L;
+        long count;
+
+        do {
+            P page = find(cdsApiEnum, klass, filter, sort, pageNumber, pageSize, inlineVariables).getResponseEntity();
+            count = page.getTotalItemCount();
+            read += page.getItems().size();
+            entities.addAll(page.getItems());
+            ++pageNumber;
+        } while (read < count);
+
+        return entities;
+    }
+
+    /**
+     * Invokes a search on an api.
+     *
+     * @param cdsApiEnum The enum to invoke the search on.
+     * @param klass The class return value.
+     * @param filter The filter parameters
+     * @param sort The sort parameters
+     * @param pageNumber What page to retrieve
+     * @param pageSize What the page size is
+     * @param inlineVariables The optional inline variables
+     * @param <T> The paginated data type to return
+     *
+     * @return The pagination for the given klass.
+     */
+    public <T, P extends Paged<T>> ResponseWrapper<P> find(
+        CDSAPIEnum cdsApiEnum,
+        Class<P> klass,
+        Map<String, ?> filter,
+        Map<String, String> sort,
+        int pageNumber,
+        int pageSize,
+        String... inlineVariables) {
+
+        Map<String, String> pagination = new HashMap<>();
+        pagination.put("pageNumber", String.format("%d", pageNumber));
+        pagination.put("pageSize", String.format("%d", pageSize));
+
+        RequestEntity request = RequestEntityUtil.init(cdsApiEnum, klass)
+            .inlineVariables(inlineVariables)
+            .urlParams(Arrays.asList(filter, sort, pagination));
+
+        return HTTPRequest.build(request).get();
+    }
+
+    /**
+     * Gets the first item in a find operation.
+     *
+     * @param cdsApiEnum The api to invoke.
+     * @param klass The expected pageable class type
+     * @param filter The filter to cull the data.
+     * @param sort The sort order.
+     * @param inlineVariables Optional inline variables to fill out the api request
+     *
+     * @param <T> The underlying data type in the page.
+     * @param <P> The Paged type.
+     *
+     * @return The first item found in the query.  Null if an empty set is returned.
+     */
+    public <T, P extends Paged<T>> T findFirst(
+        CDSAPIEnum cdsApiEnum,
+        Class<P> klass,
+        Map<String, ?> filter,
+        Map<String, String> sort,
+        String... inlineVariables
+    ) {
+        return find(cdsApiEnum, klass, filter, sort, 1, 1, inlineVariables)
+            .getResponseEntity()
+            .getItems()
+            .stream()
+            .findFirst()
+            .orElse(null);
     }
 
     /**
@@ -83,18 +186,22 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * Gets the special customer "aPriori Internal"
+     *
+     * @return The customer representing aPriori Internal
+     */
     public Customer getAprioriInternal() {
-        Map<String, Object> args = new HashMap<>();
-        args.put("name[EQ]", "aPriori Internal");
+        Map<String, Object> filters = new HashMap<>();
+        filters.put("name[EQ]", "aPriori Internal");
 
-        Customers current = findCustomers(args).getResponseEntity();
-        return current.getItems().size() > 0 ? current.getItems().get(0) : null;
-    }
+        Customer customer = findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, filters, Collections.emptyMap());
 
-    public ResponseWrapper<Customers> findCustomers(Map<String, ?> params) {
-        RequestEntity request = RequestEntityUtil.init(CDSAPIEnum.GET_CUSTOMERS, Customers.class)
-            .urlParams(Collections.singletonList(params));
-        return HTTPRequest.build(request).get();
+        if (customer == null) {
+            throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
+        }
+
+        return customer;
     }
 
     /**
