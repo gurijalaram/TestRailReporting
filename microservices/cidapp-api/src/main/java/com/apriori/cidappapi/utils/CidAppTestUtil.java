@@ -1,5 +1,6 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.ats.utils.JwtTokenUtil;
@@ -268,13 +269,12 @@ public class CidAppTestUtil {
     /**
      * Get scenario representation of a published part
      *
-     * @param terminalScenarioState - the terminal state
-     * @param lastAction            - the last action
-     * @param published             - scenario published
-     * @param userCredentials       - the user credentials
+     * @param lastAction      - the last action
+     * @param published       - scenario published
+     * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, ScenarioStateEnum terminalScenarioState, String lastAction, boolean published, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, String lastAction, boolean published, UserCredentials userCredentials) {
         final int SOCKET_TIMEOUT = 240000;
         String componentName = cssItem.getComponentIdentity();
         String scenarioName = cssItem.getScenarioIdentity();
@@ -300,10 +300,10 @@ public class CidAppTestUtil {
 
                 final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
 
-                if (scenarioResponse.getScenarioState().contains("FAILED")) {
+                if (scenarioResponse.getScenarioState().equals(PROCESSING_FAILED.getState())) {
                     throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentName, scenarioName));
                 }
-                if (scenarioResponse.getScenarioState().equals(terminalScenarioState.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
+                if (!scenarioResponse.getScenarioState().equals(PROCESSING_FAILED.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                     return scenarioRepresentation;
@@ -466,7 +466,7 @@ public class CidAppTestUtil {
                 );
         HTTPRequest.build(requestEntity).post();
 
-        return getScenarioRepresentation(item, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, userCredentials);
+        return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
     }
 
     /**

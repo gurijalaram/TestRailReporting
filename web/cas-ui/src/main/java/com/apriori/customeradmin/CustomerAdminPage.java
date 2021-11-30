@@ -1,7 +1,6 @@
 package com.apriori.customeradmin;
 
 import com.apriori.customer.CustomerWorkspacePage;
-
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;

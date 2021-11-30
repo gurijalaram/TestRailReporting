@@ -2,7 +2,6 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.login.LoginTests;
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
@@ -14,8 +13,7 @@ import testsuites.suiteinterface.CustomerSmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CustomerSmokeTests.class)
 @Suite.SuiteClasses({
-    AssemblyDetailsReportTests.class,
-    LoginTests.class,
+    AssemblyDetailsReportTests.class
 })
 public class CustomerSmokeTestSuite {
 }

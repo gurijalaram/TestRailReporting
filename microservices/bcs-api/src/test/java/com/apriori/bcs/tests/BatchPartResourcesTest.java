@@ -535,7 +535,7 @@ public class BatchPartResourcesTest extends BCSTestUtils {
         Object partDetails;
         BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
         int count = 0;
-        while (count <= Constants.BATCH_POLLING_TIMEOUT) {
+        while (count <= Constants.POLLING_TIMEOUT) {
             partDetails =
                 BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), part.getIdentity()).getResponseEntity();
             isPartComplete = BcsUtils.pollState(partDetails, Part.class);

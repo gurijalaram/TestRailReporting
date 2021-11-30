@@ -19,8 +19,11 @@ public class ExplorePage extends ExploreTabToolbar {
     @FindBy(css = ".icon-button-group .background-animation")
     private WebElement enabledStartComparison;
 
-    @FindBy(css = "[data-icon='filter']")
-    private WebElement filter;
+    @FindBy(css = "div[id=qa-scenario-explorer-filter-selector]")
+    private WebElement presetFilterDropdown;
+
+    @FindBy(css = ".header-left .text-overflow")
+    private WebElement presetFilter;
 
     private CisScenarioTableController scenarioTableController;
     private CisComponentTableActions componentTableActions;
@@ -43,6 +46,29 @@ public class ExplorePage extends ExploreTabToolbar {
     }
 
     /**
+     * Search for a component
+     *
+     * @param componentName - the component name
+     * @return current page object
+     */
+    public ExplorePage enterKeySearch(String componentName) {
+        componentTableActions.enterKeySearch(componentName.toUpperCase());
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input the filter
+     *
+     * @param filter - the filter
+     * @return current page object
+     */
+    public ExplorePage selectPresetFilter(String filter) {
+        getPageUtils().typeAheadSelect(presetFilterDropdown, filter);
+        setPagination();
+        return this;
+    }
+
+    /**
      * Search for component
      *
      * @param componentName - the component name
@@ -50,6 +76,16 @@ public class ExplorePage extends ExploreTabToolbar {
      */
     public ExplorePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
+        return this;
+    }
+
+    /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ExplorePage setPagination() {
+        componentTableActions.setPagination();
         return this;
     }
 
@@ -125,5 +161,14 @@ public class ExplorePage extends ExploreTabToolbar {
      */
     public String getSortOrder(CisColumnsEnum column) {
         return scenarioTableController.getSortOrder(column);
+    }
+
+    /**
+     * Gets the Preset filter type
+     *
+     * @return String
+     */
+    public String getPresetFilterType() {
+        return getPageUtils().waitForElementToAppear(presetFilter).getAttribute("textContent");
     }
 }
