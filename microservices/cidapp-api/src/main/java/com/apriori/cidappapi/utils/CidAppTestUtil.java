@@ -1,5 +1,6 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.ats.utils.JwtTokenUtil;
@@ -300,7 +301,7 @@ public class CidAppTestUtil {
 
                 final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
 
-                if (scenarioResponse.getScenarioState().contains("FAILED")) {
+                if (scenarioResponse.getScenarioState().equals(PROCESSING_FAILED.getState())) {
                     throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentName, scenarioName));
                 }
                 if (scenarioResponse.getScenarioState().equals(terminalScenarioState.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
