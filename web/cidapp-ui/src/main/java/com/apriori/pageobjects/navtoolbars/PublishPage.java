@@ -170,11 +170,30 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     /**
      * Select the publish button
      *
+     * @param cssItem     - the css item
+     * @param currentUser - the current user
+     * @param <T>         - the object type
      * @return generic page object
      */
     public <T> T publish(Item cssItem, UserCredentials currentUser, Class<T> klass) {
         modalDialogController.publish(klass);
         new CidAppTestUtil().getScenarioRepresentation(cssItem, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, currentUser);
+        return PageFactory.initElements(driver, klass);
+    }
+
+
+    /**
+     * Select the publish button
+     *
+     * @param cssItem       - the css item
+     * @param scenarioState - the scenario state
+     * @param currentUser   - the current user
+     * @param <T>           - the object type
+     * @return generic page object
+     */
+    public <T> T publish(Item cssItem, ScenarioStateEnum scenarioState, UserCredentials currentUser, Class<T> klass) {
+        modalDialogController.publish(klass);
+        new CidAppTestUtil().getScenarioRepresentation(cssItem, scenarioState, "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
     }
 
