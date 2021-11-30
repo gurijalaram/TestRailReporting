@@ -8,6 +8,7 @@ import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -282,7 +283,7 @@ public class WorkflowFeatures {
         String preModifiedName = workflowPage.getRowValue(1, WorkflowPage.Field.LAST_MODIFIED);
         editWorkflowPage.editWorkflow("Description", "Edited Workflow");
         navBarPage.logOut();
-        loginPage.login(Constants.SECOND_USER_EMAIL, Constants.SECOND_USER_PASSWORD);
+        loginPage.login(UserCredentials.init(Constants.SECOND_USER_EMAIL, Constants.SECOND_USER_PASSWORD));
 
         String postModifiedName;
         if (workflowPage.workflowListExists()) {
