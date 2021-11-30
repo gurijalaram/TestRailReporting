@@ -17,7 +17,6 @@ import com.apriori.workflows.Schedule;
 
 import cicuserguide.CicUserGuide;
 import org.junit.Test;
-import utils.Constants;
 
 public class NavBarTests extends TestBase {
 
@@ -27,6 +26,7 @@ public class NavBarTests extends TestBase {
     private PageHeader pageHeader;
     private CicUserGuide cicUserGuide;
     private CostingServiceSettings costingServiceSettings;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     public NavBarTests() {
         super();
@@ -36,7 +36,7 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"3653"})
     public void testNavigateToUsersTab() {
         userList = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .clickUsersMenu();
 
         assertThat(userList.getUsersText(), equalTo("Users"));
@@ -46,7 +46,7 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"3654"})
     public void testNavigateToConnectorsTab() {
         connectorList = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .clickConnectorsMenu();
 
         assertThat(connectorList.getConnectorText(), equalTo("Connectors"));
@@ -56,7 +56,7 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"3652"})
     public void testNavigateToWorkflowsTab() {
         schedule = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .clickConnectorsMenu()
             .clickWorkflowMenu();
 
@@ -67,10 +67,10 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"3659"})
     public void testUserDropDownInfo() {
         pageHeader = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .expandUserInfoDropdown();
 
-        assertThat(pageHeader.getLoginID(), equalTo(LoginPage.getUserName()));
+        assertThat(pageHeader.getLoginID(), equalTo(pageHeader.getCurrentUser()));
         assertThat(pageHeader.getCurrentCompany(), equalTo("aPriori Internal"));
     }
 
@@ -78,7 +78,7 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"3655"})
     public void testCicUserGuideNavigation() throws Exception {
         cicUserGuide = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .navigateToCicUserGuide()
             .switchTab()
             .switchToIFrameUserGuide("page_iframe");
@@ -90,7 +90,7 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"3656"})
     public void testAboutAPrioriLinkNavigation() {
         pageHeader = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .navigateToAboutAPriori();
 
         assertThat(pageHeader.getCicVersionText(), startsWith("Cost Insight Connect"));
@@ -100,7 +100,7 @@ public class NavBarTests extends TestBase {
     @TestRail(testCaseId = {"4002"})
     public void testNavigateToCostingServiceSettings() {
         costingServiceSettings = new LoginPage(driver)
-            .login()
+            .login(currentUser)
             .openCostingServiceSettings();
 
         assertThat(costingServiceSettings.getCostingServiceSettingsText(), equalTo("Costing Service Settings"));

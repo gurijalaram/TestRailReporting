@@ -108,7 +108,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the customer name.
      *
      * @return The current validation error for the customer name.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerNameFeedback() {
         return this.customerNameFeedback.getText();
@@ -118,7 +118,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the description.
      *
      * @return The current validation error for the description.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getDescriptionFeedback() {
         return this.descriptionFeedback.getText();
@@ -128,7 +128,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the customer type.
      *
      * @return The current validation error for the customer type.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerTypeFeedback() {
         return this.customerTypeFeedback.getText();
@@ -138,7 +138,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the salesforce ID.
      *
      * @return The current validation error for the salesforce ID.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getSalesforceIdFeedback() {
         return this.salesforceFeedback.getText();
@@ -157,7 +157,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the cloud reference.
      *
      * @return The current validation error for the cloud reference.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCloudRefFeedback() {
         return this.cloudRefFeedback.getText();
@@ -167,7 +167,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the email domains.
      *
      * @return The current validation error for the email domains.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getEmailDomFeedback() {
         return this.emailDomFeedback.getText();
@@ -177,7 +177,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the cad file retention policy.
      *
      * @return The current validation error for the cad file retention policy.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCadFileRetentionPolicyFeedback() {
         return this.cadFileRetentionDaysFeedback.getText();
@@ -187,7 +187,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the max cad file size.
      *
      * @return The current validation error for the max cad file size.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getMaxCadFileSizeFeedback() {
         return this.maxCadFileSizeFeedback.getText();
