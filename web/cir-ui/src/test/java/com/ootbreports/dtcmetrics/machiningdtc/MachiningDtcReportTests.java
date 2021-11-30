@@ -27,7 +27,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 import utils.Constants;
@@ -290,7 +289,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7457"})
     @Description("Verify DTC Score Input Control - No Selection - Machining DTC Report")
     public void testDtcScoreNoSelection() {
@@ -302,7 +301,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7460"})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Report")
     public void testDtcScoreLow() {
@@ -315,7 +314,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7498"})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Report")
     public void testDtcScoreMedium() {
@@ -328,7 +327,7 @@ public class MachiningDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7501"})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Report")
     public void testDtcScoreHigh() {

@@ -26,7 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.CiaCirTestDevTest;
 import testsuites.suiteinterface.ReportsSmokeTest;
 import testsuites.suiteinterface.ReportsTest;
 
@@ -208,7 +207,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7458"})
     @Description("Verify DTC Score Input Control - No Selection - Machining DTC Comparison Report")
     public void testDtcScoreNoSelection() {
@@ -220,7 +219,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7496"})
     @Description("Verify DTC Score Input Control - Low Selection - Machining DTC Comparison Report")
     public void testDtcScoreLow() {
@@ -233,7 +232,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7499"})
     @Description("Verify DTC Score Input Control - Medium Selection - Machining DTC Comparison Report")
     public void testDtcScoreMedium() {
@@ -246,7 +245,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7502"})
     @Description("Verify DTC Score Input Control - High Selection - Machining DTC Comparison Report")
     public void testDtcScoreHigh() {
@@ -259,7 +258,7 @@ public class MachiningDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7543"})
     @Description("Verify DTC Score Input Control - All Selection - Machining DTC Comparison Report")
     public void testDtcScoreAll() {
