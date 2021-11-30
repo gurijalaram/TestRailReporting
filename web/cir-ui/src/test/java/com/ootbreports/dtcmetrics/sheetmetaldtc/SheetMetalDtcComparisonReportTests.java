@@ -369,7 +369,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7533"})
     @Description("Verify DTC Score Input Control - Low Selection - Sheet Metal DTC Report")
     public void testDtcScoreLow() {
@@ -382,7 +382,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7536"})
     @Description("Verify DTC Score Input Control - Medium Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreMedium() {
@@ -395,7 +395,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7539"})
     @Description("Verify DTC Score Input Control - High Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreHigh() {
@@ -408,7 +408,7 @@ public class SheetMetalDtcComparisonReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"7541"})
     @Description("Verify DTC Score Input Control - All Selection - Sheet Metal DTC Comparison Report")
     public void testDtcScoreAll() {
