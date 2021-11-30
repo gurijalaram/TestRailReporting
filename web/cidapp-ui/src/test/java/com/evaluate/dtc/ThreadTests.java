@@ -472,7 +472,7 @@ public class ThreadTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
                 .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
+                .selectProcessGroup(processGroupEnum.STOCK_MACHINING)
                 .costScenario()
                 .openDesignGuidance()
                 .openThreadsTab()
@@ -481,11 +481,7 @@ public class ThreadTests extends TestBase {
         assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
 
         threadingPage.closePanel()
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
-                .openMaterialSelectorTable()
-                .search("1095")
-                .selectMaterial("Steel, Hot Worked, AISI 1095")
-                .submit(EvaluatePage.class)
+                .selectProcessGroup(processGroupEnum.CASTING_DIE)
                 .goToSecondaryTab()
                 .openSecondaryProcesses()
                 .goToOtherSecProcessesTab()
