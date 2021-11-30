@@ -5,6 +5,7 @@ import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
 import com.apriori.newcustomer.users.UsersListPage;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -194,6 +195,8 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      *         and the empty string if it cannot determine the identity.
      */
     public String findCustomerIdentity() {
+        getPageUtils().waitForCondition(() -> !getDriver().getCurrentUrl().contains("new"),
+            PageUtils.DURATION_SLOW);
         String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
         String url = getDriver().getCurrentUrl().replace(String.format("%scustomers/", baseUrl), "");
         return Arrays.stream(url.split("/")).findFirst().orElse("");

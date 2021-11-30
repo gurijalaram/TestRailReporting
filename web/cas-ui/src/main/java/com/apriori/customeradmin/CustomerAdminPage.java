@@ -1,7 +1,6 @@
 package com.apriori.customeradmin;
 
 import com.apriori.customer.CustomerWorkspacePage;
-
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
@@ -66,6 +65,29 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
             .getRows()
             .findFirst()
             .orElseThrow(() -> new NoSuchElementException("aPriori Internal is missing."))
+            .getCell("name")
+            .click();
+
+        return new CustomerWorkspacePage(getDriver());
+    }
+
+    /**
+     * Opens a customer profile from source table
+     *
+     * @param name - name of customer
+     * @return The profile page for customer
+     */
+    public CustomerWorkspacePage openCustomer(String name) {
+        SourceListComponent list = getSourceList();
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The customer search is missing.");
+        search.search(name);
+        getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
+
+        list.selectTableLayout();
+        Obligation.mandatory(list::getTable, "The table layout is not active")
+            .getRows()
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException("customer is missing."))
             .getCell("name")
             .click();
 

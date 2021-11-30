@@ -4,6 +4,7 @@ import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -103,6 +104,68 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     }
 
     /**
+     * Gets the label for the given name.
+     *
+     * @return The label for the given name.
+     */
+    public WebElement getLabel(String name) {
+        return getPageUtils().waitForElementToAppear(By.className(String.format("read-field-%s", name)));
+    }
+
+    /**
+     * Gets the input for the given name.
+     *
+     * @return The input for the given name.
+     */
+    public WebElement getInput(String name) {
+        if (name.equals("customerType")) {
+            return getPageUtils().waitForElementToAppear(By.className("select-field-customer-type"));
+        } else {
+            return getPageUtils().waitForElementToAppear(By.xpath(String.format("//input[@name='%s']", name)));
+        }
+    }
+
+    /**
+     * Gets the value for the given input name.
+     *
+     * @return The value for the given input  name.
+     */
+    public String getInputValue(String name) {
+        if (name.equals("customerType")) {
+            return getInput(name).getText();
+        } else {
+            return getInput(name).getAttribute("value");
+        }
+    }
+
+    /**
+     * Gets the save button.
+     *
+     * @return The save button
+     */
+    public WebElement getSaveButton() {
+        return saveButton;
+    }
+
+    /**
+     * Gets the edit button.
+     *
+     * @return The edit button
+     */
+    public WebElement getEditButton() {
+        return editButton;
+    }
+
+    /**
+     * Gets the cancel button.
+     *
+     * @return The cancel button
+     */
+    public WebElement getCancelButton() {
+        return cancelButton;
+    }
+
+    /**
      * Gets the current validation feedback for the customer name.
      *
      * @return The current validation error for the customer name.  Returns the empty string
@@ -189,6 +252,22 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      */
     public String getMaxCadFileSizeFeedback() {
         return this.maxCadFileSizeFeedback.getText();
+    }
+
+    /**
+     * Sets an input field to a value
+     *
+     * @param inputField - input field to set
+     * @param value - value to be set
+     * @return current page object
+     */
+    public CustomerProfilePage enterInputValuePair(String inputField, String value) {
+        if (inputField.equals("customerType")) {
+            new SelectFieldComponent(getDriver(), getInput(inputField)).getSelect().select(value);
+        } else {
+            getPageUtils().setValueOfElement(getInput(inputField), value);
+        }
+        return this;
     }
 
     /**
@@ -347,5 +426,14 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     public CustomerProfilePage clickSaveButton() {
         getPageUtils().waitForElementAndClick(saveButton);
         return new CustomerProfilePage(getDriver());
+    }
+
+    /**
+     * Get Toastify Error.
+     *
+     * @return Toastify error object
+     */
+    public WebElement getToastifyError() {
+        return getPageUtils().waitForElementToAppear(By.className("Toastify__toast-container"));
     }
 }
