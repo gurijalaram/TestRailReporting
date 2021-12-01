@@ -110,7 +110,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      *
      * @return The label for the given name.
      */
-    public WebElement getLabel(String name) {
+    public WebElement getReadOnlyLabel(String name) {
         return getPageUtils().waitForElementToAppear(By.className(String.format("read-field-%s", name)));
     }
 

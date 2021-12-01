@@ -76,80 +76,43 @@ public class EditCustomerTests extends TestBase {
         created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, identity));
     }
 
-    private void enterValue(String name, String value) {
-        switch (name) {
-            case "name":
-                customerProfilePage.enterCustomerName(value);
-                break;
-            case "description":
-                customerProfilePage.enterDescription(value);
-                break;
-            case "salesforceId":
-                customerProfilePage.enterSalesforceId(value);
-                break;
-            case "cloudReference":
-                customerProfilePage.enterCloudRef(value);
-                break;
-            case "emailDomains":
-                customerProfilePage.enterEmailDomains(value);
-                break;
-            case "maxCadFileRetentionDays":
-                customerProfilePage.enterCadFileRetentionPolicy(value);
-                break;
-            case "maxCadFileSize":
-                customerProfilePage.enterMaxCadFileSize(value);
-                break;
-            default:
-        }
-    }
-
     @FunctionalInterface
     interface AssertionFunction {
-        void apply(SoftAssertions assertion, String name);
+        void apply(SoftAssertions assertion, Runnable setValueFn, String name);
     }
 
     private void assertAllLeftFields(SoftAssertions soft, AssertionFunction func) {
-        func.apply(soft, "name");
-        func.apply(soft, "description");
-        func.apply(soft, "customerType");
-        func.apply(soft, "salesforceId");
-        func.apply(soft, "cloudReference");
-        func.apply(soft, "emailDomains");
-        func.apply(soft, "maxCadFileRetentionDays");
-        func.apply(soft, "maxCadFileSize");
+        func.apply(soft, () -> customerProfilePage.enterCustomerName(valueMap.get("name")), "name");
+        func.apply(soft, () -> customerProfilePage.enterDescription(valueMap.get("description")), "description");
+        func.apply(soft, () -> customerProfilePage.selectCustomerTypeCloud(), "customerType");
+        func.apply(soft, () -> customerProfilePage.enterSalesforceId(valueMap.get("salesforceId")), "salesforceId");
+        func.apply(soft, () -> customerProfilePage.enterCloudRef(valueMap.get("cloudReference")),"cloudReference");
+        func.apply(soft, () -> customerProfilePage.enterEmailDomains(valueMap.get("emailDomains")),"emailDomains");
+        func.apply(soft, () -> customerProfilePage.enterCadFileRetentionPolicy(valueMap.get("maxCadFileRetentionDays")),"maxCadFileRetentionDays");
+        func.apply(soft, () -> customerProfilePage.enterMaxCadFileSize(valueMap.get("maxCadFileSize")),"maxCadFileSize");
     }
 
-    private void assertNonEditable(SoftAssertions assertion, String name) {
-        assertion.assertThat(customerProfilePage.getLabel(name))
+    private void assertNonEditable(SoftAssertions assertion, Runnable action, String name) {
+        assertion.assertThat(customerProfilePage.getReadOnlyLabel(name))
             .overridingErrorMessage("Expected field of %s to be read only.", name)
             .isNotNull();
     }
 
-    private void assertEditable(SoftAssertions assertion, String name) {
+    private void assertEditable(SoftAssertions assertion, Runnable action, String name) {
         assertion.assertThat(customerProfilePage.getInput(name))
             .overridingErrorMessage("Expected field of %s to be editable.", name)
             .isNotNull();
     }
 
-    private void assertSaveChanges(SoftAssertions assertion, String name) {
-        String resetValue = customerProfilePage.getInputValue(name);
-
-        if (name.equals("customerType")) {
-            customerProfilePage.selectCustomerTypeCloud();
-        } else {
-            enterValue(name, valueMap.get(name));
-        }
+    private void assertSaveChanges(SoftAssertions assertion, Runnable action, String name) {
+        action.run();
 
         assertion.assertThat(customerProfilePage.canSave())
-            .overridingErrorMessage("Expected save button to be enabled with %s input changes (%s -> %s).",
-                name, resetValue, valueMap.get(name))
+            .overridingErrorMessage("Expected save button to be enabled when %s changed.", name)
             .isTrue();
 
-        if (name.equals("customerType")) {
-            customerProfilePage.selectCustomerTypeOnPremiseAndCloud();
-        } else {
-            enterValue(name, resetValue);
-        }
+        customerProfilePage.clickCancelButton(CustomerWorkspacePage.class);
+        customerProfilePage.clickEditButton();
     }
 
     private void assertButtonAvailable(SoftAssertions soft, String label) {
@@ -212,7 +175,7 @@ public class EditCustomerTests extends TestBase {
         customerProfilePage.enterDescription(newDescription);
         customerProfilePage.clickSaveButton();
         assertAllLeftFields(soft, this::assertNonEditable);
-        String savedDescription = customerProfilePage.getLabel("description").getText();
+        String savedDescription = customerProfilePage.getReadOnlyLabel("description").getText();
         soft.assertThat(savedDescription)
             .overridingErrorMessage("Expected changed description to equal %s. Actual %s.", newDescription, savedDescription)
             .isEqualTo(newDescription);
