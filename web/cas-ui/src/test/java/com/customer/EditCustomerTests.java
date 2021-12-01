@@ -104,7 +104,7 @@ public class EditCustomerTests extends TestBase {
     }
 
     @FunctionalInterface
-    interface AssertionFunction<SoftAssertions, String> {
+    interface AssertionFunction {
         void apply(SoftAssertions assertion, String name);
     }
 
@@ -165,12 +165,12 @@ public class EditCustomerTests extends TestBase {
     public void testEditAndCancel() {
         SoftAssertions soft = new SoftAssertions();
 
-        assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertNonEditable);
+        assertAllLeftFields(soft, this::assertNonEditable);
         soft.assertThat(customerProfilePage.clickEditButton())
             .overridingErrorMessage("Expected edit button to be displayed and clickable.")
             .isNotNull();
 
-        assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertEditable);
+        assertAllLeftFields(soft, this::assertEditable);
         assertButtonAvailable(soft, "Save");
         assertButtonAvailable(soft, "Cancel");
 
@@ -192,7 +192,7 @@ public class EditCustomerTests extends TestBase {
             .isNotNull();
 
         customerProfilePage.clickCancelButton(CustomerWorkspacePage.class);
-        assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertNonEditable);
+        assertAllLeftFields(soft, this::assertNonEditable);
 
         soft.assertAll();
     }
@@ -206,12 +206,12 @@ public class EditCustomerTests extends TestBase {
 
         customerProfilePage = customerProfilePage.clickEditButton();
 
-        assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertSaveChanges);
+        assertAllLeftFields(soft, this::assertSaveChanges);
 
         String newDescription = "Test Description Change";
         customerProfilePage.enterDescription(newDescription);
         customerProfilePage.clickSaveButton();
-        assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertNonEditable);
+        assertAllLeftFields(soft, this::assertNonEditable);
         String savedDescription = customerProfilePage.getLabel("description").getText();
         soft.assertThat(savedDescription)
             .overridingErrorMessage("Expected changed description to equal %s. Actual %s.", newDescription, savedDescription)
