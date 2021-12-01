@@ -8,7 +8,6 @@
       "type": "object",
       "required": [
         "batchMode",
-        "batchSize",
         "cadTolerances",
         "minCadToleranceThreshold",
         "multiBodyKeepFreeBodies",
@@ -18,6 +17,9 @@
         "tolerances",
         "useCadToleranceThreshold",
         "useVpeForAllProcesses"
+      ],
+      "optional": [
+        "batchSize"
       ],
       "properties": {
         "annualVolume": {
