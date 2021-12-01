@@ -41,6 +41,7 @@ public class Customer {
     private Boolean active;
     private Integer maxCadFileRetentionDays;
     private Integer maxCadFileSize;
+    private String mfaAuthenticator = null;
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
     private List<Object> oneTimePasswordApplications = null;
