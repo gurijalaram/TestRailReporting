@@ -10,7 +10,7 @@ import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.tests.utils.CasTestUtil;
+import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.request.HTTPRequest;

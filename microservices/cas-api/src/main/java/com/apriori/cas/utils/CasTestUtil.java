@@ -1,4 +1,4 @@
-package com.apriori.tests.utils;
+package com.apriori.cas.utils;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.TestUtil;
@@ -29,7 +29,7 @@ import java.util.Collections;
 
 public class CasTestUtil extends TestUtil {
 
-    private static String token = new JwtTokenUtil().retrieveJwtToken();
+    private static final String token = new JwtTokenUtil().retrieveJwtToken();
 
     /**
      * POST call to add a customer
@@ -249,7 +249,7 @@ public class CasTestUtil extends TestUtil {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, null)
             .token(token)
-            .body(BatchItemsPost.builder().batchItems(Arrays.asList(batchIdentity))
+            .body(BatchItemsPost.builder().batchItems(Collections.singletonList(batchIdentity))
                 .build())
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items");
 
