@@ -16,6 +16,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -32,7 +34,6 @@ public class EditCustomerTests extends TestBase {
     private CdsTestUtil cdsTestUtil;
     private List<String> created;
     private Map<String, String> valueMap;
-    private String customerName;
 
     @Before
     public void setup() {
@@ -56,7 +57,7 @@ public class EditCustomerTests extends TestBase {
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         String salesforceId = format.format(new Date());
-        customerName = String.format("QA Automation %s", salesforceId);
+        String customerName = String.format("QA Automation %s", salesforceId);
 
         customerProfilePage
             .enterDescription("Automation Test Customer")
@@ -67,12 +68,39 @@ public class EditCustomerTests extends TestBase {
             .enterCloudRef(salesforceId)
             .clickSaveButton();
 
-        created.add(customerViewPage.findCustomerIdentity());
+        created.add(customerViewPage.findExistingCustomerIdentity());
     }
 
     @After
     public void teardown() {
         created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, identity));
+    }
+
+    private void enterValue(String name, String value) {
+        switch (name) {
+            case "name":
+                customerProfilePage.enterCustomerName(value);
+                break;
+            case "description":
+                customerProfilePage.enterDescription(value);
+                break;
+            case "salesforceId":
+                customerProfilePage.enterSalesforceId(value);
+                break;
+            case "cloudReference":
+                customerProfilePage.enterCloudRef(value);
+                break;
+            case "emailDomains":
+                customerProfilePage.enterEmailDomains(value);
+                break;
+            case "maxCadFileRetentionDays":
+                customerProfilePage.enterCadFileRetentionPolicy(value);
+                break;
+            case "maxCadFileSize":
+                customerProfilePage.enterMaxCadFileSize(value);
+                break;
+            default:
+        }
     }
 
     @FunctionalInterface
@@ -106,16 +134,29 @@ public class EditCustomerTests extends TestBase {
     private void assertSaveChanges(SoftAssertions assertion, String name) {
         String resetValue = customerProfilePage.getInputValue(name);
 
-        // Set value
-        customerProfilePage.enterInputValuePair(name, valueMap.get(name));
+        if (name.equals("customerType")) {
+            customerProfilePage.selectCustomerTypeCloud();
+        } else {
+            enterValue(name, valueMap.get(name));
+        }
 
-        assertion.assertThat(customerProfilePage.getSaveButton().getAttribute("class").contains("disabled"))
+        assertion.assertThat(customerProfilePage.canSave())
             .overridingErrorMessage("Expected save button to be enabled with %s input changes (%s -> %s).",
                 name, resetValue, valueMap.get(name))
-            .isFalse();
+            .isTrue();
 
-        // Set reset
-        customerProfilePage.enterInputValuePair(name, resetValue);
+        if (name.equals("customerType")) {
+            customerProfilePage.selectCustomerTypeOnPremiseAndCloud();
+        } else {
+            enterValue(name, resetValue);
+        }
+    }
+
+    private void assertButtonAvailable(SoftAssertions soft, String label) {
+        List<WebElement> elements = driver.findElements(By.xpath(String.format("//button[.='%s']", label)));
+        soft.assertThat(elements.size())
+            .overridingErrorMessage(String.format("Could not find the %s button", label))
+            .isGreaterThan(0);
     }
 
     @Test
@@ -124,42 +165,32 @@ public class EditCustomerTests extends TestBase {
     public void testEditAndCancel() {
         SoftAssertions soft = new SoftAssertions();
 
-        // Test customer profile page load -> profile not editable & edit button displayed
         assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertNonEditable);
         soft.assertThat(customerProfilePage.clickEditButton())
             .overridingErrorMessage("Expected edit button to be displayed and clickable.")
             .isNotNull();
 
-        // Test edit button clicked -> save and cancel buttons become visible && left side fields editable
         assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertEditable);
-        soft.assertThat(customerProfilePage.getSaveButton())
-            .overridingErrorMessage("Expected save button to be displayed.")
-            .isNotNull();
-        soft.assertThat(customerProfilePage.getCancelButton())
-            .overridingErrorMessage("Expected cancel button to be displayed.")
-            .isNotNull();
+        assertButtonAvailable(soft, "Save");
+        assertButtonAvailable(soft, "Cancel");
 
-        // Test no changes on form -> Save button disabled
-        soft.assertThat(customerProfilePage.getSaveButton().getAttribute("class").contains("disabled"))
+        soft.assertThat(customerProfilePage.canSave())
             .overridingErrorMessage("Expected save button to be disabled with no changes.")
-            .isTrue();
+            .isFalse();
 
-        // Test validation errors on form -> Save button disabled
         String resetValue = customerProfilePage.getInputValue("salesforceId");
         customerProfilePage.enterSalesforceId("");
-        soft.assertThat(customerProfilePage.getSaveButton().getAttribute("class").contains("disabled"))
+        soft.assertThat(customerProfilePage.canSave())
             .overridingErrorMessage("Expected save button to be disabled with validation errors.")
-            .isTrue();
+            .isFalse();
         customerProfilePage.enterSalesforceId(resetValue);
 
-        // Test save button clicked with error -> Error toast displayed
         customerProfilePage.enterCustomerName("aPriori Internal");
         customerProfilePage.clickSaveButton();
         soft.assertThat(customerProfilePage.getToastifyError())
             .overridingErrorMessage("Expected error toast to be displayed on duplicate customer name.")
             .isNotNull();
 
-        // Test cancel button clicked -> Form is reset to non editable state
         customerProfilePage.clickCancelButton(CustomerWorkspacePage.class);
         assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertNonEditable);
 
@@ -175,10 +206,8 @@ public class EditCustomerTests extends TestBase {
 
         customerProfilePage = customerProfilePage.clickEditButton();
 
-        // Test changes made to fields -> Save button enabled
         assertAllLeftFields(soft, (AssertionFunction<SoftAssertions, String>) this::assertSaveChanges);
 
-        // Test save button clicked with no error -> Record saved and returned to readonly
         String newDescription = "Test Description Change";
         customerProfilePage.enterDescription(newDescription);
         customerProfilePage.clickSaveButton();

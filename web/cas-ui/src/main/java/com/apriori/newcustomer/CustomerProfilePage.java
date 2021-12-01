@@ -140,31 +140,35 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
         }
     }
 
-    /**
-     * Gets the save button.
-     *
-     * @return The save button
-     */
-    public WebElement getSaveButton() {
-        return saveButton;
+    private boolean isButtonEnabled(WebElement button) {
+        return button != null && button.isEnabled();
     }
 
     /**
-     * Gets the edit button.
+     * Can click the save button.
      *
-     * @return The edit button
+     * @return Boolean representing can click save button
      */
-    public WebElement getEditButton() {
-        return editButton;
+    public boolean canSave() {
+        return isButtonEnabled(saveButton);
     }
 
     /**
-     * Gets the cancel button.
+     * Can click the edit button.
      *
-     * @return The cancel button
+     * @return Boolean representing can click edit button
      */
-    public WebElement getCancelButton() {
-        return cancelButton;
+    public boolean canEdit() {
+        return isButtonEnabled(editButton);
+    }
+
+    /**
+     * Can click the cancel button.
+     *
+     * @return Boolean representing can click cancel button
+     */
+    public boolean canCancel() {
+        return isButtonEnabled(cancelButton);
     }
 
     /**
@@ -257,22 +261,6 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     }
 
     /**
-     * Sets an input field to a value
-     *
-     * @param inputField - input field to set
-     * @param value - value to be set
-     * @return current page object
-     */
-    public CustomerProfilePage enterInputValuePair(String inputField, String value) {
-        if (inputField.equals("customerType")) {
-            new SelectFieldComponent(getDriver(), getInput(inputField)).getSelect().select(value);
-        } else {
-            getPageUtils().setValueOfElement(getInput(inputField), value);
-        }
-        return this;
-    }
-
-    /**
      * Enter customer name
      *
      * @param customerName - customer name
@@ -301,6 +289,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * @return current page object
      */
     private CustomerProfilePage selectCustomerType(String customerType) {
+        this.customerTypeSelectField = new SelectFieldComponent(getDriver(), customerTypeDropdown);
         customerTypeSelectField.getSelect().select(customerType);
         return this;
     }
