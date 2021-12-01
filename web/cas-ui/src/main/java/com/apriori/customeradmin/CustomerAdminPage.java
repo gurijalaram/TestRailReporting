@@ -74,7 +74,7 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
         Obligation.mandatory(list::getTable, "The table layout is not active")
             .getRows()
             .findFirst()
-            .orElseThrow(() -> new NoSuchElementException("customer is missing."))
+            .orElseThrow(() -> new NoSuchElementException(String.format("Customer %s is missing.", name)))
             .getCell("name")
             .click();
 
