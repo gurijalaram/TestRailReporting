@@ -55,9 +55,9 @@ public class CasCustomersUsersTests {
             .inlineVariables(customerIdentity, "users")).get();
 
         assertThat(customerUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(customerUsers.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(customerUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String userIdentity = customerUsers.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<CustomerUser> singleUser = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_USERS, CustomerUser.class)
             .token(token)
