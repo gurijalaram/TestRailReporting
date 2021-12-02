@@ -3,7 +3,9 @@ package com.apriori.cds.utils;
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
-import com.apriori.apibase.services.common.objects.Paged;
+import com.apriori.apibase.utils.DeleteApi;
+import com.apriori.apibase.utils.ReadApi;
+import com.apriori.apibase.utils.SearchApi;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -28,135 +30,12 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class CdsTestUtil extends TestUtil {
-
-    /**
-     * @param klass - the class
-     * @param <T>   - generic object
-     * @return generic object
-     */
-    public <T> ResponseWrapper<T> getCommonRequest(CDSAPIEnum cdsapiEnum, Class<?> klass, String... inlineVariables) {
-        return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, klass).inlineVariables(inlineVariables))
-            .get();
-    }
-
-    /**
-     * Invokes a find operation and returns all items.
-     *
-     * @param cdsApiEnum The api to invoke.
-     * @param klass The type of data to return.
-     * @param filter Filter parameters
-     * @param sort Sort parameters
-     * @param inlineVariables The optional variables for the api
-     * @param <P> The pagination type.
-     * @param <T> The data type for an individual item
-     *
-     * @return The list of all entities across all pages.
-     */
-    public <T, P extends Paged<T>> List<T> find(
-        CDSAPIEnum cdsApiEnum,
-        Class<P> klass,
-        Map<String, ?> filter,
-        Map<String, String> sort,
-        String... inlineVariables) {
-
-        List<T> entities = new ArrayList<>();
-        int pageNumber = 1;
-        int pageSize = 1000;
-        long read = 0L;
-        long count;
-
-        do {
-            P page = find(cdsApiEnum, klass, filter, sort, pageNumber, pageSize, inlineVariables).getResponseEntity();
-            count = page.getTotalItemCount();
-            read += page.getItems().size();
-            entities.addAll(page.getItems());
-            ++pageNumber;
-        } while (read < count);
-
-        return entities;
-    }
-
-    /**
-     * Invokes a search on an api.
-     *
-     * @param cdsApiEnum The enum to invoke the search on.
-     * @param klass The class return value.
-     * @param filter The filter parameters
-     * @param sort The sort parameters
-     * @param pageNumber What page to retrieve
-     * @param pageSize What the page size is
-     * @param inlineVariables The optional inline variables
-     * @param <T> The paginated data type to return
-     *
-     * @return The pagination for the given klass.
-     */
-    public <T, P extends Paged<T>> ResponseWrapper<P> find(
-        CDSAPIEnum cdsApiEnum,
-        Class<P> klass,
-        Map<String, ?> filter,
-        Map<String, String> sort,
-        int pageNumber,
-        int pageSize,
-        String... inlineVariables) {
-
-        Map<String, String> pagination = new HashMap<>();
-        pagination.put("pageNumber", String.format("%d", pageNumber));
-        pagination.put("pageSize", String.format("%d", pageSize));
-
-        RequestEntity request = RequestEntityUtil.init(cdsApiEnum, klass)
-            .inlineVariables(inlineVariables)
-            .urlParams(Arrays.asList(filter, sort, pagination));
-
-        return HTTPRequest.build(request).get();
-    }
-
-    /**
-     * Gets the first item in a find operation.
-     *
-     * @param cdsApiEnum The api to invoke.
-     * @param klass The expected pageable class type
-     * @param filter The filter to cull the data.
-     * @param sort The sort order.
-     * @param inlineVariables Optional inline variables to fill out the api request
-     *
-     * @param <T> The underlying data type in the page.
-     * @param <P> The Paged type.
-     *
-     * @return The first item found in the query.  Null if an empty set is returned.
-     */
-    public <T, P extends Paged<T>> T findFirst(
-        CDSAPIEnum cdsApiEnum,
-        Class<P> klass,
-        Map<String, ?> filter,
-        Map<String, String> sort,
-        String... inlineVariables
-    ) {
-        return find(cdsApiEnum, klass, filter, sort, 1, 1, inlineVariables)
-            .getResponseEntity()
-            .getItems()
-            .stream()
-            .findFirst()
-            .orElse(null);
-    }
-
-    /**
-     * Calls the delete method
-     *
-     * @return The response of what was deleted
-     */
-    public ResponseWrapper<String> delete(CDSAPIEnum cdsapiEnum, String... inlineVariables) {
-        return HTTPRequest.build(RequestEntityUtil.init(cdsapiEnum, null).inlineVariables(inlineVariables)).delete();
-
-    }
-
+public class CdsTestUtil extends TestUtil implements SearchApi<CDSAPIEnum>, DeleteApi<CDSAPIEnum>, ReadApi<CDSAPIEnum> {
     /**
      * POST call to add a customer
      *

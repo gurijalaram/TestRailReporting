@@ -11,9 +11,9 @@ import lombok.Data;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "CustomerUsersSchema.json")
+@Schema(location = "CustomerAssociationsSchema.json")
 @JsonRootName("response")
 @Data
-public class CustomerUsers extends Pagination implements Paged<CustomerUser> {
-    private List<CustomerUser> items;
+public class CustomerAssociations extends Pagination implements Paged<CustomerAssociation> {
+    private List<CustomerAssociation> items;
 }
