@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "identity",
+    "createdAt",
+    "createdBy",
+    "updatedAt",
+    "status",
+    "level",
+    "customerPartNumber",
+    "quantity",
+    "manufacturerPartNumber",
+    "manufacturer",
+    "parts"
+  ],
+  "properties": {
+    "identity": {
+      "type": "string"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string"
+    },
+    "level": {
+      "type": "integer"
+    },
+    "customerPartNumber": {
+      "type": "string"
+    },
+    "quantity": {
+      "type": "integer"
+    },
+    "manufacturerPartNumber": {
+      "type": "string"
+    },
+    "manufacturer": {
+      "type": "string"
+    },
+    "parts": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          {
+            "type": "object",
+            "required": [
+              "isSaved",
+              "isUserPart",
+              "identity",
+              "lineItemIdentity",
+              "externalId",
+              "manufacturerPartNumber",
+              "manufacturer",
+              "classification",
+              "description",
+              "averageCost",
+              "minimumCost",
+              "mountType",
+              "pinCount",
+              "availability",
+              "dataSheetUrl",
+              "rohs",
+              "rohsVersion",
+              "status",
+              "type"
+            ],
+            "properties": {
+              "isSaved": {
+                "type": "boolean"
+              },
+              "isUserPart": {
+                "type": "boolean"
+              },
+              "identity": {
+                "type": "string"
+              },
+              "lineItemIdentity": {
+                "type": "string"
+              },
+              "externalId": {
+                "type": "string"
+              },
+              "manufacturerPartNumber": {
+                "type": "string"
+              },
+              "manufacturer": {
+                "type": "string"
+              },
+              "classification": {
+                "type": "string"
+              },
+              "description": {
+                "type": "string"
+              },
+              "averageCost": {
+                "type": "number"
+              },
+              "minimumCost": {
+                "type": "number"
+              },
+              "mountType": {
+                "type": "string"
+              },
+              "pinCount": {
+                "type": "number"
+              },
+              "availability": {
+                "type": "string"
+              },
+              "dataSheetUrl": {
+                "type": "string"
+              },
+              "rohs": {
+                "type": "string"
+              },
+              "rohsVersion": {
+                "type": "string"
+              },
+              "status": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string"
+              }
+            }
+          }
+        ]
+      }
+    }
+  }
+}
