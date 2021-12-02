@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdAt",
+        "createdBy",
+        "targetCustomerIdentity",
+        "description",
+        "type"
+      ],
+      "optional": [
+        "updatedAt",
+        "updatedBy",
+        "deletedAt",
+        "deletedBy"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "targetCustomerIdentity": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "deletedBy": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
