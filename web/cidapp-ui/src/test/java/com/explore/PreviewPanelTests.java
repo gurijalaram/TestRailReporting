@@ -98,13 +98,14 @@ public class PreviewPanelTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
             .openPreviewPanel();
 
         assertThat(previewPage.isImageDisplayed(), is(true));
-        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(13.27, 1));
-        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(13.65, 1));
+        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
+        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.86, 1));
         assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10526.66, 2));
     }
 

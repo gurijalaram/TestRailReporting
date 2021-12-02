@@ -57,7 +57,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return new page object
      */
     public ScenarioTableController clickSearch(String componentName) {
-        search(componentName);
+        enterSearchText(componentName);
         pageUtils.waitForElementAndClick(searchIconButton);
         return new ScenarioTableController(driver);
     }
@@ -69,7 +69,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @return new page object
      */
     public ScenarioTableController enterKeySearch(String componentName) {
-        search(componentName);
+        enterSearchText(componentName);
         searchInput.sendKeys(Keys.ENTER);
         return new ScenarioTableController(driver);
     }
@@ -80,7 +80,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      * @param componentName - the component name
      * @return current page object
      */
-    private ComponentTableActions search(String componentName) {
+    private ComponentTableActions enterSearchText(String componentName) {
         pageUtils.waitForElementToAppear(searchIconButton);
         pageUtils.clearValueOfElement(searchInput);
         searchInput.sendKeys(componentName.toUpperCase());
@@ -138,7 +138,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
      */
     public ComponentTableActions setPagination() {
         pageUtils.waitForElementAndClick(paginatorDropdown);
-        By paginator = By.xpath("//div[.='100']");
+        By paginator = By.xpath("//div[.='50']");
         pageUtils.waitForElementToAppear(paginator);
         pageUtils.waitForElementAndClick(paginator);
         return this;

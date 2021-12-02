@@ -1,76 +1,42 @@
 package com.apriori.customeradmin;
 
 import com.apriori.customer.CustomerWorkspacePage;
+import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.utils.web.components.SearchFieldComponent;
+import com.apriori.utils.web.components.SourceListComponent;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
+/**
+ * Represents the root customer list.
+ */
+@Slf4j
+public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(CustomerAdminPage.class);
+    private static final String CUSTOMER_APRIORI_INTERNAL = "aPriori Internal";
 
     @FindBy(className = "customer-list-view-new-button")
     private WebElement newCustomerButton;
 
-    @FindBy(id = "qa-customer-counter")
-    private WebElement customerCount;
-
-    @FindBy(css = "svg[data-icon='list']")
-    private WebElement listViewButton;
-
-    @FindBy(css = "svg[data-icon='th']")
-    private WebElement tileViewButton;
-
-    @FindBy(css = "div[class='input-group select-input customer-type']")
-    private WebElement custTypeDropdown;
-
-    @FindBy(css = ".customer-list-view input[name='search']")
-    private WebElement customerSearchInput;
-
-    @FindBy(css = ".customer-list-view .loader")
-    private WebElement customerListLoader;
-
-    @FindBy(id = "qa-page-size-dropdown")
-    private WebElement pageSizeDropdown;
-
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private NavToolbar navToolbar;
+    @FindBy(className = "customer-list-view-source-list")
+    private WebElement sourceListRoot;
+    private final SourceListComponent customerSourceList;
 
     public CustomerAdminPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        this.navToolbar = new NavToolbar(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
+        super(driver, log);
+        this.customerSourceList = new SourceListComponent(getDriver(), sourceListRoot);
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(newCustomerButton);
-    }
-
-    /**
-     * Checks the customers button is present
-     *
-     * @return true/false
-     */
-    public boolean isNewCustomerButtonPresent() {
-        return pageUtils.waitForElementToAppear(newCustomerButton).isDisplayed();
+        getPageUtils().waitForElementToAppear(sourceListRoot);
+        getPageUtils().waitForElementAppear(newCustomerButton);
     }
 
     /**
@@ -79,8 +45,8 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      * @return new page object
      */
     public CustomerWorkspacePage clickNewCustomerButton() {
-        pageUtils.waitForElementAndClick(newCustomerButton);
-        return new CustomerWorkspacePage(driver);
+        getPageUtils().waitForElementAndClick(newCustomerButton);
+        return new CustomerWorkspacePage(getDriver());
     }
 
     /**
@@ -89,50 +55,28 @@ public class CustomerAdminPage extends LoadableComponent<CustomerAdminPage> {
      * @return The profile page for aPriori Internal
      */
     public CustomerWorkspacePage openAprioriInternal() {
-        String name = "aPriori Internal";
-        return searchForCustomer(name).selectCustomer(name);
+        SourceListComponent list = getSourceList();
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The customer search is missing.");
+        search.search(CUSTOMER_APRIORI_INTERNAL);
+        getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
+
+        list.selectTableLayout();
+        Obligation.mandatory(list::getTable, "The table layout is not active")
+            .getRows()
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException("aPriori Internal is missing."))
+            .getCell("name")
+            .click();
+
+        return new CustomerWorkspacePage(getDriver());
     }
 
     /**
-     * Select a customer
+     * Gets the underlying source list for the admin page.
      *
-     * @param customerName - customer name
-     * @return new page object
+     * @return The source list for the admin page.
      */
-    public CustomerWorkspacePage selectCustomer(String customerName) {
-        By customer = By.xpath(String.format("//a[.='%s']", customerName));
-        pageUtils.waitForElementAndClick(customer);
-        return new CustomerWorkspacePage(driver);
-    }
-
-    /**
-     * Select customer type
-     *
-     * @param customerType - customer type
-     * @return current page object
-     */
-    public CustomerAdminPage selectCustomerType(String customerType) {
-        pageUtils.selectDropdownOption(custTypeDropdown, customerType);
-        return this;
-    }
-
-    /**
-     * Search for customer
-     *
-     * @param customer - customer details
-     * @return current page object
-     */
-    public CustomerAdminPage searchForCustomer(String customer) {
-        pageUtils.setValueOfElement(customerSearchInput, customer, Keys.ENTER);
-        return this;
-    }
-
-    /**
-     * Get customer count
-     *
-     * @return string
-     */
-    public String getCustomerCount() {
-        return pageUtils.waitForElementToAppear(customerCount).getText();
+    public SourceListComponent getSourceList() {
+        return customerSourceList;
     }
 }

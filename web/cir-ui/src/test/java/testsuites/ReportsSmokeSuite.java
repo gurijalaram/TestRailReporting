@@ -2,7 +2,6 @@ package testsuites;
 
 import com.apriori.utils.runner.CategorySuiteRunner;
 
-import com.login.LoginTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
@@ -34,7 +33,6 @@ import testsuites.suiteinterface.ReportsSmokeTest;
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
     ComponentCostReportTests.class,
-    LoginTests.class,
     MachiningDtcReportTests.class,
     MachiningDtcDetailsReportTests.class,
     MachiningDtcComparisonReportTests.class,

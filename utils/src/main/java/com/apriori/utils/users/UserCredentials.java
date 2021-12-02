@@ -2,11 +2,13 @@ package com.apriori.utils.users;
 
 public class UserCredentials {
 
-    private String username;
+    private String email;
 
     private String password;
 
     private String token;
+
+    private String username;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -19,14 +21,14 @@ public class UserCredentials {
     //TODO z: change it on Security ENUM when will be information about security levels
     private String accessLevel;
 
-    public UserCredentials(String username, String password, String accessLevel) {
-        this.username = username;
+    public UserCredentials(String email, String password, String accessLevel) {
+        this.email = email;
         this.password = password;
         this.accessLevel = accessLevel;
     }
 
-    public UserCredentials(String username, String password) {
-        this.username = username;
+    public UserCredentials(String email, String password) {
+        this.email = email;
         this.password = password;
     }
 
@@ -39,8 +41,17 @@ public class UserCredentials {
         return this;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public UserCredentials setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
     public String getUsername() {
-        return username;
+        return email.split("@")[0];
     }
 
     public UserCredentials setUsername(String username) {

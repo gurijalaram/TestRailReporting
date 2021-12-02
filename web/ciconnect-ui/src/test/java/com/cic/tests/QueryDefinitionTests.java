@@ -5,6 +5,8 @@ import com.apriori.pageobjects.LoginPage;
 import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.validators.QueryDefinitionsValidator;
 
@@ -23,6 +25,7 @@ public class QueryDefinitionTests extends TestBase {
     private NewWorkflowPage newWorkflowPage;
     private Map<String, Object> values;
     private Map<String, Boolean> valuesB;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     public QueryDefinitionTests() {
         super();
@@ -68,7 +71,7 @@ public class QueryDefinitionTests extends TestBase {
     }
 
     private void gotoQueryDefinitions() {
-        loginPage.login();
+        loginPage.login(currentUser);
         workflowPage.newWorkflow();
         newWorkflowPage.gotoQueryDefinitions("0 0 0 0 0 Query-Definition Test");
     }

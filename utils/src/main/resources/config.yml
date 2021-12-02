@@ -27,6 +27,9 @@ sprockets:
 default:
   aws_region: na-1
 
+  cloud:
+    ui_url: https://cloud.${default.aws_region}.${env}.apriori.net/
+
   ats:
     api_url: https://ats.${default.aws_region}.${env}.apriori.net/
     token_username: qa-automation-01
@@ -147,7 +150,7 @@ qa-cid-perf:
 
   bcs:
     api_url: https://bcs.na-1.qa-cid-perf.apriori.net/
-    number_of_parts: 1
+    number_of_parts: 5
   cas:
     ui_url: https://cas.na-1.qa-cid-perf.apriori.net/
     api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
@@ -182,7 +185,7 @@ qa-cid-perf-sandbox:
 
   bcs:
     api_url: https://bcs.na-1.sandbox.qa-cid-perf.apriori.net/
-    number_of_parts: 1
+    number_of_parts: 5
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
@@ -283,7 +286,7 @@ local:
     api_url: ${local.base_url}:8810/
 
   cas:
-    ui_url: ${local.base_url}:3002
+    ui_url: ${local.base_url}:3002/
     api_url: ${local.base_url}:8818/%s
 
   cds:

@@ -3,6 +3,7 @@ package com.apriori.newcustomer;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.FileImport;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -91,5 +92,18 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
      */
     public List<String> getListOfSubModules() {
         return submodules.stream().map(WebElement::getText).collect(Collectors.toList());
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return SitesLicensesPage
+     */
+    public static SitesLicensesPage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/sites-and-licenses";
+        driver.navigate().to(String.format(url, customer));
+        return new SitesLicensesPage(driver);
     }
 }
