@@ -1,5 +1,6 @@
 package com.apriori.customeradmin;
 
+import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.utils.PageUtils;
 
@@ -73,5 +74,10 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
         pageUtils.waitForElementAndClick(userDropdown);
         pageUtils.waitForElementAndClick(logoutLink);
         return new CasLoginPage(driver);
+    }
+
+    public CustomerAdminPage clickCustomersButton() {
+        pageUtils.waitForElementAndClick(customersButton);
+        return new CustomerAdminPage(driver);
     }
 }
