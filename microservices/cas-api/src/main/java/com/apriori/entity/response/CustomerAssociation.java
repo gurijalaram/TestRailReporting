@@ -1,6 +1,5 @@
 package com.apriori.entity.response;
 
-import com.apriori.apibase.utils.CreatableModel;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
