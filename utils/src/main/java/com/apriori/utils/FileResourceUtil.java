@@ -4,6 +4,8 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -111,7 +113,11 @@ public class FileResourceUtil {
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
         S3Client s3Client = S3Client.builder()
-            .region(S3_REGION_NAME)
+                .region(S3_REGION_NAME)
+                .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+                    ? EnvironmentVariableCredentialsProvider.create()
+                    : ProfileCredentialsProvider.create()
+                )
             .build();
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()

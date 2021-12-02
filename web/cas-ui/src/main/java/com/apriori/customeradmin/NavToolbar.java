@@ -72,6 +72,6 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
     public CasLoginPage logout() {
         pageUtils.waitForElementAndClick(userDropdown);
         pageUtils.waitForElementAndClick(logoutLink);
-        return new CasLoginPage(driver, false);
+        return new CasLoginPage(driver);
     }
 }

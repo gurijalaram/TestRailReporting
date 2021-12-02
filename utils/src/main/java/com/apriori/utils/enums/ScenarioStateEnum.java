@@ -2,6 +2,7 @@ package com.apriori.utils.enums;
 
 public enum ScenarioStateEnum {
     PROCESSING("PROCESSING"),
+    PROCESSING_FAILED("PROCESSING_FAILED"),
     NOT_COSTED("NOT_COSTED"),
     COST_COMPLETE("COST_COMPLETE"),
     COST_INCOMPLETE("COST_INCOMPLETE"),

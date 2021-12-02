@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.users.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
@@ -61,6 +61,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     public PublishPage(WebDriver driver) {
         this.driver = driver;
@@ -108,8 +109,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public PublishPage selectAssignee(String assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, assignee);
+    public PublishPage selectAssignee(UserCredentials assignee) {
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
+        pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 
@@ -167,13 +169,17 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     /**
      * Select the publish button
      *
+     * @param cssItem     - the css item
+     * @param currentUser - the current user
+     * @param <T>         - the object type
      * @return generic page object
      */
     public <T> T publish(Item cssItem, UserCredentials currentUser, Class<T> klass) {
         modalDialogController.publish(klass);
-        new CidAppTestUtil().getScenarioRepresentation(cssItem, ScenarioStateEnum.COST_COMPLETE, "PUBLISH", true, currentUser);
+        new CidAppTestUtil().getScenarioRepresentation(cssItem, "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
     }
+
 
     /**
      * Select the continue button

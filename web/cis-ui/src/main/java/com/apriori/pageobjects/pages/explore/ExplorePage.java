@@ -4,10 +4,14 @@ import com.apriori.pageobjects.common.CisComponentTableActions;
 import com.apriori.pageobjects.common.CisScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreTabToolbar;
 
+import com.utils.CisColumnsEnum;
+import com.utils.CisSortOrderEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
 
 @Slf4j
 public class ExplorePage extends ExploreTabToolbar {
@@ -15,8 +19,11 @@ public class ExplorePage extends ExploreTabToolbar {
     @FindBy(css = ".icon-button-group .background-animation")
     private WebElement enabledStartComparison;
 
-    @FindBy(css = "[data-icon='filter']")
-    private WebElement filter;
+    @FindBy(css = "div[id=qa-scenario-explorer-filter-selector]")
+    private WebElement presetFilterDropdown;
+
+    @FindBy(css = ".header-left .text-overflow")
+    private WebElement presetFilter;
 
     private CisScenarioTableController scenarioTableController;
     private CisComponentTableActions componentTableActions;
@@ -39,6 +46,29 @@ public class ExplorePage extends ExploreTabToolbar {
     }
 
     /**
+     * Search for a component
+     *
+     * @param componentName - the component name
+     * @return current page object
+     */
+    public ExplorePage enterKeySearch(String componentName) {
+        componentTableActions.enterKeySearch(componentName.toUpperCase());
+        return this;
+    }
+
+    /**
+     * Uses type ahead to input the filter
+     *
+     * @param filter - the filter
+     * @return current page object
+     */
+    public ExplorePage selectPresetFilter(String filter) {
+        getPageUtils().typeAheadSelect(presetFilterDropdown, filter);
+        setPagination();
+        return this;
+    }
+
+    /**
      * Search for component
      *
      * @param componentName - the component name
@@ -46,6 +76,16 @@ public class ExplorePage extends ExploreTabToolbar {
      */
     public ExplorePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
+        return this;
+    }
+
+    /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ExplorePage setPagination() {
+        componentTableActions.setPagination();
         return this;
     }
 
@@ -90,5 +130,45 @@ public class ExplorePage extends ExploreTabToolbar {
      */
     public boolean isStartComparisonEnabled() {
         return getPageUtils().waitForElementToAppear(enabledStartComparison).isEnabled();
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return scenarioTableController.getTableHeaders();
+    }
+
+    /**
+     * Sorts the column
+     *
+     * @param column - the column
+     * @param order  - the order
+     * @return current page object
+     */
+    public ExplorePage sortColumn(CisColumnsEnum column, CisSortOrderEnum order) {
+        scenarioTableController.sortColumn(column, order);
+        return this;
+    }
+
+    /**
+     * Gets the sort order
+     *
+     * @param column - the column
+     * @return string
+     */
+    public String getSortOrder(CisColumnsEnum column) {
+        return scenarioTableController.getSortOrder(column);
+    }
+
+    /**
+     * Gets the Preset filter type
+     *
+     * @return String
+     */
+    public String getPresetFilterType() {
+        return getPageUtils().waitForElementToAppear(presetFilter).getAttribute("textContent");
     }
 }

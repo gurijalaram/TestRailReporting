@@ -4,6 +4,8 @@ import com.apriori.pageobjects.LoginPage;
 import com.apriori.pageobjects.UsersPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -14,6 +16,7 @@ public class UsersTests extends TestBase {
     private WorkflowPage workflowPage;
     private UsersPage usersPage;
     private LoginPage loginPage;
+    private UserCredentials currentUser = UserUtil.getUser();
 
 
     public UsersTests() {
@@ -31,7 +34,7 @@ public class UsersTests extends TestBase {
     @TestRail(testCaseId = {"3814"})
     @Description("Test Users List Tab")
     public void testUserTab() {
-        loginPage.login();
+        loginPage.login(currentUser);
         workflowPage.clickUserTab();
         usersPage.validateUsersSortedAlphabetical();
     }

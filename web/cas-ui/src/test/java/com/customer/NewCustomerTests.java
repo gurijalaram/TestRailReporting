@@ -60,22 +60,22 @@ public class NewCustomerTests extends TestBase {
     public void testValidateThatTheFormLabelsAreCorrect() {
 
         SoftAssertions soft = new SoftAssertions();
-        soft.assertThat(customerViewPage.isProfileTabDisplayed())
-            .overridingErrorMessage("The profile tab is missing")
+        soft.assertThat(customerViewPage.getProfileTab().isActive())
+            .overridingErrorMessage("The profile tab not the active tab.")
             .isTrue();
-        soft.assertThat(customerViewPage.isUsersTabEnabled())
+        soft.assertThat(customerViewPage.getUsersTab().isEnabled())
             .overridingErrorMessage("The users tab is enabled on a new customer.")
             .isFalse();
-        soft.assertThat(customerViewPage.isSitesAndLicensesEnabled())
+        soft.assertThat(customerViewPage.getSiteLicenseTab().isEnabled())
             .overridingErrorMessage("The sites and licenses tab is enabled on a new customer.")
             .isFalse();
-        soft.assertThat(customerViewPage.isInfrastructureEnabled())
+        soft.assertThat(customerViewPage.getInfrastructureTab().isEnabled())
             .overridingErrorMessage("The infrastructure tab is enabled on a new customer.")
             .isFalse();
-        soft.assertThat(customerViewPage.isSecurityEnabled())
+        soft.assertThat(customerViewPage.getSecurityTab())
             .overridingErrorMessage("The security tab is visible on a new customer.")
-            .isFalse();
-        soft.assertThat(customerViewPage.isSystemConfigurationEnabled())
+            .isNull();
+        soft.assertThat(customerViewPage.getSystemConfigurationTab().isEnabled())
             .overridingErrorMessage("The system configuration tab is enabled on a new customer.")
             .isFalse();
 
