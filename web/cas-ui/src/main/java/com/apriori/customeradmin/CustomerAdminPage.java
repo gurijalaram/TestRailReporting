@@ -59,23 +59,22 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     }
 
     /**
-     * Searches for and opens an existing customer.
+     * Opens a customer profile from source table
      *
-     * @param identityNameOrSalesforce The identity, name, or salesforce id of the customer to open.
-     *
-     * @return The profile page for the given customer.
+     * @param name - name of customer
+     * @return The profile page for customer
      */
-    public CustomerWorkspacePage openCustomer(final String identityNameOrSalesforce) {
+    public CustomerWorkspacePage openCustomer(String name) {
         SourceListComponent list = getSourceList();
         SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The customer search is missing.");
-        search.search(identityNameOrSalesforce);
+        search.search(name);
         getPageUtils().waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
 
         list.selectTableLayout();
         Obligation.mandatory(list::getTable, "The table layout is not active")
             .getRows()
             .findFirst()
-            .orElseThrow(() -> new NoSuchElementException("aPriori Internal is missing."))
+            .orElseThrow(() -> new NoSuchElementException(String.format("Customer %s is missing.", name)))
             .getCell("name")
             .click();
 
