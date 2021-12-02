@@ -57,6 +57,7 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "casting_BEFORE_machining";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String twoModelPartName = "casting_AFTER_machining";
         twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".stp");
         currentUser = UserUtil.getUser();
@@ -71,7 +72,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
+            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
