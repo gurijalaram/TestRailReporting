@@ -2,10 +2,6 @@ package com.apriori.cas.utils;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.apibase.utils.CreateApi;
-import com.apriori.apibase.utils.DeleteApi;
-import com.apriori.apibase.utils.ReadApi;
-import com.apriori.apibase.utils.SearchApi;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
@@ -40,7 +36,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CasTestUtil extends TestUtil implements SearchApi<CASAPIEnum>, CreateApi<CASAPIEnum>, DeleteApi<CASAPIEnum>, ReadApi<CASAPIEnum> {
+public class CasTestUtil extends TestUtil {
     private static final String token = new JwtTokenUtil().retrieveJwtToken();
 
     /**
@@ -291,7 +287,7 @@ public class CasTestUtil extends TestUtil implements SearchApi<CASAPIEnum>, Crea
     }
 
     public List<CustomerUser> findUsers(Customer source) {
-        return find(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
+        return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
     }
 
     public ResponseWrapper<CustomerUser> createUser(Customer customer) {

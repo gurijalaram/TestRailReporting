@@ -3,9 +3,6 @@ package com.apriori.cds.utils;
 import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
-import com.apriori.apibase.utils.DeleteApi;
-import com.apriori.apibase.utils.ReadApi;
-import com.apriori.apibase.utils.SearchApi;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -35,7 +32,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CdsTestUtil extends TestUtil implements SearchApi<CDSAPIEnum>, DeleteApi<CDSAPIEnum>, ReadApi<CDSAPIEnum> {
+public class CdsTestUtil extends TestUtil {
     /**
      * POST call to add a customer
      *

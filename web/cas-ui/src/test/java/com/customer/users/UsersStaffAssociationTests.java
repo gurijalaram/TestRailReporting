@@ -61,7 +61,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
-        sourceUsers = new ArrayList<>(cdsTestUtil.find(
+        sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
             CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID,
             Users.class,
             existingUsers,
