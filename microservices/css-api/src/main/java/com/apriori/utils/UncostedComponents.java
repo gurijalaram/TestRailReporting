@@ -1,5 +1,7 @@
 package com.apriori.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
+
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
@@ -80,7 +82,7 @@ public class UncostedComponents {
                 if (!items.isEmpty()) {
                     final Item firstItem = scenarioRepresentation.getResponseEntity().getItems().get(0);
 
-                    if (firstItem.getScenarioState().equals("PROCESSING_FAILED")) {
+                    if (firstItem.getScenarioState().equals(PROCESSING_FAILED.getState())) {
                         throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                     }
 
