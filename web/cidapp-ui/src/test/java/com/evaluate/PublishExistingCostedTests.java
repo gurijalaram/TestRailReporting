@@ -170,7 +170,10 @@ public class PublishExistingCostedTests extends TestBase {
             .clickExplore();
 
         cssItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
+        evaluatePage = new ExplorePage(driver).selectFilter("Private")
+            .enterKeySearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
@@ -178,7 +181,7 @@ public class PublishExistingCostedTests extends TestBase {
             .continues(PublishPage.class)
             .publish(cssItemB, currentUser, EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Compaction Pressing / Furnace Sintering"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
 
     @Test
