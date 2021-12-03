@@ -288,6 +288,7 @@ public class SettingsTests extends TestBase {
 
     @Ignore("feature has not yet been added for 21.1")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6289"})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
@@ -307,6 +308,7 @@ public class SettingsTests extends TestBase {
 
     @Ignore("feature has not yet been added for 21.1")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"3605"})
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
