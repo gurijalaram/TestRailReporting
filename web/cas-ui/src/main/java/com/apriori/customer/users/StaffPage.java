@@ -27,6 +27,27 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
     private WebElement staffAssociationListViewRoot;
     private SourceListComponent staffAssociationList;
 
+    @FindBy(css = ".staff-association-users-add-modal .modal-body .apriori-source-list")
+    private WebElement candidatesSourceListRoot;
+
+    @FindBy(css = ".staff-association-users-add-modal .modal-footer .btn-primary")
+    private WebElement candidatesAddButton;
+
+    @FindBy(css = ".staff-association-users-add-modal .modal-footer .btn-secondary")
+    private WebElement candidatesCancelButton;
+
+    @FindBy(css = ".staff-association-users-add-modal .modal-header .close")
+    private WebElement candidatesCloseButton;
+
+    @FindBy(css = ".staff-association-user-confirm-modal .modal-footer .btn-primary")
+    private WebElement candidatesConfirmOkButton;
+
+    @FindBy(css = ".staff-association-user-confirm-modal .modal-footer .btn-secondary")
+    private WebElement candidatesConfirmCancelButton;
+
+    @FindBy(css = ".staff-association-user-confirm-modal .modal-header .close")
+    private WebElement candidatesConfirmCloseButton;
+
     /**
      * Initializes a new instance of this object.
      *
@@ -78,8 +99,6 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
      * Clicks the enable button.
      *
      * @return This object.
-     *
-     * @throws org.openqa.selenium.ElementNotInteractableException If the button is disabled.
      */
     public StaffPage clickEnableButton() {
         return clickAndWait(enableButton);
@@ -101,8 +120,50 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
      *
      * @return The opened modal.
      */
-    public StaffAddModal clickAddFromList() {
+    public StaffPage clickAddFromList() {
         getPageUtils().waitForElementAndClick(addButton);
-        return new StaffAddModal(getDriver());
+        return this;
+    }
+
+    /**
+     * Gets the underlying user candidates source list.
+     *
+     * @return The user candidates source list.
+     */
+    public SourceListComponent getCandidates() {
+        WebElement root = getPageUtils().waitForElementToAppear(candidatesSourceListRoot);
+        SourceListComponent candidatesSourceList = new SourceListComponent(getDriver(), root);
+        getPageUtils().waitForCondition(candidatesSourceList::isStable, PageUtils.DURATION_LOADING);
+        return candidatesSourceList;
+    }
+
+    public StaffPage clickCandidatesCancelButton() {
+        getPageUtils().waitForElementAndClick(candidatesCancelButton);
+        return this;
+    }
+
+    public StaffPage clickCandidatesCloseButton() {
+        getPageUtils().waitForElementAndClick(candidatesCloseButton);
+        return this;
+    }
+
+    public StaffPage clickCandidatesAddButton() {
+        getPageUtils().waitForElementAndClick(candidatesAddButton);
+        return this;
+    }
+
+    public StaffPage clickCandidatesConfirmCancelButton() {
+        getPageUtils().waitForElementAndClick(candidatesConfirmCancelButton);
+        return this;
+    }
+
+    public StaffPage clickCandidatesConfirmOkButton() {
+        getPageUtils().waitForElementAndClick(candidatesConfirmOkButton);
+        return this;
+    }
+
+    public StaffPage clickCandidatesConfirmCloseButton() {
+        getPageUtils().waitForElementAndClick(candidatesConfirmCloseButton);
+        return this;
     }
 }

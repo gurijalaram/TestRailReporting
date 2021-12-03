@@ -114,11 +114,11 @@ public class UsersStaffAssociationTests extends TestBase {
 
         populateStaffTestUsers(21);
 
-        StaffAddModal addModal = staffPage
+        StaffPage addModal = staffPage
             .clickAddFromList()
-            .clickSecondary()
+            .clickCandidatesCancelButton()
             .clickAddFromList()
-            .clickClose()
+            .clickCandidatesCloseButton()
             .clickAddFromList();
 
         PageUtils utils = new PageUtils(getDriver());
@@ -148,12 +148,13 @@ public class UsersStaffAssociationTests extends TestBase {
         long expected = userCandidatesTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
         assertThat("The selection is not holding across pages.", expected, is(equalTo(expected)));
 
-        StaffPage updated = addModal.clickPrimary()
-            .clickSecondary()
-            .clickPrimary()
-            .clickClose()
-            .clickPrimary()
-            .clickPrimary();
+        StaffPage updated = addModal
+            .clickCandidatesAddButton()
+            .clickCandidatesConfirmCancelButton()
+            .clickCandidatesAddButton()
+            .clickCandidatesConfirmCloseButton()
+            .clickCandidatesAddButton()
+            .clickCandidatesConfirmOkButton();
 
         SourceListComponent staffList = updated.getStaffAssociationList();
         Obligation.mandatory(staffList::getSearch, "The staff list search functionality is missing.").search(STAFF_TEST_USER);
@@ -173,13 +174,13 @@ public class UsersStaffAssociationTests extends TestBase {
 
         PageUtils utils = new PageUtils(getDriver());
 
-        StaffAddModal addModal = staffPage.clickAddFromList();
+        StaffPage addModal = staffPage.clickAddFromList();
         SourceListComponent candidates = addModal.getCandidates();
         TableComponent candidatesTable = Obligation.mandatory(candidates::getTable, "The candidate table is missing.");
         Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search(STAFF_TEST_USER);
         utils.waitForCondition(candidates::isStable, PageUtils.DURATION_LOADING);
         Obligation.mandatory(candidatesTable::getCheckHeader, "The candidates checkbox header is missing.").check(true);
-        StaffPage updated = addModal.clickPrimary().clickPrimary();
+        StaffPage updated = addModal.clickCandidatesAddButton().clickCandidatesConfirmOkButton();
 
         SourceListComponent staffList = updated.getStaffAssociationList();
         TableComponent staffTable = Obligation.mandatory(staffList::getTable, "The staff list table is missing");
