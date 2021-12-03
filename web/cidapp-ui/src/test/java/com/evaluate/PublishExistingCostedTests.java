@@ -29,7 +29,6 @@ import io.qameta.allure.Issues;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -44,6 +43,7 @@ public class PublishExistingCostedTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Item cssItem;
+    private Item cssItemB;
 
     public PublishExistingCostedTests() {
         super();
@@ -142,7 +142,6 @@ public class PublishExistingCostedTests extends TestBase {
     @Test
     @Issues({
         @Issue("BA-2052"),
-        @Issue("BA-2136"),
         @Issue("BA-2137")
     })
     @TestRail(testCaseId = {"6211"})
@@ -160,7 +159,7 @@ public class PublishExistingCostedTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
@@ -168,13 +167,16 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickExplore();
+
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(cssItem, currentUser, EvaluatePage.class);
+            .publish(cssItemB, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Compaction Pressing / Furnace Sintering"));
     }
