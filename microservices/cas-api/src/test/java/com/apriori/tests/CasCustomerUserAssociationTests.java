@@ -113,7 +113,7 @@ public class CasCustomerUserAssociationTests {
     }
 
     @Test
-    @Description("Gets a list of customer associations.")
+    @Description("Gets a list of candidates that can be associated to a customer.")
     @TestRail(testCaseId = {"10066"})
     public void getUserAssociationCandidates() {
         associatedUsers.add(casTestUtil.createCustomerAssociationUser(usersToAssociate.get(0), customerAssociationToAprioriInternal).getResponseEntity());
@@ -125,7 +125,7 @@ public class CasCustomerUserAssociationTests {
     }
 
     @Test
-    @Description("Gets a list of customer associations.")
+    @Description("Delete a user association from a customer.")
     @TestRail(testCaseId = {"5685"})
     public void deleteUserAssociation() {
         final CustomerAssociationUser user = casTestUtil.createCustomerAssociationUser(usersToAssociate.get(0), customerAssociationToAprioriInternal).getResponseEntity();
