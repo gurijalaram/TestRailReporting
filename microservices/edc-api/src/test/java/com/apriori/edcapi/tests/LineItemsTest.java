@@ -3,6 +3,7 @@ package com.apriori.edcapi.tests;
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
 
 import com.apriori.ats.utils.JwtTokenUtil;
+import com.apriori.edcapi.entity.response.line.items.LineItemsItemsResponse;
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -25,7 +26,7 @@ public class LineItemsTest extends LineItemsUtil {
 
     @Test
     public void testGetLineItems() {
-        ResponseWrapper<LineItemsResponse> response = getAllLineItems(identity);
+        ResponseWrapper<LineItemsItemsResponse> response = getAllLineItems(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
     }
 }

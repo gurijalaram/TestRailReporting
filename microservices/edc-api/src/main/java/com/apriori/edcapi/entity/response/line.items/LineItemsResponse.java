@@ -3,20 +3,18 @@ package com.apriori.edcapi.entity.response.line.items;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Schema(location = "LineItemsResponse.json")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @JsonRootName(value = "response")
 public class LineItemsResponse {
 
@@ -28,7 +26,9 @@ public class LineItemsResponse {
     private Integer quantity;
     private String manufacturerPartNumber;
     private String manufacturer;
-    private LineItemsPart lineItemsPart;
+
+    @JsonProperty("parts")
+    private List<LineItemsPart> lineItemsPart;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)

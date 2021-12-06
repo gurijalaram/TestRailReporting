@@ -1,13 +1,12 @@
 package com.apriori.edcapi.entity.response.line.items;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class LineItemsPart {
 
     private Boolean isSaved;
+    private Boolean isActionRequired;
     private Boolean isUserPart;
     private String identity;
     private String lineItemIdentity;

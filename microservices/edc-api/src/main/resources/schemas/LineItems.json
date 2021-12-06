@@ -11,7 +11,6 @@
     "customerPartNumber",
     "quantity",
     "manufacturerPartNumber",
-    "manufacturer",
     "parts"
   ],
   "properties": {
@@ -48,91 +47,66 @@
     "parts": {
       "type": "array",
       "items": {
-        "anyOf": [
-          {
-            "type": "object",
-            "required": [
-              "isSaved",
-              "isUserPart",
-              "identity",
-              "lineItemIdentity",
-              "externalId",
-              "manufacturerPartNumber",
-              "manufacturer",
-              "classification",
-              "description",
-              "averageCost",
-              "minimumCost",
-              "mountType",
-              "pinCount",
-              "availability",
-              "dataSheetUrl",
-              "rohs",
-              "rohsVersion",
-              "status",
-              "type"
-            ],
-            "properties": {
-              "isSaved": {
-                "type": "boolean"
-              },
-              "isUserPart": {
-                "type": "boolean"
-              },
-              "identity": {
-                "type": "string"
-              },
-              "lineItemIdentity": {
-                "type": "string"
-              },
-              "externalId": {
-                "type": "string"
-              },
-              "manufacturerPartNumber": {
-                "type": "string"
-              },
-              "manufacturer": {
-                "type": "string"
-              },
-              "classification": {
-                "type": "string"
-              },
-              "description": {
-                "type": "string"
-              },
-              "averageCost": {
-                "type": "number"
-              },
-              "minimumCost": {
-                "type": "number"
-              },
-              "mountType": {
-                "type": "string"
-              },
-              "pinCount": {
-                "type": "number"
-              },
-              "availability": {
-                "type": "string"
-              },
-              "dataSheetUrl": {
-                "type": "string"
-              },
-              "rohs": {
-                "type": "string"
-              },
-              "rohsVersion": {
-                "type": "string"
-              },
-              "status": {
-                "type": "string"
-              },
-              "type": {
-                "type": "string"
-              }
-            }
+        "required": [
+          "isSaved",
+          "isUserPart",
+          "identity",
+          "externalId",
+          "manufacturerPartNumber",
+          "manufacturer",
+          "classification",
+          "description",
+          "dataSheetUrl",
+          "status",
+          "type"
+        ],
+        "properties": {
+          "isSaved": {
+            "type": "boolean"
+          },
+          "isActionRequired": {
+            "type": "boolean"
+          },
+          "isUserPart": {
+            "type": "boolean"
+          },
+          "identity": {
+            "type": "string"
+          },
+          "externalId": {
+            "type": "string"
+          },
+          "manufacturerPartNumber": {
+            "type": "string"
+          },
+          "manufacturer": {
+            "type": "string"
+          },
+          "classification": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "availability": {
+            "type": "string"
+          },
+          "dataSheetUrl": {
+            "type": "string"
+          },
+          "rohs": {
+            "type": "string"
+          },
+          "rohsVersion": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
           }
-        ]
+        }
       }
     }
   }
