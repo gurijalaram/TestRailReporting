@@ -275,9 +275,9 @@ local:
     ui_url: ${local.base_url}apriori/login
 
   ats:
-    api_url: ${local.base_url}:8805
-    token_username: jvautour
-    token_email: jvautour@apriori.com
+    api_url: ${local.base_url}:8805/
+    token_username: qa-automation-01
+    token_email: qa-automation-01@apriori.com
 
   cidapp:
     ui_url: ${local.base_url}:3003
@@ -287,7 +287,7 @@ local:
 
   cas:
     ui_url: ${local.base_url}:3002/
-    api_url: ${local.base_url}:8818/%s
+    api_url: ${local.base_url}:8818/
 
   cds:
     api_url: ${local.base_url}:8808/

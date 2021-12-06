@@ -88,6 +88,7 @@ public final class SelectComponent extends CommonComponent {
      * @return The drop-down menu with the given items.
      */
     public SelectPopMenuComponent open() {
+        getPageUtils().scrollWithJavaScript(getRoot(), true);
         getRoot().click();
         return new SelectPopMenuComponent(this);
     }

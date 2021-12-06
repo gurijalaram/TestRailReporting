@@ -1,7 +1,9 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -11,6 +13,7 @@ import org.openqa.selenium.WebElement;
 public final class TableRowComponent extends CommonComponent {
     private static final String ATTRIBUTE_HEADER_ID = "data-header-id";
     private static final String CSS_CELL = ".table-cell";
+    private static final By BY_CHECKBOX_CELL = By.cssSelector(".checkbox-cell .checkbox");
 
     /**
      * Initializes a new instance of this object.
@@ -37,5 +40,17 @@ public final class TableRowComponent extends CommonComponent {
             getRoot()
         );
         return new TableCellComponent(this, cell);
+    }
+
+    /**
+     * Gets the checkbox component if it exists.
+     *
+     * @return The checkbox component from the checkbox cell.
+     */
+    public CheckboxComponent getCheck() {
+        return Obligation.optional(() -> new CheckboxComponent(
+            getDriver(),
+            getPageUtils().waitForElementToAppear(BY_CHECKBOX_CELL, PageUtils.DURATION_FAST, getRoot())
+        ));
     }
 }
