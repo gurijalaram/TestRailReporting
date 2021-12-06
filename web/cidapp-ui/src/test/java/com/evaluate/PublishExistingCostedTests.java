@@ -29,7 +29,6 @@ import io.qameta.allure.Issues;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -142,7 +141,6 @@ public class PublishExistingCostedTests extends TestBase {
     @Test
     @Issues({
         @Issue("BA-2052"),
-        @Issue("BA-2136"),
         @Issue("BA-2137")
     })
     @TestRail(testCaseId = {"6211"})
