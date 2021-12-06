@@ -1,16 +1,18 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.junit.Assert.assertTrue;
-
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -48,15 +50,34 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
     private UserCredentials userCredentials = UserUtil.getUser();
 
     public ReportsLoginPage(WebDriver driver) {
         super(driver);
+        init(driver, "", true);
+    }
+
+    public ReportsLoginPage(WebDriver driver, String url) {
+        super(driver);
+        init(driver, url, true);
+    }
+
+    public ReportsLoginPage(WebDriver driver, boolean loadNewPage) {
+        super(driver);
+        init(driver, "", loadNewPage);
+    }
+
+    public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "reports");
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        if (url == null || url.isEmpty()) {
+            url = loginPageURL;
+        }
+        if (loadNewPage) {
+            driver.get(url);
+        }
+        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -68,7 +89,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIR login page was not displayed", aprioriLoginPage.getPageTitle().contains("CI Design APRIORI-INTERNAL"));
+
     }
 
     /**
@@ -155,7 +176,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      */
     public ReportsLoginPage failedLogin(String email, String password) {
         executeLogin(email, password);
-        return new ReportsLoginPage(driver, false);
+        return new ReportsLoginPage(driver);
     }
 
     /**
@@ -187,7 +208,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
     public ReportsLoginPage submitEmail(String email) {
         enterEmail(email);
         submitLogin();
-        return new ReportsLoginPage(driver, false);
+        return new ReportsLoginPage(driver);
     }
 
     /**

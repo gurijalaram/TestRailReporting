@@ -21,7 +21,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
     @FindBy(css = ".auth0-lock-name")
     private WebElement pageTitle;
 
-    @FindBy(css = "input[name='email']")
+    @FindBy(css = "input[name='username']")
     private WebElement email;
 
     @FindBy(css = "input[name='password']")

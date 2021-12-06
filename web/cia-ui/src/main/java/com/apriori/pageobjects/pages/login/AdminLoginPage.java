@@ -1,22 +1,24 @@
 package com.apriori.pageobjects.pages.login;
 
-import static org.junit.Assert.assertTrue;
-
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.users.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class AdminLoginPage extends AdminHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(AdminLoginPage.class);
-    private static String loginPageURL = PropertiesContext.get("${env}.admins.ui_url");
+    private static String loginPageURL = PropertiesContext.get("${env}.admin.ui_url");
 
     @FindBy(css = "input[name='username']")
     private WebElement emailInput;
@@ -44,14 +46,34 @@ public class AdminLoginPage extends AdminHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
+    //private AprioriLoginPage aprioriLoginPage;
 
     public AdminLoginPage(WebDriver driver) {
         super(driver);
+        init(driver, "", true);
+    }
+
+    public AdminLoginPage(WebDriver driver, String url) {
+        super(driver);
+        init(driver, url, true);
+    }
+
+    public AdminLoginPage(WebDriver driver, boolean loadNewPage) {
+        super(driver);
+        init(driver, "", loadNewPage);
+    }
+
+    public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
-        this.aprioriLoginPage = new AprioriLoginPage(driver, "admin");
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        if (url == null || url.isEmpty()) {
+            url = loginPageURL;
+        }
+        if (loadNewPage) {
+            driver.get(url);
+        }
+        logger.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -63,7 +85,6 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIA login page was not displayed", aprioriLoginPage.getPageTitle().contains("CI Design APRIORI-INTERNAL"));
     }
 
     /**
@@ -110,11 +131,11 @@ public class AdminLoginPage extends AdminHeader {
     /**
      * Login to CI Report
      *
-     * @param email    - user email
-     * @param password - user password
+     * @param userCredentials - user credentials
      * @return new page object
      */
     public AdminHomePage login(final UserCredentials userCredentials) {
-        return aprioriLoginPage.login(userCredentials, AdminHomePage.class);
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        return new AdminHomePage(driver);
     }
 }
