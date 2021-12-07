@@ -189,7 +189,7 @@ public class SettingsTests extends TestBase {
             .costScenario()
             .goToSecondaryTab();
 
-        assertThat(secondaryPage.getBatchSize(), is(equalTo(46)));
+        assertThat(secondaryPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
     }
 
     @Test
