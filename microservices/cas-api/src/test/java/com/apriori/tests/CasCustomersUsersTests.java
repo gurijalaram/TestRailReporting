@@ -8,10 +8,10 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
-import com.apriori.tests.utils.CasTestUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -55,9 +55,9 @@ public class CasCustomersUsersTests {
             .inlineVariables(customerIdentity, "users")).get();
 
         assertThat(customerUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(customerUsers.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(customerUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String userIdentity = customerUsers.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String userIdentity = customerUsers.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<CustomerUser> singleUser = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_USERS, CustomerUser.class)
             .token(token)
