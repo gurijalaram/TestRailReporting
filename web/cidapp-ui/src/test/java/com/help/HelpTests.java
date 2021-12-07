@@ -19,6 +19,7 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -46,6 +47,7 @@ public class HelpTests extends TestBase {
 
     @Test
     @Ignore("Currently no help button for inputs")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help pages in relevant areas of the UI")
     public void moreInputsHelp() {

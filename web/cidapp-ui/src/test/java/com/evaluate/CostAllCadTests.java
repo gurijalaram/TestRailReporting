@@ -23,6 +23,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.Keys;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -323,6 +324,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Ignore("awaiting a response if this is allowed or not for new CID")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5447", "2317"})
     @Description("Ensure scripts cannot be entered into all available text input fields")
     public void failedUpload() {
