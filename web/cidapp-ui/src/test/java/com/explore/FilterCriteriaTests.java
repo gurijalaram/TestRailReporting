@@ -115,9 +115,10 @@ public class FilterCriteriaTests extends TestBase {
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Part Name", "Contains", "Wall")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("CurvedWall", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -201,12 +202,14 @@ public class FilterCriteriaTests extends TestBase {
 
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .publishScenario()
-            .publish(cssItem, currentUser, ExplorePage.class)
+            .publish(cssItem, currentUser, EvaluatePage.class)
+            .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Component Name", "Contains", "Push Pin")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), is(equalTo(1)));
     }
@@ -246,7 +249,7 @@ public class FilterCriteriaTests extends TestBase {
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6221"})
-    @Description("Test public criteria assembly description")
+    @Description("Test multiple attributes")
     public void testFilterAttributes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -267,22 +270,25 @@ public class FilterCriteriaTests extends TestBase {
             .publishScenario()
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
-            .publish(cssItem, currentUser, ExplorePage.class)
+            .selectAssignee(currentUser)
+            .publish(cssItem, currentUser, EvaluatePage.class)
+            .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
             .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
-            .publishScenario()
-            .publish(cssItem, currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName2)
             .addCriteriaWithOption("Status", "In", "Analysis")
             .addCriteriaWithOption("Cost Maturity", "In", "Initial")
             .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
     }
