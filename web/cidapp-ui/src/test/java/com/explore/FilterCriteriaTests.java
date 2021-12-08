@@ -257,6 +257,8 @@ public class FilterCriteriaTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cssItem.getScenarioCreatedByName();
+
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .publishScenario()
             .selectStatus("Analysis")
@@ -265,7 +267,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
+            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
             .submit(ExplorePage.class)
             .lock(ExplorePage.class)
             .publishScenario()
@@ -275,7 +277,7 @@ public class FilterCriteriaTests extends TestBase {
             .inputName(filterName2)
             .addCriteriaWithOption("Status", "In", "Analysis")
             .addCriteriaWithOption("Cost Maturity", "In", "Initial")
-            .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
+            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
