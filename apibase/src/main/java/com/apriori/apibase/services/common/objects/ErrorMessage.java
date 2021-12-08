@@ -6,10 +6,12 @@ import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmss
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Getter;
 
 import java.time.LocalDate;
 
 @Schema(location = "ErrorMessageSchema.json")
+@Getter
 public class ErrorMessage {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -18,49 +20,4 @@ public class ErrorMessage {
     private String error;
     private String message;
     private String path;
-
-    public LocalDate getTimestamp() {
-        return timestamp;
-    }
-
-    public ErrorMessage setTimestamp(LocalDate timestamp) {
-        this.timestamp = timestamp;
-        return this;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public ErrorMessage setStatus(Integer status) {
-        this.status = status;
-        return this;
-    }
-
-    public String getError() {
-        return error;
-    }
-
-    public ErrorMessage setError(String error) {
-        this.error = error;
-        return this;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public ErrorMessage setMessage(String message) {
-        this.message = message;
-        return this;
-    }
-
-    public String getPath() {
-        return path;
-    }
-
-    public ErrorMessage setPath(String path) {
-        this.path = path;
-        return this;
-    }
 }
