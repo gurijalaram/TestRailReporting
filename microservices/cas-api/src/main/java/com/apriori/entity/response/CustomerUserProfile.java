@@ -3,6 +3,7 @@ package com.apriori.entity.response;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -30,4 +31,12 @@ public class CustomerUserProfile {
     private String department;
     private String supervisor;
     private String townCity;
+    private String county = null;
+    private String countryCode = null;
+    private String officePhoneCountryCode = null;
+    private String officePhoneNumber = null;
+    private String prefix = null;
+    private String stateProvince = null;
+    private String suffix = null;
+    private String timezone = null;
 }
