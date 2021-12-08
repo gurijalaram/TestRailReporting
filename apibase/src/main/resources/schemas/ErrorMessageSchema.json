@@ -3,6 +3,7 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
+    "method",
     "status",
     "error",
     "message",
@@ -13,23 +14,21 @@
   ],
   "properties": {
     "timestamp": {
-      "$id": "#/properties/timestamp",
       "type": "integer"
     },
     "status": {
-      "$id": "#/properties/status",
       "type": "integer"
     },
+    "method": {
+      "type": "string"
+    },
     "error": {
-      "$id": "#/properties/error",
       "type": "string"
     },
     "message": {
-      "$id": "#/properties/message",
       "type": "string"
     },
     "path": {
-      "$id": "#/properties/path",
       "type": "string"
     }
   }

@@ -17,6 +17,7 @@ public class ErrorMessage {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDate timestamp;
     private Integer status;
+    private String method;
     private String error;
     private String message;
     private String path;
