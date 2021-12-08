@@ -6,12 +6,20 @@ import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmss
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @Schema(location = "ErrorMessageSchema.json")
 @Getter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ErrorMessage {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
