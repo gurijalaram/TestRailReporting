@@ -16,6 +16,8 @@ import com.apriori.utils.users.UserCredentials;
 import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -58,9 +60,10 @@ public class FilterCriteriaTests extends TestBase {
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Component Name", "Contains", "SheetMetal")
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("SheetMetal", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
 
     @Test
@@ -86,9 +89,10 @@ public class FilterCriteriaTests extends TestBase {
             .saveAs()
             .inputName(filterName)
             .addCriteriaWithOption("Process Group", "In", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("Casting", scenarioName), is(equalTo(1)));
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
 
     @Test
