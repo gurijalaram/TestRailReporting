@@ -11,6 +11,7 @@ import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
+import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.ReCostScenarioTests;
@@ -65,7 +66,6 @@ import testsuites.suiteinterface.SmokeTests;
     PreviewPanelTests.class,
     DFMRiskTests.class,
     DeleteTests.class,
-    DFMRiskTests.class,
     PublishTests.class,
     SheetMetalDTCTests.class,
     DTCPlasticMouldingTests.class,
@@ -79,7 +79,8 @@ import testsuites.suiteinterface.SmokeTests;
     ToleranceTests.class,
     ComparisonTests.class,
     ThreadTests.class,
-    PartNestingTests.class
+    PartNestingTests.class,
+    PsoEditTests.class
 })
 public class CIDSmokeTestSuite {
 }
