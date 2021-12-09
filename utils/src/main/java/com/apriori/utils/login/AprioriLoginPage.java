@@ -81,7 +81,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
         driver.get(url);
 
-        log.info("CURRENTLY ON INSTANCE: " + application);
+        log.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
