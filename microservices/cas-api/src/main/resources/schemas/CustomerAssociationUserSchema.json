@@ -1,0 +1,24 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "http://example.com/example.json",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "userIdentity"
+      ],
+      "ignorable": [
+        "user"
+      ],
+      "properties": {
+        "userIdentity": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

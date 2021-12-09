@@ -1,5 +1,6 @@
 package com.apriori.cds.objects.response;
 
+import com.apriori.apibase.services.common.objects.Paged;
 import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
@@ -19,6 +20,6 @@ import java.util.List;
 @Data
 @JsonRootName("response")
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class Customers extends Pagination {
+public class Customers extends Pagination implements Paged<Customer> {
     private List<Customer> items;
 }

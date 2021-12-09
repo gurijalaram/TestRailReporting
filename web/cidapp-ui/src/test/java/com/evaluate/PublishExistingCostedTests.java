@@ -43,6 +43,7 @@ public class PublishExistingCostedTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Item cssItem;
+    private Item cssItemB;
 
     public PublishExistingCostedTests() {
         super();
@@ -158,7 +159,7 @@ public class PublishExistingCostedTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
@@ -166,15 +167,21 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickExplore();
+
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        evaluatePage = new ExplorePage(driver).selectFilter("Private")
+            .enterKeySearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(cssItem, currentUser, EvaluatePage.class);
+            .publish(cssItemB, currentUser, EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Compaction Pressing / Furnace Sintering"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
 
     @Test
