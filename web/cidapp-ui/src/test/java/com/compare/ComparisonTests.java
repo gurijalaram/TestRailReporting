@@ -38,6 +38,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.AdhocTests;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -511,6 +512,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Ignore("ProcessingState")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5799"})
     @Description("Delete private scenarios that are included in the comparison")
     public void deletePrivateScenarioOfComparison() {
@@ -551,6 +553,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Ignore("ProcessingState")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5798"})
     @Description("Delete public scenarios that are included in the comparison")
     public void deletePublicScenarioOfComparison() {

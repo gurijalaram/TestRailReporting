@@ -1,5 +1,6 @@
 package com.apriori.apibase.services.cas;
 
+import com.apriori.apibase.utils.CreatableModel;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -22,6 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @JsonRootName("response")
 @Data
+@CreatableModel("customer")
 @Builder
 public class Customer {
     private String identity;
@@ -41,6 +43,7 @@ public class Customer {
     private Boolean active;
     private Integer maxCadFileRetentionDays;
     private Integer maxCadFileSize;
+    private String mfaAuthenticator = null;
     private Boolean useExternalIdentityProvider;
     private Boolean mfaRequired;
     private List<Object> oneTimePasswordApplications = null;
