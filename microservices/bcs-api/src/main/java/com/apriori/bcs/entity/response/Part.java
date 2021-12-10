@@ -1,5 +1,6 @@
 package com.apriori.bcs.entity.response;
 
+import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -8,7 +9,6 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-import org.joda.time.DateTime;
 
 import java.time.LocalDateTime;
 
@@ -34,4 +34,13 @@ public class Part {
     private String partName;
     private String costingResult;
     private String message;
+
+
+    public BCSPartBenchmarkingDTO convertToBCSPartBenchData() {
+        return BCSPartBenchmarkingDTO.builder()
+            .startTime(this.createdAt)
+            .identity(this.getIdentity())
+            .partName(this.getPartName())
+            .build();
+    }
 }

@@ -1,11 +1,13 @@
-package com.apriori.utils.users;
+package com.apriori.utils.reader.file.part;
 
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.constants.CommonConstants;
-import com.apriori.utils.users.service.UserCommonService;
-import com.apriori.utils.users.service.UserSecurityService;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.part.service.PartCommonService;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.File;
 
 /**
  * Get user functionality.
@@ -36,35 +38,34 @@ import org.slf4j.LoggerFactory;
  *
  * @author vzarovnyi
  */
-public class UserUtil {
+@Slf4j
+public class PartUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserUtil.class);
 
     /**
-     * Return common user
+     * Return part data information from part file
      *
-     * @return User
+     * @return PartData
      */
-    public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser();
-        logInfo(user);
-        return user;
+    public static PartData getPartData() {
+        PartData partData = PartCommonService.getPartData();
+        logInfo(partData);
+        return partData;
     }
 
     /**
-     * Return user by access level
+     * Return part file copied into temp folder from S3 bucket
      *
-     * @param accessLevel - access level of needed user
-     * @return User
+     * @return File
      */
-    public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel);
-        logInfo(user);
-        return user;
+    public static File getPartFile() {
+        PartData partData = PartCommonService.getPartData();
+        logInfo(partData);
+        return FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(partData.getProcessGroup()), partData.getFileName());
     }
 
-    private static void logInfo(UserCredentials user) {
-        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel()));
+    private static void logInfo(PartData partData) {
+        log.info(String.format("Received PART for tests fileName:%s processGroup:%s ", partData.getFileName(), partData.getProcessGroup()));
     }
 
 }

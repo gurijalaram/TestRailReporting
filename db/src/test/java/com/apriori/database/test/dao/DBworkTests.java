@@ -1,3 +1,5 @@
+package com.apriori.database.test.dao;
+
 import com.apriori.database.actions.local.DBBackupHandler;
 import com.apriori.database.actions.local.DBDataImporter;
 import com.apriori.database.utils.PropertiesHandler;
@@ -25,7 +27,7 @@ public class DBworkTests {
         DBDataImporter dbDataImporter = new DBDataImporter();
         /* Path to folder with test materials */
         String[] partPath = new String[]{"C:\\Users\\ssakho.FBC\\Desktop\\test\\ap"};
-        dbDataImporter.importFilesIntoDB(partPath);
+        //        dbDataImporter.importFilesIntoDB(partPath);
         System.out.println("Data was successfully imported");
     }
 }

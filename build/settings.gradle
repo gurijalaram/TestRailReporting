@@ -90,10 +90,10 @@ if (configuration != null) {
     project(':web:edc-ui').projectDir = file('../web/edc-ui')
     project(':web:cis-ui').projectDir = file('../web/cis-ui')
 
-    if (System.getProperty("all") != null) {
+//    if (System.getProperty("all") != null) {
         include(':database')
         project(':database').projectDir = file('../db')
-    }
+//    }
 }
 
 void includeProject(final String includePath, final String filePath) {

@@ -14,7 +14,7 @@ import com.apriori.utils.http.enums.common.api.AccountEndpointEnum;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;

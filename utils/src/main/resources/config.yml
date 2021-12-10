@@ -7,6 +7,8 @@ global:
   console_log_level: "OFF"
   users_csv_file: common-users.csv
   different_users: true
+  different_parts: true
+  db_connection: prod
 
 # Define the customer
 customer: ap-int
