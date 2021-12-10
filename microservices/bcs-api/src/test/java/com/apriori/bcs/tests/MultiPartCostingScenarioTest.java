@@ -73,28 +73,30 @@ public class MultiPartCostingScenarioTest extends TestUtil {
             .inlineVariables(batch.getIdentity());
 
         int countOfAttempts = 0;
-        long countFinishedParts;
         List<Part> parts;
 
         do {
+            Thread.sleep(Constants.POLLING_WAIT);
+
             ResponseWrapper<Parts> partResponseWrapper = HTTPRequest.build(requestEntity).get();
             parts = partResponseWrapper.getResponseEntity().getItems();
 
-            countFinishedParts = parts.stream()
-                .filter(part ->
-                    part.getState().equals(BCSState.ERRORED.getState())
-                        || part.getState().equals(BCSState.COMPLETED.getState())
-                )
-                .count();
-
-            Thread.sleep(Constants.POLLING_WAIT);
             countOfAttempts++;
 
-        } while (countFinishedParts != parts.size() || countOfAttempts == Constants.POLLING_INTERVALS);
+        } while (this.findCountOfFinishedParts(parts) != parts.size() || countOfAttempts == Constants.POLLING_INTERVALS);
 
         this.summarizePartsData(parts, partsCollector);
 
         BCSDao.insertCostingData(batchData, partsCollector.values());
+    }
+
+    private long findCountOfFinishedParts(List<Part> parts) {
+        return parts.stream()
+            .filter(part ->
+                part.getState().equals(BCSState.ERRORED.getState())
+                    || part.getState().equals(BCSState.COMPLETED.getState())
+            )
+            .count();
     }
 
     private void summarizePartsData(List<Part> parts, Map<String, BCSPartBenchmarkingDTO> partsCollector) {
