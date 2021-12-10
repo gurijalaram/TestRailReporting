@@ -32,6 +32,7 @@ import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -165,7 +166,6 @@ public class SettingsTests extends TestBase {
         assertThat(evaluatePage.getProductionLife(), is("7"));
     }
 
-    @Ignore("Uncomment when ba-1955 is done")
     @Test
     @TestRail(testCaseId = {"6287", "6288"})
     @Description("User can change the default Batch size when set to manual")
@@ -189,7 +189,7 @@ public class SettingsTests extends TestBase {
             .costScenario()
             .goToSecondaryTab();
 
-        assertThat(secondaryPage.getBatchSize(), is(equalTo(batchSize)));
+        assertThat(secondaryPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
     }
 
     @Test
@@ -288,6 +288,7 @@ public class SettingsTests extends TestBase {
 
     @Ignore("feature has not yet been added for 21.1")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6289"})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
@@ -307,6 +308,7 @@ public class SettingsTests extends TestBase {
 
     @Ignore("feature has not yet been added for 21.1")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"3605"})
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
@@ -326,6 +328,7 @@ public class SettingsTests extends TestBase {
 
     @Ignore("feature has not yet been added for 21.1")
     @Test
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {

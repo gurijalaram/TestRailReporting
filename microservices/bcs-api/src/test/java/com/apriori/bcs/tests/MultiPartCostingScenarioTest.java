@@ -41,7 +41,8 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     private static Batch batch;
     private static String batchIdentity;
     private static BCSBatchDTO batchData;
-    private static final int numberOfParts = Integer.parseInt(PropertiesContext.get("${env}.bcs.number_of_parts"));
+    private static final Integer numberOfParts = Integer.parseInt(PropertiesContext.get("${env}.bcs.number_of_parts"));
+    private static final Boolean doDbRecording = Boolean.parseBoolean(PropertiesContext.get("global.db_recording"));
 
     @BeforeClass
     public static void testSetup() {
@@ -87,7 +88,9 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
         this.summarizePartsData(parts, partsCollector);
 
-        BCSDao.insertCostingData(batchData, partsCollector.values());
+        if(doDbRecording) {
+            BCSDao.insertCostingData(batchData, partsCollector.values());
+        }
     }
 
     private long findCountOfFinishedParts(List<Part> parts) {

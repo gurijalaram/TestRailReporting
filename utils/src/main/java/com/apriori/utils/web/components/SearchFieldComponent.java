@@ -57,6 +57,7 @@ public final class SearchFieldComponent extends CommonComponent {
      */
     public SearchFieldComponent search(final String text) {
         WebElement search = getSearchInput();
+        getPageUtils().scrollWithJavaScript(search, true);
         getPageUtils().setValueOfElement(search, text, Keys.ENTER);
         return this;
     }
@@ -70,6 +71,7 @@ public final class SearchFieldComponent extends CommonComponent {
      */
     public SearchFieldComponent clickSearch(final String text) {
         WebElement search = getSearchInput();
+        getPageUtils().scrollWithJavaScript(search, true);
         getPageUtils().setValueOfElement(search, text);
         WebElement button = getSearchFieldButton();
         button.click();

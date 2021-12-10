@@ -11,8 +11,9 @@ import org.junit.runners.Suite;
 @ProjectRunID("874")
 @RunWith(CategorySuiteRunner.class)
 @Suite.SuiteClasses({
-    NewCustomerTests.class,
+    CustomerTestSuite.class,
     NavigationTests.class,
+    UsersTestSuite.class,
     SystemConfigurationTestSuite.class
 })
 public final class RegressionTestSuite {

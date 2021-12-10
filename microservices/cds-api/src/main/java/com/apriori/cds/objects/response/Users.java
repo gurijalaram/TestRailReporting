@@ -1,5 +1,6 @@
 package com.apriori.cds.objects.response;
 
+import com.apriori.apibase.services.common.objects.Paged;
 import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Users extends Pagination {
+public class Users extends Pagination implements Paged<User> {
     private List<User> items;
 }
 

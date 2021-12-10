@@ -36,6 +36,7 @@ import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
@@ -298,16 +299,21 @@ public class CidAppTestUtil {
                 assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                final ScenarioResponse scenarioResponse = scenarioRepresentation.getResponseEntity();
+                final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
-                if (scenarioResponse.getScenarioState().equals(PROCESSING_FAILED.getState())) {
-                    throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentName, scenarioName));
-                }
-                if (!scenarioResponse.getScenarioState().equals(PROCESSING_FAILED.getState()) && scenarioResponse.getLastAction().equals(lastAction) && scenarioResponse.getPublished() == published) {
+                scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
+                    .ifPresent(y -> {
+                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentName, scenarioName));
+                    });
+
+                if (scenarioResponse.isPresent() &&
+                    scenarioResponse.get().getLastAction().equals(lastAction) &&
+                    scenarioResponse.get().getPublished() == published) {
+
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-
                     return scenarioRepresentation;
                 }
+
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
         } catch (InterruptedException e) {
@@ -389,7 +395,8 @@ public class CidAppTestUtil {
                 .token(getToken(userCredentials))
                 .inlineVariables(componentId, scenarioId)
                 .body("costingInputs", CostRequest.builder()
-                    .costingTemplateIdentity(getCostingTemplateId(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials).getIdentity())
+                    .costingTemplateIdentity(getCostingTemplateId(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials)
+                        .getIdentity())
                     .deleteTemplateAfterUse(true)
                     .build()
                 );
