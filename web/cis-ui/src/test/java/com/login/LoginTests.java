@@ -29,12 +29,10 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = "9432")
     @Description("Successfully login with valid user")
     public void testLogin() {
-        String info = "Production";
         loginPage = new CisLoginPage(driver);
         exploreTabToolbar = loginPage.login(UserUtil.getUser());
 
-        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo(info)));
-        assertThat(exploreTabToolbar.deploymentInfo(info), is(equalTo("Production")));
+        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo("Production")));
     }
 
     @Test
@@ -58,6 +56,18 @@ public class LoginTests extends TestBase {
             .logout();
 
         assertThat(loginPage.verifyPageTitle(pageTitle), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "9554")
+    @Description("Verify deployment connection in sub header - Production")
+    public void testDeploymentConnection() {
+        String info = "Production";
+
+        loginPage = new CisLoginPage(driver);
+        exploreTabToolbar = loginPage.login(UserUtil.getUser());
+
+        assertThat(exploreTabToolbar.deploymentInfo(info), is(equalTo("Production")));
     }
 }
 
