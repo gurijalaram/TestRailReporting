@@ -31,9 +31,6 @@ public class BatchEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "test_id")
-    private String testId;
-
     @Id
     @Column(name = "batch_id")
     private String batchId;
