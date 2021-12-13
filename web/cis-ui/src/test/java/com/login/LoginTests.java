@@ -34,7 +34,7 @@ public class LoginTests extends TestBase {
         exploreTabToolbar = loginPage.login(UserUtil.getUser());
 
         assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo(info)));
-        assertThat(exploreTabToolbar.deploymentInfo(info), is(equalTo(info)));
+        assertThat(exploreTabToolbar.deploymentInfo(info), is(equalTo("Production")));
     }
 
     @Test

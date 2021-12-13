@@ -49,10 +49,16 @@ public class ExploreTabToolbar extends MainNavigationBar {
         return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
     }
 
+    /**
+     * Get the Deployment connection info
+     *
+     * @param info - info
+     * @return String
+     */
     public String deploymentInfo(String info) {
-        if (info.equalsIgnoreCase("Production")){
+        if (info.equalsIgnoreCase("Production")) {
             return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
-        }else if (info.equalsIgnoreCase("Sandbox")){
+        } else if (info.equalsIgnoreCase("Sandbox")) {
             return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
         }
         return info;
