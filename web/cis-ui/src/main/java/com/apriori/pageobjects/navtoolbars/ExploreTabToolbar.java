@@ -60,8 +60,8 @@ public class ExploreTabToolbar extends MainNavigationBar {
             return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
         } else if (info.equalsIgnoreCase("Sandbox")) {
             return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
-        }
-        return info;
+        }else
+        return null;
     }
 
     /**
