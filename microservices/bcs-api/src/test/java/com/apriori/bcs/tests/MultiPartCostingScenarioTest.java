@@ -31,6 +31,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -88,8 +89,10 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
         this.summarizePartsData(parts, partsCollector);
 
-        if(doDbRecording) {
+        if (doDbRecording) {
             BCSDao.insertCostingData(batchData, partsCollector.values());
+        } else {
+            this.logCostingInfo(batchData, partsCollector.values());
         }
     }
 
@@ -118,29 +121,55 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         Map<String, BCSPartBenchmarkingDTO> partsCollector = new HashMap<>();
 
         for (int i = 0; i < numberOfParts; i++) {
-            NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
-            PartData partData = PartUtil.getPartData();
-
-            newPartRequest.setFilename(partData.getFileName());
-            newPartRequest.setProcessGroup(partData.getProcessGroup());
-            newPartRequest.setMaterialName(partData.getMaterial());
-            newPartRequest.setAnnualVolume(partData.getAnnualVolume());
-            newPartRequest.setBatchSize(partData.getBatchSize());
+            NewPartRequest newPartRequest = this.getNewPartRequestAndOverrideByPartData(
+                BatchPartResources.getNewPartRequest()
+            );
 
             Part batchPart = (Part) BatchPartResources.createNewBatchPart(newPartRequest,
                 batchIdentity
             ).getResponseEntity();
 
-            BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
-            benchData.setFilename(newPartRequest.getFilename());
-            benchData.setProcessGroup(newPartRequest.getProcessGroup());
-            benchData.setMaterialName(newPartRequest.getMaterialName());
-            benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
-            benchData.setBatchSize(newPartRequest.getBatchSize());
+            BCSPartBenchmarkingDTO benchData = this.convertPartToPartBenchDTOAndAddRequestData(batchPart, newPartRequest);
 
             partsCollector.put(batchPart.getIdentity(), benchData);
         }
 
         return partsCollector;
+    }
+
+    private NewPartRequest getNewPartRequestAndOverrideByPartData(NewPartRequest newPartRequest) {
+        PartData partData = PartUtil.getPartData();
+
+        newPartRequest.setFilename(partData.getFileName());
+        newPartRequest.setProcessGroup(partData.getProcessGroup());
+        newPartRequest.setMaterialName(partData.getMaterial());
+        newPartRequest.setAnnualVolume(partData.getAnnualVolume());
+        newPartRequest.setBatchSize(partData.getBatchSize());
+
+        return newPartRequest;
+    }
+
+    private BCSPartBenchmarkingDTO convertPartToPartBenchDTOAndAddRequestData(Part batchPart, NewPartRequest newPartRequest) {
+        BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
+        benchData.setFilename(newPartRequest.getFilename());
+        benchData.setProcessGroup(newPartRequest.getProcessGroup());
+        benchData.setMaterialName(newPartRequest.getMaterialName());
+        benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
+        benchData.setBatchSize(newPartRequest.getBatchSize());
+
+        return benchData;
+    }
+
+    private void logCostingInfo(BCSBatchDTO batchData, Collection<BCSPartBenchmarkingDTO> partsBenchmarkingData) {
+        log.info("================== Batch Parts Benchmarking Data ==================");
+        log.info("Batch: " + batchData.toString());
+
+        StringBuilder partsData = new StringBuilder("Parts: \n");
+        partsBenchmarkingData.forEach(data -> {
+            partsData.append(data.toString())
+                .append("\n");
+        });
+
+        log.info(partsData.toString());
     }
 }

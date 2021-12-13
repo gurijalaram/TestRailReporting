@@ -6,8 +6,6 @@ import com.apriori.utils.reader.file.part.service.PartCommonService;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.io.File;
-
 /**
  * Get part functionality.
  * reference properties:
@@ -28,7 +26,6 @@ import java.io.File;
 @Slf4j
 public class PartUtil {
 
-
     /**
      * Return part data information from part file
      *
@@ -45,10 +42,13 @@ public class PartUtil {
      *
      * @return File
      */
-    public static File getPartFile() {
+    public static PartData getPartDataWithFile() {
         PartData partData = PartCommonService.getPartData();
+        partData.setFile(
+            FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(partData.getProcessGroup()), partData.getFileName())
+        );
         logInfo(partData);
-        return FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(partData.getProcessGroup()), partData.getFileName());
+        return partData;
     }
 
     private static void logInfo(PartData partData) {

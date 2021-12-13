@@ -46,7 +46,6 @@ public class InitFileData {
 
         orderLines.forEachRemaining(elementsQueue::add);
 
-
         return elementsQueue;
 
     }

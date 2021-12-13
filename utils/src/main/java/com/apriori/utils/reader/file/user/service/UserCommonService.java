@@ -26,6 +26,7 @@ public class UserCommonService {
 
     private static final Logger logger = LoggerFactory.getLogger(UserCommonService.class);
     private static UserCredentials globalUser;
+    private static ConcurrentLinkedQueue<UserCredentials> usersQueue = initCommonUsers();
 
     /**
      * Return single user
@@ -69,7 +70,6 @@ public class UserCommonService {
     private static List<UserCredentials> parseUsersToUsersCredentialsList(List<String> users) {
         List<UserCredentials> usersCredentials = new LinkedList<>();
 
-
         for (String line : users) {
             usersCredentials.add(initUserCredentialObject(line));
         }
@@ -90,8 +90,6 @@ public class UserCommonService {
     private static boolean userRecordWithAccessLevel(String[] values) {
         return values.length == 3;
     }
-
-    private static ConcurrentLinkedQueue<UserCredentials> usersQueue = initCommonUsers();
 
     private static ConcurrentLinkedQueue<UserCredentials> initCommonUsers() {
         return new ConcurrentLinkedQueue<>(initUsers());

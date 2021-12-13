@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.File;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -14,6 +16,7 @@ public class PartData {
 
     @JsonProperty("filename")
     private String fileName;
+    private File file;
     private String processGroup;
     private String material;
     private String digitalFactory;
