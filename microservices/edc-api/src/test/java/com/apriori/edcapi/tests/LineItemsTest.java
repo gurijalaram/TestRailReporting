@@ -1,8 +1,6 @@
 package com.apriori.edcapi.tests;
 
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.core.Is.is;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
@@ -36,12 +34,12 @@ public class LineItemsTest extends LineItemsUtil {
         SoftAssertions softAssertions = new SoftAssertions();
 
         List<LineItemsResponse> allLineItems = getAllLineItems(identity);
-        assertThat(allLineItems.get(0).getStatus(), is("Incomplete"));
-        assertThat(allLineItems.get(1).getQuantity(), is(1));
 
-        softAssertions.assertThat(allLineItems.contains(identity));
-        softAssertions.assertThat(allLineItems.get(8).getLineItemsPart().get(1).getRohsVersion());
-        softAssertions.assertThat(allLineItems.size());
+        softAssertions.assertThat(allLineItems.contains(identity)).as("IsUserPart").isEqualTo(false);
+        softAssertions.assertThat(allLineItems.size()).isGreaterThan(0);
+        softAssertions.assertThat(allLineItems.stream().filter(x -> x.getLineItemsPart().stream().anyMatch(y -> y.getRohs().equalsIgnoreCase("Yes"))));
+        softAssertions.assertThat(allLineItems.stream().filter(x -> x.getLineItemsPart().stream().anyMatch(y -> y.getIsSaved().equals(true))));
+        softAssertions.assertThat(allLineItems.stream().filter(x -> x.getQuantity().equals(1)));
         softAssertions.assertAll();
     }
 }
