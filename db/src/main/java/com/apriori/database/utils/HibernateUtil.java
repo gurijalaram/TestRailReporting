@@ -39,8 +39,9 @@ public class HibernateUtil {
     private static SessionFactory buildSessionFactory() {
         try {
             // Create the ServiceRegistry from hibernate.cfg.xml
-            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()//
-                .configure(FileResourceUtil.getLocalResourceFile(String.format("%s\\hibernate.cfg.xml", PropertiesContext.get("global.db_connection")))).build();
+            ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .configure(
+                    Thread.currentThread().getContextClassLoader().getResource(String.format("%s/hibernate.cfg.xml", PropertiesContext.get("global.db_connection")))).build();
 
             // Create a metadata sources using the specified service registry.
             Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
