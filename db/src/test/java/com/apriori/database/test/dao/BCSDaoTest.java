@@ -15,6 +15,7 @@ public class BCSDaoTest {
     @Test
     @Ignore("Use to test costing data")
     public void testInsertCostingData() {
+        System.setProperty("global_db_connection", "local");
 
         BCSBatchDTO bcsBatchDTO = BCSBatchDTO.builder()
             .batchId("test")

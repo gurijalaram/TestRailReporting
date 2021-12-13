@@ -1,5 +1,6 @@
 package com.apriori.database.utils;
 
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.hibernate.SessionFactory;
@@ -39,7 +40,7 @@ public class HibernateUtil {
         try {
             // Create the ServiceRegistry from hibernate.cfg.xml
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()//
-                .configure(String.format("%s\\hibernate.cfg.xml", PropertiesContext.get("global.db_connection"))).build();
+                .configure(FileResourceUtil.getLocalResourceFile(String.format("%s\\hibernate.cfg.xml", PropertiesContext.get("global.db_connection")))).build();
 
             // Create a metadata sources using the specified service registry.
             Metadata metadata = new MetadataSources(serviceRegistry).getMetadataBuilder().build();
