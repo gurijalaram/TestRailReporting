@@ -1,15 +1,15 @@
 # Define the environment
-env: qa-cid-perf
+env: staging
 
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: common-users.csv
+  users_csv_file: widgets-users.csv
   different_users: true
 
 # Define the customer
-customer: ap-int
+customer: widgets
 
 ap-int:
   token_subject: 4127
@@ -25,7 +25,7 @@ sprockets:
 
 ######################################################## DEFAULT VALUES ########################################################
 default:
-  aws_region: na-1
+  aws_region: na-1-v21-1
 
   cloud:
     ui_url: https://cloud.${default.aws_region}.${env}.apriori.net/
