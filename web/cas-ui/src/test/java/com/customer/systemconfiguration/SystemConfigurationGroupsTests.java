@@ -313,7 +313,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
         validateColumnHeaderIsCorrect("Login ID", "user.username", table, soft);
         validateColumnHeaderIsCorrect("Given Name", "user.userProfile.givenName", table, soft);
         validateColumnHeaderIsCorrect("Family Name", "user.userProfile.familyName", table, soft);
-        validateColumnHeaderIsCorrect("Department", "department", table, soft);
+        validateColumnHeaderIsCorrect("Department", "user.userProfile.department", table, soft);
     }
 
     private void validateMembersHasCorrectDefaultPageSize(SoftAssertions soft) {
