@@ -27,25 +27,25 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
     private WebElement staffAssociationListViewRoot;
     private SourceListComponent staffAssociationList;
 
-    @FindBy(css = ".staff-association-users-add-modal .modal-body .apriori-source-list")
+    @FindBy(css = ".user-candidate-modal .modal-body .apriori-source-list")
     private WebElement candidatesSourceListRoot;
 
-    @FindBy(css = ".staff-association-users-add-modal .modal-footer .btn-primary")
+    @FindBy(css = ".user-candidate-modal .modal-footer .btn-primary")
     private WebElement candidatesAddButton;
 
-    @FindBy(css = ".staff-association-users-add-modal .modal-footer .btn-secondary")
+    @FindBy(css = ".user-candidate-modal  .modal-footer .btn-secondary")
     private WebElement candidatesCancelButton;
 
-    @FindBy(css = ".staff-association-users-add-modal .modal-header .close")
+    @FindBy(css = ".user-candidate-modal  .modal-header .close")
     private WebElement candidatesCloseButton;
 
-    @FindBy(css = ".staff-association-user-confirm-modal .modal-footer .btn-primary")
+    @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-primary")
     private WebElement candidatesConfirmOkButton;
 
-    @FindBy(css = ".staff-association-user-confirm-modal .modal-footer .btn-secondary")
+    @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-secondary")
     private WebElement candidatesConfirmCancelButton;
 
-    @FindBy(css = ".staff-association-user-confirm-modal .modal-header .close")
+    @FindBy(css = ".candidate-confirm-modal .modal-header .close")
     private WebElement candidatesConfirmCloseButton;
 
     /**
