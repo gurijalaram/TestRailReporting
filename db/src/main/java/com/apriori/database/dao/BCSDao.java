@@ -66,6 +66,7 @@ public class BCSDao {
         if (batchEntity == null) {
             batchEntity = BatchEntity.builder()
                 .batchId(bcsBatchDTO.getBatchId())
+                .environment(bcsBatchDTO.getEnvironment())
                 .externalId(bcsBatchDTO.getExternalId())
                 .customerIdentity(bcsBatchDTO.getCustomerIdentity())
                 .rollupName(bcsBatchDTO.getRollupName())

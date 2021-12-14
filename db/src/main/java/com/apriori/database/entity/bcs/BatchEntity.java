@@ -31,6 +31,9 @@ public class BatchEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(name = "environment")
+    private String environment;
+
     @Id
     @Column(name = "batch_id")
     private String batchId;

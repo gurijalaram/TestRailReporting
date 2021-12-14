@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 public class BCSBatchDTO {
 
     private String batchId;
+    private String environment;
     private String externalId;
     private String customerIdentity;
     private String rollupName;

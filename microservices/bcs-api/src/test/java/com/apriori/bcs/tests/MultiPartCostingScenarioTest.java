@@ -31,6 +31,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -44,6 +45,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     private static BCSBatchDTO batchData;
     private static final Integer numberOfParts = Integer.parseInt(PropertiesContext.get("${env}.bcs.number_of_parts"));
     private static final Boolean doDbRecording = Boolean.parseBoolean(PropertiesContext.get("global.db_recording"));
+    private static final List<BCSState> finalStates = Arrays.asList(BCSState.ERRORED, BCSState.COMPLETED, BCSState.REJECTED);
 
     @BeforeClass
     public static void testSetup() {
@@ -51,6 +53,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         batchIdentity = batch.getIdentity();
         batchData = BCSBatchDTO.builder()
             .batchId(batchIdentity)
+            .environment(PropertiesContext.get("env"))
             .externalId(batch.getExternalId())
             .customerIdentity(batch.getCustomerIdentity())
             .rollupName(batch.getRollupName())
@@ -99,8 +102,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     private long findCountOfFinishedParts(List<Part> parts) {
         return parts.stream()
             .filter(part ->
-                part.getState().equals(BCSState.ERRORED.getState())
-                    || part.getState().equals(BCSState.COMPLETED.getState())
+                finalStates.contains(BCSState.valueOf(part.getState()))
             )
             .count();
     }
