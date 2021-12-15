@@ -63,7 +63,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @return This component.
      */
     private SourceListComponent selectLayout(final By layout) {
-        WebElement button = getPageUtils().waitForElementToAppear(layout);
+        WebElement button = getPageUtils().waitForElementToAppear(layout, PageUtils.DURATION_INSTANT, getRoot());
         button.click();
         return this;
     }

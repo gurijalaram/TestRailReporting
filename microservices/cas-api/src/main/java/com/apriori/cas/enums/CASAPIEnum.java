@@ -6,25 +6,49 @@ import com.apriori.utils.properties.PropertiesContext;
 public enum CASAPIEnum implements ExternalEndpointEnum {
 
     //CUSTOMERS
-    GET_CUSTOMERS("customers/%s/%s"),
-    GET_CUSTOMER_ID("customers/%s"),
-    GET_CUSTOMER("customers/"),
+    CUSTOMERS("customers"),
+    CUSTOMER(CUSTOMERS.getEndpointString().concat("/%s")),
+    GET_CUSTOMERS(CUSTOMERS.getEndpointString().concat("/%s/%s")),
+    /**
+     * @deprecated Just use CUSTOMER
+     */
+    GET_CUSTOMER_ID(CUSTOMER.getEndpointString()),
+    /**
+     * @deprecated Just use CUSTOMERS
+     */
+    GET_CUSTOMER(CUSTOMERS.getEndpointString().concat("/")),
+
+    //CUSTOMER ASSOCIATIONS
+    CUSTOMER_ASSOCIATIONS(CUSTOMER.getEndpointString().concat("/customer-associations")),
+    CUSTOMER_ASSOCIATION(CUSTOMER_ASSOCIATIONS.getEndpointString().concat("/%s")),
+
+    //CUSTOMER ASSOCIATION CANDIDATES
+    CUSTOMER_ASSOCIATION_CANDIDATES(CUSTOMER_ASSOCIATION.getEndpointString().concat("/customer-association-candidates")),
+
+    //CUSTOMER ASSOCIATION USERS
+    CUSTOMER_ASSOCIATIONS_USERS(CUSTOMER_ASSOCIATION.getEndpointString().concat("/customer-association-users")),
+    CUSTOMER_ASSOCIATIONS_USER(CUSTOMER_ASSOCIATIONS_USERS.getEndpointString().concat("/%s")),
 
     //SITES
-    POST_SITES(GET_CUSTOMER.getEndpointString().concat("%s/sites")),
-    POST_SITES_ID(GET_CUSTOMER.getEndpointString().concat("%s/sites/%s")),
+    POST_SITES(CUSTOMER.getEndpointString().concat("/sites")),
+    POST_SITES_ID(POST_SITES.getEndpointString().concat("/%s")),
 
     //MFA
     POST_MFA(GET_CUSTOMER.getEndpointString().concat("%s/reset-mfa")),
-    POST_MFA_CUSTOMER(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s/reset-mfa")),
 
     //USERS
-    POST_USERS(GET_CUSTOMER.getEndpointString().concat("%s/users/")),
-    GET_USERS(GET_CUSTOMER.getEndpointString().concat("%s/users/%s")),
-    PATCH_USERS(GET_CUSTOMER.getEndpointString().concat("%s/%users/%s")),
+    USERS(CUSTOMER.getEndpointString().concat("/users")),
+    USER(USERS.getEndpointString().concat("/%s")),
+    /**
+     * @deprecated Just use USER
+     */
+    GET_USERS(USER.getEndpointString()),
+    /**
+     * @deprecated Just use USER
+     */
+    PATCH_USERS(USER.getEndpointString()),
 
     //BATCHES
-    POST_BATCH_ITEMS("/items/"),
     GET_BATCHES(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s/%s")),
     BATCH_ITEM(GET_BATCHES.getEndpointString().concat("/%s")),
     CUSTOMER_BATCHES(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s")),
@@ -36,7 +60,7 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     GET_CUSTOMER_DEPLOYMENT(GET_CUSTOMER.getEndpointString().concat("deployments/%s")),
 
     //CURRENT USER
-    GET_CURRENT_USER("users/current");
+    GET_CURRENT_USER(USERS.getEndpointString().concat("current"));
 
     private final String endpoint;
 
