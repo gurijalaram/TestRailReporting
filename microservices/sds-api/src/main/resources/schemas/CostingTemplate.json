@@ -58,6 +58,9 @@
     "tolerances": {
       "type": "object"
     },
+    "productionLife": {
+      "type": "number"
+    },
     "vpeName": {
       "type": "string"
     }
