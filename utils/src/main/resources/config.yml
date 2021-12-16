@@ -138,6 +138,9 @@ int-core:
     ui_url: https://cis.core.int.apriori.net/
     api_url: https://cis-api.core.int.apriori.net/
 
+  edc:
+    api_url: https://edc-api.core.int.apriori.net/
+
 ######################################################## QA-CID-PERF ########################################################
 qa-cid-perf:
   name: qa-cid-perf
