@@ -23,10 +23,8 @@ import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -58,6 +56,7 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "casting_BEFORE_machining";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String twoModelPartName = "casting_AFTER_machining";
         twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".stp");
         currentUser = UserUtil.getUser();
@@ -72,7 +71,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
+            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -83,7 +82,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName.toUpperCase(), testScenarioName), is(true));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName), is(true));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Source Component")
@@ -100,7 +99,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2139")
     @Description("Validate the User can open the source part in the evaluate tab")
     @TestRail(testCaseId = {"6466", "7866"})
     public void testOpenSourceModel() {
@@ -138,7 +136,7 @@ public class TwoModelMachiningTests extends TestBase {
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario(5)
-            .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
+            .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -208,7 +206,6 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2139")
     @Description("Validate the User can open a public source part in the evaluate tab")
     @TestRail(testCaseId = {"7867", "7876"})
     public void testOpenPublicSourceModel() {
@@ -246,7 +243,7 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItemB, currentUser, EvaluatePage.class)
-            .openSourceScenario(sourcePartName.toUpperCase(), sourceScenarioName);
+            .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -302,7 +299,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, sourceScenarioName), is(true));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourceScenarioName), is(true));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(7.40, 3));
 
         evaluatePage.selectSourcePart()
@@ -313,7 +310,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2PartName, source2ScenarioName), is(true));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2ScenarioName), is(true));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(8.17, 3));
     }
 

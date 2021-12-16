@@ -31,7 +31,6 @@ import io.qameta.allure.Issue;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.AdhocTests;
 import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
@@ -349,6 +348,8 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cssItem.getScenarioCreatedByName();
+
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -364,7 +365,7 @@ public class ActionsTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
+            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), equalTo(1));

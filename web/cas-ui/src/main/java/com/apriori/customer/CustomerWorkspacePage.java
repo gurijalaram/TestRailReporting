@@ -1,16 +1,17 @@
 package com.apriori.customer;
 
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
-import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.RoutingComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -193,6 +194,18 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
         String url = getDriver().getCurrentUrl().replace(String.format("%scustomers/", baseUrl), "");
         return Arrays.stream(url.split("/")).findFirst().orElse("");
+    }
+
+    /**
+     * Same as findCustomerIdentity() but only succeeds if an existing customer identity is found.
+     * @return The identity of an existing customer.
+     * @throws TimeoutException occurs if the identity is empty or "new"
+     */
+    public String findExistingCustomerIdentity() {
+        getPageUtils().waitForCondition(() -> findCustomerIdentity().length() > 0, PageUtils.DURATION_SLOW);
+        getPageUtils().waitForCondition(() -> !StringUtils.equalsIgnoreCase(findCustomerIdentity(), "new"),
+            PageUtils.DURATION_SLOW);
+        return findCustomerIdentity();
     }
 
     /**

@@ -194,7 +194,7 @@ public class BatchPartResources {
             Object partDetails;
             BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
             int count = 0;
-            while (count <= Constants.BATCH_POLLING_TIMEOUT * 2) {
+            while (count <= Constants.POLLING_TIMEOUT * 2) {
                 partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
                 isPartComplete = BcsUtils.pollState(partDetails, Part.class);
@@ -258,7 +258,7 @@ public class BatchPartResources {
             Object partDetails;
             BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
             int count = 0;
-            while (count <= Constants.BATCH_POLLING_TIMEOUT) {
+            while (count <= Constants.POLLING_TIMEOUT) {
                 partDetails =
                     BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
                 isPartComplete = BcsUtils.pollState(partDetails, Part.class);

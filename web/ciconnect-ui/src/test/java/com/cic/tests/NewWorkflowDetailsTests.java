@@ -5,6 +5,8 @@ import com.apriori.features.WorkflowFeatures;
 import com.apriori.pageobjects.LoginPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.users.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.validators.NewWorkflowValidator;
 
@@ -12,7 +14,6 @@ import io.qameta.allure.Description;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import utils.Constants;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,6 +29,8 @@ public class NewWorkflowDetailsTests extends TestBase {
     private WorkflowFeatures workflowFeatures;
     private Map<String, Object> values;
     private Map<String, Boolean> valuesB;
+
+    private UserCredentials currentUser = UserUtil.getUser();
 
     private enum DetailFields {
         NAME,
@@ -119,7 +122,7 @@ public class NewWorkflowDetailsTests extends TestBase {
     @TestRail(testCaseId = {"3593"})
     @Description("All schedule types formatted correctly in Schedule column of Schedule tab")
     public void testSchedulingFunctionality() {
-        loginPage.login();
+        loginPage.login(currentUser);
 
         values =  newWorkflowFeatures.checkScheduleFunctionality();
         workflowNames = (List)values.get("workflows");
@@ -127,7 +130,7 @@ public class NewWorkflowDetailsTests extends TestBase {
     }
 
     private void gotoDetailsTab() {
-        loginPage.login();
+        loginPage.login(currentUser);
         workflowPage.newWorkflow();
     }
 }

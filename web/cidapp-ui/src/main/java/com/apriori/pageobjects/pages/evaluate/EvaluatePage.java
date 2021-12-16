@@ -637,20 +637,19 @@ public class EvaluatePage extends EvaluateToolbar {
      *
      * @return boolean
      */
-    public boolean isSourcePartDetailsDisplayed(String componentName, String scenarioName) {
-        By byScenario = getByScenario(componentName, scenarioName);
+    public boolean isSourcePartDetailsDisplayed(String scenarioName) {
+        By byScenario = getByScenario(scenarioName);
         return driver.findElement(byScenario).isDisplayed();
     }
 
     /**
      * Opens the source component
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
+     * @param scenarioName - scenario name
      * @return a new page object
      */
-    public EvaluatePage openSourceScenario(String componentName, String scenarioName) {
-        By byScenario = getByScenario(componentName, scenarioName);
+    public EvaluatePage openSourceScenario(String scenarioName) {
+        By byScenario = getByScenario(scenarioName);
         pageUtils.waitForElementAndClick(byScenario);
         pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
@@ -658,12 +657,12 @@ public class EvaluatePage extends EvaluateToolbar {
 
     /**
      * Get by scenario
-     * @param componentName - the component name
+     *
      * @param scenarioName - the scenario name
      * @return by
      */
-    private By getByScenario(String componentName, String scenarioName) {
-        return By.xpath(String.format("//div[.='%s']/following-sibling::div//a[.='%s']", componentName, scenarioName.trim()));
+    private By getByScenario(String scenarioName) {
+        return By.xpath(String.format("//a[.='%s']", scenarioName.trim()));
     }
 
     /**

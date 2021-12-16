@@ -260,20 +260,6 @@ public class ReportsNavigationTests extends TestBase {
     }
 
     @Test
-    @Ignore("Privacy policy link gone on 21.1 - not valid test anymore")
-    @TestRail(testCaseId = {"2700"})
-    @Description("Ensure that the link to the privacy policy works")
-    public void testPrivacyPolicyNavigation() {
-        privacyPolicyPage = new ReportsLoginPage(driver)
-            .waitForPrivacyPolicyLinkVisibility()
-            .goToPrivacyPolicy();
-
-        assertThat(privacyPolicyPage.getPageHeading(), containsString(Constants.PRIVACY_POLICY_STRING));
-        assertThat(privacyPolicyPage.getChildWindowURL(), is(equalTo(Constants.PRIVACY_POLICY_URL)));
-        assertThat(privacyPolicyPage.getTabCount(), is(2));
-    }
-
-    @Test
     @Category({ReportsTest.class, ReportsSmokeTest.class})
     @TestRail(testCaseId = {"2701"})
     @Description("Ensure that the link to the help page works")

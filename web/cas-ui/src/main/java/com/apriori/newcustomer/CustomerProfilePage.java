@@ -6,6 +6,7 @@ import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -105,10 +106,76 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     }
 
     /**
+     * Gets the label for the given name.
+     *
+     * @return The label for the given name.
+     */
+    public WebElement getReadOnlyLabel(String name) {
+        return getPageUtils().waitForElementToAppear(By.className(String.format("read-field-%s", name)));
+    }
+
+    /**
+     * Gets the input for the given name.
+     *
+     * @return The input for the given name.
+     */
+    public WebElement getInput(String name) {
+        if (name.equals("customerType")) {
+            return getPageUtils().waitForElementToAppear(By.className("select-field-customer-type"));
+        } else {
+            return getPageUtils().waitForElementToAppear(By.xpath(String.format("//input[@name='%s']", name)));
+        }
+    }
+
+    /**
+     * Gets the value for the given input name.
+     *
+     * @return The value for the given input  name.
+     */
+    public String getInputValue(String name) {
+        if (name.equals("customerType")) {
+            return getInput(name).getText();
+        } else {
+            return getInput(name).getAttribute("value");
+        }
+    }
+
+    private boolean isButtonEnabled(WebElement button) {
+        return button != null && button.isEnabled();
+    }
+
+    /**
+     * Can click the save button.
+     *
+     * @return Boolean representing can click save button
+     */
+    public boolean canSave() {
+        return isButtonEnabled(saveButton);
+    }
+
+    /**
+     * Can click the edit button.
+     *
+     * @return Boolean representing can click edit button
+     */
+    public boolean canEdit() {
+        return isButtonEnabled(editButton);
+    }
+
+    /**
+     * Can click the cancel button.
+     *
+     * @return Boolean representing can click cancel button
+     */
+    public boolean canCancel() {
+        return isButtonEnabled(cancelButton);
+    }
+
+    /**
      * Gets the current validation feedback for the customer name.
      *
      * @return The current validation error for the customer name.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerNameFeedback() {
         return this.customerNameFeedback.getText();
@@ -118,7 +185,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the description.
      *
      * @return The current validation error for the description.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getDescriptionFeedback() {
         return this.descriptionFeedback.getText();
@@ -128,7 +195,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the customer type.
      *
      * @return The current validation error for the customer type.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerTypeFeedback() {
         return this.customerTypeFeedback.getText();
@@ -138,7 +205,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the salesforce ID.
      *
      * @return The current validation error for the salesforce ID.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getSalesforceIdFeedback() {
         return this.salesforceFeedback.getText();
@@ -157,7 +224,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the cloud reference.
      *
      * @return The current validation error for the cloud reference.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCloudRefFeedback() {
         return this.cloudRefFeedback.getText();
@@ -167,7 +234,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the email domains.
      *
      * @return The current validation error for the email domains.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getEmailDomFeedback() {
         return this.emailDomFeedback.getText();
@@ -177,7 +244,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the cad file retention policy.
      *
      * @return The current validation error for the cad file retention policy.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCadFileRetentionPolicyFeedback() {
         return this.cadFileRetentionDaysFeedback.getText();
@@ -187,7 +254,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * Gets the current validation feedback for the max cad file size.
      *
      * @return The current validation error for the max cad file size.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getMaxCadFileSizeFeedback() {
         return this.maxCadFileSizeFeedback.getText();
@@ -222,6 +289,7 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      * @return current page object
      */
     private CustomerProfilePage selectCustomerType(String customerType) {
+        this.customerTypeSelectField = new SelectFieldComponent(getDriver(), customerTypeDropdown);
         customerTypeSelectField.getSelect().select(customerType);
         return this;
     }
@@ -362,5 +430,14 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
         String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/profile";
         driver.navigate().to(String.format(url, customer));
         return new CustomerWorkspacePage(driver);
+    }
+
+    /**
+     * Get Toastify Error.
+     *
+     * @return Toastify error object
+     */
+    public WebElement getToastifyError() {
+        return getPageUtils().waitForElementToAppear(By.className("Toastify__toast-container"));
     }
 }
