@@ -28,6 +28,7 @@ import io.qameta.allure.Description;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -45,7 +46,8 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     private static BCSBatchDTO batchData;
     private static final Integer numberOfParts = Integer.parseInt(PropertiesContext.get("${env}.bcs.number_of_parts"));
     private static final Boolean doDbRecording = Boolean.parseBoolean(PropertiesContext.get("global.db_recording"));
-    private static final List<BCSState> finalStates = Arrays.asList(BCSState.ERRORED, BCSState.COMPLETED, BCSState.REJECTED);
+    private static final List<BCSState> failedStates = Arrays.asList(BCSState.ERRORED, BCSState.REJECTED);
+    private static final List<BCSState> completedStates = Arrays.asList(BCSState.COMPLETED);
 
     @BeforeClass
     public static void testSetup() {
@@ -71,9 +73,6 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     @TestRail(testCaseId = {"9111"})
     @Description("Test costing scenarion, includes creating a new batch, with multiple parts and waiting for the " +
         "costing process to complete for all parts. Then retrieve costing results.")
-    // TODO discuss 4: failed status of tests/ percents, count of failed parts, ignore
-    // parts< 50 (10 parts) || Percents 50%
-
     public void costParts() {
         Map<String, BCSPartBenchmarkingDTO> partsCollector = this.addPartsToBatchAndInitPartsMap();
 
@@ -100,12 +99,37 @@ public class MultiPartCostingScenarioTest extends TestUtil {
         } else {
             this.logCostingInfo(batchData, partsCollector.values());
         }
+
+        long countOfFailedParts = this.getCountOfFailedParts(parts);
+
+        Assert.assertFalse(
+            String.format("The number of finished parts with error status is critical.\nCount of parts: %s\nCount of failed part: %s\n",
+                numberOfParts, countOfFailedParts
+            ), this.isTestFailedBasedOnPartsStatus(countOfFailedParts));
+    }
+
+    private long getCountOfFailedParts(List<Part> parts) {
+        return parts.stream().filter(part ->
+            failedStates.contains(BCSState.valueOf(part.getState()))
+        ).count();
+    }
+
+    private boolean isTestFailedBasedOnPartsStatus(long failedPartsCount) {
+        final int partsCountForPercentageValidation = 10;
+
+        if (numberOfParts < partsCountForPercentageValidation) {
+            return failedPartsCount >= 3;
+        } else {
+            return failedPartsCount >= numberOfParts / 2;
+        }
+
     }
 
     private long findCountOfFinishedParts(List<Part> parts) {
         return parts.stream()
             .filter(part ->
-                finalStates.contains(BCSState.valueOf(part.getState()))
+                completedStates.contains(BCSState.valueOf(part.getState()))
+                    || failedStates.contains(BCSState.valueOf(part.getState()))
             )
             .count();
     }
@@ -116,7 +140,10 @@ public class MultiPartCostingScenarioTest extends TestUtil {
             benchData.setState(part.getState());
             benchData.setCostingResults(part.getCostingResult());
             benchData.setErrorMessage(part.getErrors());
-            benchData.setCostingDuration(part.getUpdatedAt());
+
+            if (part.getUpdatedAt() != null) {
+                benchData.setCostingDuration(part.getUpdatedAt());
+            }
 
             partsCollector.put(part.getIdentity(), benchData);
         });

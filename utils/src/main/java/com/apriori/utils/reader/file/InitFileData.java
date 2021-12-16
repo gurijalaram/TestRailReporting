@@ -20,23 +20,22 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * Work with csv file.
- * The users list file name, is declared by users.csv.file property.
- * users.csv.file: the name of csv file with users list by path: resources/{@link CommonConstants#environment} folder
- * (if users are absent, return default user with:
- * - username:{@link CommonConstants#DEFAULT_USER_NAME}
- * - password:{@link CommonConstants#DEFAULT_PASSWORD}
- * - accessLevel:{@link CommonConstants#DEFAULT_ACCESS_LEVEL}
- * )
+ * Contain functionality to map data from CSV file
  *
  * @author vzarovnyi
  */
 @Slf4j
-
-// TODO update doc
 public class InitFileData {
 
+    /**
+     * Map data into Object from CSV file
+     *
+     * @param mapperType - Object type to map
+     * @param fileToRead - CSV file with data to map
+     * @param <T>
+     * @return thread safe queue
+     */
     @SneakyThrows
-    //TODO discuss 5: CSV library use
     //TODO z: should be updated for users util too, as a separate PR
     public <T> ConcurrentLinkedQueue<T> initRows(Class<T> mapperType, File fileToRead) {
         CsvSchema orderLineSchema = CsvSchema.emptySchema().withHeader();
@@ -46,7 +45,6 @@ public class InitFileData {
             .readValues(fileToRead);
 
         ConcurrentLinkedQueue<T> elementsQueue = new ConcurrentLinkedQueue<>();
-
         orderLines.forEachRemaining(elementsQueue::add);
 
         return elementsQueue;
