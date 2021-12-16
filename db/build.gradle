@@ -14,7 +14,8 @@ dependencies {
     implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
 
 
-// TODO Nexus issue: should be updated with other approach
+// TODO discuss 2: Nexus issue
+//    https://stackoverflow.com/questions/46930920/how-i-can-separate-version-of-libraries-in-build-gradle-app
 
 //    implementation group: 'com.fbc', name: 'fbc-util-core', version: '+'
 //    implementation group: 'com.fbc', name: 'apriori-math', version: '+'

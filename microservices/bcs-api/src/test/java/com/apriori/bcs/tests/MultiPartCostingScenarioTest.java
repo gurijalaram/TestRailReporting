@@ -71,6 +71,9 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     @TestRail(testCaseId = {"9111"})
     @Description("Test costing scenarion, includes creating a new batch, with multiple parts and waiting for the " +
         "costing process to complete for all parts. Then retrieve costing results.")
+    // TODO discuss 4: failed status of tests/ percents, count of failed parts, ignore
+    // parts< 50 (10 parts) || Percents 50%
+
     public void costParts() {
         Map<String, BCSPartBenchmarkingDTO> partsCollector = this.addPartsToBatchAndInitPartsMap();
 

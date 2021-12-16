@@ -6,10 +6,17 @@ global:
   schema_base_path: schemas/
   console_log_level: "OFF"
   users_csv_file: common-users.csv
+
+# TODO discuss 6: final properties
+
   different_users: true
   different_parts: true
+
+
   db_recording: true
-  db_connection: prod
+
+
+#  db_connection: prod
 
 # Define the customer
 customer: ap-int
