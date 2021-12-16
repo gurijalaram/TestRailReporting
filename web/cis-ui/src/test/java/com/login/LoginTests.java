@@ -32,7 +32,7 @@ public class LoginTests extends TestBase {
         loginPage = new CisLoginPage(driver);
         exploreTabToolbar = loginPage.login(UserUtil.getUser());
 
-        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo("Production")));
+        assertThat(exploreTabToolbar.getStartComparisonText(), is(equalTo("Start Comparison")));
     }
 
     @Test
@@ -62,12 +62,10 @@ public class LoginTests extends TestBase {
     @TestRail(testCaseId = "9554")
     @Description("Verify deployment connection in sub header - Production")
     public void testDeploymentConnection() {
-        String info = "Production";
-
         loginPage = new CisLoginPage(driver);
         exploreTabToolbar = loginPage.login(UserUtil.getUser());
 
-        assertThat(exploreTabToolbar.deploymentInfo(info), is(equalTo("Production")));
+        assertThat(exploreTabToolbar.getDeploymentInfo(), is(equalTo("Production")));
     }
 }
 

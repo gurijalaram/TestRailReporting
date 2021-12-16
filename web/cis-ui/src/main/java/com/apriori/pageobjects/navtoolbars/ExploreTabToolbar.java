@@ -50,21 +50,6 @@ public class ExploreTabToolbar extends MainNavigationBar {
     }
 
     /**
-     * Get the Deployment connection info
-     *
-     * @param info - info
-     * @return String
-     */
-    public String deploymentInfo(String info) {
-        if (info.equalsIgnoreCase("Production")) {
-            return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
-        } else if (info.equalsIgnoreCase("Sandbox")) {
-            return getPageUtils().waitForElementToAppear(deploymentInfo).getAttribute("textContent");
-        }else
-        return null;
-    }
-
-    /**
      * Check if the Start comparison button is enabled
      *
      * @return boolean
@@ -82,5 +67,14 @@ public class ExploreTabToolbar extends MainNavigationBar {
     public ExplorePage clickSearch(String componentName) {
         componentTableActions.clickSearch(componentName);
         return new ExplorePage(getDriver());
+    }
+
+    /**
+     * Get the value of the start comparison on the page
+     *
+     * @return - String
+     */
+    public String getStartComparisonText() {
+        return getPageUtils().waitForElementToAppear(startComparison).getAttribute("textContent");
     }
 }
