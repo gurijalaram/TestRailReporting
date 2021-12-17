@@ -68,4 +68,13 @@ public class ExploreTabToolbar extends MainNavigationBar {
         componentTableActions.clickSearch(componentName);
         return new ExplorePage(getDriver());
     }
+
+    /**
+     * Get the value of the start comparison on the page
+     *
+     * @return - String
+     */
+    public String getStartComparisonText() {
+        return getPageUtils().waitForElementToAppear(startComparison).getAttribute("textContent");
+    }
 }
