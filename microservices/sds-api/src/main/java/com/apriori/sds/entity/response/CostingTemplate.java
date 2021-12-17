@@ -36,6 +36,7 @@ public class CostingTemplate {
     private Object secondaryDigitalFactories;
     private Object threads;
     private Object tolerances;
+    private Integer productionLife;
     private Object vpeName;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
