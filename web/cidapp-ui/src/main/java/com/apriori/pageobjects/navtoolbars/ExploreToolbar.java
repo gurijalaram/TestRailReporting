@@ -7,7 +7,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

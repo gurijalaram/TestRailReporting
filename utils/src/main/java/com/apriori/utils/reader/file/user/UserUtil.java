@@ -1,9 +1,10 @@
-package com.apriori.utils.users;
+package com.apriori.utils.reader.file.user;
 
 import com.apriori.utils.constants.CommonConstants;
-import com.apriori.utils.users.service.UserCommonService;
-import com.apriori.utils.users.service.UserSecurityService;
+import com.apriori.utils.reader.file.user.service.UserCommonService;
+import com.apriori.utils.reader.file.user.service.UserSecurityService;
 
+import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -36,9 +37,8 @@ import org.slf4j.LoggerFactory;
  *
  * @author vzarovnyi
  */
+@Slf4j
 public class UserUtil {
-
-    private static final Logger logger = LoggerFactory.getLogger(UserUtil.class);
 
     /**
      * Return common user
@@ -64,7 +64,7 @@ public class UserUtil {
     }
 
     private static void logInfo(UserCredentials user) {
-        logger.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel()));
+        log.info(String.format("Received for tests USERNAME:%s PASSWORD:%s ACCESS_LEVEL:%s", user.getEmail(), user.getPassword(), user.getAccessLevel()));
     }
 
 }

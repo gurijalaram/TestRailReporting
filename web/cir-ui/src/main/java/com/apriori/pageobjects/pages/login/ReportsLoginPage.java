@@ -5,8 +5,8 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.login.AprioriLoginPage;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;

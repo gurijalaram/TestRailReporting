@@ -9,7 +9,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;

@@ -5,8 +5,8 @@ import com.apriori.pageobjects.DeleteWorkflowPage;
 import com.apriori.pageobjects.LoginPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.validators.WorkflowValidator;
 

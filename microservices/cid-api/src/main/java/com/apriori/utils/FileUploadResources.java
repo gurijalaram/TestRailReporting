@@ -51,7 +51,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;

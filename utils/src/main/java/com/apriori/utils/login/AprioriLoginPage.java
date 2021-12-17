@@ -2,7 +2,7 @@ package com.apriori.utils.login;
 
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -81,7 +81,7 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
         driver.get(url);
 
-        log.info("CURRENTLY ON INSTANCE: " + application);
+        log.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }

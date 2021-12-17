@@ -11,8 +11,8 @@ import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
