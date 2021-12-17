@@ -10,8 +10,8 @@ import com.apriori.header.PageHeader;
 import com.apriori.pageobjects.LoginPage;
 import com.apriori.users.UserList;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.workflows.Schedule;
 

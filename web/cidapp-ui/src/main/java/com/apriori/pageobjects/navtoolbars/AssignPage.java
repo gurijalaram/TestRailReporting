@@ -4,7 +4,7 @@ import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;

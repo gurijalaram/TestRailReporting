@@ -66,7 +66,6 @@ import testsuites.suiteinterface.SmokeTests;
     PreviewPanelTests.class,
     DFMRiskTests.class,
     DeleteTests.class,
-    DFMRiskTests.class,
     PublishTests.class,
     SheetMetalDTCTests.class,
     DTCPlasticMouldingTests.class,
@@ -81,8 +80,7 @@ import testsuites.suiteinterface.SmokeTests;
     ComparisonTests.class,
     ThreadTests.class,
     PartNestingTests.class,
-    PsoEditTests.class,
-    PartNestingTests.class
+    PsoEditTests.class
 })
 public class CIDSmokeTestSuite {
 }

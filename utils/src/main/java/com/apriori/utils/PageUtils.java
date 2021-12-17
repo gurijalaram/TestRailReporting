@@ -77,7 +77,7 @@ public class PageUtils {
     private WebDriver driver;
     private List<Class<? extends WebDriverException>> ignoredWebDriverExceptions = Arrays.asList(NoSuchElementException.class, ElementClickInterceptedException.class,
         StaleElementReferenceException.class, ElementNotInteractableException.class);
-    private String currentlyOn = "CURRENTLY_ON_PAGE:";
+    private String currentlyOn = "CURRENTLY ON PAGE:";
 
     public PageUtils(WebDriver driver) {
         this.driver = driver;

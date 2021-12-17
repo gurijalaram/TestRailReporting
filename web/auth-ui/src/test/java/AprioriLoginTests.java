@@ -9,7 +9,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.login.ForgottenPasswordPage;
 import com.apriori.utils.login.PrivacyPolicyPage;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;

@@ -11,7 +11,7 @@ import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;
@@ -313,7 +313,7 @@ public class SystemConfigurationGroupsTests extends TestBase {
         validateColumnHeaderIsCorrect("Login ID", "user.username", table, soft);
         validateColumnHeaderIsCorrect("Given Name", "user.userProfile.givenName", table, soft);
         validateColumnHeaderIsCorrect("Family Name", "user.userProfile.familyName", table, soft);
-        validateColumnHeaderIsCorrect("Department", "department", table, soft);
+        validateColumnHeaderIsCorrect("Department", "user.userProfile.department", table, soft);
     }
 
     private void validateMembersHasCorrectDefaultPageSize(SoftAssertions soft) {
