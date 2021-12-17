@@ -1,4 +1,4 @@
-package com.apriori.utils.users;
+package com.apriori.utils.reader.file.user;
 
 public class UserCredentials {
 

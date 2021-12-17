@@ -3,17 +3,23 @@ package com.apriori.bcs.entity.request;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.google.common.primitives.Bytes;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NewPartRequest {
     private String filename;
     private Bytes data;
     private String externalId;
-    private Object annualVolume;
-    private Object batchSize;
+    private Integer annualVolume;
+    private Integer batchSize;
     private String description;
     private String materialName;
     private String pinnedRouting;

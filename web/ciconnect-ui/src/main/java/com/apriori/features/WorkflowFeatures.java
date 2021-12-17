@@ -8,7 +8,7 @@ import com.apriori.pageobjects.NewWorkflowPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;

@@ -1,3 +1,5 @@
+package com.apriori.database.test.dao;
+
 import com.apriori.database.dao.UserDao;
 import com.apriori.database.entity.User;
 import com.apriori.database.utils.PropertiesHandler;

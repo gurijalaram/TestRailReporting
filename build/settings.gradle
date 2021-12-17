@@ -9,9 +9,11 @@ rootProject.name = 'build'
 //Default modules initialization
 include(':utils')
 include(':apibase')
+include(':database')
 
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
+project(':database').projectDir = file('../db')
 
 final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api", "integration"]
 final String[] webModules = ["auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
@@ -37,8 +39,8 @@ if (configuration != null) {
 
 } else {
 
-    //Microservices
 
+    //Microservices
     include(':microservices:acs-api')
     include(':microservices:ats-api')
     include(':microservices:cas-api')
@@ -89,11 +91,6 @@ if (configuration != null) {
     project(':web:cas-ui').projectDir = file('../web/cas-ui')
     project(':web:edc-ui').projectDir = file('../web/edc-ui')
     project(':web:cis-ui').projectDir = file('../web/cis-ui')
-
-    if (System.getProperty("all") != null) {
-        include(':database')
-        project(':database').projectDir = file('../db')
-    }
 }
 
 void includeProject(final String includePath, final String filePath) {

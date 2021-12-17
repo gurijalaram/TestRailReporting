@@ -16,6 +16,7 @@ sourceSets {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
+    implementation project(':database')
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
 }

@@ -11,7 +11,7 @@ import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.components.SelectionTreeItemComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;

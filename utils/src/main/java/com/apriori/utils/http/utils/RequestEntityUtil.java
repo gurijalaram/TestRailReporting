@@ -4,7 +4,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 public class RequestEntityUtil {
 

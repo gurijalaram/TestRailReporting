@@ -99,7 +99,7 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Create part with invalid form data: annualVolume ")
     public void createBatchPartsInvalidFormDataAnnualVolume() {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
-        newPartRequest.setAnnualVolume("abc");
+        newPartRequest.setAnnualVolume(123);
         testBadFormData(newPartRequest);
     }
 
@@ -108,7 +108,7 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Create part with invalid form data: batchSize ")
     public void createBatchPartsInvalidFormDataBatchSize() {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
-        newPartRequest.setBatchSize("abc");
+        newPartRequest.setBatchSize(1287677863);
         testBadFormData(newPartRequest);
 
     }
@@ -140,7 +140,7 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Create part with missing form data: annualVolume")
     public void createBatchPartsMissingFormDataAnnualVolume() {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
-        newPartRequest.setAnnualVolume("");
+        newPartRequest.setAnnualVolume(null);
         testBadFormData(newPartRequest);
 
     }
@@ -152,7 +152,7 @@ public class BatchPartResourcesTest extends BCSTestUtils {
     @Description("Create part with missing form data: batchSize")
     public void createBatchPartsMissingFormDataBatchSize() {
         NewPartRequest newPartRequest = BatchPartResources.getNewPartRequest();
-        newPartRequest.setBatchSize("");
+        newPartRequest.setBatchSize(null);
         testBadFormData(newPartRequest);
 
     }
