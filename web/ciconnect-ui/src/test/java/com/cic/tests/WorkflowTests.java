@@ -5,6 +5,8 @@ import com.apriori.pageobjects.DeleteWorkflowPage;
 import com.apriori.pageobjects.LoginPage;
 import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 import com.apriori.validators.WorkflowValidator;
 
@@ -27,6 +29,7 @@ public class WorkflowTests  extends TestBase {
     private WorkflowPage workflowPage;
     private Map<String, Object> values;
     private Map<String, Integer> valuesI;
+    private UserCredentials currentUser = UserUtil.getUser();
 
     public WorkflowTests() {
         super();
@@ -57,7 +60,7 @@ public class WorkflowTests  extends TestBase {
     public void testWorkflowCreateEditDelete() {
         workflowPage = new WorkflowPage(driver);
         loginPage = new LoginPage(driver);
-        loginPage.login();
+        loginPage.login(currentUser);
 
         /** Create Workflow **/
         Map<String, Object> values = workflowFeatures.createWorkflow();
@@ -88,7 +91,7 @@ public class WorkflowTests  extends TestBase {
     public void testButtonState() {
         workflowPage = new WorkflowPage(driver);
         loginPage = new LoginPage(driver);
-        loginPage.login();
+        loginPage.login(currentUser);
 
         Map<String, Object> values = workflowFeatures.getButtonStates();
         validator.validateButtonStates(values, false);
@@ -106,7 +109,7 @@ public class WorkflowTests  extends TestBase {
     public void testDefaultSorting() {
         workflowPage = new WorkflowPage(driver);
         loginPage = new LoginPage(driver);
-        loginPage.login();
+        loginPage.login(currentUser);
 
         Map<String, Object> values = workflowFeatures.defaultSorting();
         validator.validateDefaultWorkflowOrdering(values);
@@ -119,7 +122,7 @@ public class WorkflowTests  extends TestBase {
     public void testPaginationFunctionality() {
         workflowPage = new WorkflowPage(driver);
         loginPage = new LoginPage(driver);
-        loginPage.login();
+        loginPage.login(currentUser);
 
         valuesI = workflowFeatures.inspectPageSizeSettings();
         values = workflowFeatures.inspectSchedulePaginator();
@@ -132,7 +135,7 @@ public class WorkflowTests  extends TestBase {
     public void testWorkflowListSorting() {
         workflowPage = new WorkflowPage(driver);
         loginPage = new LoginPage(driver);
-        loginPage.login();
+        loginPage.login(currentUser);
 
         values = workflowFeatures.checkWorkflowListSorting();
         workflowPage.workflowExists(values.get("lower-name").toString());

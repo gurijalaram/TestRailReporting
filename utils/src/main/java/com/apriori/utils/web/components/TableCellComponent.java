@@ -3,6 +3,7 @@ package com.apriori.utils.web.components;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 
+import org.apache.commons.lang.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 
@@ -61,5 +62,28 @@ public final class TableCellComponent extends CommonComponent {
 
         getPageUtils().waitForElementAndClick(getRoot());
         return this;
+    }
+
+    /**
+     * Gets the underlying value as text.
+     *
+     * @return The cell value as text.
+     */
+    public String getValue() {
+        return getRoot().getText();
+    }
+
+    /**
+     * Gets whether the cell has a specific text value.
+     *
+     * This method is the equivalent of StringUtils.equals(getValue(), value).
+     *
+     * @param value The value to check.
+     *
+     * @return True if the cell's value matches value.  False otherwise.  Note that
+     *         this is case-sensitive.
+     */
+    public boolean hasValue(final String value) {
+        return StringUtils.equals(getValue(), value);
     }
 }

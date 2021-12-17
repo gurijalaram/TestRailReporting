@@ -2,15 +2,17 @@ package com.navigation;
 
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
+import com.apriori.customer.users.ImportPage;
+import com.apriori.customer.users.UsersListPage;
+import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
-import com.apriori.newcustomer.users.ImportPage;
-import com.apriori.newcustomer.users.UsersListPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -46,6 +48,9 @@ public class NavigationTests extends TestBase {
         soft.assertThat(UsersListPage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "UsersListPage")
             .isInstanceOf(LoadableComponent.class);
+        soft.assertThat(CustomerProfilePage.getViaURL(driver, customerID))
+            .overridingErrorMessage(errorMessage, "CustomerProfilePage")
+            .isInstanceOf(LoadableComponent.class);
         soft.assertThat(ImportPage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "ImportPage")
             .isInstanceOf(LoadableComponent.class);
@@ -73,9 +78,9 @@ public class NavigationTests extends TestBase {
         validateOnPageURL(soft,  "/profile");
 
         // Click through different menus
-        UsersListPage usersListPage = customerProfilePage.goToUsersList();
+        UsersPage usersPage = customerProfilePage.goToUsersPage();
         validateOnPageURL(soft, "/users/customer-staff");
-        usersListPage.goToImport();
+        usersPage.goToImport();
         validateOnPageURL(soft,  "/users/import");
         customerProfilePage.goToSitesLicenses();
         validateOnPageURL(soft, "/sites-and-licenses");

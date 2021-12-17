@@ -9,12 +9,14 @@ rootProject.name = 'build'
 //Default modules initialization
 include(':utils')
 include(':apibase')
+include(':database')
 
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
+project(':database').projectDir = file('../db')
 
 final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api", "integration"]
-final String[] webModules = ["cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
+final String[] webModules = ["auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
@@ -37,8 +39,8 @@ if (configuration != null) {
 
 } else {
 
-    //Microservices
 
+    //Microservices
     include(':microservices:acs-api')
     include(':microservices:ats-api')
     include(':microservices:cas-api')
@@ -72,6 +74,7 @@ if (configuration != null) {
     project(':microservices:cis-api').projectDir = file('../microservices/cis-api')
 
     //Web
+    include ':web:auth-ui'
     include ':web:cia-ui'
     include ':web:cir-ui'
     include ':web:cidapp-ui'
@@ -80,6 +83,7 @@ if (configuration != null) {
     include ':web:edc-ui'
     include ':web:cis-ui'
 
+    project(':web:auth-ui').projectDir = file('../web/auth-ui')
     project(':web:cia-ui').projectDir = file('../web/cia-ui')
     project(':web:cir-ui').projectDir = file('../web/cir-ui')
     project(':web:cidapp-ui').projectDir = file('../web/cidapp-ui')
@@ -87,11 +91,6 @@ if (configuration != null) {
     project(':web:cas-ui').projectDir = file('../web/cas-ui')
     project(':web:edc-ui').projectDir = file('../web/edc-ui')
     project(':web:cis-ui').projectDir = file('../web/cis-ui')
-
-    if (System.getProperty("all") != null) {
-        include(':database')
-        project(':database').projectDir = file('../db')
-    }
 }
 
 void includeProject(final String includePath, final String filePath) {

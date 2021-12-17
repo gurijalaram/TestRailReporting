@@ -25,6 +25,7 @@ public enum ProcessGroupEnum {
     TWO_MODEL_MACHINING("2-Model Machining"),
     WITHOUT_PG("Without PG"),
     ROLL_UP("Roll Up"),
+    RESOURCES("Resources"),
     ASSEMBLY("Assembly");
 
     private final String processGroup;

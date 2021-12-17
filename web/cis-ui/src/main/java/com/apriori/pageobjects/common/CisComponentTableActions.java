@@ -3,6 +3,7 @@ package com.apriori.pageobjects.common;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,6 +54,18 @@ public class CisComponentTableActions extends EagerPageComponent<CisComponentTab
     public CisScenarioTableController clickSearch(String componentName) {
         search(componentName);
         getPageUtils().waitForElementAndClick(searchIconButton);
+        return new CisScenarioTableController(getDriver());
+    }
+
+    /**
+     * Search for a component
+     *
+     * @param componentName - the component name
+     * @return new page object
+     */
+    public CisScenarioTableController enterKeySearch(String componentName) {
+        search(componentName);
+        searchInput.sendKeys(Keys.ENTER);
         return new CisScenarioTableController(getDriver());
     }
 

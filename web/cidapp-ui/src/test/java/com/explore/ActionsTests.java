@@ -19,8 +19,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
@@ -348,6 +348,8 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cssItem.getScenarioCreatedByName();
+
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -363,7 +365,7 @@ public class ActionsTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
+            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), equalTo(1));

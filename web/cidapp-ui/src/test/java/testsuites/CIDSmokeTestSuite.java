@@ -11,6 +11,7 @@ import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
+import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.ReCostScenarioTests;
@@ -33,7 +34,6 @@ import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
 import com.explore.UploadTests;
 import com.help.HelpTests;
-import com.login.LoginTests;
 import com.settings.DecimalPlaceTests;
 import com.settings.SettingsTests;
 import org.junit.experimental.categories.Categories;
@@ -60,14 +60,12 @@ import testsuites.suiteinterface.SmokeTests;
     UploadComponentTests.class,
     UploadTests.class,
     HelpTests.class,
-    LoginTests.class,
     DecimalPlaceTests.class,
     UploadAssembliesTests.class,
     PublishExistingCostedTests.class,
     PreviewPanelTests.class,
     DFMRiskTests.class,
     DeleteTests.class,
-    DFMRiskTests.class,
     PublishTests.class,
     SheetMetalDTCTests.class,
     DTCPlasticMouldingTests.class,
@@ -81,7 +79,8 @@ import testsuites.suiteinterface.SmokeTests;
     ToleranceTests.class,
     ComparisonTests.class,
     ThreadTests.class,
-    PartNestingTests.class
+    PartNestingTests.class,
+    PsoEditTests.class
 })
 public class CIDSmokeTestSuite {
 }

@@ -15,7 +15,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.util.HashMap;
 import java.util.List;

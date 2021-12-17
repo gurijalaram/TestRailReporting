@@ -17,14 +17,15 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Issues;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -42,6 +43,7 @@ public class PublishExistingCostedTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private Item cssItem;
+    private Item cssItemB;
 
     public PublishExistingCostedTests() {
         super();
@@ -138,7 +140,10 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2052")
+    @Issues({
+        @Issue("BA-2052"),
+        @Issue("BA-2137")
+    })
     @TestRail(testCaseId = {"6211"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
@@ -154,7 +159,7 @@ public class PublishExistingCostedTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("F-0005")
@@ -162,15 +167,21 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .publish(cssItem, currentUser, EvaluatePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickExplore();
+
+        cssItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        evaluatePage = new ExplorePage(driver).selectFilter("Private")
+            .enterKeySearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(cssItem, currentUser, EvaluatePage.class);
+            .publish(cssItemB, currentUser, EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Compaction Pressing / Furnace Sintering"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
 
     @Test

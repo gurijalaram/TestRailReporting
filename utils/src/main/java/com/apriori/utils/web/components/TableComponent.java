@@ -1,5 +1,6 @@
 package com.apriori.utils.web.components;
 
+import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.By;
@@ -19,6 +20,7 @@ public final class TableComponent extends CommonComponent implements ComponentWi
 
     private static final By BY_HEADERS = By.cssSelector(CSS_HEADERS);
     private static final By BY_ROWS = By.cssSelector(".table-body .table-row");
+    private static final By BY_CHECKBOX_HEADER = By.cssSelector(".table-head .table-cell.checkbox-cell .checkbox");
 
     /**
      * @inheritDoc
@@ -66,6 +68,22 @@ public final class TableComponent extends CommonComponent implements ComponentWi
     public TableHeaderComponent getHeader(String id) {
         By query = By.cssSelector(String.format("%s[%s=\"%s\"]", CSS_HEADERS, ATTRIBUTE_DATA_HEADER_ID, id));
         return getHeadersStream(query).findFirst().orElse(null);
+    }
+
+    /**
+     * Gets the checkbox header for the table.
+     *
+     * @return The table header check component or null if table check selection is
+     * not available.
+     */
+    public CheckboxComponent getCheckHeader() {
+        return Obligation.optional(() ->
+            new CheckboxComponent(
+                this.getDriver(),
+                getPageUtils().waitForElementToAppear(BY_CHECKBOX_HEADER, PageUtils.DURATION_INSTANT,
+                getRoot())
+            )
+        );
     }
 
     /**

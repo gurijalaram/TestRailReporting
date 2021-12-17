@@ -1,8 +1,10 @@
 package com.apriori.pageobjects.pages.login;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.login.AprioriLoginPage;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -13,8 +15,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
-
-    private static final String loginPageUrl = PropertiesContext.get("${env}.edc.ui_url");
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
@@ -30,30 +30,13 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private AprioriLoginPage aprioriLoginPage;
 
     public EdcAppLoginPage(WebDriver driver) {
-        init(driver, "", true);
-    }
-
-    public EdcAppLoginPage(WebDriver driver, String url) {
-        init(driver, url, true);
-    }
-
-    public EdcAppLoginPage(WebDriver driver, boolean loadNewPage) {
-        init(driver, "", loadNewPage);
-    }
-
-    public void init(WebDriver driver, String url, boolean loadNewPage) {
         this.driver = driver;
         pageUtils = new PageUtils(driver);
+        this.aprioriLoginPage = new AprioriLoginPage(driver, "edc");
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        if (url == null || url.isEmpty()) {
-            url = loginPageUrl;
-        }
-        if (loadNewPage) {
-            driver.get(url);
-        }
-        log.info("CURRENTLY ON INSTANCE: " + url);
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -65,91 +48,16 @@ public class EdcAppLoginPage extends LoadableComponent<EdcAppLoginPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(email);
-        pageUtils.waitForElementAppear(password);
-        pageUtils.waitForElementAppear(submitLogin);
+        assertTrue("EDC login page was not displayed", aprioriLoginPage.getPageTitle().contains("Electronics Data Collection"));
     }
 
     /**
-     * Login to edc
+     * Login to EDC
      *
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
     public ElectronicsDataCollectionPage login(final UserCredentials userCredentials) {
-        executeLogin(userCredentials.getEmail(), userCredentials.getPassword());
-        return new ElectronicsDataCollectionPage(driver);
-    }
-
-    /**
-     * Execute actions to login
-     *
-     * @param email    - the email
-     * @param password - the password
-     */
-    private void executeLogin(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        submitLogin();
-    }
-
-    /**
-     * Enters the email detail
-     *
-     * @param emailAddress - the email address
-     */
-    private void enterEmail(String emailAddress) {
-        email.click();
-        pageUtils.clearInput(email);
-        email.sendKeys(emailAddress);
-    }
-
-    /**
-     * Enters the password
-     *
-     * @param password - the password
-     */
-    private void enterPassword(String password) {
-        this.password.click();
-        pageUtils.clearInput(this.password);
-        this.password.sendKeys(password);
-    }
-
-    /**
-     * Single action that login to edc
-     */
-    private void submitLogin() {
-        submitLogin.click();
-    }
-
-    /**
-     * Failed login to edc
-     *
-     * @param email    - the email
-     * @param password - the password
-     * @return the current page object
-     */
-    public EdcAppLoginPage failedLoginAs(String email, String password) {
-        executeLogin(email, password);
-        pageUtils.waitForElementToAppear(loginErrorMsg);
-        return new EdcAppLoginPage(driver, false);
-    }
-
-    /**
-     * Gets the login error message
-     *
-     * @return login error message
-     */
-    public String getLoginErrorMessage() {
-        return loginErrorMsg.getText();
-    }
-
-    /**
-     * Gets the page title
-     *
-     * @return boolean
-     */
-    public boolean verifyPageTitle(String pageTitle) {
-        return driver.getTitle().equalsIgnoreCase(pageTitle);
+        return aprioriLoginPage.login(userCredentials, ElectronicsDataCollectionPage.class);
     }
 }
