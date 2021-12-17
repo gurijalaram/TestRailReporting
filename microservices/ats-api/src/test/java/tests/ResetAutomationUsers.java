@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 public class ResetAutomationUsers {
     private static final Logger logger = LoggerFactory.getLogger(ResetAutomationUsers.class);
     private static final String automationPassword = PropertiesContext.get("${env}.ats.automation_password");
-    private static String automationUser = PropertiesContext.get("${env}.ats.automation_username");
+    private String automationUser;
 
     /**
      * The initial value in the 'range' is inclusive and upper bound value is exclusive
@@ -32,17 +32,20 @@ public class ResetAutomationUsers {
     @Test
     @Description("Resets the password of the automation users")
     public void resetAllAutomationUsers() {
+        String automationUser = PropertiesContext.get("${env}.ats.automation_username");
+
         IntStream.range(1, 41).forEach(x -> {
             String userIndex = (x < 10 ? "0" : "") + x;
 
             logger.debug(String.format("Resetting password for user 'qa-automation-%s@apriori.com'", userIndex));
 
-            automationUser = String.format(automationUser, userIndex);
+            this.automationUser = String.format(automationUser, userIndex);
 
             RequestEntity requestEntity = RequestEntityUtil.init(ATSAPIEnum.PATCH_USER_PASSWORD_BY_USERNAME, null)
-                .inlineVariables(automationUser)
+                .inlineVariables(this.automationUser)
                 .urlEncodingEnabled(false)
-                .body(new ResetAutoUsers().setPassword(automationPassword));
+                .body(new ResetAutoUsers()
+                    .setPassword(automationPassword));
 
             ResponseWrapper<String> resetAutoUsersResponse = HTTPRequest.build(requestEntity).patch();
 

@@ -10,6 +10,9 @@ plugins {
 allprojects {
     group = 'com.apriori.qa'
     version = '0.0.1-SNAPSHOT'
+    apply plugin: 'java'
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
 }
 
 
@@ -88,8 +91,6 @@ subprojects {
             url = 'https://nexus.apriori.com/content/repositories/thirdparty'
         }
     }
-
-    sourceCompatibility = '1.8'
 
     tasks.withType(JavaCompile) {
         options.encoding = encodingType
