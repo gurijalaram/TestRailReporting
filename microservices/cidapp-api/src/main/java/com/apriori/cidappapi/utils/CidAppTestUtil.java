@@ -45,7 +45,7 @@ public class CidAppTestUtil {
     private String token = null;
 
     /**
-     * Adds a new component
+     * Post a new component
      *
      * @param componentName   - the part name
      * @param scenarioName    - the scenario name
@@ -53,19 +53,19 @@ public class CidAppTestUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public Item postCssComponents(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public Item postCssComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
 
-        return postCssComponents(componentName, scenarioName, resourceFile, getToken(userCredentials));
+        return postCssComponent(componentName, scenarioName, resourceFile, getToken(userCredentials));
     }
 
     /**
-     * Adds a new component
+     * Post a new component
      *
      * @param componentName - the part name
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    public Item postCssComponents(String componentName, String scenarioName, String resourceFile, UserCredentials userCredentials) {
+    public Item postCssComponent(String componentName, String scenarioName, String resourceFile, UserCredentials userCredentials) {
         token = getToken(userCredentials);
 
         RequestEntity requestEntity =
@@ -87,13 +87,13 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Adds a new component
+     * Post a new component
      *
      * @param scenarioName  - the scenario name
      * @param componentName - the part name
      * @return responsewrapper
      */
-    public Item postCssComponents(String componentName, String scenarioName, File resourceFile, String token) {
+    public Item postCssComponent(String componentName, String scenarioName, File resourceFile, String token) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))

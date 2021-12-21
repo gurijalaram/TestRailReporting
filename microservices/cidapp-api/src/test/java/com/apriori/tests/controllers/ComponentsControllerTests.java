@@ -29,7 +29,7 @@ public class ComponentsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponents("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = cidAppTestUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ComponentsControllerTests {
     public void getComponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponents("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = cidAppTestUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
 
         ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents();
 
@@ -50,7 +50,7 @@ public class ComponentsControllerTests {
     public void getComponentIdentity() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponents("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = cidAppTestUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
 

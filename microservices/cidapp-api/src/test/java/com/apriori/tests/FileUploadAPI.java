@@ -43,7 +43,7 @@ public class FileUploadAPI {
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = cidAppTestUtil.postCssComponents(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         cidAppTestUtil.postCostScenario(componentName, scenarioName, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), pg, DigitalFactoryEnum.APRIORI_USA, mode, materialName, currentUser);
 
