@@ -14,8 +14,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -103,6 +103,7 @@ public class ReCostScenarioTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));

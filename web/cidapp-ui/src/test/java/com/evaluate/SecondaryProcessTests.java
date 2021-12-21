@@ -23,12 +23,11 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -62,7 +61,6 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Issue("MIC-3856")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5140", "5115", "5132"})
     @Description("Test secondary process leak test - edit wall thickness PSO and validate the process chart")

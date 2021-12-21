@@ -15,11 +15,13 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -37,6 +39,7 @@ public class TwoModelMachiningTests extends TestBase {
     private File twoModelFile2;
     private UserCredentials currentUser;
     private Item cssItem;
+    private Item cssItemB;
     private GuidanceIssuesPage guidanceIssuesPage;
 
     public TwoModelMachiningTests() {
@@ -53,6 +56,7 @@ public class TwoModelMachiningTests extends TestBase {
         String sourcePartName = "casting_BEFORE_machining";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, sourcePartName + ".stp");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String twoModelScenarioName = new GenerateStringUtil().generateScenarioName();
         String twoModelPartName = "casting_AFTER_machining";
         twoModelFile = FileResourceUtil.getCloudFile(processGroupEnum, twoModelPartName + ".stp");
         currentUser = UserUtil.getUser();
@@ -67,17 +71,18 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .clickExplore()
-            .uploadComponentAndOpen(twoModelPartName, testScenarioName, twoModelFile, currentUser)
+            .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.TWO_MODEL_MACHINING)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
         assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName.toUpperCase(), testScenarioName), is(true));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName), is(true));
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Source Component")
@@ -126,11 +131,12 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario(5)
-            .openSourceScenario(sourcePartName, sourceScenarioName);
+            .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -173,6 +179,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
@@ -187,6 +194,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(twoModel1PartName)
             .highlightScenario(twoModel1PartName, twoModel1ScenarioName)
             .submit(EvaluatePage.class)
@@ -215,23 +223,27 @@ public class TwoModelMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cssItem = loginPage.login(currentUser)
-            .uploadComponentAndOpen(sourcePartName, sourceScenarioName, resourceFile, currentUser)
+            .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
+
+        cssItemB = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .clickExplore()
-            .uploadComponent(sourcePartName, twoModelScenarioName, resourceFile, currentUser);
+            .publishScenario()
+            .publish(cssItem, currentUser, EvaluatePage.class)
+            .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssItemB)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssItem, currentUser, EvaluatePage.class)
-            .openSourceScenario(sourcePartName, sourceScenarioName);
+            .publish(cssItemB, currentUser, EvaluatePage.class)
+            .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
     }
@@ -281,23 +293,25 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(sourcePartName)
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourcePartName, sourceScenarioName), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(10.53, 1));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(sourceScenarioName), is(true));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(7.40, 3));
 
         evaluatePage.selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(source2PartName)
             .highlightScenario(source2PartName, source2ScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2PartName, source2ScenarioName), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(11.66, 1));
+        assertThat(evaluatePage.isSourcePartDetailsDisplayed(source2ScenarioName), is(true));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(8.17, 3));
     }
 
     @Test
@@ -329,12 +343,13 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(wrongSourcePartName)
             .highlightScenario(wrongSourcePartName, testScenarioName)
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.UNCOSTED_CHANGES), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");

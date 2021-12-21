@@ -1,43 +1,21 @@
 package com.apriori.newcustomer;
 
-import com.apriori.newcustomer.users.UsersListPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SelectFieldComponent;
 
-import org.apache.commons.lang.StringUtils;
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.util.Arrays;
-
-public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(CustomerProfilePage.class);
-
-    @FindBy(xpath = "//a[.='Profile']")
-    private WebElement profileTab;
-
-    @FindBy(xpath = "//a[.='Users']")
-    private WebElement usersTab;
-
-    @FindBy(xpath = "//a[.='Sites & Licenses']")
-    private WebElement siteLicenseTab;
-
-    @FindBy(xpath = "//a[.='Infrastructure']")
-    private WebElement infraStructTab;
-
-    @FindBy(xpath = "//a[.='Security']")
-    private WebElement securityTab;
-
-    @FindBy(xpath = "//a[.='System Configuration']")
-    private WebElement systemConfigurationTab;
+@Slf4j
+public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage> {
+    @FindBy(className = "customer-profile")
+    private WebElement root;
 
     @FindBy(css = ".edit-read-form button.edit-button")
     private WebElement editButton;
@@ -97,8 +75,6 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
     @FindBy(className = "invalid-feedback-for-max-cad-file-size")
     private WebElement maxCadFileSizeFeedback;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
 
     /**
      * Initializes a new instance of this object.
@@ -106,20 +82,8 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @param driver The web driver used to query the entire page.
      */
     public CustomerProfilePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-
+        super(driver, log);
         this.customerTypeSelectField = new SelectFieldComponent(driver, customerTypeDropdown);
-        this.get();
-    }
-
-    /**
-     * @inheritDoc
-     */
-    @Override
-    protected void load() {
     }
 
     /**
@@ -129,62 +93,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      */
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(profileTab);
-        pageUtils.waitForElementAppear(usersTab);
-    }
-
-    /**
-     * Gets a value that indicates if the profile tab is displayed.
-     *
-     * @return True if the profile tab is displayed.
-     */
-    public boolean isProfileTabDisplayed() {
-        return profileTab.isDisplayed();
-    }
-
-    /**
-     * Gets a value that indicates if the users tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the users tab is enabled
-     */
-    public boolean isUsersTabEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", usersTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the sites & licenses tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the sites & licenses tab is enabled
-     */
-    public boolean isSitesAndLicensesEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", siteLicenseTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the infrastructure tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the infrastructure tab is enabled
-     */
-    public boolean isInfrastructureEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", infraStructTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the security tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the security tab is enabled
-     */
-    public boolean isSecurityEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", securityTab.getAttribute("disabled"));
-    }
-
-    /**
-     * Gets a value that indicates if the system configuration tab is enabled and can be clicked.
-     *
-     * @return A value that indicates if the system configuration tab is enabled
-     */
-    public boolean isSystemConfigurationEnabled() {
-        return !StringUtils.equalsIgnoreCase("true", systemConfigurationTab.getAttribute("disabled"));
+        getPageUtils().waitForElementToAppear(root);
     }
 
     /**
@@ -193,14 +102,80 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return A value that indicates if the cloud reference input is enabled
      */
     public boolean isCloudReferenceEnabled() {
-        return pageUtils.isElementEnabled(cloudRefInput);
+        return getPageUtils().isElementEnabled(cloudRefInput);
+    }
+
+    /**
+     * Gets the label for the given name.
+     *
+     * @return The label for the given name.
+     */
+    public WebElement getReadOnlyLabel(String name) {
+        return getPageUtils().waitForElementToAppear(By.className(String.format("read-field-%s", name)));
+    }
+
+    /**
+     * Gets the input for the given name.
+     *
+     * @return The input for the given name.
+     */
+    public WebElement getInput(String name) {
+        if (name.equals("customerType")) {
+            return getPageUtils().waitForElementToAppear(By.className("select-field-customer-type"));
+        } else {
+            return getPageUtils().waitForElementToAppear(By.xpath(String.format("//input[@name='%s']", name)));
+        }
+    }
+
+    /**
+     * Gets the value for the given input name.
+     *
+     * @return The value for the given input  name.
+     */
+    public String getInputValue(String name) {
+        if (name.equals("customerType")) {
+            return getInput(name).getText();
+        } else {
+            return getInput(name).getAttribute("value");
+        }
+    }
+
+    private boolean isButtonEnabled(WebElement button) {
+        return button != null && button.isEnabled();
+    }
+
+    /**
+     * Can click the save button.
+     *
+     * @return Boolean representing can click save button
+     */
+    public boolean canSave() {
+        return isButtonEnabled(saveButton);
+    }
+
+    /**
+     * Can click the edit button.
+     *
+     * @return Boolean representing can click edit button
+     */
+    public boolean canEdit() {
+        return isButtonEnabled(editButton);
+    }
+
+    /**
+     * Can click the cancel button.
+     *
+     * @return Boolean representing can click cancel button
+     */
+    public boolean canCancel() {
+        return isButtonEnabled(cancelButton);
     }
 
     /**
      * Gets the current validation feedback for the customer name.
      *
      * @return The current validation error for the customer name.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerNameFeedback() {
         return this.customerNameFeedback.getText();
@@ -210,7 +185,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the description.
      *
      * @return The current validation error for the description.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getDescriptionFeedback() {
         return this.descriptionFeedback.getText();
@@ -220,7 +195,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the customer type.
      *
      * @return The current validation error for the customer type.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCustomerTypeFeedback() {
         return this.customerTypeFeedback.getText();
@@ -230,7 +205,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the salesforce ID.
      *
      * @return The current validation error for the salesforce ID.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getSalesforceIdFeedback() {
         return this.salesforceFeedback.getText();
@@ -249,7 +224,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the cloud reference.
      *
      * @return The current validation error for the cloud reference.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCloudRefFeedback() {
         return this.cloudRefFeedback.getText();
@@ -259,7 +234,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the email domains.
      *
      * @return The current validation error for the email domains.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getEmailDomFeedback() {
         return this.emailDomFeedback.getText();
@@ -269,7 +244,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the cad file retention policy.
      *
      * @return The current validation error for the cad file retention policy.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getCadFileRetentionPolicyFeedback() {
         return this.cadFileRetentionDaysFeedback.getText();
@@ -279,7 +254,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * Gets the current validation feedback for the max cad file size.
      *
      * @return The current validation error for the max cad file size.  Returns the empty string
-     *         if the value is valid.
+     * if the value is valid.
      */
     public String getMaxCadFileSizeFeedback() {
         return this.maxCadFileSizeFeedback.getText();
@@ -292,7 +267,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterCustomerName(String customerName) {
-        pageUtils.setValueOfElement(customerNameInput, customerName);
+        getPageUtils().setValueOfElement(customerNameInput, customerName);
         return this;
     }
 
@@ -303,7 +278,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterDescription(String description) {
-        pageUtils.setValueOfElement(descriptionInput, description);
+        getPageUtils().setValueOfElement(descriptionInput, description);
         return this;
     }
 
@@ -314,6 +289,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     private CustomerProfilePage selectCustomerType(String customerType) {
+        this.customerTypeSelectField = new SelectFieldComponent(getDriver(), customerTypeDropdown);
         customerTypeSelectField.getSelect().select(customerType);
         return this;
     }
@@ -361,7 +337,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterSalesforceId(String salesforceId) {
-        pageUtils.setValueOfElement(salesforceInput, salesforceId);
+        getPageUtils().setValueOfElement(salesforceInput, salesforceId);
         return this;
     }
 
@@ -372,7 +348,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterCloudRef(String cloudReference) {
-        pageUtils.setValueOfElement(cloudRefInput, cloudReference);
+        getPageUtils().setValueOfElement(cloudRefInput, cloudReference);
         return this;
     }
 
@@ -383,7 +359,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterEmailDomains(String emailDomains) {
-        pageUtils.setValueOfElement(emailDomInput, emailDomains);
+        getPageUtils().setValueOfElement(emailDomInput, emailDomains);
         return this;
     }
 
@@ -394,7 +370,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterCadFileRetentionPolicy(String days) {
-        pageUtils.setValueOfElement(cadFileRetentionDaysInput, days);
+        getPageUtils().setValueOfElement(cadFileRetentionDaysInput, days);
         return this;
     }
 
@@ -405,50 +381,8 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage enterMaxCadFileSize(String size) {
-        pageUtils.setValueOfElement(maxCadFileSizeInput, size);
+        getPageUtils().setValueOfElement(maxCadFileSizeInput, size);
         return this;
-    }
-
-    /**
-     * Attempts to discover the customer identity.
-     *
-     * @return The customer identity for an existing customer, "new" for a new customer,
-     *         and the empty string if it cannot determine the identity.
-     */
-    public String findCustomerIdentity() {
-        String baseUrl = PropertiesContext.get("${env}.cas.ui_url");
-        String url = driver.getCurrentUrl().replace(String.format("%s/customers/", baseUrl), "");
-        return Arrays.stream(url.split("/")).findFirst().orElse("");
-    }
-
-    /**
-     * Go to users tab
-     *
-     * @return new page object
-     */
-    public UsersListPage goToUsersList() {
-        pageUtils.waitForElementAndClick(usersTab);
-        return new UsersListPage(driver);
-    }
-
-    /**
-     * Go to sites and licenses tab
-     *
-     * @return new page object
-     */
-    public SitesLicensesPage goToSitesLicenses() {
-        pageUtils.waitForElementAndClick(siteLicenseTab);
-        return new SitesLicensesPage(driver);
-    }
-
-    /**
-     * Go to infrastructure tab
-     *
-     * @return new page object
-     */
-    public InfrastructurePage goToInfrastructure() {
-        pageUtils.waitForElementAndClick(infraStructTab);
-        return new InfrastructurePage(driver);
     }
 
     /**
@@ -457,7 +391,7 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return current page object
      */
     public CustomerProfilePage clickEditButton() {
-        pageUtils.waitForElementAndClick(editButton);
+        getPageUtils().waitForElementAndClick(editButton);
         return this;
     }
 
@@ -467,12 +401,12 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return new page object
      */
     public <T> T clickCancelButton(Class<T> klass) {
-        pageUtils.waitForElementAndClick(cancelButton);
-        return PageFactory.initElements(driver, klass);
+        getPageUtils().waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(getDriver(), klass);
     }
 
     public boolean isSaveButtonEnabled() {
-        return pageUtils.isElementEnabled(saveButton);
+        return getPageUtils().isElementEnabled(saveButton);
     }
 
     /**
@@ -481,7 +415,29 @@ public class CustomerProfilePage extends LoadableComponent<CustomerProfilePage> 
      * @return new page object
      */
     public CustomerProfilePage clickSaveButton() {
-        pageUtils.waitForElementAndClick(saveButton);
-        return new CustomerProfilePage(driver);
+        getPageUtils().waitForElementAndClick(saveButton);
+        return new CustomerProfilePage(getDriver());
+    }
+
+    /**
+     * Retrieves CustomerProfilePage for customer via URL and returns Page object.
+     *
+     * @param driver - WebDriver
+     * @param customer - Customer ID
+     * @return CustomerWorkspacePage
+     */
+    public static CustomerWorkspacePage getViaURL(WebDriver driver, String customer) {
+        String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/profile";
+        driver.navigate().to(String.format(url, customer));
+        return new CustomerWorkspacePage(driver);
+    }
+
+    /**
+     * Get Toastify Error.
+     *
+     * @return Toastify error object
+     */
+    public WebElement getToastifyError() {
+        return getPageUtils().waitForElementToAppear(By.className("Toastify__toast-container"));
     }
 }

@@ -1,33 +1,24 @@
 package com.apriori.pageobjects.pages.compare;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.pageobjects.navtoolbars.CompareTabToolbar;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 @Slf4j
-public class ComparePage extends LoadableComponent<ComparePage> {
+public class ComparePage extends CompareTabToolbar {
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
+    @FindBy(css = "[data-icon='pencil-alt']")
+    private WebElement modifyButton;
 
     public ComparePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-
+        super(driver);
     }
 
     @Override
     protected void isLoaded() throws Error {
-
+        getPageUtils().waitForElementToAppear(modifyButton);
     }
 }

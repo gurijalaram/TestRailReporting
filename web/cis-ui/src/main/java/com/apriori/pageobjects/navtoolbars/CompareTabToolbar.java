@@ -1,23 +1,29 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 
 @Slf4j
 public class CompareTabToolbar extends MainNavigationBar {
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    @FindBy(css = "[id= qa-sub-header-modify-button]")
+    private WebElement modifyButton;
 
     public CompareTabToolbar(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver, log);
+    }
+
+    /**
+     * Clicks the Modify button
+     *
+     * @return new page object
+     */
+    public ModifyComparisonPage clickModify() {
+        getPageUtils().waitForElementAndClick(modifyButton);
+        return new ModifyComparisonPage(getDriver());
     }
 }

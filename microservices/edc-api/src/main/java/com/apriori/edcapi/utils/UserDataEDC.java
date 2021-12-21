@@ -3,7 +3,7 @@ package com.apriori.edcapi.utils;
 import com.apriori.apibase.services.response.objects.BillOfMaterial;
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialPart;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -35,7 +35,7 @@ public class UserDataEDC {
     }
 
     public UserDataEDC(final UserCredentials userCredentials) {
-        this.username = userCredentials.getUsername();
+        this.username = userCredentials.getEmail();
         this.password = userCredentials.getPassword();
     }
 

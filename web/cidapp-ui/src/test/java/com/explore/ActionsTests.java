@@ -19,8 +19,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
@@ -79,6 +79,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
             .info()
@@ -88,6 +89,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("QA Notes Test\n \u2022 MP Testing\n \u2022 Add and remove notes") //Unicode characters
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName,scenarioName)
             .info();
@@ -122,6 +124,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -286,12 +289,12 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .assign()
-            .selectAssignee("Moya Parker")
+            .selectAssignee(currentUser)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
             .info();
 
-        assertThat(infoPage.getScenarioInfo("Assignee"), is("Moya Parker"));
+        assertThat(infoPage.isScenarioInfo("Assignee", currentUser), is(true));
     }
 
     @Test
@@ -322,11 +325,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
             .assign()
-            .selectAssignee("Sinead Plunkett")
+            .selectAssignee(currentUser)
             .submit(EvaluatePage.class)
             .assign();
 
-        assertThat(assignPage.isAssigneeDisplayed("Sinead Plunkett"), is(true));
+        assertThat(assignPage.isAssigneeDisplayed(currentUser), is(true));
     }
 
     @Test
@@ -345,6 +348,8 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cssItem.getScenarioCreatedByName();
+
         explorePage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -354,13 +359,13 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .selectStatus("New")
             .selectCostMaturity("Low")
-            .selectAssignee("Ciene Frith")
+            .selectAssignee(currentUser)
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "In", "Ciene Frith")
+            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), equalTo(1));
@@ -437,6 +442,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -446,6 +452,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -491,6 +498,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -574,7 +582,7 @@ public class ActionsTests extends TestBase {
             .publishScenario()
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
-            .selectAssignee("Moya Parker")
+            .selectAssignee(currentUser)
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -621,6 +629,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
             .info()
@@ -630,6 +639,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
             .info()
@@ -668,6 +678,7 @@ public class ActionsTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
             .info()

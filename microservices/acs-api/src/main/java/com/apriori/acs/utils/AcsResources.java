@@ -19,7 +19,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class AcsResources {
     private static final long WAIT_TIME = 180;
 
     private static final HashMap<String, String> token = new APIAuthentication()
-            .initAuthorizationHeaderNoContent(UserUtil.getUser().getUsername());
+            .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
 
     private final String contentType = "Content-Type";
     private final String applicationJson = "application/json";

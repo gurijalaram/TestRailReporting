@@ -2,10 +2,13 @@ package com.apriori.pageobjects.navtoolbars;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -58,6 +61,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private StatusIcon statusIcon;
+    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     public InfoPage(WebDriver driver) {
         this.driver = driver;
@@ -152,7 +156,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      */
     private void inputFields(WebElement element, String description) {
         pageUtils.waitForElementAndClick(element);
-        pageUtils.clear(element);
+        pageUtils.clearValueOfElement(element);
         element.sendKeys(description);
     }
 
@@ -187,12 +191,14 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     /**
      * Gets scenario info
      *
-     * @param label - the label
+     * @param label    - the label
+     * @param assignee - the assignee
      * @return string
      */
-    public String getScenarioInfo(String label) {
+    public boolean isScenarioInfo(String label, UserCredentials assignee) {
+        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
         By byLabel = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
-        return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent").equals(currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
     }
 
     /**

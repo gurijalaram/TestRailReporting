@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.ROTO_BLOW_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -13,8 +14,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.EvaluateDfmIconEnum;
@@ -254,6 +255,7 @@ public class ProcessGroupsTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("AISI 1010")
             .selectMaterial("Steel, Hot Worked, AISI 1010")

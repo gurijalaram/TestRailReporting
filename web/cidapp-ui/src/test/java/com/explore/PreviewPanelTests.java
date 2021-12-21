@@ -1,5 +1,6 @@
 package com.explore;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,8 +15,8 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
@@ -89,6 +90,7 @@ public class PreviewPanelTests extends TestBase {
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(PLASTIC_MOLDING)
+            .selectDigitalFactory(APRIORI_USA)
             .openMaterialSelectorTable()
             .search("ABS, 10")
             .selectMaterial("ABS, 10% Glass")
@@ -96,6 +98,7 @@ public class PreviewPanelTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
             .openPreviewPanel();

@@ -7,12 +7,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -33,6 +34,7 @@ import java.util.List;
 import java.util.TimeZone;
 
 public class NewCustomerTests extends TestBase {
+    private CustomerWorkspacePage customerViewPage;
     private CustomerProfilePage customerProfilePage;
     private CdsTestUtil cdsTestUtil;
     private List<String> created;
@@ -41,9 +43,10 @@ public class NewCustomerTests extends TestBase {
     public void setup() {
         created = new ArrayList<>();
         cdsTestUtil = new CdsTestUtil();
-        customerProfilePage = new CasLoginPage(driver)
+        customerViewPage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
             .clickNewCustomerButton();
+        customerProfilePage = customerViewPage.goToProfile();
     }
 
     @After
@@ -57,22 +60,22 @@ public class NewCustomerTests extends TestBase {
     public void testValidateThatTheFormLabelsAreCorrect() {
 
         SoftAssertions soft = new SoftAssertions();
-        soft.assertThat(customerProfilePage.isProfileTabDisplayed())
-            .overridingErrorMessage("The profile tab is missing")
+        soft.assertThat(customerViewPage.getProfileTab().isActive())
+            .overridingErrorMessage("The profile tab not the active tab.")
             .isTrue();
-        soft.assertThat(customerProfilePage.isUsersTabEnabled())
+        soft.assertThat(customerViewPage.getUsersTab().isEnabled())
             .overridingErrorMessage("The users tab is enabled on a new customer.")
             .isFalse();
-        soft.assertThat(customerProfilePage.isSitesAndLicensesEnabled())
+        soft.assertThat(customerViewPage.getSiteLicenseTab().isEnabled())
             .overridingErrorMessage("The sites and licenses tab is enabled on a new customer.")
             .isFalse();
-        soft.assertThat(customerProfilePage.isInfrastructureEnabled())
+        soft.assertThat(customerViewPage.getInfrastructureTab().isEnabled())
             .overridingErrorMessage("The infrastructure tab is enabled on a new customer.")
             .isFalse();
-        soft.assertThat(customerProfilePage.isSecurityEnabled())
+        soft.assertThat(customerViewPage.getSecurityTab())
             .overridingErrorMessage("The security tab is visible on a new customer.")
-            .isFalse();
-        soft.assertThat(customerProfilePage.isSystemConfigurationEnabled())
+            .isNull();
+        soft.assertThat(customerViewPage.getSystemConfigurationTab().isEnabled())
             .overridingErrorMessage("The system configuration tab is enabled on a new customer.")
             .isFalse();
 
@@ -134,7 +137,7 @@ public class NewCustomerTests extends TestBase {
             .clickSaveButton()
             .clickEditButton();
 
-        created.add(editPage.findCustomerIdentity());
+        created.add(customerViewPage.findCustomerIdentity());
 
         assertThat(editPage, is(notNullValue()));
     }

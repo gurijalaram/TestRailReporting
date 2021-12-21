@@ -23,8 +23,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
@@ -37,6 +37,8 @@ import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.AdhocTests;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -146,6 +148,7 @@ public class ComparisonTests extends TestBase {
         evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .openBasisScenario();
@@ -158,6 +161,7 @@ public class ComparisonTests extends TestBase {
             .publish(cssItemA, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(componentName2, scenarioName2)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -323,6 +327,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .modify()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .selectScenario(componentName3, scenarioName3)
             .submit(ComparePage.class);
 
@@ -330,6 +335,7 @@ public class ComparisonTests extends TestBase {
 
         comparePage.modify()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .selectScenario(componentName4, scenarioName4)
             .submit(ComparePage.class);
 
@@ -460,6 +466,7 @@ public class ComparisonTests extends TestBase {
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
@@ -496,6 +503,7 @@ public class ComparisonTests extends TestBase {
 
         comparePage = evaluatePage.clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
@@ -504,6 +512,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Ignore("ProcessingState")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5799"})
     @Description("Delete private scenarios that are included in the comparison")
     public void deletePrivateScenarioOfComparison() {
@@ -523,10 +532,12 @@ public class ComparisonTests extends TestBase {
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
             .delete()
             .submit(ExplorePage.class)
@@ -542,6 +553,7 @@ public class ComparisonTests extends TestBase {
 
     @Test
     @Ignore("ProcessingState")
+    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5798"})
     @Description("Delete public scenarios that are included in the comparison")
     public void deletePublicScenarioOfComparison() {
@@ -573,6 +585,7 @@ public class ComparisonTests extends TestBase {
             .publish(cssItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName2 + ", " + scenarioName2 + "", "" + componentName + ", " + scenarioName + "")
             .createComparison()
             .clickExplore()
@@ -605,23 +618,28 @@ public class ComparisonTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssItem = loginPage.login(currentUser)
+        cssItemA = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         cssItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemB)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemA)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .navigateToScenario(cssItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
             .publishScenario()
-            .publish(cssItem, currentUser, ExplorePage.class)
+            .publish(cssItemB, currentUser, ExplorePage.class)
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
@@ -633,9 +651,10 @@ public class ComparisonTests extends TestBase {
 
         evaluatePage = comparePage.clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .publishScenario()
-            .publish(cssItemB, currentUser, ExplorePage.class)
+            .publish(cssItemA, currentUser, ExplorePage.class)
             .clickCompare()
             .openBasisScenario();
 
@@ -670,6 +689,7 @@ public class ComparisonTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
@@ -707,6 +727,7 @@ public class ComparisonTests extends TestBase {
             .costScenario()
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 

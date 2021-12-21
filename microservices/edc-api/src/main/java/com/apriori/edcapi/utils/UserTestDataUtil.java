@@ -16,8 +16,8 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
@@ -36,7 +36,7 @@ public class UserTestDataUtil extends TestUtil {
     public UserDataEDC initEmptyUser() {
         UserCredentials userNamePass = UserUtil.getUser();
 
-        return new UserDataEDC(userNamePass.getUsername(), userNamePass.getPassword());
+        return new UserDataEDC(userNamePass.getEmail(), userNamePass.getPassword());
     }
 
     public String getToken() {

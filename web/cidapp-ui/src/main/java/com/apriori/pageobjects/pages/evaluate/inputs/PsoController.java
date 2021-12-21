@@ -32,7 +32,7 @@ public class PsoController {
      */
     public PsoController inputOverrideValue(WebElement override, WebElement input, String value) {
         pageUtils.waitForElementAndClick(override);
-        pageUtils.clear(input);
+        pageUtils.clearValueOfElement(input);
         input.sendKeys(value);
         return this;
     }

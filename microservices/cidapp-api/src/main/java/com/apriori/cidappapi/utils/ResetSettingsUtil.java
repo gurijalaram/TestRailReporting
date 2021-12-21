@@ -15,7 +15,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.users.UserCredentials;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import java.util.HashMap;
 import java.util.List;
@@ -56,6 +56,7 @@ public class ResetSettingsUtil {
         String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
         String digFacIdentity = mappedResponse.get("production.defaultDigitalFactory");
         String matCatalogIdentity = mappedResponse.get("production.defaultMaterialCatalogName");
+        String cadThresholdIdentity = mappedResponse.get("tolerance.useCadToleranceThreshold");
         String materialIdentity = mappedResponse.get("production.defaultMaterialName");
         String annVolIdentity = mappedResponse.get("production.defaultAnnualVolume");
         String prodLifeIdentity = mappedResponse.get("production.defaultProductionLife");
@@ -82,6 +83,7 @@ public class ResetSettingsUtil {
                 + "\"" + annVolIdentity + "\":\"" + 5500 + "\","
                 + "\"" + prodLifeIdentity + "\":\"" + 5 + "\","
                 + "\"" + batchIdentity + "\":\"" + 458 + "\","
+                + "\"" + cadThresholdIdentity + "\":\"" + false + "\","
                 + "\"" + tolModeIdentity + "\":\"SYSTEMDEFAULT\""
                 + "}}");
 

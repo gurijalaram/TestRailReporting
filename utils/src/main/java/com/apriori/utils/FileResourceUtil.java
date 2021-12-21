@@ -4,6 +4,8 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
@@ -80,38 +82,16 @@ public class FileResourceUtil {
         return copyFileFromCloudToTempFolder("common", processGroup, fileName);
     }
 
-    /**
-     * Get a list of files from S3
-     *
-     * @return List of files
-     */
-    public static List<String> getCloudFileList() {
-        List<String> cloudFileList = new ArrayList<>();
-
-        S3Client s3Client = S3Client.builder()
-            .region(S3_REGION_NAME)
-            .build();
-
-        ListObjectsRequest listObjects = ListObjectsRequest
-            .builder()
-            .bucket(S3_BUCKET_NAME)
-            .build();
-
-        List<S3Object> objects = s3Client.listObjects(listObjects).contents();
-
-        objects.forEach(s3Object ->
-            cloudFileList.add(s3Object.key())
-        );
-
-        return cloudFileList;
-    }
-
     private static File copyFileFromCloudToTempFolder(final String workspaceName, final ProcessGroupEnum processGroup, final String fileName) {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
 
         S3Client s3Client = S3Client.builder()
-            .region(S3_REGION_NAME)
+                .region(S3_REGION_NAME)
+                .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+                    ? EnvironmentVariableCredentialsProvider.create()
+                    : ProfileCredentialsProvider.create()
+                )
             .build();
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()

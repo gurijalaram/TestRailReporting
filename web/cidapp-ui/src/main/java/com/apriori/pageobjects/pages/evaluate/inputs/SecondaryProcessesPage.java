@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -208,8 +209,9 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return true/false
      */
     public boolean isCheckboxSelected(String process) {
-        By byProcess = By.xpath(String.format("//span[.='%s']/ancestor::span//label//input", process.trim()));
-        return driver.findElement(byProcess).getAttribute("checked").equals("true");
+        By byProcess = with(By.cssSelector("svg"))
+            .near(By.xpath(String.format("//span[.='%s']/ancestor::span", process.trim())));
+        return driver.findElement(byProcess).getDomAttribute("data-icon").equals("check-square");
     }
 
     /**
@@ -444,7 +446,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage search(String searchTerm) {
-        pageUtils.clear(searchInput);
+        pageUtils.clearValueOfElement(searchInput);
         searchInput.sendKeys(searchTerm);
         return this;
     }

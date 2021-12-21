@@ -15,10 +15,12 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.users.UserCredentials;
-import com.apriori.utils.users.UserUtil;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -99,6 +101,7 @@ public class NewScenarioNameTests extends TestBase {
             .publish(cssItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, testScenarioName)
             .createScenario()
@@ -162,7 +165,8 @@ public class NewScenarioNameTests extends TestBase {
             .inputName(filterName)
             .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
             .submit(ExplorePage.class)
-            .selectFilter("Recent");
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA), equalTo(1));
         assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB), equalTo(1));
