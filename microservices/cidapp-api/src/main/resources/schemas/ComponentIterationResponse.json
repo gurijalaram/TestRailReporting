@@ -53,11 +53,20 @@
             "customAttributes": {
               "type": "object"
             },
+            "machiningMode": {
+              "type": "string"
+            },
+            "materialMode": {
+              "type": "string"
+            },
             "materialName": {
               "type": "string"
             },
             "processGroupName": {
               "type": "string"
+            },
+            "processSetupOptions": {
+              "type": "object"
             },
             "productionLife": {
               "type": "number"
