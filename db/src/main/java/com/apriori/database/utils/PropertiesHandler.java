@@ -26,7 +26,4 @@ public class PropertiesHandler {
     public Properties getDBProperties() {
         return DBproperties;
     }
-
-    public PropertiesHandler() {
-    }
 }
