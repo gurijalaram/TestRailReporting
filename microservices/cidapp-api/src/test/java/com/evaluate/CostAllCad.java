@@ -1,5 +1,11 @@
 package com.evaluate;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.closeTo;
+import static org.hamcrest.Matchers.is;
+
+import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
+import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.cidappapi.utils.CostComponentInfo;
 import com.apriori.css.entity.response.Item;
@@ -7,6 +13,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -49,5 +56,12 @@ public class CostAllCad {
                     .user(currentUser)
                     .build());
 
+        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatestId(CostComponentInfo.builder().build());
+
+        AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getResponse().getAnalysisOfScenario();
+
+        assertThat(analysisOfScenario.getMaterialCost(), is(closeTo(27.44, 15)));
+        assertThat(analysisOfScenario.getLaborCost(), is(closeTo(6.30, 5)));
+        assertThat(analysisOfScenario.getDirectOverheadCost(), is(closeTo(1.69, 5)));
     }
 }
