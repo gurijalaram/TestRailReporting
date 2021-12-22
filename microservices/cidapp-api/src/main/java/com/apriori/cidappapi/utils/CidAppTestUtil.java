@@ -406,6 +406,33 @@ public class CidAppTestUtil {
     }
 
     /**
+     * Post method to cost a scenario
+     *
+     * @param costComponentInfo - the cost component object
+     * @return list of scenario items
+     */
+    public List<Item> postCostScenario(CostComponentInfo costComponentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(getToken(costComponentInfo.getUser()))
+                .inlineVariables(costComponentInfo.getComponentId(), costComponentInfo.getScenarioId())
+                .body("costingInputs", CostRequest.builder()
+                    .costingTemplateIdentity(getCostingTemplateId(
+                        costComponentInfo.getProcessGroup(),
+                        costComponentInfo.getDigitalFactory(),
+                        costComponentInfo.getMode(),
+                        costComponentInfo.getMaterial(),
+                        costComponentInfo.getUser())
+                        .getIdentity())
+                    .deleteTemplateAfterUse(true)
+                    .build());
+
+        HTTPRequest.build(requestEntity).post();
+
+        return getCssComponent(costComponentInfo.getComponentName(), costComponentInfo.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, costComponentInfo.getUser());
+    }
+
+    /**
      * Get costing template id
      *
      * @param processGroupEnum   - the process group
