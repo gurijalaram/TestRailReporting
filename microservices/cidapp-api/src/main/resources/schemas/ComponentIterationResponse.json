@@ -20,7 +20,13 @@
         "updatedAt": {
           "type": "string"
         },
+        "updatedBy": {
+          "type": "string"
+        },
         "createdByName": {
+          "type": "string"
+        },
+        "updatedByName": {
           "type": "string"
         },
         "customerIdentity": {
@@ -1154,7 +1160,7 @@
               "type": "number"
             },
             "materialCutCodeName": {
-              "type": "number"
+              "type": "string"
             },
             "materialTypeName": {
               "type": "string"

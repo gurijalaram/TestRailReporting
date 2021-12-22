@@ -56,7 +56,12 @@ public class CostAllCad {
                     .user(currentUser)
                     .build());
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatestId(CostComponentInfo.builder().build());
+        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
+            CostComponentInfo.builder()
+                .componentId(componentResponse.getComponentIdentity())
+                .scenarioId(componentResponse.getScenarioIdentity())
+                .user(currentUser)
+                .build());
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getResponse().getAnalysisOfScenario();
 

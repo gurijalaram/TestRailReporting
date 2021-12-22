@@ -351,9 +351,9 @@ public class CidAppTestUtil {
                     CostRequest.builder().annualVolume(5500)
                         .batchSize(458)
                         .materialName("Aluminum, Stock, ANSI 1050A")
-                        .processGroupName("Sheet Metal")
+                        .processGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
                         .productionLife(5.0)
-                        .digitalFactory("aPriori USA")
+                        .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
                         .build()
                 );
 
@@ -376,36 +376,6 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Post cost a scenario
-     *
-     * @param componentName      - the component name
-     * @param scenarioName       - the scenario name
-     * @param componentId        - the component id
-     * @param scenarioId         - the scenario id
-     * @param processGroupEnum   - the process group
-     * @param digitalFactoryEnum - the digital factory
-     * @param mode               - the material mode
-     * @param materialName       - the material name
-     * @param userCredentials    - the user credentials
-     * @return scenario object
-     */
-    public List<Item> postCostScenario(String componentName, String scenarioName, String componentId, String scenarioId, ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(getToken(userCredentials))
-                .inlineVariables(componentId, scenarioId)
-                .body("costingInputs", CostRequest.builder()
-                    .costingTemplateIdentity(getCostingTemplateId(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials)
-                        .getIdentity())
-                    .deleteTemplateAfterUse(true)
-                    .build()
-                );
-        HTTPRequest.build(requestEntity).post();
-
-        return getCssComponent(componentName, scenarioName, ScenarioStateEnum.COST_COMPLETE, userCredentials);
-    }
-
-    /**
      * Post method to cost a scenario
      *
      * @param costComponentInfo - the cost component object
@@ -416,16 +386,13 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(getToken(costComponentInfo.getUser()))
                 .inlineVariables(costComponentInfo.getComponentId(), costComponentInfo.getScenarioId())
-                .body("costingInputs", CostRequest.builder()
-                    .costingTemplateIdentity(getCostingTemplateId(
-                        costComponentInfo.getProcessGroup(),
-                        costComponentInfo.getDigitalFactory(),
-                        costComponentInfo.getMode(),
-                        costComponentInfo.getMaterial(),
-                        costComponentInfo.getUser())
-                        .getIdentity())
-                    .deleteTemplateAfterUse(true)
-                    .build());
+                .body("costingInputs",
+                    CostRequest.builder()
+                        .costingTemplateIdentity(
+                            getCostingTemplateId(costComponentInfo)
+                                .getIdentity())
+                        .deleteTemplateAfterUse(true)
+                        .build());
 
         HTTPRequest.build(requestEntity).post();
 
@@ -438,9 +405,10 @@ public class CidAppTestUtil {
      * @param costComponentInfo - the cost component object
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatestId(CostComponentInfo costComponentInfo) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(CostComponentInfo costComponentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+                .token(getToken(costComponentInfo.getUser()))
                 .inlineVariables(costComponentInfo.getComponentId(), costComponentInfo.getScenarioId());
 
         return HTTPRequest.build(requestEntity).get();
@@ -449,37 +417,27 @@ public class CidAppTestUtil {
     /**
      * Get costing template id
      *
-     * @param processGroupEnum   - the process group
-     * @param digitalFactoryEnum - the digital factory
-     * @param mode               - the material mode
-     * @param materialName       - the material name
-     * @param userCredentials    - the user credentials
      * @return scenario object
      */
-    private Scenario getCostingTemplateId(ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
-        return postCostingTemplate(processGroupEnum, digitalFactoryEnum, mode, materialName, userCredentials);
+    private Scenario getCostingTemplateId(CostComponentInfo costComponentInfo) {
+        return postCostingTemplate(costComponentInfo);
     }
 
 
     /**
      * Post costing template
      *
-     * @param processGroupEnum   - the process group
-     * @param digitalFactoryEnum - the digital factory
-     * @param mode               - the material mode
-     * @param materialName       - the material name
-     * @param userCredentials    - the user credentials
      * @return scenario object
      */
-    private Scenario postCostingTemplate(ProcessGroupEnum processGroupEnum, DigitalFactoryEnum digitalFactoryEnum, String mode, String materialName, UserCredentials userCredentials) {
+    private Scenario postCostingTemplate(CostComponentInfo costComponentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
-                .token(getToken(userCredentials))
+                .token(getToken(costComponentInfo.getUser()))
                 .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(processGroupEnum.getProcessGroup())
-                    .digitalFactory(digitalFactoryEnum.getDigitalFactory())
-                    .materialMode(mode.toUpperCase())
-                    .materialName(materialName)
+                    .processGroup(costComponentInfo.getProcessGroup().getProcessGroup())
+                    .digitalFactory(costComponentInfo.getDigitalFactory())
+                    .materialMode(costComponentInfo.getMode().toUpperCase())
+                    .materialName(costComponentInfo.getMaterial())
                     .annualVolume(5500)
                     .productionLife(5.0)
                     .batchSize(458)

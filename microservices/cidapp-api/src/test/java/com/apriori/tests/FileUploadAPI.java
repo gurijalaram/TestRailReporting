@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.CostComponentInfo;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -45,7 +46,18 @@ public class FileUploadAPI {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cidAppTestUtil.postCostScenario(componentName, scenarioName, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), pg, DigitalFactoryEnum.APRIORI_USA, mode, materialName, currentUser);
+        cidAppTestUtil.postCostScenario(
+            CostComponentInfo.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .componentId(componentResponse.getComponentIdentity())
+                .scenarioId(componentResponse.getScenarioIdentity())
+                .processGroup(pg)
+                .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
+                .mode(mode)
+                .material(materialName)
+                .user(currentUser)
+                .build());
 
         ResponseWrapper<ScenarioResponse> publishResponse = cidAppTestUtil.postPublishScenario(componentResponse, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
 
