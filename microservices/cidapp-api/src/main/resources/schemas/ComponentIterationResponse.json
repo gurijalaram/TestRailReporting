@@ -898,7 +898,7 @@
               "type": "number"
             },
             "dfmRisk": {
-              "type": "integer"
+              "type": "string"
             },
             "directOverheadCost": {
               "type": "number"
