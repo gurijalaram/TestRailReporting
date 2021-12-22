@@ -353,7 +353,7 @@ public class CidAppTestUtil {
                         .materialName("Aluminum, Stock, ANSI 1050A")
                         .processGroupName("Sheet Metal")
                         .productionLife(5.0)
-                        .vpeName("aPriori USA")
+                        .digitalFactory("aPriori USA")
                         .build()
                 );
 
@@ -463,7 +463,7 @@ public class CidAppTestUtil {
                 .token(getToken(userCredentials))
                 .body("costingTemplate", CostRequest.builder()
                     .processGroupName(processGroupEnum.getProcessGroup())
-                    .vpeName(digitalFactoryEnum.getDigitalFactory())
+                    .digitalFactory(digitalFactoryEnum.getDigitalFactory())
                     .materialMode(mode.toUpperCase())
                     .materialName(materialName)
                     .annualVolume(5500)

@@ -23,7 +23,7 @@ public class CostRequest {
     private String materialName;
     private String processGroupName;
     private Double productionLife;
-    private String vpeName;
+    private String digitalFactory;
     private Boolean deleteTemplateAfterUse;
     private String costingTemplateIdentity;
     private List<Object> propertiesToReset;
