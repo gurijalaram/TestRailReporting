@@ -31,6 +31,7 @@ public class CostingInput {
     private Tolerances tolerances;
     private Thumbnail thumbnail;
     private String materialUtilizationMode;
+    private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
 
     static class CustomAttributes {
     }

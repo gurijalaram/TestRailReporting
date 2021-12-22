@@ -71,6 +71,9 @@
             "productionLife": {
               "type": "number"
             },
+            "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
+              "type": "boolean"
+            },
             "vpeName": {
               "type": "string"
             }
