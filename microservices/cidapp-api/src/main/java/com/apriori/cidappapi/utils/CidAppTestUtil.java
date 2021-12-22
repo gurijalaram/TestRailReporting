@@ -433,6 +433,20 @@ public class CidAppTestUtil {
     }
 
     /**
+     * Find components for the current user matching an identity and component
+     *
+     * @param costComponentInfo - the cost component object
+     * @return response object
+     */
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatestId(CostComponentInfo costComponentInfo) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+                .inlineVariables(costComponentInfo.getComponentId(), costComponentInfo.getScenarioId());
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
      * Get costing template id
      *
      * @param processGroupEnum   - the process group
