@@ -111,6 +111,22 @@ public class AcsResources {
     }
 
     /**
+     * Get Scenarios Info, negative - sending null body
+     *
+     * @return ResponseWrapper<GetScenariosInfoResponse> instance
+     */
+    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInfoNullBody() {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, null)
+                .headers(token)
+                .body(null)
+                .inlineVariables(Constants.USERNAME);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Gets Display Units
      *
      * @return GetDisplayUnitsResponse
