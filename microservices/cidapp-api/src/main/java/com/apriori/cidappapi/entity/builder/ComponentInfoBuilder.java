@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.utils;
+package com.apriori.cidappapi.entity.builder;
 
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
