@@ -97,6 +97,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(referenceComparePage.getTotalCapitalInvestmentsDelta(), containsString("up"));
     }*/
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
@@ -120,6 +121,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
@@ -143,6 +145,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - prt.4")
@@ -166,6 +169,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
@@ -190,6 +194,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421"})
@@ -214,6 +219,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Inventor")
@@ -237,6 +243,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - STEP")
@@ -260,6 +267,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - Parasolid")
@@ -283,6 +291,7 @@ public class CostAllCadTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
     }
 
+    // TODO: 23/12/2021 cn - moved to api
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - ACIS")
