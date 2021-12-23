@@ -27,7 +27,7 @@ import testsuite.suiteinterface.SmokeTests;
 
 import java.io.File;
 
-public class CostAllCad {
+public class CostAllCadTests {
 
     private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
     private UserCredentials currentUser;
@@ -37,7 +37,7 @@ public class CostAllCad {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421", "565", "567"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
-    public void testCADFormatSLDPRT() {
+    public void cadFormatSLDPRT() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         final String componentName = "Machined Box AMERICAS";
@@ -76,7 +76,7 @@ public class CostAllCad {
     @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
-    public void testCADFormatPar() {
+    public void cadFormatPar() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
         String componentName = "26136";
