@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
@@ -225,36 +226,6 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Gets the scenario representation
-     *
-     * @param transientState    - the impermanent state
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
-     * @return response object
-     */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioStateEnum transientState, String componentIdentity, String scenarioIdentity) {
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity);
-
-        long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5L;
-        final long MAX_WAIT_TIME = 180L;
-        String scenarioState;
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
-
-        waitSeconds(2);
-        do {
-            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
-            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
-            waitSeconds(POLLING_INTERVAL);
-        } while (scenarioState.equals(transientState.getState()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
-
-        return scenarioRepresentation;
-    }
-
-    /**
      * Waits for specified time
      *
      * @param seconds - the seconds
@@ -326,6 +297,30 @@ public class CidAppTestUtil {
                 componentName, scenarioName, WAIT_TIME)
         );
     }
+
+    /**
+     * Get scenario representation of a published part
+     *
+     * @param scenarioRepresentationBuilder - the scenario representation builder
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioRepresentationBuilder scenarioRepresentationBuilder) {
+        final int SOCKET_TIMEOUT = 240000;
+        String componentName = scenarioRepresentationBuilder.getItem().getComponentIdentity();
+        String scenarioName = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+                .inlineVariables(componentName, scenarioName)
+                .token(getToken(scenarioRepresentationBuilder.getUser()))
+                .socketTimeout(SOCKET_TIMEOUT);
+
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+
+        assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+        return scenarioRepresentation;
+    }
+
 
     /**
      * Get token
