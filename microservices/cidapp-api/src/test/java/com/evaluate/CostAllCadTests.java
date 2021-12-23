@@ -87,7 +87,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -104,7 +104,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "ABS");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "ABS");
     }
 
     @Test
@@ -120,7 +120,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -137,7 +137,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -154,7 +154,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -170,7 +170,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -186,7 +186,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -202,7 +202,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "Steel, Hot Worked, AISI 1010");
     }
 
     @Test
@@ -218,10 +218,10 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "ABS");
+        getCadInfo(processGroupEnum, componentName, scenarioName, componentResponse, "ABS");
     }
 
-    private void cadInfo(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, Item componentResponse, String material) {
+    private void getCadInfo(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, Item componentResponse, String material) {
         cidAppTestUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
@@ -234,12 +234,12 @@ public class CostAllCadTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> scenarioResponseResponse = cidAppTestUtil.getScenarioRepresentation(
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = cidAppTestUtil.getScenarioRepresentation(
             ScenarioRepresentationBuilder.builder()
                 .item(componentResponse)
                 .user(currentUser)
                 .build());
 
-        assertThat(scenarioResponseResponse.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
 }
