@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class CostComponentInfo {
+public class ComponentInfoBuilder {
     private final String componentName;
     private final String scenarioName;
     private final String componentId;

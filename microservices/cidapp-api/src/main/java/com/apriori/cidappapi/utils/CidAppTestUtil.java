@@ -378,38 +378,38 @@ public class CidAppTestUtil {
     /**
      * Post method to cost a scenario
      *
-     * @param costComponentInfo - the cost component object
+     * @param componentInfoBuilder - the cost component object
      * @return list of scenario items
      */
-    public List<Item> postCostScenario(CostComponentInfo costComponentInfo) {
+    public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(getToken(costComponentInfo.getUser()))
-                .inlineVariables(costComponentInfo.getComponentId(), costComponentInfo.getScenarioId())
+                .token(getToken(componentInfoBuilder.getUser()))
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("costingInputs",
                     CostRequest.builder()
                         .costingTemplateIdentity(
-                            getCostingTemplateId(costComponentInfo)
+                            getCostingTemplateId(componentInfoBuilder)
                                 .getIdentity())
                         .deleteTemplateAfterUse(true)
                         .build());
 
         HTTPRequest.build(requestEntity).post();
 
-        return getCssComponent(costComponentInfo.getComponentName(), costComponentInfo.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, costComponentInfo.getUser());
+        return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
     }
 
     /**
      * Find components for the current user matching an identity and component
      *
-     * @param costComponentInfo - the cost component object
+     * @param componentInfoBuilder - the cost component object
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(CostComponentInfo costComponentInfo) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfoBuilder) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .token(getToken(costComponentInfo.getUser()))
-                .inlineVariables(costComponentInfo.getComponentId(), costComponentInfo.getScenarioId());
+                .token(getToken(componentInfoBuilder.getUser()))
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId());
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -419,8 +419,8 @@ public class CidAppTestUtil {
      *
      * @return scenario object
      */
-    private Scenario getCostingTemplateId(CostComponentInfo costComponentInfo) {
-        return postCostingTemplate(costComponentInfo);
+    private Scenario getCostingTemplateId(ComponentInfoBuilder componentInfoBuilder) {
+        return postCostingTemplate(componentInfoBuilder);
     }
 
 
@@ -429,15 +429,15 @@ public class CidAppTestUtil {
      *
      * @return scenario object
      */
-    private Scenario postCostingTemplate(CostComponentInfo costComponentInfo) {
+    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
-                .token(getToken(costComponentInfo.getUser()))
+                .token(getToken(componentInfoBuilder.getUser()))
                 .body("costingTemplate", CostRequest.builder()
-                    .processGroup(costComponentInfo.getProcessGroup().getProcessGroup())
-                    .digitalFactory(costComponentInfo.getDigitalFactory())
-                    .materialMode(costComponentInfo.getMode().toUpperCase())
-                    .materialName(costComponentInfo.getMaterial())
+                    .processGroup(componentInfoBuilder.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfoBuilder.getDigitalFactory())
+                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
+                    .materialName(componentInfoBuilder.getMaterial())
                     .annualVolume(5500)
                     .productionLife(5.0)
                     .batchSize(458)

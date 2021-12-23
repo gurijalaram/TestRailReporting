@@ -9,7 +9,7 @@ import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenar
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
-import com.apriori.cidappapi.utils.CostComponentInfo;
+import com.apriori.cidappapi.utils.ComponentInfoBuilder;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -48,7 +48,7 @@ public class CostAllCad {
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         cidAppTestUtil.postCostScenario(
-                CostComponentInfo.builder()
+                ComponentInfoBuilder.builder()
                     .componentName(componentName)
                     .scenarioName(scenarioName)
                     .componentId(componentResponse.getComponentIdentity())
@@ -60,7 +60,7 @@ public class CostAllCad {
                     .build());
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
-            CostComponentInfo.builder()
+            ComponentInfoBuilder.builder()
                 .componentId(componentResponse.getComponentIdentity())
                 .scenarioId(componentResponse.getScenarioIdentity())
                 .user(currentUser)
@@ -87,7 +87,7 @@ public class CostAllCad {
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         cidAppTestUtil.postCostScenario(
-            CostComponentInfo.builder()
+            ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
                 .componentId(componentResponse.getComponentIdentity())

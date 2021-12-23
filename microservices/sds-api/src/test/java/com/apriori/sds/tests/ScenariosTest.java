@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.cidappapi.utils.CidAppTestUtil;
-import com.apriori.cidappapi.utils.CostComponentInfo;
+import com.apriori.cidappapi.utils.ComponentInfoBuilder;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -405,7 +405,7 @@ public class ScenariosTest extends SDSTestUtil {
         String materialName = "Use Default";
 
         List<Item> testingScenarios = new CidAppTestUtil().postCostScenario(
-            CostComponentInfo.builder().componentName(componentName)
+            ComponentInfoBuilder.builder().componentName(componentName)
                 .scenarioName(scenarioName)
                 .componentId(componentId)
                 .scenarioId(scenarioId)
