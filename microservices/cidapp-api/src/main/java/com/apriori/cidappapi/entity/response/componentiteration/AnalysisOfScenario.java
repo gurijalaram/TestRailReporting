@@ -1,10 +1,14 @@
 package com.apriori.cidappapi.entity.response.componentiteration;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 @Builder
 public class AnalysisOfScenario {
@@ -81,4 +85,11 @@ public class AnalysisOfScenario {
     private Double utilizationWithoutAddendum;
     private String virtualMaterialStockName;
     private Double width;
+    private Double dfmScore;
+    private String cadMaterialName;
+    private String digitalFactoryDefaultMaterialName;
+    private String manualMaterialName;
+    private String materialMode;
+    private String materialUtilizationMode;
+    private String productionLife;
 }
