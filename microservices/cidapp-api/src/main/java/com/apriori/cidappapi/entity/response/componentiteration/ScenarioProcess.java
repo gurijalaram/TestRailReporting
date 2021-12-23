@@ -27,14 +27,4 @@ public class ScenarioProcess {
     private Double totalCost;
     private String vpeName;
     private List<Gcds> gcds;
-
-    @AllArgsConstructor
-    @NoArgsConstructor
-    @Data
-    @Builder
-    static class Gcds {
-        private String artifactTypeName;
-        private Integer sequenceNumber;
-        private String displayName;
-    }
 }
