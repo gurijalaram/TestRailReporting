@@ -110,6 +110,19 @@ public class AcsResources {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation2(
+            ArrayList<ScenarioIterationKey> scenarioIterationKeys) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+                .headers(token)
+                .body(ScenarioIterationKeysInputs.builder()
+                        .scenarioIterationKeys(scenarioIterationKeys).build()).inlineVariables(Constants.USERNAME);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
     /**
      * Get Scenarios Info, negative - sending null body
      *
