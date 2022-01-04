@@ -42,7 +42,7 @@ public class ComponentsControllerTests {
         ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents();
 
         assertThat(getComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(getComponentResponse.getResponseEntity().getResponse().getItems().size(), is(greaterThan(0)));
+        assertThat(getComponentResponse.getResponseEntity().getItems().size(), is(greaterThan(0)));
     }
 
     @Test
@@ -57,6 +57,6 @@ public class ComponentsControllerTests {
         ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponentIdentity(componentIdentity);
 
         assertThat(componentIdentityResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(componentIdentityResponse.getResponseEntity().getResponse().getIdentity(), is(equalTo(componentIdentity)));
+        assertThat(componentIdentityResponse.getResponseEntity().getIdentity(), is(equalTo(componentIdentity)));
     }
 }
