@@ -184,7 +184,7 @@ public class CidAppTestUtil {
         do {
             axesEntriesResponse = HTTPRequest.build(requestEntity).get();
             try {
-                axesEntries = axesEntriesResponse.getResponseEntity().getResponse().getScenarioMetadata().getAxesEntries().size();
+                axesEntries = axesEntriesResponse.getResponseEntity().getScenarioMetadata().getAxesEntries().size();
                 TimeUnit.MILLISECONDS.sleep(POLLING_INTERVAL);
             } catch (InterruptedException | NullPointerException e) {
                 log.error(e.getMessage());

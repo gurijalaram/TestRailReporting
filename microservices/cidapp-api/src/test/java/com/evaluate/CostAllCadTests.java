@@ -67,7 +67,7 @@ public class CostAllCadTests {
                 .user(currentUser)
                 .build());
 
-        AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getResponse().getAnalysisOfScenario();
+        AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
         assertThat(analysisOfScenario.getMaterialCost(), is(closeTo(27.44, 15)));
         assertThat(analysisOfScenario.getLaborCost(), is(closeTo(6.30, 5)));
