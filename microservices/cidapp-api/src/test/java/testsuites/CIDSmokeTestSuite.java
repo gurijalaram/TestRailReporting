@@ -1,4 +1,4 @@
-package testsuite;
+package testsuites;
 
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
@@ -7,7 +7,7 @@ import com.evaluate.CostAllCadTests;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuite.suiteinterfaces.SmokeTests;
+import testsuites.suiteinterfaces.SmokeTests;
 
 @ProjectRunID("767")
 @RunWith(CategorySuiteRunner.class)

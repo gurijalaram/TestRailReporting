@@ -1,4 +1,4 @@
-package testsuite;
+package testsuites;
 
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
@@ -6,7 +6,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
-import testsuite.suiteinterfaces.SanityTests;
+import testsuites.suiteinterfaces.SanityTests;
 
 @ProjectRunID("769")
 @RunWith(CategorySuiteRunner.class)

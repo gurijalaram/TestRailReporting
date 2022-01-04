@@ -24,7 +24,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuite.suiteinterfaces.SmokeTests;
+import testsuites.suiteinterfaces.SmokeTests;
 
 import java.io.File;
 
