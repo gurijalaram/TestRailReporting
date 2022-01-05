@@ -109,7 +109,7 @@ int-core:
     api_url: https://cas-api.core.int.apriori.net/
     
   cds:
-    api_url: https://cds.na-1.qa-21-1.apriori.net/
+    api_url: https://cds.core.int.apriori.net/
     apriori_core_services_installation_identity:
     apriori_cloud_home_identity: 1J8M416FBJBK
     appro_application_identity: 1J8M416FBJ94

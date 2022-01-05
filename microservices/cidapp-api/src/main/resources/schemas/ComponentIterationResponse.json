@@ -20,7 +20,13 @@
         "updatedAt": {
           "type": "string"
         },
+        "updatedBy": {
+          "type": "string"
+        },
         "createdByName": {
+          "type": "string"
+        },
+        "updatedByName": {
           "type": "string"
         },
         "customerIdentity": {
@@ -47,14 +53,26 @@
             "customAttributes": {
               "type": "object"
             },
+            "machiningMode": {
+              "type": "string"
+            },
+            "materialMode": {
+              "type": "string"
+            },
             "materialName": {
               "type": "string"
             },
             "processGroupName": {
               "type": "string"
             },
+            "processSetupOptions": {
+              "type": "object"
+            },
             "productionLife": {
               "type": "number"
+            },
+            "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
+              "type": "boolean"
             },
             "vpeName": {
               "type": "string"
@@ -64,6 +82,124 @@
         "scenarioCustomAttributes": {
           "type": "array",
           "items": {}
+        },
+        "scenarioDesignInvestigations": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "optional": [
+                  "identity",
+                  "data"
+                ],
+                "properties": {
+                  "identity": {
+                    "type": "string"
+                  },
+                  "data": {
+                    "type": "array",
+                    "items": {
+                      "anyOf": [
+                        {
+                          "type": "object",
+                          "optional": [
+                            "sizeCount",
+                            "category",
+                            "gcdCount"
+                          ],
+                          "properties": {
+                            "sizeCount": {
+                              "type": "integer"
+                            },
+                            "childBeans": {
+                              "type": "array",
+                              "items": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "optional": [
+                                      "category",
+                                      "sizeCount",
+                                      "gcdCount",
+                                      "childBeans"
+                                    ],
+                                    "properties": {
+                                      "category": {
+                                        "type": "string"
+                                      },
+                                      "sizeCount": {
+                                        "type": "integer"
+                                      },
+                                      "gcdCount": {
+                                        "type": "integer"
+                                      },
+                                      "optional": {
+                                        "type": "array",
+                                        "items": {
+                                          "anyOf": [
+                                            {
+                                              "type": "object",
+                                              "optional": [
+                                                "category",
+                                                "sizeCount",
+                                                "gcdCount",
+                                                "artifactKey"
+                                              ],
+                                              "properties": {
+                                                "category": {
+                                                  "type": "string"
+                                                },
+                                                "sizeCount": {
+                                                  "type": "integer"
+                                                },
+                                                "gcdCount": {
+                                                  "type": "integer"
+                                                },
+                                                "artifactKey": {
+                                                  "type": "object",
+                                                  "optional": [
+                                                    "artifactTypeName",
+                                                    "sequenceNumber",
+                                                    "displayName"
+                                                  ],
+                                                  "properties": {
+                                                    "artifactTypeName": {
+                                                      "type": "string"
+                                                    },
+                                                    "sequenceNumber": {
+                                                      "type": "integer"
+                                                    },
+                                                    "displayName": {
+                                                      "type": "string"
+                                                    }
+                                                  }
+                                                }
+                                              }
+                                            }
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  }
+                                ]
+                              }
+                            },
+                            "category": {
+                              "type": "string"
+                            },
+                            "gcdCount": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
         },
         "scenarioDtcIssues": {
           "type": "array",
@@ -898,7 +1034,7 @@
               "type": "number"
             },
             "dfmRisk": {
-              "type": "integer"
+              "type": "string"
             },
             "directOverheadCost": {
               "type": "number"
@@ -1154,7 +1290,7 @@
               "type": "number"
             },
             "materialCutCodeName": {
-              "type": "number"
+              "type": "string"
             },
             "materialTypeName": {
               "type": "string"

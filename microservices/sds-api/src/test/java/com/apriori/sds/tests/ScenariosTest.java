@@ -3,6 +3,7 @@ package com.apriori.sds.tests;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
@@ -403,11 +404,17 @@ public class ScenariosTest extends SDSTestUtil {
         String mode = "manual";
         String materialName = "Use Default";
 
-        List<Item> testingScenarios = new CidAppTestUtil().postCostScenario(componentName, scenarioName,
-            componentId, scenarioId,
-            pg, DigitalFactoryEnum.APRIORI_USA,
-            mode, materialName, currentUser
-        );
+        List<Item> testingScenarios = new CidAppTestUtil().postCostScenario(
+            ComponentInfoBuilder.builder().componentName(componentName)
+                .scenarioName(scenarioName)
+                .componentId(componentId)
+                .scenarioId(scenarioId)
+                .processGroup(pg)
+                .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
+                .mode(mode)
+                .material(materialName)
+                .user(currentUser)
+                .build());
 
         assertNotEquals("Testing scenario should present.", testingScenarios.size(), 0);
 
