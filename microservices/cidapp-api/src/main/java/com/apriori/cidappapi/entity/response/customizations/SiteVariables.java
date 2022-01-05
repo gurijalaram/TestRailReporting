@@ -28,7 +28,7 @@ public class SiteVariables {
     private String notes;
     private List<String> permissions;
     private String subjectIdentity;
-    private Boolean type;
+    private String type;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;

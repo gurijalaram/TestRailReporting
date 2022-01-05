@@ -19,7 +19,7 @@ public class ExchangeRates {
     private LocalDateTime createdAt;
     private String createdBy;
     private String createdByName;
-    private Integer currencyCode;
+    private String currencyCode;
     private String customerIdentity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
