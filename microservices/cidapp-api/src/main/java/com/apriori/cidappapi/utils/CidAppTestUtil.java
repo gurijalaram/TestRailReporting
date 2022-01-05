@@ -17,6 +17,7 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.entity.response.customizations.Customizations;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
@@ -498,5 +499,14 @@ public class CidAppTestUtil {
 
         ResponseWrapper<PeopleResponse> peopleResponse = HTTPRequest.build(requestEntity).get();
         return peopleResponse.getResponseEntity().getItems().get(0);
+    }
+
+    public Customizations getCustomizations(UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_CUSTOMIZATIONS, Customizations.class)
+                .token(getToken(userCredentials));
+
+        ResponseWrapper<Customizations> customizationResponse = HTTPRequest.build(requestEntity).get();
+        return customizationResponse.getResponseEntity();
     }
 }
