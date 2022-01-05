@@ -40,31 +40,7 @@ public class GetScenariosInfoTests {
         Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse =
                 coreGetScenariosInfoTest(fileNames);
 
-        ArrayList<GetScenariosInfoItem> items = new ArrayList<>(scenarioItemsResponse.keySet());
-        ArrayList<ScenarioKey> items2 = new ArrayList<>(scenarioItemsResponse.values());
-
-        String userToExpect = "qa-automation-01";
-        String componentTypeToExpect = "PART";
-        String typeNameToExpect = "partState";
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        for (int i = 0; i < scenarioItemsResponse.size(); i++) {
-            softAssertions.assertThat(!items.get(i).getInitialized());
-            softAssertions.assertThat(!items.get(i).getMissing());
-            softAssertions.assertThat(!items.get(i).getVirtual());
-            softAssertions.assertThat(!items.get(i).getLocked());
-
-            softAssertions.assertThat(items.get(i).getCreatedBy().equals(userToExpect));
-            softAssertions.assertThat(items.get(i).getUpdatedBy().equals(userToExpect));
-
-            softAssertions.assertThat(items.get(i).getComponentType().equals(componentTypeToExpect));
-            softAssertions.assertThat(items.get(i).getFileName().equals(fileNames.get(0).toLowerCase()));
-
-            softAssertions.assertThat(items2.get(i).getTypeName().equals(typeNameToExpect));
-        }
-
-        softAssertions.assertAll();
+        getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
     }
 
     @Test
@@ -78,31 +54,7 @@ public class GetScenariosInfoTests {
         Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse =
                 coreGetScenariosInfoTest(fileNames);
 
-        ArrayList<GetScenariosInfoItem> items = new ArrayList<>(scenarioItemsResponse.keySet());
-        ArrayList<ScenarioKey> items2 = new ArrayList<>(scenarioItemsResponse.values());
-
-        String userToExpect = "qa-automation-01";
-        String componentTypeToExpect = "PART";
-        String typeNameToExpect = "partState";
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        for (int i = 0; i < scenarioItemsResponse.size(); i++) {
-            softAssertions.assertThat(!items.get(i).getInitialized());
-            softAssertions.assertThat(!items.get(i).getMissing());
-            softAssertions.assertThat(!items.get(i).getVirtual());
-            softAssertions.assertThat(!items.get(i).getLocked());
-
-            softAssertions.assertThat(items.get(i).getCreatedBy().equals(userToExpect));
-            softAssertions.assertThat(items.get(i).getUpdatedBy().equals(userToExpect));
-
-            softAssertions.assertThat(items.get(i).getComponentType().equals(componentTypeToExpect));
-            softAssertions.assertThat(items.get(i).getFileName().equals(fileNames.get(0).toLowerCase()));
-
-            softAssertions.assertThat(items2.get(i).getTypeName().equals(typeNameToExpect));
-        }
-
-        softAssertions.assertAll();
+        getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
     }
 
     @Test
@@ -205,6 +157,44 @@ public class GetScenariosInfoTests {
         }
 
         return responseHashMap;
+    }
+
+    /**
+     * Performs assertions on response from get scenarios info endpoint
+     *
+     * @param scenarioItemsResponse - Map of get scenarios info items and scenario keys to allow asserts
+     * @param fileNames - file names to assert against
+     */
+    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse,
+                                            ArrayList<String> fileNames) {
+
+        ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>(scenarioItemsResponse.keySet());
+        ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>(scenarioItemsResponse.values());
+
+        String userToExpect = "qa-automation-01";
+        String componentTypeToExpect = "PART";
+        String typeNameToExpect = "partState";
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        for (int i = 0; i < scenarioItemsResponse.size(); i++) {
+            GetScenariosInfoItem scenariosInfoItem = getScenariosInfoItems.get(i);
+
+            softAssertions.assertThat(!scenariosInfoItem.getInitialized());
+            softAssertions.assertThat(!scenariosInfoItem.getMissing());
+            softAssertions.assertThat(!scenariosInfoItem.getVirtual());
+            softAssertions.assertThat(!scenariosInfoItem.getLocked());
+
+            softAssertions.assertThat(scenariosInfoItem.getCreatedBy().equals(userToExpect));
+            softAssertions.assertThat(scenariosInfoItem.getUpdatedBy().equals(userToExpect));
+
+            softAssertions.assertThat(scenariosInfoItem.getComponentType().equals(componentTypeToExpect));
+            softAssertions.assertThat(scenariosInfoItem.getFileName().equals(fileNames.get(i).toLowerCase()));
+
+            softAssertions.assertThat(scenarioKeys.get(i).getTypeName().equals(typeNameToExpect));
+        }
+
+        softAssertions.assertAll();
     }
 
 }
