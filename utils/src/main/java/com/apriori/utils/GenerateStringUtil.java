@@ -132,6 +132,16 @@ public class GenerateStringUtil {
     }
 
     /**
+     * Generates a deploymentName for API
+     *
+     * @return string
+     */
+    @Attachment
+    public String generateDeploymentName() {
+        return "AutoDeployment" + RandomStringUtils.randomAlphabetic(3);
+    }
+
+    /**
      * Generates a realmkey for API
      *
      * @return string
