@@ -108,20 +108,17 @@ public class GetScenariosInfoTests {
         ArrayList<FileResponse> fileResponses = new ArrayList<>();
         ArrayList<FileUploadOutputs> fileUploadOutputs = new ArrayList<>();
         String processGroup = "";
-        int i = 0;
 
-        for (String fileName : fileNames) {
+        for (int i = 0; i < fileNames.size(); i++) {
             processGroup = i == 0 ? ProcessGroupEnum.CASTING.getProcessGroup()
                     : ProcessGroupEnum.SHEET_METAL.getProcessGroup();
             fileResponses.add(fileUploadResources.initialisePartUpload(
-                    fileName,
+                    fileNames.get(i),
                     processGroup
             ));
 
             fileUploadOutputs.add(
                     fileUploadResources.createFileUploadWorkorderSuppressError(fileResponses.get(i), testScenarioName));
-
-            i++;
         }
 
         return fileUploadOutputs;
