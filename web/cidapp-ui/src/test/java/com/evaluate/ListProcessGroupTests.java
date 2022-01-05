@@ -53,7 +53,8 @@ public class ListProcessGroupTests extends TestBase {
                 !x.equals(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
                     && !x.equals(ProcessGroupEnum.ROLL_UP.getProcessGroup())
                     && !x.equals(ProcessGroupEnum.COMPOSITES.getProcessGroup())
-                    && !x.equals(ProcessGroupEnum.WITHOUT_PG.getProcessGroup()))
+                    && !x.equals(ProcessGroupEnum.WITHOUT_PG.getProcessGroup())
+                    && !x.equals(ProcessGroupEnum.RESOURCES.getProcessGroup()))
             .toArray(String[]::new)));
     }
 
