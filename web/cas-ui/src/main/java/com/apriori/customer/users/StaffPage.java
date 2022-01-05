@@ -1,5 +1,6 @@
 package com.apriori.customer.users;
 
+import com.apriori.common.ModalUserList;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SourceListComponent;
@@ -27,26 +28,7 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
     private WebElement staffAssociationListViewRoot;
     private SourceListComponent staffAssociationList;
 
-    @FindBy(css = ".user-candidate-modal .modal-body .apriori-source-list")
-    private WebElement candidatesSourceListRoot;
-
-    @FindBy(css = ".user-candidate-modal .modal-footer .btn-primary")
-    private WebElement candidatesAddButton;
-
-    @FindBy(css = ".user-candidate-modal  .modal-footer .btn-secondary")
-    private WebElement candidatesCancelButton;
-
-    @FindBy(css = ".user-candidate-modal  .modal-header .close")
-    private WebElement candidatesCloseButton;
-
-    @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-primary")
-    private WebElement candidatesConfirmOkButton;
-
-    @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-secondary")
-    private WebElement candidatesConfirmCancelButton;
-
-    @FindBy(css = ".candidate-confirm-modal .modal-header .close")
-    private WebElement candidatesConfirmCloseButton;
+    private ModalUserList modalUserList;
 
     /**
      * Initializes a new instance of this object.
@@ -55,8 +37,8 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
      */
     public StaffPage(WebDriver driver) {
         super(driver, log);
-
         staffAssociationList = new SourceListComponent(getDriver(), staffAssociationListViewRoot);
+        modalUserList = new ModalUserList(driver);
     }
 
     /**
@@ -131,39 +113,60 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
      * @return The user candidates source list.
      */
     public SourceListComponent getCandidates() {
-        WebElement root = getPageUtils().waitForElementToAppear(candidatesSourceListRoot);
-        SourceListComponent candidatesSourceList = new SourceListComponent(getDriver(), root);
-        getPageUtils().waitForCondition(candidatesSourceList::isStable, PageUtils.DURATION_LOADING);
-        return candidatesSourceList;
+        return modalUserList.getCandidates();
     }
 
+    /**
+     * Clicks on Cancel button of candidates modal list
+     *
+     * @return this object
+     */
     public StaffPage clickCandidatesCancelButton() {
-        getPageUtils().waitForElementAndClick(candidatesCancelButton);
-        return this;
+        return modalUserList.clickCandidatesCancelButton(StaffPage.class);
     }
 
+    /**
+     * Clicks on Close button of candidates modal list
+     *
+     * @return this object
+     */
     public StaffPage clickCandidatesCloseButton() {
-        getPageUtils().waitForElementAndClick(candidatesCloseButton);
-        return this;
+        return modalUserList.clickCandidatesCloseButton(StaffPage.class);
     }
 
+    /**
+     * Clicks on Add button of candidates modal list
+     *
+     * @return this object
+     */
     public StaffPage clickCandidatesAddButton() {
-        getPageUtils().waitForElementAndClick(candidatesAddButton);
-        return this;
+        return modalUserList.clickCandidatesAddButton(StaffPage.class);
     }
 
+    /**
+     * Clicks on Cancel button of candidates confirm dialog
+     *
+     * @return this object
+     */
     public StaffPage clickCandidatesConfirmCancelButton() {
-        getPageUtils().waitForElementAndClick(candidatesConfirmCancelButton);
-        return this;
+        return modalUserList.clickCandidatesConfirmCancelButton(StaffPage.class);
     }
 
+    /**
+     * Clicks on Ok button of candidates confirm dialog
+     *
+     * @return this object
+     */
     public StaffPage clickCandidatesConfirmOkButton() {
-        getPageUtils().waitForElementAndClick(candidatesConfirmOkButton);
-        return this;
+        return modalUserList.clickCandidatesConfirmOkButton(StaffPage.class);
     }
 
+    /**
+     * Clicks on Close button of candidates confirm dialog
+     *
+     * @return this object
+     */
     public StaffPage clickCandidatesConfirmCloseButton() {
-        getPageUtils().waitForElementAndClick(candidatesConfirmCloseButton);
-        return this;
+        return modalUserList.clickCandidatesConfirmCloseButton(StaffPage.class);
     }
 }
