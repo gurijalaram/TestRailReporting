@@ -30,11 +30,7 @@ import java.io.File;
 
 public class CostAllCadTests {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
-    private UserCredentials currentUser;
-    private File resourceFile;
-    private String scenarioName;
-    private String componentName;
+    private final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
     @Test
     @Category(SmokeTests.class)
@@ -43,10 +39,10 @@ public class CostAllCadTests {
     public void cadFormatSLDPRT() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-        componentName = "Machined Box AMERICAS";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String componentName = "Machined Box AMERICAS";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
@@ -81,13 +77,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - par")
     public void cadFormatPar() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "26136";
+        final String componentExtension = ".par";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "26136";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".par");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -96,13 +90,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - CATPart")
     public void testCADFormatCATPart() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentName = "Plastic moulded cap DFM";
+        final String componentExtension = ".CATPart";
+        final String materialName = "ABS";
 
-        componentName = "Plastic moulded cap DFM";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "ABS");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -110,13 +102,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - prt.4")
     public void testCADFormatPRT4() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "turning";
+        final String componentExtension = ".prt.4";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "turning";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.4");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -125,13 +115,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - Creo")
     public void testCADFormatCreo() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "turning";
+        final String componentExtension = ".prt.4";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "turning";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.4");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -140,13 +128,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - NX")
     public void testCADFormatNX() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "Locker_bottom_panel";
+        final String componentExtension = ".prt";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "Locker_bottom_panel";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -154,13 +140,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - Inventor")
     public void testCADFormatInventor() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "VERTICAL PLATE";
+        final String componentExtension = ".ipt";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "VERTICAL PLATE";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".ipt");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -168,13 +152,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - STEP")
     public void testCADFormatSTEP() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "partbody_2";
+        final String componentExtension = ".stp";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -182,13 +164,11 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - Parasolid")
     public void testCADFormatParaSolid() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "bracket_basic_steel_PMI";
+        final String componentExtension = ".x_t";
+        final String materialName = "Steel, Hot Worked, AISI 1010";
 
-        componentName = "bracket_basic_steel_PMI";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "Steel, Hot Worked, AISI 1010");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
     @Test
@@ -196,16 +176,18 @@ public class CostAllCadTests {
     @Description("CAD file from all supported CAD formats - ACIS")
     public void testCADFormatParaACIS() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentName = "Plastic moulded cap thinPart";
+        final String componentExtension = ".SAT";
+        final String materialName = "ABS";
 
-        componentName = "Plastic moulded cap thinPart";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SAT");
-        currentUser = UserUtil.getUser();
-        scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        uploadCostCadPartAndAssert(processGroupEnum, componentName, currentUser, scenarioName, "ABS");
+        uploadCostCadPartAndAssert(processGroupEnum, componentName, componentExtension, materialName);
     }
 
-    private void uploadCostCadPartAndAssert(ProcessGroupEnum processGroupEnum, String componentName, UserCredentials currentUser, String scenarioName, String material) {
+    private void uploadCostCadPartAndAssert(final ProcessGroupEnum processGroupEnum, final String componentName, final String extension, final String material) {
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         cidAppTestUtil.postCostScenario(
