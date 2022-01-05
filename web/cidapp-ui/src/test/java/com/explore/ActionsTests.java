@@ -333,6 +333,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2148")
     @TestRail(testCaseId = {"7178", "7262", "7910"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {
