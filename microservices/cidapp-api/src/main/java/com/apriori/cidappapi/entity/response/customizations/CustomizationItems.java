@@ -1,9 +1,12 @@
 package com.apriori.cidappapi.entity.response.customizations;
 
-import com.apriori.apibase.services.bcs.objects.ProcessGroups;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
 import java.util.List;
 
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Data
 public class CustomizationItems {
     private List<CustomAttributes> customAttributes;
     private String customerIdentity;
