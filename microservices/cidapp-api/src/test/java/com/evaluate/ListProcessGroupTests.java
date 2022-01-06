@@ -14,6 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -26,12 +27,15 @@ public class ListProcessGroupTests {
 
     private CustomizationUtil customizationUtil;
 
+    @Before
+    public void setToken() {
+        customizationUtil = new CustomizationUtil(new JwtTokenUtil(UserUtil.getUser()).retrieveJwtToken());
+    }
+
     @Test
     @TestRail(testCaseId = {"6197"})
     @Description("Get List of Process Groups")
     public void getProcessGroupList() {
-        customizationUtil = new CustomizationUtil(new JwtTokenUtil(UserUtil.getUser()).retrieveJwtToken());
-
         ResponseWrapper<Customizations> customizations = customizationUtil.getCustomizations();
 
         assertThat(customizations.getResponseEntity().getItems().stream()
@@ -48,8 +52,6 @@ public class ListProcessGroupTests {
     @TestRail(testCaseId = {"6198"})
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
-        customizationUtil = new CustomizationUtil(new JwtTokenUtil(UserUtil.getUser()).retrieveJwtToken());
-
         ResponseWrapper<Customizations> customizations = customizationUtil.getCustomizations();
 
         assertThat(customizations.getResponseEntity().getItems().stream()
