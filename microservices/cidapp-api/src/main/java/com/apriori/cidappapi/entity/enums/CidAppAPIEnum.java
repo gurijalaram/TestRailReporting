@@ -32,7 +32,10 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     GET_CURRENT_USER("users/current"),
 
     //PEOPLE
-    GET_CURRENT_PERSON("people?username[EQ]=%s");
+    GET_CURRENT_PERSON("people?username[EQ]=%s"),
+
+    //CUSTOMIZATIONS
+    GET_CUSTOMIZATIONS("customizations");
 
     private final String endpoint;
 
