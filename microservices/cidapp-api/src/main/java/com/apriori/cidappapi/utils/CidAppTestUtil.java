@@ -411,7 +411,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * GET for costing template id
+     * GET costing template id
      *
      * @return scenario object
      */
@@ -421,7 +421,7 @@ public class CidAppTestUtil {
 
 
     /**
-     * POST for costing template
+     * POST costing template
      *
      * @return scenario object
      */
