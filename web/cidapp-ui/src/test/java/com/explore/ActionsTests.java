@@ -276,6 +276,8 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cssItem.getScenarioCreatedByName();
+
         infoPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -289,12 +291,12 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .assign()
-            .selectAssignee(currentUser)
+            .selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
             .info();
 
-        assertThat(infoPage.isScenarioInfo("Assignee", currentUser), is(true));
+        assertThat(infoPage.isScenarioInfo("Assignee", scenarioCreatedByName), is(true));
     }
 
     @Test
@@ -312,6 +314,8 @@ public class ActionsTests extends TestBase {
         cssItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cssItem.getScenarioCreatedByName();
+
         assignPage = new ExplorePage(driver).navigateToScenario(cssItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -325,14 +329,15 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
             .assign()
-            .selectAssignee(currentUser)
+            .selectAssignee(scenarioCreatedByName)
             .submit(EvaluatePage.class)
             .assign();
 
-        assertThat(assignPage.isAssigneeDisplayed(currentUser), is(true));
+        assertThat(assignPage.isAssigneeDisplayed(scenarioCreatedByName), is(true));
     }
 
     @Test
+    @Issue("BA-2148")
     @TestRail(testCaseId = {"7178", "7262", "7910"})
     @Description("Validate Assignee is an available search criteria")
     public void filterAssignee() {

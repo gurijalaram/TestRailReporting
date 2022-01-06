@@ -1,37 +1,29 @@
 package com.apriori.cidappapi.entity.response.componentiteration;
 
+import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
+@Builder
 public class PartNestingDiagram {
     private String identity;
     private String image;
     private String imageType;
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public PartNestingDiagram setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public PartNestingDiagram setImage(String image) {
-        this.image = image;
-        return this;
-    }
-
-    public String getImageType() {
-        return imageType;
-    }
-
-    public PartNestingDiagram setImageType(String imageType) {
-        this.imageType = imageType;
-        return this;
-    }
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
+    private String createdBy;
 }

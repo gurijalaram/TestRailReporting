@@ -1,5 +1,9 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoItem;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.utils.AcsResources;
@@ -19,44 +23,150 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+
 public class GetScenariosInfoTests {
 
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "9597")
-    @Description("Validate Get Scenarios Info")
-    public void testGetScenariosInfo() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        String castingPartFileName = "Casting.prt";
-        String tabFormsPartFileName = "tab_forms.prt";
+    @Description("Validate Get Scenarios Info - Two Parts")
+    public void testGetScenariosInfoTwoParts() {
+        ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        FileResponse fileResponseOne = fileUploadResources.initialisePartUpload(
-                castingPartFileName,
-                ProcessGroupEnum.CASTING.getProcessGroup()
-        );
-        FileUploadOutputs fileUploadOutputsOne = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponseOne, testScenarioName);
+        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse =
+                coreGetScenariosInfoTest(fileNames);
 
-        FileResponse fileResponseTwo = fileUploadResources.initialisePartUpload(
-                tabFormsPartFileName,
-                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
-        );
-        FileUploadOutputs fileUploadOutputsTwo = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponseTwo, testScenarioName);
+        getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
+    }
 
-        ScenarioIterationKey keyOne = fileUploadOutputsOne.getScenarioIterationKey();
-        ScenarioIterationKey keyTwo = fileUploadOutputsTwo.getScenarioIterationKey();
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "10384")
+    @Description("Validate Get Scenarios Info - Four Parts")
+    public void testGetScenariosInfoFourParts() {
+        ArrayList<String> fileNames = new ArrayList<>(
+                Arrays.asList("Casting.prt", "tab_forms.prt", "bracket_basic.prt", "flanged_hole.prt"));
+
+        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse =
+                coreGetScenariosInfoTest(fileNames);
+
+        getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "10182")
+    @Description("Negative Get Scenarios Info - Invalid Iteration Identities")
+    public void negativeGetScenariosInfoInvalidIterationIdentitiesTest() {
+        ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
+        ArrayList<FileUploadOutputs> fileUploadOutputsArrayList = fileUpload(fileNames);
+
+        ScenarioIterationKey keyOne = fileUploadOutputsArrayList.get(0).getScenarioIterationKey();
+        ScenarioIterationKey keyTwo = fileUploadOutputsArrayList.get(1).getScenarioIterationKey();
+
+        keyOne.setIteration(11);
+        keyTwo.setIteration(12);
 
         AcsResources acsResources = new AcsResources();
+
         ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformation(
                 keyOne,
                 keyTwo
         );
 
-        GetScenariosInfoItem response1 = response.getResponseEntity().get(0);
-        ScenarioKey responseOneScenarioKey = response1.getScenarioIterationKey().getScenarioKey();
+        assertThat(response.getResponseEntity().isEmpty(), is(equalTo(true)));
+    }
 
-        GetScenariosInfoItem response2 = response.getResponseEntity().get(1);
-        ScenarioKey responseTwoScenarioKey = response2.getScenarioIterationKey().getScenarioKey();
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "10203")
+    @Description("Negative Get Scenarios Info - Empty Body")
+    public void negativeGetScenariosInfoEmptyBodyTest() {
+        AcsResources acsResources = new AcsResources();
+
+        ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
+
+        assertThat(response.getStatusCode(), is(equalTo(400)));
+        assertThat(response.getBody().contains("The request should not be null"), is(equalTo(true)));
+    }
+
+    /**
+     * File upload part of get scenarios info test
+     *
+     * @param fileNames output from previous part of test
+     * @return ArrayList of FileUploadOutputs - data to assert on
+     */
+    private ArrayList<FileUploadOutputs> fileUpload(ArrayList<String> fileNames) {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        FileUploadResources fileUploadResources = new FileUploadResources();
+
+        ArrayList<FileResponse> fileResponses = new ArrayList<>();
+        ArrayList<FileUploadOutputs> fileUploadOutputs = new ArrayList<>();
+        String processGroup = "";
+
+        for (int i = 0; i < fileNames.size(); i++) {
+            processGroup = i == 0 ? ProcessGroupEnum.CASTING.getProcessGroup()
+                    : ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+            fileResponses.add(fileUploadResources.initialisePartUpload(
+                    fileNames.get(i),
+                    processGroup
+            ));
+
+            fileUploadOutputs.add(
+                    fileUploadResources.createFileUploadWorkorderSuppressError(fileResponses.get(i), testScenarioName));
+        }
+
+        return fileUploadOutputs;
+    }
+
+    /**
+     * Main part of get scenarios info test
+     *
+     * @param fileNames - ArrayList of Strings - file names to upload
+     * @return Map of GetScenariosInfoItem and ScenarioKey
+     */
+    private Map<GetScenariosInfoItem, ScenarioKey> coreGetScenariosInfoTest(ArrayList<String> fileNames) {
+        ArrayList<FileUploadOutputs> fileUploadOutputs = fileUpload(fileNames);
+
+        ArrayList<ScenarioIterationKey> scenarioIterationKeys = new ArrayList<>();
+
+        for (FileUploadOutputs fileUploadOutput : fileUploadOutputs) {
+            scenarioIterationKeys.add(fileUploadOutput.getScenarioIterationKey());
+        }
+
+        AcsResources acsResources = new AcsResources();
+        ResponseWrapper<GetScenariosInfoResponse> response = acsResources
+                .getScenariosInformation2(scenarioIterationKeys);
+
+        ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>();
+        ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>();
+        Map<GetScenariosInfoItem, ScenarioKey> responseHashMap = new HashMap<>();
+
+        for (int j = 0; j < response.getResponseEntity().size(); j++) {
+            getScenariosInfoItems.add(response.getResponseEntity().get(j));
+            scenarioKeys.add(getScenariosInfoItems.get(j).getScenarioIterationKey().getScenarioKey());
+            responseHashMap.put(getScenariosInfoItems.get(j), scenarioKeys.get(j));
+        }
+
+        return responseHashMap;
+    }
+
+    /**
+     * Performs assertions on response from get scenarios info endpoint
+     *
+     * @param scenarioItemsResponse - Map of get scenarios info items and scenario keys to allow asserts
+     * @param fileNames - file names to assert against
+     */
+    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse,
+                                            ArrayList<String> fileNames) {
+
+        ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>(scenarioItemsResponse.keySet());
+        ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>(scenarioItemsResponse.values());
 
         String userToExpect = "qa-automation-01";
         String componentTypeToExpect = "PART";
@@ -64,36 +174,24 @@ public class GetScenariosInfoTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(!response1.getInitialized());
-        softAssertions.assertThat(!response1.getMissing());
-        softAssertions.assertThat(!response1.getVirtual());
-        softAssertions.assertThat(!response1.getLocked());
+        for (int i = 0; i < scenarioItemsResponse.size(); i++) {
+            GetScenariosInfoItem scenariosInfoItem = getScenariosInfoItems.get(i);
 
-        softAssertions.assertThat(response1.getCreatedBy().equals(userToExpect));
-        softAssertions.assertThat(response1.getUpdatedBy().equals(userToExpect));
+            softAssertions.assertThat(!scenariosInfoItem.getInitialized());
+            softAssertions.assertThat(!scenariosInfoItem.getMissing());
+            softAssertions.assertThat(!scenariosInfoItem.getVirtual());
+            softAssertions.assertThat(!scenariosInfoItem.getLocked());
 
-        softAssertions.assertThat(response1.getComponentName().equals(castingPartFileName.substring(0, 7)));
-        softAssertions.assertThat(response1.getComponentType().equals(componentTypeToExpect));
-        softAssertions.assertThat(response1.getFileName().equals(castingPartFileName.toLowerCase()));
+            softAssertions.assertThat(scenariosInfoItem.getCreatedBy().equals(userToExpect));
+            softAssertions.assertThat(scenariosInfoItem.getUpdatedBy().equals(userToExpect));
 
-        softAssertions.assertThat(responseOneScenarioKey.getMasterName().equals(castingPartFileName.substring(0, 7).toUpperCase()));
-        softAssertions.assertThat(responseOneScenarioKey.getTypeName().equals(typeNameToExpect));
+            softAssertions.assertThat(scenariosInfoItem.getComponentType().equals(componentTypeToExpect));
+            softAssertions.assertThat(scenariosInfoItem.getFileName().equals(fileNames.get(i).toLowerCase()));
 
-        softAssertions.assertThat(!response2.getInitialized());
-        softAssertions.assertThat(!response2.getMissing());
-        softAssertions.assertThat(!response2.getVirtual());
-        softAssertions.assertThat(!response2.getLocked());
-
-        softAssertions.assertThat(response2.getCreatedBy().equals(userToExpect));
-        softAssertions.assertThat(response2.getUpdatedBy().equals(userToExpect));
-
-        softAssertions.assertThat(response2.getComponentName().equals(tabFormsPartFileName.substring(0, 9)));
-        softAssertions.assertThat(response2.getComponentType().equals(componentTypeToExpect));
-        softAssertions.assertThat(response2.getFileName().equals(tabFormsPartFileName));
-
-        softAssertions.assertThat(responseTwoScenarioKey.getMasterName().equals(tabFormsPartFileName.substring(0, 9).toUpperCase()));
-        softAssertions.assertThat(responseTwoScenarioKey.getTypeName().equals(typeNameToExpect));
+            softAssertions.assertThat(scenarioKeys.get(i).getTypeName().equals(typeNameToExpect));
+        }
 
         softAssertions.assertAll();
     }
+
 }

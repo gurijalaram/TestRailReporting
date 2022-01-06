@@ -115,7 +115,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        Item component = new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, userCredentials);
+        Item component = new CidAppTestUtil().postCssComponent(componentName, scenarioName, resourceFile, userCredentials);
         return navigateToScenario(component);
     }
 
@@ -129,7 +129,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public Item uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new CidAppTestUtil().postCssComponents(componentName, scenarioName, resourceFile, userCredentials);
+        return new CidAppTestUtil().postCssComponent(componentName, scenarioName, resourceFile, userCredentials);
     }
 
 
