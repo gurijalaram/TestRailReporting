@@ -39,13 +39,7 @@ public class ListProcessGroupTests {
                 .map(ProcessGroups::getDescription))
             .findAny()
             .orElseThrow(AssertionError::new)
-            .collect(Collectors.toList()), hasItems(Arrays.stream(ProcessGroupEnum.getNames())
-            .filter(x -> !x.equals(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.ROLL_UP.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.COMPOSITES.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.WITHOUT_PG.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.RESOURCES.getProcessGroup()))
-            .toArray(String[]::new)));
+            .collect(Collectors.toList()), hasItems(Arrays.stream(ProcessGroupEnum.getReducedProcessGroup()).toArray()));
     }
 
     @Ignore("Assemblies cannot be upload")
