@@ -15,7 +15,7 @@ public class CustomizationUtil {
     }
 
     /**
-     * GET call for customizations
+     * GET customizations
      *
      * @return customizations object
      */
