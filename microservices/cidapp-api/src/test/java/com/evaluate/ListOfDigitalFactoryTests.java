@@ -14,13 +14,11 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
-import java.io.File;
 import java.util.stream.Collectors;
 
 public class ListOfDigitalFactoryTests {
     private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
 
-    private File resourceFile;
     UserCredentials currentUser;
 
     public ListOfDigitalFactoryTests() {
