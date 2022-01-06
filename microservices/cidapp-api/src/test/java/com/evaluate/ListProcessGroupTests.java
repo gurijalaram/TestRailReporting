@@ -8,6 +8,7 @@ import com.apriori.cidappapi.entity.response.customizations.Customizations;
 import com.apriori.cidappapi.entity.response.customizations.ProcessGroups;
 import com.apriori.cidappapi.utils.CustomizationUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.AssemblyProcessGroupEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -53,16 +54,15 @@ public class ListProcessGroupTests {
     @TestRail(testCaseId = {"6198"})
     @Description("Get List of Assembly Process Groups")
     public void getAssemblyProcessGroupList() {
-//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-//
-//        String componentName = "Piston_assembly";
-//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-//        currentUser = UserUtil.getUser();
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        evaluatePage = loginPage.login(currentUser)
-//            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
-//
-//        MatcherAssert.assertThat(evaluatePage.getListOfProcessGroups(), hasItems(AssemblyProcessGroupEnum.getNames()));
+        customizationUtil = new CustomizationUtil(new JwtTokenUtil(UserUtil.getUser()).retrieveJwtToken());
+
+        ResponseWrapper<Customizations> customizations = customizationUtil.getCustomizations();
+
+        assertThat(customizations.getResponseEntity().getItems().stream()
+            .map(x -> x.getProcessGroups().stream()
+                .map(ProcessGroups::getDescription))
+            .findAny()
+            .orElseThrow(AssertionError::new)
+            .collect(Collectors.toList()), hasItems(Arrays.stream(AssemblyProcessGroupEnum.getNames()).toArray()));
     }
 }
