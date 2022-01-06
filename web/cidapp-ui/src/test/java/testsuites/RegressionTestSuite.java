@@ -7,7 +7,6 @@ import com.compare.ComparisonTests;
 import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
-import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
@@ -50,7 +49,6 @@ import testsuites.suiteinterface.SmokeTests;
 @Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,
-    ListOfDigitalFactoryTests.class,
     ListProcessGroupTests.class,
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,
