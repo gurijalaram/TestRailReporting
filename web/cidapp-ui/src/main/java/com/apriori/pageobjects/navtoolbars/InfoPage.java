@@ -2,13 +2,11 @@ package com.apriori.pageobjects.navtoolbars;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -195,10 +193,9 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @param assignee - the assignee
      * @return string
      */
-    public boolean isScenarioInfo(String label, UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
+    public boolean isScenarioInfo(String label, String assignee) {
         By byLabel = By.xpath(String.format("//span[.='%s']/following-sibling::span", label));
-        return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent").equals(currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
+        return pageUtils.waitForElementToAppear(byLabel).getAttribute("textContent").equals(assignee);
     }
 
     /**

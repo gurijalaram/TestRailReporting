@@ -1,10 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
@@ -55,8 +53,8 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @param assignee - the assignee
      * @return current page object
      */
-    public AssignPage selectAssignee(UserCredentials assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", getPersonResponse(assignee));
+    public AssignPage selectAssignee(String assignee) {
+        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", assignee);
         return this;
     }
 
@@ -65,21 +63,10 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      *
      * @return true/false
      */
-    public boolean isAssigneeDisplayed(UserCredentials assignee) {
-        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", getPersonResponse(assignee)));
+    public boolean isAssigneeDisplayed(String assignee) {
+        By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee));
         pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
         return driver.findElement(byAssignee).isDisplayed();
-    }
-
-    /**
-     * Gets a person object from api
-     *
-     * @param assignee - the assignee
-     * @return string
-     */
-    private String getPersonResponse(UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
-        return currentPerson.getGivenName() + " " + currentPerson.getFamilyName();
     }
 
     /**
