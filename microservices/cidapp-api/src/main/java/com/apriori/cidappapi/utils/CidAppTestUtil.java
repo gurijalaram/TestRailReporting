@@ -47,7 +47,7 @@ public class CidAppTestUtil {
     private String token = null;
 
     /**
-     * Post a new component
+     * POST new component
      *
      * @param componentName   - the part name
      * @param scenarioName    - the scenario name
@@ -61,7 +61,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Post a new component
+     * POST new component
      *
      * @param componentName - the part name
      * @param scenarioName  - the scenario name
@@ -89,7 +89,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Post a new component
+     * POST new component
      *
      * @param scenarioName  - the scenario name
      * @param componentName - the part name
@@ -115,7 +115,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Gets css component
+     * GET css component
      *
      * @param componentName   - the component name
      * @param scenarioName    - the scenario name
@@ -128,7 +128,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Find components for the current user matching a specified query.
+     * GET components for the current user matching a specified query.
      *
      * @return response object
      */
@@ -140,7 +140,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Find components for the current user matching an identity
+     * GET components for the current user matching an identity
      *
      * @param componentIdentity - the identity
      * @return response object
@@ -154,7 +154,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Find components for the current user matching an identity and component
+     * GET components for the current user matching an identity and component
      *
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
@@ -195,7 +195,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Gets the scenario representation
+     * GET scenario representation
      *
      * @param transientState    - the impermanent state
      * @param componentIdentity - the component identity
@@ -240,7 +240,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Get scenario representation of a published part
+     * GET scenario representation of a published part
      *
      * @param lastAction      - the last action
      * @param published       - scenario published
@@ -299,7 +299,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Get scenario representation of a published part
+     * GET scenario representation of a published part
      *
      * @param scenarioRepresentationBuilder - the scenario representation builder
      * @return response object
@@ -323,7 +323,7 @@ public class CidAppTestUtil {
 
 
     /**
-     * Get token
+     * GET token
      *
      * @param userCredentials - the user credentials
      * @return string
@@ -333,7 +333,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Post to cost a component
+     * POST to cost a component
      *
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
@@ -357,7 +357,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Gets the hoops image
+     * GET hoops image
      *
      * @param componentIdentity - the component identity
      * @param scenarioIdentity  - the scenario identity
@@ -372,7 +372,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Post method to cost a scenario
+     * POST to cost a scenario
      *
      * @param componentInfoBuilder - the cost component object
      * @return list of scenario items
@@ -396,7 +396,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Find components for the current user matching an identity and component
+     * GET to find components for the current user matching an identity and component
      *
      * @param componentInfoBuilder - the cost component object
      * @return response object
@@ -411,7 +411,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Get costing template id
+     * GET costing template id
      *
      * @return scenario object
      */
@@ -421,7 +421,7 @@ public class CidAppTestUtil {
 
 
     /**
-     * Post costing template
+     * POST costing template
      *
      * @return scenario object
      */
@@ -446,7 +446,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Post publish scenario
+     * POST to publish scenario
      *
      * @param item            - the item
      * @param componentId     - the component id
@@ -472,7 +472,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Get current user
+     * GET current user
      *
      * @param userCredentials - the user credentials
      * @return user object
@@ -486,7 +486,7 @@ public class CidAppTestUtil {
     }
 
     /**
-     * Get current person
+     * GET current person
      *
      * @param userCredentials - the user credentials
      * @return person object
