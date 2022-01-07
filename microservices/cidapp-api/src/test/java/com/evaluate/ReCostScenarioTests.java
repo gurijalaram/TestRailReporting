@@ -98,11 +98,61 @@ public class ReCostScenarioTests {
     @Description("Test recosting a cad file - Machining Contouring")
     public void testRecostMachiningContouring() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-
         final String componentName = "case_002_00400016-003M10_A";
-        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".STP");
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final UserCredentials currentUser = UserUtil.getUser();
+        final String componentExtension = ".STP";
+
+        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "4 Axis Mill", DigitalFactoryEnum.APRIORI_CHINA);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6103"})
+    @Description("Test recosting a cad file - Partially Automated Machining")
+    public void testRecostPartiallyAutomatedMachining() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "14100640";
+        final String componentExtension = ".stp";
+
+        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "3 Axis Mill", DigitalFactoryEnum.APRIORI_BRAZIL);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6104"})
+    @Description("Test recosting a cad file - Pocket Recognition")
+    public void testRecostPocketRecognition() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "case_010_lam_15-435508-00";
+        final String componentExtension = ".prt.1";
+
+        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "Band Saw", DigitalFactoryEnum.APRIORI_BRAZIL);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6105"})
+    @Description("Test recosting a cad file - Shared Walls")
+    public void testRecostSharedWalls() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "case_066_SpaceX_00128711-001_A";
+        final String componentExtension = ".stp";
+
+        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "Band Saw", DigitalFactoryEnum.APRIORI_BRAZIL);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6106"})
+    @Description("Test recosting a cad file - Slot Examples")
+    public void testRecostSlotExamples() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+        final String componentName = "case_007_SpaceX_00088481-001_C";
+        final String componentExtension = ".stp";
+
+        uploadCostScenarioAndAssert(processGroupEnum, componentName, componentExtension, "Material Stock", DigitalFactoryEnum.APRIORI_BRAZIL);
+    }
+
+    private void uploadCostScenarioAndAssert(final ProcessGroupEnum processGroupEnum, final String componentName, final String extension, final String processRoutingName, final DigitalFactoryEnum digitalFactoryEnum) {
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
@@ -127,7 +177,7 @@ public class ReCostScenarioTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        assertThat(analysisOfScenario.getProcessRoutingName(), containsString("4 Axis Mill"));
+        assertThat(analysisOfScenario.getProcessRoutingName(), containsString(processRoutingName));
 
         cidAppTestUtil.postCostScenario(
             ComponentInfoBuilder.builder()
@@ -136,7 +186,7 @@ public class ReCostScenarioTests {
                 .componentId(componentResponse.getComponentIdentity())
                 .scenarioId(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
-                .digitalFactory(DigitalFactoryEnum.APRIORI_CHINA)
+                .digitalFactory(digitalFactoryEnum)
                 .material("Use Default")
                 .mode("manual")
                 .user(currentUser)
@@ -150,105 +200,4 @@ public class ReCostScenarioTests {
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
-
-//    @Test
-//    @TestRail(testCaseId = {"6103"})
-//    @Description("Test recosting a cad file - Partially Automated Machining")
-//    public void testRecostPartiallyAutomatedMachining() {
-//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-//
-//        String componentName = "14100640";
-//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-//        String scenarioName = new GenerateStringUtil().generateScenarioName();
-//        currentUser = UserUtil.getUser();
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        evaluatePage = loginPage.login(currentUser)
-//            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-//            .selectProcessGroup(processGroupEnum)
-//            .selectDigitalFactory(APRIORI_USA)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
-//
-//        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-//    }
-//
-//    @Test
-//    @TestRail(testCaseId = {"6104"})
-//    @Description("Test recosting a cad file - Pocket Recognition")
-//    public void testRecostPocketRecognition() {
-//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-//
-//        String componentName = "case_010_lam_15-435508-00";
-//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt.1");
-//        String scenarioName = new GenerateStringUtil().generateScenarioName();
-//        currentUser = UserUtil.getUser();
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        evaluatePage = loginPage.login(currentUser)
-//            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-//            .selectProcessGroup(processGroupEnum)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
-//
-//        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-//    }
-//
-//    @Test
-//    @TestRail(testCaseId = {"6105"})
-//    @Description("Test recosting a cad file - Shared Walls")
-//    public void testRecostSharedWalls() {
-//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-//
-//        String componentName = "case_066_SpaceX_00128711-001_A";
-//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-//        String scenarioName = new GenerateStringUtil().generateScenarioName();
-//        currentUser = UserUtil.getUser();
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        evaluatePage = loginPage.login(currentUser)
-//            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-//            .selectProcessGroup(processGroupEnum)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
-//
-//        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-//    }
-//
-//    @Test
-//    @TestRail(testCaseId = {"6106"})
-//    @Description("Test recosting a cad file - Slot Examples")
-//    public void testRecostSlotExamples() {
-//        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
-//
-//        String componentName = "case_007_SpaceX_00088481-001_C";
-//        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-//        String scenarioName = new GenerateStringUtil().generateScenarioName();
-//        currentUser = UserUtil.getUser();
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        evaluatePage = loginPage.login(currentUser)
-//            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-//            .selectProcessGroup(processGroupEnum)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock"));
-//
-//        evaluatePage.selectDigitalFactory(APRIORI_BRAZIL)
-//            .costScenario();
-//
-//        MatcherAssert.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-//    }
 }
