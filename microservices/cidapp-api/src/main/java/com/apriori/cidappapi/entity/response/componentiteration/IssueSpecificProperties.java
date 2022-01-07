@@ -20,4 +20,5 @@ public class IssueSpecificProperties  {
     private String edgeList;
     private OpName opName;
     private ProcName procName;
+    private String gcdType;
 }
