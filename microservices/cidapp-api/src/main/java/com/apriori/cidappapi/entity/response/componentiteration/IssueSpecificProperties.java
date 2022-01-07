@@ -21,4 +21,5 @@ public class IssueSpecificProperties  {
     private OpName opName;
     private ProcName procName;
     private String gcdType;
+    private String guidanceTopic;
 }
