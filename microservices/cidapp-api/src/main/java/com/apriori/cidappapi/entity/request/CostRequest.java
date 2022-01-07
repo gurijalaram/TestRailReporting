@@ -23,7 +23,7 @@ public class CostRequest {
     private Object customAttributes;
     private String materialMode;
     private String materialName;
-    private String processGroup;
+    private String processGroupName;
     private Double productionLife;
     private DigitalFactoryEnum digitalFactory;
     private Boolean deleteTemplateAfterUse;
