@@ -27,8 +27,11 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-dropdown']")
     private WebElement newButton;
 
-    @FindBy(css = "[id='qa-sub-header-new-component']")
-    private WebElement componentButton;
+    @FindBy(css = "[id='qa-sub-header-import-dropdown'")
+    private WebElement importButton;
+
+    @FindBy(css = "[id='qa-sub-header-import-component']")
+    private WebElement cadButton;
 
     @FindBy(css = "[id='qa-sub-header-publish-button'] button")
     private WebElement publishButton;
@@ -172,8 +175,8 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public FileUploadPage uploadComponent(String scenarioName, File filePath) {
-        pageUtils.waitForElementAndClick(newButton);
-        pageUtils.waitForElementAndClick(componentButton);
+        pageUtils.waitForElementAndClick(importButton);
+        pageUtils.waitForElementAndClick(cadButton);
         return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
     }
 
