@@ -1,0 +1,520 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "propertyValueMap": {
+      "type": "object",
+      "properties": {
+        "totalRunoutOverride": {
+          "type": "number"
+        },
+        "perpendicularityOverride": {
+          "type": "number"
+        },
+        "symmetryOverride": {
+          "type": "number"
+        },
+        "roughnessOverride": {
+          "type": "number"
+        },
+        "circularityOverride": {
+          "type": "number"
+        },
+        "minCadToleranceThreshhold": {
+          "type": "number"
+        },
+        "toleranceMode": {
+          "type": "string"
+        },
+        "bendAngleToleranceOverride": {
+          "type": "number"
+        },
+        "runoutOverride": {
+          "type": "number"
+        },
+        "flatnessOverride": {
+          "type": "number"
+        },
+        "parallelismOverride": {
+          "type": "number"
+        },
+        "useCadToleranceThreshhold": {
+          "type": "boolean"
+        },
+        "cadToleranceReplacement": {
+          "type": "number"
+        },
+        "straightnessOverride": {
+          "type": "number"
+        },
+        "positionToleranceOverride": {
+          "type": "number"
+        },
+        "profileOfSurfaceOverride": {
+          "type": "number"
+        },
+        "roughnessRzOverride": {
+          "type": "number"
+        },
+        "toleranceOverride": {
+          "type": "number"
+        },
+        "diamToleranceOverride": {
+          "type": "number"
+        },
+        "concentricityOverride": {
+          "type": "number"
+        },
+        "cylindricityOverride": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "totalRunoutOverride",
+        "perpendicularityOverride",
+        "symmetryOverride",
+        "roughnessOverride",
+        "circularityOverride",
+        "minCadToleranceThreshhold",
+        "toleranceMode",
+        "bendAngleToleranceOverride",
+        "runoutOverride",
+        "flatnessOverride",
+        "parallelismOverride",
+        "useCadToleranceThreshhold",
+        "cadToleranceReplacement",
+        "straightnessOverride",
+        "positionToleranceOverride",
+        "profileOfSurfaceOverride",
+        "roughnessRzOverride",
+        "toleranceOverride",
+        "diamToleranceOverride",
+        "concentricityOverride",
+        "cylindricityOverride"
+      ]
+    },
+    "propertyInfoMap": {
+      "type": "object",
+      "properties": {
+        "totalRunoutOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "perpendicularityOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "symmetryOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "roughnessOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "circularityOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "minCadToleranceThreshhold": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "toleranceMode": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "bendAngleToleranceOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "runoutOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "flatnessOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "parallelismOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "useCadToleranceThreshhold": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "supportedSerializedType"
+          ]
+        },
+        "cadToleranceReplacement": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "straightnessOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "positionToleranceOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "profileOfSurfaceOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "roughnessRzOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "toleranceOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "diamToleranceOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "concentricityOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        },
+        "cylindricityOverride": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            },
+            "supportedSerializedType": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName",
+            "supportedSerializedType"
+          ]
+        }
+      },
+      "required": [
+        "totalRunoutOverride",
+        "perpendicularityOverride",
+        "symmetryOverride",
+        "roughnessOverride",
+        "circularityOverride",
+        "minCadToleranceThreshhold",
+        "toleranceMode",
+        "bendAngleToleranceOverride",
+        "runoutOverride",
+        "flatnessOverride",
+        "parallelismOverride",
+        "useCadToleranceThreshhold",
+        "cadToleranceReplacement",
+        "straightnessOverride",
+        "positionToleranceOverride",
+        "profileOfSurfaceOverride",
+        "roughnessRzOverride",
+        "toleranceOverride",
+        "diamToleranceOverride",
+        "concentricityOverride",
+        "cylindricityOverride"
+      ]
+    }
+  },
+  "required": [
+    "propertyValueMap",
+    "propertyInfoMap"
+  ]
+}

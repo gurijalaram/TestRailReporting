@@ -12,7 +12,8 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     GET_ENABLED_CURRENCY_RATE_VERSIONS("ws/workspace/global-info/enabledCurrency"),
     CREATE_MISSING_SCENARIO("ws/workspace/0/scenarios"),
     GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY("ws/workspace/0/scenarios/%s/%s/%s/iterations/%s/scenario-info"),
-    GET_SCENARIOS_INFORMATION("ws/workspace/scenario-info/search");
+    GET_SCENARIOS_INFORMATION("ws/workspace/scenario-info/search"),
+    GET_TOLERANCE_POLICY_DEFAULTS("ws/workspace/users/%s/tolerance-policy-defaults");
 
     private final String endpoint;
 

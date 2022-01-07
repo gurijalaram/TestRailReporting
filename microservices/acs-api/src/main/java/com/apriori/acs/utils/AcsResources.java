@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInp
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
+import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -214,5 +215,21 @@ public class AcsResources {
                 .headers(token);
 
         return (CurrencyRateVersionResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Tolerance Policy Defaults
+     *
+     * @return GetTolerancePolicyDefaults instance
+     */
+    public GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaults() {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
+                .headers(token)
+                .inlineVariables("qa-automation-01");
+
+        return (GetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 }
