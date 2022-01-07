@@ -6,67 +6,67 @@
       "type": "object",
       "properties": {
         "totalRunoutOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "perpendicularityOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "symmetryOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "roughnessOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "circularityOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "minCadToleranceThreshhold": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "toleranceMode": {
           "type": "string"
         },
         "bendAngleToleranceOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "runoutOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "flatnessOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "parallelismOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "useCadToleranceThreshhold": {
           "type": "boolean"
         },
         "cadToleranceReplacement": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "straightnessOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "positionToleranceOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "profileOfSurfaceOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "roughnessRzOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "toleranceOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "diamToleranceOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "concentricityOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         },
         "cylindricityOverride": {
-          "type": "number"
+          "type": ["number", "null"]
         }
       },
       "required": [

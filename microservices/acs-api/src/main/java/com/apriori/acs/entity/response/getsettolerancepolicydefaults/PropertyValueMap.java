@@ -1,27 +1,27 @@
 package com.apriori.acs.entity.response.getsettolerancepolicydefaults;
 
-import javax.annotation.Nullable;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.Data;
 
+@Data
 public class PropertyValueMap {
     private double totalRunoutOverride;
     private double perpendicularityOverride;
     private double symmetryOverride;
     private double roughnessOverride;
     private double circularityOverride;
-    private double minCadToleranceThreshold;
+    private double minCadToleranceThreshhold;
     private String toleranceMode;
     private double bendAngleToleranceOverride;
     private double runoutOverride;
-    @Nullable
     private double flatnessOverride;
     private double parallelismOverride;
-    private double useCadToleranceThreshold;
+    private boolean useCadToleranceThreshhold;
     private double cadToleranceReplacement;
     private double straightnessOverride;
     private double positionToleranceOverride;
     private double profileOfSurfaceOverride;
     private double roughnessRzOverride;
-    @Nullable
     private double toleranceOverride;
     private double diamToleranceOverride;
     private double concentricityOverride;

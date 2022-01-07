@@ -1,9 +1,9 @@
 package com.apriori.acs.entity.response.getsettolerancepolicydefaults;
 
-import java.util.List;
+import lombok.Data;
 
+@Data
 public class PropertyInfoMap {
-    //private List<PropertyInfoItem> propertyInformationList;
     private PropertyInfoItem totalRunoutOverride;
     private PropertyInfoItem perpendicularityOverride;
     private PropertyInfoItem symmetryOverride;
