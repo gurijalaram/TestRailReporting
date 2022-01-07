@@ -5,7 +5,9 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum NTSAPIEnum implements ExternalEndpointEnum {
 
-    GET_EMAIL("emails"),
+    POST_EMAIL("emails"),
+    GET_EMAILS("emails"),
+    GET_EMAILS_BY_ID("emails?identity[EQ]=%s"),
     GET_EMAIL_BY_ID("emails/%s"),
     GET_NOTIFICATIONS("notifications");
 
@@ -15,7 +17,6 @@ public enum NTSAPIEnum implements ExternalEndpointEnum {
         this.endpoint = endpoint;
     }
 
-
     @Override
     public String getEndpointString() {
         return endpoint;
@@ -23,6 +24,18 @@ public enum NTSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.nts.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.nts.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
+
+    private String addQuery(String endpointString) {
+        String querySymbol = "?";
+
+        if (endpointString.contains("?")) {
+            querySymbol = "&";
+        }
+
+        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
+
+    }
+
 }
