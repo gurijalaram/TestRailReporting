@@ -23,17 +23,19 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(testCaseId = {"3581"})
     @Description("Retrieve a JWT from the ATS Token endpoint")
     public void getToken() {
-        new TokenUtil().getToken();
+        ResponseWrapper<Token> response = new TokenUtil().getToken();
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
     }
 
     @Test
     @TestRail(testCaseId = {"3913"})
     @Description("Authorize a user to access a specified application")
     public void authorizeUser() {
-        Token token = new TokenUtil().getToken();
+        ResponseWrapper<Token> token = new TokenUtil().getToken();
 
         ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(
-            PropertiesContext.get("${env}.auth_target_cloud_context"), token.getToken());
+            PropertiesContext.get("${env}.auth_target_cloud_context"), token.getResponseEntity().getToken());
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

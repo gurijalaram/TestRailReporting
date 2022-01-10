@@ -4,6 +4,7 @@ import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -29,7 +30,7 @@ public class TokenUtil {
      *
      * @return string
      */
-    public Token getToken() {
+    public ResponseWrapper<Token> getToken() {
         log.info("Getting ATS Token...");
 
         RequestEntity requestEntity = RequestEntityUtil.init(TokenEnum.POST_TOKEN, Token.class)
@@ -44,6 +45,6 @@ public class TokenUtil {
                     .build())
                 .build());
 
-        return (Token) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return HTTPRequest.build(requestEntity).post();
     }
 }
