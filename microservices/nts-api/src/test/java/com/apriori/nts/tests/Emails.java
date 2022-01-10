@@ -1,53 +1,87 @@
 package com.apriori.nts.tests;
 
-import com.apriori.apibase.services.PropertyStore;
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.nts.apicalls.EmailService;
-import com.apriori.nts.entity.response.GetEmailResponse;
-import com.apriori.nts.entity.response.SendEmailResponse;
+import com.apriori.nts.entity.response.Email;
+import com.apriori.nts.entity.response.EmailsItems;
+import com.apriori.nts.entity.response.SendEmail;
 import com.apriori.nts.utils.Constants;
+import com.apriori.utils.TestHelper;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.properties.PropertiesContext;
+
+import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import org.junit.Assert;
-import org.junit.Before;
+
+import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
-public class Emails {
-    private PropertyStore propertyStore = new PropertyStore();
-    private String baseUrl;
+public class Emails extends TestHelper {
 
-    @Before
-    public void setServiceUrl() {
-        baseUrl = PropertiesContext.get("${env}.nts.api_url") + "emails?key=" + PropertiesContext.get("${env}.secret_key");
+    @Test
+    @TestRail(testCaseId = {"3828", "10472", "3881"})
+    @Description("Send an email using the NTS API")
+    public void sendEmail() {
+        String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
+        SoftAssertions soft = new SoftAssertions();
+
+        //Send Email
+        SendEmail sendEmail = EmailService.sendEmail(
+                subject,
+                Constants.EMAIL_CONTENT
+        ).getResponseEntity();
+
+        //Confirm Email Sent
+        Boolean emailExists = EmailService.validateEmail(subject);
+        soft.assertThat(emailExists).isTrue();
+
+        //Get Single Email
+        ResponseWrapper<Email> getEmailResponse = EmailService.getEmail(sendEmail.getIdentity());
+        soft.assertThat(getEmailResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+
+        //Get All Emails, but filter by single identity
+        ResponseWrapper<EmailsItems> getEmailsItemsResponse = EmailService.getEmailsByIdentity(sendEmail.getIdentity());
+        soft.assertThat(getEmailsItemsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+
+        soft.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"3828"})
-    @Description("Send an email using the NTS API")
-    public void sendEmail() {
-        String subject = String.format("%s_%d", Constants.EMAIL_SUBJECT, System.currentTimeMillis());
-        EmailService.sendEmail(baseUrl, subject, Constants.EMAIL_CONTENT);
-        Boolean emailExists = EmailService.validateEmail(subject);
-        Assert.assertEquals(true, emailExists);
-    }
+    @TestRail(testCaseId = {"10469", "10470", "10471"})
+    @Description("Send an email using the NTS API w/Attachment")
+    public void sendEmailWithAttachment() {
+        SoftAssertions soft = new SoftAssertions();
+        String subject = Constants.EMAIL_SUBJECT + System.currentTimeMillis();
 
+        //Send Email
+        SendEmail sendEmail = EmailService.sendEmailWithAttachment(
+                subject,
+                "NtsAttachment.txt",
+                Constants.EMAIL_CONTENT_W_ATTACHMENT
+        ).getResponseEntity();
+
+        //Confirm Email Sent
+        Boolean emailExists = EmailService.validateEmail(subject);
+        soft.assertThat(emailExists).isTrue();
+
+        //Get Single Email
+        ResponseWrapper<Email> getEmailResponse = EmailService.getEmail(sendEmail.getIdentity());
+        soft.assertThat(getEmailResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+
+        //Get All Emails, but filter by single identity
+        ResponseWrapper<EmailsItems> getEmailsItemsResponse = EmailService.getEmailsByIdentity(sendEmail.getIdentity());
+        soft.assertThat(getEmailsItemsResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+
+        soft.assertAll();
+    }
 
     @Test
     @TestRail(testCaseId = {"3880"})
     @Description("Get a list of emails using the NTS API")
     public void getEmails() {
-        GetEmailResponse getEmailResponse = EmailService.getEmails();
-        propertyStore.setEmailIdentity(getEmailResponse.getResponse().getItems().get(0).getIdentity());
-    }
-
-    @Test
-    @TestRail(testCaseId = {"3881"})
-    @Description("Get a single email using the NTS API")
-    public void getEmail() {
-        String subject = String.format("%s_%d", Constants.EMAIL_SUBJECT, System.currentTimeMillis());
-        SendEmailResponse sendEmailResponse = EmailService.sendEmail(baseUrl, subject,
-            Constants.EMAIL_CONTENT);
-        EmailService.getEmail(sendEmailResponse.getIdentity());
+        ResponseWrapper<EmailsItems> getEmailResponse = EmailService.getEmails();
+        assertEquals(getEmailResponse.getStatusCode(), HttpStatus.SC_OK);
     }
 }
