@@ -1,10 +1,15 @@
 package tests;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
@@ -26,9 +31,9 @@ public class AtsAuthorization extends TestUtil {
     public void authorizeUser() {
         String token = new JwtTokenUtil().retrieveJwtToken();
 
-        AuthorizationResponse response = AuthorizeUserUtil.authorizeUser(
-            PropertiesContext.get("${env}.auth_target_cloud_context"),
-            token,
-            HttpStatus.SC_OK);
+        ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(
+            PropertiesContext.get("${env}.auth_target_cloud_context"), token);
+
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 }
