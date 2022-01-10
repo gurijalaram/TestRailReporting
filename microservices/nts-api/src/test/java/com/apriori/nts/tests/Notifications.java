@@ -1,6 +1,7 @@
 package com.apriori.nts.tests;
 
 import com.apriori.nts.enums.NTSAPIEnum;
+import com.apriori.utils.TestHelper;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -11,7 +12,7 @@ import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class Notifications {
+public class Notifications extends TestHelper {
 
     @Test
     @TestRail(testCaseId = {"4530"})
