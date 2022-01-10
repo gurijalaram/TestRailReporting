@@ -10,7 +10,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 public class AuthorizeUserUtil {
 
-    public static ResponseWrapper<AuthorizationResponse> authorizeUser(String targetCloudContext,                                                                       String token) {
+    public static ResponseWrapper<AuthorizationResponse> authorizeUser(String targetCloudContext, String token) {
         AuthorizeRequest authorizeRequest = new AuthorizeRequest().setTargetCloudContext(targetCloudContext).setToken(token);
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AuthorizeUserEnum.POST_MULTIPART_AUTHORIZE_BY_BASE_URL_SECRET, AuthorizationResponse.class)
