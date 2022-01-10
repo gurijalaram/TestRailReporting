@@ -47,48 +47,17 @@ public class ReCostScenarioTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cidAppTestUtil.postCostScenario(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
-                .material("Use Default")
-                .mode("manual")
-                .user(currentUser)
-                .build());
+        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
-            ComponentInfoBuilder.builder()
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(currentUser, componentResponse);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
         assertThat(analysisOfScenario.getProcessRoutingName(), containsString("Material Stock"));
 
-        cidAppTestUtil.postCostScenario(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-                .material("Use Default")
-                .mode("manual")
-                .user(currentUser)
-                .build());
+        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = cidAppTestUtil.getScenarioRepresentation(
-            ScenarioRepresentationBuilder.builder()
-                .item(componentResponse)
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(currentUser, componentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
@@ -116,48 +85,17 @@ public class ReCostScenarioTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cidAppTestUtil.postCostScenario(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
-                .material("Use Default")
-                .mode("manual")
-                .user(currentUser)
-                .build());
+        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
-            ComponentInfoBuilder.builder()
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(currentUser, componentResponse);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
         assertThat(analysisOfScenario.getProcessRoutingName(), containsString("3 Axis Mill"));
 
-        cidAppTestUtil.postCostScenario(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .processGroup(processGroupEnum)
-                .digitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
-                .material("Use Default")
-                .mode("manual")
-                .user(currentUser)
-                .build());
+        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = cidAppTestUtil.getScenarioRepresentation(
-            ScenarioRepresentationBuilder.builder()
-                .item(componentResponse)
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(currentUser, componentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
@@ -215,17 +153,20 @@ public class ReCostScenarioTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
-            ComponentInfoBuilder.builder()
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(currentUser, componentResponse);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
         assertThat(analysisOfScenario.getProcessRoutingName(), containsString(processRoutingName));
 
+        postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, digitalFactoryEnum);
+
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(currentUser, componentResponse);
+
+        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+    }
+
+    private void postCostScenario(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, UserCredentials currentUser, Item componentResponse, DigitalFactoryEnum digitalFactory) {
         cidAppTestUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
@@ -233,18 +174,27 @@ public class ReCostScenarioTests {
                 .componentId(componentResponse.getComponentIdentity())
                 .scenarioId(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
-                .digitalFactory(digitalFactoryEnum)
+                .digitalFactory(digitalFactory)
                 .material("Use Default")
                 .mode("manual")
                 .user(currentUser)
                 .build());
+    }
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = cidAppTestUtil.getScenarioRepresentation(
+    private ResponseWrapper<ScenarioResponse> getScenarioResponseResponseWrapper(UserCredentials currentUser, Item componentResponse) {
+        return cidAppTestUtil.getScenarioRepresentation(
             ScenarioRepresentationBuilder.builder()
                 .item(componentResponse)
                 .user(currentUser)
                 .build());
+    }
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+    private ResponseWrapper<ComponentIteration> getComponentIterationResponseWrapper(UserCredentials currentUser, Item componentResponse) {
+        return cidAppTestUtil.getComponentIterationLatest(
+            ComponentInfoBuilder.builder()
+                .componentId(componentResponse.getComponentIdentity())
+                .scenarioId(componentResponse.getScenarioIdentity())
+                .user(currentUser)
+                .build());
     }
 }
