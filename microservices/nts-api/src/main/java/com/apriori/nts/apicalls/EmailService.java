@@ -1,15 +1,17 @@
 package com.apriori.nts.apicalls;
 
 import com.apriori.nts.entity.response.Email;
-import com.apriori.nts.entity.response.GetEmailResponse;
-import com.apriori.nts.entity.response.SendEmailResponse;
+import com.apriori.nts.entity.response.EmailsItems;
+import com.apriori.nts.entity.response.SendEmail;
 import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.nts.utils.EmailSetup;
-import com.apriori.nts.utils.NtsUtil;
 import com.apriori.utils.EmailUtil;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.slf4j.Logger;
@@ -23,7 +25,11 @@ public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
     private static final String cloudContext = PropertiesContext.get("${env}.auth_target_cloud_context");
+    private static SendEmail sendEmail;
 
+    private static Map<String, String> headers = new HashMap<String, String>() {{
+            put("ap-cloud-context", cloudContext);
+        }};
 
     /**
      * Validates that an email has been sent by checking the target account
@@ -63,48 +69,47 @@ public class EmailService {
     /**
      * Call the SendEmail endpoint
      *
-     * @param baseUrl      Base url of the NTS Service
      * @param subject      Email subject
-     * @param parameters
+     * @param filename     Email Attachment
      * @param emailContent Email content
      * @return Service response
      */
-    private static SendEmailResponse sendEmail(String baseUrl, String subject, Map<String, String> parameters, String emailContent) {
+    public static ResponseWrapper<SendEmail> sendEmailWithAttachment(String subject, String filename, String emailContent) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
-        Map<String, String> params = new HashMap<>();
-        params.put("recipientAddress", emailSetup.getUsername());
-        params.put("subject", subject);
-        params.put("content", emailContent);
+        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.POST_EMAIL, SendEmail.class)
+            .headers(headers)
+            .multiPartFiles(new MultiPartFiles()
+                .use("data", FileResourceUtil.getResourceAsFile(filename))
+                .use("recipientAddress", emailSetup.getUsername())
+                .use("subject", subject)
+                .use("content", emailContent)
+            );
 
-        if (parameters != null) {
-            params.putAll(parameters);
-        }
-
-        String url = String.format(baseUrl, "");
-
-        SendEmailResponse smr = null;
-        try {
-            smr = (SendEmailResponse) NtsUtil.postMultiPartFormData(url, params, SendEmailResponse.class, cloudContext);
-        } catch (Exception e) {
-            logger.error(e.getMessage());
-        }
-
-        return smr;
-
+        return HTTPRequest.build(requestEntity).postMultipart();
     }
 
     /**
      * Call the SendEmail service endpoint
      *
-     * @param baseUrl      Base url of the NTS Service
      * @param subject      Email subject
      * @param emailContent Email content
      * @return Service response
      */
-    public static SendEmailResponse sendEmail(String baseUrl, String subject, String emailContent) {
-        return sendEmail(baseUrl, subject, null, emailContent);
+    public static ResponseWrapper<SendEmail> sendEmail(String subject, String emailContent) {
+        EmailSetup emailSetup = new EmailSetup();
+        emailSetup.getCredentials();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.POST_EMAIL, SendEmail.class)
+            .headers(headers)
+            .multiPartFiles(new MultiPartFiles()
+                .use("recipientAddress", emailSetup.getUsername())
+                .use("subject", subject)
+                .use("content", emailContent)
+            );
+
+        return HTTPRequest.build(requestEntity).postMultipart();
     }
 
     /**
@@ -112,16 +117,19 @@ public class EmailService {
      *
      * @return Service response
      */
-    public static GetEmailResponse getEmails() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(NTSAPIEnum.GET_EMAIL, GetEmailResponse.class)
-            .headers(new HashMap<String, String>() {
-                {
-                    put("ap-cloud-context", cloudContext);
-                }
-            });
+    public static ResponseWrapper<EmailsItems> getEmails() {
+        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS, EmailsItems.class)
+            .headers(headers);
 
-        return (GetEmailResponse)
-            HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    public static ResponseWrapper<EmailsItems> getEmailsByIdentity(String identity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS_BY_ID, EmailsItems.class)
+                .inlineVariables(identity)
+                .headers(headers);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -130,15 +138,11 @@ public class EmailService {
      * @param identity The identity of the email to retrieve
      * @return Service response
      */
-    public static Email getEmail(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
+    public static ResponseWrapper<Email> getEmail(String identity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
             .inlineVariables(identity)
-            .headers(new HashMap<String, String>() {{
-                    put("ap-cloud-context", cloudContext);
-                }
-            });
+            .headers(headers);
 
-        return (Email)
-            HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return HTTPRequest.build(requestEntity).get();
     }
 }
