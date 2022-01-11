@@ -10,6 +10,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.ApplicationMetadata;
+import com.apriori.cidappapi.entity.response.CloudContext;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PeopleResponse;
@@ -512,5 +513,22 @@ public class CidAppTestUtil {
             .token(getToken(userCredentials));
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Gets Authorisation Target Cloud Context
+     *
+     * @param userCredentials - user credentials
+     * @return string
+     */
+    public String getAuthTargetCloudContext(UserCredentials userCredentials) {
+        CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
+        String customerIdentity = cloudContextResponse.getCustomerIdentity();
+        String deploymentIdentity = cloudContextResponse.getDeploymentIdentity();
+        String installationIdentity = cloudContextResponse.getInstallationIdentity();
+        String applicationIdentity = cloudContextResponse.getApplicationIdentity();
+
+
+        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;
     }
 }
