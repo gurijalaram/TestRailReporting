@@ -5,8 +5,6 @@ import com.apriori.utils.reader.file.user.service.UserCommonService;
 import com.apriori.utils.reader.file.user.service.UserSecurityService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Get user functionality.
@@ -46,7 +44,7 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser();
+        UserCredentials user = UserCommonService.getUser().setToken();
         logInfo(user);
         return user;
     }

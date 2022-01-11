@@ -22,6 +22,11 @@ public class TokenUtil {
         this.email = userCredentials.getEmail();
     }
 
+    public TokenUtil(String username, String email) {
+        this.username = username;
+        this.email = email;
+    }
+
     public TokenUtil() {
     }
 

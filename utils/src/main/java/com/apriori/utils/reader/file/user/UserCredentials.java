@@ -1,5 +1,7 @@
 package com.apriori.utils.reader.file.user;
 
+import com.apriori.utils.token.TokenUtil;
+
 public class UserCredentials {
 
     private String email;
@@ -72,8 +74,10 @@ public class UserCredentials {
         return token;
     }
 
-    public UserCredentials setToken(String token) {
-        this.token = token;
+    public UserCredentials setToken() {
+        this.token = new TokenUtil(getUsername(), getEmail()).getToken()
+            .getResponseEntity()
+            .getToken();
         return this;
     }
 }
