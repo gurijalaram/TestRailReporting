@@ -35,7 +35,10 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     GET_CURRENT_PERSON("people?username[EQ]=%s"),
 
     //CUSTOMIZATIONS
-    GET_CUSTOMIZATIONS("customizations");
+    GET_CUSTOMIZATIONS("customizations"),
+
+    //APPLICATION METADATA
+    GET_APPLICATION_METADATA("application-metadata");
 
     private final String endpoint;
 
