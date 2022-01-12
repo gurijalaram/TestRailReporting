@@ -20,7 +20,7 @@ public class UserPreferencesTest extends UserPreferencesUtil {
 
     @BeforeClass
     public static void setUp() {
-        RequestEntityUtil.useTokenForRequests(new TokenUtil().getToken().getResponseEntity().getToken());
+        RequestEntityUtil.useTokenForRequests(new TokenUtil().getTokenAsString());
     }
 
     @Test

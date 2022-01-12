@@ -48,7 +48,7 @@ public class UserTestDataUtil extends TestUtil {
     }
 
     public String initToken(UserCredentials userCredentials) {
-        return new TokenUtil(userCredentials).getToken().getResponseEntity().getToken();
+        return new TokenUtil(userCredentials).getTokenAsString();
     }
 
     public UserDataEDC initBillOfMaterials() {

@@ -30,7 +30,7 @@ public class ResetSettingsUtil {
      * @return response object
      */
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
-        String token = new TokenUtil(userCredentials).getToken().getResponseEntity().getToken();
+        String token = new TokenUtil(userCredentials).getTokenAsString();
 
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
             .token(token);

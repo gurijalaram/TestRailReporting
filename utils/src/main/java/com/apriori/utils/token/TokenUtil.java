@@ -52,4 +52,13 @@ public class TokenUtil {
 
         return HTTPRequest.build(requestEntity).post();
     }
+
+    /**
+     * Gets token as string
+     *
+     * @return string
+     */
+    public String getTokenAsString() {
+        return getToken().getResponseEntity().getToken();
+    }
 }
