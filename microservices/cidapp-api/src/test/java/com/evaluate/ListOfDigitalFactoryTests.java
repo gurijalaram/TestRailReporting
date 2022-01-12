@@ -25,7 +25,7 @@ public class ListOfDigitalFactoryTests {
     @TestRail(testCaseId = {"5415"})
     @Description("Get List of Digital Factory")
     public void getListOfDigitalFactory() {
-       final UserCredentials user = UserUtil.getUser();
+        final UserCredentials user = UserUtil.getUser();
 
         ResponseWrapper<Customizations> customizations = customizationUtil.getCustomizations(user);
 
