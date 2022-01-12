@@ -1,6 +1,5 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
@@ -16,6 +15,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.token.TokenUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,7 +30,7 @@ public class ResetSettingsUtil {
      * @return response object
      */
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
-        String token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
+        String token = new TokenUtil(userCredentials).getToken().getResponseEntity().getToken();
 
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
             .token(token);
