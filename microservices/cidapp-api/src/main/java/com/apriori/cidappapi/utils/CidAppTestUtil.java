@@ -528,7 +528,6 @@ public class CidAppTestUtil {
         String installationIdentity = cloudContextResponse.getInstallationIdentity();
         String applicationIdentity = cloudContextResponse.getApplicationIdentity();
 
-
         return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;
     }
 }
