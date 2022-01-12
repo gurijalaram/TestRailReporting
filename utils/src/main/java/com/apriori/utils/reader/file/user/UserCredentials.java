@@ -74,7 +74,7 @@ public class UserCredentials {
         return token;
     }
 
-    public UserCredentials setToken() {
+    public UserCredentials generateToken() {
         this.token = new TokenUtil(getUsername(), getEmail()).getToken()
             .getResponseEntity()
             .getToken();
