@@ -1,0 +1,73 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "type": "object",
+  "required": [
+    "createdAt",
+    "createdBy",
+    "createdByName",
+    "customerIdentity",
+    "identity",
+    "lastAction",
+    "locked",
+    "ownedBy",
+    "ownedByName",
+    "permissions",
+    "previousScenarioState",
+    "published",
+    "scenarioName",
+    "scenarioState",
+    "scenarioType",
+    "systemLocked"
+  ],
+  "properties": {
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "createdByName": {
+      "type": "string"
+    },
+    "customerIdentity": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "lastAction": {
+      "type": "string"
+    },
+    "locked": {
+      "type": "boolean"
+    },
+    "ownedBy": {
+      "type": "string"
+    },
+    "ownedByName": {
+      "type": "string"
+    },
+    "permissions": {
+      "type": "array",
+      "items": {}
+    },
+    "previousScenarioState": {
+      "type": "string"
+    },
+    "published": {
+      "type": "boolean"
+    },
+    "scenarioName": {
+      "type": "string"
+    },
+    "scenarioState": {
+      "type": "string"
+    },
+    "scenarioType": {
+      "type": "string"
+    },
+    "systemLocked": {
+      "type": "boolean"
+    }
+  }
+}

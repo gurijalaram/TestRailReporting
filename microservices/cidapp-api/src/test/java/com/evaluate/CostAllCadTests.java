@@ -7,6 +7,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
+import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -31,6 +32,7 @@ import java.io.File;
 public class CostAllCadTests {
 
     private final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private UserCredentials currentUser;
 
     @Test
     @Category(SmokeTests.class)
@@ -70,6 +72,39 @@ public class CostAllCadTests {
         assertThat(analysisOfScenario.getMaterialCost(), is(closeTo(27.44, 15)));
         assertThat(analysisOfScenario.getLaborCost(), is(closeTo(6.30, 5)));
         assertThat(analysisOfScenario.getDirectOverheadCost(), is(closeTo(1.69, 5)));
+    }
+
+    @Test
+    @Description("Copy a scenario")
+    public void testCopyScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        String filename  = "oldham.asm.1";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "OLDHAM";
+        currentUser = UserUtil.getUser();
+        File resourceFile = FileResourceUtil.getResourceAsFile(filename);
+
+        Item postComponentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        String componentIdentity = postComponentResponse.getComponentIdentity();
+        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
+
+        cidAppTestUtil.postCopyScenario(
+            ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .componentId(componentIdentity)
+            .scenarioId(scenarioIdentity)
+            .user(currentUser)
+            .build());
+
+        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
+            ComponentInfoBuilder.builder()
+                .componentId(componentIdentity)
+                .scenarioId(scenarioIdentity)
+            .user(currentUser)
+            .build());
+
+        AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
     }
 
     @Test
