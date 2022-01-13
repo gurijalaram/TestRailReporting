@@ -11,6 +11,8 @@ import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsRespons
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
+import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
+import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -47,7 +49,8 @@ public class AcsResources {
     public CreateMissingScenarioResponse createMissingScenario() {
         token.put(contentType, applicationJson);
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.CREATE_MISSING_SCENARIO, CreateMissingScenarioResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.CREATE_MISSING_SCENARIO,
+                        CreateMissingScenarioResponse.class)
                 .headers(token)
                 .body(CreateMissingScenarioInputs.builder()
                         .baseName(Constants.PART_FILE_NAME)
@@ -93,15 +96,17 @@ public class AcsResources {
      * @param scenarioIterationKeyTwo - second Scenario Iteration Key
      * @return instance of GetScenariosInfoResponse
      */
-    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation(ScenarioIterationKey scenarioIterationKeyOne,
-                                                                             ScenarioIterationKey scenarioIterationKeyTwo) {
+    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation(
+            ScenarioIterationKey scenarioIterationKeyOne,
+            ScenarioIterationKey scenarioIterationKeyTwo) {
         token.put(contentType, applicationJson);
 
         ArrayList<ScenarioIterationKey> listOfKeys = new ArrayList<>();
         listOfKeys.add(scenarioIterationKeyOne);
         listOfKeys.add(scenarioIterationKeyTwo);
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION,
+                        GetScenariosInfoResponse.class)
                 .headers(token)
                 .body(ScenarioIterationKeysInputs.builder()
                         .scenarioIterationKeys(listOfKeys)
@@ -148,7 +153,8 @@ public class AcsResources {
     public GetDisplayUnitsResponse getDisplayUnits() {
         token.put(contentType, applicationJson);
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_DISPLAY_UNITS, GetDisplayUnitsResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_DISPLAY_UNITS,
+                        GetDisplayUnitsResponse.class)
                 .headers(token)
                 .inlineVariables(Constants.USERNAME);
 
@@ -163,7 +169,8 @@ public class AcsResources {
     public SetDisplayUnitsResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
         token.put(contentType, applicationJson);
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS, SetDisplayUnitsResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS,
+                        SetDisplayUnitsResponse.class)
                 .headers(token)
                 .body(setDisplayUnitsInputs)
                 .inlineVariables(Constants.USERNAME);
@@ -222,13 +229,15 @@ public class AcsResources {
      *
      * @return GetTolerancePolicyDefaults instance
      */
-    public GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaults() {
+    public GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaults(String username) {
         token.put(contentType, applicationJson);
 
+        String userToUse = username.isEmpty() ? UserUtil.getUser().getUsername() : username;
+
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
+                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
                 .headers(token)
-                .inlineVariables(UserUtil.getUser().getUsername());
+                .inlineVariables(userToUse);
 
         return (GetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -243,10 +252,64 @@ public class AcsResources {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_TOLERANCE_POLICY_DEFAULTS, null)
+                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
                 .headers(token)
                 .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     * Sets Tolerance Policy Defaults Values
+     *
+     * @return SetTolerancePolicyDefaultsResponse
+     */
+    public SetTolerancePolicyDefaultsResponse setTolerancePolicyDefaults(double totalRunoutOverride,
+                                                                         String toleranceMode,
+                                                                         boolean useCadToleranceThreshhold,
+                                                                         String username) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, SetTolerancePolicyDefaultsResponse.class)
+                .headers(token)
+                .body(SetTolerancePolicyDefaultsInputs.builder()
+                        .totalRunoutOverride(totalRunoutOverride)
+                        .toleranceMode(toleranceMode)
+                        .useCadToleranceThreshhold(useCadToleranceThreshhold)
+                        .build()
+                )
+                .inlineVariables(username);
+
+        return (SetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Set Tolerance Policy Defaults with Invalid Username to produce error
+     *
+     * @param totalRunoutOverride - double
+     * @param toleranceMode - String
+     * @param useCadToleranceThreshhold - boolean
+     * @param invalidUsername - String
+     * @return String of error
+     */
+    public String setTolerancePolicyDefaultsInvalidUsername(double totalRunoutOverride,
+                                                     String toleranceMode,
+                                                     boolean useCadToleranceThreshhold,
+                                                     String invalidUsername) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
+                .headers(token)
+                .body(SetTolerancePolicyDefaultsInputs.builder()
+                        .totalRunoutOverride(totalRunoutOverride)
+                        .toleranceMode(toleranceMode)
+                        .useCadToleranceThreshhold(useCadToleranceThreshhold)
+                        .build()
+                )
+                .inlineVariables(invalidUsername);
+
+        return HTTPRequest.build(requestEntity).post().getBody();
     }
 }
