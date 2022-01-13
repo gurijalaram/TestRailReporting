@@ -228,8 +228,25 @@ public class AcsResources {
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
                 .headers(token)
-                .inlineVariables("qa-automation-01");
+                .inlineVariables(UserUtil.getUser().getUsername());
 
         return (GetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Tolerance Policy Defaults with invalid user to produce 400 error
+     *
+     * @param invalidUsername - String
+     * @return String of error
+     */
+    public String getTolerancePolicyDefaults400Error(String invalidUsername) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_TOLERANCE_POLICY_DEFAULTS, null)
+                .headers(token)
+                .inlineVariables(invalidUsername);
+
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 }
