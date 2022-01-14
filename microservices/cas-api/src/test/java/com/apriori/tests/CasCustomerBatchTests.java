@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.CustomerBatch;
@@ -17,6 +16,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -29,7 +29,7 @@ public class CasCustomerBatchTests {
 
     @Before
     public void getToken() {
-        token = new JwtTokenUtil().retrieveJwtToken();
+        token = new TokenUtil().getTokenAsString();
     }
 
     @Test
