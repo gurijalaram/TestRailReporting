@@ -48,13 +48,4 @@ public enum ProcessGroupEnum {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ",  pg)));
     }
-
-    public static String[] getReducedProcessGroup() {
-        return Stream.of(ProcessGroupEnum.values()).map(ProcessGroupEnum::getProcessGroup).filter(x -> !x.equals(ProcessGroupEnum.ASSEMBLY.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.ROLL_UP.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.COMPOSITES.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.WITHOUT_PG.getProcessGroup())
-                && !x.equals(ProcessGroupEnum.RESOURCES.getProcessGroup()))
-            .toArray(String[]::new);
-    }
 }
