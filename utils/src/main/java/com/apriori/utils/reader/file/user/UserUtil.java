@@ -44,7 +44,7 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser();
+        UserCredentials user = UserCommonService.getUser().generateToken();
         logInfo(user);
         return user;
     }
@@ -56,7 +56,7 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel);
+        UserCredentials user = UserSecurityService.getUser(accessLevel).generateToken();
         logInfo(user);
         return user;
     }
