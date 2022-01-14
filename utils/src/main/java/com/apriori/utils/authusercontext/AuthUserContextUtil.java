@@ -16,9 +16,15 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class AuthUserContextUtil {
 
-    public String getAuthUserContext() {
+    /**
+     * GET authorisation User Context from cds
+     *
+     * @param email - the email
+     * @return string
+     */
+    public String getAuthUserContext(String email) {
         RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
-            .formParams(new FormParams().use("email[EQ]", "cfrith@apriori.com"));
+            .formParams(new FormParams().use("email[EQ]", email));
 
         ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();
 
