@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.entity.response;
+package com.apriori.utils.applicationmetadata;
 
 import com.apriori.utils.http.enums.Schema;
 

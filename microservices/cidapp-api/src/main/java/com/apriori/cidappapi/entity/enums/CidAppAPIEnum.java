@@ -47,7 +47,6 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
         this.endpoint = endpoint;
     }
 
-
     @Override
     public String getEndpointString() {
         return endpoint;

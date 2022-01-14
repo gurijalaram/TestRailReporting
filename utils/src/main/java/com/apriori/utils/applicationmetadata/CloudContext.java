@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.entity.response;
+package com.apriori.utils.applicationmetadata;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

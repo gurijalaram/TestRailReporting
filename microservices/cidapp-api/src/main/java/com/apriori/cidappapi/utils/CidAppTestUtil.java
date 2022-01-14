@@ -8,8 +8,6 @@ import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
-import com.apriori.cidappapi.entity.response.ApplicationMetadata;
-import com.apriori.cidappapi.entity.response.CloudContext;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PeopleResponse;
@@ -473,34 +471,5 @@ public class CidAppTestUtil {
 
         ResponseWrapper<PeopleResponse> peopleResponse = HTTPRequest.build(requestEntity).get();
         return peopleResponse.getResponseEntity().getItems().get(0);
-    }
-
-    /**
-     * GET application metadata
-     *
-     * @param userCredentials - the user credentials
-     * @return application metadata object
-     */
-    public ResponseWrapper<ApplicationMetadata> getApplicationMetadata(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_APPLICATION_METADATA, ApplicationMetadata.class)
-            .token(getToken(userCredentials));
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * Gets Authorisation Target Cloud Context
-     *
-     * @param userCredentials - user credentials
-     * @return string
-     */
-    public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
-        String customerIdentity = cloudContextResponse.getCustomerIdentity();
-        String deploymentIdentity = cloudContextResponse.getDeploymentIdentity();
-        String installationIdentity = cloudContextResponse.getInstallationIdentity();
-        String applicationIdentity = cloudContextResponse.getApplicationIdentity();
-
-        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;
     }
 }
