@@ -1,4 +1,4 @@
-package com.apriori.cds.objects.response;
+package com.apriori.utils.authusercontext;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -18,11 +18,25 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Data
 @Builder
-public class UserSite {
+public class UserProfile {
     private String identity;
     private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private String siteIdentity;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
+    private String givenName;
+    private String familyName;
+    private String jobTitle;
+    private String department;
+    private String supervisor;
+    private String timezone;
+    private String townCity;
+    private String countryCode;
+    private String prefix;
+    private String suffix;
+    private String stateProvince;
+    private String county;
 }

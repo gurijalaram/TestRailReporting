@@ -1,4 +1,4 @@
-package com.apriori.cds.objects.response;
+package com.apriori.utils.authusercontext;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
