@@ -92,7 +92,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
 
     @Override
     protected void load() {
-
+        //Empty due to missed loading process
     }
 
     @Override

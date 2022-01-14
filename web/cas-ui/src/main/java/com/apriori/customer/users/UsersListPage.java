@@ -63,7 +63,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
 
     @Override
     protected void load() {
-
+        //Empty due to missed loading process
     }
 
     @Override
@@ -161,7 +161,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return new page object
      */
     public UserProfilePage selectUser(String customerIdentity, String userIdentity, String userName) {
-        findUser(customerIdentity, userIdentity, userName).click();
+        pageUtils.waitForElementAndClick(findUser(customerIdentity, userIdentity, userName));
         return new UserProfilePage(driver);
     }
 
@@ -207,7 +207,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return new page object
      */
     public UserProfilePage selectCard(String customerIdentity, String userIdentity) {
-        findCardUser(customerIdentity, userIdentity).click();
+        pageUtils.waitForElementAndClick(findCardUser(customerIdentity, userIdentity));
         return new UserProfilePage(driver);
     }
 

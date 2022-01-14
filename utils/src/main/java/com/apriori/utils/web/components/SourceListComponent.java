@@ -87,7 +87,10 @@ public final class SourceListComponent extends CommonComponent implements Compon
      */
     public SearchFieldComponent getSearch() {
         WebElement search = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_SEARCH_FIELD, PageUtils.DURATION_INSTANT, getRoot()));
-        return search == null ? null : new SearchFieldComponent(getDriver(), search);
+        if (search != null) {
+            return new SearchFieldComponent(getDriver(), search);
+        }
+        return null;
     }
 
     /**
@@ -97,7 +100,10 @@ public final class SourceListComponent extends CommonComponent implements Compon
      */
     public TableComponent getTable() {
         WebElement tableRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_TABLE, PageUtils.DURATION_SLOW, getRoot()));
-        return tableRoot == null ? null : new TableComponent(getDriver(), tableRoot);
+        if (tableRoot != null) {
+            return new TableComponent(getDriver(), tableRoot);
+        }
+        return null;
     }
 
     /**
@@ -107,7 +113,10 @@ public final class SourceListComponent extends CommonComponent implements Compon
      */
     public PaginatorComponent getPaginator() {
         WebElement paginatorRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_PAGINATOR, PageUtils.DURATION_FAST, getRoot()));
-        return paginatorRoot == null ? null : new PaginatorComponent(getDriver(), paginatorRoot);
+        if (paginatorRoot != null) {
+            return new PaginatorComponent(getDriver(), paginatorRoot);
+        }
+        return null;
     }
 
     /**
@@ -117,6 +126,9 @@ public final class SourceListComponent extends CommonComponent implements Compon
      */
     public CardsViewComponent getCardGrid() {
         WebElement cardGridRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_CARD_GRID, PageUtils.DURATION_SLOW, getRoot()));
-        return cardGridRoot == null ? null : new CardsViewComponent(getDriver(), cardGridRoot);
+        if (cardGridRoot != null) {
+            return new CardsViewComponent(getDriver(), cardGridRoot);
+        }
+        return null;
     }
 }

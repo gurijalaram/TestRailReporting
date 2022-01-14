@@ -43,7 +43,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
 
     @Override
     protected void load() {
-
+        //Empty due to missed loading process
     }
 
     @Override
