@@ -3,6 +3,7 @@ package com.apriori.utils.authusercontext;
 import com.apriori.utils.enums.AuthUserContextEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -16,10 +17,25 @@ import java.nio.charset.StandardCharsets;
 public class AuthUserContextUtil {
 
     public String getAuthUserContext() {
-        RequestEntity requestEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, User.class)
-            .inlineVariables("1EK3A4AD76G2");
+        RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
+            .formParams(new FormParams().use("email[EQ]", "cfrith@apriori.com"));
 
-        ResponseWrapper<User> response = HTTPRequest.build(requestEntity).get();
-        return new String(Base64.encodeBase64(new Gson().toJson(response.getResponseEntity()).getBytes()), StandardCharsets.UTF_8);
+        ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();
+
+        String identity = userResponse.getResponseEntity().getItems().get(0).getIdentity();
+
+        RequestEntity idEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT_BY_USERID, User.class)
+            .inlineVariables(identity);
+
+        ResponseWrapper<User> userIdResponse = HTTPRequest.build(idEntity).get();
+
+        //Get the actual [User] object and store it as bytes. At this point we don't want the root name [response] to be included
+        byte[] userIdBytes = new Gson().toJson(userIdResponse.getResponseEntity()).getBytes(StandardCharsets.UTF_8);
+
+        //Encode the previously stored object in Base64
+        byte[] encodedUserIdBytes = Base64.encodeBase64(userIdBytes);
+
+        //Repackage the object into a string format
+        return new String(encodedUserIdBytes);
     }
 }

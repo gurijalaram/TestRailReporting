@@ -5,7 +5,8 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum AuthUserContextEnum implements ExternalEndpointEnum {
     //USER
-    GET_AUTH_USER_CONTEXT("users/%s");
+    GET_AUTH_USER_CONTEXT_BY_USERID("users/%s"),
+    GET_AUTH_USER_CONTEXT("users/"),;
 
     private final String endpoint;
 
