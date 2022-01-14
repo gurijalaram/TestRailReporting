@@ -44,5 +44,6 @@ public class PropertyValueMap {
     private Double numSideCores;
     private Double averageThicknessDev;
     private Double min80Thickness;
+    private Double minStockLength;
     private String cadMaterialName;
 }

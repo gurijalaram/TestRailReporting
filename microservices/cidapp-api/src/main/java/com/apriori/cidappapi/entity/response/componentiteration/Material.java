@@ -49,4 +49,17 @@ public class Material {
     private Double tensileYieldStrength;
     private Double ultimateTensileStrength;
     private Double youngModulus;
+    private Double hexBarCostPerUnit;
+    private String hexBarCostUnits;
+    private Double plateCostPerUnit;
+    private String plateCostUnits;
+    private String rectangularBarCostUnits;
+    private Double rectangularBarCostPerUnit;
+    private Double roundBarCostPerUnit;
+    private String roundBarCostUnits;
+    private Double roundTubeCostPerUnit;
+    private String roundTubeCostUnits;
+    private Double squareBarCostPerUnit;
+    private String squareBarCostUnits;
+    private Double turningSpeed;
 }
