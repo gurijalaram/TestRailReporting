@@ -10,7 +10,6 @@ import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
-import com.evaluate.ReCostScenarioTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.UploadAssembliesTests;
@@ -45,7 +44,6 @@ import testsuites.suiteinterface.AdhocTests;
     CostScenarioTests.class,
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,
-    ReCostScenarioTests.class,
     SecondaryProcessTests.class,
     ChangeMaterialSelectionTests.class,
     MaterialStockTests.class,

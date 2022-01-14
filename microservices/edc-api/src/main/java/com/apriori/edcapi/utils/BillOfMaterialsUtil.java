@@ -1,7 +1,6 @@
 package com.apriori.edcapi.utils;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsItemsResponse;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
@@ -12,6 +11,7 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.token.TokenUtil;
 
 import org.apache.http.HttpStatus;
 
@@ -74,7 +74,8 @@ public class BillOfMaterialsUtil extends TestUtil {
     public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialByIdUi(final String identity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
-                .inlineVariables(identity).token(new JwtTokenUtil().retrieveJwtToken());
+                .inlineVariables(identity)
+                .token(new TokenUtil().getTokenAsString());
 
         return HTTPRequest.build(requestEntity).delete();
     }
