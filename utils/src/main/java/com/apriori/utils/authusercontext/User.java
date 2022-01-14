@@ -1,8 +1,9 @@
-package com.apriori.ats.entity.response;
+package com.apriori.utils.authusercontext;
 
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -13,23 +14,24 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-@Schema(location = "common/AtsAuthorizeSchema.json")
+@Schema(location = "UserSchema.json")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonRootName("response")
-@Builder
 @Data
-public class AuthorizationResponse {
-    private Boolean isSystemUser;
+@Builder
+@JsonRootName("response")
+public class User {
     private String identity;
     private String createdBy;
-    private String awsRole;
     private String userType;
     private UserProfile userProfile;
     private String email;
     private String username;
     private Boolean active;
+    private List<UserSite> sites;
     private CustomAttributes customAttributes;
     private String customerIdentity;
     private String updatedBy;

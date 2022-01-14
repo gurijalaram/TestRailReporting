@@ -1,9 +1,8 @@
-package com.apriori.ats.entity.response;
+package com.apriori.utils.authusercontext;
 
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonRootName;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -14,30 +13,30 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Schema(location = "common/AtsAuthorizeSchema.json")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonRootName("response")
-@Builder
 @Data
-public class AuthorizationResponse {
-    private Boolean isSystemUser;
+@Builder
+public class UserProfile {
     private String identity;
     private String createdBy;
-    private String awsRole;
-    private String userType;
-    private UserProfile userProfile;
-    private String email;
-    private String username;
-    private Boolean active;
-    private CustomAttributes customAttributes;
-    private String customerIdentity;
-    private String updatedBy;
-    private Boolean mfaRequired;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String givenName;
+    private String familyName;
+    private String jobTitle;
+    private String department;
+    private String supervisor;
+    private String timezone;
+    private String townCity;
+    private String countryCode;
+    private String prefix;
+    private String suffix;
+    private String stateProvince;
+    private String county;
 }
