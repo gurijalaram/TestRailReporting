@@ -1,6 +1,6 @@
 {
   "type": "object",
-  "required": [
+  "optional": [
     "response"
   ],
   "properties": {
