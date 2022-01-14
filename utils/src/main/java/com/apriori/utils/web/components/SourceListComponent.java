@@ -18,6 +18,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
     private static final By BY_PAGINATOR = By.className("paginator");
     private static final By BY_REFRESH = By.className("apriori-source-list-refresh-button");
     private static final By BY_LAYOUT_TABLE = By.className("apriori-source-list-layout-table-button");
+    private static final By BY_CARD_GRID = By.className("apriori-source-list-card-grid");
 
     /**
      * @inheritDoc
@@ -107,5 +108,15 @@ public final class SourceListComponent extends CommonComponent implements Compon
     public PaginatorComponent getPaginator() {
         WebElement paginatorRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_PAGINATOR, PageUtils.DURATION_FAST, getRoot()));
         return paginatorRoot == null ? null : new PaginatorComponent(getDriver(), paginatorRoot);
+    }
+
+    /**
+     * Gets the card grid component
+     *
+     * @return The card grid component. Returns null if this list is using a table list layout.
+     */
+    public CardsViewComponent getCardGrid() {
+        WebElement cardGridRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_CARD_GRID, PageUtils.DURATION_SLOW, getRoot()));
+        return cardGridRoot == null ? null : new CardsViewComponent(getDriver(), cardGridRoot);
     }
 }

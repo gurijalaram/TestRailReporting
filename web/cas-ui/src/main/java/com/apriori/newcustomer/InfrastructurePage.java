@@ -1,14 +1,12 @@
 package com.apriori.newcustomer;
 
 import com.apriori.common.ModalUserList;
+import com.apriori.common.UsersTableController;
 import com.apriori.customeradmin.NavToolbar;
-import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
 import com.apriori.utils.web.components.SourceListComponent;
-import com.apriori.utils.web.components.TableComponent;
-import com.apriori.utils.web.components.TableHeaderComponent;
 
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
@@ -29,10 +27,6 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
 
     @FindBy(xpath = "//div[contains(text(),'Please select infrastructure within the Tree View')]")
     private WebElement noContentMessage;
-
-    @FindBy(css = ".apriori-source-list-layout-table")
-    private WebElement applicationAccessControlsTableRoot;
-    private final SourceListComponent applicationAccessControlsTable;
 
     @FindBy(className = "application-grant-button")
     private WebElement grantFromListButton;
@@ -56,6 +50,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
     private ModalUserList modalUserList;
+    private UsersTableController usersTableController;
 
     public InfrastructurePage(WebDriver driver) {
         this.driver = driver;
@@ -64,8 +59,8 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
-        applicationAccessControlsTable = new SourceListComponent(driver, applicationAccessControlsTableRoot);
         modalUserList = new ModalUserList(driver);
+        usersTableController = new UsersTableController(driver);
     }
 
     @Override
@@ -134,37 +129,16 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return application access controls table
      */
     public SourceListComponent getApplicationAccessControlsTable() {
-        pageUtils.waitForCondition(applicationAccessControlsTable::isStable, pageUtils.DURATION_LOADING);
-        return applicationAccessControlsTable;
+        return usersTableController.getUsersTable();
     }
 
     /**
      * Validates that table has a correct columns
      *
-     * @param expectedName name of column
-     * @param id id of column
-     * @param soft soft assertions
      * @return This object
      */
     public InfrastructurePage validateAccessControlsTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft) {
-        SourceListComponent list = applicationAccessControlsTable;
-        TableComponent table = Obligation.mandatory(list::getTable, "The access controls table is missing");
-
-        TableHeaderComponent header = table.getHeader(id);
-        soft.assertThat(header)
-                .overridingErrorMessage("The '%s' column is missing.", expectedName)
-                .isNotNull();
-
-        if (header != null) {
-            String name = header.getName();
-            soft.assertThat(name)
-                    .overridingErrorMessage("The '%s' column is incorrectly named '%s'", expectedName, name)
-                    .isEqualTo(expectedName);
-            soft.assertThat(header.canSort())
-                    .overridingErrorMessage("The '%s' column is not sortable.")
-                    .isTrue();
-        }
-        return this;
+        return usersTableController.validateUsersTableHasCorrectColumns(expectedName, id, soft, InfrastructurePage.class);
     }
 
     /**

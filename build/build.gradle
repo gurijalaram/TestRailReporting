@@ -162,7 +162,7 @@ subprojects {
     //get all system properties
     test {
         systemProperties(System.getProperties())
-        useJUnitPlatform()
+ //       useJUnitPlatform()
     }
 
     //declare all dependencies
