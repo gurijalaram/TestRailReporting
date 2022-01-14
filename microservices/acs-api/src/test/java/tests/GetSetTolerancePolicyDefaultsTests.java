@@ -57,7 +57,7 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Category(AcsTest.class)
     @TestRail(testCaseId = "10556")
     @Description("Test Set Tolerance Policy Defaults")
-    public void testSetGetTolerancePolicyDefaults() {
+    public void testSetTolerancePolicyDefaults() {
         String username = UserUtil.getUser().getUsername();
         double totalRunoutOverrride = 0.1;
         String toleranceMode = "PARTOVERRIDE";
