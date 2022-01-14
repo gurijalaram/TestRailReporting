@@ -85,7 +85,7 @@ public class CdsTestUtil extends TestUtil {
      *
      * @param customerIdentity - the customer id
      * @param userName         - the username
-     * @param domain     - the customer name
+     * @param domain           - the customer name
      * @return new object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
@@ -185,7 +185,8 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplication.class)
             .inlineVariables(customerIdentity, siteIdentity)
-            .headers(new HashMap<String, String>() {{
+            .headers(new HashMap<String, String>() {
+                {
                     put("Content-Type", "application/json");
                 }
             })
@@ -347,7 +348,8 @@ public class CdsTestUtil extends TestUtil {
     public ResponseWrapper<IdentityProviderResponse> patchIdp(String customerIdentity, String idpIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity, idpIdentity)
-            .headers(new HashMap<String, String>() {{
+            .headers(new HashMap<String, String>() {
+                {
                     put("Content-Type", "application/json");
                 }
             })
