@@ -3,7 +3,6 @@ package com.apriori.cidappapi.utils;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -44,46 +43,28 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 public class CidAppTestUtil {
 
-    private String token = null;
-
-    /**
-     * POST new component
-     *
-     * @param componentName   - the part name
-     * @param scenarioName    - the scenario name
-     * @param resourceFile    - the process group
-     * @param userCredentials - the user credentials
-     * @return response object
-     */
-    public Item postCssComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-
-        return postCssComponent(componentName, scenarioName, resourceFile, getToken(userCredentials));
-    }
-
     /**
      * POST new component
      *
      * @param componentName - the part name
      * @param scenarioName  - the scenario name
-     * @return responsewrapper
+     * @return Item
      */
     public Item postCssComponent(String componentName, String scenarioName, String resourceFile, UserCredentials userCredentials) {
-        token = getToken(userCredentials);
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
                     .use("scenarioName", scenarioName))
-                .token(token);
+                .token(userCredentials.getToken());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return itemResponse.get(0);
     }
@@ -91,25 +72,27 @@ public class CidAppTestUtil {
     /**
      * POST new component
      *
-     * @param scenarioName  - the scenario name
-     * @param componentName - the part name
-     * @return responsewrapper
+     * @param componentName   - the part name
+     * @param scenarioName    - the scenario name
+     * @param resourceFile    - the resource file
+     * @param userCredentials - the user credentials
+     * @return Item
      */
-    public Item postCssComponent(String componentName, String scenarioName, File resourceFile, String token) {
+    public Item postCssComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
                     .use("scenarioName", scenarioName))
-                .token(token);
+                .token(userCredentials.getToken());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, token);
+        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return itemResponse.get(0);
     }
@@ -121,10 +104,10 @@ public class CidAppTestUtil {
      * @param scenarioName    - the scenario name
      * @param scenarioState   - the scenario state
      * @param userCredentials - user credentials
-     * @return response object
+     * @return list of Item
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
-        return new UncostedComponents().getCssComponent(componentName, scenarioName, getToken(userCredentials), scenarioState);
+        return new UncostedComponents().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
     }
 
     /**
@@ -207,7 +190,7 @@ public class CidAppTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
-                .token(getToken(userCredentials));
+                .token(userCredentials.getToken());
 
         long START_TIME = System.currentTimeMillis() / 1000;
         final long POLLING_INTERVAL = 5L;
@@ -255,7 +238,7 @@ public class CidAppTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentName, scenarioName)
-                .token(getToken(userCredentials))
+                .token(userCredentials.getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
@@ -312,7 +295,7 @@ public class CidAppTestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentName, scenarioName)
-                .token(getToken(scenarioRepresentationBuilder.getUser()))
+                .token(scenarioRepresentationBuilder.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
@@ -321,16 +304,6 @@ public class CidAppTestUtil {
         return scenarioRepresentation;
     }
 
-
-    /**
-     * GET token
-     *
-     * @param userCredentials - the user credentials
-     * @return string
-     */
-    private String getToken(UserCredentials userCredentials) {
-        return token = userCredentials == null ? new JwtTokenUtil().retrieveJwtToken() : new JwtTokenUtil(userCredentials).retrieveJwtToken();
-    }
 
     /**
      * POST to cost a component
@@ -380,7 +353,7 @@ public class CidAppTestUtil {
     public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(getToken(componentInfoBuilder.getUser()))
+                .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("costingInputs",
                     CostRequest.builder()
@@ -404,7 +377,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfoBuilder) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .token(getToken(componentInfoBuilder.getUser()))
+                .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId());
 
         return HTTPRequest.build(requestEntity).get();
@@ -428,7 +401,7 @@ public class CidAppTestUtil {
     private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
-                .token(getToken(componentInfoBuilder.getUser()))
+                .token(componentInfoBuilder.getUser().getToken())
                 .body("costingTemplate", CostRequest.builder()
                     .processGroup(componentInfoBuilder.getProcessGroup().getProcessGroup())
                     .digitalFactory(componentInfoBuilder.getDigitalFactory())
@@ -457,7 +430,7 @@ public class CidAppTestUtil {
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
-                .token(getToken(userCredentials))
+                .token(userCredentials.getToken())
                 .inlineVariables(componentId, scenarioId)
                 .body("scenario", PublishRequest.builder()
                     .assignedTo(getCurrentUser(userCredentials).getIdentity())
@@ -479,7 +452,7 @@ public class CidAppTestUtil {
      */
     private User getCurrentUser(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_USER, User.class)
-            .token(getToken(userCredentials));
+            .token(userCredentials.getToken());
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
         return userResponse.getResponseEntity();
@@ -493,7 +466,7 @@ public class CidAppTestUtil {
      */
     public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_PERSON, PeopleResponse.class)
-            .token(getToken(userCredentials))
+            .token(userCredentials.getToken())
             .inlineVariables(userCredentials.getUsername());
 
         ResponseWrapper<PeopleResponse> peopleResponse = HTTPRequest.build(requestEntity).get();
