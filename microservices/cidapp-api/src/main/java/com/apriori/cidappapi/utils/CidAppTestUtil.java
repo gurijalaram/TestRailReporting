@@ -320,9 +320,9 @@ public class CidAppTestUtil {
                     CostRequest.builder().annualVolume(5500)
                         .batchSize(458)
                         .materialName("Aluminum, Stock, ANSI 1050A")
-                        .processGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
+                        .processGroupName(ProcessGroupEnum.SHEET_METAL.getProcessGroup())
                         .productionLife(5.0)
-                        .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
+                        .digitalFactory(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
                         .build()
                 );
 
@@ -403,8 +403,8 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .body("costingTemplate", CostRequest.builder()
-                    .processGroup(componentInfoBuilder.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfoBuilder.getDigitalFactory())
+                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
                     .materialMode(componentInfoBuilder.getMode().toUpperCase())
                     .materialName(componentInfoBuilder.getMaterial())
                     .annualVolume(5500)
