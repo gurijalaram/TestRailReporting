@@ -73,7 +73,7 @@ public class UserCredentials {
     }
 
     public UserCredentials generateToken() {
-        this.token = new AuthorizationUtil(getUsername(), getEmail()).getToken()
+        this.token = token != null ? token : new AuthorizationUtil(getUsername(), getEmail()).getToken()
             .getResponseEntity()
             .getToken();
         return this;
@@ -84,7 +84,7 @@ public class UserCredentials {
     }
 
     public UserCredentials generateCloudContext() {
-        this.cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(this);
+        this.cloudContext = cloudContext != null ? cloudContext : new AuthorizationUtil().getAuthTargetCloudContext(this);
         return this;
     }
 }
