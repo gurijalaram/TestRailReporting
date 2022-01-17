@@ -171,7 +171,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return new page object
      */
     public NewUserPage clickNew() {
-        pageUtils.waitForElementToAppear(newUserButton).click();
+        pageUtils.waitForElementAndClick(newUserButton);
         return new NewUserPage(driver);
     }
 
