@@ -83,7 +83,6 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      */
     public CustomerProfilePage(WebDriver driver) {
         super(driver, log);
-        this.customerTypeSelectField = new SelectFieldComponent(driver, customerTypeDropdown);
     }
 
     /**
