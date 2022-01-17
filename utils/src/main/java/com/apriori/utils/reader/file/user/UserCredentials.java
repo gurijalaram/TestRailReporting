@@ -73,7 +73,7 @@ public class UserCredentials {
     }
 
     public UserCredentials generateToken() {
-        this.token = token != null ? token : new AuthorizationUtil(getUsername(), getEmail()).getToken()
+        this.token = token != null ? token : new AuthorizationUtil(this).getToken()
             .getResponseEntity()
             .getToken();
         return this;

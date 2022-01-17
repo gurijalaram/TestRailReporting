@@ -23,11 +23,6 @@ public class AuthorizationUtil {
         this.email = userCredentials.getEmail();
     }
 
-    public AuthorizationUtil(String username, String email) {
-        this.username = username;
-        this.email = email;
-    }
-
     public AuthorizationUtil() {
     }
 
