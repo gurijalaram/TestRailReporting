@@ -2,7 +2,6 @@ package com.apriori.utils;
 
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.Item;
@@ -11,6 +10,8 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -35,8 +36,8 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, String token) {
-        return getCssComponent(componentName, scenarioName, token, ScenarioStateEnum.NOT_COSTED);
+    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return getCssComponent(componentName, scenarioName, userCredentials, ScenarioStateEnum.NOT_COSTED);
     }
 
     /**
@@ -47,7 +48,8 @@ public class UncostedComponents {
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
-        return getCssComponent(componentName, scenarioName, new JwtTokenUtil().retrieveJwtToken(), ScenarioStateEnum.NOT_COSTED);
+        // TODO: 12/01/2022 cn - UserUtil here needs to be reviewed before its used in sds tests
+        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), ScenarioStateEnum.NOT_COSTED);
     }
 
     /**
@@ -57,12 +59,12 @@ public class UncostedComponents {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, String token, ScenarioStateEnum scenarioState) {
+    public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
         final int SOCKET_TIMEOUT = 270000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(token)
+            .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;

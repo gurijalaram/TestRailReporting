@@ -1,11 +1,11 @@
 package com.apriori.fms.tests;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -21,7 +21,7 @@ public class FileManagementControllerTest extends TestUtil {
 
     @BeforeClass
     public static void getAuthorizationToken() {
-        token = new JwtTokenUtil().retrieveJwtToken();
+        token = new TokenUtil().getTokenAsString();
     }
 
     @Test
