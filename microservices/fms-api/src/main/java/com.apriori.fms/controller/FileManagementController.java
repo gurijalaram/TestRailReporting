@@ -4,7 +4,6 @@ import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.fms.entity.response.FilesResponse;
 import com.apriori.fms.enums.FMSAPIEnum;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.applicationmetadata.ApplicationMetadataUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -50,7 +49,7 @@ public class FileManagementController {
     private static Map<String, String> initHeaders(UserCredentials userCredentials, boolean addMultiPartFile) {
         Map<String, String> headers = new HashMap<String, String>() {{
                 put("Authorization", "Bearer " + userCredentials.getToken());
-                put("ap-cloud-context", new ApplicationMetadataUtil().getAuthTargetCloudContext(userCredentials));
+                put("ap-cloud-context", userCredentials.getCloudContext());
             }};
 
         if (addMultiPartFile) {
