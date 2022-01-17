@@ -5,12 +5,10 @@ import com.apriori.utils.token.TokenUtil;
 public class UserCredentials {
 
     private String email;
-
     private String password;
-
     private String token;
-
     private String username;
+    private String cloudContext;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -78,6 +76,15 @@ public class UserCredentials {
         this.token = new TokenUtil(getUsername(), getEmail()).getToken()
             .getResponseEntity()
             .getToken();
+        return this;
+    }
+
+    public String getCloudContext() {
+        return cloudContext;
+    }
+
+    public UserCredentials generateCloudContext() {
+        this.cloudContext = new TokenUtil().getAuthTargetCloudContext(this);
         return this;
     }
 }
