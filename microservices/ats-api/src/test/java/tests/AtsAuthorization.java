@@ -1,14 +1,15 @@
 package tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.applicationmetadata.ApplicationMetadataUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -23,22 +24,24 @@ public class AtsAuthorization extends TestUtil {
 
     @Test
     @TestRail(testCaseId = {"3581"})
-    @Description("Retrieve a JWT from the ATS Token endpoint")
-    public void getToken() {
+    @Description("Generate a JWT from the ATS Token endpoint")
+    public void generateTokenTest() {
         ResponseWrapper<Token> response = new TokenUtil().getToken();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));
     }
 
     @Test
     @TestRail(testCaseId = {"3913"})
     @Description("Authorize a user to access a specified application")
-    public void authorizeUser() {
+    public void authorizeUserTest() {
         final UserCredentials userCredentials = UserUtil.getUser();
 
         ResponseWrapper<AuthorizationResponse> response = AuthorizeUserUtil.authorizeUser(
-            new ApplicationMetadataUtil().getAuthTargetCloudContext(userCredentials), userCredentials.getToken());
+            userCredentials.getCloudContext(), userCredentials.getToken());
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(response.getResponseEntity().getEmail(), is(equalTo(userCredentials.getEmail())));
     }
 }
