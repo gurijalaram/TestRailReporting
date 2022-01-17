@@ -10,11 +10,11 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.ats.entity.response.AuthorizationResponse;
 import com.apriori.ats.utils.AuthorizeUserUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
+import com.apriori.utils.authorization.Token;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.token.Token;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -26,7 +26,7 @@ public class AtsAuthorization extends TestUtil {
     @TestRail(testCaseId = {"3581"})
     @Description("Generate a JWT from the ATS Token endpoint")
     public void generateTokenTest() {
-        ResponseWrapper<Token> response = new TokenUtil().getToken();
+        ResponseWrapper<Token> response = new AuthorizationUtil().getToken();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getToken(), is(not(emptyString())));

@@ -1,4 +1,4 @@
-package com.apriori.utils.applicationmetadata;
+package com.apriori.utils.authorization;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

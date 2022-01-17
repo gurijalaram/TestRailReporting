@@ -4,11 +4,11 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.utils.applicationmetadata.ApplicationMetadata;
+import com.apriori.utils.authorization.ApplicationMetadata;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -21,7 +21,7 @@ public class ApplicationMetadataTest {
     public void getApplicationMetadata() {
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ResponseWrapper<ApplicationMetadata> applicationMetadataUtil = new TokenUtil().getApplicationMetadata(currentUser);
+        ResponseWrapper<ApplicationMetadata> applicationMetadataUtil = new AuthorizationUtil().getApplicationMetadata(currentUser);
 
         assertThat(applicationMetadataUtil.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

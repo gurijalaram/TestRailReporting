@@ -1,7 +1,5 @@
-package com.apriori.utils.token;
+package com.apriori.utils.authorization;
 
-import com.apriori.utils.applicationmetadata.ApplicationMetadata;
-import com.apriori.utils.applicationmetadata.CloudContext;
 import com.apriori.utils.enums.ApplicationMetadataEnum;
 import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -14,23 +12,23 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class TokenUtil {
+public class AuthorizationUtil {
     private String username = PropertiesContext.get("${env}.ats.token_username");
     private String email = PropertiesContext.get("${env}.ats.token_email");
     private String issuer = PropertiesContext.get("${env}.ats.token_issuer");
     private String subject = PropertiesContext.get("${customer}.token_subject");
 
-    public TokenUtil(UserCredentials userCredentials) {
+    public AuthorizationUtil(UserCredentials userCredentials) {
         this.username = userCredentials.getUsername();
         this.email = userCredentials.getEmail();
     }
 
-    public TokenUtil(String username, String email) {
+    public AuthorizationUtil(String username, String email) {
         this.username = username;
         this.email = email;
     }
 
-    public TokenUtil() {
+    public AuthorizationUtil() {
     }
 
     /**

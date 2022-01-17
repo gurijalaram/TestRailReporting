@@ -1,6 +1,6 @@
 package com.apriori.utils.reader.file.user;
 
-import com.apriori.utils.token.TokenUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 
 public class UserCredentials {
 
@@ -73,7 +73,7 @@ public class UserCredentials {
     }
 
     public UserCredentials generateToken() {
-        this.token = new TokenUtil(getUsername(), getEmail()).getToken()
+        this.token = new AuthorizationUtil(getUsername(), getEmail()).getToken()
             .getResponseEntity()
             .getToken();
         return this;
@@ -84,7 +84,7 @@ public class UserCredentials {
     }
 
     public UserCredentials generateCloudContext() {
-        this.cloudContext = new TokenUtil().getAuthTargetCloudContext(this);
+        this.cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(this);
         return this;
     }
 }
