@@ -9,7 +9,6 @@ import static org.hamcrest.Matchers.not;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.entity.response.Site;
@@ -20,6 +19,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -34,7 +34,7 @@ public class CasSitesTests {
 
     @Before
     public void getToken() {
-        token = new JwtTokenUtil().retrieveJwtToken();
+        token = new TokenUtil().getTokenAsString();
     }
 
     @Test

@@ -3,7 +3,6 @@ package com.apriori.cas.utils;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
@@ -27,6 +26,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.token.TokenUtil;
 
 import java.io.File;
 import java.time.LocalDateTime;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CasTestUtil extends TestUtil {
-    private static final String token = new JwtTokenUtil().retrieveJwtToken();
+    private static final String token = new TokenUtil().getTokenAsString();
 
     /**
      * Gets the special customer "aPriori Internal"

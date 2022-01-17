@@ -27,7 +27,7 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-new-dropdown']")
     private WebElement newButton;
 
-    @FindBy(css = "[id='qa-sub-header-import-dropdown'")
+    @FindBy(css = "[id='qa-sub-header-import-dropdown']")
     private WebElement importButton;
 
     @FindBy(css = "[id='qa-sub-header-import-component']")

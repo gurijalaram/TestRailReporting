@@ -1,5 +1,6 @@
 package com.apriori.customer.users.profile;
 
+import com.apriori.customer.users.UsersListPage;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
@@ -73,6 +74,9 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     @FindBy(xpath = "//button[.='Reset MFA']")
     private WebElement resetMfaButton;
 
+    @FindBy(linkText = "< Back to User List Page")
+    private WebElement backToUsersListPage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
@@ -88,7 +92,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
 
     @Override
     protected void load() {
-
+        //Empty due to missed loading process
     }
 
     @Override
@@ -355,5 +359,15 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     public NewUserPage resetMfa() {
         pageUtils.waitForElementAndClick(resetMfaButton);
         return this;
+    }
+
+    /**
+     * Opens customer staff page
+     *
+     * @return new page object
+     */
+    public UsersListPage backToUsersListPage() {
+        pageUtils.waitForElementAndClick(backToUsersListPage);
+        return new UsersListPage(driver);
     }
 }
