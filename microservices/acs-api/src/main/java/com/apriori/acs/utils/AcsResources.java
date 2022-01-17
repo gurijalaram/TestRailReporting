@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInp
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
+import com.apriori.acs.entity.response.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsResponse;
@@ -311,5 +312,41 @@ public class AcsResources {
                 .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
+    }
+
+    /**
+     * Gets Production Defaults
+     *
+     * @param username - String of username to use
+     * @return GetProductionDefaultsResponse instance - response from API
+     */
+    public GetProductionDefaultsResponse getProductionDefaults(String username) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
+                .headers(token)
+                .inlineVariables(username);
+
+        return (GetProductionDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Production Defaults
+     *
+     * @param invalidUsername - invalid username for negative test
+     * @return GetProductionDefaultsResponse instance - response from API
+     */
+    public String getProductionDefaultsInvalidUsername(String invalidUsername) {
+        token.put(contentType, applicationJson);
+
+        String username = invalidUsername.isEmpty() ? UserUtil.getUser().getUsername() : invalidUsername;
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_PRODUCTION_DEFAULTS, null)
+                .headers(token)
+                .inlineVariables(username);
+
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 }
