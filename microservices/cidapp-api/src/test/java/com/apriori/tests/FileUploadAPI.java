@@ -5,7 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
@@ -30,7 +30,7 @@ import java.util.List;
 @RunWith(JUnitParamsRunner.class)
 public class FileUploadAPI {
 
-    final private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    final private ComponentsUtil componentsUtil = new ComponentsUtil();
     final private ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
@@ -46,7 +46,7 @@ public class FileUploadAPI {
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

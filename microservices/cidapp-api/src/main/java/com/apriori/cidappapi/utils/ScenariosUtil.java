@@ -198,14 +198,14 @@ public class ScenariosUtil {
                 .body("costingInputs",
                     CostRequest.builder()
                         .costingTemplateIdentity(
-                            new CidAppTestUtil().getCostingTemplateId(componentInfoBuilder)
+                            new ComponentsUtil().getCostingTemplateId(componentInfoBuilder)
                                 .getIdentity())
                         .deleteTemplateAfterUse(true)
                         .build());
 
         HTTPRequest.build(requestEntity).post();
 
-        return new CidAppTestUtil().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
+        return new ComponentsUtil().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
     }
 
     /**

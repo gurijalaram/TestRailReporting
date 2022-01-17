@@ -31,7 +31,7 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
-public class CidAppTestUtil {
+public class ComponentsUtil {
 
     /**
      * POST new component

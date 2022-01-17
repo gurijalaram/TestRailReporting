@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -20,7 +20,7 @@ import org.junit.Test;
 
 public class ComponentsControllerTests {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private UserCredentials currentUser;
 
     @Test
@@ -29,7 +29,7 @@ public class ComponentsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
     }
 
     @Test
@@ -37,9 +37,9 @@ public class ComponentsControllerTests {
     public void getComponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
 
-        ResponseWrapper<GetComponentResponse> getComponentResponse = cidAppTestUtil.getComponents();
+        ResponseWrapper<GetComponentResponse> getComponentResponse = componentsUtil.getComponents();
 
         assertThat(getComponentResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(getComponentResponse.getResponseEntity().getItems().size(), is(greaterThan(0)));
@@ -50,11 +50,11 @@ public class ComponentsControllerTests {
     public void getComponentIdentity() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
 
-        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = cidAppTestUtil.getComponentIdentity(componentIdentity);
+        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = componentsUtil.getComponentIdentity(componentIdentity);
 
         assertThat(componentIdentityResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIdentityResponse.getResponseEntity().getIdentity(), is(equalTo(componentIdentity)));
