@@ -15,10 +15,10 @@ public class CustomizationUtil {
      *
      * @return customizations object
      */
-    public ResponseWrapper<Customizations> getCustomizations(UserCredentials user) {
+    public ResponseWrapper<Customizations> getCustomizations(UserCredentials userCredentials) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_CUSTOMIZATIONS, Customizations.class)
-                .token(user.getToken());
+                .token(userCredentials.getToken());
 
         return HTTPRequest.build(requestEntity).get();
     }
