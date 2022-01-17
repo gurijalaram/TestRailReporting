@@ -13,7 +13,6 @@ import com.apriori.cds.objects.response.InstallationItems;
 import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
-import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.login.CasLoginPage;
@@ -41,7 +40,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -58,7 +56,6 @@ public class AccessControlsApplicationTests extends TestBase {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private InfrastructurePage infrastructurePage;
     private Customer targetCustomer;
-    private Customer aprioriInternal;
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
@@ -68,20 +65,12 @@ public class AccessControlsApplicationTests extends TestBase {
     @Before
     public void setup() {
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", APP_CONTROLS_CUSTOMER);
-        Map<String, Object> existingUsers = Collections.singletonMap("username[CN]", STAFF_TEST_USER);
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "\\S+@".concat(APP_CONTROLS_CUSTOMER);
 
         cdsTestUtil = new CdsTestUtil();
-        aprioriInternal = cdsTestUtil.getAprioriInternal();
-        sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
-                CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID,
-                Users.class,
-                existingUsers,
-                Collections.emptyMap(),
-                aprioriInternal.getIdentity()
-        ));
+
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
                 ? cdsTestUtil.addCustomer(APP_CONTROLS_CUSTOMER, now, salesforce, email).getResponseEntity()
@@ -90,7 +79,7 @@ public class AccessControlsApplicationTests extends TestBase {
         customerIdentity = targetCustomer.getIdentity();
         customerName = targetCustomer.getName();
         userCreation = new UserCreation();
-        userCreation.populateStaffTestUsers(21, customerIdentity, customerName);
+        sourceUsers = userCreation.populateStaffTestUsers(21, customerIdentity, customerName);
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
