@@ -10,6 +10,7 @@ import com.apriori.cidappapi.entity.response.componentiteration.ComponentIterati
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -26,7 +27,8 @@ import java.util.stream.Collectors;
 
 public class ComponentImageTests {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private UserCredentials currentUser;
 
     @Test
@@ -41,16 +43,16 @@ public class ComponentImageTests {
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
-        ResponseWrapper<ScenarioResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = cidAppTestUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ImageResponse> imageResponse = cidAppTestUtil.getHoopsImage(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ImageResponse> imageResponse = scenariosUtil.getHoopsImage(componentIdentity, scenarioIdentity);
         assertThat(imageResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
@@ -70,13 +72,13 @@ public class ComponentImageTests {
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
-        ResponseWrapper<ScenarioResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = cidAppTestUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
@@ -96,13 +98,13 @@ public class ComponentImageTests {
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
-        ResponseWrapper<ScenarioResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = cidAppTestUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);

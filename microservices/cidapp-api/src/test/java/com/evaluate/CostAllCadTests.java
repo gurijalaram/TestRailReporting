@@ -11,6 +11,8 @@ import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenar
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.IterationsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -31,6 +33,8 @@ import java.io.File;
 public class CostAllCadTests {
 
     private final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private final IterationsUtil iterationsUtil = new IterationsUtil();
 
     @Test
     @Category(SmokeTests.class)
@@ -46,7 +50,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cidAppTestUtil.postCostScenario(
+        scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -58,7 +62,7 @@ public class CostAllCadTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
+        ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(
             ComponentInfoBuilder.builder()
                 .componentId(componentResponse.getComponentIdentity())
                 .scenarioId(componentResponse.getScenarioIdentity())
@@ -190,7 +194,7 @@ public class CostAllCadTests {
 
         Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cidAppTestUtil.postCostScenario(
+        scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -202,7 +206,7 @@ public class CostAllCadTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = cidAppTestUtil.getScenarioRepresentation(
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(
             ScenarioRepresentationBuilder.builder()
                 .item(componentResponse)
                 .user(currentUser)
