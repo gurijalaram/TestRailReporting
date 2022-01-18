@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
-import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -80,9 +79,10 @@ public class CostAllCadTests {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
         String filename  = "oldham.asm.1";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "OLDHAM";
         currentUser = UserUtil.getUser();
-        File resourceFile = FileResourceUtil.getResourceAsFile(filename);
+        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
         Item postComponentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
         String componentIdentity = postComponentResponse.getComponentIdentity();
@@ -91,20 +91,19 @@ public class CostAllCadTests {
         cidAppTestUtil.postCopyScenario(
             ComponentInfoBuilder.builder()
             .componentName(componentName)
-            .scenarioName(scenarioName)
+            .scenarioName(newScenarioName)
             .componentId(componentIdentity)
             .scenarioId(scenarioIdentity)
             .user(currentUser)
             .build());
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(
-            ComponentInfoBuilder.builder()
-                .componentId(componentIdentity)
-                .scenarioId(scenarioIdentity)
+        ResponseWrapper<ScenarioResponse> componentIterationResponse = cidAppTestUtil.getScenarioRepresentation(
+           ScenarioRepresentationBuilder.builder()
+               .item(postComponentResponse)
             .user(currentUser)
             .build());
 
-        AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
+       assertThat(componentIterationResponse.getResponseEntity().getScenarioName(), is(equalTo(newScenarioName)));
     }
 
     @Test

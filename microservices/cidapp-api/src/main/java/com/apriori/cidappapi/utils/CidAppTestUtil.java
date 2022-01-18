@@ -17,7 +17,6 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidappapi.entity.response.scenarios.CopyScenarioResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
@@ -375,14 +374,12 @@ public class CidAppTestUtil {
             RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
             .token(componentInfoBuilder.getUser().getToken())
             .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
-            .body("scenarioName",
+            .body("scenario",
                 ScenarioRequest.builder()
                     .scenarioName(componentInfoBuilder.getScenarioName())
                     .build());
 
         return HTTPRequest.build(requestEntity).post();
-
-        //return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.NOT_COSTED, componentInfoBuilder.getUser());
     }
 
     /**
