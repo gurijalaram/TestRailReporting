@@ -1,10 +1,11 @@
 package com.apriori.customer.users.profile;
 
 import com.apriori.customer.users.UsersListPage;
-import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
 
+import org.assertj.core.api.SoftAssertions;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,6 +13,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class NewUserPage extends LoadableComponent<NewUserPage> {
 
@@ -26,37 +29,43 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     @FindBy(css = "input[type='checkbox']")
     private WebElement activeCheckbox;
 
-    @FindBy(css = "input[type='givenName']")
+    @FindBy(css = "input[name='userProfile.givenName']")
     private WebElement givenNameInput;
 
-    @FindBy(css = "input[type='familyName']")
+    @FindBy(xpath = "//input[@name='userProfile.givenName']/following-sibling::span[@class='invalid-feedback']")
+    private WebElement givenNameFeedback;
+
+    @FindBy(css = "input[name='userProfile.familyName']")
     private WebElement familyNameInput;
 
-    @FindBy(css = "input[type='prefix']")
+    @FindBy(xpath = "//input[@name='userProfile.familyName']/following-sibling::span[@class='invalid-feedback']")
+    private WebElement familyNameFeedback;
+
+    @FindBy(css = "input[name='userProfile.prefix']")
     private WebElement namePrefixInput;
 
-    @FindBy(css = "input[type='suffix']")
+    @FindBy(css = "input[name='userProfile.suffix']")
     private WebElement nameSuffixInput;
 
-    @FindBy(css = "input[type='jobTitle']")
+    @FindBy(css = "input[name='userProfile.jobTitle']")
     private WebElement jobTitleInput;
 
-    @FindBy(css = "input[type='department']")
+    @FindBy(css = "input[name='userProfile.department']")
     private WebElement deptInput;
 
-    @FindBy(css = "input[type='townCity']")
+    @FindBy(css = "input[name='userProfile.townCity']")
     private WebElement townCityInput;
 
     @FindBy(css = "select[name='stateProvince']")
     private WebElement stateProvDropdown;
 
-    @FindBy(css = "input[type='county']")
+    @FindBy(css = "input[name='userProfile.county']")
     private WebElement countyInput;
 
-    @FindBy(css = "select[name='countryCode']")
+    @FindBy(css = "select[name='userProfile.countryCode']")
     private WebElement countyCodeDropdown;
 
-    @FindBy(css = "select[name='timezone']")
+    @FindBy(css = "select[name='userProfile.timezone']")
     private WebElement timeZoneDropdown;
 
     @FindBy(css = "select[class='form-control form-control-sm']")
@@ -106,19 +115,13 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param email - email
      * @param givenName - given name
      * @param familyName - family name
-     * @param jobTitle - job title
-     * @param countryCode - county code
-     * @param timezone - time zone
      * @return current page object
      */
-    public NewUserPage formFillNewUserDetails(String userName, String email, String givenName, String familyName, String jobTitle, String countryCode, String timezone) {
+    public NewUserPage formFillNewUserDetails(String userName, String email, String givenName, String familyName) {
         inputUserName(userName)
             .inputEmail(email)
             .inputGivenName(givenName)
-            .inputFamilyName(familyName)
-            .inputJobTitle(jobTitle)
-            .selectCountryCode(countryCode)
-            .selectTimezone(timezone);
+            .inputFamilyName(familyName);
         return this;
     }
 
@@ -163,7 +166,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param userName - user name
      * @return current page object
      */
-    private NewUserPage inputUserName(String userName) {
+    public NewUserPage inputUserName(String userName) {
         pageUtils.waitForElementToAppear(usernameInput).clear();
         usernameInput.sendKeys(userName);
         return this;
@@ -175,7 +178,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param email - email
      * @return current page object
      */
-    private NewUserPage inputEmail(String email) {
+    public NewUserPage inputEmail(String email) {
         pageUtils.waitForElementToAppear(emailInput).clear();
         emailInput.sendKeys(email);
         return this;
@@ -336,9 +339,9 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      *
      * @return new page object
      */
-    public CustomerAdminPage save() {
+    public <T> T save(Class<T> klass) {
         pageUtils.waitForElementAndClick(saveButton);
-        return new CustomerAdminPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -369,5 +372,39 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     public UsersListPage backToUsersListPage() {
         pageUtils.waitForElementAndClick(backToUsersListPage);
         return new UsersListPage(driver);
+    }
+
+    /**
+     * Validates that appropriate field is displayed
+     *
+     * @param label - name of field
+     * @param soft - soft assertion
+     * @return this object
+     */
+    public NewUserPage testNewUserLabelAvailable(String label, SoftAssertions soft) {
+        List<WebElement> elements = driver.findElements(By.xpath(String.format("//span[.='%s']", label)));
+        soft.assertThat(elements.size())
+                .overridingErrorMessage(String.format("Could not find the label, %s", label))
+                .isGreaterThan(0);
+
+        return this;
+    }
+
+    /**
+     * Gets error message for Given Name field
+     *
+     * @return string
+     */
+    public String getGivenNameFeedback() {
+        return this.givenNameFeedback.getAttribute("textContent");
+    }
+
+    /**
+     * Gets error message for Family Name field
+     *
+     * @return string
+     */
+    public String getFamilyNameFeedback() {
+        return this.familyNameFeedback.getAttribute("textContent");
     }
 }
