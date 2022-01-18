@@ -6,7 +6,6 @@ import com.compare.ComparisonTests;
 import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
-import com.evaluate.ListProcessGroupTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
 import com.evaluate.PublishExistingCostedTests;
@@ -43,7 +42,6 @@ import testsuites.suiteinterface.AdhocTests;
 @Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,
-    ListProcessGroupTests.class,
     NewScenarioNameTests.class,
     ProcessGroupsTests.class,
     SecondaryProcessTests.class,
