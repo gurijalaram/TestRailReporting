@@ -51,8 +51,6 @@ public class ScenarioResponse {
     private Boolean systemLocked;
     private String updatedBy;
     private String updatedByName;
-
-    @JsonProperty("permissions")
     private List<Permissions> permissions;
 
     @JsonSerialize(using = ToStringSerializer.class)

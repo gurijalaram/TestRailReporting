@@ -8,15 +8,17 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Schema(location = "ScenarioUpdate.json")
+@Schema(location = "CopyScenario.json")
 @Data
+@Builder
 @JsonRootName(value = "response")
-public class ScenarioUpdateResponse {
+public class CopyScenarioResponse {
 
     private String createdBy;
     private String createdByName;
@@ -32,8 +34,6 @@ public class ScenarioUpdateResponse {
     private String scenarioState;
     private String scenarioType;
     private Boolean systemLocked;
-
-    @JsonProperty("permissions")
     private List<Permissions> permissions;
 
     @JsonSerialize(using = ToStringSerializer.class)

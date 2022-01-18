@@ -17,9 +17,9 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
+import com.apriori.cidappapi.entity.response.scenarios.CopyScenarioResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioUpdateResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
@@ -370,18 +370,19 @@ public class CidAppTestUtil {
         return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
     }
 
-    public ResponseWrapper<ScenarioResponse> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioResponse.class)
-            .token(getToken(componentInfoBuilder.getUser()))
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            .token(componentInfoBuilder.getUser().getToken())
             .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
             .body("scenarioName",
                 ScenarioRequest.builder()
-                    .scenarioName("InitialPart.asm")
+                    .scenarioName(componentInfoBuilder.getScenarioName())
                     .build());
 
-
         return HTTPRequest.build(requestEntity).post();
+
+        //return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.NOT_COSTED, componentInfoBuilder.getUser());
     }
 
     /**
