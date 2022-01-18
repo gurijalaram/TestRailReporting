@@ -5,9 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
@@ -58,7 +58,7 @@ public class GetSetDisplayUnitsTests {
         String currencyCodeToCheck = getDisplayUnitsResponse.getCurrencyCode().equals(CurrencyEnum.USD.getCurrency())
                 ? CurrencyEnum.GBP.getCurrency() : CurrencyEnum.USD.getCurrency();
 
-        SetDisplayUnitsResponse setDisplayUnitsResponse = acsResources
+        GenericResourceCreatedResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
                         .currencyCode(currencyCodeToCheck)
                         .currencyLabel(getDisplayUnitsResponse.getCurrencyLabel())
@@ -76,7 +76,6 @@ public class GetSetDisplayUnitsTests {
                                 .build())
                 .build());
 
-        assertThat(setDisplayUnitsResponse, is(notNullValue()));
         assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
 
         GetDisplayUnitsResponse getDisplayUnitsResponsePostChanges = acsResources.getDisplayUnits();
@@ -96,7 +95,7 @@ public class GetSetDisplayUnitsTests {
         String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg")
                 ? "lb" : "kg";
 
-        SetDisplayUnitsResponse setDisplayUnitsResponse = acsResources
+        GenericResourceCreatedResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
                         .currencyCode(getDisplayUnitsResponse.getCurrencyCode())
                         .currencyLabel(getDisplayUnitsResponse.getCurrencyLabel())
@@ -113,7 +112,6 @@ public class GetSetDisplayUnitsTests {
                                 .build())
                 .build());
 
-        assertThat(setDisplayUnitsResponse, is(notNullValue()));
         assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
 
         GetDisplayUnitsResponse getDisplayUnitResponsePostChanges = acsResources.getDisplayUnits();

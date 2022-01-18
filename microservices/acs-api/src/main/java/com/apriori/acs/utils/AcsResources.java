@@ -1,6 +1,7 @@
 package com.apriori.acs.utils;
 
 import com.apriori.acs.entity.enums.AcsApiEnum;
+import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
@@ -9,11 +10,10 @@ import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse
 import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetproductiondefaults.GetProductionDefaultsResponse;
+import com.apriori.acs.entity.response.getsetproductiondefaults.SetProductionDefaultsInputs;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
-import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -167,16 +167,16 @@ public class AcsResources {
      *
      * @return Set Display Units response instance
      */
-    public SetDisplayUnitsResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
+    public GenericResourceCreatedResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS,
-                        SetDisplayUnitsResponse.class)
+                        GenericResourceCreatedResponse.class)
                 .headers(token)
                 .body(setDisplayUnitsInputs)
                 .inlineVariables(Constants.USERNAME);
 
-        return (SetDisplayUnitsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -263,16 +263,21 @@ public class AcsResources {
     /**
      * Sets Tolerance Policy Defaults Values
      *
-     * @return SetTolerancePolicyDefaultsResponse
+     * @param totalRunoutOverride - double
+     * @param toleranceMode - String
+     * @param useCadToleranceThreshhold - boolean
+     * @param username - String
+     *
+     * @return GenericResourceCreatedResponse
      */
-    public SetTolerancePolicyDefaultsResponse setTolerancePolicyDefaults(double totalRunoutOverride,
-                                                                         String toleranceMode,
-                                                                         boolean useCadToleranceThreshhold,
-                                                                         String username) {
+    public GenericResourceCreatedResponse setTolerancePolicyDefaults(double totalRunoutOverride,
+                                                                     String toleranceMode,
+                                                                     boolean useCadToleranceThreshhold,
+                                                                     String username) {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, SetTolerancePolicyDefaultsResponse.class)
+                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
                 .headers(token)
                 .body(SetTolerancePolicyDefaultsInputs.builder()
                         .totalRunoutOverride(totalRunoutOverride)
@@ -282,7 +287,7 @@ public class AcsResources {
                 )
                 .inlineVariables(username);
 
-        return (SetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -324,7 +329,7 @@ public class AcsResources {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
                 .headers(token)
                 .inlineVariables(username);
 
@@ -343,10 +348,35 @@ public class AcsResources {
         String username = invalidUsername.isEmpty() ? UserUtil.getUser().getUsername() : invalidUsername;
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_PRODUCTION_DEFAULTS, null)
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
                 .headers(token)
                 .inlineVariables(username);
 
         return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     * Sets production defaults
+     *
+     * @param username - String
+     * @return GenericResourceCreatedResponse
+     */
+    public GenericResourceCreatedResponse setProductionDefaults(String username) {
+        token.put(contentType, applicationJson);
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
+                .headers(token)
+                .body(SetProductionDefaultsInputs.builder()
+                        .material("Accura 10")
+                        .annualVolume("5500")
+                        .productionLife(5.0)
+                        .batchSize(458)
+                        .useVpeForAllProcesses(false)
+                        .batchSizeMode(false)
+                        .build()
+                ).inlineVariables(username);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 }

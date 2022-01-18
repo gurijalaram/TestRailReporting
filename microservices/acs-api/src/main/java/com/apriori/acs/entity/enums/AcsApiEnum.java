@@ -14,7 +14,7 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY("ws/workspace/0/scenarios/%s/%s/%s/iterations/%s/scenario-info"),
     GET_SCENARIOS_INFORMATION("ws/workspace/scenario-info/search"),
     GET_SET_TOLERANCE_POLICY_DEFAULTS("ws/workspace/users/%s/tolerance-policy-defaults"),
-    GET_PRODUCTION_DEFAULTS("ws/workspace/users/%s/production-defaults");
+    GET_SET_PRODUCTION_DEFAULTS("ws/workspace/users/%s/production-defaults");
 
     private final String endpoint;
 

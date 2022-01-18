@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.PropertyInfoItem;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.PropertyValueMap;
@@ -64,12 +65,14 @@ public class GetSetTolerancePolicyDefaultsTests {
         boolean useCadToleranceThreshold = false;
 
         AcsResources acsResources = new AcsResources();
-        acsResources.setTolerancePolicyDefaults(
+        GenericResourceCreatedResponse setTolerancePolicyDefaultsResponse = acsResources.setTolerancePolicyDefaults(
                 totalRunoutOverrride,
                 toleranceMode,
                 useCadToleranceThreshold,
                 username
         );
+
+        assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated(), is(equalTo("false")));
 
         GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources
                 .getTolerancePolicyDefaults(username);
