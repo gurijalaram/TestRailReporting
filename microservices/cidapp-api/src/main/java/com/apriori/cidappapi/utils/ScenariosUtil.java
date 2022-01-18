@@ -197,15 +197,49 @@ public class ScenariosUtil {
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("costingInputs",
                     CostRequest.builder()
-                        .costingTemplateIdentity(
-                            new ComponentsUtil().getCostingTemplateId(componentInfoBuilder)
-                                .getIdentity())
+                        .costingTemplateIdentity(getCostingTemplateId(componentInfoBuilder)
+                            .getIdentity())
                         .deleteTemplateAfterUse(true)
                         .build());
 
         HTTPRequest.build(requestEntity).post();
 
         return new ComponentsUtil().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
+    }
+
+    /**
+     * GET costing template id
+     *
+     * @return scenario object
+     */
+    private Scenario getCostingTemplateId(ComponentInfoBuilder componentInfoBuilder) {
+        return postCostingTemplate(componentInfoBuilder);
+    }
+
+
+    /**
+     * POST costing template
+     *
+     * @return scenario object
+     */
+    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .body("costingTemplate", CostRequest.builder()
+                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
+                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
+                    .materialName(componentInfoBuilder.getMaterial())
+                    .annualVolume(5500)
+                    .productionLife(5.0)
+                    .batchSize(458)
+                    .propertiesToReset(null)
+                    .build());
+
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
     }
 
     /**

@@ -2,13 +2,10 @@ package com.apriori.cidappapi.utils;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
-import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
@@ -165,40 +162,5 @@ public class ComponentsUtil {
         } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return axesEntriesResponse;
-    }
-
-    /**
-     * GET costing template id
-     *
-     * @return scenario object
-     */
-    public Scenario getCostingTemplateId(ComponentInfoBuilder componentInfoBuilder) {
-        return postCostingTemplate(componentInfoBuilder);
-    }
-
-
-    /**
-     * POST costing template
-     *
-     * @return scenario object
-     */
-    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
-                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
-                    .materialName(componentInfoBuilder.getMaterial())
-                    .annualVolume(5500)
-                    .productionLife(5.0)
-                    .batchSize(458)
-                    .propertiesToReset(null)
-                    .build());
-
-        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
-
-        return response.getResponseEntity();
     }
 }
