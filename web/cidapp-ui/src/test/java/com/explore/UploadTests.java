@@ -55,15 +55,17 @@ public class UploadTests extends TestBase {
     @TestRail(testCaseId = "10558")
     @Description("Successful creation of new scenario from existing scenario")
     public void testUploadAssemblyAndRenameScenario() {
-        resourceFile = FileResourceUtil.getResourceAsFile("oldham.asm.1");
-        String testScenarioName = "AssemblyTest3";
-        String scenarioName = "AssemblyTest1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        String filename  = "oldham.asm.1";
         String componentName = "OLDHAM";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,filename);
 
         loginPage = new CidAppLoginPage(driver);
         loginPage.login(UserUtil.getUser())
-            .uploadComponent(testScenarioName, resourceFile)
+            .uploadComponent(scenarioName, resourceFile)
             .submit(ExplorePage.class);
 
         evaluatePage = new ExplorePage(driver).clickSearch(componentName)
@@ -73,6 +75,7 @@ public class UploadTests extends TestBase {
             .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
     }
 
     @Test
