@@ -365,7 +365,7 @@ public class CidAppTestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
+        return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getScenarioState(), componentInfoBuilder.getUser());
     }
 
     /**
