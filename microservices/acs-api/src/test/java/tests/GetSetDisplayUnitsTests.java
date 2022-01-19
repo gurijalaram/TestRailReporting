@@ -94,7 +94,8 @@ public class GetSetDisplayUnitsTests {
                 ? "in" : "mm";
         String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg")
                 ? "lb" : "kg";
-        String metricToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("true") ? "false" : "true";
+        String metricToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo()
+                .getMetric().equals("true") ? "false" : "true";
 
         GenericResourceCreatedResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
