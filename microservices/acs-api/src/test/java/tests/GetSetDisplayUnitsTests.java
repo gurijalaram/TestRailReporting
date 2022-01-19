@@ -94,6 +94,7 @@ public class GetSetDisplayUnitsTests {
                 ? "in" : "mm";
         String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg")
                 ? "lb" : "kg";
+        String metricToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("true") ? "false" : "true";
 
         GenericResourceCreatedResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
@@ -101,14 +102,14 @@ public class GetSetDisplayUnitsTests {
                         .currencyLabel(getDisplayUnitsResponse.getCurrencyLabel())
                         .unitVariantSettingsInfo(UnitVariantSettingsInfoInputs.builder()
                                 .type(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType())
-                                .name(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName())
-                                .metric(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric())
+                                .name("CUSTOM")
+                                .metric(metricToSet)
                                 .length(lengthToSet)
                                 .mass(massToSet)
                                 .time(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getTime())
                                 .decimalPlaces(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces())
                                 .system(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem())
-                                .custom(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom())
+                                .custom(true)
                                 .build())
                 .build());
 
