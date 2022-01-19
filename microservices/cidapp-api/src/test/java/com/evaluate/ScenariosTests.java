@@ -31,7 +31,7 @@ public class ScenariosTests {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = "10558")
+    @TestRail(testCaseId = "10620")
     @Description("Copy a scenario")
     public void testCopyScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
