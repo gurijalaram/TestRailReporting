@@ -12,6 +12,7 @@ import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
+import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -25,6 +26,7 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
@@ -75,6 +77,7 @@ public class NewUserTests extends TestBase {
     }
 
     @Test
+    @Category({SmokeTest.class})
     @Description("New User profile form has correct fields, user can be added by filling only mandatory fields")
     @TestRail(testCaseId = {"4063", "4062", "4073"})
     public void testUserIsCreatedWithOnlyRequiredFields() {
