@@ -369,6 +369,12 @@ public class CidAppTestUtil {
         return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
     }
 
+    /**
+     * Post to Copy a Scenario
+     *
+     * @param componentInfoBuilder - the copy component object
+     * @return response object
+     */
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
