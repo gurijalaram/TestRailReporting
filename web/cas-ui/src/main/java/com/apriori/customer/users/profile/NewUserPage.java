@@ -32,14 +32,8 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     @FindBy(css = "input[name='userProfile.givenName']")
     private WebElement givenNameInput;
 
-    @FindBy(xpath = "//input[@name='userProfile.givenName']/following-sibling::span[@class='invalid-feedback']")
-    private WebElement givenNameFeedback;
-
     @FindBy(css = "input[name='userProfile.familyName']")
     private WebElement familyNameInput;
-
-    @FindBy(xpath = "//input[@name='userProfile.familyName']/following-sibling::span[@class='invalid-feedback']")
-    private WebElement familyNameFeedback;
 
     @FindBy(css = "input[name='userProfile.prefix']")
     private WebElement namePrefixInput;
@@ -391,20 +385,12 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     }
 
     /**
-     * Gets error message for Given Name field
+     * Gets error message for appropriate field
      *
-     * @return string
+     * @param label field name
+     * @return
      */
-    public String getGivenNameFeedback() {
-        return this.givenNameFeedback.getAttribute("textContent");
-    }
-
-    /**
-     * Gets error message for Family Name field
-     *
-     * @return string
-     */
-    public String getFamilyNameFeedback() {
-        return this.familyNameFeedback.getAttribute("textContent");
+    public String getFieldFeedback(String label) {
+        return driver.findElement(By.xpath(String.format("//input[@name='userProfile.%s']/following-sibling::span[@class='invalid-feedback']", label))).getAttribute("textContent");
     }
 }

@@ -102,9 +102,9 @@ public class NewUserTests extends TestBase {
                 .inputEmail("NewUserTest@" + customerName + ".com")
                 .save(NewUserPage.class);
 
-        soft.assertThat(newUserPage.getGivenNameFeedback())
+        soft.assertThat(newUserPage.getFieldFeedback("givenName"))
                 .isEqualTo("Enter a given name.");
-        soft.assertThat(newUserPage.getFamilyNameFeedback())
+        soft.assertThat(newUserPage.getFieldFeedback("familyName"))
                 .isEqualTo("Enter a family name.");
 
         newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + customerName + ".com", "Test", "User")
