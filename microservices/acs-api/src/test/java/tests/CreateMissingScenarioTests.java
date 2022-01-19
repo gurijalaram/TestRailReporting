@@ -1,8 +1,6 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.startsWith;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
@@ -48,13 +46,15 @@ public class CreateMissingScenarioTests {
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getFileName(),
                 is(equalTo(Constants.PART_FILE_NAME)));
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedBy(), is(equalTo(Constants.USERNAME)));
+        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedBy(),
+                is(containsString("qa-automation")));
 
         String currentDate = LocalDateTime.now(ZoneOffset.UTC).withNano(0).toString().substring(0, 10);
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), is(startsWith(currentDate)));
 
-        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), is(equalTo(Constants.USERNAME)));
+        assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(),
+                is(containsString("qa-automation")));
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), is(startsWith(currentDate)));
 
