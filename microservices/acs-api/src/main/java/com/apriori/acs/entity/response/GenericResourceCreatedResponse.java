@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
+
 import lombok.Data;
 
 @Data

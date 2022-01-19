@@ -1,14 +1,16 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
-import io.qameta.allure.Description;
 
+import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
