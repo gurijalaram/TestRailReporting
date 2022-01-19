@@ -31,7 +31,6 @@ import java.io.File;
 public class CostAllCadTests {
 
     private final CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
-    private UserCredentials currentUser;
 
     @Test
     @Category(SmokeTests.class)
