@@ -27,8 +27,10 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class NewUserTests extends TestBase {
@@ -77,26 +79,27 @@ public class NewUserTests extends TestBase {
     @TestRail(testCaseId = {"4063", "4062", "4073"})
     public void testUserIsCreatedWithOnlyRequiredFields() {
         SoftAssertions soft = new SoftAssertions();
+        List<String> labelsToCheck = Arrays.asList(
+                "User Name:*",
+                "Email:*",
+                "User Type",
+                "Status:",
+                "Given Name:*",
+                "Family Name:*",
+                "Name Prefix:",
+                "Name Suffix:",
+                "Job Title:",
+                "Department:",
+                "Town or City:",
+                "County:",
+                "Country:",
+                "Time Zone:",
+                "Office Phone Country Code:",
+                "Office Phone Number:",
+                "Authentication"
+        );
 
-        newUserPage
-                .testNewUserLabelAvailable("User Name:*", soft)
-                .testNewUserLabelAvailable("Email:*", soft)
-                .testNewUserLabelAvailable("User Type", soft)
-                .testNewUserLabelAvailable("Status:", soft)
-                .testNewUserLabelAvailable("Given Name:*", soft)
-                .testNewUserLabelAvailable("Family Name:*", soft)
-                .testNewUserLabelAvailable("Name Prefix:", soft)
-                .testNewUserLabelAvailable("Name Suffix:", soft)
-                .testNewUserLabelAvailable("Job Title:", soft)
-                .testNewUserLabelAvailable("Department:", soft)
-                .testNewUserLabelAvailable("Town or City:", soft)
-                .testNewUserLabelAvailable("County:", soft)
-                .testNewUserLabelAvailable("Country:", soft)
-                .testNewUserLabelAvailable("Time Zone:", soft)
-                .testNewUserLabelAvailable("Office Phone Country Code:", soft)
-                .testNewUserLabelAvailable("Office Phone Number:", soft)
-                .testNewUserLabelAvailable("Authentication", soft);
-        soft.assertAll();
+        newUserPage.testNewUserLabelAvailable(labelsToCheck, soft);
 
         newUserPage.inputUserName("NewTestUser")
                 .inputEmail("NewUserTest@" + customerName + ".com")
@@ -106,6 +109,8 @@ public class NewUserTests extends TestBase {
                 .isEqualTo("Enter a given name.");
         soft.assertThat(newUserPage.getFieldFeedback("familyName"))
                 .isEqualTo("Enter a family name.");
+
+        soft.assertAll();
 
         newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + customerName + ".com", "Test", "User")
                 .save(UserProfilePage.class);

@@ -371,15 +371,18 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     /**
      * Validates that appropriate field is displayed
      *
-     * @param label - name of field
+     * @param labelsToCheck - a list of fields names to check
      * @param soft - soft assertion
      * @return this object
      */
-    public NewUserPage testNewUserLabelAvailable(String label, SoftAssertions soft) {
-        List<WebElement> elements = driver.findElements(By.xpath(String.format("//span[.='%s']", label)));
-        soft.assertThat(elements.size())
-                .overridingErrorMessage(String.format("Could not find the label, %s", label))
-                .isGreaterThan(0);
+    public NewUserPage testNewUserLabelAvailable(List<String> labelsToCheck, SoftAssertions soft) {
+
+        labelsToCheck.forEach(label -> {
+            List<WebElement> elements = driver.findElements(By.xpath(String.format("//span[.='%s']", label)));
+            soft.assertThat(elements.size())
+                    .overridingErrorMessage(String.format("Could not find the label, %s", label))
+                    .isGreaterThan(0);
+        });
 
         return this;
     }
