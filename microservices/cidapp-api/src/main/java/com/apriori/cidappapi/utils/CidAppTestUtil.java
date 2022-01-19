@@ -23,7 +23,6 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
@@ -95,19 +94,6 @@ public class CidAppTestUtil {
         List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return itemResponse.get(0);
-    }
-
-    /**
-     * GET css component
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param scenarioState   - the scenario state
-     * @param userCredentials - user credentials
-     * @return list of Item
-     */
-    public List<Item> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
-        return new UncostedComponents().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
     }
 
     /**
@@ -304,7 +290,6 @@ public class CidAppTestUtil {
         return scenarioRepresentation;
     }
 
-
     /**
      * POST to cost a component
      *
@@ -365,7 +350,7 @@ public class CidAppTestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getScenarioState(), componentInfoBuilder.getUser());
+        return new UncostedComponents().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
     }
 
     /**
