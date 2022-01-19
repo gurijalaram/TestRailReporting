@@ -74,39 +74,6 @@ public class CostAllCadTests {
     }
 
     @Test
-    @Description("Copy a scenario")
-    public void testCopyScenario() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String filename  = "oldham.asm.1";
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "OLDHAM";
-        currentUser = UserUtil.getUser();
-        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
-
-        Item postComponentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
-        String componentIdentity = postComponentResponse.getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
-
-        cidAppTestUtil.postCopyScenario(
-            ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(newScenarioName)
-            .componentId(componentIdentity)
-            .scenarioId(scenarioIdentity)
-            .user(currentUser)
-            .build());
-
-        ResponseWrapper<ScenarioResponse> componentIterationResponse = cidAppTestUtil.getScenarioRepresentation(
-           ScenarioRepresentationBuilder.builder()
-               .item(postComponentResponse)
-            .user(currentUser)
-            .build());
-
-       assertThat(componentIterationResponse.getResponseEntity().getScenarioName(), is(equalTo(newScenarioName)));
-    }
-
-    @Test
     @TestRail(testCaseId = {"5421"})
     @Description("CAD file from all supported CAD formats - par")
     public void cadFormatPar() {
