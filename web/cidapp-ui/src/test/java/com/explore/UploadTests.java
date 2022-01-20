@@ -64,12 +64,8 @@ public class UploadTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,filename);
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(UserUtil.getUser())
-            .uploadComponent(scenarioName, resourceFile)
-            .submit(ExplorePage.class);
-
-        evaluatePage = new ExplorePage(driver).clickSearch(componentName)
-            .openScenario(componentName, scenarioName)
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndOpen(componentName,scenarioName,resourceFile, currentUser)
             .createScenario()
             .enterScenarioName(newScenarioName)
             .submit(EvaluatePage.class);
