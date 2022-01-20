@@ -7,8 +7,8 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.cisapi.entity.response.user.preferences.UserPreferencesResponse;
 import com.apriori.cisapi.utils.UserPreferencesUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
@@ -20,7 +20,7 @@ public class UserPreferencesTest extends UserPreferencesUtil {
 
     @BeforeClass
     public static void setUp() {
-        RequestEntityUtil.useTokenForRequests(new TokenUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @Test
