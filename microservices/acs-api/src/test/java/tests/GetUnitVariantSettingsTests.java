@@ -61,7 +61,7 @@ public class GetUnitVariantSettingsTests {
 
         if (expectedMass.equals("lb")) {
             assertThat(getCustomUnitVariantSettingsResponse.getMass(),
-                    is(anyOf(equalTo(expectedMass), equalTo("oz"))));
+                    anyOf(equalTo(expectedMass), equalTo("oz")));
         } else {
             assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
         }
