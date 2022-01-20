@@ -34,7 +34,7 @@ public class GetSetDisplayUnitsTests {
                 "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")));
 
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType(), is(equalTo("simple")));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), is(equalTo("CUSTOM")));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), is(equalTo("MMKS")));
 
         if (getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("false")) {
             getDisplayUnitsAssertions(getDisplayUnitsResponse, "in", "lb");
@@ -43,8 +43,8 @@ public class GetSetDisplayUnitsTests {
         }
 
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces(), is(equalTo(2)));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem(), is(equalTo(false)));
-        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom(), is(equalTo(true)));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem(), is(equalTo(true)));
+        assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom(), is(equalTo(false)));
     }
 
     @Test
