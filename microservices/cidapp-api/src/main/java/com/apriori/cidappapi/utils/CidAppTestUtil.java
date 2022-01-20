@@ -218,12 +218,12 @@ public class CidAppTestUtil {
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, String lastAction, boolean published, UserCredentials userCredentials) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentName = cssItem.getComponentIdentity();
-        String scenarioName = cssItem.getScenarioIdentity();
+        String componentId = cssItem.getComponentIdentity();
+        String scenarioId = cssItem.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentName, scenarioName)
+                .inlineVariables(componentId, scenarioId)
                 .token(userCredentials.getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
@@ -237,14 +237,14 @@ public class CidAppTestUtil {
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
                 scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
                     .ifPresent(y -> {
-                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentName, scenarioName));
+                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentId, scenarioId));
                     });
 
                 if (scenarioResponse.isPresent() &&
@@ -263,7 +263,7 @@ public class CidAppTestUtil {
         }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentName, scenarioName, WAIT_TIME)
+                componentId, scenarioId, WAIT_TIME)
         );
     }
 
@@ -275,12 +275,12 @@ public class CidAppTestUtil {
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioRepresentationBuilder scenarioRepresentationBuilder) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentName = scenarioRepresentationBuilder.getItem().getComponentIdentity();
-        String scenarioName = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
+        String componentId = scenarioRepresentationBuilder.getItem().getComponentIdentity();
+        String scenarioId = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentName, scenarioName)
+                .inlineVariables(componentId, scenarioId)
                 .token(scenarioRepresentationBuilder.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
