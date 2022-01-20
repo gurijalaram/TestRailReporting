@@ -51,7 +51,21 @@
               "type": "integer"
             },
             "customAttributes": {
-              "type": "object"
+              "type": "object",
+              "properties": {
+                "language": {
+                  "type": "string"
+                },
+                "projectType": {
+                  "type": "string"
+                },
+                "tags": {
+                  "type": "array"
+                },
+                "epamAssembly": {
+                  "type": "string"
+                }
+              }
             },
             "machiningMode": {
               "type": "string"
@@ -1324,6 +1338,12 @@
             },
             "youngModulus": {
               "type": "number"
+            },
+            "updatedAt": {
+              "type": "string"
+            },
+            "updatedBy": {
+              "type": "string"
             }
           }
         },
