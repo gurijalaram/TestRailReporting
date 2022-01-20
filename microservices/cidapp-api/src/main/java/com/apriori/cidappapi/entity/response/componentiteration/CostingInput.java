@@ -33,9 +33,6 @@ public class CostingInput {
     private String materialUtilizationMode;
     private Boolean usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories;
 
-    static class CustomAttributes {
-    }
-
     static class ProcessSetupOptions {
     }
 
