@@ -16,10 +16,10 @@ import com.apriori.entity.response.Sites;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -34,7 +34,7 @@ public class CasSitesTests {
 
     @Before
     public void getToken() {
-        token = new TokenUtil().getTokenAsString();
+        token = new AuthorizationUtil().getTokenAsString();
     }
 
     @Test
