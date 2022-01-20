@@ -66,7 +66,7 @@
       "type": "string"
     },
     "materialCutCodeName": {
-      "type": "number"
+      "type": "string"
     },
     "materialForm": {
       "type": "string"
