@@ -1,16 +1,14 @@
 package com.apriori.utils.reader.file.user;
 
-import com.apriori.utils.token.TokenUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 
 public class UserCredentials {
 
     private String email;
-
     private String password;
-
     private String token;
-
     private String username;
+    private String cloudContext;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -75,9 +73,18 @@ public class UserCredentials {
     }
 
     public UserCredentials generateToken() {
-        this.token = new TokenUtil(getUsername(), getEmail()).getToken()
+        this.token = token != null ? token : new AuthorizationUtil(this).getToken()
             .getResponseEntity()
             .getToken();
+        return this;
+    }
+
+    public String getCloudContext() {
+        return cloudContext;
+    }
+
+    public UserCredentials generateCloudContext() {
+        this.cloudContext = cloudContext != null ? cloudContext : new AuthorizationUtil().getAuthTargetCloudContext(this);
         return this;
     }
 }

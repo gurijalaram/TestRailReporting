@@ -5,13 +5,13 @@ import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsItemsResponse;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
 import org.apache.http.HttpStatus;
 
@@ -75,7 +75,7 @@ public class BillOfMaterialsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
                 .inlineVariables(identity)
-                .token(new TokenUtil().getTokenAsString());
+                .token(new AuthorizationUtil().getTokenAsString());
 
         return HTTPRequest.build(requestEntity).delete();
     }

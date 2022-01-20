@@ -1,5 +1,5 @@
 
-package com.apriori.utils.token;
+package com.apriori.utils.authorization;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Builder;
