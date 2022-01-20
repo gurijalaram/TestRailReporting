@@ -63,7 +63,6 @@ public class ScenariosTests {
                 .user(currentUser)
                 .build());
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioName(), is(not(newScenarioName)));
-        assertThat(scenarioRepresentation.getResponseEntity().getIdentity(), is(not(copyScenarioResponse.getResponseEntity().getIdentity())));
+        assertThat(scenarioRepresentation.getResponseEntity().getScenarioName(), is(equalTo(scenarioName)));
     }
 }
