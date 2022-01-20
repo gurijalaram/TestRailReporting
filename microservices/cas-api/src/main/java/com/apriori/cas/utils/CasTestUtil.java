@@ -3,7 +3,6 @@ package com.apriori.cas.utils;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
@@ -22,6 +21,7 @@ import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -37,7 +37,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CasTestUtil extends TestUtil {
-    private static final String token = new JwtTokenUtil().retrieveJwtToken();
+    private static final String token = new AuthorizationUtil().getTokenAsString();
 
     /**
      * Gets the special customer "aPriori Internal"
@@ -77,11 +77,10 @@ public class CasTestUtil extends TestUtil {
     /**
      * Creates a pseudo random customer.
      *
-     * @param name The name of the customer.
+     * @param name           The name of the customer.
      * @param cloudReference The customer cloud reference.
-     * @param description Customer description.
-     * @param domains The email domains for the customer.
-     *
+     * @param description    Customer description.
+     * @param domains        The email domains for the customer.
      * @return The response for the customer created.
      */
     public ResponseWrapper<Customer> createCustomer(String name, String cloudReference, String description, String... domains) {
@@ -105,7 +104,6 @@ public class CasTestUtil extends TestUtil {
      *
      * @param source The source customer.
      * @param target The target customer.
-     *
      * @return The customer association for the target->source relationship.  Returns null
      * if there is no association.
      */
@@ -158,9 +156,8 @@ public class CasTestUtil extends TestUtil {
     /**
      * Associates a user to another customer and creates an out of context relationship.
      *
-     * @param user The user to associate in the source customer.
+     * @param user        The user to associate in the source customer.
      * @param association The association that contains the target customer.
-     *
      * @return The response.
      */
     public ResponseWrapper<CustomerAssociationUser> createCustomerAssociationUser(CustomerUser user, CustomerAssociation association) {

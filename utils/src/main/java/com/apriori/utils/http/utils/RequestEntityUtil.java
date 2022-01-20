@@ -1,10 +1,11 @@
 package com.apriori.utils.http.utils;
 
+import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.common.entity.UserAuthenticationEntity;
 import com.apriori.utils.http.enums.EndpointEnum;
-import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 public class RequestEntityUtil {
 
@@ -39,7 +40,7 @@ public class RequestEntityUtil {
 
     public static RequestEntity initWithApUserContext(EndpointEnum endpoint, Class<?> returnType) {
         return initBuilder(endpoint, returnType)
-            .header("ap-user-context", PropertiesContext.get("${env}.ap_user_context"))
+            .header("ap-user-context", new AuthUserContextUtil().getAuthUserContext(UserUtil.getUser().getEmail()))
             .build();
     }
 }

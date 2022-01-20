@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.edcapi.entity.response.bill.of.materials.BillOfMaterialsResponse;
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -26,7 +26,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     @BeforeClass
     public static void setUp() {
-        RequestEntityUtil.useTokenForRequests(new JwtTokenUtil().retrieveJwtToken());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         identity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 

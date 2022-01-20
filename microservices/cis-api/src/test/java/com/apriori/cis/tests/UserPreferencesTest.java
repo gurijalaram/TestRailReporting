@@ -4,10 +4,10 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cisapi.entity.response.user.preferences.UserPreferencesResponse;
 import com.apriori.cisapi.utils.UserPreferencesUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
@@ -20,7 +20,7 @@ public class UserPreferencesTest extends UserPreferencesUtil {
 
     @BeforeClass
     public static void setUp() {
-        RequestEntityUtil.useTokenForRequests(new JwtTokenUtil().retrieveJwtToken());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @Test

@@ -6,8 +6,8 @@ import com.apriori.apibase.services.response.objects.BillOfSingleMaterialWrapper
 import com.apriori.apibase.services.response.objects.MaterialLineItem;
 import com.apriori.apibase.services.response.objects.MaterialsLineItemsWrapper;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
@@ -48,7 +48,7 @@ public class UserTestDataUtil extends TestUtil {
     }
 
     public String initToken(UserCredentials userCredentials) {
-        return new JwtTokenUtil(userCredentials).retrieveJwtToken();
+        return new AuthorizationUtil(userCredentials).getTokenAsString();
     }
 
     public UserDataEDC initBillOfMaterials() {

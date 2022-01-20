@@ -7,10 +7,10 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.IdentityProviders;
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.SingleIdp;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -26,7 +26,7 @@ public class CasIdentityProvidersTests extends TestUtil {
 
     @Before
     public void getToken() {
-        token = new JwtTokenUtil().retrieveJwtToken();
+        token = new AuthorizationUtil().getTokenAsString();
     }
 
     @Test

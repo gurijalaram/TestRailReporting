@@ -48,4 +48,5 @@ public class PropertyInfoMap {
     private NumSideCores numSideCores;
     private AverageThicknessDev averageThicknessDev;
     private Min80Thickness min80Thickness;
+    private MinStockLength minStockLength;
 }

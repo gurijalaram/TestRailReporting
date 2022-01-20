@@ -5,8 +5,6 @@ import com.apriori.utils.reader.file.user.service.UserCommonService;
 import com.apriori.utils.reader.file.user.service.UserSecurityService;
 
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Get user functionality.
@@ -46,7 +44,9 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser();
+        UserCredentials user = UserCommonService.getUser()
+            .generateToken()
+            .generateCloudContext();
         logInfo(user);
         return user;
     }
@@ -58,7 +58,8 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser(String accessLevel) {
-        UserCredentials user = UserSecurityService.getUser(accessLevel);
+        UserCredentials user = UserSecurityService.getUser(accessLevel).generateToken()
+            .generateCloudContext();
         logInfo(user);
         return user;
     }

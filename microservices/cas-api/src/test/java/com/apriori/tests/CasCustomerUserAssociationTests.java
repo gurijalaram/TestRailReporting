@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.common.objects.ErrorMessage;
-import com.apriori.ats.utils.JwtTokenUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -18,6 +17,7 @@ import com.apriori.entity.response.CustomerAssociationUsers;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -43,7 +43,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeClass
     public static void globalSetup() {
-        RequestEntityUtil.useTokenForRequests(new JwtTokenUtil().retrieveJwtToken());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @Before

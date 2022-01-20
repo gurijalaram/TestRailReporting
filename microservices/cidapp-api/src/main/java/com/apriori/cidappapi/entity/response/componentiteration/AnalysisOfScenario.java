@@ -92,4 +92,8 @@ public class AnalysisOfScenario {
     private String materialMode;
     private String materialUtilizationMode;
     private String productionLife;
+    private Double stockPropertyHeight;
+    private Double stockPropertyInsideDia;
+    private Double stockPropertyOutsideDia;
+    private Double stockPropertyWallThickness;
 }
