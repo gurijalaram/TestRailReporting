@@ -7,7 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.Item;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -15,6 +17,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
+
+import java.io.File;
 
 public class IterationsControllerTests {
 
@@ -24,10 +28,13 @@ public class IterationsControllerTests {
     @Test
     @Description("Get the latest iteration")
     public void getComponentsIterationsLatest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.CASTING_DIE;
+        final String componentName = "Casting";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postCssComponent("Casting.prt", scenarioName, "Casting - Die", currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();

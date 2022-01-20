@@ -8,9 +8,7 @@ import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.Item;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.UncostedComponents;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -29,32 +27,6 @@ import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ComponentsUtil {
-
-    /**
-     * POST new component
-     *
-     * @param componentName - the part name
-     * @param scenarioName  - the scenario name
-     * @return Item
-     */
-    public Item postCssComponent(String componentName, String scenarioName, String resourceFile, UserCredentials userCredentials) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(resourceFile), componentName)))
-                .formParams(new FormParams().use("filename", componentName)
-                    .use("override", "false")
-                    .use("scenarioName", scenarioName))
-                .token(userCredentials.getToken());
-
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
-
-        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
-            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
-
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
-
-        return itemResponse.get(0);
-    }
 
     /**
      * POST new component

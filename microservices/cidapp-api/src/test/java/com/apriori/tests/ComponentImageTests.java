@@ -12,6 +12,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -23,6 +24,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.stream.Collectors;
 
 public class ComponentImageTests {
@@ -35,10 +37,13 @@ public class ComponentImageTests {
     @TestRail(testCaseId = {"5834"})
     @Description("Test bounding values are correct")
     public void boundingBoxValuesTest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "700-33770-01_A0";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postCssComponent("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
@@ -64,10 +69,13 @@ public class ComponentImageTests {
     @TestRail(testCaseId = {"6639"})
     @Description("Test axes entries values are correct")
     public void axesEntriesValuesTest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "700-33770-01_A0";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postCssComponent("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
@@ -90,10 +98,13 @@ public class ComponentImageTests {
     @TestRail(testCaseId = {"5851"})
     @Description("Test active axes values are correct")
     public void activeAxesValuesTest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "700-33770-01_A0";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postCssComponent("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), currentUser);
+        Item postComponentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
