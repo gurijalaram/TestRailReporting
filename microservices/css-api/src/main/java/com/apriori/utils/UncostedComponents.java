@@ -1,5 +1,6 @@
 package com.apriori.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.COSTING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
@@ -104,7 +105,7 @@ public class UncostedComponents {
                     if (items.get().stream()
                         .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()) ||
                             x.getScenarioState().equals(PROCESSING.getState()) ||
-                            x.getScenarioState().equals("COSTING"))) {
+                            x.getScenarioState().equals(COSTING.getState()))) {
 
                         itemScenarioState = items.get().stream().map(Item::getScenarioState).collect(Collectors.toList());
                         break;
