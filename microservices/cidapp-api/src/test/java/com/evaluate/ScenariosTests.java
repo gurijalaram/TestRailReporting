@@ -49,7 +49,6 @@ public class ScenariosTests {
             .scenarioName(newScenarioName)
             .componentId(postComponentResponse.getComponentIdentity())
             .scenarioId(postComponentResponse.getScenarioIdentity())
-            .processGroup(processGroupEnum)
             .user(currentUser)
             .build());
 
@@ -65,5 +64,6 @@ public class ScenariosTests {
                 .build());
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioName(), is(not(newScenarioName)));
+        assertThat(scenarioRepresentation.getResponseEntity().getIdentity(), is(not(copyScenarioResponse.getResponseEntity().getIdentity())));
     }
 }
