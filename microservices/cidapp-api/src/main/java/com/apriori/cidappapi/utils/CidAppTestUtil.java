@@ -19,8 +19,8 @@ import com.apriori.cidappapi.entity.response.componentiteration.ComponentIterati
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -63,7 +63,7 @@ public class CidAppTestUtil {
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
+        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return itemResponse.get(0);
     }
@@ -91,7 +91,7 @@ public class CidAppTestUtil {
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
+        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return itemResponse.get(0);
     }
@@ -350,7 +350,7 @@ public class CidAppTestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return new UncostedComponents().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
     }
 
     /**

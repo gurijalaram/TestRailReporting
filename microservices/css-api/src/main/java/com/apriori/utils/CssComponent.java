@@ -31,7 +31,7 @@ import java.util.stream.Stream;
  */
 
 @Slf4j
-public class UncostedComponents {
+public class CssComponent {
 
     private List<String> itemScenarioState;
 
