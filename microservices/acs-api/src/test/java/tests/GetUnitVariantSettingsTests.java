@@ -1,17 +1,15 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.*;
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
-import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
 
-import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
