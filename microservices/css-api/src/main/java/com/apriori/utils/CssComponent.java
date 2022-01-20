@@ -68,7 +68,7 @@ public class CssComponent {
     public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
         final int SOCKET_TIMEOUT = 270000;
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
