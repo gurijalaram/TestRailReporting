@@ -1,5 +1,6 @@
 package com.apriori.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
@@ -28,6 +29,8 @@ import java.util.stream.Collectors;
 
 @Slf4j
 public class UncostedComponents {
+
+    private List<String> itemScenarioState;
 
     /**
      * Gets the uncosted component from Css
@@ -97,6 +100,15 @@ public class UncostedComponents {
 
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                     }
+
+                    if (items.get().stream()
+                        .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()) ||
+                            x.getScenarioState().equals(PROCESSING.getState()) ||
+                            x.getScenarioState().equals("COSTING"))) {
+
+                        itemScenarioState = items.get().stream().map(Item::getScenarioState).collect(Collectors.toList());
+                        break;
+                    }
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
@@ -105,8 +117,8 @@ public class UncostedComponents {
             Thread.currentThread().interrupt();
         }
         throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentName, scenarioName, WAIT_TIME)
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds. \n Expected: %s \n Found: %s",
+                componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
         );
     }
 }
