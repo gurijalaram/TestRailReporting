@@ -56,13 +56,14 @@ public class GetUnitVariantSettingsTests {
 
         assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
+        assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
 
-        if (expectedMass.equals("lb")) {
+        /*if (expectedMass.equals("lb")) {
             assertThat(getCustomUnitVariantSettingsResponse.getMass(),
                     anyOf(equalTo(expectedMass), equalTo("oz")));
         } else {
             assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
-        }
+        }*/
 
         assertThat(getCustomUnitVariantSettingsResponse.getTime(), is(equalTo("s")));
         assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces(), is(equalTo(2.0)));
