@@ -22,7 +22,9 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author cfrith
@@ -87,14 +89,17 @@ public class UncostedComponents {
                 final Optional<List<Item>> items = Optional.ofNullable(scenarioRepresentation.getResponseEntity().getItems());
 
                 if (items.isPresent()) {
-                    items.get().stream()
+
+                    Supplier<Stream<Item>> distinctItem = () -> items.get().stream().distinct();
+
+                    distinctItem.get()
                         .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
                         .findAny()
                         .ifPresent(y -> {
                             throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                         });
 
-                    if (items.get().stream()
+                    if (distinctItem.get()
                         .anyMatch(x -> x.getScenarioState().equals(scenarioState.getState()))) {
 
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
@@ -102,12 +107,12 @@ public class UncostedComponents {
                         return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                     }
 
-                    if (items.get().stream()
+                    if (distinctItem.get()
                         .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()) ||
                             x.getScenarioState().equals(PROCESSING.getState()) ||
                             x.getScenarioState().equals(COSTING.getState()))) {
 
-                        itemScenarioState = items.get().stream().map(Item::getScenarioState).collect(Collectors.toList());
+                        itemScenarioState = items.get().stream().map(Item::getScenarioState).distinct().collect(Collectors.toList());
                         break;
                     }
                 }
