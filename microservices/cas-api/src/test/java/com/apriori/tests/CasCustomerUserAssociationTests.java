@@ -17,9 +17,9 @@ import com.apriori.entity.response.CustomerAssociationUsers;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -43,7 +43,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeClass
     public static void globalSetup() {
-        RequestEntityUtil.useTokenForRequests(new TokenUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @Before

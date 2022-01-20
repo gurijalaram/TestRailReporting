@@ -6,8 +6,8 @@ import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -29,7 +29,7 @@ public class LineItemsTest extends LineItemsUtil {
 
     @BeforeClass
     public static void setUp() {
-        RequestEntityUtil.useTokenForRequests(new TokenUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 
