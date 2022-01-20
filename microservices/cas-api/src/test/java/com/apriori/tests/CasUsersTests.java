@@ -10,10 +10,10 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.User;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -25,7 +25,7 @@ public class CasUsersTests extends TestUtil {
 
     @Before
     public void getToken() {
-        token = new TokenUtil().getTokenAsString();
+        token = new AuthorizationUtil().getTokenAsString();
     }
 
     @Test
