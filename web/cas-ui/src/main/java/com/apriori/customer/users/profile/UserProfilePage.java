@@ -3,6 +3,7 @@ package com.apriori.customer.users.profile;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -101,4 +102,12 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
         return this;
     }
 
+    /**
+     * Gets user identity
+     *
+     * @return string
+     */
+    public String getUserIdentity() {
+        return driver.findElement(By.xpath("//span[.='Identity']/following-sibling::span[@class='display-field-value']")).getAttribute("textContent");
+    }
 }
