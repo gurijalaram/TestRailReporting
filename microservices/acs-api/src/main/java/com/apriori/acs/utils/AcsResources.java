@@ -224,9 +224,11 @@ public class AcsResources {
     public void getEnabledCurrencyRateVersions() {
         token.put(contentType, applicationJson);
 
-        RequestEntityUtil
+        final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
                 .headers(token);
+
+        HTTPRequest.build(requestEntity).get();
     }
 
     /**
