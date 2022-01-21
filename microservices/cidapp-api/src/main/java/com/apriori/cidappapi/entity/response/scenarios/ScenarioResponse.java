@@ -24,42 +24,47 @@ import java.util.List;
 @Builder
 @Schema(location = "ScenarioResponse.json")
 public class ScenarioResponse {
-    private String identity;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
-    private LocalDateTime createdAt;
-    private String createdBy;
-    private String subjectIdentity;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
-    private LocalDateTime updatedAt;
-    private String customerIdentity;
-    private String scenarioName;
-    private String scenarioType;
-    private String scenarioState;
-    private String previousScenarioState;
-    private String lastAction;
-    private String costMaturity;
-    private String status;
+    private String assignedBy;
+    private String assignedByName;
     private String assignedTo;
+    private String assignedToName;
+    private String costMaturity;
+    private String createdBy;
+    private String createdByName;
+    private String customerIdentity;
+    private String description;
+    private String identity;
+    private String lastAction;
+    private Boolean locked;
+    private String ownedBy;
+    private String ownedByName;
+    private String previousScenarioState;
+    private Boolean published;
+    private String publishedBy;
+    private String publishedByName;
+    private String scenarioName;
+    private String scenarioState;
+    private String scenarioType;
+    private String status;
+    private String subjectIdentity;
+    private Boolean systemLocked;
+    private String updatedBy;
+    private String updatedByName;
+    private List<String> permissions;
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime assignedAt;
-    private String assignedBy;
-    private String ownedBy;
-    private Boolean locked;
-    private String assignedToName;
-    private String assignedByName;
-    private Boolean published;
-    private String ownedByName;
-    private String createdByName;
-    private Boolean systemLocked;
-    private List<String> permissions;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
+    private LocalDateTime createdAt;
+
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime publishedAt;
-    private String publishedBy;
-    private String publishedByName;
-    private String updatedBy;
-    private String updatedByName;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
+    private LocalDateTime updatedAt;
 }

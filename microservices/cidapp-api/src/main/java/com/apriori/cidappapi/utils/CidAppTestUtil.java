@@ -8,6 +8,7 @@ import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
+import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PeopleResponse;
@@ -366,6 +367,25 @@ public class CidAppTestUtil {
         HTTPRequest.build(requestEntity).post();
 
         return getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
+    }
+
+    /**
+     * Post to Copy a Scenario
+     *
+     * @param componentInfoBuilder - the copy component object
+     * @return response object
+     */
+    public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            .token(componentInfoBuilder.getUser().getToken())
+            .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+            .body("scenario",
+                ScenarioRequest.builder()
+                    .scenarioName(componentInfoBuilder.getScenarioName())
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
