@@ -46,7 +46,7 @@ public class FileUploadAPI {
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

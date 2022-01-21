@@ -48,7 +48,7 @@ public class CostAllCadTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        Item componentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
@@ -192,7 +192,7 @@ public class CostAllCadTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        Item componentResponse = componentsUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
