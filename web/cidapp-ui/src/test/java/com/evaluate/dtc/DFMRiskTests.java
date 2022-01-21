@@ -243,7 +243,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        // TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when revert is implemented
         /*
         evaluatePage.revert()
             .revertScenario();
@@ -283,7 +283,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
-        // TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when revert is implemented
         /*
         evaluatePage.revert()
             .revertScenario();
@@ -324,7 +324,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        // TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when revert is implemented
         /*
         evaluatePage.revert()
             .revertScenario();
@@ -364,7 +364,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        // TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
             .revertScenario();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
@@ -403,7 +403,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        // TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when revert is implemented
         /*
         evaluatePage.revert()
             .revertScenario();
@@ -437,7 +437,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
         assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), is(closeTo(372, 1)));
 
-        // TODO uncomment this section when update cad file is implemented
+        // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
             .revertScenario();
 
