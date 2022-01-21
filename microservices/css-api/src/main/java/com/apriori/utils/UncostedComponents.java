@@ -84,7 +84,7 @@ public class UncostedComponents {
 
                 if (items.isPresent()) {
                     items.get().stream()
-                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
+                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()) && !scenarioState.getState().equals(PROCESSING_FAILED.getState()))
                         .findAny()
                         .ifPresent(y -> {
                             throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
