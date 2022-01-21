@@ -22,6 +22,8 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //SCENARIO
     POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
+    POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
+
 
     //COSTING TEMPLATES
     GET_COSTING_TEMPLATES("costing-templates"),
@@ -36,14 +38,16 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     GET_CURRENT_PERSON("people?username[EQ]=%s"),
 
     //CUSTOMIZATIONS
-    GET_CUSTOMIZATIONS("customizations");
+    GET_CUSTOMIZATIONS("customizations"),
+
+    //APPLICATION METADATA
+    GET_APPLICATION_METADATA("application-metadata");
 
     private final String endpoint;
 
     CidAppAPIEnum(String endpoint) {
         this.endpoint = endpoint;
     }
-
 
     @Override
     public String getEndpointString() {

@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -48,6 +49,29 @@ public class UploadTests extends TestBase {
             .uploadComponent(testScenarioName, resourceFile).getFileInputError();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10558")
+    @Description("Successful creation of new scenario from existing scenario")
+    public void testUploadAssemblyAndRenameScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        String filename  = "oldham.asm.1";
+        String componentName = "OLDHAM";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,filename);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndOpen(componentName,scenarioName,resourceFile, currentUser)
+            .createScenario()
+            .enterScenarioName(newScenarioName)
+            .submit(EvaluatePage.class);
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
     }
 
     @Test
