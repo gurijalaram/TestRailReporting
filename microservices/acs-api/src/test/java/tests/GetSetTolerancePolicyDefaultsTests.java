@@ -32,7 +32,7 @@ public class GetSetTolerancePolicyDefaultsTests {
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
 
         assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
-        assertThat(propertyValueMap.getToleranceMode(), is(equalTo("SYSTEMDEFAULT")));
+        assertThat(propertyValueMap.getToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"), equalTo("PARTOVERRIDE")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
 
         PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
