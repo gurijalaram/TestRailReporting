@@ -24,7 +24,8 @@
           "Arn": "arn:aws:iam::563229348140:user/test@apriori.com"
       }
      ```  
-9.You are ready to run the tests
+9.You are ready to run the tests..
+
 
 ## List of special modules that are not included into a common build
  - **database** module location "../db"
