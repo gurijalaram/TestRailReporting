@@ -3,13 +3,13 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.not;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -27,7 +27,8 @@ import java.io.File;
 
 public class ScenariosTests {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private UserCredentials currentUser;
 
     @Test
@@ -42,9 +43,9 @@ public class ScenariosTests {
         currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
-        ResponseWrapper<Scenario> copyScenarioResponse = cidAppTestUtil.postCopyScenario(ComponentInfoBuilder
+        ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
             .scenarioName(newScenarioName)
             .componentId(postComponentResponse.getComponentIdentity())
@@ -57,7 +58,7 @@ public class ScenariosTests {
         assertThat(copyScenarioResponse.getResponseEntity().getLastAction(), is(equalTo("COPY")));
 
         //Rechecking the original scenario has not changed
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = cidAppTestUtil.getScenarioRepresentation(
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(
             ScenarioRepresentationBuilder.builder()
                 .item(postComponentResponse)
                 .user(currentUser)

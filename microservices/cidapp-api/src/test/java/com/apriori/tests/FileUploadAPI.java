@@ -5,7 +5,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -29,7 +30,8 @@ import java.util.List;
 @RunWith(JUnitParamsRunner.class)
 public class FileUploadAPI {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    final private ComponentsUtil componentsUtil = new ComponentsUtil();
+    final private ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
@@ -44,9 +46,9 @@ public class FileUploadAPI {
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = cidAppTestUtil.postCssComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
-        cidAppTestUtil.postCostScenario(
+        scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -59,7 +61,7 @@ public class FileUploadAPI {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> publishResponse = cidAppTestUtil.postPublishScenario(componentResponse, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
+        ResponseWrapper<ScenarioResponse> publishResponse = scenariosUtil.postPublishScenario(componentResponse, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
 
         assertThat(publishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
         assertThat(publishResponse.getResponseEntity().getPublished(), is(true));
