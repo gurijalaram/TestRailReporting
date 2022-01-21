@@ -10,7 +10,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 public class IterationsUtil {
     /**
-     * GET to find components for the current user matching an identity and component
+     * GET components for the current user matching an identity and component
      *
      * @param componentInfoBuilder - the cost component object
      * @return response object
