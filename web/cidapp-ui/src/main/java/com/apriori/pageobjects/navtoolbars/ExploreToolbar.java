@@ -1,9 +1,10 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
@@ -115,7 +116,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        Item component = new CidAppTestUtil().postCssComponent(componentName, scenarioName, resourceFile, userCredentials);
+        Item component = new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
         return navigateToScenario(component);
     }
 
@@ -129,7 +130,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public Item uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new CidAppTestUtil().postCssComponent(componentName, scenarioName, resourceFile, userCredentials);
+        return new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
     }
 
 
@@ -288,5 +289,15 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
         return new FileUploadPage(driver).enterFilePath(filePath).submit(klass);
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return new page object
+     */
+    public ExplorePage refresh() {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return new ExplorePage(driver);
     }
 }
