@@ -8,6 +8,7 @@ import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,6 +28,9 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     @FindBy(className = "customer-list-view-source-list")
     private WebElement sourceListRoot;
     private final SourceListComponent customerSourceList;
+
+    @FindBy(className = "apriori-source-list-layout-card-button")
+    private WebElement cardViewButton;
 
     public CustomerAdminPage(WebDriver driver) {
         super(driver, log);
@@ -88,5 +92,38 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
      */
     public SourceListComponent getSourceList() {
         return customerSourceList;
+    }
+
+    /**
+     * Clicks the card view button
+     *
+     * @return This object
+     */
+    public CustomerAdminPage clickCardViewButton() {
+        getPageUtils().waitForElementAndClick(cardViewButton);
+        return this;
+    }
+
+    /**
+     * Gets locator of status icon
+     *
+     * @param customerIdentity the customer identity
+     * @return web element
+     */
+    private WebElement findStatusIcon(String customerIdentity) {
+        return getDriver().findElement(By.xpath(String.format("//a[@href='/customers/%s']//span[@class='float-right']",
+                customerIdentity.toUpperCase().trim())));
+    }
+
+    /**
+     * Checks is icon has a expected color
+     *
+     * @param customerIdentity the customer identity
+     * @param color color of icon
+     * @return true or false
+     */
+    public boolean isStatusIconColour(String customerIdentity, String color) {
+        return getPageUtils().scrollWithJavaScript(findStatusIcon(customerIdentity)
+                .findElement(By.cssSelector("svg")), true).getAttribute("color").equals(color);
     }
 }

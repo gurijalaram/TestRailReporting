@@ -4,7 +4,7 @@ import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
 public enum CssAPIEnum implements ExternalEndpointEnum {
-    GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES("scenario-iterations?componentName[EQ]=%s&scenarioName[EQ]=%s");
+    GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES("scenario-iterations?componentName[EQ]=%s&scenarioName[EQ]=%s&componentType[NE]=Unknown");
 
     private final String endpoint;
 
