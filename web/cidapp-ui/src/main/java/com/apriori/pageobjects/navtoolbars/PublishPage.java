@@ -1,7 +1,9 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.response.PersonResponse;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.PeopleUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
@@ -61,7 +63,8 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private PeopleUtil peopleUtil = new PeopleUtil();
 
     public PublishPage(WebDriver driver) {
         this.driver = driver;
@@ -110,7 +113,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectAssignee(UserCredentials assignee) {
-        PersonResponse currentPerson = cidAppTestUtil.getCurrentPerson(assignee);
+        PersonResponse currentPerson = peopleUtil.getCurrentPerson(assignee);
         pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
@@ -176,7 +179,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public <T> T publish(Item cssItem, UserCredentials currentUser, Class<T> klass) {
         modalDialogController.publish(klass);
-        new CidAppTestUtil().getScenarioRepresentation(cssItem, "PUBLISH", true, currentUser);
+        new ScenariosUtil().getScenarioRepresentation(cssItem, "PUBLISH", true, currentUser);
         return PageFactory.initElements(driver, klass);
     }
 

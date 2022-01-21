@@ -20,7 +20,6 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -84,7 +83,7 @@ public class UncostedComponents {
 
                 if (items.isPresent()) {
                     items.get().stream()
-                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
+                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()) && !scenarioState.getState().equals(PROCESSING_FAILED.getState()))
                         .findAny()
                         .ifPresent(y -> {
                             throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
@@ -95,7 +94,7 @@ public class UncostedComponents {
 
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                        return scenarioRepresentation.getResponseEntity().getItems();
                     }
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);

@@ -75,6 +75,9 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     @FindBy(className = "invalid-feedback-for-max-cad-file-size")
     private WebElement maxCadFileSizeFeedback;
 
+    @FindBy(className = "checkbox-icon")
+    private WebElement statusCheckbox;
+
 
     /**
      * Initializes a new instance of this object.
@@ -438,5 +441,26 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
      */
     public WebElement getToastifyError() {
         return getPageUtils().waitForElementToAppear(By.className("Toastify__toast-container"));
+    }
+
+    /**
+     * Gets status of customer
+     *
+     * @return string
+     */
+    public String getStatus() {
+        By icon = By.xpath("//label[.='Status:']/following-sibling::div[@class='text-overflow read-field read-field-active']");
+        getPageUtils().waitForElementToAppear(icon);
+        return getDriver().findElement(icon).getAttribute("textContent");
+    }
+
+    /**
+     * Changes status of customer
+     *
+     * @return this object
+     */
+    public CustomerProfilePage changeCustomerStatus() {
+        getPageUtils().waitForElementAndClick(statusCheckbox);
+        return this;
     }
 }
