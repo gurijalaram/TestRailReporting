@@ -37,8 +37,7 @@ public class GetScenariosInfoTests {
     public void testGetScenariosInfoTwoParts() {
         ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
 
-        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse =
-                coreGetScenariosInfoTest(fileNames);
+        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
 
         getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
     }
@@ -48,11 +47,9 @@ public class GetScenariosInfoTests {
     @TestRail(testCaseId = "10384")
     @Description("Validate Get Scenarios Info - Four Parts")
     public void testGetScenariosInfoFourParts() {
-        ArrayList<String> fileNames = new ArrayList<>(
-                Arrays.asList("Casting.prt", "tab_forms.prt", "bracket_basic.prt", "flanged_hole.prt"));
+        ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt", "bracket_basic.prt", "flanged_hole.prt"));
 
-        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse =
-                coreGetScenariosInfoTest(fileNames);
+        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
 
         getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
     }
@@ -110,15 +107,13 @@ public class GetScenariosInfoTests {
         String processGroup = "";
 
         for (int i = 0; i < fileNames.size(); i++) {
-            processGroup = i == 0 ? ProcessGroupEnum.CASTING.getProcessGroup()
-                    : ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+            processGroup = i == 0 ? ProcessGroupEnum.CASTING.getProcessGroup() : ProcessGroupEnum.SHEET_METAL.getProcessGroup();
             fileResponses.add(fileUploadResources.initialisePartUpload(
                     fileNames.get(i),
                     processGroup
             ));
 
-            fileUploadOutputs.add(
-                    fileUploadResources.createFileUploadWorkorderSuppressError(fileResponses.get(i), testScenarioName));
+            fileUploadOutputs.add(fileUploadResources.createFileUploadWorkorderSuppressError(fileResponses.get(i), testScenarioName));
         }
 
         return fileUploadOutputs;
@@ -140,8 +135,7 @@ public class GetScenariosInfoTests {
         }
 
         AcsResources acsResources = new AcsResources();
-        ResponseWrapper<GetScenariosInfoResponse> response = acsResources
-                .getScenariosInformation2(scenarioIterationKeys);
+        ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformation2(scenarioIterationKeys);
 
         ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>();
         ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>();
@@ -162,8 +156,7 @@ public class GetScenariosInfoTests {
      * @param scenarioItemsResponse - Map of get scenarios info items and scenario keys to allow asserts
      * @param fileNames - file names to assert against
      */
-    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse,
-                                            ArrayList<String> fileNames) {
+    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse, ArrayList<String> fileNames) {
 
         ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>(scenarioItemsResponse.keySet());
         ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>(scenarioItemsResponse.values());

@@ -12,7 +12,6 @@ import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
@@ -27,7 +26,6 @@ public class GetSetProductionDefaultsTests {
         AcsResources acsResources = new AcsResources();
         GetProductionDefaultsResponse getProductionDefaultsResponse = acsResources.getProductionDefaults();
 
-        //assertThat(getProductionDefaultsResponse.getMaterial(), is(equalTo("Accura 10")));
         assertThat(getProductionDefaultsResponse.getMaterial(), anyOf(equalTo("Accura 10"), equalTo("Use Default")));
         assertThat(getProductionDefaultsResponse.getAnnualVolume(), is(equalTo("5500")));
         assertThat(getProductionDefaultsResponse.getProductionLife(), is(equalTo(5.0)));
@@ -59,16 +57,12 @@ public class GetSetProductionDefaultsTests {
 
         GetProductionDefaultsResponse getProductionDefaultsResponse = acsResources.getProductionDefaults();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(getProductionDefaultsResponse.getMaterial().equals("Accura 10"));
-        softAssertions.assertThat(getProductionDefaultsResponse.getAnnualVolume().equals("5500"));
-        softAssertions.assertThat(getProductionDefaultsResponse.getProductionLife() == 5.0);
-        softAssertions.assertThat(getProductionDefaultsResponse.getBatchSize() == 458);
-        softAssertions.assertThat(!getProductionDefaultsResponse.isUseVpeForAllProcesses());
-        softAssertions.assertThat(!getProductionDefaultsResponse.isBatchSizeMode());
-
-        softAssertions.assertAll();
+        assertThat(getProductionDefaultsResponse.getMaterial(), is(equalTo("Accura 10")));
+        assertThat(getProductionDefaultsResponse.getAnnualVolume(), is(equalTo("5500")));
+        assertThat(getProductionDefaultsResponse.getProductionLife(), is(equalTo(5.0)));
+        assertThat(getProductionDefaultsResponse.getBatchSize(), is(equalTo(458)));
+        assertThat(getProductionDefaultsResponse.isUseVpeForAllProcesses(), is(equalTo(false)));
+        assertThat(getProductionDefaultsResponse.isBatchSizeMode(), is(equalTo(false)));
     }
 
     @Test

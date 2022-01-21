@@ -30,8 +30,7 @@ public class GetSetDisplayUnitsTests {
 
         assertThat(getDisplayUnitsResponse, is(notNullValue()));
 
-        assertThat(getDisplayUnitsResponse.getCurrencyLabel(), is(equalTo(
-                "abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")));
+        assertThat(getDisplayUnitsResponse.getCurrencyLabel(), is(equalTo("abaairaairbaizqbirjqizraizraiyqbabjrizyrirjqjzqiyrbbizyq")));
 
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getType(), is(equalTo("simple")));
         assertThat(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getName(), is(equalTo("MMKS")));
@@ -55,8 +54,7 @@ public class GetSetDisplayUnitsTests {
         AcsResources acsResources = new AcsResources();
         GetDisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
-        String currencyCodeToCheck = getDisplayUnitsResponse.getCurrencyCode().equals(CurrencyEnum.USD.getCurrency())
-                ? CurrencyEnum.GBP.getCurrency() : CurrencyEnum.USD.getCurrency();
+        String currencyCodeToCheck = getDisplayUnitsResponse.getCurrencyCode().equals(CurrencyEnum.USD.getCurrency()) ? CurrencyEnum.GBP.getCurrency() : CurrencyEnum.USD.getCurrency();
 
         GenericResourceCreatedResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
@@ -73,7 +71,7 @@ public class GetSetDisplayUnitsTests {
                                         .getDecimalPlaces())
                                 .system(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem())
                                 .custom(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isCustom())
-                                .build())
+                            .build())
                 .build());
 
         assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
@@ -90,12 +88,9 @@ public class GetSetDisplayUnitsTests {
         AcsResources acsResources = new AcsResources();
         GetDisplayUnitsResponse getDisplayUnitsResponse = acsResources.getDisplayUnits();
 
-        String lengthToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength().equals("mm")
-                ? "in" : "mm";
-        String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg")
-                ? "lb" : "kg";
-        String metricToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo()
-                .getMetric().equals("true") ? "false" : "true";
+        String lengthToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getLength().equals("mm") ? "in" : "mm";
+        String massToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMass().equals("kg") ? "lb" : "kg";
+        String metricToSet = getDisplayUnitsResponse.getUnitVariantSettingsInfo().getMetric().equals("true") ? "false" : "true";
 
         GenericResourceCreatedResponse setDisplayUnitsResponse = acsResources
                 .setDisplayUnits(SetDisplayUnitsInputs.builder()
@@ -111,19 +106,17 @@ public class GetSetDisplayUnitsTests {
                                 .decimalPlaces(getDisplayUnitsResponse.getUnitVariantSettingsInfo().getDecimalPlaces())
                                 .system(getDisplayUnitsResponse.getUnitVariantSettingsInfo().isSystem())
                                 .custom(true)
-                                .build())
+                            .build())
                 .build());
 
         assertThat(setDisplayUnitsResponse.getResourceCreated(), is(equalTo("false")));
 
         GetDisplayUnitsResponse getDisplayUnitResponsePostChanges = acsResources.getDisplayUnits();
         String isMetric = lengthToSet.equals("mm") ? "true" : "false";
-        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMetric(),
-                is(equalTo(isMetric)));
-        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getLength(),
-                is(equalTo(lengthToSet)));
-        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMass(),
-                is(equalTo(massToSet)));
+
+        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMetric(), is(equalTo(isMetric)));
+        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getLength(), is(equalTo(lengthToSet)));
+        assertThat(getDisplayUnitResponsePostChanges.getUnitVariantSettingsInfo().getMass(), is(equalTo(massToSet)));
     }
 
     private void getDisplayUnitsAssertions(GetDisplayUnitsResponse getDisplayUnitsResponse, String length, String mass) {

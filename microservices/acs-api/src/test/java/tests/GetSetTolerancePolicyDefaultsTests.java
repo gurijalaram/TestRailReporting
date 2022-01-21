@@ -25,16 +25,16 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Get Tolerance Policy Defaults")
     public void testGetTolerancePolicyDefaults() {
         AcsResources acsResources = new AcsResources();
-        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources
-                .getTolerancePolicyDefaults();
+        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
+
         assertThat(propertyValueMap.getTotalRunoutOverride(), is(equalTo(1.4)));
         assertThat(propertyValueMap.getToleranceMode(), is(equalTo("SYSTEMDEFAULT")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
 
-        PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap()
-                .getTotalRunoutOverride();
+        PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
+
         assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
         assertThat(totalRunoutOverrideItem.getUnitTypeName(), is(equalTo("mm")));
         assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), is(equalTo("DOUBLE")));
@@ -69,8 +69,7 @@ public class GetSetTolerancePolicyDefaultsTests {
 
         assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated(), is(equalTo("false")));
 
-        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources
-                .getTolerancePolicyDefaults();
+        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
         assertThat(propertyValueMap.getTotalRunoutOverride(), is(equalTo(0.1)));

@@ -40,24 +40,16 @@ public class CreateMissingScenarioTests {
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getComponentType(), is(equalTo(Constants.PART_COMPONENT_TYPE)));
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getConfigurationName(), is(equalTo(Constants.PART_CONFIG_NAME)));
-
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getLocked(), is(equalTo("false")));
-
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getFileName(), is(equalTo(Constants.PART_FILE_NAME)));
-
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedBy(), is(containsString("qa-automation")));
 
         String currentDate = LocalDateTime.now(ZoneOffset.UTC).withNano(0).toString().substring(0, 10);
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getCreatedAt(), is(startsWith(currentDate)));
-
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedBy(), is(containsString("qa-automation")));
-
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.getUpdatedAt(), is(startsWith(currentDate)));
-
-
         assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getStateName(), is(equalTo(getScenarioInfoByScenarioIterationKeyResponse.getScenarioName())));
-
         assertThat(createMissingScenarioResponse.getScenarioIterationKey().getScenarioKey().getMasterName(), is(startsWith(getScenarioInfoByScenarioIterationKeyResponse.getComponentName())));
     }
 }

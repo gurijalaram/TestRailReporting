@@ -1,6 +1,5 @@
 package tests;
 
-import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -27,8 +26,7 @@ public class GetUnitVariantSettingsTests {
         AcsResources acsResources = new AcsResources();
         GetUnitVariantSettingsResponse getUnitVariantSettingsResponse = acsResources.getUnitVariantSettings();
 
-        ArrayList<UnitVariantSetting> allItems =
-                getUnitVariantSettingsResponse.getAllUnitVariantSetting();
+        ArrayList<UnitVariantSetting> allItems = getUnitVariantSettingsResponse.getAllUnitVariantSetting();
 
         for (UnitVariantSetting item : allItems) {
             assertThat(item.getType(), is(equalTo("simple")));
@@ -57,13 +55,6 @@ public class GetUnitVariantSettingsTests {
         assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
         assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
-
-        /*if (expectedMass.equals("lb")) {
-            assertThat(getCustomUnitVariantSettingsResponse.getMass(),
-                    anyOf(equalTo(expectedMass), equalTo("oz")));
-        } else {
-            assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
-        }*/
 
         assertThat(getCustomUnitVariantSettingsResponse.getTime(), is(equalTo("s")));
         assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces(), is(equalTo(2.0)));
