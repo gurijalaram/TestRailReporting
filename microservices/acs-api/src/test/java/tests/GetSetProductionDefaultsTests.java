@@ -1,5 +1,6 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
@@ -26,7 +27,8 @@ public class GetSetProductionDefaultsTests {
         AcsResources acsResources = new AcsResources();
         GetProductionDefaultsResponse getProductionDefaultsResponse = acsResources.getProductionDefaults();
 
-        assertThat(getProductionDefaultsResponse.getMaterial(), is(equalTo("Accura 10")));
+        //assertThat(getProductionDefaultsResponse.getMaterial(), is(equalTo("Accura 10")));
+        assertThat(getProductionDefaultsResponse.getMaterial(), anyOf(equalTo("Accura 10"), equalTo("Use Default")));
         assertThat(getProductionDefaultsResponse.getAnnualVolume(), is(equalTo("5500")));
         assertThat(getProductionDefaultsResponse.getProductionLife(), is(equalTo(5.0)));
         assertThat(getProductionDefaultsResponse.getBatchSize(), is(equalTo(458)));
