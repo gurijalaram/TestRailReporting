@@ -49,7 +49,7 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
@@ -87,7 +87,7 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        Item componentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
@@ -143,7 +143,7 @@ public class ReCostScenarioTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        Item componentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

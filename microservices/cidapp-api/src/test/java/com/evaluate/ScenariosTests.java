@@ -43,7 +43,7 @@ public class ScenariosTests {
         currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        Item postComponentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()

@@ -37,7 +37,7 @@ public class ComponentsUtil {
      * @param userCredentials - the user credentials
      * @return Item
      */
-    public Item postComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public Item postComponentQueryCSS(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))

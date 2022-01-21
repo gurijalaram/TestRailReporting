@@ -41,7 +41,7 @@ public class ComponentsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         assertThat(postComponentResponse.getScenarioIdentity(), is(not(emptyString())));
     }
@@ -55,7 +55,7 @@ public class ComponentsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         ResponseWrapper<GetComponentResponse> getComponentResponse = componentsUtil.getComponents();
 
@@ -73,7 +73,7 @@ public class ComponentsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postComponent(componentName, scenarioName, resourceFile, currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = componentsUtil.getComponentIdentity(postComponentResponse.getComponentIdentity());
 
