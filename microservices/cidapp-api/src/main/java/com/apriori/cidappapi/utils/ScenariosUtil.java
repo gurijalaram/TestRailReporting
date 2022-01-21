@@ -8,6 +8,12 @@ import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
+import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
+import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
+import com.apriori.cidappapi.entity.response.GetComponentResponse;
+import com.apriori.cidappapi.entity.response.PeopleResponse;
+import com.apriori.cidappapi.entity.response.PersonResponse;
+import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -205,6 +211,40 @@ public class ScenariosUtil {
         HTTPRequest.build(requestEntity).post();
 
         return new ComponentsUtil().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), ScenarioStateEnum.COST_COMPLETE, componentInfoBuilder.getUser());
+    }
+
+    /**
+     * Post to Copy a Scenario
+     *
+     * @param componentInfoBuilder - the copy component object
+     * @return response object
+     */
+    public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            .token(componentInfoBuilder.getUser().getToken())
+            .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+            .body("scenario",
+                ScenarioRequest.builder()
+                    .scenarioName(componentInfoBuilder.getScenarioName())
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * GET to find components for the current user matching an identity and component
+     *
+     * @param componentInfoBuilder - the cost component object
+     * @return response object
+     */
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfoBuilder) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId());
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**

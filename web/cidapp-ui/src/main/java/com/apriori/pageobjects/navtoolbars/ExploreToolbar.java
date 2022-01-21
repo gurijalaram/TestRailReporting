@@ -4,6 +4,7 @@ import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
@@ -288,5 +289,15 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
         return new FileUploadPage(driver).enterFilePath(filePath).submit(klass);
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return new page object
+     */
+    public ExplorePage refresh() {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return new ExplorePage(driver);
     }
 }
