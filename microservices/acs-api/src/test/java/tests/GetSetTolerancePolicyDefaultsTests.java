@@ -1,8 +1,10 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
@@ -29,14 +31,14 @@ public class GetSetTolerancePolicyDefaultsTests {
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
 
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(equalTo(1.4)));
+        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
         assertThat(propertyValueMap.getToleranceMode(), is(equalTo("SYSTEMDEFAULT")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
 
         PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
 
         assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
-        assertThat(totalRunoutOverrideItem.getUnitTypeName(), is(equalTo("mm")));
+        assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
         assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), is(equalTo("DOUBLE")));
     }
 
