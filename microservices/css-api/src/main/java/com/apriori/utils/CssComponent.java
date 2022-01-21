@@ -86,9 +86,9 @@ public class CssComponent {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                final Optional<List<Item>> items = Optional.ofNullable(scenarioRepresentation.getResponseEntity().getItems());
+                final Optional<List<Item>> items = Optional.of(scenarioRepresentation.getResponseEntity().getItems());
 
-                if (items.isPresent()) {
+                if (items.get().size() > 0) {
 
                     Supplier<Stream<Item>> distinctItem = () -> items.get().stream().distinct();
 
