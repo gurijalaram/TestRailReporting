@@ -20,7 +20,6 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -95,7 +94,7 @@ public class UncostedComponents {
 
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                        return scenarioRepresentation.getResponseEntity().getItems();
                     }
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
