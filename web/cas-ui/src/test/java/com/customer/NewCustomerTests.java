@@ -12,8 +12,11 @@ import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.Obligation;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
+import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -29,6 +32,7 @@ import org.openqa.selenium.WebElement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
@@ -79,27 +83,34 @@ public class NewCustomerTests extends TestBase {
             .overridingErrorMessage("The system configuration tab is enabled on a new customer.")
             .isFalse();
 
-        testNewCustomerLabelAvailable("Customer Name:", soft);
-        testNewCustomerLabelAvailable("Description:", soft);
-        testNewCustomerLabelAvailable("Customer Type:", soft);
-        testNewCustomerLabelAvailable("Salesforce ID:", soft);
-        testNewCustomerLabelAvailable("Cloud Reference:", soft);
-        testNewCustomerLabelAvailable("Email Domains:", soft);
-        testNewCustomerLabelAvailable("CAD File Retention Policy (days):", soft);
-        testNewCustomerLabelAvailable("Max CAD File Size:", soft);
-        testNewCustomerLabelAvailable("Last Updated:", soft);
-        testNewCustomerLabelAvailable("Updated By:", soft);
-        testNewCustomerLabelAvailable("Created:", soft);
-        testNewCustomerLabelAvailable("Created By:", soft);
-        testNewCustomerLabelAvailable("Authentication:", soft);
+        List<String> labels = Arrays.asList(
+                "Customer Name:",
+                "Description:",
+                "Customer Type:",
+                "Salesforce ID:",
+                "Cloud Reference:",
+                "Email Domains:",
+                "CAD File Retention Policy (days):",
+                "Max CAD File Size:",
+                "Last Updated:",
+                "Updated By:",
+                "Created:",
+                "Created By:",
+                "Authentication:",
+                "Status:"
+        );
+
+        testNewCustomerLabelAvailable(labels, soft);
         soft.assertAll();
     }
 
-    private void testNewCustomerLabelAvailable(String label, SoftAssertions soft) {
-        List<WebElement> elements = driver.findElements(By.xpath(String.format("//label[.='%s']", label)));
-        soft.assertThat(elements.size())
-            .overridingErrorMessage(String.format("Could not find the label, %s", label))
-            .isGreaterThan(0);
+    private void testNewCustomerLabelAvailable(List<String> labels, SoftAssertions soft) {
+        labels.forEach(label -> {
+            List<WebElement> elements = driver.findElements(By.xpath(String.format("//label[.='%s']", label)));
+            soft.assertThat(elements.size())
+                    .overridingErrorMessage(String.format("Could not find the label, %s", label))
+                    .isGreaterThan(0);
+        });
     }
 
     @Test
@@ -114,9 +125,9 @@ public class NewCustomerTests extends TestBase {
 
     @Test
     @Category({SmokeTest.class})
-    @Description("The save button creates the new user and reloads the page in edit mode.")
-    @TestRail(testCaseId = {"9616"})
-    public void testSaveCreatesTheNewUserAndThePageReloadsWithTheNewCustomer() {
+    @Description("The save button creates the new customer and reloads the page in edit mode.")
+    @TestRail(testCaseId = {"9616", "10627"})
+    public void testSaveCreatesTheNewCustomerAndThePageReloadsWithTheNewCustomer() {
 
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
@@ -140,6 +151,10 @@ public class NewCustomerTests extends TestBase {
         created.add(customerViewPage.findCustomerIdentity());
 
         assertThat(editPage, is(notNullValue()));
+
+        editPage.clickCancelButton(CustomerProfilePage.class);
+
+        assertThat(customerProfilePage.getStatus(), is(equalTo("Active")));
     }
 
     private void testTheNecessaryFieldsAreRequired(SoftAssertions soft) {
@@ -242,5 +257,37 @@ public class NewCustomerTests extends TestBase {
         assertThat(customerProfilePage.getCloudRefFeedback(), is(equalTo("")));
         assertThat(customerProfilePage.getCloudRefValue(), is(equalTo("")));
         assertThat(customerProfilePage.isCloudReferenceEnabled(), is(equalTo(false)));
+    }
+
+    @Test
+    @Description("Validate that customer can be set to inactive by unselecting Status checkbox")
+    @TestRail(testCaseId = {"10633"})
+    public void testNewCustomerCanBeCreatedWithInactiveStatus() {
+        DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
+        format.setTimeZone(TimeZone.getTimeZone("UTC"));
+        String salesforceId = format.format(new Date());
+        String customerName = String.format("QA Automation %s", salesforceId);
+        customerProfilePage
+                .enterDescription("Automation Test Customer")
+                .enterSalesforceId(salesforceId)
+                .enterEmailDomains("apriori.com")
+                .enterCustomerName(customerName)
+                .changeCustomerStatus()
+                .clickSaveButton();
+
+        assertThat(customerProfilePage.getStatus(), is(equalTo("Inactive")));
+
+        String customerIdentity = customerViewPage.findCustomerIdentity();
+
+        CustomerAdminPage findCustomer = customerViewPage.goToCustomersList()
+                .clickCardViewButton();
+
+        PageUtils utils = new PageUtils(getDriver());
+
+        SourceListComponent customers = findCustomer.getSourceList();
+        Obligation.mandatory(customers::getSearch, "Customers list search is missing").search(customerIdentity);
+        utils.waitForCondition(customers::isStable, PageUtils.DURATION_LOADING);
+
+        assertThat(findCustomer.isStatusIconColour(customerIdentity, "red"), is(true));
     }
 }

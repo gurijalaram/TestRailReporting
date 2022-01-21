@@ -125,7 +125,7 @@ public class CustomerStaffTests extends TestBase {
         goToTableView.selectUser(customerIdentity, userIdentity, userName)
                 .edit()
                 .cancel()
-                .backToUsersListPage()
+                .backToUsersListPage(UsersListPage.class)
                 .clickNew()
                 .backToUsersListPage();
 
@@ -167,7 +167,7 @@ public class CustomerStaffTests extends TestBase {
                 .edit()
                 .changeStatus()
                 .save()
-                .backToUsersListPage()
+                .backToUsersListPage(UsersListPage.class)
                 .clickCardViewButton();
 
         Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
