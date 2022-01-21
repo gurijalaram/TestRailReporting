@@ -74,7 +74,7 @@ public class GetSetTolerancePolicyDefaultsTests {
         GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(equalTo(0.1)));
+        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
         assertThat(propertyValueMap.getToleranceMode(), is(equalTo("PARTOVERRIDE")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
     }
