@@ -219,7 +219,7 @@ public class AcsResources {
 
     /**
      * Gets Enabled Currency Rate Versions
-     * Return is void because the mapping to CurrencyRateVersionResponse is the validation, so no assertions required
+     * Return is void because the mapping to CurrencyRateVersionResponse is the validation, therefore no assertions are required
      */
     public void getEnabledCurrencyRateVersions() {
         token.put(contentType, applicationJson);

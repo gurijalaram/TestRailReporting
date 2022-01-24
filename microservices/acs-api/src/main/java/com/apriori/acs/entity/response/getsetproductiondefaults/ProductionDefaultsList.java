@@ -6,19 +6,19 @@ import lombok.Data;
 @Data
 public class ProductionDefaultsList {
     @JsonProperty("prod.info.default.material")
-    private String prodinfodefaultmaterial;
+    private String prodInfoDefaultMaterial;
     @JsonProperty("prod.info.default.annual.volume")
-    private int prodinfodefaultannualvolume;
+    private int prodInfoDefaultAnnualVolume;
     @JsonProperty("prod.info.default.use.vpe.for.all.processes")
-    private String prodinfodefaultusevpeforallprocesses;
+    private String prodInfoDefaultUseVpeForAllProcesses;
     @JsonProperty("prod.info.default.material.catalog.name")
-    private String prodinfodefaultmaterialcatalogname;
+    private String prodInfoDefaultMaterialCatalogName;
     @JsonProperty("prod.info.default.production.life")
-    private String prodinfodefaultproductionlife;
+    private String prodInfoDefaultProductionLife;
     @JsonProperty("prod.info.default.batch.size")
-    private String prodinfodefaultbatchsize;
+    private String prodInfoDefaultBatchSize;
     @JsonProperty("prod.info.default.pg")
-    private String prodinfodefaultpg;
+    private String prodInfoDefaultPg;
     @JsonProperty("prod.info.default.vpe")
-    private String prodinfodefaultvpe;
+    private String prodInfoDefaultVpe;
 }
