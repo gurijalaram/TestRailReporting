@@ -96,7 +96,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7342"})
     @Description("Verify apply button functionality - Casting DTC Report")
     public void testApplyButton() {
