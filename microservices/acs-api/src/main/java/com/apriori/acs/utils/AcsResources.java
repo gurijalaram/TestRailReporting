@@ -30,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AcsResources {
 
@@ -107,7 +108,7 @@ public class AcsResources {
             ScenarioIterationKey scenarioIterationKeyTwo) {
         token.put(contentType, applicationJson);
 
-        ArrayList<ScenarioIterationKey> listOfKeys = new ArrayList<>();
+        List<ScenarioIterationKey> listOfKeys = new ArrayList<>();
         listOfKeys.add(scenarioIterationKeyOne);
         listOfKeys.add(scenarioIterationKeyTwo);
 
@@ -123,7 +124,7 @@ public class AcsResources {
     }
 
     public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation2(
-            ArrayList<ScenarioIterationKey> scenarioIterationKeys) {
+            List<ScenarioIterationKey> scenarioIterationKeys) {
         token.put(contentType, applicationJson);
 
         final RequestEntity requestEntity = RequestEntityUtil

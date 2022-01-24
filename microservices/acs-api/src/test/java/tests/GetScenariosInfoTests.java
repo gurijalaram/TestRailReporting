@@ -26,6 +26,7 @@ import testsuites.categories.AcsTest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GetScenariosInfoTests {
@@ -35,7 +36,7 @@ public class GetScenariosInfoTests {
     @TestRail(testCaseId = "9597")
     @Description("Validate Get Scenarios Info - Two Parts")
     public void testGetScenariosInfoTwoParts() {
-        ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
+        List<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
 
         Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
 
@@ -47,7 +48,7 @@ public class GetScenariosInfoTests {
     @TestRail(testCaseId = "10384")
     @Description("Validate Get Scenarios Info - Four Parts")
     public void testGetScenariosInfoFourParts() {
-        ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt", "bracket_basic.prt", "flanged_hole.prt"));
+        List<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt", "bracket_basic.prt", "flanged_hole.prt"));
 
         Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
 
@@ -59,8 +60,8 @@ public class GetScenariosInfoTests {
     @TestRail(testCaseId = "10182")
     @Description("Negative Get Scenarios Info - Invalid Iteration Identities")
     public void negativeGetScenariosInfoInvalidIterationIdentitiesTest() {
-        ArrayList<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
-        ArrayList<FileUploadOutputs> fileUploadOutputsArrayList = fileUpload(fileNames);
+        List<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
+        List<FileUploadOutputs> fileUploadOutputsArrayList = fileUpload(fileNames);
 
         ScenarioIterationKey keyOne = fileUploadOutputsArrayList.get(0).getScenarioIterationKey();
         ScenarioIterationKey keyTwo = fileUploadOutputsArrayList.get(1).getScenarioIterationKey();
@@ -95,15 +96,15 @@ public class GetScenariosInfoTests {
      * File upload part of get scenarios info test
      *
      * @param fileNames output from previous part of test
-     * @return ArrayList of FileUploadOutputs - data to assert on
+     * @return List of FileUploadOutputs - data to assert on
      */
-    private ArrayList<FileUploadOutputs> fileUpload(ArrayList<String> fileNames) {
+    private List<FileUploadOutputs> fileUpload(List<String> fileNames) {
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
         FileUploadResources fileUploadResources = new FileUploadResources();
 
-        ArrayList<FileResponse> fileResponses = new ArrayList<>();
-        ArrayList<FileUploadOutputs> fileUploadOutputs = new ArrayList<>();
+        List<FileResponse> fileResponses = new ArrayList<>();
+        List<FileUploadOutputs> fileUploadOutputs = new ArrayList<>();
         String processGroup = "";
 
         for (int i = 0; i < fileNames.size(); i++) {
@@ -122,13 +123,13 @@ public class GetScenariosInfoTests {
     /**
      * Main part of get scenarios info test
      *
-     * @param fileNames - ArrayList of Strings - file names to upload
+     * @param fileNames - List of Strings - file names to upload
      * @return Map of GetScenariosInfoItem and ScenarioKey
      */
-    private Map<GetScenariosInfoItem, ScenarioKey> coreGetScenariosInfoTest(ArrayList<String> fileNames) {
-        ArrayList<FileUploadOutputs> fileUploadOutputs = fileUpload(fileNames);
+    private Map<GetScenariosInfoItem, ScenarioKey> coreGetScenariosInfoTest(List<String> fileNames) {
+        List<FileUploadOutputs> fileUploadOutputs = fileUpload(fileNames);
 
-        ArrayList<ScenarioIterationKey> scenarioIterationKeys = new ArrayList<>();
+        List<ScenarioIterationKey> scenarioIterationKeys = new ArrayList<>();
 
         for (FileUploadOutputs fileUploadOutput : fileUploadOutputs) {
             scenarioIterationKeys.add(fileUploadOutput.getScenarioIterationKey());
@@ -137,8 +138,8 @@ public class GetScenariosInfoTests {
         AcsResources acsResources = new AcsResources();
         ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformation2(scenarioIterationKeys);
 
-        ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>();
-        ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>();
+        List<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>();
+        List<ScenarioKey> scenarioKeys = new ArrayList<>();
         Map<GetScenariosInfoItem, ScenarioKey> responseHashMap = new HashMap<>();
 
         for (int j = 0; j < response.getResponseEntity().size(); j++) {
@@ -156,10 +157,10 @@ public class GetScenariosInfoTests {
      * @param scenarioItemsResponse - Map of get scenarios info items and scenario keys to allow asserts
      * @param fileNames - file names to assert against
      */
-    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse, ArrayList<String> fileNames) {
+    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse, List<String> fileNames) {
 
-        ArrayList<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>(scenarioItemsResponse.keySet());
-        ArrayList<ScenarioKey> scenarioKeys = new ArrayList<>(scenarioItemsResponse.values());
+        List<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>(scenarioItemsResponse.keySet());
+        List<ScenarioKey> scenarioKeys = new ArrayList<>(scenarioItemsResponse.values());
 
         String userToExpect = "qa-automation-01";
         String componentTypeToExpect = "PART";
@@ -186,5 +187,4 @@ public class GetScenariosInfoTests {
 
         softAssertions.assertAll();
     }
-
 }
