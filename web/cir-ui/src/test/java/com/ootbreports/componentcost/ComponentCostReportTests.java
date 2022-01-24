@@ -173,7 +173,7 @@ public class ComponentCostReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"3329"})
     @Description("Verify Currency Code input control is working correctly")
     public void testCurrencyCode() {
