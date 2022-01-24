@@ -180,7 +180,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category({ReportsTest.class, CiaCirTestDevTest.class})
+    @Category(ReportsTest.class)
     @TestRail(testCaseId = {"6992"})
     @Description("Annualised potential savings threshold filter - details report - junk value")
     public void testAnnualisedFilterJunkValue() {
@@ -204,7 +204,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"7024"})
     @Description("Annualised potential savings threshold filter - details report - no data available")
     public void testAnnualisedPotentialSavingsNoDataAvailable() {
@@ -228,7 +228,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category({ReportsTest.class, CiaCirTestDevTest.class})
     @TestRail(testCaseId = {"6990"})
     @Description("Annualised potential savings threshold filter - details report")
     public void testAnnualisedPotentialSavingsThresholdFilter() {
