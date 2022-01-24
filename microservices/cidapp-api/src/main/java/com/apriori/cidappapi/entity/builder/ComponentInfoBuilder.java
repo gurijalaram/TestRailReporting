@@ -2,6 +2,7 @@ package com.apriori.cidappapi.entity.builder;
 
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -26,4 +27,6 @@ public class ComponentInfoBuilder {
     private final String mode;
     private final String material;
     private final UserCredentials user;
+    @Builder.Default
+    private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
 }

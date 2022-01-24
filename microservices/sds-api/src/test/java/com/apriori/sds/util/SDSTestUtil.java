@@ -10,9 +10,9 @@ import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.EncodedFileUtil;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.UncostedComponents;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -164,7 +164,7 @@ public abstract class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", postComponentRequest.getComponentName(), postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName());
+        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName());
 
         scenariosToDelete.add(itemResponse.get(0));
         return itemResponse.get(0);
