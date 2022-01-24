@@ -203,8 +203,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private FilterPage inputProperty(String property) {
         By propertyDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index));
         pageUtils.waitForElementAndClick(propertyDropdown);
-        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, property));
-        pageUtils.waitForElementAndClick(byMaterialCatalog);
+        By byProperty = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, property));
+        pageUtils.waitForElementAndClick(byProperty);
 
         return this;
     }
@@ -218,8 +218,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private FilterPage inputOperation(String operation) {
         By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index));
         pageUtils.waitForElementAndClick(operationDropdown);
-        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operation));
-        pageUtils.waitForElementAndClick(byMaterialCatalog);
+        By byOperation = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operation));
+        pageUtils.waitForElementAndClick(byOperation);
         return this;
     }
 
