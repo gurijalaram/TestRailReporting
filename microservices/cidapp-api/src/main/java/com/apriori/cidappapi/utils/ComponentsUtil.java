@@ -8,7 +8,7 @@ import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.Item;
-import com.apriori.utils.UncostedComponents;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -51,7 +51,7 @@ public class ComponentsUtil {
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new UncostedComponents().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
+        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return itemResponse.get(0);
     }
@@ -66,7 +66,7 @@ public class ComponentsUtil {
      * @return list of Item
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
-        return new UncostedComponents().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
+        return new CssComponent().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
     }
 
     /**
