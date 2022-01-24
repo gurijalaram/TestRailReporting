@@ -1743,7 +1743,7 @@ public class GenericReportPage extends ReportsPageHeader {
         pageUtils.waitForElementToAppear(componentSelectDropdown);
         componentSelectDropdown.click();
         componentSelectSearchInput.sendKeys(componentName);
-        driver.findElement(By.xpath(String.format("//li[@title='%s']", componentName))).click();
+        driver.findElement(By.xpath(String.format("//li[contains(@title, '%s')]", componentName))).click();
         return this;
     }
 
