@@ -1,18 +1,17 @@
 # Define the environment
-env: qa-cid-perf
-
+env: migration
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: common-users.csv
+  users_csv_file: widgets-migration-users.csv
   different_users: true
   different_parts: true
 
   db_recording: true
 
 # Define the customer
-customer: ap-int
+customer: widgets
 
 ap-int:
   token_subject: 4127
@@ -28,13 +27,13 @@ sprockets:
 
 ######################################################## DEFAULT VALUES ########################################################
 default:
-  aws_region: na-1
+  aws_region: core
 
   cloud:
     ui_url: https://cloud.${default.aws_region}.${env}.apriori.net/
 
   ats:
-    api_url: https://ats.${default.aws_region}.${env}.apriori.net/
+    api_url: https://ats.${default.aws_region}.int.apriori.net/
     token_username: qa-automation-01
     token_email: qa-automation-01@apriori.com
     token_issuer: 2021 R1
@@ -54,11 +53,11 @@ default:
     api_url: https://cds.${default.aws_region}.${env}.apriori.net/
 
   cidapp:
-    api_url: https://cid-api.${default.aws_region}.${env}.apriori.net/
-    ui_url: https://cid.${default.aws_region}.${env}.apriori.net/
+    api_url: https://cid-api.${default.aws_region}.int.apriori.net/
+    ui_url: https://cid.${default.aws_region}.int.apriori.net/
 
   css:
-    api_url: https://css.${default.aws_region}.${env}.apriori.net/
+    api_url: https://css.${default.aws_region}.int.apriori.net/
 
   edc:
     ui_url: https://edc.${default.aws_region}.${env}.apriori.net/
@@ -285,8 +284,8 @@ migration:
   secret_key:  X0V4XXK2SF87
 
   cidapp:
-    ui_url: https://cid.na-1-v21-1.qa-20-1.apriori.net/
-    api_url: https://cid-api.na-1-v21-1.qa-20-1.apriori.net/
+    ui_url: https://ci-design.na-1-v22-1.preview.qa-20-1.apriori.net/
+    api_url: https://cid-api.na-1-v22-1.preview.qa-20-1.apriori.net/
 
   ats:
     api_url: https://ats.na-1.qa-20-1.apriori.net/
