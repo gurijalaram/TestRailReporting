@@ -175,6 +175,10 @@ _Validation:_
  * if RequestEntity contain _ReturnType_, the response will be validated by Schema and mapped to returnType
  * if RequestEntity has _isUrlEncodingEnabled_ "true" - request URL will be encoded
   
+## Upload/find test parts on AWS
+1. Login to AWS and go to the `S3` section
+2. Locate `qa-test-parts` folder
+3. Upload parts to either `cad` or `common` folder
 
 ## Run Checkstyle analysis from command line
 1. go to `build` directory, run `gradle check -x test`
