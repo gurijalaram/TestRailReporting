@@ -136,7 +136,7 @@ public class GetScenariosInfoTests {
         }
 
         AcsResources acsResources = new AcsResources();
-        ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformation2(scenarioIterationKeys);
+        ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformationOneScenario(scenarioIterationKeys);
 
         List<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>();
         List<ScenarioKey> scenarioKeys = new ArrayList<>();

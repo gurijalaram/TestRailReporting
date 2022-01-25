@@ -308,7 +308,7 @@ public class FileUploadResources {
      * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        setupHeaders("multipart/form-data", "*/*");
+        setupHeaders("multipart/form-data");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
@@ -328,7 +328,7 @@ public class FileUploadResources {
      * @return GetAdminInfoResponse object
      */
     public GetAdminInfoResponse getAdminInfo(ScenarioKey publishScenarioKey) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.GET_ADMIN_INFO, GetAdminInfoResponse.class)
@@ -349,7 +349,7 @@ public class FileUploadResources {
      * @return GetImageInfoResponse - json response from API call
      */
     public GetImageInfoResponse getImageInfo(ScenarioIterationKey scenarioIterationKey) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.GET_IMAGE_INFO, GetImageInfoResponse.class)
@@ -371,7 +371,7 @@ public class FileUploadResources {
      * @return GetCadMetadataResponse
      */
     public GetCadMetadataResponse getCadMetadata(String fileMetadataIdentity) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.GET_CAD_METADATA, GetCadMetadataResponse.class)
@@ -390,7 +390,7 @@ public class FileUploadResources {
      * @return String file upload workorder id
      */
     private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         RequestEntity requestEntity;
         if (ignore500Error) {
@@ -428,7 +428,7 @@ public class FileUploadResources {
      * @return String file upload workorder id
      */
     public String createWorkorder(String commandType, Object inputs) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
@@ -449,7 +449,7 @@ public class FileUploadResources {
      * @return Object
      */
     private Object getWorkorderDetails(String workorderId) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.GET_WORKORDER_DETAILS, WorkorderDetailsResponse.class)
@@ -466,7 +466,7 @@ public class FileUploadResources {
      * @return Object - response
      */
     public Object getImageById(String imageId) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.GET_IMAGES, null)
@@ -555,7 +555,7 @@ public class FileUploadResources {
      * @return Integer
      */
     private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.INITIALIZE_COST_SCENARIO, CreateWorkorderResponse.class)
@@ -578,7 +578,7 @@ public class FileUploadResources {
      * @return int
      */
     private int getLatestIteration(ScenarioKey scenarioKey) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.GET_LATEST_ITERATION, CostIteration.class)
@@ -611,7 +611,7 @@ public class FileUploadResources {
         }
 
         do {
-            setupHeaders("application/json", "*/*");
+            setupHeaders("application/json");
 
             final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.CHECK_WORKORDER_STATUS, null)
@@ -640,7 +640,7 @@ public class FileUploadResources {
      * @param orderId - the order id
      */
     private void submitWorkorder(String orderId) {
-        setupHeaders("application/json", "*/*");
+        setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, SubmitWorkOrder.class)
@@ -739,17 +739,16 @@ public class FileUploadResources {
     }
 
     /**
-     * Sets up token properly in header
+     * Sets up header with content type and token
      *
      * @param contentType String
-     * @param acceptType  String
      */
-    private void setupHeaders(String contentType, String acceptType) {
+    private void setupHeaders(String contentType) {
         Object[] tokenArray = token.keySet().toArray();
         for (Object key : tokenArray) {
             headers.put(key.toString(), token.get(key));
         }
         headers.put("Content-Type", contentType);
-        headers.put("Accept", acceptType);
+        headers.put("Accept", "*/*");
     }
 }
