@@ -5,6 +5,7 @@ import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -46,7 +47,8 @@ public class AdminLoginPage extends AdminHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    //private AprioriLoginPage aprioriLoginPage;
+    private AprioriLoginPage aprioriLoginPage;
+    private UserCredentials userCredentials = UserUtil.getUser();
 
     public AdminLoginPage(WebDriver driver) {
         super(driver);
@@ -90,52 +92,10 @@ public class AdminLoginPage extends AdminHeader {
     /**
      * Login to CIA
      *
-     * @param emailAddress - user email address
-     */
-    private void enterEmail(String emailAddress) {
-        pageUtils.waitForElementAndClick(emailInput);
-        pageUtils.clearInput(emailInput);
-        emailInput.sendKeys(emailAddress);
-    }
-
-    /**
-     * Enter password
-     *
-     * @param password - user password
-     */
-    private void enterPassword(String password) {
-        pageUtils.waitForElementAndClick(passwordInput);
-        pageUtils.clearInput(this.passwordInput);
-        this.passwordInput.sendKeys(password);
-    }
-
-    /**
-     * Single action to submit login credentials
-     */
-    private void submitLogin() {
-        loginButton.click();
-    }
-
-    /**
-     * Execute actions to login
-     *
-     * @param email    - user email
-     * @param password - user password
-     */
-    private void executeLogin(String email, String password) {
-        enterEmail(email);
-        enterPassword(password);
-        submitLogin();
-    }
-
-    /**
-     * Login to CI Report
-     *
      * @param userCredentials - user credentials
      * @return new page object
      */
-    public AdminHomePage login(final UserCredentials userCredentials) {
-        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
-        return new AdminHomePage(driver);
+    public AdminHomePage login() {
+        return aprioriLoginPage.login(userCredentials, AdminHomePage.class);
     }
 }
