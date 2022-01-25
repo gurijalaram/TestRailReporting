@@ -1,6 +1,7 @@
 package com.apriori.utils;
 
 import static com.apriori.utils.enums.ScenarioStateEnum.COSTING;
+import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
@@ -43,7 +44,7 @@ public class CssComponent {
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials, ScenarioStateEnum.NOT_COSTED);
+        return getCssComponent(componentName, scenarioName, userCredentials, NOT_COSTED);
     }
 
     /**
@@ -55,7 +56,7 @@ public class CssComponent {
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
         // TODO: 12/01/2022 cn - UserUtil here needs to be reviewed before its used in sds tests
-        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), ScenarioStateEnum.NOT_COSTED, false);
+        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), NOT_COSTED, false);
     }
 
     /**
