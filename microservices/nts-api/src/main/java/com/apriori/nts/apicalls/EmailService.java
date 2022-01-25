@@ -7,7 +7,6 @@ import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.nts.utils.EmailSetup;
 import com.apriori.utils.EmailUtil;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -25,7 +24,7 @@ import javax.mail.Message;
 public class EmailService {
 
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
-    private static final String cloudContext = new AuthorizationUtil().getAuthTargetCloudContext(UserUtil.getUser());
+    private static final String cloudContext = UserUtil.getUser().getCloudContext();
     private static SendEmail sendEmail;
 
     private static Map<String, String> headers = new HashMap<String, String>() {{
