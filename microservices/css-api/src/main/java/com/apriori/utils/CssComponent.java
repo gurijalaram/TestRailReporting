@@ -110,7 +110,7 @@ public class CssComponent {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         if (!allowUnknownParts) {
-                            return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getScenarioState().equalsIgnoreCase("Unknown")).collect(Collectors.toList());
+                            return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                         }
                         return scenarioRepresentation.getResponseEntity().getItems();
                     }
