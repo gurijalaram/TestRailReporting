@@ -14,6 +14,7 @@ import com.apriori.acs.entity.response.getsetproductiondefaults.GetProductionDef
 import com.apriori.acs.entity.response.getsetproductiondefaults.SetProductionDefaultsInputs;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
+import com.apriori.acs.entity.response.getsetuserpreferences.GetUserPreferencesResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -398,6 +399,22 @@ public class AcsResources {
                 ).inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
+    }
+
+    /**
+     * Calls get user preferences endpoint
+     *
+     * @return instance of response object
+     */
+    public GetUserPreferencesResponse getUserPreferences() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCES, GetUserPreferencesResponse.class)
+            .headers(headers)
+            .inlineVariables(validUsername);
+
+        return (GetUserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

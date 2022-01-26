@@ -1,0 +1,78 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "apriori.free.bodies.ignore.missing.component": {
+      "type": "string"
+    },
+    "apriori.free.bodies.preserve.CAD": {
+      "type": "string"
+    },
+    "apriori.keep.free.bodies": {
+      "type": "string"
+    },
+    "componentsTable.scenarioKey.width": {
+      "type": "string"
+    },
+    "cost.table.decimal.places": {
+      "type": "string"
+    },
+    "defaultScenarioName": {
+      "type": "string"
+    },
+    "prod.info.default.annual.volume": {
+      "type": "string"
+    },
+    "prod.info.default.batch.size": {
+      "type": "string"
+    },
+    "prod.info.default.material.catalog.name": {
+      "type": "string"
+    },
+    "prod.info.default.material": {
+      "type": "string"
+    },
+    "prod.info.default.pg": {
+      "type": "string"
+    },
+    "prod.info.default.production.life": {
+      "type": "string"
+    },
+    "prod.info.default.use.vpe.for.all.processes": {
+      "type": "string"
+    },
+    "prod.info.vpe": {
+      "type": "string"
+    },
+    "selectionColor": {
+      "type": "string"
+    },
+    "TolerancePolicyDefaults.cadToleranceReplacement": {
+      "type": "string"
+    },
+    "TolerancePolicyDefaults.diamToleranceOverride": {
+      "type": "string"
+    },
+    "TolerancePolicyDefaults.minCadToleranceThreshhold": {
+      "type": "string"
+    },
+    "TolerancePolicyDefaults.toleranceMode": {
+      "type": "string"
+    },
+    "TolerancePolicyDefaults.useCadToleranceThreshhold": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "prod.info.default.annual.volume",
+    "prod.info.default.batch.size",
+    "prod.info.default.material",
+    "prod.info.default.production.life",
+    "prod.info.default.use.vpe.for.all.processes",
+    "TolerancePolicyDefaults.cadToleranceReplacement",
+    "TolerancePolicyDefaults.diamToleranceOverride",
+    "TolerancePolicyDefaults.minCadToleranceThreshhold",
+    "TolerancePolicyDefaults.toleranceMode",
+    "TolerancePolicyDefaults.useCadToleranceThreshhold"
+  ]
+}
