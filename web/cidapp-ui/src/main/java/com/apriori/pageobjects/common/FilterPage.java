@@ -198,7 +198,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     private FilterPage toggle(int index, final PropertyEnum propertyEnum, final String value) {
         if (!PropertyEnum.toggleGroup.contains(propertyEnum)) {
-            throw new IllegalStateException(String.format("Property must be in this list: %s", PropertyEnum.toggleGroup));
+            throw new IllegalStateException(String.format("Not able to toggle 'Yes/No' because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.toggleGroup));
         }
         WebElement buttonStatus = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target'] button", index))));
 
@@ -217,11 +217,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     private FilterPage inputValue(int index, final PropertyEnum propertyEnum, final String value) {
         if (PropertyEnum.inputGroup.contains(propertyEnum) || PropertyEnum.dateGroup.contains(propertyEnum)) {
-            pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target']", index))).sendKeys(value);
+            pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index))).sendKeys(value);
         }
 
         if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
-            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
             pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
         }
         return this;
