@@ -164,7 +164,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value        - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final String value) {
+    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final boolean value) {
         index = getIndex();
 
         add().selectProperty(index, propertyEnum)
@@ -196,13 +196,13 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value        - the value
      * @return current page object
      */
-    private FilterPage toggle(int index, final PropertyEnum propertyEnum, final String value) {
+    private FilterPage toggle(int index, final PropertyEnum propertyEnum, final boolean value) {
         if (!PropertyEnum.toggleGroup.contains(propertyEnum)) {
             throw new IllegalStateException(String.format("Not able to toggle 'Yes/No' because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.toggleGroup));
         }
         WebElement buttonStatus = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target'] button", index))));
 
-        if (value.equalsIgnoreCase("yes") && buttonStatus.getAttribute("class").contains("not-checked")) {
+        if (value && buttonStatus.getAttribute("class").contains("not-checked")) {
             pageUtils.waitForElementAndClick(buttonStatus);
         }
         return this;
