@@ -1,6 +1,7 @@
 package com.apriori.utils;
 
 import static com.apriori.utils.enums.ScenarioStateEnum.COSTING;
+import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
@@ -36,18 +37,18 @@ public class CssComponent {
     private List<String> itemScenarioState;
 
     /**
-     * Gets the uncosted component from Css
+     * Gets the uncosted component from CSS
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials, ScenarioStateEnum.NOT_COSTED);
+        return getCssComponent(componentName, scenarioName, userCredentials, NOT_COSTED);
     }
 
     /**
-     * Gets component from Css
+     * Gets component from CSS
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
@@ -55,17 +56,21 @@ public class CssComponent {
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
         // TODO: 12/01/2022 cn - UserUtil here needs to be reviewed before its used in sds tests
-        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), ScenarioStateEnum.NOT_COSTED);
+        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), NOT_COSTED, false);
     }
 
     /**
-     * Gets component from Css
+     * Gets component from CSS
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
+        return getCssComponent(componentName, scenarioName, userCredentials, scenarioState, true);
+    }
+
+    public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
         final int SOCKET_TIMEOUT = 270000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
@@ -104,6 +109,9 @@ public class CssComponent {
 
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
+                        if (!allowUnknownParts) {
+                            return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                        }
                         return scenarioRepresentation.getResponseEntity().getItems();
                     }
 
@@ -122,9 +130,8 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds. \n Expected: %s \n Found: %s",
-                componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds. \n Expected: %s \n Found: %s",
+            componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
         );
     }
 }
