@@ -1,8 +1,9 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.PropertyEnum;
 
-import com.utils.Constants;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,8 +12,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -159,119 +158,101 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Adds a new criteria
+     * Adds a criteria
      *
-     * @param property - the property
-     * @param value    - the value
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(String property, String value) {
+    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final String value) {
         index = getIndex();
 
-        add()
-            .inputProperty(property)
-            .inputValue(property, value);
-
+        add().selectProperty(index, propertyEnum)
+            .toggle(index, propertyEnum, value);
         return this;
     }
 
     /**
-     * Adds a new criteria
+     * Adds a criteria
      *
-     * @param property  - the property
-     * @param operation - the operation
-     * @param value     - the value
+     * @param propertyEnum  - property from the enum
+     * @param operationEnum - operation from the enum
+     * @param value         - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(String property, String operation, String value) {
+    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
         index = getIndex();
 
-        add()
-            .inputProperty(property.trim())
-            .inputOperation(operation.trim())
-            .inputValue(property.trim(), value.trim());
-
+        add().selectProperty(index, propertyEnum)
+            .selectOperation(index, operationEnum)
+            .inputValue(index, propertyEnum, value);
         return this;
     }
 
     /**
-     * Uses type ahead to input the property
+     * Toggles yes/no
      *
-     * @param property - the property
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
      * @return current page object
      */
-    private FilterPage inputProperty(String property) {
-        By propertyDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index));
-        pageUtils.waitForElementAndClick(propertyDropdown);
-        By byProperty = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, property));
-        pageUtils.waitForElementAndClick(byProperty);
+    private FilterPage toggle(int index, final PropertyEnum propertyEnum, final String value) {
+        if (!PropertyEnum.toggleGroup.contains(propertyEnum)) {
+            throw new IllegalStateException(String.format("Property must be in this list: %s", PropertyEnum.toggleGroup));
+        }
+        WebElement buttonStatus = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target'] button", index))));
 
-        return this;
-    }
-
-    /**
-     * Uses type ahead to input the operation
-     *
-     * @param operation - the operation
-     * @return current page object
-     */
-    private FilterPage inputOperation(String operation) {
-        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index));
-        pageUtils.waitForElementAndClick(operationDropdown);
-        By byOperation = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operation));
-        pageUtils.waitForElementAndClick(byOperation);
-        return this;
-    }
-
-    /**
-     * Uses type ahead to input the value
-     *
-     * @param value    - the value
-     * @param property - the property
-     * @return current page object
-     */
-    private FilterPage inputValue(String property, String value) {
-        boolean toggleValue = Constants.TOGGLE_VALUES.stream().anyMatch(str -> str.trim().equalsIgnoreCase(property));
-
-        if (toggleValue) {
-            driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] button", index))).click();
-        } else {
-            WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
-            WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
-
-            valuesEntry(property, value, valueInput, Constants.INPUT_VALUES);
-
-            inputValuesEntry(property, value, valueDropdown, Constants.TYPE_INPUT_VALUES);
-
-            valuesEntry(property, value, valueInput, Constants.DATE_VALUES);
+        if (value.equalsIgnoreCase("yes") && buttonStatus.getAttribute("class").contains("not-checked")) {
+            pageUtils.waitForElementAndClick(buttonStatus);
         }
         return this;
     }
 
     /**
-     * Input values
+     * Enters the value
      *
-     * @param property      - the property
-     * @param value         - the value
-     * @param valueDropdown - the value dropdown
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
+     * @return current page object
      */
-    private void inputValuesEntry(String property, String value, WebElement valueDropdown, List<String> valueList) {
-        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadSelect(valueDropdown, value));
+    private FilterPage inputValue(int index, final PropertyEnum propertyEnum, final String value) {
+        if (PropertyEnum.inputGroup.contains(propertyEnum) || PropertyEnum.dateGroup.contains(propertyEnum)) {
+            pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target']", index))).sendKeys(value);
+        }
+
+        if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
+            pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
+        }
+        return this;
     }
 
     /**
-     * Input values
+     * Selects the property from the dropdown
      *
-     * @param property   - the property
-     * @param value      - the value
-     * @param valueInput - the value input
-     * @param valueList  - the value list
+     * @param propertyEnum - property from the enum
+     * @return current page object
      */
-    private void valuesEntry(String property, String value, WebElement valueInput, List<String> valueList) {
-        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
-            pageUtils.waitForElementToAppear(valueInput).clear();
-            valueInput.sendKeys(value);
-        });
+    private FilterPage selectProperty(int index, PropertyEnum propertyEnum) {
+        By propertyDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index));
+        pageUtils.waitForElementAndClick(propertyDropdown);
+        By byProperty = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, propertyEnum.getProperty()));
+        pageUtils.waitForElementAndClick(byProperty);
+        return this;
+    }
+
+    /**
+     * Selects the operation from the dropdown
+     *
+     * @param operationEnum - operation from the enum
+     * @return current page object
+     */
+    private FilterPage selectOperation(int index, OperationEnum operationEnum) {
+        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index));
+        pageUtils.waitForElementAndClick(operationDropdown);
+        By byOperation = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operationEnum.getOperation()));
+        pageUtils.waitForElementAndClick(byOperation);
+        return this;
     }
 
     /**
