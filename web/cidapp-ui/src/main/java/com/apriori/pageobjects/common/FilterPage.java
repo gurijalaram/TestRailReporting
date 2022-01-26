@@ -223,6 +223,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
             pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
+            //click the dropdown again to remove it
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
         }
         return this;
     }
