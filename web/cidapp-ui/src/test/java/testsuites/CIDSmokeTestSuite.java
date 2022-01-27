@@ -75,7 +75,6 @@ import testsuites.suiteinterface.SmokeTests;
     ThreadTests.class,
     PartNestingTests.class,
     PsoEditTests.class,
-    UploadAssembliesTests.class
 })
 public class CIDSmokeTestSuite {
 }
