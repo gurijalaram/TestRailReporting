@@ -22,6 +22,7 @@ import com.apriori.entity.response.upload.ScenarioIterationKey;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -251,22 +252,6 @@ public class AcsResources {
     }
 
     /**
-     * Gets Tolerance Policy Defaults with invalid user to produce 400 error
-     *
-     * @return String of error
-     */
-    public String getTolerancePolicyDefaults400Error() {
-        setupHeader();
-
-        final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
-                .headers(headers)
-                .inlineVariables(invalidUsername);
-
-        return HTTPRequest.build(requestEntity).get().getBody();
-    }
-
-    /**
      * Sets Tolerance Policy Defaults Values
      *
      * @param totalRunoutOverride - double
@@ -338,22 +323,6 @@ public class AcsResources {
     }
 
     /**
-     * Gets Production Defaults
-     *
-     * @return GetProductionDefaultsResponse instance - response from API
-     */
-    public String getProductionDefaultsInvalidUsername() {
-        setupHeader();
-
-        final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
-                .headers(headers)
-                .inlineVariables(invalidUsername);
-
-        return HTTPRequest.build(requestEntity).get().getBody();
-    }
-
-    /**
      * Sets production defaults
      *
      * @return GenericResourceCreatedResponse
@@ -415,6 +384,23 @@ public class AcsResources {
             .inlineVariables(validUsername);
 
         return (GetUserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Generic call for get endpoint with invalid username
+     *
+     * @param endpoint - endpoint to call
+     * @return String - error
+     */
+    public String getEndpointInvalidUsername(EndpointEnum endpoint) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(endpoint, null)
+            .headers(headers)
+            .inlineVariables(invalidUsername);
+
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 
     /**
