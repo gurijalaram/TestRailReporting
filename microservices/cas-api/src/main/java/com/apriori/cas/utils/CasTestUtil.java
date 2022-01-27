@@ -4,6 +4,9 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cds.objects.response.AssociationUserItems;
+import com.apriori.cds.objects.request.License;
+import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
@@ -14,6 +17,7 @@ import com.apriori.entity.response.CustomerAssociations;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUserProfile;
 import com.apriori.entity.response.CustomerUsers;
+import com.apriori.entity.response.LicenseResponse;
 import com.apriori.entity.response.PostBatch;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
@@ -436,5 +440,40 @@ public class CasTestUtil extends TestUtil {
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemIdentity);
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    public ResponseWrapper<LicenseResponse> addLiscense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
+                .inlineVariables(customerIdentity, siteIdentity)
+                .headers(new HashMap<String, String>() {
+                    {
+                        put("Content-Type", "");
+                    }
+                })
+                .body(LicenseRequest.builder()
+                        .license(
+                                License.builder()
+                                        .description("Test License")
+                                        .apVersion("2020 R1")
+                                        .createdBy("#SYSTEM00000")
+                                        .active("true")
+                                        .license(String.format(Constants.CAS_EXPIRED_LICENSE, customerName, siteId, licenseId, subLicenseId))
+                                        .licenseTemplate(String.format(Constants.CAS_EXPIRED_LICENSE_TEMPLATE, customerName))
+                                        .build())
+                        .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public static <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
+                .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+                .body("userAssociation",
+                        AssociationUserItems.builder()
+                                .userIdentity(userIdentity)
+                                .createdBy("#SYSTEM00000")
+                                .build());
+
+        return HTTPRequest.build(requestEntity).post();
     }
 }
