@@ -5,6 +5,7 @@ import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.PropertyEnum;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,6 +45,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private int index;
+    private String day;
+    private String month;
+    private String year;
+    private String hour;
+    private String minute;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
@@ -190,6 +196,33 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * Adds a criteria
+     *
+     * @param propertyEnum  - property from the enum
+     * @param operationEnum - operation from the enum
+     * @param day           - the day
+     * @param month         - the month
+     * @param year          - the year
+     * @param hour          - the hour
+     * @param minute        - the minute
+     * @return current page object
+     */
+    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String day, final String month, final String year, final String hour, final String minute) {
+        index = getIndex();
+
+        this.day = day;
+        this.month = month;
+        this.year = year;
+        this.hour = hour;
+        this.minute = minute;
+
+        add().selectProperty(index, propertyEnum)
+            .selectOperation(index, operationEnum)
+            .inputDate(index, propertyEnum);
+        return this;
+    }
+
+    /**
      * Toggles yes/no
      *
      * @param propertyEnum - property from the enum
@@ -200,6 +233,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         if (!PropertyEnum.toggleGroup.contains(propertyEnum)) {
             throw new IllegalStateException(String.format("Not able to toggle 'Yes/No' because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.toggleGroup));
         }
+
         WebElement buttonStatus = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target'] button", index))));
 
         if (value && buttonStatus.getAttribute("class").contains("not-checked")) {
@@ -216,16 +250,34 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     private FilterPage inputValue(int index, final PropertyEnum propertyEnum, final String value) {
-        if (PropertyEnum.inputGroup.contains(propertyEnum) || PropertyEnum.dateGroup.contains(propertyEnum)) {
+        if (PropertyEnum.inputGroup.contains(propertyEnum)) {
             pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index))).sendKeys(value);
         }
-
         if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
             pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
             //click the dropdown again to remove it and unhide the submit button
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
         }
+
+        return this;
+    }
+
+    /**
+     * Enters the value
+     *
+     * @param propertyEnum - property from the enum
+     * @return current page object
+     */
+    private FilterPage inputDate(int index, final PropertyEnum propertyEnum) {
+        if (!PropertyEnum.dateGroup.contains(propertyEnum)) {
+            throw new IllegalStateException(String.format("Not able to select calendar because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.dateGroup));
+        }
+
+        WebElement dateTimeLocator = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target'][value]", index)));
+        String dateTime = "" + this.year + "-" + this.month + "-" + this.day + "T" + this.hour + ":" + this.minute + "";
+
+        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + dateTime + "'", dateTimeLocator);
         return this;
     }
 
