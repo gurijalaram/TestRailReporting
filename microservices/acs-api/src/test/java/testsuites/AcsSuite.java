@@ -11,6 +11,7 @@ import tests.GetScenariosInfoTests;
 import tests.GetSetDisplayUnitsTests;
 import tests.GetSetProductionDefaultsTests;
 import tests.GetSetTolerancePolicyDefaultsTests;
+import tests.GetSetUserPreferencesByNameTests;
 import tests.GetSetUserPreferencesTests;
 import tests.GetUnitVariantSettingsTests;
 import testsuites.categories.AcsTest;
@@ -25,7 +26,8 @@ import testsuites.categories.AcsTest;
     GetSetTolerancePolicyDefaultsTests.class,
     GetUnitVariantSettingsTests.class,
     GetEnabledCurrencyRateVersionsTests.class,
-    GetSetUserPreferencesTests.class
+    GetSetUserPreferencesTests.class,
+    GetSetUserPreferencesByNameTests.class
 })
 
 public class AcsSuite {

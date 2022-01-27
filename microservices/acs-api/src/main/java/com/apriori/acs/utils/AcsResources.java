@@ -387,6 +387,23 @@ public class AcsResources {
     }
 
     /**
+     * Calls get user preference by name
+     *
+     * @param userPrefToGet - String
+     * @return String response of preference value
+     */
+    public String getUserPreferenceByName(String userPrefToGet) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCE_BY_NAME, null)
+            .headers(headers)
+            .inlineVariables(validUsername, userPrefToGet);
+
+        return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
      * Generic call for get endpoint with invalid username
      *
      * @param endpoint - endpoint to call

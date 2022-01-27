@@ -15,7 +15,8 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     GET_SCENARIOS_INFORMATION("ws/workspace/scenario-info/search"),
     GET_SET_TOLERANCE_POLICY_DEFAULTS("ws/workspace/users/%s/tolerance-policy-defaults"),
     GET_SET_PRODUCTION_DEFAULTS("ws/workspace/users/%s/production-defaults"),
-    GET_SET_USER_PREFERENCES("ws/workspace/users/%s/preferences/");
+    GET_SET_USER_PREFERENCES("ws/workspace/users/%s/preferences/"),
+    GET_SET_USER_PREFERENCE_BY_NAME("ws/workspace/users/%s/preferences/preference?key=%s");
 
     private final String endpoint;
 
@@ -30,7 +31,6 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.base_url") + String.format(getEndpointString(), variables)
-                + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.base_url") + String.format(getEndpointString(), variables);
     }
 }
