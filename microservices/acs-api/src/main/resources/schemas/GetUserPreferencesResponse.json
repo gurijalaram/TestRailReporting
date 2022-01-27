@@ -47,6 +47,9 @@
     "selectionColor": {
       "type": "string"
     },
+    "show.component.list.preview.panel": {
+      "type": "string"
+    },
     "TolerancePolicyDefaults.bendAngleToleranceOverride": {
       "type": "string"
     },
@@ -142,6 +145,7 @@
     "prod.info.default.use.vpe.for.all.processes",
     "prod.info.vpe",
     "selectionColor",
+    "show.component.list.preview.panel",
     "TolerancePolicyDefaults.bendAngleToleranceOverride",
     "TolerancePolicyDefaults.cadToleranceReplacement",
     "TolerancePolicyDefaults.circularityOverride",
