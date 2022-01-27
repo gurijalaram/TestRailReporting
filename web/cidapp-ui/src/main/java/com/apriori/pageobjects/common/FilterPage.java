@@ -5,7 +5,7 @@ import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.PropertyEnum;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -200,25 +200,19 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      *
      * @param propertyEnum  - property from the enum
      * @param operationEnum - operation from the enum
-     * @param day           - the day
-     * @param month         - the month
+     * @param day          - the day
+     * @param month          - the month
      * @param year          - the year
      * @param hour          - the hour
-     * @param minute        - the minute
+     * @param minute          - the minute
      * @return current page object
      */
     public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String day, final String month, final String year, final String hour, final String minute) {
         index = getIndex();
 
-        this.day = day;
-        this.month = month;
-        this.year = year;
-        this.hour = hour;
-        this.minute = minute;
-
         add().selectProperty(index, propertyEnum)
             .selectOperation(index, operationEnum)
-            .inputDate(index, propertyEnum);
+            .inputDate(index, propertyEnum, day, month, year,  hour, minute);
         return this;
     }
 
@@ -267,17 +261,20 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * Enters the value
      *
      * @param propertyEnum - property from the enum
+     * @param day          - the day
+     * @param month          - the month
+     * @param year          - the year
+     * @param hour          - the hour
+     * @param minute          - the minute
      * @return current page object
      */
-    private FilterPage inputDate(int index, final PropertyEnum propertyEnum) {
+    private FilterPage inputDate(int index, final PropertyEnum propertyEnum, final String day, final String month, final String year, final String hour, final String minute) {
         if (!PropertyEnum.dateGroup.contains(propertyEnum)) {
-            throw new IllegalStateException(String.format("Not able to select calendar because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.dateGroup));
+            throw new IllegalStateException(String.format("Not able to input date because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.dateGroup));
         }
 
         WebElement dateTimeLocator = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target'][value]", index)));
-        String dateTime = "" + this.year + "-" + this.month + "-" + this.day + "T" + this.hour + ":" + this.minute + "";
-
-        ((JavascriptExecutor) driver).executeScript("arguments[0].value='" + dateTime + "'", dateTimeLocator);
+        dateTimeLocator.sendKeys(day, month, year, Keys.RIGHT, hour, minute);
         return this;
     }
 
