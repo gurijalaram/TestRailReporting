@@ -1,9 +1,9 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.AcsApiEnum;
@@ -12,7 +12,6 @@ import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
@@ -29,7 +28,7 @@ public class GetSetUserPreferencesTests {
 
         assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), is(equalTo("2")));
         assertThat(getUserPreferencesResponse.getDefaultScenarioName(), is(equalTo("Initial")));
-        assertThat(getUserPreferencesResponse.getProdInfoDefaultMaterial(), is(equalTo("Use Default")));
+        assertThat(getUserPreferencesResponse.getProdInfoDefaultMaterial(), anyOf(equalTo("Use Default"), equalTo("Accura 10")));
         assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), is(equalTo("SYSTEMDEFAULT")));
         assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsUseCadToleranceThreshhold(), is(equalTo("false")));
     }
