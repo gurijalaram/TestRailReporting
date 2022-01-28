@@ -107,7 +107,7 @@ public class PreviewPanelTests extends TestBase {
         assertThat(previewPage.isImageDisplayed(), is(true));
         assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
         assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.86, 1));
-        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10526.66, 2));
+        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10514.67, 10));
     }
 
     @Test

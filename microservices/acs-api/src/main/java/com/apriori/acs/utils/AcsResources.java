@@ -1,6 +1,7 @@
 package com.apriori.acs.utils;
 
 import com.apriori.acs.entity.enums.AcsApiEnum;
+import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
@@ -9,10 +10,10 @@ import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse
 import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInputs;
 import com.apriori.acs.entity.response.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.getsetdisplayunits.SetDisplayUnitsResponse;
+import com.apriori.acs.entity.response.getsetproductiondefaults.GetProductionDefaultsResponse;
+import com.apriori.acs.entity.response.getsetproductiondefaults.SetProductionDefaultsInputs;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
-import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -29,6 +30,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class AcsResources {
 
@@ -38,8 +40,10 @@ public class AcsResources {
     private static final HashMap<String, String> token = new APIAuthentication()
             .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
 
-    private final String contentType = "Content-Type";
-    private final String applicationJson = "application/json";
+    private static final HashMap<String, String> headers = new HashMap<>();
+
+    private final String validUsername = UserUtil.getUser().getUsername();
+    private final String invalidUsername = UserUtil.getUser().getUsername().substring(0, 14).concat("41");
 
     /**
      * Creates Missing Scenario
@@ -47,11 +51,11 @@ public class AcsResources {
      * @return CreateMissingScenarioResponse response instance
      */
     public CreateMissingScenarioResponse createMissingScenario() {
-        token.put(contentType, applicationJson);
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.CREATE_MISSING_SCENARIO,
                         CreateMissingScenarioResponse.class)
-                .headers(token)
+                .headers(headers)
                 .body(CreateMissingScenarioInputs.builder()
                         .baseName(Constants.PART_FILE_NAME)
                         .configurationName(Constants.PART_CONFIG_NAME)
@@ -59,7 +63,9 @@ public class AcsResources {
                         .scenarioName(new GenerateStringUtil().generateScenarioName())
                         .scenarioType(Constants.PART_COMPONENT_TYPE)
                         .missing(true)
-                        .createdBy(Constants.USERNAME).build());
+                        .createdBy(validUsername)
+                        .build()
+                );
 
         return (CreateMissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
@@ -70,14 +76,12 @@ public class AcsResources {
      *
      * @return GetScenarioInfoByScenarioIterationKeyResponse instance
      */
-    public GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(
-            ScenarioIterationKey scenarioIterationKey) {
-        token.put(contentType, applicationJson);
+    public GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY,
-                        GetScenarioInfoByScenarioIterationKeyResponse.class)
-                .headers(token)
+                .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GetScenarioInfoByScenarioIterationKeyResponse.class)
+                .headers(headers)
                 .inlineVariables(
                         scenarioIterationKey.getScenarioKey().getTypeName(),
                         scenarioIterationKey.getScenarioKey().getMasterName(),
@@ -99,32 +103,38 @@ public class AcsResources {
     public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation(
             ScenarioIterationKey scenarioIterationKeyOne,
             ScenarioIterationKey scenarioIterationKeyTwo) {
-        token.put(contentType, applicationJson);
+        setupHeader();
 
-        ArrayList<ScenarioIterationKey> listOfKeys = new ArrayList<>();
+        List<ScenarioIterationKey> listOfKeys = new ArrayList<>();
         listOfKeys.add(scenarioIterationKeyOne);
         listOfKeys.add(scenarioIterationKeyTwo);
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION,
-                        GetScenariosInfoResponse.class)
-                .headers(token)
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+                .headers(headers)
                 .body(ScenarioIterationKeysInputs.builder()
                         .scenarioIterationKeys(listOfKeys)
                         .build())
-                .inlineVariables(Constants.USERNAME);
+                .inlineVariables(validUsername);
 
         return HTTPRequest.build(requestEntity).post();
     }
 
-    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation2(
-            ArrayList<ScenarioIterationKey> scenarioIterationKeys) {
-        token.put(contentType, applicationJson);
+    /**
+     * Get Scenarios Info (one scenario)
+     *
+     * @param scenarioIterationKeys List of scenario iteration keys
+     * @return ResponseWrapper instance
+     */
+    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformationOneScenario(List<ScenarioIterationKey> scenarioIterationKeys) {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
-                .headers(token)
+                .headers(headers)
                 .body(ScenarioIterationKeysInputs.builder()
-                        .scenarioIterationKeys(scenarioIterationKeys).build()).inlineVariables(Constants.USERNAME);
+                        .scenarioIterationKeys(scenarioIterationKeys)
+                        .build())
+                .inlineVariables(validUsername);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -135,12 +145,12 @@ public class AcsResources {
      * @return ResponseWrapper<GetScenariosInfoResponse> instance
      */
     public ResponseWrapper<GetScenariosInfoResponse> getScenariosInfoNullBody() {
-        token.put(contentType, applicationJson);
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, null)
-                .headers(token)
+                .headers(headers)
                 .body(null)
-                .inlineVariables(Constants.USERNAME);
+                .inlineVariables(validUsername);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -151,12 +161,12 @@ public class AcsResources {
      * @return GetDisplayUnitsResponse
      */
     public GetDisplayUnitsResponse getDisplayUnits() {
-        token.put(contentType, applicationJson);
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_DISPLAY_UNITS,
                         GetDisplayUnitsResponse.class)
-                .headers(token)
-                .inlineVariables(Constants.USERNAME);
+                .headers(headers)
+                .inlineVariables(validUsername);
 
         return (GetDisplayUnitsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -164,18 +174,18 @@ public class AcsResources {
     /**
      * Sets Display Units
      *
+     * @param setDisplayUnitsInputs - inputs for body of request
      * @return Set Display Units response instance
      */
-    public SetDisplayUnitsResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
-        token.put(contentType, applicationJson);
+    public GenericResourceCreatedResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
+        setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS,
-                        SetDisplayUnitsResponse.class)
-                .headers(token)
+        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS, GenericResourceCreatedResponse.class)
+                .headers(headers)
                 .body(setDisplayUnitsInputs)
-                .inlineVariables(Constants.USERNAME);
+                .inlineVariables(validUsername);
 
-        return (SetDisplayUnitsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -184,11 +194,11 @@ public class AcsResources {
      * @return GetUnitVariantSettingsResponse instance
      */
     public GetUnitVariantSettingsResponse getUnitVariantSettings() {
-        token.put(contentType, applicationJson);
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_UNIT_VARIANT_SETTINGS, GetUnitVariantSettingsResponse.class)
-                .headers(token);
+                .headers(headers);
 
         return (GetUnitVariantSettingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -199,29 +209,28 @@ public class AcsResources {
      * @return GetUnitVariantSettingsResponse instance
      */
     public UnitVariantSetting getCustomUnitVariantSettings() {
-        token.put(contentType, applicationJson);
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_CUSTOM_UNIT_VARIANT_SETTINGS, UnitVariantSetting.class)
-                .headers(token)
-                .inlineVariables(Constants.USERNAME);
+                .headers(headers)
+                .inlineVariables(validUsername);
 
         return (UnitVariantSetting) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
      * Gets Enabled Currency Rate Versions
-     *
-     * @return GetEnabledCurrencyRateVersions instance
+     * Return is void because the mapping to CurrencyRateVersionResponse is the validation, therefore no assertions are required
      */
-    public CurrencyRateVersionResponse getEnabledCurrencyRateVersions() {
-        token.put(contentType, applicationJson);
+    public void getEnabledCurrencyRateVersions() {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
-                .headers(token);
+                .headers(headers);
 
-        return (CurrencyRateVersionResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -229,15 +238,13 @@ public class AcsResources {
      *
      * @return GetTolerancePolicyDefaults instance
      */
-    public GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaults(String username) {
-        token.put(contentType, applicationJson);
-
-        String userToUse = username.isEmpty() ? UserUtil.getUser().getUsername() : username;
+    public GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaults() {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
-                .headers(token)
-                .inlineVariables(userToUse);
+                .headers(headers)
+                .inlineVariables(validUsername);
 
         return (GetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -245,15 +252,14 @@ public class AcsResources {
     /**
      * Gets Tolerance Policy Defaults with invalid user to produce 400 error
      *
-     * @param invalidUsername - String
      * @return String of error
      */
-    public String getTolerancePolicyDefaults400Error(String invalidUsername) {
-        token.put(contentType, applicationJson);
+    public String getTolerancePolicyDefaults400Error() {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).get().getBody();
@@ -262,26 +268,29 @@ public class AcsResources {
     /**
      * Sets Tolerance Policy Defaults Values
      *
-     * @return SetTolerancePolicyDefaultsResponse
+     * @param totalRunoutOverride - double
+     * @param toleranceMode - String
+     * @param useCadToleranceThreshhold - boolean
+     *
+     * @return GenericResourceCreatedResponse
      */
-    public SetTolerancePolicyDefaultsResponse setTolerancePolicyDefaults(double totalRunoutOverride,
-                                                                         String toleranceMode,
-                                                                         boolean useCadToleranceThreshhold,
-                                                                         String username) {
-        token.put(contentType, applicationJson);
+    public GenericResourceCreatedResponse setTolerancePolicyDefaults(double totalRunoutOverride,
+                                                                     String toleranceMode,
+                                                                     boolean useCadToleranceThreshhold) {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, SetTolerancePolicyDefaultsResponse.class)
-                .headers(token)
+                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
+                .headers(headers)
                 .body(SetTolerancePolicyDefaultsInputs.builder()
                         .totalRunoutOverride(totalRunoutOverride)
                         .toleranceMode(toleranceMode)
                         .useCadToleranceThreshhold(useCadToleranceThreshhold)
                         .build()
                 )
-                .inlineVariables(username);
+                .inlineVariables(validUsername);
 
-        return (SetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -290,18 +299,16 @@ public class AcsResources {
      * @param totalRunoutOverride - double
      * @param toleranceMode - String
      * @param useCadToleranceThreshhold - boolean
-     * @param invalidUsername - String
      * @return String of error
      */
     public String setTolerancePolicyDefaultsInvalidUsername(double totalRunoutOverride,
                                                      String toleranceMode,
-                                                     boolean useCadToleranceThreshhold,
-                                                     String invalidUsername) {
-        token.put(contentType, applicationJson);
+                                                     boolean useCadToleranceThreshhold) {
+        setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
-                .headers(token)
+                .headers(headers)
                 .body(SetTolerancePolicyDefaultsInputs.builder()
                         .totalRunoutOverride(totalRunoutOverride)
                         .toleranceMode(toleranceMode)
@@ -311,5 +318,96 @@ public class AcsResources {
                 .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
+    }
+
+    /**
+     * Gets Production Defaults
+     *
+     * @return GetProductionDefaultsResponse instance - response from API
+     */
+    public GetProductionDefaultsResponse getProductionDefaults() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
+                .headers(headers)
+                .inlineVariables(validUsername);
+
+        return (GetProductionDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Production Defaults
+     *
+     * @return GetProductionDefaultsResponse instance - response from API
+     */
+    public String getProductionDefaultsInvalidUsername() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
+                .headers(headers)
+                .inlineVariables(invalidUsername);
+
+        return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     * Sets production defaults
+     *
+     * @return GenericResourceCreatedResponse
+     */
+    public GenericResourceCreatedResponse setProductionDefaults() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
+                .headers(headers)
+                .body(SetProductionDefaultsInputs.builder()
+                        .material("Accura 10")
+                        .annualVolume("5500")
+                        .productionLife(5.0)
+                        .batchSize(458)
+                        .useVpeForAllProcesses(false)
+                        .batchSizeMode(false)
+                        .build()
+                ).inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Calls set production defaults endpoint with invalid username
+     *
+     * @return String of body, which contains the error
+     */
+    public String setProductionDefaultsInvalidUsername() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
+                .headers(headers)
+                .body(SetProductionDefaultsInputs.builder()
+                        .material("Accura 10")
+                        .annualVolume("5500")
+                        .productionLife(5.0)
+                        .batchSize(458)
+                        .useVpeForAllProcesses(false)
+                        .batchSizeMode(false)
+                        .build()
+                ).inlineVariables(invalidUsername);
+
+        return HTTPRequest.build(requestEntity).post().getBody();
+    }
+
+    /**
+     * Sets up header with content type and token
+     */
+    private void setupHeader() {
+        headers.put("Content-Type", "application/json");
+        Object[] tokenArray = token.keySet().toArray();
+        for (Object key : tokenArray) {
+            headers.put(key.toString(), token.get(key));
+        }
     }
 }
