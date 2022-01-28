@@ -11,38 +11,41 @@
       "type": "object",
       "required": [
         "identity",
-        "createdBy",
         "createdAt",
-        "active",
+        "createdBy",
+        "updatedAt",
         "apVersion",
+        "active",
         "description",
         "subLicenses",
-        "licensedModules"
-      ],
-      "optional": [
-        "customerIdentity",
-        "siteIdentity"
+        "licensedModules",
+        "site",
+        "createdByName"
       ],
       "properties": {
         "identity": {
           "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
+        "createdAt": {
+          "$id": "#/properties/response/properties/createdAt",
+          "type": "string"
+        },
         "createdBy": {
           "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
-        "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
+        "updatedAt": {
+          "$id": "#/properties/response/properties/updatedAt",
+          "type": "string"
+        },
+        "apVersion": {
+          "$id": "#/properties/response/properties/apVersion",
           "type": "string"
         },
         "active": {
           "$id": "#/properties/response/properties/active",
           "type": "boolean"
-        },
-        "apVersion": {
-          "$id": "#/properties/response/properties/apVersion",
-          "type": "string"
         },
         "description": {
           "$id": "#/properties/response/properties/description",
@@ -59,28 +62,27 @@
                 "type": "object",
                 "required": [
                   "identity",
-                  "createdBy",
                   "createdAt",
+                  "createdBy",
                   "name",
                   "uuid",
                   "licensedModuleNames",
                   "maxNumUsers",
                   "numPurchasedUsers",
-                  "expiresAt",
-                  "licenseSignature",
-                  "numAssignedUsers"
+                  "numAssignedUsers",
+                  "expiresAt"
                 ],
                 "properties": {
                   "identity": {
                     "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
-                  "createdBy": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/createdBy",
-                    "type": "string"
-                  },
                   "createdAt": {
                     "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/createdAt",
+                    "type": "string"
+                  },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "name": {
@@ -106,17 +108,13 @@
                     "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/numPurchasedUsers",
                     "type": "integer"
                   },
-                  "expiresAt": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/expiresAt",
-                    "type": "string"
-                  },
-                  "licenseSignature": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/licenseSignature",
-                    "type": "string"
-                  },
                   "numAssignedUsers": {
                     "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/numAssignedUsers",
                     "type": "integer"
+                  },
+                  "expiresAt": {
+                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/expiresAt",
+                    "type": "string"
                   }
                 }
               }
@@ -134,35 +132,25 @@
                 "type": "object",
                 "required": [
                   "identity",
-                  "createdBy",
                   "createdAt",
-                  "name",
-                  "expiresAt",
-                  "licenseSignature"
+                  "createdBy",
+                  "name"
                 ],
                 "properties": {
                   "identity": {
                     "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
-                  "createdBy": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/createdBy",
-                    "type": "string"
-                  },
                   "createdAt": {
                     "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
+                  "createdBy": {
+                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/createdBy",
+                    "type": "string"
+                  },
                   "name": {
                     "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/name",
-                    "type": "string"
-                  },
-                  "expiresAt": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/expiresAt",
-                    "type": "string"
-                  },
-                  "licenseSignature": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/licenseSignature",
                     "type": "string"
                   }
                 }
@@ -170,12 +158,72 @@
             ]
           }
         },
-        "customerIdentity": {
-          "$id": "#/properties/response/properties/customerIdentity",
-          "type": "string"
-        },
-        "siteIdentity": {
-          "$id": "#/properties/response/properties/siteIdentity",
+        "site": {
+          "$id": "#/properties/response/properties/site",
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "customerIdentity",
+            "name",
+            "description",
+            "siteId",
+            "active",
+            "deployments",
+            "licensedApplications"
+          ],
+          "properties": {
+            "identity": {
+              "$id": "#/properties/response/properties/site/properties/identity",
+              "type": "string"
+            },
+            "createdAt": {
+              "$id": "#/properties/response/properties/site/properties/createdAt",
+              "type": "string"
+            },
+            "createdBy": {
+              "$id": "#/properties/response/properties/site/properties/createdBy",
+              "type": "string"
+            },
+            "customerIdentity": {
+              "$id": "#/properties/response/properties/site/properties/customerIdentity",
+              "type": "string"
+            },
+            "name": {
+              "$id": "#/properties/response/properties/site/properties/name",
+              "type": "string"
+            },
+            "description": {
+              "$id": "#/properties/response/properties/site/properties/description",
+              "type": "string"
+            },
+            "siteId": {
+              "$id": "#/properties/response/properties/site/properties/siteId",
+              "type": "string"
+            },
+            "active": {
+              "$id": "#/properties/response/properties/site/properties/active",
+              "type": "boolean"
+            },
+            "deployments": {
+              "$id": "#/properties/response/properties/site/properties/deployments",
+              "type": "array",
+              "items": {
+                "$id": "#/properties/response/properties/site/properties/deployments/items"
+              }
+            },
+            "licensedApplications": {
+              "$id": "#/properties/response/properties/site/properties/licensedApplications",
+              "type": "array",
+              "items": {
+                "$id": "#/properties/response/properties/site/properties/licensedApplications/items"
+              }
+            }
+          }
+         },
+        "createdByName": {
+          "$id": "#/properties/response/properties/createdByName",
           "type": "string"
         }
       }

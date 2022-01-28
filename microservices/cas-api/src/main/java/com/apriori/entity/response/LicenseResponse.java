@@ -17,20 +17,20 @@ import java.util.List;
 @Schema(location = "LicenseResponseSchema.json")
 @Data
 public class LicenseResponse {
-    private com.apriori.cds.entity.response.LicenseResponse response;
+    private LicenseResponse response;
     private String identity;
-    private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-    private Boolean active;
-    private String apVersion;
-    private String description;
-    private List<SubLicense> subLicenses = null;
-    private List<LicensedModule> licensedModules = null;
-    private String customerIdentity;
-    private String siteIdentity;
+    private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String apVersion;
+    private Boolean active;
+    private String description;
+    private List<SubLicense> subLicenses = null;
+    private List<LicensedModule> licensedModules = null;
+    private Site site;
+    private String createdByName;
 }
