@@ -26,13 +26,21 @@ public class JasperReportTest {
     public void tt() {
 
         try {
-            Scanner scanner = new Scanner(new File(""));
+            Scanner scanner = new Scanner(new File("E:\\junitTest.log"));
 
             while (scanner.hasNextLine()) {
                 extractData(scanner.nextLine());
             }
 
-            metrics.values();
+            Long globalTime = metrics.get("TB_GLOBAL_TIME") / 1000;
+
+            metrics.entrySet().stream().forEach(entry ->
+                System.out.println(entry.getKey() + "    " + entry.getValue() / 1000 / 60+ " min (" + entry.getValue() / 1000 / 60 / 60 + "," + entry.getValue() / 1000 / 60 % 60 + " hr ) | " +
+                    + 100 * (entry.getValue() / 1000) / globalTime + "%"));
+
+            System.out.println("CM_VALIDATE_TIME time in seconds    " + metrics.get("CM_VALIDATE_TIME") + " milliseconds");
+            System.out.println("Prepare files to validate time in seconds    " + metrics.get("CM_PREPARE_FILES_TO_VALIDATE_TIME") + " milliseconds");
+
             scanner.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -54,14 +62,15 @@ public class JasperReportTest {
             metrics.merge(key, value, Long::sum);
         }
     }
-
-    private boolean lineContainsKey(String nextLine) {
-
-        for (String s : arr) {
-            if(nextLine.contains(s)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
+}
+//
+//    private boolean lineContainsKey(String nextLine) {
+//
+//        for (String s : arr) {
+//            if(nextLine.contains(s)) {
+//                return true;
+//            }
+//        }
+//
+//        return false;
+//    }
