@@ -268,8 +268,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         }
 
         WebElement dateTimeLocator = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target'][value]", index)));
-        dateTimeLocator.sendKeys(String.valueOf(dateTime.getDayOfMonth()), String.valueOf(dateTime.getDayOfMonth()), String.valueOf(dateTime.getYear()),
-            Keys.RIGHT, String.valueOf(dateTime.getHour()), String.valueOf(dateTime.getMinute()));
+
+        String newDay = String.valueOf(dateTime.getDayOfMonth()).length() == 1 ? "0" + dateTime.getDayOfMonth() : String.valueOf(dateTime.getDayOfMonth());
+        String newMonth = String.valueOf(dateTime.getMonthValue()).length() == 1 ? "0" + dateTime.getMonthValue() : String.valueOf(dateTime.getMonthValue());
+
+        dateTimeLocator.sendKeys(newDay, newMonth, String.valueOf(dateTime.getYear()), Keys.RIGHT, String.valueOf(dateTime.getHour()), String.valueOf(dateTime.getMinute()));
         return this;
     }
 
