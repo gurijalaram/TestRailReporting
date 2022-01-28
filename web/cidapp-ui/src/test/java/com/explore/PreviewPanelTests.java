@@ -14,7 +14,9 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -32,7 +34,6 @@ public class PreviewPanelTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private PreviewPage previewPage;
-    private ExplorePage explorePage;
 
     private File resourceFile;
     private File resourceFile2;
@@ -165,7 +166,7 @@ public class PreviewPanelTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(filterName)
-                .addCriteriaWithOption("Notes", "Contains", notes)
+                .addCriteria(PropertyEnum.NOTES, OperationEnum.CONTAINS, notes)
                 .submit(ExplorePage.class)
                 .selectAllScenarios()
                 .openPreviewPanel();

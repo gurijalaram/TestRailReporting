@@ -133,6 +133,18 @@ public class ExploreToolbar extends MainNavBar {
         return new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
     }
 
+    /**
+     * Selects the file dropdown and enters file details
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @return new page object
+     */
+    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
+        pageUtils.waitForElementAndClick(importButton);
+        pageUtils.waitForElementAndClick(cadButton);
+        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
+    }
 
     /**
      * Navigates to the scenario via url
@@ -166,19 +178,6 @@ public class ExploreToolbar extends MainNavBar {
      */
     public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
         return uploadComponent(scenarioName, filePath).cancel(className);
-    }
-
-    /**
-     * Selects the file dropdown and enters file details
-     *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @return new page object
-     */
-    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
-        pageUtils.waitForElementAndClick(importButton);
-        pageUtils.waitForElementAndClick(cadButton);
-        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
     }
 
     /**
