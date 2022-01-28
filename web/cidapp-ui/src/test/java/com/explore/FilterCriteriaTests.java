@@ -284,11 +284,11 @@ public class FilterCriteriaTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
             .filter()
-            .saveAs()
+            .newFilter()
             .inputName(filterName2)
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
-            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, "QA Automation Account 01")
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
