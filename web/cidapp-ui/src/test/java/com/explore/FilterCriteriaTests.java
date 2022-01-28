@@ -286,7 +286,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName2)
-            .addCriteria(PropertyEnum.LAST_UPDATED_AT, OperationEnum.GREATER_THAN, "17", "09", "2021", "12", "30")
+            .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
             .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, "QA Automation Account 01")
             .submit(ExplorePage.class)
