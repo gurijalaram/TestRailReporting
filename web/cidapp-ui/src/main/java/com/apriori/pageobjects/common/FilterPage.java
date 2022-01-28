@@ -170,7 +170,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value        - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final boolean value) {
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final boolean value) {
         index = getIndex();
 
         add().selectProperty(index, propertyEnum)
@@ -186,7 +186,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param value         - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
         index = getIndex();
 
         add().selectProperty(index, propertyEnum)
@@ -207,7 +207,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @param minute          - the minute
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String day, final String month, final String year, final String hour, final String minute) {
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String day, final String month, final String year, final String hour, final String minute) {
         index = getIndex();
 
         add().selectProperty(index, propertyEnum)
