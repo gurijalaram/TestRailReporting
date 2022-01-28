@@ -14,6 +14,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+
 public class FilterPage extends LoadableComponent<FilterPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(FilterPage.class);
@@ -200,19 +202,15 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      *
      * @param propertyEnum  - property from the enum
      * @param operationEnum - operation from the enum
-     * @param day          - the day
-     * @param month          - the month
-     * @param year          - the year
-     * @param hour          - the hour
-     * @param minute          - the minute
+     * @param dateTime      - the local date time
      * @return current page object
      */
-    public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String day, final String month, final String year, final String hour, final String minute) {
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final LocalDateTime dateTime) {
         index = getIndex();
 
         add().selectProperty(index, propertyEnum)
             .selectOperation(index, operationEnum)
-            .inputDate(index, propertyEnum, day, month, year,  hour, minute);
+            .inputDate(index, propertyEnum, dateTime);
         return this;
     }
 
@@ -261,20 +259,17 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * Enters the value
      *
      * @param propertyEnum - property from the enum
-     * @param day          - the day
-     * @param month          - the month
-     * @param year          - the year
-     * @param hour          - the hour
-     * @param minute          - the minute
+     * @param dateTime     - the local date time
      * @return current page object
      */
-    private FilterPage inputDate(int index, final PropertyEnum propertyEnum, final String day, final String month, final String year, final String hour, final String minute) {
+    private FilterPage inputDate(int index, final PropertyEnum propertyEnum, final LocalDateTime dateTime) {
         if (!PropertyEnum.dateGroup.contains(propertyEnum)) {
             throw new IllegalStateException(String.format("Not able to input date because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.dateGroup));
         }
 
         WebElement dateTimeLocator = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target'][value]", index)));
-        dateTimeLocator.sendKeys(day, month, year, Keys.RIGHT, hour, minute);
+        dateTimeLocator.sendKeys(String.valueOf(dateTime.getDayOfMonth()), String.valueOf(dateTime.getDayOfMonth()), String.valueOf(dateTime.getYear()),
+            Keys.RIGHT, String.valueOf(dateTime.getHour()), String.valueOf(dateTime.getMinute()));
         return this;
     }
 
