@@ -4,10 +4,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.PropertyEnum;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -269,6 +266,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
         WebElement dateTimeLocator = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target'][value]", index)));
 
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].setAttribute('value', '2022-01-28T13:32');", dateTimeLocator);
+        dateTimeLocator.sendKeys(Keys.ENTER);
+
+        /*
         String newDay = String.valueOf(dateTime.getDayOfMonth()).length() == 1 ? "0" + dateTime.getDayOfMonth() : String.valueOf(dateTime.getDayOfMonth());
         String newMonth = String.valueOf(dateTime.getMonthValue()).length() == 1 ? "0" + dateTime.getMonthValue() : String.valueOf(dateTime.getMonthValue());
         String newYear = String.valueOf(dateTime.getYear());
@@ -276,6 +278,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         String newMinute = String.valueOf(dateTime.getMinute());
 
         dateTimeLocator.sendKeys(newDay, newMonth, newYear, Keys.RIGHT, newHour, newMinute);
+         */
         return this;
     }
 

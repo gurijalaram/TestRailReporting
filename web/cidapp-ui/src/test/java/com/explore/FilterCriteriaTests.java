@@ -28,6 +28,7 @@ import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+import java.time.LocalDateTime;
 
 public class FilterCriteriaTests extends TestBase {
 
@@ -286,6 +287,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .newFilter()
             .inputName(filterName2)
+            .addCriteria(PropertyEnum.CREATED_AT,OperationEnum.GREATER_THAN,cssItem.getScenarioCreatedAt())
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
             .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
@@ -293,5 +295,21 @@ public class FilterCriteriaTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
+    }
+
+    @Test
+    public void testFilterTest() {
+        String filterName2 = generateStringUtil.generateFilterName();
+
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .filter()
+            .newFilter()
+            .inputName(filterName2)
+            .addCriteria(PropertyEnum.CREATED_AT,OperationEnum.GREATER_THAN, LocalDateTime.MAX)
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
     }
 }
