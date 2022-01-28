@@ -271,8 +271,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
 
         String newDay = String.valueOf(dateTime.getDayOfMonth()).length() == 1 ? "0" + dateTime.getDayOfMonth() : String.valueOf(dateTime.getDayOfMonth());
         String newMonth = String.valueOf(dateTime.getMonthValue()).length() == 1 ? "0" + dateTime.getMonthValue() : String.valueOf(dateTime.getMonthValue());
+        String newYear = String.valueOf(dateTime.getYear());
+        String newHour = String.valueOf(dateTime.getHour());
+        String newMinute = String.valueOf(dateTime.getMinute());
 
-        dateTimeLocator.sendKeys(newDay, newMonth, String.valueOf(dateTime.getYear()), Keys.RIGHT, String.valueOf(dateTime.getHour()), String.valueOf(dateTime.getMinute()));
+        dateTimeLocator.sendKeys(newDay, newMonth, newYear, Keys.RIGHT, newHour, newMinute);
         return this;
     }
 
