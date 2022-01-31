@@ -251,7 +251,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
             //click the dropdown again to remove it and unhide the submit button
             pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
         }
-
         return this;
     }
 
