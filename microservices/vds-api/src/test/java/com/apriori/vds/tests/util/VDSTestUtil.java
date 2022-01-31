@@ -6,6 +6,8 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.vds.entity.enums.VDSAPIEnum;
 import com.apriori.vds.entity.response.access.control.AccessControlGroup;
 import com.apriori.vds.entity.response.access.control.AccessControlGroupItems;
@@ -14,18 +16,27 @@ import com.apriori.vds.entity.response.digital.factories.DigitalFactory;
 
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 
 import java.util.List;
 
 public abstract class VDSTestUtil extends TestUtil {
     protected static final String customerId =  PropertiesContext.get("${env}.customer_identity");
     protected static final String userId = PropertiesContext.get("${env}.user_identity");
+    protected static final UserCredentials testingUser = UserUtil.getUser();
+
 
     private static DigitalFactory digitalFactory;
     private static String digitalFactoryIdentity;
 
+
+    @BeforeClass
+    public static  void init() {
+        RequestEntityUtil.useApUserContextForRequests(testingUser);
+    }
+
     protected static DigitalFactory getDigitalFactoriesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactoriesItems.class);
         ResponseWrapper<DigitalFactoriesItems> digitalFactoriesItemsResponseWrapper = HTTPRequest.build(requestEntity).get();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -48,7 +59,7 @@ public abstract class VDSTestUtil extends TestUtil {
     }
 
     protected static List<AccessControlGroup> getAccessControlGroupsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_GROUPS, AccessControlGroupItems.class);
 
         ResponseWrapper<AccessControlGroupItems> accessControlGroupsResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,

@@ -33,9 +33,9 @@ import java.util.Set;
 
 public abstract class SDSTestUtil extends TestUtil {
 
+    protected static final UserCredentials testingUser = UserUtil.getUser();
     protected static Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
-    protected static UserCredentials testingUser = UserUtil.getUser();
 
     @BeforeClass
     public static  void init() {

@@ -41,7 +41,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     @Description("GET a specific UserGroupAssociation.")
     public void getUserGroupAssociationByIdentity() {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
+            RequestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(
                     getGroupIdentity(),
                     this.postUserGroupAssociation().getIdentity()
@@ -74,7 +74,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
         UserGroupAssociation userGroupAssociationBeforeUpdate = this.postUserGroupAssociation();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
+            RequestEntityUtil.init(VDSAPIEnum.PATCH_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity(), userGroupAssociationBeforeUpdate.getIdentity())
                 .body(UserGroupAssociationRequest.builder()
                     .customerIdentity(customerId)
@@ -88,7 +88,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
     }
 
     private List<UserGroupAssociation> getUserGroupAssociationsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociationsItems.class)
             .inlineVariables(getGroupIdentity());
 
         ResponseWrapper<UserGroupAssociationsItems> userGroupAssociationsResponse = HTTPRequest.build(requestEntity).get();
@@ -126,7 +126,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
 
 
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
+            RequestEntityUtil.init(VDSAPIEnum.POST_UG_ASSOCIATIONS_BY_GROUP_ID, UserGroupAssociation.class)
                 .inlineVariables(getGroupIdentity())
                 .body(requestBody);
 
@@ -143,7 +143,7 @@ public class UserGroupAssociationsTest extends ProcessGroupUtil {
 
     private static void deleteUserGroupAssociationById(final String ugaIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
+            RequestEntityUtil.init(VDSAPIEnum.DELETE_UG_ASSOCIATIONS_BY_GROUP_UGA_IDs, null)
                 .inlineVariables(getGroupIdentity(), ugaIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
