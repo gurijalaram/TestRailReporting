@@ -21,6 +21,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
+
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
