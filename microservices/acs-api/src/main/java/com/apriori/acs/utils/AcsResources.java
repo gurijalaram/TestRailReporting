@@ -15,6 +15,7 @@ import com.apriori.acs.entity.response.getsetproductiondefaults.SetProductionDef
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
 import com.apriori.acs.entity.response.getsetuserpreferences.GetUserPreferencesResponse;
+import com.apriori.acs.entity.response.getsetuserpreferences.SetUserPreferencesInputs;
 import com.apriori.acs.entity.response.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.apibase.utils.APIAuthentication;
@@ -282,25 +283,15 @@ public class AcsResources {
     /**
      * Set Tolerance Policy Defaults with Invalid Username to produce error
      *
-     * @param totalRunoutOverride - double
-     * @param toleranceMode - String
-     * @param useCadToleranceThreshhold - boolean
      * @return String of error
      */
-    public String setTolerancePolicyDefaultsInvalidUsername(double totalRunoutOverride,
-                                                     String toleranceMode,
-                                                     boolean useCadToleranceThreshhold) {
+    public String setTolerancePolicyDefaultsInvalidUsername() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
                 .headers(headers)
-                .body(SetTolerancePolicyDefaultsInputs.builder()
-                        .totalRunoutOverride(totalRunoutOverride)
-                        .toleranceMode(toleranceMode)
-                        .useCadToleranceThreshhold(useCadToleranceThreshhold)
-                        .build()
-                )
+                .body(null)
                 .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
@@ -357,15 +348,8 @@ public class AcsResources {
         final RequestEntity requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
                 .headers(headers)
-                .body(SetProductionDefaultsInputs.builder()
-                        .material("Accura 10")
-                        .annualVolume("5500")
-                        .productionLife(5.0)
-                        .batchSize(458)
-                        .useVpeForAllProcesses(false)
-                        .batchSizeMode(false)
-                        .build()
-                ).inlineVariables(invalidUsername);
+                .body(null)
+            .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
     }
@@ -404,6 +388,22 @@ public class AcsResources {
     }
 
     /**
+     * Gets user preferences with invalid username
+     *
+     * @return String
+     */
+    public String getUserPreferenceByNameInvalidUser() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCE_BY_NAME, null)
+            .headers(headers)
+            .inlineVariables(invalidUsername, "TolerancePolicyDefaults.toleranceMode");
+
+        return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
      * Generic call for get endpoint with invalid username
      *
      * @param endpoint - endpoint to call
@@ -418,6 +418,59 @@ public class AcsResources {
             .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     * Set user preferences
+     *
+     * @param costTableDecimalPlaces - String - value to set
+     * @param useVpe - String - value to set
+     * @param toleranceMode - String - value to set
+     * @return GenericResourceCreatedResponse instance
+     */
+    public GenericResourceCreatedResponse setUserPreferences(String costTableDecimalPlaces, String useVpe, String toleranceMode) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCES, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(SetUserPreferencesInputs.builder()
+                .costTableDecimalPlaces(costTableDecimalPlaces)
+                .prodInfoDefaultUseVpeForAllProcesses(useVpe)
+                .tolerancePolicyDefaultsToleranceMode(toleranceMode)
+                .build())
+            .inlineVariables(validUsername);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Set user preferences with invalid user
+     *
+     * @return String - 400 error response body
+     */
+    public String setUserPreferencesInvalidUser() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCES, null)
+            .headers(headers)
+            .body(null)
+            .inlineVariables(invalidUsername);
+
+        return HTTPRequest.build(requestEntity).post().getBody();
+    }
+
+    public GenericResourceCreatedResponse setUserPreferenceByName(String prefToSetKey, String prefToSetValue) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCE_BY_NAME, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(prefToSetValue)
+            .inlineVariables(validUsername, prefToSetKey);
+
+        return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**

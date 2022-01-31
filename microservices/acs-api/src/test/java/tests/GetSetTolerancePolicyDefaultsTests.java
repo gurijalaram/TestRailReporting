@@ -86,11 +86,7 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        String http400ErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername(
-                0.1,
-                "PARTOVERRIDE",
-                false
-        );
+        String http400ErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername();
 
         assertInvalidResponse(http400ErrorResponse);
     }

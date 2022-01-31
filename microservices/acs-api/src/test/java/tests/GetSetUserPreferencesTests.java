@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.AcsApiEnum;
+import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsetuserpreferences.GetUserPreferencesResponse;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
@@ -42,6 +43,47 @@ public class GetSetUserPreferencesTests {
         String errorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_USER_PREFERENCES);
 
         assertInvalidResponse(errorResponse);
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "10842")
+    @Description("Validate Set User Preferences Endpoint")
+    public void testSetUserPreferencesEndpoint() {
+        AcsResources acsResources = new AcsResources();
+        GetUserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
+        String costTableDecimalPlaces = getUserPreferencesResponse.getCostTableDecimalPlaces();
+        String useVpeForAllProcesses = getUserPreferencesResponse.getProdInfoDefaultUseVpeForAllProcesses();
+        String toleranceMode = getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode();
+
+        String costTableDecimalPlacesValueToSet = costTableDecimalPlaces.equals("2") ? "3" : "2";
+        String useVpeForAllProcessValueToSet = useVpeForAllProcesses.equals("false") ? "true" : "false";
+        String toleranceModeValueToSet = toleranceMode.equals("PARTOVERRIDE") ? "SYSTEMDEFAULT" : "PARTOVERRIDE";
+
+        GenericResourceCreatedResponse genericResourceCreatedResponse = acsResources.setUserPreferences(
+            costTableDecimalPlacesValueToSet,
+            useVpeForAllProcessValueToSet,
+            toleranceModeValueToSet
+        );
+
+        assertThat(genericResourceCreatedResponse.getResourceCreated(), is(equalTo("false")));
+
+        GetUserPreferencesResponse getUserPreferencesResponsePostChanges = acsResources.getUserPreferences();
+
+        assertThat(getUserPreferencesResponsePostChanges.getCostTableDecimalPlaces(), is(equalTo(costTableDecimalPlacesValueToSet)));
+        assertThat(getUserPreferencesResponsePostChanges.getProdInfoDefaultUseVpeForAllProcesses(), is(equalTo(useVpeForAllProcessValueToSet)));
+        assertThat(getUserPreferencesResponsePostChanges.getTolerancePolicyDefaultsToleranceMode(), is(equalTo(toleranceModeValueToSet)));
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "10844")
+    @Description("Validate Set User Preferences Endpoint - Negative - Invalid User")
+    public void testSetUserPreferencesEndpointInvalidUser() {
+        AcsResources acsResources = new AcsResources();
+        String invalidUserResponse = acsResources.setUserPreferencesInvalidUser();
+
+        assertInvalidResponse(invalidUserResponse);
     }
 
     private void assertInvalidResponse(String invalidUserResponse) {
