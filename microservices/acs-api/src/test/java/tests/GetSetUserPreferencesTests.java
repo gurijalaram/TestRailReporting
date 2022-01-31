@@ -30,7 +30,8 @@ public class GetSetUserPreferencesTests {
         assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), is(equalTo("2")));
         assertThat(getUserPreferencesResponse.getDefaultScenarioName(), is(equalTo("Initial")));
         assertThat(getUserPreferencesResponse.getProdInfoDefaultMaterial(), anyOf(equalTo("Use Default"), equalTo("Accura 10")));
-        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), is(equalTo("SYSTEMDEFAULT")));
+        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"),
+            equalTo("PARTOVERRIDE"), equalTo("CAD")));
         assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsUseCadToleranceThreshhold(), is(equalTo("false")));
     }
 
