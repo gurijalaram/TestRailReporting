@@ -33,13 +33,13 @@ import java.util.Set;
 
 public abstract class SDSTestUtil extends TestUtil {
 
-    protected static final UserCredentials testingUser = UserUtil.getUser();
+    protected static UserCredentials testingUser;
     protected static Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
 
     @BeforeClass
     public static  void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser);
+        RequestEntityUtil.useApUserContextForRequests(testingUser =  UserUtil.getUser());
     }
 
     @AfterClass

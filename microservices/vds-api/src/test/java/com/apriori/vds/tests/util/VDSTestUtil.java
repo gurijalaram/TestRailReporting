@@ -23,7 +23,7 @@ import java.util.List;
 public abstract class VDSTestUtil extends TestUtil {
     protected static final String customerId =  PropertiesContext.get("${env}.customer_identity");
     protected static final String userId = PropertiesContext.get("${env}.user_identity");
-    protected static final UserCredentials testingUser = UserUtil.getUser();
+    protected static UserCredentials testingUser;
 
 
     private static DigitalFactory digitalFactory;
@@ -32,7 +32,7 @@ public abstract class VDSTestUtil extends TestUtil {
 
     @BeforeClass
     public static  void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser);
+        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
     }
 
     protected static DigitalFactory getDigitalFactoriesResponse() {
