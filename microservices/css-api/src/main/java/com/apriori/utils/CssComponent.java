@@ -41,22 +41,11 @@ public class CssComponent {
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
+     * @param userCredentials  - user to upload the part
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         return getCssComponent(componentName, scenarioName, userCredentials, NOT_COSTED);
-    }
-
-    /**
-     * Gets component from CSS
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @return response object
-     */
-    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
-        // TODO: 12/01/2022 cn - UserUtil here needs to be reviewed before its used in sds tests
-        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), NOT_COSTED, false);
     }
 
     /**
