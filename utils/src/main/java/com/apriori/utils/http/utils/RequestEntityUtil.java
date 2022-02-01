@@ -28,7 +28,7 @@ public class RequestEntityUtil {
             .endpoint(endpoint)
             .returnType(returnType)
             .token(token)
-            .headers(initApUserContext());
+            .apUserContext(apUserContext);
     }
 
     public static RequestEntity init(EndpointEnum endpoint, Class<?> returnType) {
@@ -36,7 +36,7 @@ public class RequestEntityUtil {
             .endpoint(endpoint)
             .returnType(returnType)
             .token(token)
-            .headers(initApUserContext());
+            .apUserContext(apUserContext);
     }
 
 
@@ -46,24 +46,6 @@ public class RequestEntityUtil {
             .returnType(returnType)
             .endpoint(endpoint)
             .token(token)
-            .headers(initApUserContext());
-    }
-
-    private static Map<String, String> initApUserContext() {
-        if (apUserContext == null) {
-            return null;
-        }
-
-        return new HashMap<String, String>() {{
-                put("ap-user-context", apUserContext);
-            }
-        };
-    }
-
-    public static RequestEntity initWithApUserContext(EndpointEnum endpoint, Class<?> returnType) {
-        return initBuilder(endpoint, returnType)
-            .header("ap-user-context",
-                apUserContext != null ? apUserContext : new AuthUserContextUtil().getAuthUserContext(UserUtil.getUser().getEmail()))
-            .build();
+            .apUserContext(apUserContext);
     }
 }
