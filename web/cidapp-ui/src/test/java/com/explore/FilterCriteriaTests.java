@@ -21,8 +21,10 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -40,7 +42,7 @@ public class FilterCriteriaTests extends TestBase {
         super();
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"6213"})
     @Description("Test private criteria part")
     public void testPrivateCriteriaPart() {
@@ -244,7 +246,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
-    }*/
+    }
 
     @Test
     @Category(SmokeTests.class)
