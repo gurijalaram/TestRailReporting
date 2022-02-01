@@ -37,7 +37,6 @@ import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
 
-    private static final UserCredentials currentUser = UserUtil.getUser();
     private static Item testingScenario;
     private static Item testingScenarioWithWatchpoint;
 
@@ -230,7 +229,7 @@ public class ScenariosTest extends SDSTestUtil {
         Item scenarioWithCreatedWatchpoint = this.createWatchpoint();
 
         new ScenariosUtil().getScenarioRepresentation("processing", scenarioWithCreatedWatchpoint.getComponentIdentity(),
-            scenarioWithCreatedWatchpoint.getScenarioIdentity(), currentUser
+            scenarioWithCreatedWatchpoint.getScenarioIdentity(), testingUser
         );
 
         final RequestEntity requestEntity =
@@ -413,7 +412,7 @@ public class ScenariosTest extends SDSTestUtil {
                 .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
                 .mode(mode)
                 .material(materialName)
-                .user(currentUser)
+                .user(testingUser)
                 .build());
 
         assertNotEquals("Testing scenario should present.", testingScenarios.size(), 0);
