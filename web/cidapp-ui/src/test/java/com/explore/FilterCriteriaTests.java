@@ -286,7 +286,6 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .newFilter()
             .inputName(filterName2)
-            .addCriteria(PropertyEnum.CREATED_AT,OperationEnum.GREATER_THAN,cssItem.getScenarioCreatedAt())
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
             .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
