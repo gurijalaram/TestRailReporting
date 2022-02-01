@@ -280,7 +280,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         if (!local.getCountry().contains("US")) {
             dateTimeLocator.sendKeys(newDay, newMonth, newYear, Keys.RIGHT, newHour, newMinute);
         } else {
-            dateTimeLocator.sendKeys(newMonth, newMonth, newDay, Keys.RIGHT, newHour, newMinute);
+            dateTimeLocator.sendKeys(newMonth, newDay, newYear, Keys.RIGHT, newHour, newMinute);
         }
         return this;
     }
