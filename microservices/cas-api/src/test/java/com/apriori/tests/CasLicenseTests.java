@@ -43,20 +43,20 @@ public class CasLicenseTests {
     public void cleanUp() {
         if (deleteIdentityHolder != null) {
             casTestUtil.delete(CASAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS,
-                    deleteIdentityHolder.customerIdentity(),
-                    deleteIdentityHolder.siteIdentity(),
-                    deleteIdentityHolder.licenseIdentity(),
-                    deleteIdentityHolder.subLicenseIdentity(),
-                    deleteIdentityHolder.userIdentity()
+                deleteIdentityHolder.customerIdentity(),
+                deleteIdentityHolder.siteIdentity(),
+                deleteIdentityHolder.licenseIdentity(),
+                deleteIdentityHolder.subLicenseIdentity(),
+                deleteIdentityHolder.userIdentity()
             );
-            if (userIdentityHolder !=null) {
+            if (userIdentityHolder != null) {
                 casTestUtil.delete(CASAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS,
-                        userIdentityHolder.customerIdentity(),
-                        userIdentityHolder.userIdentity()
+                    userIdentityHolder.customerIdentity(),
+                    userIdentityHolder.userIdentity()
                 );
-                if (customerIdentityHolder !=null) {
+                if (customerIdentityHolder != null) {
                     casTestUtil.delete(CASAPIEnum.CUSTOMER,
-                            customerIdentityHolder.customerIdentity()
+                        customerIdentityHolder.customerIdentity()
                     );
 
                 }
@@ -80,15 +80,15 @@ public class CasLicenseTests {
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .build();
+            .customerIdentity(customerIdentity)
+            .build();
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
         String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityHolder = IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .userIdentity(userIdentity)
-                .build();
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
 
         ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
         String siteIdentity = site.getResponseEntity().getIdentity();
@@ -98,8 +98,8 @@ public class CasLicenseTests {
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 
         ResponseWrapper<Licenses> license = casTestUtil.getCommonRequest(CASAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
-                Licenses.class,
-                customerIdentity
+            Licenses.class,
+            customerIdentity
         );
         String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
 
@@ -108,11 +108,11 @@ public class CasLicenseTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
 
         deleteIdentityHolder = IdentityHolder.builder()
-                .customerIdentity(customerIdentity)
-                .siteIdentity(siteIdentity)
-                .licenseIdentity(licenseIdentity)
-                .subLicenseIdentity(subLicenseIdentity)
-                .userIdentity(userIdentity)
-                .build();
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licenseIdentity)
+            .subLicenseIdentity(subLicenseIdentity)
+            .userIdentity(userIdentity)
+            .build();
     }
 }

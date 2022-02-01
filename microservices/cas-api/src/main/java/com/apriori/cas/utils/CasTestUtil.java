@@ -521,12 +521,12 @@ public class CasTestUtil extends TestUtil {
      */
     public static <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
-                .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
-                .body("userAssociation",
-                        AssociationUserItems.builder()
-                                .userIdentity(userIdentity)
-                                .createdBy("#SYSTEM00000")
-                                .build());
+            .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+            .body("userAssociation",
+                AssociationUserItems.builder()
+                    .userIdentity(userIdentity)
+                    .createdBy("#SYSTEM00000")
+                    .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
