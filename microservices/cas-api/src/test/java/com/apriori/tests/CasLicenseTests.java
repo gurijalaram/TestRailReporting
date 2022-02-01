@@ -16,6 +16,7 @@ import com.apriori.entity.response.Site;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.After;
@@ -92,7 +93,7 @@ public class CasLicenseTests {
         ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLiscense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
 

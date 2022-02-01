@@ -4,9 +4,9 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
@@ -120,6 +120,12 @@ public class CasTestUtil extends TestUtil {
             source.getIdentity());
     }
 
+    /**
+     * @param source
+     * @param association
+     * @param identity
+     * @return
+     */
     public CustomerAssociationUser findCustomerAssociationUser(Customer source, CustomerAssociation association, String identity) {
         return findFirst(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -131,6 +137,11 @@ public class CasTestUtil extends TestUtil {
         );
     }
 
+    /**
+     * @param source
+     * @param association
+     * @return
+     */
     public ResponseWrapper<CustomerAssociationUsers> findCustomerAssociationUsers(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -144,6 +155,11 @@ public class CasTestUtil extends TestUtil {
         );
     }
 
+    /**
+     * @param source
+     * @param association
+     * @return
+     */
     public ResponseWrapper<CustomerUsers> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATION_CANDIDATES,
@@ -287,20 +303,39 @@ public class CasTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param source
+     * @return
+     */
     public List<CustomerUser> findUsers(Customer source) {
         return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
     }
 
+    /**
+     * @param customer
+     * @return
+     */
     public ResponseWrapper<CustomerUser> createUser(Customer customer) {
         String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
         return createUser(customer.getIdentity(), domain);
     }
 
+    /**
+     * @param customerIdentity
+     * @param domain
+     * @return
+     */
     public ResponseWrapper<CustomerUser> createUser(String customerIdentity, String domain) {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createUser(customerIdentity, generator.generateUserName(), domain);
     }
 
+    /**
+     * @param customerIdentity
+     * @param userName
+     * @param domain
+     * @return
+     */
     public ResponseWrapper<CustomerUser> createUser(final String customerIdentity, final String userName, final String domain) {
         String email = String.format("%s@%s", userName.toLowerCase(), domain);
 
@@ -442,7 +477,16 @@ public class CasTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).patch();
     }
 
-    public ResponseWrapper<LicenseResponse> addLiscense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+    /**
+     * @param customerIdentity
+     * @param siteIdentity
+     * @param customerName
+     * @param siteId
+     * @param licenseId
+     * @param subLicenseId
+     * @return
+     */
+    public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
                 .inlineVariables(customerIdentity, siteIdentity)
                 .headers(new HashMap<String, String>() {
@@ -465,6 +509,16 @@ public class CasTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param klass
+     * @param customerIdentity
+     * @param siteIdentity
+     * @param licenseIdentity
+     * @param subLicenseIdentity
+     * @param userIdentity
+     * @param <T>
+     * @return
+     */
     public static <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
