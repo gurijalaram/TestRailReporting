@@ -21,7 +21,7 @@ public class IterationsTest extends SDSTestUtil {
     @Description("Find iterations for a given scenario matching a specified query.")
     public void getIterations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioIterationItemsResponse.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -35,7 +35,7 @@ public class IterationsTest extends SDSTestUtil {
     @Description("Get the latest iteration.")
     public void getIterationLatest() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ScenarioIteration.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId()
                 );
@@ -49,7 +49,7 @@ public class IterationsTest extends SDSTestUtil {
     @Description("Get the current representation of a iteration.")
     public void getIterationsByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_ITERATION_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioIteration.class)
                 .inlineVariables(
                     getComponentId(), getScenarioId(), getIterationId()
                 );

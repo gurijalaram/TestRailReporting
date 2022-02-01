@@ -85,6 +85,10 @@ class ConnectionManager<T> {
             builder.addHeader("Authorization", "Bearer " + requestEntity.token());
         }
 
+        if (requestEntity.apUserContext() != null) {
+            builder.addHeader("ap-user-context", requestEntity.apUserContext());
+        }
+
         if (requestEntity.xwwwwFormUrlEncodeds() != null && !requestEntity.xwwwwFormUrlEncodeds().isEmpty()) {
             builder.setContentType(ContentType.URLENC);
             requestEntity.xwwwwFormUrlEncodeds().forEach(builder::addFormParams);

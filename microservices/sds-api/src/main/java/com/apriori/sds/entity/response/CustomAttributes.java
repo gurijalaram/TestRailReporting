@@ -27,4 +27,6 @@ public class CustomAttributes {
     private String boxMaterial;
     @JsonProperty("ShippingCompany")
     private String shippingCompany;
+    @JsonProperty("Test_Field_04")
+    private String testField4;
 }

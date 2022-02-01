@@ -19,9 +19,13 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
+
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
+import org.junit.BeforeClass;
 
 import java.util.HashSet;
 import java.util.List;
@@ -29,8 +33,14 @@ import java.util.Set;
 
 public abstract class SDSTestUtil extends TestUtil {
 
+    protected static UserCredentials testingUser;
     protected static Set<Item> scenariosToDelete = new HashSet<>();
     private static Item testingComponent;
+
+    @BeforeClass
+    public static  void init() {
+        RequestEntityUtil.useApUserContextForRequests(testingUser =  UserUtil.getUser());
+    }
 
     @AfterClass
     public static void clearTestingData() {
@@ -93,7 +103,7 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
+            RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
             .inlineVariables(componentId, scenarioId);
 
         ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
@@ -156,7 +166,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected static Item postComponent(final PostComponentRequest postComponentRequest) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", postComponentRequest);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
@@ -164,7 +174,8 @@ public abstract class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", postComponentRequest.getComponentName(), postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName());
+        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName(),
+            testingUser);
 
         scenariosToDelete.add(itemResponse.get(0));
         return itemResponse.get(0);
@@ -179,7 +190,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected List<CostingTemplate> getCostingTemplates() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
+            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATES, CostingTemplatesItems.class);
 
         ResponseWrapper<CostingTemplatesItems> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
