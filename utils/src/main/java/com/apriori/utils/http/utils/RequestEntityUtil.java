@@ -60,7 +60,6 @@ public class RequestEntityUtil {
         };
     }
 
-    //TODO z: will be removed after VDS update
     public static RequestEntity initWithApUserContext(EndpointEnum endpoint, Class<?> returnType) {
         return initBuilder(endpoint, returnType)
             .header("ap-user-context",
