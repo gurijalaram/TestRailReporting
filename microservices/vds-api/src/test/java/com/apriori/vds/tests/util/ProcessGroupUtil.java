@@ -28,7 +28,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static List<ProcessGroupMaterial> getProcessGroupMaterial() {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
+            RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_BY_DF_AND_PG_IDs, ProcessGroupMaterialsItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity());
 
         final ResponseWrapper<ProcessGroupMaterialsItems> processGroupMaterialsItems = HTTPRequest.build(requestEntity).get();
@@ -41,7 +41,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
     }
 
     protected static List<ProcessGroup> getProcessGroupsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
 
         ResponseWrapper<ProcessGroups> processGroupsResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, processGroupsResponse.getStatusCode());
@@ -80,7 +80,7 @@ public class ProcessGroupUtil extends VDSTestUtil {
 
     protected static List<ProcessGroupAssociation> getProcessGroupAssociations() {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class);
+            RequestEntityUtil.init(VDSAPIEnum.GET_PG_ASSOCIATIONS, ProcessGroupAssociationsItems.class);
 
         ResponseWrapper<ProcessGroupAssociationsItems> responseWrapper = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
