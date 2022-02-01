@@ -25,11 +25,6 @@ public class PublishScenarioPage extends EagerPageComponent<PublishScenarioPage>
     }
 
     @Override
-    protected void load() {
-
-    }
-
-    @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(publishScenarioAlert);
     }
