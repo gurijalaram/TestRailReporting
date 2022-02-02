@@ -12,6 +12,8 @@ import com.apriori.pageobjects.pages.view.reports.CycleTimeValueTrackingPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -138,8 +140,8 @@ public class CycleTimeValueTrackingDetailsReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", reportsPartNumber)
-                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+                .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, reportsPartNumber)
+                .addCriteria(PropertyEnum.DIGITAL_FACTORY,OperationEnum.IN, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 

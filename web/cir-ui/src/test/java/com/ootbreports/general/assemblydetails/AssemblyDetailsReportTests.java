@@ -17,6 +17,8 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ComponentInfoColumnEnum;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.AssemblyTypeEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -506,8 +508,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", Constants.PISTON_ASSEMBLY_CID_NAME)
-                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, Constants.PISTON_ASSEMBLY_CID_NAME)
+                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
                 .openFirstScenario()
                 .openComponents();
@@ -832,8 +834,8 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", reportsValues.get("Part Name"))
-                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .addCriteria(PropertyEnum.COMPONENT_NAME,OperationEnum.EQUALS, reportsValues.get("Part Name"))
+                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 
@@ -941,9 +943,9 @@ public class AssemblyDetailsReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals",
+                .addCriteria(PropertyEnum.COMPONENT_NAME,OperationEnum.EQUALS,
                         AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .addCriteriaWithOption("Scenario Name", "Contains", "Multi VPE")
+                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, "Multi VPE")
                 .submit(ExplorePage.class)
                 .openFirstScenario().openComponents();
 

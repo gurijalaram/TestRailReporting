@@ -1,12 +1,6 @@
 package com.evaluate;
 
-import static com.apriori.utils.enums.ComponentIconEnum.PART;
-import static com.apriori.utils.enums.CostingIconEnum.COSTED;
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
-import static com.apriori.utils.enums.ProcessGroupEnum.CASTING_DIE;
-import static com.utils.AssemDfmIconEnum.HIGH;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -22,7 +16,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.sun.xml.bind.v2.TODO;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;

@@ -24,7 +24,7 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
     @Description("Get a list of MaterialStocks for a specific material.")
     public void getMaterialStocks() {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+            RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
                 .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), getMaterialIdentity());
 
         ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
@@ -38,7 +38,7 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
         List<ProcessGroupMaterialStock> processGroupMaterialsStocks = this.getMaterialsStocksWithItems();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialStock.class)
+            RequestEntityUtil.init(VDSAPIEnum.GET_SPECIFIC_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialStock.class)
                 .inlineVariables(
                     getDigitalFactoryIdentity(),
                     getAssociatedProcessGroupIdentity(),
@@ -51,7 +51,7 @@ public class ProcessGroupMaterialStocksTest extends ProcessGroupUtil {
     private List<ProcessGroupMaterialStock> getMaterialsStocksWithItems() {
         for (ProcessGroupMaterial material : getProcessGroupMaterial()) {
             RequestEntity requestEntity =
-                RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
+                RequestEntityUtil.init(VDSAPIEnum.GET_PROCESS_GROUP_MATERIALS_STOCKS_BY_DF_PG_AND_MATERIAL_IDs, ProcessGroupMaterialsStocksItems.class)
                     .inlineVariables(getDigitalFactoryIdentity(), getAssociatedProcessGroupIdentity(), material.getIdentity());
 
             ResponseWrapper<ProcessGroupMaterialsStocksItems> processGroupMaterialStocksResponse = HTTPRequest.build(requestEntity).get();
