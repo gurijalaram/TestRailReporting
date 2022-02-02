@@ -1,8 +1,6 @@
 package com.apriori.utils;
 
-import static com.apriori.utils.enums.ScenarioStateEnum.COSTING;
 import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
-import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
@@ -14,7 +12,6 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -34,7 +31,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class CssComponent {
 
-    private List<String> itemScenarioState;
+    private String itemScenarioState;
 
     /**
      * Gets the uncosted component from CSS
@@ -105,12 +102,8 @@ public class CssComponent {
                     }
 
                     if (distinctItem.get()
-                        .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()) ||
-                            x.getScenarioState().equals(PROCESSING.getState()) ||
-                            x.getScenarioState().equals(COSTING.getState()))) {
-
-                        itemScenarioState = items.get().stream().map(Item::getScenarioState).distinct().collect(Collectors.toList());
-                        break;
+                        .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()))) {
+                        itemScenarioState = items.get().stream().map(Item::getScenarioState).distinct().collect(Collectors.toList()).get(0);
                     }
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
