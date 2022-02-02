@@ -191,6 +191,16 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * Clicks on the publish button to open PublishScenario page with Unpublished Scenario(s)
+     *
+     * @return new page object
+     */
+    public PublishScenarioPage publishPrivateScenario() {
+        pageUtils.waitForElementAndClick(publishButton);
+        return new PublishScenarioPage(driver);
+    }
+
+    /**
      * Edit the scenario
      *
      * @return new page object
