@@ -9,6 +9,7 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.DecimalPlaceEnum;
 import com.apriori.utils.enums.LengthEnum;
 import com.apriori.utils.enums.MassEnum;
+import com.apriori.utils.enums.PreferencesEnum;
 import com.apriori.utils.enums.TimeEnum;
 import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -43,25 +44,25 @@ public class ResetSettingsUtil {
 
         preferencesItems.forEach(x -> mappedResponse.put(x.getName(), x.getIdentity()));
 
-        String areaIdentity = mappedResponse.get("display.areaUnits");
-        String currencyIdentity = mappedResponse.get("display.currency");
-        String unitIdentity = mappedResponse.get("display.unitsGroup");
-        String lengthIdentity = mappedResponse.get("display.lengthUnits");
-        String massIdentity = mappedResponse.get("display.massUnits");
-        String timeIdentity = mappedResponse.get("display.timeUnits");
-        String decimalIdentity = mappedResponse.get("display.decimalPlaces");
-        String languageIdentity = mappedResponse.get("display.language");
-        String colourIdentity = mappedResponse.get("display.selectionColor");
-        String scenarioIdentity = mappedResponse.get("production.defaultScenarioName");
-        String proGroupIdentity = mappedResponse.get("production.defaultProcessGroup");
-        String digFacIdentity = mappedResponse.get("production.defaultDigitalFactory");
-        String matCatalogIdentity = mappedResponse.get("production.defaultMaterialCatalogName");
-        String cadThresholdIdentity = mappedResponse.get("tolerance.useCadToleranceThreshold");
-        String materialIdentity = mappedResponse.get("production.defaultMaterialName");
-        String annVolIdentity = mappedResponse.get("production.defaultAnnualVolume");
-        String prodLifeIdentity = mappedResponse.get("production.defaultProductionLife");
-        String batchIdentity = mappedResponse.get("production.defaultBatchSize");
-        String tolModeIdentity = mappedResponse.get("tolerance.toleranceMode");
+        String areaIdentity = mappedResponse.get(PreferencesEnum.AREA_UNITS.getPreference());
+        String currencyIdentity = mappedResponse.get(PreferencesEnum.CURRENCY.getPreference());
+        String unitIdentity = mappedResponse.get(PreferencesEnum.UNITS_GROUP.getPreference());
+        String lengthIdentity = mappedResponse.get(PreferencesEnum.LENGTH_UNITS.getPreference());
+        String massIdentity = mappedResponse.get(PreferencesEnum.MASS_UNITS.getPreference());
+        String timeIdentity = mappedResponse.get(PreferencesEnum.TIME_UNITS.getPreference());
+        String decimalIdentity = mappedResponse.get(PreferencesEnum.DECIMAL_PLACES.getPreference());
+        String languageIdentity = mappedResponse.get(PreferencesEnum.LANGUAGE.getPreference());
+        String colourIdentity = mappedResponse.get(PreferencesEnum.SELECTION_COLOUR.getPreference());
+        String scenarioIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_SCENARIO_NAME.getPreference());
+        String proGroupIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_PROCESS_GROUP.getPreference());
+        String digFacIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_DIGITAL_FACTORY.getPreference());
+        String matCatalogIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_MATERIAL_CATALOG_NAME.getPreference());
+        String cadThresholdIdentity = mappedResponse.get(PreferencesEnum.CAD_TOLERANCE_THRESHOLD.getPreference());
+        String materialIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_MATERIAL_NAME.getPreference());
+        String annVolIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_ANNUAL_VOLUME.getPreference());
+        String prodLifeIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_PRODUCTION_LIFE.getPreference());
+        String batchIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_BATCH_SIZE.getPreference());
+        String tolModeIdentity = mappedResponse.get(PreferencesEnum.TOLERANCE_MODE.getPreference());
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(token)

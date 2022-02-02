@@ -12,7 +12,7 @@ public enum PreferencesEnum {
     SELECTION_COLOUR("display.selectionColor"),
     DEFAULT_SCENARIO_NAME("production.defaultScenarioName"),
     DEFAULT_PROCESS_GROUP("production.defaultProcessGroup"),
-    DEFAULT_DIGITAL_FACTOR("production.defaultDigitalFactory"),
+    DEFAULT_DIGITAL_FACTORY("production.defaultDigitalFactory"),
     DEFAULT_MATERIAL_CATALOG_NAME("production.defaultMaterialCatalogName"),
     CAD_TOLERANCE_THRESHOLD("tolerance.useCadToleranceThreshold"),
     DEFAULT_MATERIAL_NAME("production.defaultMaterialName"),
