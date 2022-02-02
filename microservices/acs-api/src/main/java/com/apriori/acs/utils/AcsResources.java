@@ -478,6 +478,8 @@ public class AcsResources {
      */
     private void setupHeader() {
         headers.put("Content-Type", "application/json");
+        headers.put("apriori.tenantgroup", "default");
+        headers.put("apriori.tenant", "default");
         Object[] tokenArray = token.keySet().toArray();
         for (Object key : tokenArray) {
             headers.put(key.toString(), token.get(key));

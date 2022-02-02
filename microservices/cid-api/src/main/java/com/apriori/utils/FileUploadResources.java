@@ -75,6 +75,7 @@ public class FileUploadResources {
 
     private static final HashMap<String, String> token = new APIAuthentication()
         .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
+
     private static final HashMap<String, String> headers = new HashMap<>();
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -312,7 +313,7 @@ public class FileUploadResources {
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
-            .headers(token)
+            .headers(headers)
             .multiPartFiles(new MultiPartFiles().use("data",
                 FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
             .formParams(new FormParams().use("filename", fileName));
@@ -615,7 +616,7 @@ public class FileUploadResources {
 
             final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.CHECK_WORKORDER_STATUS, null)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(workorderId);
 
             status = HTTPRequest.build(requestEntity).get().getBody().replace("\"", "");
@@ -744,11 +745,14 @@ public class FileUploadResources {
      * @param contentType String
      */
     private void setupHeaders(String contentType) {
+        String defaultString = "default";
+        headers.put("Content-Type", contentType);
+        headers.put("Accept", "*/*");
+        headers.put("apriori.tenantgroup", defaultString);
+        headers.put("apriori.tenant", defaultString);
         Object[] tokenArray = token.keySet().toArray();
         for (Object key : tokenArray) {
             headers.put(key.toString(), token.get(key));
         }
-        headers.put("Content-Type", contentType);
-        headers.put("Accept", "*/*");
     }
 }
