@@ -16,10 +16,12 @@ import java.util.stream.Collectors;
 public class UserPreferencesUtil {
 
     /**
-     * @param userCredentials
-     * @param preference
-     * @param value
-     * @return
+     * Patch/update a preference
+     *
+     * @param userCredentials - the user credentials
+     * @param preference      - the preference
+     * @param value           - the value
+     * @return response object
      */
     public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, PreferencesEnum preference, String value) {
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
