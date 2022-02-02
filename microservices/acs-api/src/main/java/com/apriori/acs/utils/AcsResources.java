@@ -5,6 +5,7 @@ import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
+import com.apriori.acs.entity.response.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
 import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInputs;
@@ -25,6 +26,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
+import org.bouncycastle.cert.ocsp.Req;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -398,6 +400,21 @@ public class AcsResources {
                 ).inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
+    }
+
+    /**
+     * Get part primary process groups
+     *
+     * @return GetPartPrimaryProcessGroupsResponse instance
+     */
+    public GetPartPrimaryProcessGroupsResponse getPartPrimaryProcessGroups() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_PART_PRIMARY_PROCESS_GROUPS, GetPartPrimaryProcessGroupsResponse.class)
+            .headers(headers);
+
+        return (GetPartPrimaryProcessGroupsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
