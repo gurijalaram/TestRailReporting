@@ -33,7 +33,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-list-configure-button']")
     private WebElement configureButton;
 
-    @FindBy(id = "qa-scenario-list-filter-button")
+    @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
     private WebElement filterButton;
 
     @FindBy(css = "[data-icon='angle-double-left']")

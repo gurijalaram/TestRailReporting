@@ -17,7 +17,9 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -370,7 +372,7 @@ public class ActionsTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), equalTo(1));
@@ -593,7 +595,7 @@ public class ActionsTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Status", "In", "Complete")
+            .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Complete")
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -602,7 +604,7 @@ public class ActionsTests extends TestBase {
         explorePage.filter()
             .newFilter()
             .inputName(filterName2)
-            .addCriteriaWithOption("Cost Maturity", "In", "Medium")
+            .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 

@@ -11,7 +11,9 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -59,7 +61,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Component Name", "Contains", "SheetMetal")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "SheetMetal")
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -88,7 +90,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Process Group", "In", ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .addCriteria(PropertyEnum.PROCESS_GROUP, OperationEnum.IN, ProcessGroupEnum.CASTING_DIE.getProcessGroup())
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -114,7 +116,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Part Name", "Contains", "Wall")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Wall")
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -142,7 +144,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Component Name", "Contains", "Piston_assembly")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Piston_assembly")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
@@ -178,7 +180,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Status", "is", "Analysis")
+            .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
@@ -207,7 +209,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Component Name", "Contains", "Push Pin")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Push Pin")
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -240,7 +242,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Description", "Contains", "Test Description")
+            .addCriteria(PropertyEnum.DESCRIPTION, OperationEnum.CONTAINS, "Test Description")
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Piston_assembly", scenarioName), is(equalTo(1)));
@@ -276,17 +278,18 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .lock(ExplorePage.class)
             .filter()
-            .saveAs()
+            .newFilter()
             .inputName(filterName2)
-            .addCriteriaWithOption("Status", "In", "Analysis")
-            .addCriteriaWithOption("Cost Maturity", "In", "Initial")
-            .addCriteriaWithOption("Assignee", "In", scenarioCreatedByName)
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, cssItem.getScenarioCreatedAt())
+            .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
+            .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 

@@ -21,7 +21,7 @@ public class ComponentsTest extends SDSTestUtil {
     @Description("Find components for a customer matching a specified query.")
     public void getComponents() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class);
+            RequestEntityUtil.init(SDSAPIEnum.GET_COMPONENTS, ComponentsItemsResponse.class);
 
         ResponseWrapper<ComponentsItemsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -32,7 +32,7 @@ public class ComponentsTest extends SDSTestUtil {
     @Description("Get the current representation of a component.")
     public void getComponentByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_COMPONENT_SINGLE_BY_IDENTITY, Component.class)
                 .inlineVariables(getComponentId());
 
         ResponseWrapper<Component> response = HTTPRequest.build(requestEntity).get();
