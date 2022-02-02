@@ -40,7 +40,7 @@ public class GetSetTolerancePolicyDefaultsTests {
 
         assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
         assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
-        assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), is(equalTo("DOUBLE")));
+        assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), anyOf(equalTo("DOUBLE"), equalTo("OBJECT")));
     }
 
     @Test
