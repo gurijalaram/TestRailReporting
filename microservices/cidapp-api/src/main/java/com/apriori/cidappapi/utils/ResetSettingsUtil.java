@@ -3,7 +3,6 @@ package com.apriori.cidappapi.utils;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
-import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.enums.ColourEnum;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.DecimalPlaceEnum;
@@ -30,7 +29,7 @@ public class ResetSettingsUtil {
      * @return response object
      */
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
-        String token = new AuthorizationUtil(userCredentials).getTokenAsString();
+        String token = userCredentials.getToken();
 
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
             .token(token);
