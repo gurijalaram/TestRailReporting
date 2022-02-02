@@ -3,6 +3,7 @@ package com.apriori.cidappapi.utils;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceItemsResponse;
 import com.apriori.cidappapi.entity.response.preferences.PreferenceResponse;
+import com.apriori.utils.enums.PreferencesEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -20,7 +21,7 @@ public class UserPreferencesUtil {
      * @param value
      * @return
      */
-    public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, String preference, String value) {
+    public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, PreferencesEnum preference, String value) {
         RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
             .token(userCredentials.getToken());
 
@@ -28,7 +29,7 @@ public class UserPreferencesUtil {
 
         List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
 
-        PreferenceResponse prefItem = preferencesItems.stream().filter(x -> x.getName().equals(preference)).collect(Collectors.toList()).get(0);
+        PreferenceResponse prefItem = preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(userCredentials.getToken())

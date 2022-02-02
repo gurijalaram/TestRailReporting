@@ -11,6 +11,7 @@ import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.PreferencesEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -42,7 +43,7 @@ public class DecimalPlaceTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ResponseWrapper<String> patchResponse = userPreferencesUtil.patchPreference(currentUser, "display.decimalPlaces", "2");
+        ResponseWrapper<String> patchResponse = userPreferencesUtil.patchPreference(currentUser, PreferencesEnum.DECIMAL_PLACES, "2");
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 }
