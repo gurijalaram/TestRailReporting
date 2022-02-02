@@ -27,7 +27,7 @@ public class CostingTemplatesTest extends SDSTestUtil {
     @Description("Get the current representation of a costing template.")
     public void testGetCostingTemplateByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_COSTING_TEMPLATE_SINGLE_BY_IDENTITY_ID, CostingTemplate.class)
                 .inlineVariables(this.getFirstCostingTemplate().getIdentity());
 
         ResponseWrapper<CostingTemplate> response = HTTPRequest.build(requestEntity).get();

@@ -18,7 +18,9 @@ import com.apriori.pageobjects.pages.view.reports.TargetQuotedCostTrendReportPag
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.DateElementsEnum;
 import com.apriori.utils.enums.reports.DtcScoreEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
@@ -940,8 +942,8 @@ public class InputControlsTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", partName)
-                .addCriteriaWithOption("VPE", "In", DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
+                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+                .addCriteria(PropertyEnum.DIGITAL_FACTORY, OperationEnum.IN, DigitalFactoryEnum.APRIORI_USA.getDigitalFactory())
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 

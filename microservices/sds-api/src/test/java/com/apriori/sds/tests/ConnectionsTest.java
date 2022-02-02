@@ -50,7 +50,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static List<Connection> getConnections() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class);
+            RequestEntityUtil.init(SDSAPIEnum.GET_CONNECTIONS, ConnectionsItemsResponse.class);
 
         ResponseWrapper<ConnectionsItemsResponse> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -86,7 +86,7 @@ public class ConnectionsTest extends SDSTestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.PATCH_CONNECTIONS_BY_ID, Connection.class)
+            RequestEntityUtil.init(SDSAPIEnum.PATCH_CONNECTIONS_BY_ID, Connection.class)
                 .inlineVariables(postConnection().getIdentity())
                 .body("connection", connectionRequest);
 
@@ -108,7 +108,7 @@ public class ConnectionsTest extends SDSTestUtil {
         }
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
+            RequestEntityUtil.init(SDSAPIEnum.POST_CONNECTIONS, Connection.class)
                 .body("connection", connectionRequest);
 
         ResponseWrapper<Connection> response = HTTPRequest.build(requestEntity).post();
@@ -137,7 +137,7 @@ public class ConnectionsTest extends SDSTestUtil {
 
     private static String deleteConnection(String identityToDelete) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_CONNECTIONS_BY_ID, null)
+            RequestEntityUtil.init(SDSAPIEnum.DELETE_CONNECTIONS_BY_ID, null)
                 .inlineVariables(identityToDelete);
 
         ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).delete();

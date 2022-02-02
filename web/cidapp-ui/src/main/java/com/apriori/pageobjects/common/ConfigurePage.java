@@ -78,6 +78,21 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     }
 
     /**
+     * Moves the column
+     *
+     * @param columnName - the column name
+     * @param direction  - the direction
+     */
+    private void moveColumn(ColumnsEnum columnName, DirectionEnum direction) {
+        selectColumn(columnName);
+        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction.getDirection()));
+
+        while (!driver.findElement(By.xpath(String.format("//*[name()='svg' and @data-icon='angle-%s']/..", direction.getDirection()))).getAttribute("class").contains("disabled")) {
+            pageUtils.waitForElementAndClick(byArrow);
+        }
+    }
+
+    /**
      * Select the column
      *
      * @param columnName - the column
@@ -109,21 +124,6 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     public ConfigurePage moveToBottom(ColumnsEnum columnName) {
         moveColumn(columnName, DirectionEnum.DOWN);
         return this;
-    }
-
-    /**
-     * Moves the column
-     *
-     * @param columnName - the column name
-     * @param direction  - the direction
-     */
-    private void moveColumn(ColumnsEnum columnName, DirectionEnum direction) {
-        selectColumn(columnName);
-        By byArrow = By.cssSelector(String.format("[data-icon='angle-%s']", direction.getDirection()));
-
-        while (!driver.findElement(By.xpath(String.format("//*[name()='svg' and @data-icon='angle-%s']/..", direction.getDirection()))).getAttribute("class").contains("disabled")) {
-            pageUtils.waitForElementAndClick(byArrow);
-        }
     }
 
     /**

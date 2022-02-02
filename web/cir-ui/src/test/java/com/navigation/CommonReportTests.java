@@ -20,6 +20,8 @@ import com.apriori.pageobjects.pages.view.reports.CastingDtcReportPage;
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.AssemblySetEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
@@ -265,8 +267,8 @@ public class CommonReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", partName)
-                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();
@@ -316,8 +318,8 @@ public class CommonReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", partName)
-                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, partName)
+                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
                 .openFirstScenario()
                 .openDesignGuidance();
@@ -453,9 +455,9 @@ public class CommonReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Contains",
+                .addCriteria(PropertyEnum.COMPONENT_NAME,OperationEnum.CONTAINS,
                         AssemblySetEnum.TOP_LEVEL_SHORT.getAssemblySetName())
-                .addCriteriaWithOption("Scenario Name", "Contains", Constants.DEFAULT_SCENARIO_NAME)
+                .addCriteria(PropertyEnum.SCENARIO_NAME,OperationEnum.CONTAINS, Constants.DEFAULT_SCENARIO_NAME)
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 
