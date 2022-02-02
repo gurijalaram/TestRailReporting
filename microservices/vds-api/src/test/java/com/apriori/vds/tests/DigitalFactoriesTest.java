@@ -35,7 +35,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8031"})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getDigitalFactoriesByIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_DIGITAL_FACTORIES_BY_IDENTITY, DigitalFactory.class)
             .inlineVariables(getDigitalFactoriesResponse().getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -61,7 +61,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8033"})
     @Description("Get a specific Digital Factory for a customer identified by its identity.")
     public void getVPEsByIdentity() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_VPES_BY_IDENTITY, DigitalFactory.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_VPES_BY_IDENTITY, DigitalFactory.class)
             .inlineVariables(this.getVPEsResponse().getIdentity());
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
@@ -70,7 +70,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     }
 
     private DigitalFactory getVPEsResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_VPES, DigitalFactoriesItems.class);
 
         ResponseWrapper<DigitalFactoriesItems> vpEsItemsResponse = HTTPRequest.build(requestEntity).get();
 

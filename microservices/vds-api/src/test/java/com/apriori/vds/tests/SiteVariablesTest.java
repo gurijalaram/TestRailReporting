@@ -43,7 +43,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     @Description("Get a site variable for a customer.")
     public void getSiteVariablesByIdentity() {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
+            RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLE_BY_ID, SiteVariable.class)
                 .inlineVariables(
                     this.getFirstSiteVariable().getIdentity()
                 );
@@ -72,7 +72,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         siteVariableIdsToDelete.add(siteVariableBeforeUpdate.getIdentity());
 
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
+            RequestEntityUtil.init(VDSAPIEnum.PATCH_SITE_VARIABLES_BY_ID, SiteVariable.class)
                 .inlineVariables(siteVariableBeforeUpdate.getIdentity())
                 .body(initUpdateRequestBody(siteVariableBeforeUpdate));
 
@@ -88,7 +88,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
         SiteVariable siteVariable = getFirstSiteVariable();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
+            RequestEntityUtil.init(VDSAPIEnum.PUT_SITE_VARIABLES, SiteVariable.class)
                 .body(initUpdateRequestBody(siteVariable));
 
         final ResponseWrapper<SiteVariable> updatedSiteVariableResponse = HTTPRequest.build(requestEntity).put();
@@ -98,7 +98,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private static void deleteSiteVariableById(final String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
+            RequestEntityUtil.init(VDSAPIEnum.DELETE_SITE_VARIABLE_BY_ID, null)
                 .inlineVariables(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, HTTPRequest.build(requestEntity).delete().getStatusCode());
     }
@@ -111,7 +111,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
     }
 
     private List<SiteVariable> getSiteVariablesResponse() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_SITE_VARIABLES, SiteVariablesItems.class);
 
         ResponseWrapper<SiteVariablesItems> siteVariablesResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, siteVariablesResponse.getStatusCode());
@@ -121,7 +121,7 @@ public class SiteVariablesTest extends SiteVariableUtil {
 
     private SiteVariable postSiteVariables() {
         RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_SITE_VARIABLE, SiteVariable.class)
+            RequestEntityUtil.init(VDSAPIEnum.POST_SITE_VARIABLE, SiteVariable.class)
                 .body(SiteVariableRequest.builder()
                     .name(new GenerateStringUtil().generateSiteName())
                     .type("DOUBLE")
