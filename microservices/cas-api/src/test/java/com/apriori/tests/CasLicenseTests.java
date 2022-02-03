@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.apibase.services.cas.Customer;
+import com.apriori.apibase.services.common.objects.ErrorMessage;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
 import com.apriori.cds.enums.CDSAPIEnum;

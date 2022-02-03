@@ -121,6 +121,12 @@ public class CasTestUtil extends TestUtil {
             source.getIdentity());
     }
 
+    /**
+     * @param source - the customer source
+     * @param association - The association that contains the target customer.
+     * @param identity - the identity
+     * @return
+     */
     public CustomerAssociationUser findCustomerAssociationUser(Customer source, CustomerAssociation association, String identity) {
         return findFirst(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -132,6 +138,11 @@ public class CasTestUtil extends TestUtil {
         );
     }
 
+    /**
+     * @param source - the customer source
+     * @param association - The association that contains the target customer.
+     * @return ResponseWrapper <CustomerAssociationUsers>
+     */
     public ResponseWrapper<CustomerAssociationUsers> findCustomerAssociationUsers(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -145,6 +156,11 @@ public class CasTestUtil extends TestUtil {
         );
     }
 
+    /**
+     * @param source - the customer source
+     * @param association The association that contains the target customer.
+     * @return ResponseWrapper <CustomerUsers>
+     */
     public ResponseWrapper<CustomerUsers> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATION_CANDIDATES,
@@ -288,20 +304,39 @@ public class CasTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param source - the customer source
+     * @return ResponseWrapper <CustomerUser>
+     */
     public List<CustomerUser> findUsers(Customer source) {
         return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
     }
 
+    /**
+     * @param customer - the customer
+     * @return ResponseWrapper <CustomerUser>
+     */
     public ResponseWrapper<CustomerUser> createUser(Customer customer) {
         String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
         return createUser(customer.getIdentity(), domain);
     }
 
+    /**
+     * @param customerIdentity - customer identity
+     * @param domain - domain
+     * @return ResponseWrapper <CustomerUser>
+     */
     public ResponseWrapper<CustomerUser> createUser(String customerIdentity, String domain) {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createUser(customerIdentity, generator.generateUserName(), domain);
     }
 
+    /**
+     * @param customerIdentity - customer identity
+     * @param userName - user name
+     * @param domain - domain
+     * @return ResponseWrapper <CustomerUser>
+     */
     public ResponseWrapper<CustomerUser> createUser(final String customerIdentity, final String userName, final String domain) {
         String email = String.format("%s@%s", userName.toLowerCase(), domain);
 
