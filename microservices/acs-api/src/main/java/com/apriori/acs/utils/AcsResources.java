@@ -491,6 +491,28 @@ public class AcsResources {
     }
 
     /**
+     * Gets 2D image of costed part by scenario iteration key
+     *
+     * @return String - base64 encoded image
+     */
+    public String get2DImageByScenarioIterationKey(List<String> infoToGetImage) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_PART_PRIMARY_PROCESS_GROUPS, null)
+            .headers(headers)
+            .inlineVariables(
+                infoToGetImage.get(0),
+                infoToGetImage.get(1),
+                infoToGetImage.get(2),
+                infoToGetImage.get(3),
+                infoToGetImage.get(4)
+            );
+
+        return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
      * Sets up header with content type and token
      */
     private void setupHeader() {
