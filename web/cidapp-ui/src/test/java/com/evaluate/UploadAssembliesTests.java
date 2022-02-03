@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -79,10 +80,9 @@ public class UploadAssembliesTests extends TestBase {
             .costScenario();
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
-        //TODO uncomment when BA-2185 is complete
-        /*assertThat(evaluatePage.getComponentResults("Total"), is(equalTo("3")));
+        assertThat(evaluatePage.getComponentResults("Total"), is(equalTo("3")));
         assertThat(evaluatePage.getComponentResults("Unique"), is(equalTo("3")));
-        assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));*/
+        assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo("0")));
 
         //TODO uncomment when BA-2155 is complete
         /*componentsListPage = evaluatePage.openComponents();
