@@ -34,7 +34,7 @@ public class UserPreferencesUtil {
      * @return response object
      */
     public ResponseWrapper<String> patchPreference(UserCredentials userCredentials, PreferencesEnum preference, String value) {
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
             .token(userCredentials.getToken());
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
@@ -43,7 +43,7 @@ public class UserPreferencesUtil {
 
         PreferenceResponse preferenceResponse = preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
             .token(userCredentials.getToken())
             .customBody("{\"userPreferences\": {"
                 + "\"" + preferenceResponse.getIdentity() + "\":\"" + value + "\""
@@ -61,7 +61,7 @@ public class UserPreferencesUtil {
     public ResponseWrapper<String> resetSettings(UserCredentials userCredentials) {
         String token = new AuthorizationUtil(userCredentials).getTokenAsString();
 
-        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_PREFERENCES, PreferenceItemsResponse.class)
+        RequestEntity responseEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES_PAGE_SIZE, PreferenceItemsResponse.class)
             .token(token);
 
         ResponseWrapper<PreferenceItemsResponse> preferencesResponse = HTTPRequest.build(responseEntity).get();
@@ -92,7 +92,7 @@ public class UserPreferencesUtil {
         String batchIdentity = mappedResponse.get(PreferencesEnum.DEFAULT_BATCH_SIZE.getPreference());
         String tolModeIdentity = mappedResponse.get(PreferencesEnum.TOLERANCE_MODE.getPreference());
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PREFERENCES, null)
             .token(token)
             .customBody("{\"userPreferences\": {"
                 + "\"" + areaIdentity + "\":\"mm2\","

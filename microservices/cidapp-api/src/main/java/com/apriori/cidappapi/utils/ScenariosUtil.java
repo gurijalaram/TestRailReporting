@@ -14,7 +14,6 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -44,7 +43,7 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
                 .token(userCredentials.getToken());
 
@@ -78,7 +77,7 @@ public class ScenariosUtil {
         String scenarioId = cssItem.getScenarioIdentity();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentId, scenarioId)
                 .token(userCredentials.getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
@@ -135,7 +134,7 @@ public class ScenariosUtil {
         String scenarioId = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentId, scenarioId)
                 .token(scenarioRepresentationBuilder.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
@@ -155,7 +154,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ScenarioResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)
@@ -179,7 +178,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
         return HTTPRequest.build(requestEntity).get();
@@ -193,7 +192,7 @@ public class ScenariosUtil {
      */
     public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("costingInputs",
@@ -217,7 +216,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
             .token(componentInfoBuilder.getUser().getToken())
             .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
             .body("scenario",
@@ -245,7 +244,7 @@ public class ScenariosUtil {
      */
     private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .body("costingTemplate", CostRequest.builder()
                     .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
@@ -274,7 +273,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
                 .token(userCredentials.getToken())
                 .inlineVariables(componentId, scenarioId)
                 .body("scenario", PublishRequest.builder()
