@@ -41,12 +41,12 @@ public class UserPreferencesUtil {
 
         List<PreferenceResponse> preferencesItems = preferencesResponse.getResponseEntity().getItems();
 
-        PreferenceResponse prefItem = preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
+        PreferenceResponse preferenceResponse = preferencesItems.stream().filter(x -> x.getName().equals(preference.getPreference())).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.PATCH_PREFERENCES, null)
             .token(userCredentials.getToken())
             .customBody("{\"userPreferences\": {"
-                + "\"" + prefItem.getIdentity() + "\":\"" + value + "\""
+                + "\"" + preferenceResponse.getIdentity() + "\":\"" + value + "\""
                 + "}}");
 
         return HTTPRequest.build(requestEntity).patch();
