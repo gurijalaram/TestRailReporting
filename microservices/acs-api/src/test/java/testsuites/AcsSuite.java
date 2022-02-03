@@ -7,6 +7,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import tests.CreateMissingScenarioTests;
 import tests.GetEnabledCurrencyRateVersionsTests;
+import tests.GetPartPrimaryProcessGroupsTests;
 import tests.GetScenariosInfoTests;
 import tests.GetSetDisplayUnitsTests;
 import tests.GetSetProductionDefaultsTests;
@@ -23,7 +24,8 @@ import testsuites.categories.AcsTest;
     GetSetProductionDefaultsTests.class,
     GetSetTolerancePolicyDefaultsTests.class,
     GetUnitVariantSettingsTests.class,
-    GetEnabledCurrencyRateVersionsTests.class
+    GetEnabledCurrencyRateVersionsTests.class,
+    GetPartPrimaryProcessGroupsTests.class
 })
 
 public class AcsSuite {

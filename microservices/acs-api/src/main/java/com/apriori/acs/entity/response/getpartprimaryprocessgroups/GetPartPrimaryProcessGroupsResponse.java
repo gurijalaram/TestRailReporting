@@ -9,10 +9,6 @@ import lombok.NoArgsConstructor;
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Schema(location = "GetPartPrimaryProcessGroupsResponse.json")
-@AllArgsConstructor
-@NoArgsConstructor
 public class GetPartPrimaryProcessGroupsResponse extends ArrayList {
-    private List<String> processGroups;
 }
