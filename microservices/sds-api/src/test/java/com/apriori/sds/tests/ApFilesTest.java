@@ -25,7 +25,7 @@ public class ApFilesTest  extends SDSTestUtil {
     @Ignore
     public void testPostApFile() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_AP_FILES, null)
+            RequestEntityUtil.init(SDSAPIEnum.POST_AP_FILES, null)
                 .multiPartFiles(new MultiPartFiles()
                     .use("data", new File("C:\\Users\\vzarovnyi\\Downloads\\test.Initial (1).ap"))
                 );

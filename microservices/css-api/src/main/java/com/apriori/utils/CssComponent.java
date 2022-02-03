@@ -1,5 +1,6 @@
 package com.apriori.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
@@ -11,7 +12,6 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -20,49 +20,46 @@ import org.junit.Assert;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * @author cfrith
  */
 
 @Slf4j
-public class UncostedComponents {
+public class CssComponent {
+
+    private String itemScenarioState;
 
     /**
-     * Gets the uncosted component from Css
+     * Gets the uncosted component from CSS
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
+     * @param userCredentials  - user to upload the part
      * @return response object
      */
     public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials, ScenarioStateEnum.NOT_COSTED);
+        return getCssComponent(componentName, scenarioName, userCredentials, NOT_COSTED);
     }
 
     /**
-     * Gets component from Css
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @return response object
-     */
-    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName) {
-        // TODO: 12/01/2022 cn - UserUtil here needs to be reviewed before its used in sds tests
-        return getCssComponent(componentName, scenarioName, UserUtil.getUser(), ScenarioStateEnum.NOT_COSTED);
-    }
-
-    /**
-     * Gets component from Css
+     * Gets component from CSS
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
      * @return response object
      */
     public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
+        return getCssComponent(componentName, scenarioName, userCredentials, scenarioState, true);
+    }
+
+    public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
         final int SOCKET_TIMEOUT = 270000;
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.GET_COMPONENT_BY_COMPONENT_SCENARIO_NAMES, CssComponentResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
@@ -80,22 +77,33 @@ public class UncostedComponents {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                final Optional<List<Item>> items = Optional.ofNullable(scenarioRepresentation.getResponseEntity().getItems());
+                final Optional<List<Item>> items = Optional.of(scenarioRepresentation.getResponseEntity().getItems());
 
-                if (items.isPresent()) {
-                    items.get().stream()
-                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
+                if (items.get().size() > 0) {
+
+                    Supplier<Stream<Item>> distinctItem = () -> items.get().stream().distinct();
+
+                    distinctItem.get()
+                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()) && !scenarioState.getState().equals(PROCESSING_FAILED.getState()))
                         .findAny()
                         .ifPresent(y -> {
                             throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
                         });
 
-                    if (items.get().stream()
+                    if (distinctItem.get()
                         .anyMatch(x -> x.getScenarioState().equals(scenarioState.getState()))) {
 
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                        return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                        if (!allowUnknownParts) {
+                            return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                        }
+                        return scenarioRepresentation.getResponseEntity().getItems();
+                    }
+
+                    if (distinctItem.get()
+                        .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()))) {
+                        itemScenarioState = items.get().stream().map(Item::getScenarioState).distinct().collect(Collectors.toList()).get(0);
                     }
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
@@ -104,9 +112,8 @@ public class UncostedComponents {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentName, scenarioName, WAIT_TIME)
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds. \n Expected: %s \n Found: %s",
+            componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
         );
     }
 }

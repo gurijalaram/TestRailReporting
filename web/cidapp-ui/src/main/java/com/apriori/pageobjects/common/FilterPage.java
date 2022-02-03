@@ -1,9 +1,11 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.PropertyEnum;
 
-import com.utils.Constants;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,7 +14,8 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.Locale;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -45,6 +48,11 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private int index;
+    private String day;
+    private String month;
+    private String year;
+    private String hour;
+    private String minute;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
@@ -159,119 +167,150 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Adds a new criteria
+     * Adds a criteria
      *
-     * @param property - the property
-     * @param value    - the value
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(String property, String value) {
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final boolean value) {
         index = getIndex();
 
-        add()
-            .inputProperty(property)
-            .inputValue(property, value);
-
+        add().selectProperty(index, propertyEnum)
+            .toggle(index, propertyEnum, value);
         return this;
     }
 
     /**
-     * Adds a new criteria
+     * Adds a criteria
      *
-     * @param property  - the property
-     * @param operation - the operation
-     * @param value     - the value
+     * @param propertyEnum  - property from the enum
+     * @param operationEnum - operation from the enum
+     * @param value         - the value
      * @return current page object
      */
-    public FilterPage addCriteriaWithOption(String property, String operation, String value) {
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
         index = getIndex();
 
-        add()
-            .inputProperty(property.trim())
-            .inputOperation(operation.trim())
-            .inputValue(property.trim(), value.trim());
-
+        add().selectProperty(index, propertyEnum)
+            .selectOperation(index, operationEnum)
+            .inputValue(index, propertyEnum, value);
         return this;
     }
 
     /**
-     * Uses type ahead to input the property
+     * Adds a criteria
      *
-     * @param property - the property
+     * @param propertyEnum  - property from the enum
+     * @param operationEnum - operation from the enum
+     * @param dateTime      - the local date time
      * @return current page object
      */
-    private FilterPage inputProperty(String property) {
-        By propertyDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index));
-        pageUtils.waitForElementAndClick(propertyDropdown);
-        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, property));
-        pageUtils.waitForElementAndClick(byMaterialCatalog);
+    public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final LocalDateTime dateTime) {
+        index = getIndex();
 
+        add().selectProperty(index, propertyEnum)
+            .selectOperation(index, operationEnum)
+            .inputDate(index, propertyEnum, dateTime);
         return this;
     }
 
     /**
-     * Uses type ahead to input the operation
+     * Toggles yes/no
      *
-     * @param operation - the operation
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
      * @return current page object
      */
-    private FilterPage inputOperation(String operation) {
-        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index));
-        pageUtils.waitForElementAndClick(operationDropdown);
-        By byMaterialCatalog = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operation));
-        pageUtils.waitForElementAndClick(byMaterialCatalog);
-        return this;
-    }
+    private FilterPage toggle(int index, final PropertyEnum propertyEnum, final boolean value) {
+        if (!PropertyEnum.toggleGroup.contains(propertyEnum)) {
+            throw new IllegalStateException(String.format("Not able to toggle 'Yes/No' because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.toggleGroup));
+        }
 
-    /**
-     * Uses type ahead to input the value
-     *
-     * @param value    - the value
-     * @param property - the property
-     * @return current page object
-     */
-    private FilterPage inputValue(String property, String value) {
-        boolean toggleValue = Constants.TOGGLE_VALUES.stream().anyMatch(str -> str.trim().equalsIgnoreCase(property));
+        WebElement buttonStatus = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("//div[@id='modal-body'][id='qa-searchCriterion[%s].target'] button", index))));
 
-        if (toggleValue) {
-            driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] button", index))).click();
-        } else {
-            WebElement valueDropdown = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target']", index)));
-            WebElement valueInput = driver.findElement(By.cssSelector(String.format("[id='qa-searchCriterion[%s].target'] input", index)));
-
-            valuesEntry(property, value, valueInput, Constants.INPUT_VALUES);
-
-            inputValuesEntry(property, value, valueDropdown, Constants.TYPE_INPUT_VALUES);
-
-            valuesEntry(property, value, valueInput, Constants.DATE_VALUES);
+        if (value && buttonStatus.getAttribute("class").contains("not-checked")) {
+            pageUtils.waitForElementAndClick(buttonStatus);
         }
         return this;
     }
 
     /**
-     * Input values
+     * Enters the value
      *
-     * @param property      - the property
-     * @param value         - the value
-     * @param valueDropdown - the value dropdown
+     * @param propertyEnum - property from the enum
+     * @param value        - the value
+     * @return current page object
      */
-    private void inputValuesEntry(String property, String value, WebElement valueDropdown, List<String> valueList) {
-        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> pageUtils.typeAheadSelect(valueDropdown, value));
+    private FilterPage inputValue(int index, final PropertyEnum propertyEnum, final String value) {
+        if (PropertyEnum.inputGroup.contains(propertyEnum)) {
+            pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target']", index))).sendKeys(value);
+        }
+        if (PropertyEnum.dropdownGroup.contains(propertyEnum)) {
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
+            pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", value))));
+            //click the dropdown again to remove it and unhide the submit button
+            pageUtils.waitForElementAndClick(By.cssSelector(String.format("[id='modal-body'] div[id='qa-searchCriterion[%s].target']", index)));
+        }
+        return this;
     }
 
     /**
-     * Input values
+     * Enters the value
      *
-     * @param property   - the property
-     * @param value      - the value
-     * @param valueInput - the value input
-     * @param valueList  - the value list
+     * @param propertyEnum - property from the enum
+     * @param dateTime     - the local date time
+     * @return current page object
      */
-    private void valuesEntry(String property, String value, WebElement valueInput, List<String> valueList) {
-        valueList.stream().filter(x -> x.trim().equalsIgnoreCase(property)).forEach(y -> {
-            pageUtils.waitForElementToAppear(valueInput).clear();
-            valueInput.sendKeys(value);
-        });
+    private FilterPage inputDate(int index, final PropertyEnum propertyEnum, final LocalDateTime dateTime) {
+        if (!PropertyEnum.dateGroup.contains(propertyEnum)) {
+            throw new IllegalStateException(String.format("Not able to input date because property '%s' was not found in this group: %s", propertyEnum, PropertyEnum.dateGroup));
+        }
+
+        Locale local = Locale.getDefault();
+
+        WebElement dateTimeLocator = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[id='modal-body'] input[name='searchCriterion[%s].target'][value]", index)));
+
+        String newDay = String.valueOf(dateTime.getDayOfMonth()).length() == 1 ? "0" + dateTime.getDayOfMonth() : String.valueOf(dateTime.getDayOfMonth());
+        String newMonth = String.valueOf(dateTime.getMonthValue()).length() == 1 ? "0" + dateTime.getMonthValue() : String.valueOf(dateTime.getMonthValue());
+        String newYear = String.valueOf(dateTime.getYear());
+        String newHour = String.valueOf(dateTime.getHour());
+        String newMinute = String.valueOf(dateTime.getMinute());
+
+        if (!local.getCountry().contains("US")) {
+            dateTimeLocator.sendKeys(newDay, newMonth, newYear, Keys.RIGHT, newHour, newMinute);
+        } else {
+            dateTimeLocator.sendKeys(newMonth, newDay, newYear, Keys.RIGHT, newHour, newMinute);
+        }
+        return this;
+    }
+
+    /**
+     * Selects the property from the dropdown
+     *
+     * @param propertyEnum - property from the enum
+     * @return current page object
+     */
+    private FilterPage selectProperty(int index, PropertyEnum propertyEnum) {
+        By propertyDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].subject']", index));
+        pageUtils.waitForElementAndClick(propertyDropdown);
+        By byProperty = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, propertyEnum.getProperty()));
+        pageUtils.waitForElementAndClick(byProperty);
+        return this;
+    }
+
+    /**
+     * Selects the operation from the dropdown
+     *
+     * @param operationEnum - operation from the enum
+     * @return current page object
+     */
+    private FilterPage selectOperation(int index, OperationEnum operationEnum) {
+        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", index));
+        pageUtils.waitForElementAndClick(operationDropdown);
+        By byOperation = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operationEnum.getOperation()));
+        pageUtils.waitForElementAndClick(byOperation);
+        return this;
     }
 
     /**

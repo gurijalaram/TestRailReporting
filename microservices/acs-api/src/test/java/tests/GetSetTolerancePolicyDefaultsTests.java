@@ -1,16 +1,18 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.PropertyInfoItem;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.PropertyValueMap;
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -25,18 +27,18 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Get Tolerance Policy Defaults")
     public void testGetTolerancePolicyDefaults() {
         AcsResources acsResources = new AcsResources();
-        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources
-                .getTolerancePolicyDefaults("");
+        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(equalTo(1.4)));
-        assertThat(propertyValueMap.getToleranceMode(), is(equalTo("SYSTEMDEFAULT")));
+
+        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
+        assertThat(propertyValueMap.getToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"), equalTo("PARTOVERRIDE")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
 
-        PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap()
-                .getTotalRunoutOverride();
+        PropertyInfoItem totalRunoutOverrideItem = getTolerancePolicyDefaultsResponse.getPropertyInfoMap().getTotalRunoutOverride();
+
         assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
-        assertThat(totalRunoutOverrideItem.getUnitTypeName(), is(equalTo("mm")));
+        assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
         assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), is(equalTo("DOUBLE")));
     }
 
@@ -46,11 +48,9 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
         AcsResources acsResources = new AcsResources();
-        String http400ErrorResponse = acsResources.getTolerancePolicyDefaults400Error(
-                UserUtil.getUser().getUsername().substring(0, 14).concat("41"));
+        String http400ErrorResponse = acsResources.getTolerancePolicyDefaults400Error();
 
-        assertThat(http400ErrorResponse, is(containsString("400")));
-        assertThat(http400ErrorResponse, is(containsString("User is not found")));
+        assertInvalidResponse(http400ErrorResponse);
     }
 
     @Test
@@ -58,24 +58,23 @@ public class GetSetTolerancePolicyDefaultsTests {
     @TestRail(testCaseId = "10556")
     @Description("Test Set Tolerance Policy Defaults")
     public void testSetTolerancePolicyDefaults() {
-        String username = UserUtil.getUser().getUsername();
         double totalRunoutOverrride = 0.1;
         String toleranceMode = "PARTOVERRIDE";
         boolean useCadToleranceThreshold = false;
 
         AcsResources acsResources = new AcsResources();
-        acsResources.setTolerancePolicyDefaults(
+        GenericResourceCreatedResponse setTolerancePolicyDefaultsResponse = acsResources.setTolerancePolicyDefaults(
                 totalRunoutOverrride,
                 toleranceMode,
-                useCadToleranceThreshold,
-                username
+                useCadToleranceThreshold
         );
 
-        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources
-                .getTolerancePolicyDefaults(username);
+        assertThat(setTolerancePolicyDefaultsResponse.getResourceCreated(), is(equalTo("false")));
+
+        GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaultsResponse = acsResources.getTolerancePolicyDefaults();
 
         PropertyValueMap propertyValueMap = getTolerancePolicyDefaultsResponse.getPropertyValueMap();
-        assertThat(propertyValueMap.getTotalRunoutOverride(), is(equalTo(0.1)));
+        assertThat(propertyValueMap.getTotalRunoutOverride(), is(notNullValue()));
         assertThat(propertyValueMap.getToleranceMode(), is(equalTo("PARTOVERRIDE")));
         assertThat(propertyValueMap.isUseCadToleranceThreshhold(), is(equalTo(false)));
     }
@@ -89,11 +88,14 @@ public class GetSetTolerancePolicyDefaultsTests {
         String http400ErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername(
                 0.1,
                 "PARTOVERRIDE",
-                false,
-                UserUtil.getUser().getUsername().substring(0, 14).concat("42")
+                false
         );
 
-        assertThat(http400ErrorResponse, is(containsString("400")));
-        assertThat(http400ErrorResponse, is(containsString("User is not found")));
+        assertInvalidResponse(http400ErrorResponse);
+    }
+
+    private void assertInvalidResponse(String invalidUserResponse) {
+        assertThat(invalidUserResponse, is(containsString("400")));
+        assertThat(invalidUserResponse, is(containsString("User is not found")));
     }
 }

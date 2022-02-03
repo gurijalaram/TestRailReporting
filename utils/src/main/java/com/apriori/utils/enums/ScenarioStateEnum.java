@@ -7,7 +7,8 @@ public enum ScenarioStateEnum {
     COST_COMPLETE("COST_COMPLETE"),
     COST_INCOMPLETE("COST_INCOMPLETE"),
     COSTING_FAILED("COSTING_FAILED"),
-    COST_UP_TO_DATE("COST_UP_TO_DATE");
+    COST_UP_TO_DATE("COST_UP_TO_DATE"),
+    COSTING("COSTING");
 
     private final String state;
 

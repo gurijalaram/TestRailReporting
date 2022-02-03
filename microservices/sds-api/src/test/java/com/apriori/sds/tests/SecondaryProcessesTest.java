@@ -28,7 +28,7 @@ public class SecondaryProcessesTest extends SDSTestUtil {
 
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES, SecondaryProcessesItems.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_SECONDARY_PROCESS_BY_COMPONENT_SCENARIO_IDS_VPE_PG_NAMES, SecondaryProcessesItems.class)
                 .inlineVariables(
                     testingComponent.getComponentIdentity(),
                     testingComponent.getScenarioIdentity(),

@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -116,7 +116,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        Item component = new CidAppTestUtil().postCssComponent(componentName, scenarioName, resourceFile, userCredentials);
+        Item component = new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
         return navigateToScenario(component);
     }
 
@@ -130,9 +130,21 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public Item uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new CidAppTestUtil().postCssComponent(componentName, scenarioName, resourceFile, userCredentials);
+        return new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
     }
 
+    /**
+     * Selects the file dropdown and enters file details
+     *
+     * @param scenarioName - the name of the scenario
+     * @param filePath     - location of the file
+     * @return new page object
+     */
+    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
+        pageUtils.waitForElementAndClick(importButton);
+        pageUtils.waitForElementAndClick(cadButton);
+        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
+    }
 
     /**
      * Navigates to the scenario via url
@@ -169,19 +181,6 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Selects the file dropdown and enters file details
-     *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @return new page object
-     */
-    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
-        pageUtils.waitForElementAndClick(importButton);
-        pageUtils.waitForElementAndClick(cadButton);
-        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
-    }
-
-    /**
      * Opens the scenario
      *
      * @return new page object
@@ -189,6 +188,16 @@ public class ExploreToolbar extends MainNavBar {
     public PublishPage publishScenario() {
         pageUtils.waitForElementAndClick(publishButton);
         return new PublishPage(driver);
+    }
+
+    /**
+     * Clicks on the publish button to open PublishScenario page with Unpublished Scenario(s)
+     *
+     * @return new page object
+     */
+    public PublishScenarioPage publishPrivateScenario() {
+        pageUtils.waitForElementAndClick(publishButton);
+        return new PublishScenarioPage(driver);
     }
 
     /**
