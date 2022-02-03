@@ -99,9 +99,9 @@ public class CasLicenseTests {
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String licenseIdentity = licenseResponse.getResponseEntity().getResponse().getIdentity();
-        String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
-        LocalDate expireDate = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getExpiresAt();
+        String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
+        String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(1).getIdentity();
+        LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(1).getExpiresAt();
 
         ResponseWrapper<CasErrorMessage> associationErrorResponse = CasTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
