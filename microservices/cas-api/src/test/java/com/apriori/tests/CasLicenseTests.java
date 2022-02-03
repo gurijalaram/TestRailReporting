@@ -5,8 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.common.objects.ErrorMessage;
-import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cas.utils.Constants;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -64,7 +62,6 @@ public class CasLicenseTests {
                     cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID,
                             customerIdentityHolder.customerIdentity()
                     );
-
                 }
             }
         }
@@ -106,10 +103,10 @@ public class CasLicenseTests {
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getIdentity();
         LocalDate expireDate = licenseResponse.getResponseEntity().getResponse().getSubLicenses().get(1).getExpiresAt();
 
-        ResponseWrapper<CasErrorMessage> response = CasTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+        ResponseWrapper<CasErrorMessage> associationErrorResponse = CasTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CONFLICT)));
-        assertThat(response.getResponseEntity().getMessage(), is(equalTo(String.format("Sub License with identity '%s' expired on '%s' and cannot be assigned to a user.", subLicenseIdentity, expireDate))));
+        assertThat(associationErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CONFLICT)));
+        assertThat(associationErrorResponse.getResponseEntity().getMessage(), is(equalTo(String.format("Sub License with identity '%s' expired on '%s' and cannot be assigned to a user.", subLicenseIdentity, expireDate))));
 
         deleteIdentityHolder = IdentityHolder.builder()
                 .customerIdentity(customerIdentity)
