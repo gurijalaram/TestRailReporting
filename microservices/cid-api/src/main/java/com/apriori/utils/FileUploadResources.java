@@ -75,6 +75,7 @@ public class FileUploadResources {
 
     private static final HashMap<String, String> token = new APIAuthentication()
         .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
+
     private static final HashMap<String, String> headers = new HashMap<>();
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
@@ -143,12 +144,12 @@ public class FileUploadResources {
     }
 
     /**
-     * Loads CAD Metadata
+     * Loads CAD Metadata (suppressing 500 error)
      *
      * @param fileResponse - response from file upload
      * @return LoadCadMetadataOutputs - outputs to use in next call
      */
-    public LoadCadMetadataOutputs loadCadMetadata(FileResponse fileResponse) {
+    public LoadCadMetadataOutputs loadCadMetadataSuppressError(FileResponse fileResponse) {
         String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
             LoadCadMetadataInputs.builder()
                 .keepFreeBodies(false)
@@ -157,7 +158,33 @@ public class FileUploadResources {
                 .fileMetadataIdentity(fileResponse.getIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
                 .fileName(fileResponse.getFilename())
-                .build()
+                .build(),
+            true
+        );
+        submitWorkorder(loadCadMetadataWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(loadCadMetadataWorkorderId),
+            LoadCadMetadataOutputs.class
+        );
+    }
+
+    /**
+     * Loads CAD Metadata (exposing 500 error)
+     *
+     * @param fileResponse - response from file upload
+     * @return LoadCadMetadataOutputs - outputs to use in next call
+     */
+    public LoadCadMetadataOutputs loadCadMetadataExposeError(FileResponse fileResponse) {
+        String loadCadMetadataWorkorderId = createWorkorder(WorkorderCommands.LOAD_CAD_METADATA.getWorkorderCommand(),
+            LoadCadMetadataInputs.builder()
+                .keepFreeBodies(false)
+                .freeBodiesPreserveCad(false)
+                .freeBodiesIgnoreMissingComponents(true)
+                .fileMetadataIdentity(fileResponse.getIdentity())
+                .requestedBy(fileResponse.getUserIdentity())
+                .fileName(fileResponse.getFilename())
+                .build(),
+            false
         );
         submitWorkorder(loadCadMetadataWorkorderId);
         return objectMapper.convertValue(
@@ -180,7 +207,8 @@ public class FileUploadResources {
             GeneratePartImagesInputs.builder()
                 .cadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
-                .build()
+                .build(),
+            false
         );
         submitWorkorder(generatePartImagesWorkorderId);
         return objectMapper.convertValue(
@@ -224,7 +252,8 @@ public class FileUploadResources {
                 .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
                 .subComponents(subComponentsList)
                 .requestedBy(fileResponse.getUserIdentity())
-                .build()
+                .build(),
+            false
         );
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
@@ -258,7 +287,8 @@ public class FileUploadResources {
                 .scenarioIterationKey(
                     setCostOrderScenarioIteration(
                         fileUploadOutputs.getScenarioIterationKey().getScenarioKey()))
-                .build()
+                .build(),
+            false
         );
         submitWorkorder(costWorkorderId);
         return objectMapper.convertValue(
@@ -280,7 +310,8 @@ public class FileUploadResources {
                 .description("Description goes here...")
                 .scenarioIterationKey(
                     setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
-                .build()
+                .build(),
+            false
         );
         submitWorkorder(createPublishWorkorderId);
         return objectMapper.convertValue(
@@ -312,7 +343,7 @@ public class FileUploadResources {
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
-            .headers(token)
+            .headers(headers)
             .multiPartFiles(new MultiPartFiles().use("data",
                 FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
             .formParams(new FormParams().use("filename", fileName));
@@ -421,16 +452,32 @@ public class FileUploadResources {
     }
 
     /**
-     * Creates workorder (without ignore HTTP 500 error capability)
+     * Creates workorder (with ignore HTTP 500 error capability)
      *
      * @param commandType String
      * @param inputs      Object
      * @return String file upload workorder id
      */
-    public String createWorkorder(String commandType, Object inputs) {
+    public String createWorkorder(String commandType, Object inputs, boolean ignore500Error) {
         setupHeaders("application/json");
 
-        final RequestEntity requestEntity = RequestEntityUtil
+        RequestEntity requestEntity;
+        if (ignore500Error) {
+            requestEntity = RequestEntityUtil
+                .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
+                .headers(headers)
+                .body(new WorkorderRequest()
+                    .setCommand(new WorkorderCommand(
+                        commandType,
+                        inputs))
+                );
+            int counter = 0;
+            while (HTTPRequest.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
+                counter++;
+            }
+        }
+
+        requestEntity = RequestEntityUtil
             .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
             .headers(headers)
             .body(new WorkorderRequest()
@@ -615,7 +662,7 @@ public class FileUploadResources {
 
             final RequestEntity requestEntity = RequestEntityUtil
                 .init(CidWorkorderApiEnum.CHECK_WORKORDER_STATUS, null)
-                .headers(token)
+                .headers(headers)
                 .inlineVariables(workorderId);
 
             status = HTTPRequest.build(requestEntity).get().getBody().replace("\"", "");
@@ -744,11 +791,14 @@ public class FileUploadResources {
      * @param contentType String
      */
     private void setupHeaders(String contentType) {
+        String defaultString = "default";
+        headers.put("Content-Type", contentType);
+        headers.put("Accept", "*/*");
+        headers.put("apriori.tenantgroup", defaultString);
+        headers.put("apriori.tenant", defaultString);
         Object[] tokenArray = token.keySet().toArray();
         for (Object key : tokenArray) {
             headers.put(key.toString(), token.get(key));
         }
-        headers.put("Content-Type", contentType);
-        headers.put("Accept", "*/*");
     }
 }
