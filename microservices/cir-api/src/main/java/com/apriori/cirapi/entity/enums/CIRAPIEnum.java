@@ -7,11 +7,9 @@ public enum CIRAPIEnum implements ExternalEndpointEnum {
 
     //Application Metadata
     CASTING_DTC_REPORT("rest_v2/reportExecutions"),
-    REPORT_DETAILS_BY_REQUEST_ID("rest_v2/reportExecutions/%s"),
     REPORT_EXPORT_BY_REQUEST_ID("rest_v2/reportExecutions/%s/exports"),
     REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs("rest_v2/reportExecutions/%s/exports/%s/outputResource"),
     REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs("rest_v2/reportExecutions/%s/exports/%s/attachments/reportComponents.json");
-//    CASTING_DTC_REPORT("/aPriori/reports/DTC Metrics/casting/castingDTC");
 
 
     private final String endpoint;
@@ -27,6 +25,6 @@ public enum CIRAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return "https://conqbaci02/jasperserver-pro/" + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("${env}.cir.vm_url") + String.format(getEndpointString(), variables);
     }
 }
