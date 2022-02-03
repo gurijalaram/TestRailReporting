@@ -4,9 +4,7 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
-import com.apriori.cds.objects.response.AssociationUserItems;
-import com.apriori.cds.objects.request.License;
-import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
@@ -32,7 +30,10 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -442,36 +443,47 @@ public class CasTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).patch();
     }
 
-    public ResponseWrapper<LicenseResponse> addLiscense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+    /**
+     * @param casLicense - license text
+     * @param customerIdentity - the customer identity
+     * @param siteIdentity - the site identity
+     * @param customerName - the customer name
+     * @param siteId - the site id
+     * @param licenseId - the license id
+     * @param subLicenseId - the sublicense id
+     * @return ResponseWrapper <LicenseResponse>
+     */
+    public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+
+        InputStream license = new ByteArrayInputStream(String.format(casLicense, customerName, siteId, licenseId, licenseId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
+
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
+                .token(token)
                 .inlineVariables(customerIdentity, siteIdentity)
-                .headers(new HashMap<String, String>() {
-                    {
-                        put("Content-Type", "");
-                    }
-                })
-                .body(LicenseRequest.builder()
-                        .license(
-                                License.builder()
-                                        .description("Test License")
-                                        .apVersion("2020 R1")
-                                        .createdBy("#SYSTEM00000")
-                                        .active("true")
-                                        .license(String.format(Constants.CAS_EXPIRED_LICENSE, customerName, siteId, licenseId, subLicenseId))
-                                        .licenseTemplate(String.format(Constants.CAS_EXPIRED_LICENSE_TEMPLATE, customerName))
-                                        .build())
-                        .build());
+                .multiPartFiles(new MultiPartFiles()
+                .use("apVersion", "2020 R1")
+                .use("description", "Test License")
+                .use("multiPartFile", FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest.xml")));
 
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param klass - class
+     * @param customerIdentity - the customer identity
+     * @param siteIdentity - the site identity
+     * @param licenseIdentity - the license identity
+     * @param subLicenseIdentity - the sublicense identity
+     * @param userIdentity - the user identity
+     * @return <T>ResponseWrapper <T>
+     */
     public static <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
+                .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
                 .body("userAssociation",
-                        AssociationUserItems.builder()
+                        AssociationUser.builder()
                                 .userIdentity(userIdentity)
-                                .createdBy("#SYSTEM00000")
                                 .build());
 
         return HTTPRequest.build(requestEntity).post();

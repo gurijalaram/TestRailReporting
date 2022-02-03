@@ -4,32 +4,36 @@ import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "LicenseResponseSchema.json")
+@Schema(location = "SiteInLicenseSchema.json")
 @Data
-public class LicenseResponse {
-    private LicenseResponse response;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonRootName("response")
+public class SiteInLicense {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedAt;
-    private String apVersion;
-    private Boolean active;
+    private String customerIdentity;
+    private String name;
     private String description;
-    private List<SubLicense> subLicenses = null;
-    private List<LicenseModule> licensedModules = null;
-    private SiteInLicense site;
-    private String createdByName;
+    private String siteId;
+    private Boolean active;
+    private List<String> deployments = null;
+    private List<String> licensedApplications = null;
 }

@@ -2,6 +2,7 @@ package com.apriori.entity.response;
 
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.util.List;

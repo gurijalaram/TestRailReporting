@@ -1,13 +1,10 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
     "response"
   ],
   "properties": {
     "response": {
-      "$id": "#/properties/response",
       "type": "object",
       "required": [
         "identity",
@@ -24,41 +21,31 @@
       ],
       "properties": {
         "identity": {
-          "$id": "#/properties/response/properties/identity",
           "type": "string"
         },
         "createdAt": {
-          "$id": "#/properties/response/properties/createdAt",
           "type": "string"
         },
         "createdBy": {
-          "$id": "#/properties/response/properties/createdBy",
           "type": "string"
         },
         "updatedAt": {
-          "$id": "#/properties/response/properties/updatedAt",
           "type": "string"
         },
         "apVersion": {
-          "$id": "#/properties/response/properties/apVersion",
           "type": "string"
         },
         "active": {
-          "$id": "#/properties/response/properties/active",
           "type": "boolean"
         },
         "description": {
-          "$id": "#/properties/response/properties/description",
           "type": "string"
         },
         "subLicenses": {
-          "$id": "#/properties/response/properties/subLicenses",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/subLicenses/items",
             "anyOf": [
               {
-                "$id": "#/properties/response/properties/subLicenses/items/anyOf/0",
                 "type": "object",
                 "required": [
                   "identity",
@@ -74,46 +61,35 @@
                 ],
                 "properties": {
                   "identity": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/identity",
                     "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/name",
                     "type": "string"
                   },
                   "uuid": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/uuid",
                     "type": "string"
                   },
                   "licensedModuleNames": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/licensedModuleNames",
                     "type": "array",
                     "items": {
-                      "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/licensedModuleNames/items"
                     }
                   },
                   "maxNumUsers": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/maxNumUsers",
                     "type": "integer"
                   },
                   "numPurchasedUsers": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/numPurchasedUsers",
                     "type": "integer"
                   },
                   "numAssignedUsers": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/numAssignedUsers",
                     "type": "integer"
                   },
                   "expiresAt": {
-                    "$id": "#/properties/response/properties/subLicenses/items/anyOf/0/properties/expiresAt",
                     "type": "string"
                   }
                 }
@@ -122,13 +98,10 @@
           }
         },
         "licensedModules": {
-          "$id": "#/properties/response/properties/licensedModules",
           "type": "array",
           "items": {
-            "$id": "#/properties/response/properties/licensedModules/items",
             "anyOf": [
               {
-                "$id": "#/properties/response/properties/licensedModules/items/anyOf/0",
                 "type": "object",
                 "required": [
                   "identity",
@@ -138,19 +111,14 @@
                 ],
                 "properties": {
                   "identity": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/identity",
-                    "type": "string"
                   },
                   "createdAt": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/createdAt",
                     "type": "string"
                   },
                   "createdBy": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/createdBy",
                     "type": "string"
                   },
                   "name": {
-                    "$id": "#/properties/response/properties/licensedModules/items/anyOf/0/properties/name",
                     "type": "string"
                   }
                 }
@@ -159,7 +127,6 @@
           }
         },
         "site": {
-          "$id": "#/properties/response/properties/site",
           "type": "object",
           "required": [
             "identity",
@@ -175,55 +142,42 @@
           ],
           "properties": {
             "identity": {
-              "$id": "#/properties/response/properties/site/properties/identity",
               "type": "string"
             },
             "createdAt": {
-              "$id": "#/properties/response/properties/site/properties/createdAt",
               "type": "string"
             },
             "createdBy": {
-              "$id": "#/properties/response/properties/site/properties/createdBy",
               "type": "string"
             },
             "customerIdentity": {
-              "$id": "#/properties/response/properties/site/properties/customerIdentity",
               "type": "string"
             },
             "name": {
-              "$id": "#/properties/response/properties/site/properties/name",
               "type": "string"
             },
             "description": {
-              "$id": "#/properties/response/properties/site/properties/description",
               "type": "string"
             },
             "siteId": {
-              "$id": "#/properties/response/properties/site/properties/siteId",
               "type": "string"
             },
             "active": {
-              "$id": "#/properties/response/properties/site/properties/active",
               "type": "boolean"
             },
             "deployments": {
-              "$id": "#/properties/response/properties/site/properties/deployments",
               "type": "array",
               "items": {
-                "$id": "#/properties/response/properties/site/properties/deployments/items"
               }
             },
             "licensedApplications": {
-              "$id": "#/properties/response/properties/site/properties/licensedApplications",
               "type": "array",
               "items": {
-                "$id": "#/properties/response/properties/site/properties/licensedApplications/items"
               }
             }
           }
-         },
+        },
         "createdByName": {
-          "$id": "#/properties/response/properties/createdByName",
           "type": "string"
         }
       }
