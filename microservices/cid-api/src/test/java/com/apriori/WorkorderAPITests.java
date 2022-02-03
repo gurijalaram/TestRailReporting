@@ -49,7 +49,7 @@ public class WorkorderAPITests {
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
-        LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
+        LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataSuppressError(fileResponse);
 
         GeneratePartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
                 fileResponse,
@@ -212,7 +212,7 @@ public class WorkorderAPITests {
                 processGroup
         );
 
-        LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadata(fileResponse);
+        LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataExposeError(fileResponse);
 
         GetCadMetadataResponse getCadMetadataResponse = fileUploadResources
                 .getCadMetadata(loadCadMetadataOutputs.getCadMetadataIdentity());
@@ -383,7 +383,7 @@ public class WorkorderAPITests {
                     component.getScenarioName()
             );
 
-            componentMetadataOutputs.add(fileUploadResources.loadCadMetadata(fileResponse));
+            componentMetadataOutputs.add(fileUploadResources.loadCadMetadataSuppressError(fileResponse));
         }
 
         FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
@@ -396,7 +396,7 @@ public class WorkorderAPITests {
                 assemblyToUse.getScenarioName()
         );
 
-        LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadata(assemblyFileResponse);
+        LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadataSuppressError(assemblyFileResponse);
 
         return fileUploadResources.generateAssemblyImages(
                 assemblyFileResponse,
