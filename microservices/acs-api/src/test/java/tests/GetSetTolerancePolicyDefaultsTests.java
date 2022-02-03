@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.getsettolerancepolicydefaults.PropertyInfoItem;
@@ -39,7 +40,7 @@ public class GetSetTolerancePolicyDefaultsTests {
 
         assertThat(totalRunoutOverrideItem.getName(), is(equalTo("totalRunoutOverride")));
         assertThat(totalRunoutOverrideItem.getUnitTypeName(), anyOf(equalTo("mm"), equalTo("in")));
-        assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), is(equalTo("DOUBLE")));
+        assertThat(totalRunoutOverrideItem.getSupportedSerializedType(), anyOf(equalTo("DOUBLE"), equalTo("OBJECT")));
     }
 
     @Test
@@ -48,7 +49,7 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
         AcsResources acsResources = new AcsResources();
-        String http400ErrorResponse = acsResources.getTolerancePolicyDefaults400Error();
+        String http400ErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS);
 
         assertInvalidResponse(http400ErrorResponse);
     }
@@ -85,11 +86,7 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        String http400ErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername(
-                0.1,
-                "PARTOVERRIDE",
-                false
-        );
+        String http400ErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername();
 
         assertInvalidResponse(http400ErrorResponse);
     }
