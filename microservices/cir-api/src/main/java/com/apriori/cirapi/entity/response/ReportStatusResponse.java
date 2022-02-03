@@ -1,9 +1,8 @@
 package com.apriori.cirapi.entity.response;
 
-import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
 import java.util.List;
