@@ -1,0 +1,31 @@
+{
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "createdBy",
+        "userIdentity",
+        "createdByName"
+      ],
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "userIdentity": {
+          "type": "string"
+        },
+        "createdByName": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}
