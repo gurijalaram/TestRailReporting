@@ -4,6 +4,7 @@ import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.acs.entity.response.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
 import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
@@ -29,7 +30,6 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
-import org.bouncycastle.cert.ocsp.Req;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -510,6 +510,26 @@ public class AcsResources {
             );
 
         return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     *
+     */
+    public GetActiveDimensionsResponse getActiveDimensionsByScenarioIterationKeyEndpoint(List<String> infoToGetDimensions) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ACTIVE_DIMENSIONS, GetActiveDimensionsResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                infoToGetDimensions.get(0),
+                infoToGetDimensions.get(1),
+                infoToGetDimensions.get(2),
+                infoToGetDimensions.get(3),
+                infoToGetDimensions.get(4)
+            );
+
+        return (GetActiveDimensionsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
