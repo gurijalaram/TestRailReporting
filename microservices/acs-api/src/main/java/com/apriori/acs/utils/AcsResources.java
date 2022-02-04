@@ -499,7 +499,7 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_PART_PRIMARY_PROCESS_GROUPS, null)
+            .init(AcsApiEnum.GET_2D_IMAGE, null)
             .headers(headers)
             .inlineVariables(
                 infoToGetImage.get(0),

@@ -6,6 +6,7 @@ import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import tests.CreateMissingScenarioTests;
+import tests.Get2DImageByScenarioIterationKeyTests;
 import tests.GetEnabledCurrencyRateVersionsTests;
 import tests.GetPartPrimaryProcessGroupsTests;
 import tests.GetScenariosInfoTests;
@@ -29,7 +30,8 @@ import testsuites.categories.AcsTest;
     GetEnabledCurrencyRateVersionsTests.class,
     GetPartPrimaryProcessGroupsTests.class,
     GetSetUserPreferencesTests.class,
-    GetSetUserPreferenceByNameTests.class
+    GetSetUserPreferenceByNameTests.class,
+    Get2DImageByScenarioIterationKeyTests.class
 })
 
 public class AcsSuite {

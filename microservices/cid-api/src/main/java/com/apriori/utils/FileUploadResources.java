@@ -326,8 +326,6 @@ public class FileUploadResources {
      * @param imageResponse - image to validate
      */
     public void imageValidation(String imageResponse) {
-        assertThat(imageResponse, is(notNullValue()));
-
         assertThat(Base64.isBase64(imageResponse), is(equalTo(true)));
     }
 
