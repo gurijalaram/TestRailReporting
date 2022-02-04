@@ -5,10 +5,10 @@ import com.apriori.entity.response.upload.ScenarioIterationKey;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.ArrayList;
+import java.util.List;
 
 @Data
 @Builder
 public class ScenarioIterationKeysInputs {
-    public ArrayList<ScenarioIterationKey> scenarioIterationKeys;
+    public List<ScenarioIterationKey> scenarioIterationKeys;
 }

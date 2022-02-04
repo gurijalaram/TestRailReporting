@@ -1,4 +1,4 @@
-package com.apriori.utils.token;
+package com.apriori.utils.authorization;
 
 import com.apriori.utils.http.enums.Schema;
 

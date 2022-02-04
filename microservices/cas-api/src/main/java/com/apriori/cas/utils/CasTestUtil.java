@@ -4,6 +4,7 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
 import com.apriori.entity.response.CustomProperties;
@@ -14,6 +15,7 @@ import com.apriori.entity.response.CustomerAssociations;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUserProfile;
 import com.apriori.entity.response.CustomerUsers;
+import com.apriori.entity.response.LicenseResponse;
 import com.apriori.entity.response.PostBatch;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.UpdateUser;
@@ -21,14 +23,17 @@ import com.apriori.entity.response.UpdatedProfile;
 import com.apriori.entity.response.ValidateSite;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.Collections;
@@ -37,7 +42,7 @@ import java.util.List;
 import java.util.Map;
 
 public class CasTestUtil extends TestUtil {
-    private static final String token = new TokenUtil().getTokenAsString();
+    private static final String token = new AuthorizationUtil().getTokenAsString();
 
     /**
      * Gets the special customer "aPriori Internal"
@@ -77,11 +82,10 @@ public class CasTestUtil extends TestUtil {
     /**
      * Creates a pseudo random customer.
      *
-     * @param name The name of the customer.
+     * @param name           The name of the customer.
      * @param cloudReference The customer cloud reference.
-     * @param description Customer description.
-     * @param domains The email domains for the customer.
-     *
+     * @param description    Customer description.
+     * @param domains        The email domains for the customer.
      * @return The response for the customer created.
      */
     public ResponseWrapper<Customer> createCustomer(String name, String cloudReference, String description, String... domains) {
@@ -105,7 +109,6 @@ public class CasTestUtil extends TestUtil {
      *
      * @param source The source customer.
      * @param target The target customer.
-     *
      * @return The customer association for the target->source relationship.  Returns null
      * if there is no association.
      */
@@ -118,6 +121,12 @@ public class CasTestUtil extends TestUtil {
             source.getIdentity());
     }
 
+    /**
+     * @param source - the customer source
+     * @param association - The association that contains the target customer.
+     * @param identity - the identity
+     * @return
+     */
     public CustomerAssociationUser findCustomerAssociationUser(Customer source, CustomerAssociation association, String identity) {
         return findFirst(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -129,6 +138,11 @@ public class CasTestUtil extends TestUtil {
         );
     }
 
+    /**
+     * @param source - the customer source
+     * @param association - The association that contains the target customer.
+     * @return ResponseWrapper <CustomerAssociationUsers>
+     */
     public ResponseWrapper<CustomerAssociationUsers> findCustomerAssociationUsers(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -142,6 +156,11 @@ public class CasTestUtil extends TestUtil {
         );
     }
 
+    /**
+     * @param source - the customer source
+     * @param association The association that contains the target customer.
+     * @return ResponseWrapper <CustomerUsers>
+     */
     public ResponseWrapper<CustomerUsers> findCustomerAssociationCandidates(Customer source, CustomerAssociation association) {
         return find(
             CASAPIEnum.CUSTOMER_ASSOCIATION_CANDIDATES,
@@ -158,9 +177,8 @@ public class CasTestUtil extends TestUtil {
     /**
      * Associates a user to another customer and creates an out of context relationship.
      *
-     * @param user The user to associate in the source customer.
+     * @param user        The user to associate in the source customer.
      * @param association The association that contains the target customer.
-     *
      * @return The response.
      */
     public ResponseWrapper<CustomerAssociationUser> createCustomerAssociationUser(CustomerUser user, CustomerAssociation association) {
@@ -286,20 +304,39 @@ public class CasTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * @param source - the customer source
+     * @return ResponseWrapper <CustomerUser>
+     */
     public List<CustomerUser> findUsers(Customer source) {
         return findAll(CASAPIEnum.USERS, CustomerUsers.class, Collections.emptyMap(), Collections.emptyMap(), source.getIdentity());
     }
 
+    /**
+     * @param customer - the customer
+     * @return ResponseWrapper <CustomerUser>
+     */
     public ResponseWrapper<CustomerUser> createUser(Customer customer) {
         String domain = customer.getEmailDomains().stream().findFirst().orElseThrow(() -> new IllegalStateException("This customer has no email domains"));
         return createUser(customer.getIdentity(), domain);
     }
 
+    /**
+     * @param customerIdentity - customer identity
+     * @param domain - domain
+     * @return ResponseWrapper <CustomerUser>
+     */
     public ResponseWrapper<CustomerUser> createUser(String customerIdentity, String domain) {
         GenerateStringUtil generator = new GenerateStringUtil();
         return createUser(customerIdentity, generator.generateUserName(), domain);
     }
 
+    /**
+     * @param customerIdentity - customer identity
+     * @param userName - user name
+     * @param domain - domain
+     * @return ResponseWrapper <CustomerUser>
+     */
     public ResponseWrapper<CustomerUser> createUser(final String customerIdentity, final String userName, final String domain) {
         String email = String.format("%s@%s", userName.toLowerCase(), domain);
 
@@ -439,5 +476,51 @@ public class CasTestUtil extends TestUtil {
             .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemIdentity);
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * @param casLicense - license text
+     * @param customerIdentity - the customer identity
+     * @param siteIdentity - the site identity
+     * @param customerName - the customer name
+     * @param siteId - the site id
+     * @param licenseId - the license id
+     * @param subLicenseId - the sublicense id
+     * @return ResponseWrapper <LicenseResponse>
+     */
+    public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+
+        InputStream license = new ByteArrayInputStream(String.format(casLicense, customerName, siteId, licenseId, licenseId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
+                .token(token)
+                .inlineVariables(customerIdentity, siteIdentity)
+                .multiPartFiles(new MultiPartFiles()
+                .use("apVersion", "2020 R1")
+                .use("description", "Test License")
+                .use("multiPartFile", FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest.xml")));
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * @param klass - class
+     * @param customerIdentity - the customer identity
+     * @param siteIdentity - the site identity
+     * @param licenseIdentity - the license identity
+     * @param subLicenseIdentity - the sublicense identity
+     * @param userIdentity - the user identity
+     * @return <T>ResponseWrapper <T>
+     */
+    public static <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
+                .token(token)
+                .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
+                .body("userAssociation",
+                        AssociationUser.builder()
+                                .userIdentity(userIdentity)
+                                .build());
+
+        return HTTPRequest.build(requestEntity).post();
     }
 }

@@ -6,20 +6,20 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.CustomerAssociation;
 import com.apriori.entity.response.CustomerAssociationUser;
 import com.apriori.entity.response.CustomerAssociationUsers;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -43,7 +43,7 @@ public class CasCustomerUserAssociationTests {
 
     @BeforeClass
     public static void globalSetup() {
-        RequestEntityUtil.useTokenForRequests(new TokenUtil().getTokenAsString());
+        RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
     @Before
@@ -87,9 +87,9 @@ public class CasCustomerUserAssociationTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getUserIdentity(), is(equalTo(user.getIdentity())));
 
-        ResponseWrapper<ErrorMessage> error = casTestUtil.create(
+        ResponseWrapper<CasErrorMessage> error = casTestUtil.create(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
-            ErrorMessage.class,
+            CasErrorMessage.class,
             associatedUser,
             aprioriInternal.getIdentity(),
             customerAssociationToAprioriInternal.getIdentity()

@@ -14,7 +14,9 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
+import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -163,7 +165,7 @@ public class NewScenarioNameTests extends TestBase {
             .filter()
             .saveAs()
             .inputName(filterName)
-            .addCriteriaWithOption("Component Name", "Contains", "MultiUpload")
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "MultiUpload")
             .submit(ExplorePage.class)
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);

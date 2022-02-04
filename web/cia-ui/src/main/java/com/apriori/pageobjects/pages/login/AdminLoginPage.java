@@ -7,6 +7,7 @@ import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -18,6 +19,7 @@ public class AdminLoginPage extends AdminHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
+    private UserCredentials userCredentials = UserUtil.getUser();
 
     public AdminLoginPage(WebDriver driver) {
         super(driver);
@@ -42,10 +44,9 @@ public class AdminLoginPage extends AdminHeader {
     /**
      * Login to CIA
      *
-     * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public AdminHomePage login(final UserCredentials userCredentials) {
+    public AdminHomePage login() {
         return aprioriLoginPage.login(userCredentials, AdminHomePage.class);
     }
 }

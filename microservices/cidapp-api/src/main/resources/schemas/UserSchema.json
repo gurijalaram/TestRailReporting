@@ -9,7 +9,6 @@
     "response": {
       "type": "object",
       "required": [
-        "isSystemUser",
         "identity",
         "createdAt",
         "createdBy",
@@ -21,7 +20,6 @@
         "active",
         "mfaRequired",
         "customAttributes",
-        "resourcesAllowedToCreate",
         "userType"
       ],
       "optional": [

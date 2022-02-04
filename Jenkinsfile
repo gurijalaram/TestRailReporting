@@ -1,6 +1,6 @@
 def buildInfo
 def buildInfoFile = "build-info.yml"
-def uuid = UUID.randomUUID()
+def timeStamp = new Date().format('yyyyMMddHHss')
 def javaOpts = ""
 def url
 def threadCount
@@ -48,7 +48,7 @@ Those marked with a * are required or the job will not run
 
                     // Write file.
                     buildInfo.buildNumber = env.BUILD_TAG
-                    buildInfo.buildTimestamp = uuid
+                    buildInfo.buildTimestamp = timeStamp
                     buildInfo.commitHash = env.GIT_COMMIT
                     writeYaml file: buildInfoFile, data: buildInfo
 
@@ -111,74 +111,65 @@ Those marked with a * are required or the job will not run
             }
         }
 
-        stage("Build & Test") {
+        stage("Build") {
             steps {
-                echo "Building.."
+                echo "Building..."
+                sh """
+                    docker build \
+                        --no-cache \
+                        --target build \
+                        --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                        --label \"build-date=${timeStamp}\" \
+                        --build-arg FOLDER=${folder} \
+                        --build-arg MODULE=${MODULE} \
+                        .
+                """
+            }
+        }
+
+        stage("Test") {
+            steps {
+                echo "Testing..."
                 withCredentials([
                         string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
                         string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
                     sh """
                         docker build \
+                            --progress=plain \
+                            --target test \
+                            --tag ${buildInfo.name}-test-${timeStamp}:latest \
+                            --label \"build-date=${timeStamp}\" \
+                            --build-arg AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
+                            --build-arg AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
                             --build-arg FOLDER=${folder} \
                             --build-arg MODULE=${MODULE} \
-                            --build-arg TEST_MODE=${TEST_MODE} \
-                            --no-cache \
-                            --tag ${buildInfo.name}-build-${uuid}:latest \
-                            --label \"build-date=${uuid}\" \
+                            --build-arg JAVAOPTS='${javaOpts}' \
+                            --build-arg TESTS=${testSuite} \
                             .
                     """
                 }
             }
         }
 
-        stage("Test") {
+        stage("Extract Test Results") {
             steps {
-                echo "Running.."
+                // Copy out build/test artifacts.
+                echo "Extract Test Results.."
+                sh "docker create --name ${buildInfo.name}-test-${timeStamp} ${buildInfo.name}-test-${timeStamp}:latest"
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/build ."
+                sh "docker cp ${buildInfo.name}-test-${timeStamp}:home/gradle/${folder}/${MODULE}/target ."
 
-                withCredentials([
-                        string(credentialsId: 'aws_access_key_id', variable: 'AWS_ACCESS_KEY_ID'),
-                        string(credentialsId: 'aws_secret_access_key', variable: 'AWS_SECRET_ACCESS_KEY')]) {
-                    sh """
-                    docker run \
-                        -e AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID} \
-                        -e AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY} \
-                        -e AWS_PROFILE='development' \
-                        -e AWS_DEFAULT_REGION='us-east-1' \
-                        -itd \
-                        --name ${buildInfo.name}-build-${uuid} \
-                        ${buildInfo.name}-build-${uuid}:latest
-                     """
-                }
-
-                echo "Testing.."
-
-                script {
-                    if ("${params.TEST_MODE}" == "LOCAL") {
-                        sh """
-                            docker-compose up -d --force-recreate
-                        """
-                    }
-                }
-
-                sh """
-                    sleep 5s
-                    docker exec \
-                        ${buildInfo.name}-build-${uuid} \
-                        java \
-                        ${javaOpts} \
-                        -javaagent:aspectjweaver-1.8.10.jar \
-                        -jar automation-tests.jar \
-                        --tests ${testSuite}
-                """
-
-                // Copy out Allure results
                 echo "Publishing Results"
-                sh """
-                    docker cp \
-                    ${buildInfo.name}-build-${uuid}:app/target \
-                    .
-                """
                 allure includeProperties: false, jdk: "", results: [[path: "target/allure-results"]]
+                junit skipPublishingChecks: true, testResults: 'build/test-results/test/*.xml'
+                publishHTML(target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'build/reports/tests/test',
+                    reportFiles: 'index.html',
+                    reportName: "${buildInfo.name} Test Report"
+                ])
             }
         }
     }
@@ -188,18 +179,8 @@ Those marked with a * are required or the job will not run
             archiveArtifacts artifacts: 'target/*.csv', allowEmptyArchive: true, fingerprint: true
             archiveArtifacts artifacts: 'target/*.txt', allowEmptyArchive: true, fingerprint: true
             echo "Cleaning up.."
-            sh "docker rm -f ${buildInfo.name}-build-${uuid}"
-            sh "docker rmi ${buildInfo.name}-build-${uuid}:latest"
-            script {
-                if ("${params.TEST_MODE}" == "LOCAL") {
-                    sh "docker rm -f \$(docker ps --filter name=chrome -q)"
-                    sh "docker rm -f \$(docker ps --filter name=firefox -q)"
-                    sh "docker rm -f \$(docker ps --filter name=edge -q)"
-                    sh "docker rmi -f selenium/node-firefox"
-                    sh "docker rmi -f selenium/node-chrome"
-                    sh "docker rmi -f selenium/node-edge"
-                }
-            }
+            sh "docker rm -f ${buildInfo.name}-test-${timeStamp}"
+            sh "docker rmi ${buildInfo.name}-test-${timeStamp}:latest"
             sh "docker system prune --force"
             cleanWs()
         }

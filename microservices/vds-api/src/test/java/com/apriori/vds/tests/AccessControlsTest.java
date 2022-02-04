@@ -25,7 +25,7 @@ public class AccessControlsTest extends VDSTestUtil {
     @TestRail(testCaseId = {"7753"})
     @Description("Get a list of Access Control Permissions for a specific customer.")
     public void getPermissions() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_PERMISSIONS, AccessControlPermissionItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_PERMISSIONS, AccessControlPermissionItems.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             HTTPRequest.build(requestEntity).get().getStatusCode()
@@ -36,7 +36,7 @@ public class AccessControlsTest extends VDSTestUtil {
     @TestRail(testCaseId = {"7754"})
     @Description("Post synchronize the access controls for this customer. ")
     public void postSynchronize() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.POST_SYNCHRONIZE, null);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.POST_SYNCHRONIZE, null);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT,
             HTTPRequest.build(requestEntity).post().getStatusCode()

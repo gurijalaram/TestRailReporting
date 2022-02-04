@@ -2,6 +2,7 @@ package com.apriori.customer;
 
 import com.apriori.customer.systemconfiguration.SystemConfigurationPage;
 import com.apriori.customer.users.UsersPage;
+import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.newcustomer.SitesLicensesPage;
@@ -46,6 +47,9 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     @FindBy(xpath = "//a[.='System Configuration']")
     private WebElement systemConfigurationTabRoot;
     private RoutingComponent systemConfigurationTab;
+
+    @FindBy(css = ".btn-link")
+    private WebElement customersButton;
 
     /**
      * Initializes a new instance of this object.
@@ -199,7 +203,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     /**
      * Same as findCustomerIdentity() but only succeeds if an existing customer identity is found.
      * @return The identity of an existing customer.
-     * @throws TimeoutException occurs if the identity is empty or "new"
      */
     public String findExistingCustomerIdentity() {
         getPageUtils().waitForCondition(() -> findCustomerIdentity().length() > 0, PageUtils.DURATION_SLOW);
@@ -219,5 +222,15 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s";
         driver.navigate().to(String.format(url, customer));
         return new CustomerWorkspacePage(driver);
+    }
+
+    /**
+     * Returns to customer list page
+     *
+     * @return new page object
+     */
+    public CustomerAdminPage goToCustomersList() {
+        getPageUtils().waitForElementAndClick(customersButton);
+        return new CustomerAdminPage(getDriver());
     }
 }

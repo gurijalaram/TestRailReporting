@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
@@ -27,7 +27,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     public AssignPage(WebDriver driver) {
         this.driver = driver;
@@ -66,7 +66,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
     public boolean isAssigneeDisplayed(String assignee) {
         By byAssignee = By.xpath(String.format("//form[@class='assign-scenario-form'] //div[.='%s']", assignee));
         pageUtils.waitForElementsToNotAppear(By.xpath("//form[@class='assign-scenario-form'] //div[.='Fetching users...']"));
-        return driver.findElement(byAssignee).isDisplayed();
+        return pageUtils.waitForElementToAppear(byAssignee).isDisplayed();
     }
 
     /**

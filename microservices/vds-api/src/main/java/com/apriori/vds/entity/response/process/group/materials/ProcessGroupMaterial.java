@@ -59,7 +59,7 @@ public class ProcessGroupMaterial {
     private Double liquidusTemperature;
     private Double lowerFormingTemperature;
     private Double lubricantPercentContent;
-    private Double materialCutCodeName;
+    private String materialCutCodeName;
     private Double materialUtilization;
     private Double materialWidth;
     private Double maxDrawRatio;

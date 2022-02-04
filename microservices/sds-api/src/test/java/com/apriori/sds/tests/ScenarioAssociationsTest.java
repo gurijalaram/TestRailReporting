@@ -53,7 +53,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
                 .inlineVariables(
                     getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(), getFirstAssociation().getIdentity()
                 );
@@ -75,7 +75,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     public void patchScenarioAssociation() {
         final Integer updatedOccurrences = 2;
 
-        RequestEntity request = RequestEntityUtil.initWithApUserContext(SDSAPIEnum.PATCH_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
+        RequestEntity request = RequestEntityUtil.init(SDSAPIEnum.PATCH_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
             .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(), getFirstAssociation().getIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getScenarioId())
                 .occurrences(updatedOccurrences)
@@ -103,7 +103,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             return testingAssociation;
         }
 
-        RequestEntity request = RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociation.class)
+        RequestEntity request = RequestEntityUtil.init(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociation.class)
             .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
             .body("association", AssociationRequest.builder().scenarioIdentity(getTestingRollUp().getScenarioIdentity())
                 .occurrences(1)
@@ -125,7 +125,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
     private List<ScenarioAssociation> getAssociations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociationsItems.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_ASSOCIATIONS_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociationsItems.class)
                 .inlineVariables(
                     getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity()
                 );
@@ -138,7 +138,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
     private static void removeTestingAssociation(String associationIdentity) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
+            RequestEntityUtil.init(SDSAPIEnum.DELETE_ASSOCIATION_BY_COMPONENT_SCENARIO_IDENTITY_IDS, null)
                 .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity(),
                     associationIdentity);
 

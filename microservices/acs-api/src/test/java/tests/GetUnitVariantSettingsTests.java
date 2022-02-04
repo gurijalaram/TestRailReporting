@@ -26,8 +26,7 @@ public class GetUnitVariantSettingsTests {
         AcsResources acsResources = new AcsResources();
         GetUnitVariantSettingsResponse getUnitVariantSettingsResponse = acsResources.getUnitVariantSettings();
 
-        ArrayList<UnitVariantSetting> allItems =
-                getUnitVariantSettingsResponse.getAllUnitVariantSetting();
+        ArrayList<UnitVariantSetting> allItems = getUnitVariantSettingsResponse.getAllUnitVariantSetting();
 
         for (UnitVariantSetting item : allItems) {
             assertThat(item.getType(), is(equalTo("simple")));
@@ -49,11 +48,11 @@ public class GetUnitVariantSettingsTests {
         assertThat(getCustomUnitVariantSettingsResponse.getType(), is(equalTo("simple")));
         assertThat(getCustomUnitVariantSettingsResponse.getName(), is(equalTo("CUSTOM")));
 
+        String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
         String expectedLength = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "mm" : "in";
         String expectedMass = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "kg" : "lb";
-        String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
-        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
 
+        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
         assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
 
