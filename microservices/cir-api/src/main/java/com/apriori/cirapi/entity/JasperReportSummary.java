@@ -17,4 +17,9 @@ import java.util.List;
 public class JasperReportSummary {
     private Document reportHtmlPart;
     private List<ChartDataPoint> chartDataPoints;
+
+    public ChartDataPoint getChartDataPointByPartName(final String partName) {
+        return chartDataPoints.stream().filter(dataPoint -> dataPoint.getPartName().equals(partName))
+            .findFirst().orElse(null);
+    }
 }

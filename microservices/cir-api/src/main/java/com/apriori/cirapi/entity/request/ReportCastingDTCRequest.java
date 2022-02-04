@@ -20,16 +20,16 @@ public class ReportCastingDTCRequest {
             FileResourceUtil.getResourceFileStream("ReportCastingDTCRequest.json"), ReportCastingDTCRequest.class);
     }
 
-    private String  reportUnitUri;
+    private String reportUnitUri;
     private Boolean async;
-    private Boolean  allowInlineScripts;
-    private String  markupType;
-    private Boolean  interactive;
-    private Boolean  freshData;
-    private Boolean  saveDataSnapshot;
-    private String  transformerKey;
-    private Integer  pages;
-    private String  attachmentsPrefix;
-    private String  baseUrl;
+    private Boolean allowInlineScripts;
+    private String markupType;
+    private Boolean interactive;
+    private Boolean freshData;
+    private Boolean saveDataSnapshot;
+    private String transformerKey;
+    private Integer pages;
+    private String attachmentsPrefix;
+    private String baseUrl;
     private ParametersRequest parameters;
 }

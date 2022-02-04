@@ -100,12 +100,13 @@ public class JasperReportUtil {
         ObjectMapper objectMapper = new ObjectMapper();
 
         JsonNode dataNode = objectMapper.readTree(jsonResponse)
-            .findValue("series")
-            .findValue("data");
+            .findValue("series");
 
-        return objectMapper.readerFor(new TypeReference<List<ChartDataPoint>>() {
-        })
-            .readValue(dataNode);
+        if (dataNode != null) {
+            dataNode.findValue("data");
+        }
+
+        return dataNode != null ? objectMapper.readerFor(new TypeReference<List<ChartDataPoint>>() {}).readValue(dataNode) : null;
     }
 
     private HashMap<String, String> initHeadersWithJSession() {
