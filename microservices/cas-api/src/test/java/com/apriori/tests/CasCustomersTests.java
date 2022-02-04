@@ -7,15 +7,15 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
+import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.token.TokenUtil;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -32,7 +32,7 @@ public class CasCustomersTests {
 
     @Before
     public void getToken() {
-        token = new TokenUtil().getTokenAsString();
+        token = new AuthorizationUtil().getTokenAsString();
     }
 
     @Test
@@ -89,7 +89,7 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5644"})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
-        ResponseWrapper<ErrorMessage> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<CasErrorMessage> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, CasErrorMessage.class)
             .token(token)
             .inlineVariables("76EA87KCHIKD")).get();
 

@@ -62,4 +62,8 @@ public class Material {
     private Double squareBarCostPerUnit;
     private String squareBarCostUnits;
     private Double turningSpeed;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
+    private String updatedBy;
 }

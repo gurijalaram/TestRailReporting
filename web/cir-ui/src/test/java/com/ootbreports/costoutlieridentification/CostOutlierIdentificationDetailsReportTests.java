@@ -11,6 +11,8 @@ import com.apriori.pageobjects.pages.view.reports.CostOutlierIdentificationRepor
 import com.apriori.pageobjects.pages.view.reports.GenericReportPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ReportNamesEnum;
 import com.apriori.utils.web.driver.TestBase;
@@ -119,7 +121,7 @@ public class CostOutlierIdentificationDetailsReportTests extends TestBase {
                 .filter()
                 .saveAs()
                 .inputName(new GenerateStringUtil().generateFilterName())
-                .addCriteriaWithOption("Component Name", "Equals", partName)
+                .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, partName)
                 .submit(ExplorePage.class)
                 .openFirstScenario();
 

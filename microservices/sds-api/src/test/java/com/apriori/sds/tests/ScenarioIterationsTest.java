@@ -22,7 +22,7 @@ public class ScenarioIterationsTest extends SDSTestUtil {
     @Ignore
     public void testCreateScenarioIterations() {
         final RequestEntity requestEntity =
-            RequestEntityUtil.initWithApUserContext(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null);
+            RequestEntityUtil.init(SDSAPIEnum.POST_SCENARIO_ITERATIONS, null);
 
         ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).post();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, response.getStatusCode());

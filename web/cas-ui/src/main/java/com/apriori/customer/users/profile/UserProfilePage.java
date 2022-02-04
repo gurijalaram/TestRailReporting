@@ -3,6 +3,7 @@ package com.apriori.customer.users.profile;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -86,9 +87,9 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      *
      * @return new page object
      */
-    public UsersListPage backToUsersListPage() {
+    public <T> T backToUsersListPage(Class<T> klass) {
         pageUtils.waitForElementAndClick(backToUsersListPage);
-        return new UsersListPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -101,4 +102,21 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
         return this;
     }
 
+    /**
+     * Gets user identity
+     *
+     * @return string
+     */
+    public String getUserIdentity() {
+        return driver.findElement(By.xpath("//span[.='Identity']/following-sibling::span[@class='display-field-value']")).getAttribute("textContent");
+    }
+
+    /**
+     * Checks if status checkbox is enabled
+     *
+     * @return true or false
+     */
+    public boolean isStatusCheckboxEditable() {
+        return pageUtils.isElementEnabled(statusCheckbox);
+    }
 }

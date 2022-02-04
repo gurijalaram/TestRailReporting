@@ -78,9 +78,9 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.getMaterialResult("Finish Mass"), closeTo(5.309458, 1));
         assertThat(evaluatePage.getMaterialResult("Utilization"), closeTo(81.163688, 1));
         assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.400000, 1));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(26.712767, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(31.595940, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(31.595940, 10));
+        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(43.993885, 10));
+        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(51.043238, 10));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(51.043238, 10));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.000000, 1));
 
         evaluatePage.openSettings()
@@ -90,25 +90,25 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
         assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.2%"));
         assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4s"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$26.7"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$31.6"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$31.6"), is(true));
+        assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$44.0"), is(true));
+        assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$51.0"), is(true));
+        assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$51.0"), is(true));
         assertThat(evaluatePage.isCostResultDisplayed("Total Capital Investment", "$0.0"), is(true));
         materialProcessPage = evaluatePage.openMaterialProcess();
 
         assertThat(materialProcessPage.getTotalResult("Cycle Time"), closeTo(109.4, 1));
-        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(31.6, 10));
-        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(31.6, 10));
+        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(51.0, 10));
+        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(51.0, 10));
         assertThat(materialProcessPage.getTotalResult("Total Capital Investment"), closeTo(0.0, 1));
 
         costDetailsPage = evaluatePage.openCostDetails()
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(28.5, 10));
+        assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(46.2, 10));
         assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead"), closeTo(0.3, 1));
-        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(2.8, 1));
+        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(4.6, 5));
         assertThat(costDetailsPage.getCostContributionValue("Margin"), closeTo(0.0, 1));
-        assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(31.6, 10));
+        assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(51.0, 10));
 
         evaluatePage.openSettings()
             .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
@@ -117,26 +117,26 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3095kg"));
         assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.1576%"));
         assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.4000, 1));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(26.7128, 1));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(31.5959, 1));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(31.5959, 1));
+        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(43.9939, 1));
+        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(51.0432, 1));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(51.0432, 1));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.0000, 1));
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
         assertThat(materialProcessPage.getTotalResult("Cycle Time"), closeTo(109.4000, 1));
-        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(31.5959, 1));
-        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(31.5959, 1));
+        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(51.0432, 1));
+        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(51.0432, 1));
         assertThat(materialProcessPage.getTotalResult("Total Capital Investment"), closeTo(0.0000, 1));
 
         costDetailsPage = evaluatePage.openCostDetails()
             .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(28.4589, 10));
+        assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(46.1543, 10));
         assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead"), closeTo(0.3179, 1));
-        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(2.8191, 1));
+        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(4.5720, 1));
         assertThat(costDetailsPage.getCostContributionValue("Margin"), closeTo(0.0000, 1));
-        assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(31.5959, 10));
+        assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(51.0432, 10));
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
@@ -146,9 +146,9 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
         assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.15756%"));
         assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.40000, 10));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(26.71277, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(31.59594, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(31.59594, 10));
+        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(43.99388, 10));
+        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(51.04324, 10));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(51.04324, 10));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
 
         evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
@@ -157,9 +157,9 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
         assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.15756%"));
         assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.40000, 10));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(26.71277, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(31.59594, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(31.59594, 10));
+        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(33.96328, 10));
+        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(39.781705, 10));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(39.781705, 10));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 50));
     }
 }

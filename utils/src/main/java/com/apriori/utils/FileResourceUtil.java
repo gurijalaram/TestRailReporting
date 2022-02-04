@@ -152,7 +152,7 @@ public class FileResourceUtil {
         }
     }
 
-    private static File copyIntoTempFile(final InputStream inputStreamOfOriginalFile, final String additionalPath, final String fileName) {
+    public static File copyIntoTempFile(final InputStream inputStreamOfOriginalFile, final String additionalPath, final String fileName) {
         if (inputStreamOfOriginalFile == null) {
             return null;
         }

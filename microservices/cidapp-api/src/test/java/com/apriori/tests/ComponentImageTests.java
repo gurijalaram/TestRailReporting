@@ -9,8 +9,10 @@ import com.apriori.cidappapi.entity.response.componentiteration.ActiveAxes;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.cidappapi.utils.CidAppTestUtil;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.Item;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -22,38 +24,43 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.stream.Collectors;
 
 public class ComponentImageTests {
 
-    private CidAppTestUtil cidAppTestUtil = new CidAppTestUtil();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = {"5834"})
     @Description("Test bounding values are correct")
     public void boundingBoxValuesTest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "700-33770-01_A0";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
-        ResponseWrapper<ScenarioResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = cidAppTestUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ImageResponse> imageResponse = cidAppTestUtil.getHoopsImage(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ImageResponse> imageResponse = scenariosUtil.getHoopsImage(componentIdentity, scenarioIdentity);
         assertThat(imageResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getBoundingBox(), hasItems(-1.25, 0.0, 0.0, 1.25, 0.800000011920929, 0.012000000104308128));
     }
@@ -62,24 +69,27 @@ public class ComponentImageTests {
     @TestRail(testCaseId = {"6639"})
     @Description("Test axes entries values are correct")
     public void axesEntriesValuesTest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "700-33770-01_A0";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
-        ResponseWrapper<ScenarioResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = cidAppTestUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getAxesEntries().size(), is(equalTo(6)));
     }
@@ -88,24 +98,27 @@ public class ComponentImageTests {
     @TestRail(testCaseId = {"5851"})
     @Description("Test active axes values are correct")
     public void activeAxesValuesTest() {
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "700-33770-01_A0";
+        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = cidAppTestUtil.postCssComponent("700-33770-01_A0.stp", scenarioName, ProcessGroupEnum.SHEET_METAL.getProcessGroup(), currentUser);
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
         String componentIdentity = postComponentResponse.getComponentIdentity();
         String scenarioIdentity = postComponentResponse.getScenarioIdentity();
 
-        ResponseWrapper<ScenarioResponse> preCostState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = cidAppTestUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = cidAppTestUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = cidAppTestUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getActiveAxes().stream().map(ActiveAxes::getDisplayName).collect(Collectors.toList()), hasItems("SetupAxis:1"));
     }

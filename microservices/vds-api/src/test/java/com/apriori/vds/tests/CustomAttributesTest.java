@@ -18,7 +18,7 @@ public class CustomAttributesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"7949"})
     @Description("Returns a list of UDAs for a specific customer.")
     public void getCustomAttributes() {
-        RequestEntity requestEntity = RequestEntityUtil.initWithApUserContext(VDSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributesItems.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(VDSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributesItems.class);
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             HTTPRequest.build(requestEntity).get().getStatusCode()
