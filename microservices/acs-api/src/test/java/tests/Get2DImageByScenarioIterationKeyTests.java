@@ -2,11 +2,7 @@ package tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import com.apriori.acs.utils.AcsResources;
 import com.apriori.entity.response.upload.FileResponse;
@@ -15,11 +11,15 @@ import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+
 import io.qameta.allure.Description;
 import org.apache.commons.codec.binary.Base64;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Get2DImageByScenarioIterationKeyTests {
 
