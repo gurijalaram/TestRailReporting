@@ -46,6 +46,11 @@ public class Scenario {
     private String description;
     private String createdByName;
     private String updatedByName;
+    private String status;
+    private String assignedTo;
+    private String assignedBy;
+    private String assignedToName;
+    private String assignedByName;
     private List<String> permissions;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
@@ -53,4 +58,7 @@ public class Scenario {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime assignedAt;
 }
