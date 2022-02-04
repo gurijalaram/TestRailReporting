@@ -1,36 +1,34 @@
 package com.apriori.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateDeserializer_yyyyMMdd;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "SubLicenseSchema.json")
+@Schema(location = "SubLicenseAssociationUsersSchema.json")
 @Data
-public class SubLicense {
+public class SublicenseAssociationUsers {
+    private Boolean isSystemUser;
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     private String createdBy;
-    private String name;
-    private String uuid;
-    private List<String> licensedModuleNames = null;
-    private Integer maxNumUsers;
-    private Integer numPurchasedUsers;
-    private Integer numAssignedUsers;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateDeserializer_yyyyMMdd.class)
-    private LocalDate expiresAt;
+    private String customerIdentity;
+    private UserProfile userProfile;
+    private String email;
+    private String username;
+    private Boolean active;
+    private Boolean mfaRequired;
+    private CustomAttributes customAttributes;
     private String createdByName;
+    private List<String> licenseAssignments = null;
+    private String userType;
 }
