@@ -23,6 +23,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -239,10 +240,21 @@ public class ScenariosUtil {
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("scenario", ForkRequest.builder()
-                    .costMaturity("Initial".toUpperCase())
-                    .override(true)
-                    .status("New".toUpperCase())
+                    .override(false)
                     .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, String scenarioName) {
+        final RequestEntity requestEntity =
+                RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                        .token(componentInfoBuilder.getUser().getToken())
+                        .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                        .body("scenario", ForkRequest.builder()
+                                .override(true)
+                                .scenarioName(scenarioName)
+                                .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -291,7 +303,9 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return scenarioresponse object
      */
+    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this infomration)
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
                 .token(userCredentials.getToken())

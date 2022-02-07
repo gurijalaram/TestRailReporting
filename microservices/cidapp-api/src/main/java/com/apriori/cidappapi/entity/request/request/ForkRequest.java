@@ -12,8 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class ForkRequest {
-    private String assignedTo;
-    private String costMaturity;
     private Boolean override;
-    private String status;
+    private String scenarioName;
 }

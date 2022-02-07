@@ -13,6 +13,7 @@ import lombok.Data;
 @Data
 public class ComponentInfoBuilder {
     private final String componentName;
+    private final String extension;
     private final String scenarioName;
     private final String componentId;
     private final String scenarioId;
