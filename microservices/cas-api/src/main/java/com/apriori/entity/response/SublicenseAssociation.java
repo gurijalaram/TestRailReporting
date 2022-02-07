@@ -10,9 +10,9 @@ import lombok.Data;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "LicensesSchema.json")
+@Schema(location = "SubLicenseAssociationSchema.json")
 @Data
 @JsonRootName("response")
-public class Licenses extends Pagination {
-    private List<LicenseResponse> items;
+public class SublicenseAssociation extends Pagination {
+    private List<SublicenseAssociationUsers> items;
 }
