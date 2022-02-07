@@ -193,7 +193,7 @@ public class ScenariosUtil {
      */
     public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("costingInputs",
@@ -217,7 +217,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
             .token(componentInfoBuilder.getUser().getToken())
             .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
             .body("scenario",
@@ -235,7 +235,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("scenario", ForkRequest.builder()

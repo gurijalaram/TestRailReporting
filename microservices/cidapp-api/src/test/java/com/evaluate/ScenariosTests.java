@@ -24,11 +24,15 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ScenariosTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private String scenarioName = new GenerateStringUtil().generateScenarioName();
+    private Item postComponentResponse;
     private UserCredentials currentUser;
 
     @Test
@@ -68,95 +72,45 @@ public class ScenariosTests {
     }
 
     @Test
-    @TestRail(testCaseId = "10730")
-    @Description("Edit an assembly")
-    public void testEditAssembly() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String scenarioName = "Hinge asmthur0302v3";
+    @TestRail(testCaseId = {"10731", "10730","10810","10823"})
+    @Description("Upload, publish subcomponents and assembly then Edit the Assembly, shallow basis")
+    public void testUploadPublishingAndEditAssemblyShallow() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final ProcessGroupEnum processGroupEnumAsm = ProcessGroupEnum.ASSEMBLY;
+        ArrayList<String> subComponentName = new ArrayList<>(Arrays.asList("big ring", "Pin", "small ring"));
+        final String componentExtension = ".SLDPRT";
+        final String assemblyExtension = ".SLDASM";
         String assemblyName = "Hinge assembly";
-        currentUser = UserUtil.getUser();
 
-        File assembly = FileResourceUtil.getCloudFile(processGroupEnum, assemblyName + ".SLDASM");
+        uploadAndPublishComponent(processGroupEnum, subComponentName.get(0), componentExtension);
+        uploadAndPublishComponent(processGroupEnum, subComponentName.get(1), componentExtension);
+        uploadAndPublishComponent(processGroupEnum, subComponentName.get(2), componentExtension);
 
-        Item postAssemblyResponse = componentsUtil.postComponentQueryCSS(assemblyName, scenarioName, assembly, currentUser);
+        uploadAndPublishComponent(processGroupEnumAsm, assemblyName, assemblyExtension);
 
-        ResponseWrapper<ScenarioResponse> assemblyPublishResponse = scenariosUtil.postPublishScenario(postAssemblyResponse,
-            postAssemblyResponse.getComponentIdentity(),
-            postAssemblyResponse.getScenarioIdentity(),
-            currentUser);
-
-        assertThat(assemblyPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(assemblyPublishResponse.getResponseEntity().getPublished(), is(true));
-
-        ResponseWrapper<Scenario> editAssemblyResponse = scenariosUtil.postEditScenario(ComponentInfoBuilder
-            .builder()
-            .componentId(postAssemblyResponse.getComponentIdentity())
-            .scenarioId(postAssemblyResponse.getScenarioIdentity())
-            .user(currentUser)
-            .build());
-
-        assertThat(editAssemblyResponse.getResponseEntity().getLastAction(), is("FORK"));
+        editAssembly();
     }
 
-    @Test
-    @TestRail(testCaseId = {"10810","10823", "10730"})
-    @Description("Upload subcomponents and assembly, Publish all subcomponents and assembly, Edit the assembly")
-    public void testEditUploadedSubcomponentsAndAssembly() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+    private void uploadAndPublishComponent(final ProcessGroupEnum processGroupEnum, final String componentName, final String extension) {
         currentUser = UserUtil.getUser();
+        File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        String firstSubComponentName = "big ring";
-        String secondSubComponentName = "Pin";
-        String thirdSubComponentName = "small ring";
-        String assemblyName = "Hinge assembly";
+        postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
-        File firstSubComponent = FileResourceUtil.getCloudFile(processGroupEnum, firstSubComponentName + ".SLDPRT");
-        File secondSubComponent = FileResourceUtil.getCloudFile(processGroupEnum, secondSubComponentName + ".SLDPRT");
-        File thirdSubComponent = FileResourceUtil.getCloudFile(processGroupEnum, thirdSubComponentName + ".SLDPRT");
-        File assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
-
-        Item postFirstComponentResponse = componentsUtil.postComponentQueryCSS(firstSubComponentName, scenarioName, firstSubComponent, currentUser);
-        ResponseWrapper<ScenarioResponse> firstComponentPublishResponse =  scenariosUtil.postPublishScenario(postFirstComponentResponse,
-            postFirstComponentResponse.getComponentIdentity(),
-            postFirstComponentResponse.getScenarioIdentity(),
+        ResponseWrapper<ScenarioResponse> componentPublishResponse =  scenariosUtil.postPublishScenario(postComponentResponse,
+            postComponentResponse.getComponentIdentity(),
+            postComponentResponse.getScenarioIdentity(),
             currentUser);
 
-        assertThat(firstComponentPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(firstComponentPublishResponse.getResponseEntity().getPublished(), is(true));
+        assertThat(componentPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
+        assertThat(componentPublishResponse.getResponseEntity().getPublished(), is(true));
+    }
 
-        Item postSecondComponentResponse = componentsUtil.postComponentQueryCSS(secondSubComponentName, scenarioName, secondSubComponent, currentUser);
-        ResponseWrapper<ScenarioResponse> secondComponentPublishResponse =  scenariosUtil.postPublishScenario(postSecondComponentResponse,
-            postSecondComponentResponse.getComponentIdentity(),
-            postSecondComponentResponse.getScenarioIdentity(),
-            currentUser);
-
-        assertThat(secondComponentPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(secondComponentPublishResponse.getResponseEntity().getPublished(), is(true));
-
-        Item postThirdComponentResponse = componentsUtil.postComponentQueryCSS(thirdSubComponentName, scenarioName, thirdSubComponent, currentUser);
-        ResponseWrapper<ScenarioResponse> thirdComponentPublishResponse =  scenariosUtil.postPublishScenario(postThirdComponentResponse,
-            postThirdComponentResponse.getComponentIdentity(),
-            postThirdComponentResponse.getScenarioIdentity(),
-            currentUser);
-
-        assertThat(thirdComponentPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(thirdComponentPublishResponse.getResponseEntity().getPublished(), is(true));
-
-        Item postAssemblyResponse = componentsUtil.postComponentQueryCSS(assemblyName, scenarioName, assembly, currentUser);
-
-        ResponseWrapper<ScenarioResponse> assemblyPublishResponse = scenariosUtil.postPublishScenario(postAssemblyResponse,
-            postAssemblyResponse.getComponentIdentity(),
-            postAssemblyResponse.getScenarioIdentity(),
-            currentUser);
-
-        assertThat(assemblyPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(assemblyPublishResponse.getResponseEntity().getPublished(), is(true));
-
+    private void editAssembly() {
         ResponseWrapper<Scenario> editAssemblyResponse = scenariosUtil.postEditScenario(ComponentInfoBuilder
             .builder()
-            .componentId(postAssemblyResponse.getComponentIdentity())
-            .scenarioId(postAssemblyResponse.getScenarioIdentity())
+            .componentId(postComponentResponse.getComponentIdentity())
+            .scenarioId(postComponentResponse.getScenarioIdentity())
             .user(currentUser)
             .build());
 
