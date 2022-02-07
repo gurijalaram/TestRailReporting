@@ -3,6 +3,7 @@ package com.apriori.entity.response;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
+@JsonRootName("response")
 public class AssociationUser {
-    private AssociationUser response;
     private String identity;
     private String createdBy;
     private String userIdentity;

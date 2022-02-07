@@ -512,7 +512,7 @@ public class CasTestUtil extends TestUtil {
      * @param userIdentity - the user identity
      * @return <T>ResponseWrapper <T>
      */
-    public static <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
+    public <T> ResponseWrapper<T> addSubLicenseAssociationUser(Class<T> klass, String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, klass)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
