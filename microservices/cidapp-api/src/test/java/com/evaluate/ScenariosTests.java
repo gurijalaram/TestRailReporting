@@ -118,7 +118,26 @@ public class ScenariosTests {
 
         //assertions
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
+    }
 
+    //todo: move to main class, and add javaDoc
+    private Item uploadAndPublishComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        Item postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+
+        ResponseWrapper<ScenarioResponse> componentPublishResponse = scenariosUtil.postPublishScenario(postComponentResponse,
+            postComponentResponse.getComponentIdentity(),
+            postComponentResponse.getScenarioIdentity(),
+            component.getUser());
+
+
+
+        return postComponentResponse;
+    }
+
+    private void thingsTodoLater() {
         //possible to check for status as well to confirm forked scenario identity get to 'not costed'
         //or verify its private or other details.
 
@@ -140,23 +159,5 @@ public class ScenariosTests {
         //choose which option,  overwrite the temporary one from the original fork, or new scenario, both again are valid new test cases
 
         //also consider what to do with subcomponets under each situation above.
-
-    }
-
-    private Item uploadAndPublishComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        Item postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
-
-        ResponseWrapper<ScenarioResponse> componentPublishResponse = scenariosUtil.postPublishScenario(postComponentResponse,
-            postComponentResponse.getComponentIdentity(),
-            postComponentResponse.getScenarioIdentity(),
-            component.getUser());
-
-        assertThat(componentPublishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
-        assertThat(componentPublishResponse.getResponseEntity().getPublished(), is(true));
-
-        return postComponentResponse;
     }
 }
