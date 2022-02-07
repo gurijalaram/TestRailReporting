@@ -484,13 +484,12 @@ public class CasTestUtil extends TestUtil {
      * @param siteIdentity - the site identity
      * @param customerName - the customer name
      * @param siteId - the site id
-     * @param licenseId - the license id
      * @param subLicenseId - the sublicense id
      * @return ResponseWrapper <LicenseResponse>
      */
-    public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
+    public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
 
-        InputStream license = new ByteArrayInputStream(String.format(casLicense, customerName, siteId, licenseId, licenseId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
+        InputStream license = new ByteArrayInputStream(String.format(casLicense, customerName, siteId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
 
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
                 .token(token)
