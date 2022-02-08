@@ -18,6 +18,9 @@
         "numAssignedUsers",
         "expiresAt"
       ],
+      "optional": [
+        "createdByName"
+      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -49,6 +52,9 @@
           "type": "integer"
         },
         "expiresAt": {
+          "type": "string"
+        },
+        "createdByName": {
           "type": "string"
         }
       }

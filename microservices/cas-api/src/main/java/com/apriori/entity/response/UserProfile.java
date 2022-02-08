@@ -20,4 +20,8 @@ public class UserProfile {
     private String createdBy;
     private String givenName;
     private String familyName;
+    private String jobTitle;
+    private String department;
+    private String supervisor;
+    private String townCity;
 }
