@@ -63,7 +63,6 @@ import testsuites.suiteinterface.SmokeTests;
     PublishTests.class,
     SheetMetalDTCTests.class,
     DTCPlasticMouldingTests.class,
-    SheetMetalDTCTests.class,
     ActionsTests.class,
     TableHeadersTests.class,
     DTCMachiningTests.class,
