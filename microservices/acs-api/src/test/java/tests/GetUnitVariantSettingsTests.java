@@ -54,7 +54,7 @@ public class GetUnitVariantSettingsTests {
 
         String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
         String expectedLength = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "mm" : "in";
-        List<String> potentialMassValues = new ArrayList<>(Arrays.asList("mm", "oz", "lb"));
+        List<String> potentialMassValues = new ArrayList<>(Arrays.asList("kg", "oz", "lb"));
 
         assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
