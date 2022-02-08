@@ -1,5 +1,6 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.anyOf;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -54,7 +55,11 @@ public class GetUnitVariantSettingsTests {
 
         assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
-        assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
+        if (expectedMetric.equals("false")) {
+            assertThat(getCustomUnitVariantSettingsResponse.getMass(), anyOf(equalTo(expectedMass), equalTo("oz")));
+        } else {
+            assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
+        }
 
         assertThat(getCustomUnitVariantSettingsResponse.getTime(), is(equalTo("s")));
         assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces(), is(equalTo(2.0)));

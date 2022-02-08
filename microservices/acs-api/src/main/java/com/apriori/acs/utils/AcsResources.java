@@ -4,6 +4,7 @@ import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.acs.entity.response.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
@@ -513,7 +514,10 @@ public class AcsResources {
     }
 
     /**
+     * Gets Active Dimensions by Scenario Iteration Key
      *
+     * @param infoToGetDimensions list of Strings to input into url
+     * @return GetActiveDimensionsResponse instance
      */
     public GetActiveDimensionsResponse getActiveDimensionsByScenarioIterationKeyEndpoint(List<String> infoToGetDimensions) {
         setupHeader();
@@ -530,6 +534,29 @@ public class AcsResources {
             );
 
         return (GetActiveDimensionsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Active Axes by Scenario Iteration Key
+     *
+     * @param infoForUrl - list of values to input into url
+     * @return GetActiveAxesByScenarioIterationKeyResponse instance
+     */
+    public GetActiveAxesByScenarioIterationKeyResponse getActiveAxesByScenarioIterationKey(List<String> infoForUrl) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ACTIVE_AXES, GetActiveAxesByScenarioIterationKeyResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                infoForUrl.get(0),
+                infoForUrl.get(1),
+                infoForUrl.get(2),
+                infoForUrl.get(3),
+                infoForUrl.get(4)
+            );
+
+        return (GetActiveAxesByScenarioIterationKeyResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
