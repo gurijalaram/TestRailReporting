@@ -26,7 +26,7 @@ public class Scenario {
     private String updatedBy;
     private String identity;
     private String state;
-    private String published;
+    private Boolean published;
     private Integer annualVolume;
     private Integer batchSize;
     private String materialMode;
@@ -35,7 +35,7 @@ public class Scenario {
     private Integer productionLife;
     private String vpeName;
     private List<String> propertiesToReset;
-    private String locked;
+    private Boolean locked;
     private String ownedByName;
     private String scenarioName;
     private String scenarioType;

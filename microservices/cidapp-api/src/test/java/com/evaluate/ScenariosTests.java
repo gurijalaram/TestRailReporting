@@ -4,11 +4,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.apibase.services.response.objects.ScenarioNameEntity;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
+import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
-import com.apriori.cidappapi.entity.response.customizations.Assembly;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -22,11 +21,9 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import net.sf.saxon.expr.instruct.ForEach;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 
-import javax.accessibility.AccessibleComponent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +38,7 @@ public class ScenariosTests {
     @Description("Copy a scenario")
     public void testCopyScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String filename  = "oldham.asm.1";
+        String filename = "oldham.asm.1";
         String componentName = "OLDHAM";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
@@ -73,7 +70,7 @@ public class ScenariosTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"10731", "10730","10810","10823"})
+    @TestRail(testCaseId = {"10731", "10730", "10810", "10823"})
     @Description("Upload, publish subcomponents and assembly then Edit the Assembly, shallow basis")
     public void testUploadPublishingAndEditAssemblyShallow() {
         String assemblyName = "Hinge assembly";
@@ -86,78 +83,40 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-
         //Build & process sub component object based on array list of names
-        for (String subComponentName:subComponentNames)
-        {
-            uploadAndPublishComponent(ComponentInfoBuilder.builder()
-                    .componentName(subComponentName)
-                    .extension(componentExtension)
-                    .scenarioName(scenarioName)
-                    .processGroup(processGroupEnum)
-                    .user(currentUser)
-                    .build());
+        for (String subComponentName : subComponentNames) {
+            scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
+                .componentName(subComponentName)
+                .extension(componentExtension)
+                .scenarioName(scenarioName)
+                .processGroup(processGroupEnum)
+                .user(currentUser)
+                .build());
         }
 
         //Process assembly
-        Item assemblyUploadResponse = uploadAndPublishComponent(ComponentInfoBuilder.builder()
-                .componentName(assemblyName)
-                .extension(assemblyExtension)
-                .scenarioName(scenarioName)
-                .processGroup(ProcessGroupEnum.ASSEMBLY)
-                .user(currentUser)
-                .build());
+        Item assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .user(currentUser)
+            .build());
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(ComponentInfoBuilder
-                .builder()
-                .componentId(assemblyUploadResponse.getComponentIdentity())
-                .scenarioId(assemblyUploadResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build()).getResponseEntity();
+            .builder()
+            .componentId(assemblyUploadResponse.getComponentIdentity())
+            .scenarioId(assemblyUploadResponse.getScenarioIdentity())
+            .user(currentUser)
+            .build(), ForkRequest.builder()
+            .scenarioName(scenarioName)
+            .override(false)
+            .build())
+            .getResponseEntity();
 
         //assertions
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
-    }
-
-    //todo: move to main class, and add javaDoc
-    private Item uploadAndPublishComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        Item postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
-
-        ResponseWrapper<ScenarioResponse> componentPublishResponse = scenariosUtil.postPublishScenario(postComponentResponse,
-            postComponentResponse.getComponentIdentity(),
-            postComponentResponse.getScenarioIdentity(),
-            component.getUser());
-
-
-
-        return postComponentResponse;
-    }
-
-    private void thingsTodoLater() {
-        //possible to check for status as well to confirm forked scenario identity get to 'not costed'
-        //or verify its private or other details.
-
-
-        //OtherTest Ideas
-        //option, publish the now temporary scenario using editAssemblyReponse object to pass into the Publis Method
-        //choose which option,  overwrite or new scenario, both of these are valid new test cases
-
-
-        //option, try to edit original a second time
-        /*
-        Scenario editAssemblyAgainResponse = scenariosUtil.postEditScenario(ComponentInfoBuilder
-                .builder()
-                .componentId(assemblyUploadResponse.getComponentIdentity())
-                .scenarioId(assemblyUploadResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build(), "NewScenarioName").getResponseEntity();
-         */
-        //choose which option,  overwrite the temporary one from the original fork, or new scenario, both again are valid new test cases
-
-        //also consider what to do with subcomponets under each situation above.
+        assertThat(editAssemblyResponse.getPublished(), is(false));
     }
 }
