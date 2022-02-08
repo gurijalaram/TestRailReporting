@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.getenabledcurrencyrateversions;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 
 @Data
