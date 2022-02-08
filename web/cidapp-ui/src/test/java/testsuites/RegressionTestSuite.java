@@ -61,7 +61,6 @@ import testsuites.suiteinterface.SmokeTests;
     PreviewPanelTests.class,
     DFMRiskTests.class,
     DeleteTests.class,
-    DFMRiskTests.class,
     PublishTests.class,
     SheetMetalDTCTests.class,
     DTCPlasticMouldingTests.class,
