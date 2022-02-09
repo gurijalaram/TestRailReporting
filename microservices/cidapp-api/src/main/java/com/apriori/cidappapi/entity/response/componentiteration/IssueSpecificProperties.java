@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,4 +24,6 @@ public class IssueSpecificProperties  {
     private ProcName procName;
     private String gcdType;
     private String guidanceTopic;
+    private String bendHoleList;
+    private List<GcdsToHighlight> gcdsToHighlight;
 }
