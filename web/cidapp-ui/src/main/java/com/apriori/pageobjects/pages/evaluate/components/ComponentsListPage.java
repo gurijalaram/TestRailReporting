@@ -24,13 +24,13 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ComponentsListPage.class);
 
-    @FindBy(css = ".evaluate-view-drawer [data-icon='list']")
+    @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
     private WebElement listButton;
 
-    @FindBy(css = ".evaluate-view-drawer [data-icon='folder-tree']")
+    @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
     private WebElement treeButton;
 
-    @FindBy(xpath = "//button[.='Preview']")
+    @FindBy(css = ".scenario-preview-card .left")
     private WebElement previewButton;
 
     @FindBy(xpath = "//button[.='Selection']")
@@ -51,7 +51,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(id = "qa-sub-component-action-bar-include-button")
     private WebElement eyeButton;
 
-    @FindBy(id = "qa-sub-component-detail-column-config-button")
+    @FindBy(id = "qa-sub-component-detail-configure-button")
     private WebElement configureButton;
 
     @FindBy(id = "qa-sub-component-detail-filter-button")
