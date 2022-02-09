@@ -254,4 +254,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public int getListOfScenarios(String componentName, String scenarioName) {
         return scenarioTableController.getListOfScenarios(componentName, scenarioName);
     }
+
+    /**
+     * Opens the assembly
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openAssembly(String componentName, String scenarioName) {
+        scenarioTableController.openScenario(componentName, scenarioName);
+        pageUtils.windowHandler(1);
+        return new EvaluatePage(driver);
+    }
 }
