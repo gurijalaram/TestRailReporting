@@ -14,7 +14,8 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.UploadAssembliesTests;
+import com.evaluate.assemblies.PublishAssembliesTests;
+import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
 import com.evaluate.dtc.DTCMachiningTests;
@@ -74,7 +75,8 @@ import testsuites.suiteinterface.SmokeTests;
     ComparisonTests.class,
     ThreadTests.class,
     PartNestingTests.class,
-    PsoEditTests.class
+    PsoEditTests.class,
+    PublishAssembliesTests.class
 })
 public class CIDSmokeTestSuite {
 }
