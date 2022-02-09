@@ -89,6 +89,26 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Changes the view to table view
+     *
+     * @return current page object
+     */
+    public ComponentsListPage tableView() {
+        pageUtils.waitForElementToAppear(listButton);
+        return this;
+    }
+
+    /**
+     * Changes the view to tree view
+     *
+     * @return current page object
+     */
+    public ComponentsListPage treeView() {
+        pageUtils.waitForElementToAppear(treeButton);
+        return this;
+    }
+
+    /**
      * Search for component
      *
      * @param componentName - the component name
@@ -222,5 +242,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
         return scenarioTableController.getRowDetails(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the number of elements present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfScenarios(String componentName, String scenarioName) {
+        return scenarioTableController.getListOfScenarios(componentName, scenarioName);
     }
 }
