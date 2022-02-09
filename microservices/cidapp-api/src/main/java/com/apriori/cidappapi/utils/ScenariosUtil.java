@@ -7,6 +7,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
@@ -14,6 +15,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.Item;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -25,12 +27,15 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ScenariosUtil {
+
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     /**
      * GET scenario representation
@@ -228,6 +233,23 @@ public class ScenariosUtil {
     }
 
     /**
+     * Post to Edit a scenario/assembly (with a scenario name that already exists)
+     *
+     * @param componentInfoBuilder - the copy component object
+     * @param forkRequest - the request object
+     * @return response object
+     */
+    public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
+        final RequestEntity requestEntity =
+                RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                        .token(componentInfoBuilder.getUser().getToken())
+                        .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                        .body("scenario", forkRequest);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * GET costing template id
      *
      * @return scenario object
@@ -271,7 +293,9 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return scenarioresponse object
      */
+    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
                 .token(userCredentials.getToken())
@@ -286,6 +310,25 @@ public class ScenariosUtil {
         HTTPRequest.build(requestEntity).post();
 
         return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
+    }
+
+    /** Upload and Publish a subcomponent/assembly
+     *
+     * @param component - the copy component object
+     * @return - the Item
+     */
+    public Item uploadAndPublishComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        Item postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+
+        postPublishScenario(postComponentResponse,
+            postComponentResponse.getComponentIdentity(),
+            postComponentResponse.getScenarioIdentity(),
+            component.getUser());
+
+        return postComponentResponse;
     }
 
     /**
