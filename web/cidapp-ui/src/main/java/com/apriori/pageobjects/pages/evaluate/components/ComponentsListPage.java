@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -81,6 +83,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
         pageUtils.waitForElementAndClick(listButton);
         pageUtils.waitForElementAndClick(previewButton);
     }
