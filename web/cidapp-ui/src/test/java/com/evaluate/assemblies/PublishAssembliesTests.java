@@ -82,7 +82,7 @@ public class PublishAssembliesTests extends TestBase {
             .clickExplore()
             .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
 
-        evaluatePage= new ExplorePage(driver).navigateToScenario(cssItemC)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItemC)
             .selectProcessGroup(ASSEMBLY)
             .costScenario()
             .publishScenario()
