@@ -39,7 +39,7 @@ public class ComponentsUtil {
      */
     public Item postComponentQueryCSS(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
                 .formParams(new FormParams().use("filename", componentName)
                     .use("override", "false")
@@ -76,7 +76,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<GetComponentResponse> getComponents() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENTS, GetComponentResponse.class);
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, GetComponentResponse.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -89,7 +89,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(String componentIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_BY_COMPONENT_ID, ComponentIdentityResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentIdentity);
 
         return HTTPRequest.build(requestEntity).get();
@@ -104,7 +104,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
         return checkNonNullIterationLatest(requestEntity);

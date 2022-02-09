@@ -17,7 +17,7 @@ public class CustomizationUtil {
      */
     public ResponseWrapper<Customizations> getCustomizations(UserCredentials userCredentials) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_CUSTOMIZATIONS, Customizations.class)
+            RequestEntityUtil.init(CidAppAPIEnum.CUSTOMIZATIONS, Customizations.class)
                 .token(userCredentials.getToken());
 
         return HTTPRequest.build(requestEntity).get();

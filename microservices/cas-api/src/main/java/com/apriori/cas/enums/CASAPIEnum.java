@@ -33,12 +33,23 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     POST_SITES(CUSTOMER.getEndpointString().concat("/sites")),
     POST_SITES_ID(POST_SITES.getEndpointString().concat("/%s")),
 
+    //LICENSES
+    DELETE_SPECIFIC_USER_SUB_LICENSE_USERS("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s"),
+    POST_LICENSE_BY_CUSTOMER_SITE_IDS(POST_SITES_ID.getEndpointString().concat("/licenses")),
+    GET_LICENSES_BY_CUSTOMER_ID(POST_SITES_ID.getEndpointString().concat("/licenses")),
+    GET_SUBLICENSES_BY_LICENSE_ID(GET_LICENSES_BY_CUSTOMER_ID.getEndpointString().concat("/%s/sub-licenses")),
+    POST_SUBLICENSE_ASSOCIATIONS("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users"),
+    GET_SUBLICENSE_ASSOCIATIONS("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users"),
+
+
     //MFA
     POST_MFA(GET_CUSTOMER.getEndpointString().concat("%s/reset-mfa")),
 
     //USERS
     USERS(CUSTOMER.getEndpointString().concat("/users")),
     USER(USERS.getEndpointString().concat("/%s")),
+    DELETE_USERS_BY_CUSTOMER_USER_IDS("customers/%s/users/%s"),
+
     /**
      * @deprecated Just use USER
      */

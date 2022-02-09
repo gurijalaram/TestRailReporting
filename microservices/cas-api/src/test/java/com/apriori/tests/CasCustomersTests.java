@@ -7,9 +7,9 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
+import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
@@ -89,7 +89,7 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5644"})
     @Description("Get the Customer by not existing identity")
     public void getCustomerNotExistingIdentity() {
-        ResponseWrapper<ErrorMessage> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<CasErrorMessage> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, CasErrorMessage.class)
             .token(token)
             .inlineVariables("76EA87KCHIKD")).get();
 
