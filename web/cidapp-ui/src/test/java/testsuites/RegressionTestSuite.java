@@ -61,11 +61,9 @@ import testsuites.suiteinterface.SmokeTests;
     PreviewPanelTests.class,
     DFMRiskTests.class,
     DeleteTests.class,
-    DFMRiskTests.class,
     PublishTests.class,
     SheetMetalDTCTests.class,
     DTCPlasticMouldingTests.class,
-    SheetMetalDTCTests.class,
     ActionsTests.class,
     TableHeadersTests.class,
     DTCMachiningTests.class,
@@ -78,7 +76,6 @@ import testsuites.suiteinterface.SmokeTests;
     ThreadTests.class,
     PartNestingTests.class,
     PsoEditTests.class,
-    PartNestingTests.class
 })
 public class RegressionTestSuite {
 }

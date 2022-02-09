@@ -4,7 +4,7 @@ import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -40,7 +40,7 @@ public class DTCMachiningTests extends TestBase {
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new ResetSettingsUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSettings(currentUser);
         }
     }
 
