@@ -83,9 +83,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(listButton);
+        pageUtils.waitForElementToAppear(previewButton);
         assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
-        pageUtils.waitForElementAndClick(listButton);
-        pageUtils.waitForElementAndClick(previewButton);
     }
 
     /**
