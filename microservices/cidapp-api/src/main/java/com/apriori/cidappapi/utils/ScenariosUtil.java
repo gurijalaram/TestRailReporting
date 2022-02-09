@@ -233,23 +233,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * Post to Edit a scenario/assembly
-     *
-     * @return response object
-     */
-    public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
-                .body("scenario", ForkRequest.builder()
-                    .override(false)
-                    .build());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
      * Post to Edit a scenario/assembly (with a scenario name that already exists)
      *
      * @param componentInfoBuilder - the copy component object

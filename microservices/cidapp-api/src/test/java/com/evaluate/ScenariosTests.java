@@ -95,24 +95,24 @@ public class ScenariosTests {
         }
 
         //Process assembly
-        Item assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
+                .componentName(assemblyName)
+                .extension(assemblyExtension)
+                .scenarioName(scenarioName)
+                .processGroup(ProcessGroupEnum.ASSEMBLY)
+                .user(currentUser)
+                .build();
+
+        Item assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
+        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
+        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
 
         //Edit Assembly
-        Scenario editAssemblyResponse = scenariosUtil.postEditScenario(ComponentInfoBuilder
-            .builder()
-            .componentId(assemblyUploadResponse.getComponentIdentity())
-            .scenarioId(assemblyUploadResponse.getScenarioIdentity())
-            .user(currentUser)
-            .build(), ForkRequest.builder()
-            .scenarioName(scenarioName)
-            .override(false)
-            .build())
+        Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
+                myAssembly,
+                ForkRequest.builder()
+                    .override(false)
+                    .build())
             .getResponseEntity();
 
         //assertions
