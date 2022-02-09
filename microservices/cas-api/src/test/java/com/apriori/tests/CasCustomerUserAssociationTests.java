@@ -6,11 +6,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.entity.response.CustomerAssociation;
 import com.apriori.entity.response.CustomerAssociationUser;
 import com.apriori.entity.response.CustomerAssociationUsers;
@@ -87,9 +87,9 @@ public class CasCustomerUserAssociationTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(response.getResponseEntity().getUserIdentity(), is(equalTo(user.getIdentity())));
 
-        ResponseWrapper<ErrorMessage> error = casTestUtil.create(
+        ResponseWrapper<CasErrorMessage> error = casTestUtil.create(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
-            ErrorMessage.class,
+            CasErrorMessage.class,
             associatedUser,
             aprioriInternal.getIdentity(),
             customerAssociationToAprioriInternal.getIdentity()

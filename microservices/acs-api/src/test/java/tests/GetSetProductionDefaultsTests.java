@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.utils.AcsResources;
@@ -39,7 +40,7 @@ public class GetSetProductionDefaultsTests {
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        String invalidUserResponse = acsResources.getProductionDefaultsInvalidUsername();
+        String invalidUserResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS);
 
         assertInvalidResponse(invalidUserResponse);
     }
