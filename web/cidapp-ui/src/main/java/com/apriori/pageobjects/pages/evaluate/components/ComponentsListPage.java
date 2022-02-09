@@ -202,6 +202,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Expands the Assembly
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public ComponentsListPage expandAssembly(String componentName, String scenarioName) {
+        scenarioTableController.expandAssembly(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
