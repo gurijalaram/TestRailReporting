@@ -9,7 +9,6 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
@@ -54,19 +53,6 @@ public class ComponentsUtil {
         List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
         return scenarioItemResponse.get(0);
-    }
-
-    /**
-     * GET css component
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param scenarioState   - the scenario state
-     * @param userCredentials - user credentials
-     * @return list of Item
-     */
-    public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
-        return new CssComponent().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
     }
 
     /**
