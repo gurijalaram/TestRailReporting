@@ -5,7 +5,7 @@ import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -41,7 +41,7 @@ public class CssComponent {
      * @param userCredentials  - user to upload the part
      * @return response object
      */
-    public List<Item> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+    public List<ScenarioItem> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         return getCssComponent(componentName, scenarioName, userCredentials, NOT_COSTED);
     }
 
@@ -52,11 +52,11 @@ public class CssComponent {
      * @param scenarioName  - the scenario name
      * @return response object
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
+    public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
         return getCssComponent(componentName, scenarioName, userCredentials, scenarioState, true);
     }
 
-    public List<Item> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
+    public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
         final int SOCKET_TIMEOUT = 270000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
@@ -77,11 +77,11 @@ public class CssComponent {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                final Optional<List<Item>> items = Optional.of(scenarioRepresentation.getResponseEntity().getItems());
+                final Optional<List<ScenarioItem>> items = Optional.of(scenarioRepresentation.getResponseEntity().getScenarioItems());
 
                 if (items.get().size() > 0) {
 
-                    Supplier<Stream<Item>> distinctItem = () -> items.get().stream().distinct();
+                    Supplier<Stream<ScenarioItem>> distinctItem = () -> items.get().stream().distinct();
 
                     distinctItem.get()
                         .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()) && !scenarioState.getState().equals(PROCESSING_FAILED.getState()))
@@ -96,14 +96,14 @@ public class CssComponent {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         if (!allowUnknownParts) {
-                            return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                            return scenarioRepresentation.getResponseEntity().getScenarioItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                         }
-                        return scenarioRepresentation.getResponseEntity().getItems();
+                        return scenarioRepresentation.getResponseEntity().getScenarioItems();
                     }
 
                     if (distinctItem.get()
                         .noneMatch(x -> x.getScenarioState().equals(scenarioState.getState()))) {
-                        itemScenarioState = items.get().stream().map(Item::getScenarioState).distinct().collect(Collectors.toList()).get(0);
+                        itemScenarioState = items.get().stream().map(ScenarioItem::getScenarioState).distinct().collect(Collectors.toList()).get(0);
                     }
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);

@@ -13,7 +13,7 @@ import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -76,10 +76,10 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, String lastAction, boolean published, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem cssScenarioItem, String lastAction, boolean published, UserCredentials userCredentials) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentId = cssItem.getComponentIdentity();
-        String scenarioId = cssItem.getScenarioIdentity();
+        String componentId = cssScenarioItem.getComponentIdentity();
+        String scenarioId = cssScenarioItem.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -135,8 +135,8 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioRepresentationBuilder scenarioRepresentationBuilder) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentId = scenarioRepresentationBuilder.getItem().getComponentIdentity();
-        String scenarioId = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
+        String componentId = scenarioRepresentationBuilder.getScenarioItem().getComponentIdentity();
+        String scenarioId = scenarioRepresentationBuilder.getScenarioItem().getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -195,7 +195,7 @@ public class ScenariosUtil {
      * @param componentInfoBuilder - the cost component object
      * @return list of scenario items
      */
-    public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
@@ -287,14 +287,14 @@ public class ScenariosUtil {
     /**
      * POST to publish scenario
      *
-     * @param item            - the item
+     * @param scenarioItem            - the item
      * @param componentId     - the component id
      * @param scenarioId      - the scenario id
      * @param userCredentials - the user credentials
      * @return scenarioresponse object
      */
     //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, String componentId, String scenarioId, UserCredentials userCredentials) {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
@@ -309,7 +309,7 @@ public class ScenariosUtil {
                 );
         HTTPRequest.build(requestEntity).post();
 
-        return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
+        return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
     }
 
     /** Upload and Publish a subcomponent/assembly
@@ -317,10 +317,10 @@ public class ScenariosUtil {
      * @param component - the copy component object
      * @return - the Item
      */
-    public Item uploadAndPublishComponent(ComponentInfoBuilder component) {
+    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
-        Item postComponentResponse;
+        ScenarioItem postComponentResponse;
         postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
 
         postPublishScenario(postComponentResponse,

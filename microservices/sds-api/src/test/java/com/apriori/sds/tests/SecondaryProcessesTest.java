@@ -1,6 +1,6 @@
 package com.apriori.sds.tests;
 
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.response.SecondaryProcessesItems;
 import com.apriori.sds.util.SDSTestUtil;
@@ -22,7 +22,7 @@ public class SecondaryProcessesTest extends SDSTestUtil {
     @TestRail(testCaseId = {"8435"})
     @Description("GET the applicable secondary processes for the VPE/Process Group. ")
     public void testGetSecondaryProcesses() {
-        final Item testingComponent = getTestingComponent();
+        final ScenarioItem testingComponent = getTestingComponent();
         final String vpeName = "aPriori USA";
         final String pgName = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
 

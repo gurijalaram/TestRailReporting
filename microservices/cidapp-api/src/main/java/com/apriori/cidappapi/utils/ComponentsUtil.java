@@ -7,7 +7,7 @@ import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -37,7 +37,7 @@ public class ComponentsUtil {
      * @param userCredentials - the user credentials
      * @return Item
      */
-    public Item postComponentQueryCSS(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public ScenarioItem postComponentQueryCSS(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
@@ -51,9 +51,9 @@ public class ComponentsUtil {
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
+        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
 
-        return itemResponse.get(0);
+        return scenarioItemResponse.get(0);
     }
 
     /**
@@ -65,7 +65,7 @@ public class ComponentsUtil {
      * @param userCredentials - user credentials
      * @return list of Item
      */
-    public List<Item> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
+    public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
         return new CssComponent().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
     }
 
@@ -102,7 +102,7 @@ public class ComponentsUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(Item scenarioItem, UserCredentials userCredentials) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ScenarioItem scenarioItem, UserCredentials userCredentials) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())

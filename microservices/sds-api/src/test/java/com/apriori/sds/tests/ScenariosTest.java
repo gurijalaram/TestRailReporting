@@ -5,7 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.request.PostWatchpointReportRequest;
@@ -24,8 +24,6 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
-import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -37,8 +35,8 @@ import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
 
-    private static Item testingScenario;
-    private static Item testingScenarioWithWatchpoint;
+    private static ScenarioItem testingScenario;
+    private static ScenarioItem testingScenarioWithWatchpoint;
 
     @Test
     @TestRail(testCaseId = {"6922"})
@@ -102,7 +100,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6926"})
     @Description("Returns the manifest for a scenario if the component type is a container.")
     public void getManifest() {
-        final Item testingRollUp = postRollUp(new GenerateStringUtil().generateScenarioName(), "AutomationRollup");
+        final ScenarioItem testingRollUp = postRollUp(new GenerateStringUtil().generateScenarioName(), "AutomationRollup");
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_MANIFEST_BY_COMPONENT_SCENARIO_IDS, ScenarioManifest.class)
@@ -154,7 +152,7 @@ public class ScenariosTest extends SDSTestUtil {
     public void testUpdateScenario() {
         final String updatedNotes = "Automation Notes";
         final String updatedDescription = "Automation Description";
-        final Item scenarioForUpdate = postTestingComponentAndAddToRemoveList();
+        final ScenarioItem scenarioForUpdate = postTestingComponentAndAddToRemoveList();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .notes(updatedNotes)
@@ -198,7 +196,7 @@ public class ScenariosTest extends SDSTestUtil {
             .updatedBy(getTestingComponent().getCreatedBy())
             .build();
 
-        Item publishedScenario = publishAndGetReadyToWorkScenario();
+        ScenarioItem publishedScenario = publishAndGetReadyToWorkScenario();
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_FORK_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
@@ -215,7 +213,7 @@ public class ScenariosTest extends SDSTestUtil {
             forkScenarioName, this.getReadyToWorkScenario(publishedScenario.getComponentIdentity(), forkScenario.getIdentity()).getScenarioName()
         );
 
-        scenariosToDelete.add(Item.builder()
+        scenariosToDelete.add(ScenarioItem.builder()
             .componentIdentity(publishedScenario.getComponentIdentity())
             .scenarioIdentity(forkScenario.getIdentity())
             .build()
@@ -226,7 +224,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = {"8590"})
     @Description("GET a completed watchpoint report for a scenario.")
     public void testGetWatchPoint() {
-        Item scenarioWithCreatedWatchpoint = this.createWatchpoint();
+        ScenarioItem scenarioWithCreatedWatchpoint = this.createWatchpoint();
 
         new ScenariosUtil().getScenarioRepresentation("processing", scenarioWithCreatedWatchpoint.getComponentIdentity(),
             scenarioWithCreatedWatchpoint.getScenarioIdentity(), testingUser
@@ -253,7 +251,7 @@ public class ScenariosTest extends SDSTestUtil {
     @TestRail(testCaseId = "7246")
     @Description("Delete an existing scenario.")
     public void deleteScenario() {
-        final Item componentToDelete = postTestingComponentAndAddToRemoveList();
+        final ScenarioItem componentToDelete = postTestingComponentAndAddToRemoveList();
 
         removeTestingScenario(componentToDelete.getComponentIdentity(), componentToDelete.getScenarioIdentity());
         scenariosToDelete.remove(componentToDelete);
@@ -286,13 +284,13 @@ public class ScenariosTest extends SDSTestUtil {
         );
     }
 
-    private Item createWatchpoint() {
+    private ScenarioItem createWatchpoint() {
 
         if (testingScenarioWithWatchpoint != null) {
             return testingScenarioWithWatchpoint;
         }
 
-        final Item scenario = this.costAndGetReadyScenario();
+        final ScenarioItem scenario = this.costAndGetReadyScenario();
 
         PostWatchpointReportRequest watchpointReportRequest = PostWatchpointReportRequest.builder()
             .watchpointTemplateName("CI_PartCost.watchpoints.xml")
@@ -360,9 +358,9 @@ public class ScenariosTest extends SDSTestUtil {
         return response.getResponseEntity().getItems();
     }
 
-    private Item publishAndGetReadyToWorkScenario() {
+    private ScenarioItem publishAndGetReadyToWorkScenario() {
         final String publishScenarioName = new GenerateStringUtil().generateScenarioName();
-        final Item testingComponent = postTestingComponentAndAddToRemoveList();
+        final ScenarioItem testingComponent = postTestingComponentAndAddToRemoveList();
 
         PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
             .scenarioName(publishScenarioName)
@@ -387,7 +385,7 @@ public class ScenariosTest extends SDSTestUtil {
         return testingComponent;
     }
 
-    private Item costAndGetReadyScenario() {
+    private ScenarioItem costAndGetReadyScenario() {
 
         if (testingScenario != null) {
             return testingScenario;
@@ -403,7 +401,7 @@ public class ScenariosTest extends SDSTestUtil {
         String mode = "manual";
         String materialName = "Use Default";
 
-        List<Item> testingScenarios = new ScenariosUtil().postCostScenario(
+        List<ScenarioItem> testingScenarios = new ScenariosUtil().postCostScenario(
             ComponentInfoBuilder.builder().componentName(componentName)
                 .scenarioName(scenarioName)
                 .componentId(componentId)
