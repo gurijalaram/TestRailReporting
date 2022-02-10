@@ -2,8 +2,8 @@ package com.apriori.cirapi.utils;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.enums.CIRAPIEnum;
-import com.apriori.cirapi.entity.request.ReportCastingDTCRequest;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
+import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.ReportStatusResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -36,8 +36,8 @@ public class JasperReportUtil {
         this.jSessionValue = String.format(jSessionValue, jSessionId);
     }
 
-    public JasperReportSummary generateJasperReportSummary(ReportCastingDTCRequest reportCastingDTCRequest) {
-        ReportStatusResponse response = this.generateDTCReport(reportCastingDTCRequest);
+    public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
+        ReportStatusResponse response = this.generateReport(reportRequest);
         ReportStatusResponse exportedReport = this.doReportExport(response);
 
         return JasperReportSummary.builder()
@@ -50,10 +50,10 @@ public class JasperReportUtil {
             .build();
     }
 
-    private ReportStatusResponse generateDTCReport(ReportCastingDTCRequest reportCastingDTCRequest) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.CASTING_DTC_REPORT, ReportStatusResponse.class)
+    private ReportStatusResponse generateReport(ReportRequest reportRequest) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.REPORT_EXECUTIONS, ReportStatusResponse.class)
             .headers(initHeadersWithJSession())
-            .body(reportCastingDTCRequest);
+            .body(reportRequest);
 
         ResponseWrapper<ReportStatusResponse> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
         Assert.assertEquals(responseResponseWrapper.getStatusCode(), HttpStatus.SC_OK);
@@ -82,7 +82,7 @@ public class JasperReportUtil {
 
         InputStream htmlData = (InputStream) HTTPRequest.build(requestEntity).get().getResponseEntity();
 
-        return Jsoup.parse(htmlData, "UTF-8", "/aPriori/reports/DTC Metrics/casting/castingDTC");
+        return Jsoup.parse(htmlData, "UTF-8", "/aPriori/reports/");
     }
 
     private List<ChartDataPoint> getReportChartData(final String requestId, final String exportId) {

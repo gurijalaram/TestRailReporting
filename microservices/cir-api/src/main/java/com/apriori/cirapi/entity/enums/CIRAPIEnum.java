@@ -6,7 +6,7 @@ import com.apriori.utils.properties.PropertiesContext;
 public enum CIRAPIEnum implements ExternalEndpointEnum {
 
     //Application Metadata
-    CASTING_DTC_REPORT("rest_v2/reportExecutions"),
+    REPORT_EXECUTIONS("rest_v2/reportExecutions"),
     REPORT_EXPORT_BY_REQUEST_ID("rest_v2/reportExecutions/%s/exports"),
     REPORT_OUTPUT_RESOURCE_BY_REQUEST_EXPORT_IDs("rest_v2/reportExecutions/%s/exports/%s/outputResource"),
     REPORT_OUTPUT_COMPONENT_JSON_BY_REQUEST_EXPORT_IDs("rest_v2/reportExecutions/%s/exports/%s/attachments/reportComponents.json");

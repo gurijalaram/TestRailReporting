@@ -2,7 +2,7 @@ package com.apriori.cir.tests;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ParametersRequest;
-import com.apriori.cirapi.entity.request.ReportCastingDTCRequest;
+import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.utils.JasperReportUtil;
 
@@ -20,26 +20,26 @@ public class JasperReportTest {
         // TODO z: usage example.
 
         // How to init a request data
-        ReportCastingDTCRequest reportCastingDTCRequest = ReportCastingDTCRequest.initFromJsonFile(); // will map ReportCastingDTCRequest.json to object
+        ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest"); // will map ReportCastingDTCRequest.json to object
 
         // to update request data, update object fields
-        reportCastingDTCRequest.setReportUnitUri("newReportUnitURI");
-        reportCastingDTCRequest.setPages(5);
+        reportRequest.setReportUnitUri("newReportUnitURI");
+        reportRequest.setPages(5);
 
         // to update specific parameter
-        reportCastingDTCRequest.getParameters().getReportParameterByName("currencyCode").setValue(Arrays.asList("Fully Burdened Cost",
+        reportRequest.getParameters().getReportParameterByName("currencyCode").setValue(Arrays.asList("Fully Burdened Cost",
             "\"Fully Burdened Cost\"", "sdfjhsdkjfh"));
 
         // to insert a new request parameters
-        reportCastingDTCRequest.setParameters(ParametersRequest.builder().build());
+        reportRequest.setParameters(ParametersRequest.builder().build());
         // ===============================================
 
 
 
-        // Generate DTS Report
+        // Generate DTC Report
         JasperReportSummary jasperReportSummary =
             JasperReportUtil.init("0FBF6B3526703FC5C14FBD889D9F16F8")
-                .generateJasperReportSummary(ReportCastingDTCRequest.initFromJsonFile());
+                .generateJasperReportSummary(ReportRequest.initFromJsonFile("ReportCastingDTCRequest"));
 
 
 

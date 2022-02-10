@@ -13,11 +13,11 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReportCastingDTCRequest {
+public class ReportRequest {
 
-    public static ReportCastingDTCRequest initFromJsonFile() {
-        return (ReportCastingDTCRequest) JsonManager.deserializeJsonFromInputStream(
-            FileResourceUtil.getResourceFileStream("ReportCastingDTCRequest.json"), ReportCastingDTCRequest.class);
+    public static ReportRequest initFromJsonFile(final String jsonFileNameWithoutType) {
+        return (ReportRequest) JsonManager.deserializeJsonFromInputStream(
+            FileResourceUtil.getResourceFileStream(jsonFileNameWithoutType + ".json"), ReportRequest.class);
     }
 
     private String reportUnitUri;
