@@ -1,4 +1,4 @@
-package com.apriori.bcs.entity.request;
+package com.apriori.bcs.entity.request.reports;
 
 import lombok.Data;
 
