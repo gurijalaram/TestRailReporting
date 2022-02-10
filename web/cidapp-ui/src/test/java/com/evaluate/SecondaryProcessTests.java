@@ -8,7 +8,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -58,7 +58,7 @@ public class SecondaryProcessTests extends TestBase {
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new ResetSettingsUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSettings(currentUser);
         }
     }
 

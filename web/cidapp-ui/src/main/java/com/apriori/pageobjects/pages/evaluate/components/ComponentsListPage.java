@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -24,13 +26,13 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     private final Logger logger = LoggerFactory.getLogger(ComponentsListPage.class);
 
-    @FindBy(css = ".evaluate-view-drawer [data-icon='list']")
+    @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
     private WebElement listButton;
 
-    @FindBy(css = ".evaluate-view-drawer [data-icon='folder-tree']")
+    @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
     private WebElement treeButton;
 
-    @FindBy(xpath = "//button[.='Preview']")
+    @FindBy(css = ".scenario-preview-card .left")
     private WebElement previewButton;
 
     @FindBy(xpath = "//button[.='Selection']")
@@ -51,7 +53,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(id = "qa-sub-component-action-bar-include-button")
     private WebElement eyeButton;
 
-    @FindBy(id = "qa-sub-component-detail-column-config-button")
+    @FindBy(id = "qa-sub-component-detail-configure-button")
     private WebElement configureButton;
 
     @FindBy(id = "qa-sub-component-detail-filter-button")
@@ -81,8 +83,29 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAndClick(listButton);
-        pageUtils.waitForElementAndClick(previewButton);
+        pageUtils.waitForElementToAppear(listButton);
+        pageUtils.waitForElementToAppear(previewButton);
+        assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
+    }
+
+    /**
+     * Changes the view to table view
+     *
+     * @return current page object
+     */
+    public ComponentsListPage tableView() {
+        pageUtils.waitForElementToAppear(listButton);
+        return this;
+    }
+
+    /**
+     * Changes the view to tree view
+     *
+     * @return current page object
+     */
+    public ComponentsListPage treeView() {
+        pageUtils.waitForElementToAppear(treeButton);
+        return this;
     }
 
     /**
@@ -199,6 +222,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Expands the Assembly
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public ComponentsListPage expandAssembly(String componentName, String scenarioName) {
+        scenarioTableController.expandAssembly(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
@@ -207,5 +242,29 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
         return scenarioTableController.getRowDetails(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the number of elements present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfScenarios(String componentName, String scenarioName) {
+        return scenarioTableController.getListOfScenarios(componentName, scenarioName);
+    }
+
+    /**
+     * Opens the assembly
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
+     */
+    public EvaluatePage openAssembly(String componentName, String scenarioName) {
+        scenarioTableController.openScenario(componentName, scenarioName);
+        pageUtils.windowHandler(1);
+        return new EvaluatePage(driver);
     }
 }
