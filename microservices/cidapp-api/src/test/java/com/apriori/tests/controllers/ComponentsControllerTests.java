@@ -73,9 +73,9 @@ public class ComponentsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem scenarioItem = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
-        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = componentsUtil.getComponentIdentity(postComponentResponse.getComponentIdentity());
+        ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = componentsUtil.getComponentIdentity(scenarioItem);
 
         assertThat(componentIdentityResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

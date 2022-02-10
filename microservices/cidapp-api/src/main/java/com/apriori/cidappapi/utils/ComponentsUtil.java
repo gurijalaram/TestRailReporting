@@ -70,13 +70,13 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity
      *
-     * @param componentIdentity - the identity
+     * @param scenarioItem - the scenario object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(String componentIdentity) {
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ScenarioItem scenarioItem) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(componentIdentity);
+                .inlineVariables(scenarioItem.getComponentIdentity());
 
         return HTTPRequest.build(requestEntity).get();
     }
