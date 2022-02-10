@@ -36,10 +36,7 @@ public class IterationsControllerTests {
 
         Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
 
-        String componentIdentity = postComponentResponse.getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
-
-        ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
 
         assertThat(getComponentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

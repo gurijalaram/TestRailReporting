@@ -60,7 +60,7 @@ public class ComponentImageTests {
         ResponseWrapper<ImageResponse> imageResponse = scenariosUtil.getHoopsImage(componentIdentity, scenarioIdentity);
         assertThat(imageResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getBoundingBox(), hasItems(-1.25, 0.0, 0.0, 1.25, 0.800000011920929, 0.012000000104308128));
     }
@@ -89,7 +89,7 @@ public class ComponentImageTests {
         ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getAxesEntries().size(), is(equalTo(6)));
     }
@@ -118,7 +118,7 @@ public class ComponentImageTests {
         ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getActiveAxes().stream().map(ActiveAxes::getDisplayName).collect(Collectors.toList()), hasItems("SetupAxis:1"));
     }

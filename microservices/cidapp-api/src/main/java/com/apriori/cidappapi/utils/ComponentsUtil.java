@@ -98,14 +98,15 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity and component
      *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
+     * @param scenarioItem    - the scenario item object
+     * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(Item scenarioItem, UserCredentials userCredentials) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .inlineVariables(componentIdentity, scenarioIdentity);
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
+                .token(userCredentials.getToken());
 
         return checkNonNullIterationLatest(requestEntity);
     }
