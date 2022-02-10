@@ -4,7 +4,10 @@ import com.apriori.acs.entity.enums.AcsApiEnum;
 import com.apriori.acs.entity.response.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.acs.entity.response.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
+import com.apriori.acs.entity.response.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
 import com.apriori.acs.entity.response.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.getscenariosinfo.GetScenariosInfoResponse;
 import com.apriori.acs.entity.response.getscenariosinfo.ScenarioIterationKeysInputs;
@@ -56,19 +59,19 @@ public class AcsResources {
     public CreateMissingScenarioResponse createMissingScenario() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.CREATE_MISSING_SCENARIO,
-                        CreateMissingScenarioResponse.class)
-                .headers(headers)
-                .body(CreateMissingScenarioInputs.builder()
-                        .baseName(Constants.PART_FILE_NAME)
-                        .configurationName(Constants.PART_CONFIG_NAME)
-                        .modelName(Constants.PART_MODEL_NAME)
-                        .scenarioName(new GenerateStringUtil().generateScenarioName())
-                        .scenarioType(Constants.PART_COMPONENT_TYPE)
-                        .missing(true)
-                        .createdBy(validUsername)
-                        .build()
-                );
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.CREATE_MISSING_SCENARIO, CreateMissingScenarioResponse.class)
+            .headers(headers)
+            .body(CreateMissingScenarioInputs.builder()
+                    .baseName(Constants.PART_FILE_NAME)
+                    .configurationName(Constants.PART_CONFIG_NAME)
+                    .modelName(Constants.PART_MODEL_NAME)
+                    .scenarioName(new GenerateStringUtil().generateScenarioName())
+                    .scenarioType(Constants.PART_COMPONENT_TYPE)
+                    .missing(true)
+                    .createdBy(validUsername)
+                    .build()
+            );
 
         return (CreateMissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
@@ -83,14 +86,14 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GetScenarioInfoByScenarioIterationKeyResponse.class)
-                .headers(headers)
-                .inlineVariables(
-                        scenarioIterationKey.getScenarioKey().getTypeName(),
-                        scenarioIterationKey.getScenarioKey().getMasterName(),
-                        scenarioIterationKey.getScenarioKey().getStateName(),
-                        scenarioIterationKey.getIteration().toString()
-                );
+            .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GetScenarioInfoByScenarioIterationKeyResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
 
         return (GetScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
                 .build(requestEntity).get().getResponseEntity();
@@ -112,12 +115,13 @@ public class AcsResources {
         listOfKeys.add(scenarioIterationKeyOne);
         listOfKeys.add(scenarioIterationKeyTwo);
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
-                .headers(headers)
-                .body(ScenarioIterationKeysInputs.builder()
-                        .scenarioIterationKeys(listOfKeys)
-                        .build())
-                .inlineVariables(validUsername);
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+            .headers(headers)
+            .body(ScenarioIterationKeysInputs.builder()
+                .scenarioIterationKeys(listOfKeys)
+                .build())
+            .inlineVariables(validUsername);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -132,12 +136,12 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
-                .headers(headers)
-                .body(ScenarioIterationKeysInputs.builder()
-                        .scenarioIterationKeys(scenarioIterationKeys)
-                        .build())
-                .inlineVariables(validUsername);
+            .init(AcsApiEnum.GET_SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+            .headers(headers)
+            .body(ScenarioIterationKeysInputs.builder()
+                .scenarioIterationKeys(scenarioIterationKeys)
+                .build())
+            .inlineVariables(validUsername);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -150,10 +154,11 @@ public class AcsResources {
     public ResponseWrapper<GetScenariosInfoResponse> getScenariosInfoNullBody() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_SCENARIOS_INFORMATION, null)
-                .headers(headers)
-                .body(null)
-                .inlineVariables(validUsername);
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SCENARIOS_INFORMATION, null)
+            .headers(headers)
+            .body(null)
+            .inlineVariables(validUsername);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -166,10 +171,10 @@ public class AcsResources {
     public GetDisplayUnitsResponse getDisplayUnits() {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.GET_DISPLAY_UNITS,
-                        GetDisplayUnitsResponse.class)
-                .headers(headers)
-                .inlineVariables(validUsername);
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_DISPLAY_UNITS, GetDisplayUnitsResponse.class)
+            .headers(headers)
+            .inlineVariables(validUsername);
 
         return (GetDisplayUnitsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -183,10 +188,11 @@ public class AcsResources {
     public GenericResourceCreatedResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil.init(AcsApiEnum.SET_DISPLAY_UNITS, GenericResourceCreatedResponse.class)
-                .headers(headers)
-                .body(setDisplayUnitsInputs)
-                .inlineVariables(validUsername);
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.SET_DISPLAY_UNITS, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(setDisplayUnitsInputs)
+            .inlineVariables(validUsername);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
@@ -200,8 +206,8 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_UNIT_VARIANT_SETTINGS, GetUnitVariantSettingsResponse.class)
-                .headers(headers);
+            .init(AcsApiEnum.GET_UNIT_VARIANT_SETTINGS, GetUnitVariantSettingsResponse.class)
+            .headers(headers);
 
         return (GetUnitVariantSettingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -215,9 +221,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_CUSTOM_UNIT_VARIANT_SETTINGS, UnitVariantSetting.class)
-                .headers(headers)
-                .inlineVariables(validUsername);
+            .init(AcsApiEnum.GET_CUSTOM_UNIT_VARIANT_SETTINGS, UnitVariantSetting.class)
+            .headers(headers)
+            .inlineVariables(validUsername);
 
         return (UnitVariantSetting) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -230,8 +236,8 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
-                .headers(headers);
+            .init(AcsApiEnum.GET_ENABLED_CURRENCY_RATE_VERSIONS, CurrencyRateVersionResponse.class)
+            .headers(headers);
 
         HTTPRequest.build(requestEntity).get();
     }
@@ -245,9 +251,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
-                .headers(headers)
-                .inlineVariables(validUsername);
+            .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
+            .headers(headers)
+            .inlineVariables(validUsername);
 
         return (GetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -259,7 +265,7 @@ public class AcsResources {
      * @param toleranceMode - String
      * @param useCadToleranceThreshhold - boolean
      *
-     * @return GenericResourceCreatedResponse
+     * @return GenericResourceCreatedResponse instance
      */
     public GenericResourceCreatedResponse setTolerancePolicyDefaults(double totalRunoutOverride,
                                                                      String toleranceMode,
@@ -267,15 +273,15 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
-                .headers(headers)
-                .body(SetTolerancePolicyDefaultsInputs.builder()
-                        .totalRunoutOverride(totalRunoutOverride)
-                        .toleranceMode(toleranceMode)
-                        .useCadToleranceThreshhold(useCadToleranceThreshhold)
-                        .build()
-                )
-                .inlineVariables(validUsername);
+            .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(SetTolerancePolicyDefaultsInputs.builder()
+                    .totalRunoutOverride(totalRunoutOverride)
+                    .toleranceMode(toleranceMode)
+                    .useCadToleranceThreshhold(useCadToleranceThreshhold)
+                    .build()
+            )
+            .inlineVariables(validUsername);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
@@ -289,10 +295,10 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
-                .headers(headers)
-                .body(null)
-                .inlineVariables(invalidUsername);
+            .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
+            .headers(headers)
+            .body(null)
+            .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
     }
@@ -306,9 +312,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
-                .headers(headers)
-                .inlineVariables(validUsername);
+            .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
+            .headers(headers)
+            .inlineVariables(validUsername);
 
         return (GetProductionDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
@@ -322,17 +328,17 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
-                .headers(headers)
-                .body(SetProductionDefaultsInputs.builder()
-                        .material("Accura 10")
-                        .annualVolume("5500")
-                        .productionLife(5.0)
-                        .batchSize(458)
-                        .useVpeForAllProcesses(false)
-                        .batchSizeMode(false)
-                        .build()
-                ).inlineVariables(validUsername);
+            .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(SetProductionDefaultsInputs.builder()
+                    .material("Accura 10")
+                    .annualVolume("5500")
+                    .productionLife(5.0)
+                    .batchSize(458)
+                    .useVpeForAllProcesses(false)
+                    .batchSizeMode(false)
+                    .build()
+            ).inlineVariables(validUsername);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
@@ -346,9 +352,9 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
-                .headers(headers)
-                .body(null)
+            .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
+            .headers(headers)
+            .body(null)
             .inlineVariables(invalidUsername);
 
         return HTTPRequest.build(requestEntity).post().getBody();
@@ -461,6 +467,13 @@ public class AcsResources {
         return HTTPRequest.build(requestEntity).post().getBody();
     }
 
+    /**
+     * Sets user preference by name
+     *
+     * @param prefToSetKey - String - key of preference to set
+     * @param prefToSetValue - String - value of preference to set
+     * @return GenericResourceCreatedResponse instance
+     */
     public GenericResourceCreatedResponse setUserPreferenceByName(String prefToSetKey, String prefToSetValue) {
         setupHeader();
 
@@ -471,6 +484,90 @@ public class AcsResources {
             .inlineVariables(validUsername, prefToSetKey);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Get part primary process groups
+     *
+     * @return GetPartPrimaryProcessGroupsResponse instance
+     */
+    public GetPartPrimaryProcessGroupsResponse getPartPrimaryProcessGroups() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_PART_PRIMARY_PROCESS_GROUPS, GetPartPrimaryProcessGroupsResponse.class)
+            .headers(headers);
+
+        return (GetPartPrimaryProcessGroupsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets 2D image of costed part by scenario iteration key
+     *
+     * @param paramsForUrl - list of values to input into url
+     * @return String - base64 encoded image
+     */
+    public String get2DImageByScenarioIterationKey(List<String> paramsForUrl) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_2D_IMAGE, null)
+            .headers(headers)
+            .inlineVariables(
+                paramsForUrl.get(0),
+                paramsForUrl.get(1),
+                paramsForUrl.get(2),
+                paramsForUrl.get(3),
+                paramsForUrl.get(4)
+            );
+
+        return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     * Gets Active Dimensions by Scenario Iteration Key
+     *
+     * @param paramsForUrl - list of values to input into url
+     * @return GetActiveDimensionsResponse instance
+     */
+    public GetActiveDimensionsResponse getActiveDimensionsByScenarioIterationKeyEndpoint(List<String> paramsForUrl) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ACTIVE_DIMENSIONS, GetActiveDimensionsResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                paramsForUrl.get(0),
+                paramsForUrl.get(1),
+                paramsForUrl.get(2),
+                paramsForUrl.get(3),
+                paramsForUrl.get(4)
+            );
+
+        return (GetActiveDimensionsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Active Axes by Scenario Iteration Key
+     *
+     * @param paramsForUrl - list of values to input into url
+     * @return GetActiveAxesByScenarioIterationKeyResponse instance
+     */
+    public GetActiveAxesByScenarioIterationKeyResponse getActiveAxesByScenarioIterationKey(List<String> paramsForUrl) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ACTIVE_AXES, GetActiveAxesByScenarioIterationKeyResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                paramsForUrl.get(0),
+                paramsForUrl.get(1),
+                paramsForUrl.get(2),
+                paramsForUrl.get(3),
+                paramsForUrl.get(4)
+            );
+
+        return (GetActiveAxesByScenarioIterationKeyResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

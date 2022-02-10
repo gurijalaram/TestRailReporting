@@ -19,7 +19,7 @@ public class PeopleUtil {
      * @return user object
      */
     public User getCurrentUser(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_USER, User.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.CURRENT_USER, User.class)
             .token(userCredentials.getToken());
 
         ResponseWrapper<User> userResponse = HTTPRequest.build(requestEntity).get();
@@ -33,7 +33,7 @@ public class PeopleUtil {
      * @return person object
      */
     public PersonResponse getCurrentPerson(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.GET_CURRENT_PERSON, PeopleResponse.class)
+        final RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.CURRENT_PERSON, PeopleResponse.class)
             .token(userCredentials.getToken())
             .inlineVariables(userCredentials.getUsername());
 

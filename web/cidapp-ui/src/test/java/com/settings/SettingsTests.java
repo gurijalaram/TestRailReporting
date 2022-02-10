@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
-import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.css.entity.response.Item;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
@@ -52,7 +52,7 @@ public class SettingsTests extends TestBase {
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new ResetSettingsUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSettings(currentUser);
         }
     }
 
