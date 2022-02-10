@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.common;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
@@ -25,7 +27,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
 
     private static final Logger logger = LoggerFactory.getLogger(ScenarioTableController.class);
 
-    @FindBy(css = ".apriori-table.scenario-iteration-table")
+    @FindBy(css = ".apriori-table")
     private WebElement componentTable;
 
     @FindBy(css = ".apriori-table.scenario-iteration-table .spinner-border")
@@ -116,6 +118,21 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public ScenarioTableController highlightScenario(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
         pageUtils.waitForElementAndClick(byComponentName(componentName, scenarioName));
+        return this;
+    }
+
+    /**
+     * Expands the assembly
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController expandAssembly(String componentName, String scenarioName) {
+        moveToScenario(componentName, scenarioName);
+        By byAssembly = with(By.cssSelector(".expand-button-wrapper"))
+            .toLeftOf(byComponentName(componentName, scenarioName));
+        pageUtils.waitForElementAndClick(byAssembly);
         return this;
     }
 

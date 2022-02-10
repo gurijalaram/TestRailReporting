@@ -7,6 +7,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
@@ -26,12 +27,15 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class ScenariosUtil {
+
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     /**
      * GET scenario representation
@@ -44,7 +48,7 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
                 .token(userCredentials.getToken());
 
@@ -78,7 +82,7 @@ public class ScenariosUtil {
         String scenarioId = cssItem.getScenarioIdentity();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentId, scenarioId)
                 .token(userCredentials.getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
@@ -135,7 +139,7 @@ public class ScenariosUtil {
         String scenarioId = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentId, scenarioId)
                 .token(scenarioRepresentationBuilder.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
@@ -155,7 +159,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ScenarioResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity)
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)
@@ -179,7 +183,7 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ImageResponse> getHoopsImage(String componentIdentity, String scenarioIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS, ImageResponse.class)
                 .inlineVariables(componentIdentity, scenarioIdentity);
 
         return HTTPRequest.build(requestEntity).get();
@@ -193,7 +197,7 @@ public class ScenariosUtil {
      */
     public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
                 .body("costingInputs",
@@ -217,13 +221,30 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
             .token(componentInfoBuilder.getUser().getToken())
             .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
             .body("scenario",
                 ScenarioRequest.builder()
                     .scenarioName(componentInfoBuilder.getScenarioName())
                     .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to Edit a scenario/assembly (with a scenario name that already exists)
+     *
+     * @param componentInfoBuilder - the copy component object
+     * @param forkRequest - the request object
+     * @return response object
+     */
+    public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
+        final RequestEntity requestEntity =
+                RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                        .token(componentInfoBuilder.getUser().getToken())
+                        .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                        .body("scenario", forkRequest);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -245,7 +266,7 @@ public class ScenariosUtil {
      */
     private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COSTING_TEMPLATES, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .body("costingTemplate", CostRequest.builder()
                     .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
@@ -272,9 +293,11 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return scenarioresponse object
      */
+    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_PUBLISH_SCENARIO, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
                 .token(userCredentials.getToken())
                 .inlineVariables(componentId, scenarioId)
                 .body("scenario", PublishRequest.builder()
@@ -287,6 +310,25 @@ public class ScenariosUtil {
         HTTPRequest.build(requestEntity).post();
 
         return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
+    }
+
+    /** Upload and Publish a subcomponent/assembly
+     *
+     * @param component - the copy component object
+     * @return - the Item
+     */
+    public Item uploadAndPublishComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        Item postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+
+        postPublishScenario(postComponentResponse,
+            postComponentResponse.getComponentIdentity(),
+            postComponentResponse.getScenarioIdentity(),
+            component.getUser());
+
+        return postComponentResponse;
     }
 
     /**
