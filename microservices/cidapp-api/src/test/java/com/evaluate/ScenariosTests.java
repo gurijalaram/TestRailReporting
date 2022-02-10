@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
+import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
@@ -24,23 +25,24 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ScenariosTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = "10620")
     @Description("Copy a scenario")
     public void testCopyScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        String filename  = "oldham.asm.1";
+        String filename = "oldham.asm.1";
         String componentName = "OLDHAM";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
+        UserCredentials currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
         Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
@@ -65,5 +67,56 @@ public class ScenariosTests {
                 .build());
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioName(), is(equalTo(scenarioName)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10731", "10730", "10810", "10823"})
+    @Description("Upload, publish subcomponents and assembly then Edit the Assembly, shallow basis")
+    public void testUploadPublishingAndEditAssemblyShallow() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        ArrayList<String> subComponentNames = new ArrayList<>(Arrays.asList("big ring", "Pin", "small ring"));
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        //Build & process sub component object based on array list of names
+        for (String subComponentName : subComponentNames) {
+            scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
+                .componentName(subComponentName)
+                .extension(componentExtension)
+                .scenarioName(scenarioName)
+                .processGroup(processGroupEnum)
+                .user(currentUser)
+                .build());
+        }
+
+        //Process assembly
+        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
+                .componentName(assemblyName)
+                .extension(assemblyExtension)
+                .scenarioName(scenarioName)
+                .processGroup(ProcessGroupEnum.ASSEMBLY)
+                .user(currentUser)
+                .build();
+
+        Item assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
+        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
+        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
+
+        //Edit Assembly
+        Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
+                myAssembly,
+                ForkRequest.builder()
+                    .override(false)
+                    .build())
+            .getResponseEntity();
+
+        //assertions
+        assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
+        assertThat(editAssemblyResponse.getPublished(), is(false));
     }
 }

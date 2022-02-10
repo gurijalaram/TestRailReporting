@@ -69,6 +69,24 @@
         },
         "updatedByName": {
           "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "assignedTo": {
+          "type": "string"
+        },
+        "assignedAt": {
+          "type": "string"
+        },
+        "assignedBy": {
+          "type": "string"
+        },
+        "assignedToName": {
+          "type": "string"
+        },
+        "assignedByName": {
+          "type": "string"
         }
       }
     }

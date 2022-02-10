@@ -1,4 +1,4 @@
-package com.evaluate;
+package com.evaluate.assemblies;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.equalTo;

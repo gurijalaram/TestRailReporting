@@ -22,7 +22,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     //SCENARIO
     COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
     COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
-
+    EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/fork"),
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
