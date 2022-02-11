@@ -40,16 +40,15 @@ public class ScenariosUtil {
     /**
      * GET scenario representation
      *
-     * @param transientState    - the impermanent state
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
+     * @param scenarioItem    - the scenario object
+     * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
         long START_TIME = System.currentTimeMillis() / 1000;
@@ -63,7 +62,7 @@ public class ScenariosUtil {
             scenarioRepresentation = HTTPRequest.build(requestEntity).get();
             scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             waitSeconds(POLLING_INTERVAL);
-        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return scenarioRepresentation;
     }

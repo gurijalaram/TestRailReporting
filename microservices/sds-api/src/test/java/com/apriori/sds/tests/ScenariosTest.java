@@ -226,9 +226,13 @@ public class ScenariosTest extends SDSTestUtil {
     public void testGetWatchPoint() {
         ScenarioItem scenarioWithCreatedWatchpoint = this.createWatchpoint();
 
-        new ScenariosUtil().getScenarioRepresentation("processing", scenarioWithCreatedWatchpoint.getComponentIdentity(),
-            scenarioWithCreatedWatchpoint.getScenarioIdentity(), testingUser
-        );
+        new ScenariosUtil().getScenarioRepresentation(
+            ScenarioItem.builder()
+                .componentIdentity(scenarioWithCreatedWatchpoint.getComponentIdentity())
+                .scenarioIdentity(scenarioWithCreatedWatchpoint.getScenarioIdentity())
+                .scenarioState("processing")
+                .build(),
+            testingUser);
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
