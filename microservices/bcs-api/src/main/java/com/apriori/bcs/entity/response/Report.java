@@ -1,6 +1,5 @@
 package com.apriori.bcs.entity.response;
 
-import com.apriori.bcs.entity.request.ReportParameters;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 

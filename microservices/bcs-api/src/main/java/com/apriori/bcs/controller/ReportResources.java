@@ -1,6 +1,6 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.NewReportRequest;
+import com.apriori.bcs.entity.request.reports.NewReportRequest;
 import com.apriori.bcs.entity.response.Report;
 import com.apriori.bcs.entity.response.ReportExport;
 import com.apriori.bcs.entity.response.ReportTemplates;
@@ -22,20 +22,20 @@ import java.util.List;
 public class ReportResources {
 
     public static <T> ResponseWrapper<T> getReports() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORTS, Reports.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Reports.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getReportRepresentation(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_BY_ID, Report.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
             .inlineVariables(identity);
 
         return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> exportReport(String identity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_EXPORT_BY_ID, ReportExport.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_EXPORT_BY_ID, ReportExport.class)
             .inlineVariables(identity);
 
         return HTTPRequest.build(requestEntity).get();
@@ -52,7 +52,7 @@ public class ReportResources {
                 .setScopedIdentity(nrr.getScopedIdentity())
                 .setReportParameters(nrr.getReportParameters());
 
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_REPORTS, klass)
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, klass)
             .body(body);
 
         ResponseWrapper<T> responseWrapper = HTTPRequest.build(requestEntity).post();
@@ -67,15 +67,18 @@ public class ReportResources {
     }
 
     public static <T> ResponseWrapper<T> getReportTemplates() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_TEMPLATES, ReportTemplates.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_TEMPLATES, ReportTemplates.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
 
     public static <T> ResponseWrapper<T> getReportTemplatesPartReport() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_REPORT_TEMPLATES_PART_REPORT, ReportTemplates.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_TEMPLATES_PART_REPORT, ReportTemplates.class)
             .urlEncodingEnabled(false);
 
         return HTTPRequest.build(requestEntity).get();
     }
+
+
+
 }

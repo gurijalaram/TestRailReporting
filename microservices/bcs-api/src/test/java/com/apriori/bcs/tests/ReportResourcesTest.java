@@ -4,14 +4,15 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.controller.ReportResources;
-import com.apriori.bcs.entity.request.NewPartRequest;
-import com.apriori.bcs.entity.request.NewReportRequest;
-import com.apriori.bcs.entity.request.ReportParameters;
+import com.apriori.bcs.entity.request.reports.NewReportRequest;
+import com.apriori.bcs.entity.request.reports.ReportParameters;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.Report;
 import com.apriori.bcs.entity.response.ReportTemplates;
 import com.apriori.bcs.entity.response.Reports;
+import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.utils.BcsTestUtils;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.utils.FileResourceUtil;
@@ -38,46 +39,23 @@ public class ReportResourcesTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        batch = BatchResources.createNewBatch();
-
-        NewPartRequest newPartRequest =
-                (NewPartRequest)JsonManager.deserializeJsonFromInputStream(
-                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
-        newPartRequest.setFilename("bracket_form.prt");
-
-        part = (Part)BatchPartResources.createNewBatchPart(newPartRequest, batch.getIdentity()).getResponseEntity();
-
-        int intervals = Constants.POLLING_TIMEOUT;
-        int interval = 0;
-        BcsUtils.State isPartCompleted = BcsUtils.State.PROCESSING;
-
-        while (interval <= intervals) {
-            part = (Part)BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), part.getIdentity(), Part.class)
+        ResponseWrapper<Object> responseWrapper = BatchResources.createBatch();
+        batch = (Batch)BatchResources.createBatch().getResponseEntity();
+        part = (Part) BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
+        if (BcsTestUtils.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity()).equals(BCSState.COMPLETED.toString())) {
+            reportTemplates = (ReportTemplates) ReportResources.getReportTemplatesPartReport()
                     .getResponseEntity();
-            isPartCompleted = BcsUtils.pollState(part, Part.class);
-
-            if (isPartCompleted.equals(BcsUtils.State.COMPLETED)) {
-                break;
-            }
-            interval++;
+            ReportParameters reportParameters = new ReportParameters();
+            reportParameters.setCurrencyCode("USD");
+            reportParameters.setRoundToDollar(true);
+            NewReportRequest newReportRequest = generateReportRequest(reportParameters);
+            report = ReportResources.createReport(newReportRequest);
         }
-
-        reportTemplates = (ReportTemplates) ReportResources.getReportTemplatesPartReport()
-                .getResponseEntity();
-
-        ReportParameters reportParameters = new ReportParameters();
-        reportParameters.setCurrencyCode("USD");
-        reportParameters.setRoundToDollar(true);
-
-        NewReportRequest newReportRequest = generateReportRequest(reportParameters);
-
-        report  = ReportResources.createReport(newReportRequest);
     }
 
     @AfterClass
     public static void testCleanup() {
-
-        BcsUtils.checkAndCancelBatch(batch);
+        BcsTestUtils.checkAndCancelBatch(batch);
     }
 
     @Test

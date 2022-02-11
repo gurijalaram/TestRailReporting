@@ -3,9 +3,6 @@ package com.apriori.bcs.utils;
 import static org.junit.Assert.fail;
 
 import com.apriori.bcs.controller.BatchPartResources;
-import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.entity.request.NewBatchProperties;
-import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.utils.ApiUtil;
 
@@ -44,7 +41,7 @@ public class BcsUtils extends ApiUtil {
 
     }
 
-    public enum TerminalState {
+    /*public enum TerminalState {
         COMPLETED("COMPLETED"),
         ERRORED("ERRORED"),
         REJECTED("REJECTED"),
@@ -66,8 +63,7 @@ public class BcsUtils extends ApiUtil {
             return false;
         }
 
-    }
-
+    }*/
 
     /**
      * Get the entity's identity
@@ -126,12 +122,12 @@ public class BcsUtils extends ApiUtil {
         return value;
     }
 
-    /**
+   /* *//**
      * Cancel any batch in a non-terminal state
      *
      * @param batch
      * @return
-     */
+     *//*
     public static boolean checkAndCancelBatch(Batch batch) {
         Batch currentBatch = (Batch)BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
         if (!TerminalState.contains(currentBatch.getState())) {
@@ -139,7 +135,7 @@ public class BcsUtils extends ApiUtil {
             return true;
         }
         return false;
-    }
+    }*/
 
     /**
      * Polls BCS to get a batch/part's costing status
@@ -252,7 +248,7 @@ public class BcsUtils extends ApiUtil {
      *
      * @return
      */
-    public static NewBatchProperties generateNewBatchProperties(
+    /*    public static NewBatchProperties generateNewBatchProperties(
             String externalId,
             String name,
             String scenarioName,
@@ -286,7 +282,7 @@ public class BcsUtils extends ApiUtil {
 
     public static NewBatchProperties generateNewBatchProperties() {
         return generateNewBatchProperties(null, null, null, null);
-    }
+    }*/
 
 
 }
