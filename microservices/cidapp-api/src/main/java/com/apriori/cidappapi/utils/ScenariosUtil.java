@@ -153,14 +153,13 @@ public class ScenariosUtil {
     /**
      * POST to cost a component
      *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
+     * @param scenarioItem - the scenario object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> postCostComponent(ScenarioItem scenarioItem) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)
                         .batchSize(458)

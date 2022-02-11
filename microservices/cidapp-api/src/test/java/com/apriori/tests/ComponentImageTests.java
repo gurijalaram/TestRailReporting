@@ -58,7 +58,7 @@ public class ComponentImageTests {
         ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(postComponentResponse);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
@@ -95,7 +95,7 @@ public class ComponentImageTests {
         ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(postComponentResponse);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
@@ -129,7 +129,7 @@ public class ComponentImageTests {
         ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(postComponentResponse);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation("processing", componentIdentity, scenarioIdentity, currentUser);
