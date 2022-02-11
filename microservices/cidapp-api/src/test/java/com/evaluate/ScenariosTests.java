@@ -102,12 +102,12 @@ public class ScenariosTests {
 
         //Process assembly
         ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-                .componentName(assemblyName)
-                .extension(assemblyExtension)
-                .scenarioName(scenarioName)
-                .processGroup(ProcessGroupEnum.ASSEMBLY)
-                .user(currentUser)
-                .build();
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .user(currentUser)
+            .build();
 
         ScenarioItem assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
         myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
@@ -115,10 +115,10 @@ public class ScenariosTests {
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
-                myAssembly,
-                ForkRequest.builder()
-                    .override(false)
-                    .build())
+            myAssembly,
+            ForkRequest.builder()
+                .override(false)
+                .build())
             .getResponseEntity();
 
         //assertions
@@ -134,7 +134,7 @@ public class ScenariosTests {
         final String assemblyExtension = ".SLDASM";
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        List<String> subComponentNames = Arrays.asList("big ring",  "Pin", "small ring");
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String componentExtension = ".SLDPRT";
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -163,15 +163,14 @@ public class ScenariosTests {
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(myAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
-        // TODO: 11/02/2022 the scenario name can be passed into the assertion below to capture the full error message
-        assertThat(assemblyUploadResponse.getBody(), containsString("scenario can not be published"));
+        assertThat(assemblyUploadResponse.getBody(), containsString(String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName)));
     }
 
-    private Item uploadComponent(ComponentInfoBuilder component) {
+    private ScenarioItem uploadComponent(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
-        Item postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+        ScenarioItem postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
 
         return postComponentResponse;
     }

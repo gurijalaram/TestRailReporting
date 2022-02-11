@@ -289,15 +289,12 @@ public class ScenariosUtil {
      * @param component - the copy component object
      * @return - the Item
      */
-    public Item uploadAndPublishComponent(ComponentInfoBuilder component) {
+    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
-        Item postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
 
-        postPublishScenario(postComponentResponse,
-            postComponentResponse.getComponentIdentity(),
-            postComponentResponse.getScenarioIdentity(),
-            component.getUser());
+        postPublishScenario(postComponentResponse, component.getUser());
 
         return postComponentResponse;
     }
@@ -311,7 +308,7 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> uploadAndPublishComponentError(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
-        Item postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
 
         return postPublishScenarioError(postComponentResponse, component.getUser());
     }
@@ -324,34 +321,32 @@ public class ScenariosUtil {
      * @return scenarioresponse object
      */
     public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials) {
-    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
-        publishScenario(item, userCredentials, ScenarioResponse.class);
+        publishScenario(scenarioItem, userCredentials, ScenarioResponse.class);
 
-        return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
+        return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
     }
 
     /**
      * POST to publish scenario expecting error
      *
-     * @param item            - the item object
+     * @param scenarioItem    - the item object
      * @param userCredentials - the user credentials
      * @return scenario object
      */
-    public ResponseWrapper<ScenarioResponse> postPublishScenarioError(Item item, UserCredentials userCredentials) {
-        return publishScenario(item, userCredentials, ErrorMessage.class);
+    public ResponseWrapper<ScenarioResponse> postPublishScenarioError(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+        return publishScenario(scenarioItem, userCredentials, ErrorMessage.class);
     }
 
     /**
      * POST to publish scenario
      *
-     * @param item            - the item object
+     * @param scenarioItem    - the item object
      * @param userCredentials - the user credentials
      * @param klass           - the  class
      * @param <T>             - the generic return type
      * @return generic object
      */
-    private <T> ResponseWrapper<ScenarioResponse> publishScenario(Item item, UserCredentials userCredentials, Class<T> klass) {
+    private <T> ResponseWrapper<ScenarioResponse> publishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials, Class<T> klass) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(userCredentials.getToken())
