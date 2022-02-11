@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -25,8 +26,8 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ScenariosTests {
 
@@ -77,7 +78,7 @@ public class ScenariosTests {
         final String assemblyExtension = ".SLDASM";
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        ArrayList<String> subComponentNames = new ArrayList<>(Arrays.asList("big ring", "Pin", "small ring"));
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String componentExtension = ".SLDPRT";
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -118,5 +119,54 @@ public class ScenariosTests {
         //assertions
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
         assertThat(editAssemblyResponse.getPublished(), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10758"})
+    @Description("Trigger 409 conflict on trying to publish an assembly that has private sub-components")
+    public void testUploadPublishingAssemblyError() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        List<String> subComponentNames = Arrays.asList("big ring",  "Pin", "small ring");
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        //Build & process sub component object based on array list of names
+        for (String subComponentName : subComponentNames) {
+            uploadComponent(ComponentInfoBuilder.builder()
+                .componentName(subComponentName)
+                .extension(componentExtension)
+                .scenarioName(scenarioName)
+                .processGroup(processGroupEnum)
+                .user(currentUser)
+                .build());
+        }
+
+        //Process assembly
+        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .user(currentUser)
+            .build();
+
+        ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(myAssembly);
+
+        assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
+        assertThat(assemblyUploadResponse.getBody(), containsString("scenario can not be published"));
+    }
+
+    private Item uploadComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        Item postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+
+        return postComponentResponse;
     }
 }

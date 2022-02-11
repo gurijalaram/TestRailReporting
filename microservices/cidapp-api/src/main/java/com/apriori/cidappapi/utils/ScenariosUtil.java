@@ -3,6 +3,7 @@ package com.apriori.cidappapi.utils;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -222,12 +223,12 @@ public class ScenariosUtil {
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-            .token(componentInfoBuilder.getUser().getToken())
-            .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
-            .body("scenario",
-                ScenarioRequest.builder()
-                    .scenarioName(componentInfoBuilder.getScenarioName())
-                    .build());
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .body("scenario",
+                    ScenarioRequest.builder()
+                        .scenarioName(componentInfoBuilder.getScenarioName())
+                        .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -236,15 +237,15 @@ public class ScenariosUtil {
      * Post to Edit a scenario/assembly (with a scenario name that already exists)
      *
      * @param componentInfoBuilder - the copy component object
-     * @param forkRequest - the request object
+     * @param forkRequest          - the request object
      * @return response object
      */
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                        .token(componentInfoBuilder.getUser().getToken())
-                        .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
-                        .body("scenario", forkRequest);
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .body("scenario", forkRequest);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -312,7 +313,8 @@ public class ScenariosUtil {
         return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
     }
 
-    /** Upload and Publish a subcomponent/assembly
+    /**
+     * Upload and Publish a subcomponent/assembly
      *
      * @param component - the copy component object
      * @return - the Item
@@ -329,6 +331,30 @@ public class ScenariosUtil {
             component.getUser());
 
         return postComponentResponse;
+    }
+
+    public ResponseWrapper<ScenarioResponse> postPublishScenarioError(Item item, UserCredentials userCredentials) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ErrorMessage.class)
+                .token(userCredentials.getToken())
+                .inlineVariables(item.getComponentIdentity(), item.getScenarioIdentity())
+                .body("scenario", PublishRequest.builder()
+                    .assignedTo(new PeopleUtil().getCurrentUser(userCredentials).getIdentity())
+                    .costMaturity("Initial".toUpperCase())
+                    .override(false)
+                    .status("New".toUpperCase())
+                    .build()
+                );
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<ScenarioResponse> uploadAndPublishComponentError(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        Item postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+
+        return postPublishScenarioError(postComponentResponse, component.getUser());
     }
 
     /**
