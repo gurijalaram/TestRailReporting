@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -34,7 +34,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private MaterialUtilizationPage materialUtilizationPage;
-    private Item cssItem;
+    private ScenarioItem cssScenarioItem;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -177,10 +177,10 @@ public class ChangeMaterialSelectionTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssItem = loginPage.login(currentUser)
+        cssScenarioItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();
@@ -192,7 +192,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssItem, currentUser, EvaluatePage.class)
+            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)

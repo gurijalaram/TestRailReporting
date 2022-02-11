@@ -45,6 +45,9 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "h4")
     private WebElement fileInputError;
 
+    @FindBy(css = ".modal-body .checkbox-icon")
+    private WebElement overrideCheckbox;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -134,6 +137,16 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     public String getFileInputError() {
         return pageUtils.waitForElementToAppear(fileInputError).getText();
+    }
+
+    /**
+     * Selects the override checkbox
+     *
+     * @return current page object
+     */
+    public FileUploadPage override() {
+        pageUtils.waitForElementAndClick(overrideCheckbox);
+        return this;
     }
 
     /**

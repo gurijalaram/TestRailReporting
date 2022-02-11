@@ -4,9 +4,10 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -30,16 +31,19 @@ public class IterationsControllerTests {
     public void getComponentsIterationsLatest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.CASTING_DIE;
         final String componentName = "Casting";
-        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".prt");
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
-        String componentIdentity = postComponentResponse.getComponentIdentity();
-        String scenarioIdentity = postComponentResponse.getScenarioIdentity();
-
-        ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(componentIdentity, scenarioIdentity);
+        ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
 
         assertThat(getComponentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

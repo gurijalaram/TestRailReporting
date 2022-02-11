@@ -12,7 +12,7 @@ import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -46,7 +46,12 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
@@ -63,7 +68,7 @@ public class ScenariosTests {
         //Rechecking the original scenario has not changed
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(
             ScenarioRepresentationBuilder.builder()
-                .item(postComponentResponse)
+                .scenarioItem(postComponentResponse)
                 .user(currentUser)
                 .build());
 
@@ -104,7 +109,7 @@ public class ScenariosTests {
                 .user(currentUser)
                 .build();
 
-        Item assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
+        ScenarioItem assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
         myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
         myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
 

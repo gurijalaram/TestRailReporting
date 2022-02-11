@@ -1,9 +1,11 @@
-package com.apriori.bcs.entity.request;
+package com.apriori.bcs.entity.request.batch;
 
+import lombok.Builder;
 import lombok.Data;
 
 @Data
-public class NewBatchProperties {
+@Builder
+public class BatchProperties {
     private String externalId;
     private String rollupName;
     private String rollupScenarioName;

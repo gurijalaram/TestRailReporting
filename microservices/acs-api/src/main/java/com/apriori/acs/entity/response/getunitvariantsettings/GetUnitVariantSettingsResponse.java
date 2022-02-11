@@ -10,54 +10,54 @@ import java.util.ArrayList;
 @Data
 @Schema(location = "GetUnitVariantSettingsResponse.json")
 public class GetUnitVariantSettingsResponse {
-    @JsonProperty
-    private UnitVariantSetting CGM;
-    @JsonProperty
-    private UnitVariantSetting CGS;
-    @JsonProperty
-    private UnitVariantSetting FPM;
-    @JsonProperty
-    private UnitVariantSetting FPS;
-    @JsonProperty
-    private UnitVariantSetting IOM;
-    @JsonProperty
-    private UnitVariantSetting IOS;
-    @JsonProperty
-    private UnitVariantSetting IPM;
-    @JsonProperty
-    private UnitVariantSetting IPS;
-    @JsonProperty
-    private UnitVariantSetting MGM;
-    @JsonProperty
-    private UnitVariantSetting MGS;
-    @JsonProperty
-    private UnitVariantSetting MKM;
-    @JsonProperty
-    private UnitVariantSetting MKS;
-    @JsonProperty
-    private UnitVariantSetting MMGM;
-    @JsonProperty
-    private UnitVariantSetting MMGS;
-    @JsonProperty
-    private UnitVariantSetting MMKS;
+    @JsonProperty("CGM")
+    private UnitVariantSetting cgm;
+    @JsonProperty("CGS")
+    private UnitVariantSetting cgs;
+    @JsonProperty("FPM")
+    private UnitVariantSetting fpm;
+    @JsonProperty("FPS")
+    private UnitVariantSetting fps;
+    @JsonProperty("IOM")
+    private UnitVariantSetting iom;
+    @JsonProperty("IOS")
+    private UnitVariantSetting ios;
+    @JsonProperty("IPM")
+    private UnitVariantSetting ipm;
+    @JsonProperty("IPS")
+    private UnitVariantSetting ips;
+    @JsonProperty("MGM")
+    private UnitVariantSetting mgm;
+    @JsonProperty("MGS")
+    private UnitVariantSetting mgs;
+    @JsonProperty("MKM")
+    private UnitVariantSetting mkm;
+    @JsonProperty("MKS")
+    private UnitVariantSetting mks;
+    @JsonProperty("MMGM")
+    private UnitVariantSetting mmgm;
+    @JsonProperty("MMGS")
+    private UnitVariantSetting mmgs;
+    @JsonProperty("MMKS")
+    private UnitVariantSetting mmks;
 
     public ArrayList<UnitVariantSetting> getAllUnitVariantSetting() {
         ArrayList<UnitVariantSetting> unitVariantSettings = new ArrayList<>();
-        unitVariantSettings.add(getCGM());
-        unitVariantSettings.add(getCGS());
-        unitVariantSettings.add(getFPM());
-        unitVariantSettings.add(getFPS());
-        unitVariantSettings.add(getIOM());
-        unitVariantSettings.add(getIOS());
-        unitVariantSettings.add(getIPM());
-        unitVariantSettings.add(getIPS());
-        unitVariantSettings.add(getMGM());
-        unitVariantSettings.add(getMGS());
-        unitVariantSettings.add(getMKM());
-        unitVariantSettings.add(getMKS());
-        unitVariantSettings.add(getMMGM());
-        unitVariantSettings.add(getMMGS());
-        unitVariantSettings.add(getMMKS());
+        unitVariantSettings.add(getCgm());
+        unitVariantSettings.add(getCgs());
+        unitVariantSettings.add(getFpm());
+        unitVariantSettings.add(getFps());
+        unitVariantSettings.add(getIom());
+        unitVariantSettings.add(getIos());
+        unitVariantSettings.add(getIpm());
+        unitVariantSettings.add(getIps());
+        unitVariantSettings.add(getMgm());
+        unitVariantSettings.add(getMgs());
+        unitVariantSettings.add(getMkm());
+        unitVariantSettings.add(getMks());
+        unitVariantSettings.add(getMmgm());
+        unitVariantSettings.add(getMmgs());
+        unitVariantSettings.add(getMmks());
         return unitVariantSettings;
     }
 }

@@ -3,13 +3,12 @@ package com.apriori.bcs.tests;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
-import com.apriori.bcs.entity.request.NewPartRequest;
+import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.bcs.utils.Constants;
 import com.apriori.database.dao.BCSDao;
 import com.apriori.database.dto.BCSBatchDTO;
@@ -51,7 +50,8 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        batch = BatchResources.createNewBatch();
+        ResponseWrapper<Object> responseWrapper = BatchResources.createBatch();
+        Batch batch = (Batch)BatchResources.createBatch().getResponseEntity();
         batchIdentity = batch.getIdentity();
         batchData = BCSBatchDTO.builder()
             .batchId(batchIdentity)
@@ -65,7 +65,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
     @AfterClass
     public static void testCleanup() {
-        BcsUtils.checkAndCancelBatch(batch);
+     //   BcsUtils.checkAndCancelBatch(batch);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class MultiPartCostingScenarioTest extends TestUtil {
     public void costParts() {
         Map<String, BCSPartBenchmarkingDTO> partsCollector = this.addPartsToBatchAndInitPartsMap();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PARTS_BY_ID, Parts.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(batch.getIdentity());
 
         int countOfAttempts = 0;
@@ -154,12 +154,10 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
         for (int i = 0; i < numberOfParts; i++) {
             NewPartRequest newPartRequest = this.getNewPartRequestAndOverrideByPartData(
-                BatchPartResources.getNewPartRequest()
+                BatchPartResources.newPartRequest()
             );
 
-            Part batchPart = (Part) BatchPartResources.createNewBatchPart(newPartRequest,
-                batchIdentity
-            ).getResponseEntity();
+            Part batchPart = (Part) BatchPartResources.createNewBatchPartByID(batchIdentity).getResponseEntity();
 
             BCSPartBenchmarkingDTO benchData = this.convertPartToPartBenchDTOAndAddRequestData(batchPart, newPartRequest);
 

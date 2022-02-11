@@ -14,7 +14,7 @@ import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -41,16 +41,15 @@ public class ScenariosUtil {
     /**
      * GET scenario representation
      *
-     * @param transientState    - the impermanent state
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
+     * @param scenarioItem    - the scenario object
+     * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(String transientState, String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
         long START_TIME = System.currentTimeMillis() / 1000;
@@ -64,7 +63,7 @@ public class ScenariosUtil {
             scenarioRepresentation = HTTPRequest.build(requestEntity).get();
             scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
             waitSeconds(POLLING_INTERVAL);
-        } while (scenarioState.equals(transientState.toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return scenarioRepresentation;
     }
@@ -77,10 +76,10 @@ public class ScenariosUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(Item cssItem, String lastAction, boolean published, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem cssScenarioItem, String lastAction, boolean published, UserCredentials userCredentials) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentId = cssItem.getComponentIdentity();
-        String scenarioId = cssItem.getScenarioIdentity();
+        String componentId = cssScenarioItem.getComponentIdentity();
+        String scenarioId = cssScenarioItem.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -136,8 +135,8 @@ public class ScenariosUtil {
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioRepresentationBuilder scenarioRepresentationBuilder) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentId = scenarioRepresentationBuilder.getItem().getComponentIdentity();
-        String scenarioId = scenarioRepresentationBuilder.getItem().getScenarioIdentity();
+        String componentId = scenarioRepresentationBuilder.getScenarioItem().getComponentIdentity();
+        String scenarioId = scenarioRepresentationBuilder.getScenarioItem().getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -154,14 +153,13 @@ public class ScenariosUtil {
     /**
      * POST to cost a component
      *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
+     * @param scenarioItem - the scenario object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> postCostComponent(String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ScenarioResponse> postCostComponent(ScenarioItem scenarioItem) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentIdentity, scenarioIdentity)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)
                         .batchSize(458)
@@ -196,7 +194,7 @@ public class ScenariosUtil {
      * @param componentInfoBuilder - the cost component object
      * @return list of scenario items
      */
-    public List<Item> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
@@ -321,12 +319,11 @@ public class ScenariosUtil {
     /**
      * POST to publish scenario
      *
-     * @param item            - the item object
-     * @param componentId     - the component id
-     * @param scenarioId      - the scenario id
+     * @param scenarioItem    - the scenario object
      * @param userCredentials - the user credentials
      * @return scenarioresponse object
      */
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials) {
     //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
     public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
         publishScenario(item, userCredentials, ScenarioResponse.class);
@@ -358,7 +355,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(userCredentials.getToken())
-                .inlineVariables(item.getComponentIdentity(), item.getScenarioIdentity())
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
                     .assignedTo(new PeopleUtil().getCurrentUser(userCredentials).getIdentity())
                     .costMaturity("Initial".toUpperCase())
