@@ -49,7 +49,13 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
@@ -87,7 +93,13 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
@@ -143,7 +155,13 @@ public class ReCostScenarioTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

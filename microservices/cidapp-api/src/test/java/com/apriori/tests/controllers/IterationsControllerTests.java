@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.ScenarioItem;
@@ -30,11 +31,17 @@ public class IterationsControllerTests {
     public void getComponentsIterationsLatest() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.CASTING_DIE;
         final String componentName = "Casting";
-        File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".prt");
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".prt");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
         ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
 

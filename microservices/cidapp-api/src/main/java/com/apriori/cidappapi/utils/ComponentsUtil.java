@@ -2,6 +2,7 @@ package com.apriori.cidappapi.utils;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
@@ -30,27 +31,25 @@ public class ComponentsUtil {
     /**
      * POST new component
      *
-     * @param componentName   - the part name
-     * @param scenarioName    - the scenario name
-     * @param resourceFile    - the resource file
-     * @param userCredentials - the user credentials
+     * @param componentBuilder - the component object
+     * @param resourceFile     - the resource file
      * @return Item
      */
-    public ScenarioItem postComponentQueryCSS(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder, File resourceFile) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
-                .formParams(new FormParams().use("filename", componentName)
+                .formParams(new FormParams().use("filename", componentBuilder.getComponentName())
                     .use("override", "false")
-                    .use("scenarioName", scenarioName))
-                .token(userCredentials.getToken());
+                    .use("scenarioName", componentBuilder.getScenarioName()))
+                .token(componentBuilder.getUser().getToken());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
-        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
+        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
 
         return scenarioItemResponse.get(0);
     }

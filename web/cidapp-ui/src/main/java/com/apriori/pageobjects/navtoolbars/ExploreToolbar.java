@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
@@ -119,7 +120,13 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ScenarioItem component = new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
+        ScenarioItem component = new ComponentsUtil().postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(userCredentials)
+                .build(),
+            resourceFile);
         return navigateToScenario(component);
     }
 
@@ -133,7 +140,12 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public ScenarioItem uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
+        return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(userCredentials)
+                .build(),
+            resourceFile);
     }
 
     /**

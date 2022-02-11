@@ -9,11 +9,12 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.File;
+
 @Builder
 @Data
 public class ComponentInfoBuilder {
     private final String componentName;
-    private final String extension;
     private final String scenarioName;
     private String componentId;
     private String scenarioId;

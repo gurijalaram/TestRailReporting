@@ -314,19 +314,18 @@ public class ScenariosUtil {
 
     /** Upload and Publish a subcomponent/assembly
      *
-     * @param component - the copy component object
+     * @param componentBuilder - the copy component object
      * @return - the Item
      */
-    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder componentBuilder) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
 
-        ScenarioItem postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(componentBuilder, resourceFile);
 
         postPublishScenario(postComponentResponse,
             postComponentResponse.getComponentIdentity(),
             postComponentResponse.getScenarioIdentity(),
-            component.getUser());
+            componentBuilder.getUser());
 
         return postComponentResponse;
     }
