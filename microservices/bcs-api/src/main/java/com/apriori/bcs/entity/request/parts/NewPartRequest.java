@@ -1,4 +1,4 @@
-package com.apriori.bcs.entity.request;
+package com.apriori.bcs.entity.request.parts;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonSetter;

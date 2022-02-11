@@ -6,26 +6,34 @@ import com.apriori.utils.properties.PropertiesContext;
 public enum BCSAPIEnum implements ExternalEndpointEnum {
 
     // REPORTS
-    GET_CUSTOMERS(""),
-    GET_REPORTS("reports"),
-    GET_REPORT_BY_ID("reports/%s"),
-    GET_REPORT_EXPORT_BY_ID("reports/%s/export"),
-    GET_REPORT_TEMPLATES("report-templates"),
-    GET_REPORT_TEMPLATES_PART_REPORT("report-templates&type[EQ]=PART_REPORT"),
-    POST_REPORTS("reports"),
+    REPORTS("reports"),
+    CUSTOMERS(""),
+    REPORT_BY_ID("reports/%s"),
+    REPORT_EXPORT_BY_ID("reports/%s/export"),
+    REPORT_TEMPLATES("report-templates"),
+    REPORT_TEMPLATES_PART_REPORT("report-templates&type[EQ]=PART_REPORT"),
 
     // BATCHES
-    GET_BATCH_PARTS_BY_ID("batches/%s/parts"),
-    GET_BATCH_PARTS("batches/parts"),
-    GET_BATCH_BY_ID("batches/%s"),
-    GET_BATCHES("batches"),
-    GET_BATCH_PART_BY_BATCH_PART_IDS("batches/%sparts/%s"),
-    GET_RESULTS_BY_BATCH_PART_IDS("batches/%sparts/%sresults"),
-    GET_PART_REPORT_BY_BATCH_PART_IDS("batches/%sparts/%spart-report"),
-    POST_START_COSTING_BY_ID("batches/%s/start-costing"),
-    POST_CANCEL_COSTING_BY_ID("batches/%s/cancel"),
-    POST_BATCHES("batches"),
-    POST_BATCH_PARTS_BY_ID("batches/%sparts"),
+    BATCHES("batches"),
+    BATCH_BY_ID("batches/%s"),
+
+    // PARTS
+    BATCH_PARTS_BY_ID("batches/%s/parts"),
+    BATCH_PARTS("batches/parts"),
+    BATCH_PART_BY_BATCH_PART_IDS("batches/%s/parts/%s"),
+    RESULTS_BY_BATCH_PART_IDS("batches/%s/parts/%s/results"),
+    PART_REPORT_BY_BATCH_PART_IDS("batches/%s/parts/%s/part-report"),
+
+    //COSTING
+    START_COSTING_BY_ID("batches/%s/start-costing"),
+    CANCEL_COSTING_BY_ID("batches/%s/cancel"),
+
+    //CUSTOMERS
+    BATCH_PARTS_BY_CUSTOMER_ID("%s/batches/%s/parts"),
+    BATCH_PART_BY_CUSTOMER_BATCH_PART_IDS("%s/batches/%s/parts/%s"),
+    RESULTS_BY_CUSTOMER_BATCH_PART_IDS("%s/batches/%s/parts/%s/results"),
+    PART_REPORT_BY_CUSTOMER_BATCH_PART_IDS("%s/batches/%s/parts/%s/part-report"),
+    BATCH_PARTS_BY_CUSTOMER_BATCH_ID("%s/batches/%s/parts"),
 
     GET_VPEs("virtual-production-environments"),
     GET_DIGITAL_FACTORIES("digital-factories"),
