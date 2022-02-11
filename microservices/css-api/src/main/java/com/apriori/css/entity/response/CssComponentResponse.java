@@ -20,5 +20,5 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CssComponentResponse extends Pagination {
-    private List<ScenarioItem> scenarioItems;
+    private List<ScenarioItem> items;
 }

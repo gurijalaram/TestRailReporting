@@ -77,7 +77,7 @@ public class CssComponent {
                 Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
-                final Optional<List<ScenarioItem>> items = Optional.of(scenarioRepresentation.getResponseEntity().getScenarioItems());
+                final Optional<List<ScenarioItem>> items = Optional.of(scenarioRepresentation.getResponseEntity().getItems());
 
                 if (items.get().size() > 0) {
 
@@ -96,9 +96,9 @@ public class CssComponent {
                         Assert.assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                         if (!allowUnknownParts) {
-                            return scenarioRepresentation.getResponseEntity().getScenarioItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
+                            return scenarioRepresentation.getResponseEntity().getItems().stream().filter(x -> !x.getComponentType().equals("UNKNOWN")).collect(Collectors.toList());
                         }
-                        return scenarioRepresentation.getResponseEntity().getScenarioItems();
+                        return scenarioRepresentation.getResponseEntity().getItems();
                     }
 
                     if (distinctItem.get()
