@@ -158,6 +158,7 @@ public class ScenariosTests {
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(myAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
+        // TODO: 11/02/2022 the scenario name can be passed into the assertion below to capture the full error message
         assertThat(assemblyUploadResponse.getBody(), containsString("scenario can not be published"));
     }
 

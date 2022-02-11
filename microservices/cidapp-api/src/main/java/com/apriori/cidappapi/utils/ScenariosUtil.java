@@ -286,34 +286,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * POST to publish scenario
-     *
-     * @param item            - the item
-     * @param componentId     - the component id
-     * @param scenarioId      - the scenario id
-     * @param userCredentials - the user credentials
-     * @return scenarioresponse object
-     */
-    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
-                .token(userCredentials.getToken())
-                .inlineVariables(componentId, scenarioId)
-                .body("scenario", PublishRequest.builder()
-                    .assignedTo(new PeopleUtil().getCurrentUser(userCredentials).getIdentity())
-                    .costMaturity("Initial".toUpperCase())
-                    .override(false)
-                    .status("New".toUpperCase())
-                    .build()
-                );
-        HTTPRequest.build(requestEntity).post();
-
-        return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
-    }
-
-    /**
      * Upload and Publish a subcomponent/assembly
      *
      * @param component - the copy component object
@@ -322,8 +294,7 @@ public class ScenariosUtil {
     public Item uploadAndPublishComponent(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
-        Item postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
 
         postPublishScenario(postComponentResponse,
             postComponentResponse.getComponentIdentity(),
@@ -333,9 +304,59 @@ public class ScenariosUtil {
         return postComponentResponse;
     }
 
+    /**
+     * Upload component expecting an error
+     *
+     * @param component - the component
+     * @return - scenario object
+     */
+    public ResponseWrapper<ScenarioResponse> uploadAndPublishComponentError(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        Item postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
+
+        return postPublishScenarioError(postComponentResponse, component.getUser());
+    }
+
+    /**
+     * POST to publish scenario
+     *
+     * @param item            - the item object
+     * @param componentId     - the component id
+     * @param scenarioId      - the scenario id
+     * @param userCredentials - the user credentials
+     * @return scenarioresponse object
+     */
+    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(Item item, String componentId, String scenarioId, UserCredentials userCredentials) {
+        publishScenario(item, userCredentials, ScenarioResponse.class);
+
+        return getScenarioRepresentation(item, "PUBLISH", true, userCredentials);
+    }
+
+    /**
+     * POST to publish scenario expecting error
+     *
+     * @param item            - the item object
+     * @param userCredentials - the user credentials
+     * @return scenario object
+     */
     public ResponseWrapper<ScenarioResponse> postPublishScenarioError(Item item, UserCredentials userCredentials) {
+        return publishScenario(item, userCredentials, ErrorMessage.class);
+    }
+
+    /**
+     * POST to publish scenario
+     *
+     * @param item            - the item object
+     * @param userCredentials - the user credentials
+     * @param klass           - the  class
+     * @param <T>             - the generic return type
+     * @return generic object
+     */
+    private <T> ResponseWrapper<ScenarioResponse> publishScenario(Item item, UserCredentials userCredentials, Class<T> klass) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ErrorMessage.class)
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(userCredentials.getToken())
                 .inlineVariables(item.getComponentIdentity(), item.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
@@ -345,16 +366,8 @@ public class ScenariosUtil {
                     .status("New".toUpperCase())
                     .build()
                 );
+
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    public ResponseWrapper<ScenarioResponse> uploadAndPublishComponentError(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        Item postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component.getComponentName(), component.getScenarioName(), resourceFile, component.getUser());
-
-        return postPublishScenarioError(postComponentResponse, component.getUser());
     }
 
     /**
