@@ -46,7 +46,7 @@ public class FileUploadAPI {
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+        ScenarioItem scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
                 .user(currentUser)
@@ -57,8 +57,8 @@ public class FileUploadAPI {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentId(scenarioItem.getComponentIdentity())
+                .scenarioId(scenarioItem.getScenarioIdentity())
                 .processGroup(pg)
                 .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
                 .mode(mode)
@@ -66,7 +66,7 @@ public class FileUploadAPI {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> publishResponse = scenariosUtil.postPublishScenario(componentResponse, componentResponse.getComponentIdentity(), componentResponse.getScenarioIdentity(), currentUser);
+        ResponseWrapper<ScenarioResponse> publishResponse = scenariosUtil.postPublishScenario(scenarioItem, currentUser);
 
         assertThat(publishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
         assertThat(publishResponse.getResponseEntity().getPublished(), is(true));

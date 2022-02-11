@@ -222,12 +222,12 @@ public class ScenariosUtil {
     public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-            .token(componentInfoBuilder.getUser().getToken())
-            .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
-            .body("scenario",
-                ScenarioRequest.builder()
-                    .scenarioName(componentInfoBuilder.getScenarioName())
-                    .build());
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .body("scenario",
+                    ScenarioRequest.builder()
+                        .scenarioName(componentInfoBuilder.getScenarioName())
+                        .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -236,15 +236,15 @@ public class ScenariosUtil {
      * Post to Edit a scenario/assembly (with a scenario name that already exists)
      *
      * @param componentInfoBuilder - the copy component object
-     * @param forkRequest - the request object
+     * @param forkRequest          - the request object
      * @return response object
      */
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                        .token(componentInfoBuilder.getUser().getToken())
-                        .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
-                        .body("scenario", forkRequest);
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .body("scenario", forkRequest);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -287,19 +287,16 @@ public class ScenariosUtil {
     /**
      * POST to publish scenario
      *
-     * @param scenarioItem            - the item
-     * @param componentId     - the component id
-     * @param scenarioId      - the scenario id
+     * @param scenarioItem    - the scenario object
      * @param userCredentials - the user credentials
      * @return scenarioresponse object
      */
-    //todo: make this method just user the item object alone as it contains componentId and scenarioId already (or some other type of builder that has all this information)
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, String componentId, String scenarioId, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials) {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
                 .token(userCredentials.getToken())
-                .inlineVariables(componentId, scenarioId)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
                     .assignedTo(new PeopleUtil().getCurrentUser(userCredentials).getIdentity())
                     .costMaturity("Initial".toUpperCase())
@@ -312,7 +309,8 @@ public class ScenariosUtil {
         return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
     }
 
-    /** Upload and Publish a subcomponent/assembly
+    /**
+     * Upload and Publish a subcomponent/assembly
      *
      * @param componentBuilder - the copy component object
      * @return - the Item
@@ -323,8 +321,6 @@ public class ScenariosUtil {
         ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(componentBuilder, resourceFile);
 
         postPublishScenario(postComponentResponse,
-            postComponentResponse.getComponentIdentity(),
-            postComponentResponse.getScenarioIdentity(),
             componentBuilder.getUser());
 
         return postComponentResponse;
