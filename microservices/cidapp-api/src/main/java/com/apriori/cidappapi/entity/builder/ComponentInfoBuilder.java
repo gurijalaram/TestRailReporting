@@ -18,10 +18,6 @@ public class ComponentInfoBuilder {
     private String componentId;
     private String scenarioId;
     private final ProcessGroupEnum processGroup;
-    /**
-     * Setting to default as this field is currently not used in some tests. Sometimes a component can be costed without changing the fields,
-     * so it is very possible that every field in this pojo should have a default value
-     */
     @Builder.Default
     @JsonProperty("vpeName")
     private final DigitalFactoryEnum digitalFactory = DigitalFactoryEnum.APRIORI_USA;
