@@ -1,8 +1,7 @@
 package com.apriori.newcustomer;
 
 import com.apriori.customeradmin.NavToolbar;
-import com.apriori.utils.FileImport;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.*;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
@@ -14,7 +13,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,6 +29,12 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
 
     @FindBy(css = "ul[class='list-group list-group-flush'] li")
     private List<WebElement> submodules;
+
+    @FindBy(className = "Toastify__toast-container")
+    private WebElement errorMessageContainer;
+
+    @FindBy(css = "[class='Toastify__toast-body']")
+    private WebElement toastify;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -105,5 +113,17 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
         String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/sites-and-licenses";
         driver.navigate().to(String.format(url, customer));
         return new SitesLicensesPage(driver);
+    }
+
+    public String getErrorMessage() {
+        String message = pageUtils.waitForElementToAppear(toastify).getAttribute("textContent");
+        pageUtils.waitForElementsToNotAppear(By.cssSelector("[class='Toastify__toast-body']"));
+        return message;
+    }
+
+    public <T> T uploadLicense(String licenseFile, String customerName, String siteId, String subLicenseId, Class<T> klass) {
+        InputStream license = new ByteArrayInputStream(String.format(licenseFile, customerName, siteId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
+        fileImport.importFile(FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest" +new GenerateStringUtil().getRandomNumbers() + ".xml"));
+        return PageFactory.initElements(driver, klass);
     }
 }
