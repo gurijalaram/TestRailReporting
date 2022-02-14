@@ -84,7 +84,6 @@ public class CasLicenseTests {
         String userName = generateStringUtil.generateUserName();
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
-        String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
@@ -103,16 +102,11 @@ public class CasLicenseTests {
         ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
-
-        ResponseWrapper<SubLicenses> subLicenses = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SUBLICENSES_BY_LICENSE_ID, SubLicenses.class)
-                .token(token)
-                .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)).get();
-
-        String subLicenseIdentity = subLicenses.getResponseEntity().getItems().get(1).getIdentity();
-        LocalDate expireDate = subLicenses.getResponseEntity().getItems().get(1).getExpiresAt();
+        String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
+        LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(0).getExpiresAt();
 
         ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
@@ -139,7 +133,6 @@ public class CasLicenseTests {
         String userName = generateStringUtil.generateUserName();
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
-        String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
@@ -158,7 +151,7 @@ public class CasLicenseTests {
         ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, licenseId, subLicenseId);
+        ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
@@ -166,7 +159,7 @@ public class CasLicenseTests {
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity)).get();
 
-        String subLicenseIdentity = subLicenses.getResponseEntity().getItems().get(1).getIdentity();
+        String subLicenseIdentity = subLicenses.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<AssociationUser> associationUserResponse = casTestUtil.addSubLicenseAssociationUser(AssociationUser.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 

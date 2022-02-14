@@ -1,7 +1,8 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -27,6 +28,9 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(css = "[id='qa-sub-header-new-dropdown']")
     private WebElement newButton;
+
+    @FindBy(css = "[id='qa-sub-header-new-component']")
+    private WebElement componentButton;
 
     @FindBy(css = "[id='qa-sub-header-import-dropdown']")
     private WebElement importButton;
@@ -116,7 +120,13 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        Item component = new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
+        ScenarioItem component = new ComponentsUtil().postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(userCredentials)
+                .build(),
+            resourceFile);
         return navigateToScenario(component);
     }
 
@@ -129,8 +139,13 @@ public class ExploreToolbar extends MainNavBar {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public Item uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new ComponentsUtil().postComponentQueryCSS(componentName, scenarioName, resourceFile, userCredentials);
+    public ScenarioItem uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+        return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(userCredentials)
+                .build(),
+            resourceFile);
     }
 
     /**
@@ -140,9 +155,15 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath     - location of the file
      * @return new page object
      */
+    // TODO: 08/02/2022 cn - condition to be removed once we sort out branching
     public FileUploadPage uploadComponent(String scenarioName, File filePath) {
-        pageUtils.waitForElementAndClick(importButton);
-        pageUtils.waitForElementAndClick(cadButton);
+        if (PropertiesContext.get("${env}.name").equals("qa-cid-perf")) {
+            pageUtils.waitForElementAndClick(newButton);
+            pageUtils.waitForElementAndClick(componentButton);
+        } else {
+            pageUtils.waitForElementAndClick(importButton);
+            pageUtils.waitForElementAndClick(cadButton);
+        }
         return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
     }
 
@@ -152,7 +173,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param cssComponent - the CSS Component
      * @return a new page object
      */
-    public EvaluatePage navigateToScenario(Item cssComponent) {
+    public EvaluatePage navigateToScenario(ScenarioItem cssComponent) {
         driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }

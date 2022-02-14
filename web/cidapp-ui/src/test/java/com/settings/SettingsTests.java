@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
-import com.apriori.cidappapi.utils.ResetSettingsUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
@@ -45,14 +45,14 @@ public class SettingsTests extends TestBase {
     private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
-    private Item cssItem;
+    private ScenarioItem cssScenarioItem;
     private SecondaryPage secondaryPage;
     private MaterialSelectorPage materialSelectorPage;
 
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new ResetSettingsUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSettings(currentUser);
         }
     }
 
@@ -101,17 +101,17 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssItem = loginPage.login(currentUser)
+        cssScenarioItem = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
             .submit(ExplorePage.class)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
             .costScenario()
             .publishScenario()
-            .publish(cssItem, currentUser, EvaluatePage.class);
+            .publish(cssScenarioItem, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }

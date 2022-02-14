@@ -1,4 +1,4 @@
-package com.apriori.bcs.entity.request;
+package com.apriori.bcs.entity.request.reports;
 
 public class NewReportRequest {
     private String externalId;

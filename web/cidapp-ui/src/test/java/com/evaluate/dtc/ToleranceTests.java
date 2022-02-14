@@ -3,8 +3,8 @@ package com.evaluate.dtc;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cidappapi.utils.ResetSettingsUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -43,7 +43,7 @@ public class ToleranceTests extends TestBase {
     private ToleranceDefaultsPage toleranceDefaultsPage;
 
     private File resourceFile;
-    private Item cssItem;
+    private ScenarioItem cssScenarioItem;
 
     public ToleranceTests() {
         super();
@@ -52,7 +52,7 @@ public class ToleranceTests extends TestBase {
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new ResetSettingsUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSettings(currentUser);
         }
     }
 
@@ -652,14 +652,14 @@ public class ToleranceTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
 
         loginPage = new CidAppLoginPage(driver);
-        cssItem = loginPage.login(testUser1)
+        cssScenarioItem = loginPage.login(testUser1)
             .openSettings()
             .goToToleranceTab()
             .selectCad()
             .submit(ExplorePage.class)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
@@ -668,7 +668,7 @@ public class ToleranceTests extends TestBase {
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
         evaluatePage.publishScenario()
-            .publish(cssItem, currentUser, EvaluatePage.class)
+            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
             .logout()
             .login(testUser2)
             .selectFilter("Public")

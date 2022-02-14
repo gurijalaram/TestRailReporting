@@ -464,6 +464,30 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Gets cost result - result is returned as a double with strings and special characters parsed
+     *
+     * @param label - the label
+     * @return double
+     */
+    public double getComponentResults(String label) {
+        By costResult = By.xpath(String.format("//div[@class='sub-components-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Checks the value of specified cost
+     *
+     * @param label - the label
+     * @param value - the value
+     * @return true/false
+     */
+    public boolean isComponentResultDisplayed(String label, String value) {
+        By costResult = By.xpath(String.format("//div[@class='sub-components-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
+        pageUtils.waitForElementToAppear(costResult);
+        return driver.findElement(costResult).isDisplayed();
+    }
+
+    /**
      * Gets the dfm risk score
      *
      * @return string
@@ -588,17 +612,6 @@ public class EvaluatePage extends EvaluateToolbar {
     public String getSelectedVPE() {
         pageUtils.waitForElementToAppear(selectedVPE);
         return selectedVPE.getText();
-    }
-
-    /**
-     * Gets component result - result is returned as a double with strings and special characters parsed
-     *
-     * @param label - the label
-     * @return double
-     */
-    public String getComponentResults(String label) {
-        By componentResult = By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='property-value']", label));
-        return pageUtils.waitForElementToAppear(componentResult).getAttribute("textContent");
     }
 
     /**

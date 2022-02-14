@@ -2,14 +2,14 @@ package com.apriori.cidappapi.utils;
 
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
@@ -31,42 +31,27 @@ public class ComponentsUtil {
     /**
      * POST new component
      *
-     * @param componentName   - the part name
-     * @param scenarioName    - the scenario name
-     * @param resourceFile    - the resource file
-     * @param userCredentials - the user credentials
+     * @param componentBuilder - the component object
+     * @param resourceFile     - the resource file
      * @return Item
      */
-    public Item postComponentQueryCSS(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder, File resourceFile) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
-                .formParams(new FormParams().use("filename", componentName)
+                .formParams(new FormParams().use("filename", componentBuilder.getComponentName())
                     .use("override", "false")
-                    .use("scenarioName", scenarioName))
-                .token(userCredentials.getToken());
+                    .use("scenarioName", componentBuilder.getScenarioName()))
+                .token(componentBuilder.getUser().getToken());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
-        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, scenarioName),
+        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(componentName, scenarioName, userCredentials);
+        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
 
-        return itemResponse.get(0);
-    }
-
-    /**
-     * GET css component
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param scenarioState   - the scenario state
-     * @param userCredentials - user credentials
-     * @return list of Item
-     */
-    public List<Item> getCssComponent(String componentName, String scenarioName, ScenarioStateEnum scenarioState, UserCredentials userCredentials) {
-        return new CssComponent().getCssComponent(componentName, scenarioName, userCredentials, scenarioState);
+        return scenarioItemResponse.get(0);
     }
 
     /**
@@ -76,7 +61,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<GetComponentResponse> getComponents() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENTS, GetComponentResponse.class);
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, GetComponentResponse.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -84,13 +69,13 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity
      *
-     * @param componentIdentity - the identity
+     * @param scenarioItem - the scenario object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(String componentIdentity) {
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ScenarioItem scenarioItem) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(componentIdentity);
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
+                .inlineVariables(scenarioItem.getComponentIdentity());
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -98,14 +83,15 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity and component
      *
-     * @param componentIdentity - the component identity
-     * @param scenarioIdentity  - the scenario identity
+     * @param scenarioItem    - the scenario item object
+     * @param userCredentials - the user credentials
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(String componentIdentity, String scenarioIdentity) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ScenarioItem scenarioItem, UserCredentials userCredentials) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .inlineVariables(componentIdentity, scenarioIdentity);
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
+                .token(userCredentials.getToken());
 
         return checkNonNullIterationLatest(requestEntity);
     }
