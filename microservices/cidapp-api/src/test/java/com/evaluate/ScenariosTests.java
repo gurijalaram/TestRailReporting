@@ -144,7 +144,7 @@ public class ScenariosTests {
 
         //Build & process sub component object based on array list of names
         for (String subComponentName : subComponentNames) {
-            uploadComponent(ComponentInfoBuilder.builder()
+            scenariosUtil.uploadComponent(ComponentInfoBuilder.builder()
                 .componentName(subComponentName)
                 .extension(componentExtension)
                 .scenarioName(scenarioName)
@@ -166,14 +166,5 @@ public class ScenariosTests {
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
         assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));
-    }
-
-    private ScenarioItem uploadComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        ScenarioItem postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
-
-        return postComponentResponse;
     }
 }

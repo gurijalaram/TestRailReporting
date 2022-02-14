@@ -257,7 +257,6 @@ public class ScenariosUtil {
         return postCostingTemplate(componentInfoBuilder);
     }
 
-
     /**
      * POST costing template
      *
@@ -290,9 +289,7 @@ public class ScenariosUtil {
      * @return - the Item
      */
     public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
+        ScenarioItem postComponentResponse = uploadComponent(component);
 
         postPublishScenario(postComponentResponse, component.getUser());
 
@@ -306,11 +303,24 @@ public class ScenariosUtil {
      * @return - scenario object
      */
     public ResponseWrapper<ScenarioResponse> uploadAndPublishComponentError(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
+        ScenarioItem postComponentResponse = uploadComponent(component);
 
         return publishScenario(postComponentResponse, component.getUser(), ErrorMessage.class);
+    }
+
+    /**
+     * Upload a component
+     *
+     * @param component - the component
+     * @return - scenario object
+     */
+    public ScenarioItem uploadComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        ScenarioItem postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
+
+        return postComponentResponse;
     }
 
     /**
