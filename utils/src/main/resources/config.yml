@@ -209,6 +209,9 @@ qa-cid-perf:
     second_page_starting_range_number: 26
     default_connector: Automation - NA - WC
 
+  cir:
+    vm_url: https://conqbaci02/jasperserver-pro/
+
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
 
