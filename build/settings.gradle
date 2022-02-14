@@ -15,7 +15,7 @@ project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 project(':database').projectDir = file('../db')
 
-final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api", "integration"]
+final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cid-api", "cidapp-api", "cir-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api", "integration"]
 final String[] webModules = ["auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
@@ -39,7 +39,6 @@ if (configuration != null) {
 
 } else {
 
-
     //Microservices
     include(':microservices:acs-api')
     include(':microservices:ats-api')
@@ -47,6 +46,7 @@ if (configuration != null) {
     include(':microservices:cds-api')
     include(':microservices:cid-api')
     include(':microservices:cidapp-api')
+    include(':microservices:cir-api')
     include(':microservices:css-api')
     include(':microservices:bcs-api')
     include(':microservices:edc-api')
@@ -62,6 +62,7 @@ if (configuration != null) {
     project(':microservices:cas-api').projectDir = file('../microservices/cas-api')
     project(':microservices:cid-api').projectDir = file('../microservices/cid-api')
     project(':microservices:cidapp-api').projectDir = file('../microservices/cidapp-api')
+    project(':microservices:cir-api').projectDir = file('../microservices/cir-api')
     project(':microservices:css-api').projectDir = file('../microservices/css-api')
     project(':microservices:cds-api').projectDir = file('../microservices/cds-api')
     project(':microservices:bcs-api').projectDir = file('../microservices/bcs-api')
@@ -97,4 +98,5 @@ void includeProject(final String includePath, final String filePath) {
     include(includePath)
     project(includePath).projectDir = file(filePath)
 }
+
 
