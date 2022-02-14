@@ -17,7 +17,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 public class CustomerResources {
 
     public static <T> ResponseWrapper<T> getCustomers() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_CUSTOMERS, Customers.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.CUSTOMERS, Customers.class);
 
         return HTTPRequest.build(requestEntity).get();
     }

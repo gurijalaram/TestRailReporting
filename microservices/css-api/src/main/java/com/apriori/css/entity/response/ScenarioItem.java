@@ -21,7 +21,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Item {
+public class ScenarioItem {
     private String componentConfigurationName;
     private String subjectIdentity;
     private List<String> permissions;
