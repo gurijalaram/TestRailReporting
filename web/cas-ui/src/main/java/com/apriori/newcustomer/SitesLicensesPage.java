@@ -1,7 +1,9 @@
 package com.apriori.newcustomer;
 
 import com.apriori.customeradmin.NavToolbar;
-import com.apriori.utils.*;
+import com.apriori.utils.FileImport;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
 import org.openqa.selenium.By;
@@ -74,6 +76,7 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
 
     /**
      * Select card
+     *
      * @param fileName - file name
      * @return current page object
      */
@@ -96,6 +99,7 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
 
     /**
      * Get list of sub modules
+     *
      * @return list
      */
     public List<String> getListOfSubModules() {
@@ -105,7 +109,7 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     /**
      * Retrieves CustomerProfilePage for customer via URL and returns Page object.
      *
-     * @param driver - WebDriver
+     * @param driver   - WebDriver
      * @param customer - Customer ID
      * @return SitesLicensesPage
      */
@@ -115,15 +119,18 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
         return new SitesLicensesPage(driver);
     }
 
-    public String getErrorMessage() {
-        String message = pageUtils.waitForElementToAppear(toastify).getAttribute("textContent");
-        pageUtils.waitForElementsToNotAppear(By.cssSelector("[class='Toastify__toast-body']"));
-        return message;
-    }
-
+    /**
+     * @param licenseFile
+     * @param customerName
+     * @param siteId
+     * @param subLicenseId
+     * @param klass
+     * @param <T>
+     * @return
+     */
     public <T> T uploadLicense(String licenseFile, String customerName, String siteId, String subLicenseId, Class<T> klass) {
         InputStream license = new ByteArrayInputStream(String.format(licenseFile, customerName, siteId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
-        fileImport.importFile(FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest" +new GenerateStringUtil().getRandomNumbers() + ".xml"));
+        fileImport.importFile(FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest.xml"));
         return PageFactory.initElements(driver, klass);
     }
 }
