@@ -3,6 +3,7 @@ package com.apriori.cidappapi.utils;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
@@ -256,7 +257,6 @@ public class ScenariosUtil {
         return postCostingTemplate(componentInfoBuilder);
     }
 
-
     /**
      * POST costing template
      *
@@ -283,16 +283,71 @@ public class ScenariosUtil {
     }
 
     /**
+     * Upload and Publish a subcomponent/assembly
+     *
+     * @param component - the copy component object
+     * @return - the Item
+     */
+    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
+        ScenarioItem postComponentResponse = uploadComponent(component);
+
+        postPublishScenario(postComponentResponse, component.getUser());
+
+        return postComponentResponse;
+    }
+
+    /**
+     * Upload component expecting an error
+     *
+     * @param component - the component
+     * @return - scenario object
+     */
+    public ResponseWrapper<ScenarioResponse> uploadAndPublishComponentError(ComponentInfoBuilder component) {
+        ScenarioItem postComponentResponse = uploadComponent(component);
+
+        return publishScenario(postComponentResponse, component.getUser(), ErrorMessage.class);
+    }
+
+    /**
+     * Upload a component
+     *
+     * @param component - the component
+     * @return - scenario object
+     */
+    public ScenarioItem uploadComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        ScenarioItem postComponentResponse;
+        postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
+
+        return postComponentResponse;
+    }
+
+    /**
      * POST to publish scenario
      *
      * @param scenarioItem    - the scenario object
      * @param userCredentials - the user credentials
-     * @return scenarioresponse object
+     * @return - scenarioResponse object
      */
     public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+        publishScenario(scenarioItem, userCredentials, ScenarioResponse.class);
 
+        return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
+    }
+
+    /**
+     * POST to publish scenario
+     *
+     * @param scenarioItem    - the item object
+     * @param userCredentials - the user credentials
+     * @param klass           - the  class
+     * @param <T>             - the generic return type
+     * @return generic object
+     */
+    private <T> ResponseWrapper<ScenarioResponse> publishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials, Class<T> klass) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(userCredentials.getToken())
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
@@ -302,26 +357,8 @@ public class ScenariosUtil {
                     .status("New".toUpperCase())
                     .build()
                 );
-        HTTPRequest.build(requestEntity).post();
 
-        return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
-    }
-
-    /**
-     * Upload and Publish a subcomponent/assembly
-     *
-     * @param componentBuilder - the copy component object
-     * @return - the Item
-     */
-    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder componentBuilder) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
-
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(componentBuilder, resourceFile);
-
-        postPublishScenario(postComponentResponse,
-            componentBuilder.getUser());
-
-        return postComponentResponse;
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
