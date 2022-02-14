@@ -2,7 +2,6 @@ package com.apriori.utils;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
@@ -326,8 +325,6 @@ public class FileUploadResources {
      * @param imageResponse - image to validate
      */
     public void imageValidation(String imageResponse) {
-        assertThat(imageResponse, is(notNullValue()));
-
         assertThat(Base64.isBase64(imageResponse), is(equalTo(true)));
     }
 

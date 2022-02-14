@@ -4,7 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.cidappapi.utils.ResetSettingsUtil;
+import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
@@ -46,7 +46,7 @@ public class ThreadTests extends TestBase {
     @After
     public void resetAllSettings() {
         if (currentUser != null) {
-            new ResetSettingsUtil().resetSettings(currentUser);
+            new UserPreferencesUtil().resetSettings(currentUser);
         }
     }
 

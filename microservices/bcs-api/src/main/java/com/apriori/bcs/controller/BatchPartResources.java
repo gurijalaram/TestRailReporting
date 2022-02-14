@@ -1,12 +1,13 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.bcs.entity.request.NewPartRequest;
+import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Part;
+import com.apriori.bcs.entity.response.PartReport;
+import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.entity.response.Results;
-import com.apriori.bcs.enums.BCSAPICustomersEnum;
 import com.apriori.bcs.enums.BCSAPIEnum;
-import com.apriori.bcs.utils.BcsUtils;
-import com.apriori.bcs.utils.Constants;
+import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.utils.BcsTestUtils;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -17,164 +18,97 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
-import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+
+/**
+ * This class contains the methods related to batch-parts-controller APIs
+ */
 public class BatchPartResources {
 
-    public enum ProcessGroupValue {
-        USE_NULL,
-        USE_EMPTY_STRING,
-        USE_PROCESS_GROUP
+    private static final Logger logger = LoggerFactory.getLogger(BatchPartResources.class);
+    private static RequestEntity requestEntity = null;
+
+
+    /**
+     * Creates a new batch part for specific batch ID.
+     * @param batchIdentity - batch id
+     * @param <T> response of object type
+     * @return Response
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartByID(String batchIdentity) {
+        requestEntity = batchPartRequestEntity(newPartRequest(),batchIdentity);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
+     * @param batchIdentity - batch id
+     * @param <T> response of object type
+     * @return Response
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity) {
+        requestEntity = batchPartRequestEntity(newPartRequest(),batchIdentity);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * Create new batch part for a specific customer, batch ID and custom NewPartRequest POJO.
+     * @param batchIdentity - Batch id
+     * @param customerIdentity - customer id
+     * @param <T> - Response of Object type
+     * @return - Response
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartByBatchCustomerID(NewPartRequest newPartRequest,String batchIdentity,String customerIdentity) {
+        requestEntity = batchPartRequestEntity(newPartRequest(),batchIdentity,customerIdentity);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * Get all parts for a batch
+     * @param batchIdentity - batch id
+     * @param <T> - Response of Object Type
+     * @return - Response
+     */
+    public static <T> ResponseWrapper<T> getBatchPartById(String batchIdentity) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
+                .inlineVariables(batchIdentity);
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
      * Gets a list of all parts associated to a specific batch
-     *
-     * @param batchIdentity The batch identity to retrieve parts for
-     * @param partIdentity  The identity of the part to retrieve
-     * @param returnType    The parts class object
-     * @param customer      Customer identity
-     * @param <T>           The object types in the response
+     * @param batchIdentity - The batch identity
+     * @param partIdentity  - The identity of the part
+     * @param <T> - The object types in the response
      * @return The response returned from the server
      */
-    public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity,
-                                                                    Class returnType, String customer) {
-        if (!batchIdentity.isEmpty()) {
-            batchIdentity = batchIdentity + "/";
-        }
-
-        if (!partIdentity.isEmpty()) {
-            partIdentity = partIdentity + "/";
-        }
-
-        RequestEntity requestEntity;
-
-        if (StringUtils.isNotBlank(customer)) {
-            requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_BATCH_PART_BY_CUSTOMER_BATCH_PART_IDS, returnType)
-                .inlineVariables(customer, batchIdentity, partIdentity);
-        } else {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_BATCH_PART_BY_BATCH_PART_IDS, returnType)
+    public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
                 .inlineVariables(batchIdentity, partIdentity);
-        }
-
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity,
-                                                                    Class returnType) {
-        return getBatchPartRepresentation(batchIdentity, partIdentity, returnType, null);
-    }
-
-    public static <T> ResponseWrapper<T> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
-
-        return getBatchPartRepresentation(batchIdentity, partIdentity, Part.class);
-    }
-
-
     /**
-     * Create a part with no material
-     *
-     * @param npr
-     * @param batchIdentity
-     * @param <T>
-     * @return
+     * Gets a batch part report for completed part.
+     * @param batchIdentity - Batch ID
+     * @param partIdentity - Part ID
+     * @param <T> - Response of Object Type
+     * @return - Response
      */
-    public static <T> ResponseWrapper<T> createNewBatchPartNoMaterial(NewPartRequest npr, String batchIdentity) {
-        npr.setMaterialName(null);
-        return createNewBatchPart(npr, batchIdentity);
-    }
-
-    public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
-                                                            ProcessGroupValue processGroupValue) {
-        return createNewBatchPart(npr, batchIdentity, processGroupValue, Part.class, null);
-    }
-
-    /**
-     * Create a new part
-     *
-     * @param npr               New part request
-     * @param batchIdentity     Batch identity
-     * @param processGroupValue Process group to use
-     * @param returnType        The object class to return. If null, then the default
-     *                          response schema validation is bypassed
-     * @param customer          The customer identity
-     * @param <T>
-     * @return
-     */
-    public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity,
-                                                            ProcessGroupValue processGroupValue, Class returnType,
-                                                            String customer) {
-        String processGroup;
-        switch (processGroupValue) {
-            case USE_PROCESS_GROUP:
-            default:
-                processGroup = npr.getProcessGroup();
-                break;
-            case USE_NULL:
-                processGroup = null;
-                break;
-            case USE_EMPTY_STRING:
-                processGroup = "";
-                break;
-
+    public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity) {
+        if (BcsTestUtils.waitUntilPartStateIsCompleted(batchIdentity, partIdentity).toString().equals(BCSState.COMPLETED.toString())) {
+            logger.info("Batch costing State is => " + BCSState.COMPLETED);
+            RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
+                    .inlineVariables(batchIdentity, partIdentity);
+            return HTTPRequest.build(requestEntity).get();
         }
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("Content-Type", "multipart/form-data");
-
-        File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(npr.getProcessGroup()),
-            npr.getFilename());
-
-        if (!batchIdentity.isEmpty()) {
-            batchIdentity = batchIdentity + "/";
-        }
-
-        RequestEntity requestEntity;
-
-        if (StringUtils.isNotBlank(customer)) {
-            requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.POST_BATCH_PARTS_BY_CUSTOMER_BATCH_ID, returnType)
-                .inlineVariables(customer, batchIdentity);
-        } else {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.POST_BATCH_PARTS_BY_ID, returnType)
-                .inlineVariables(batchIdentity);
-        }
-
-        requestEntity.headers(headers)
-            .multiPartFiles(new MultiPartFiles()
-                .use("data", partFile)
-            )
-            .formParams(new FormParams()
-                .use("filename", npr.getFilename())
-                .use("externalId", String.format(npr.getExternalId(), System.currentTimeMillis()))
-                .use("AnnualVolume", npr.getAnnualVolume().toString())
-                .use("BatchSize", npr.getBatchSize().toString())
-                .use("Description", npr.getDescription())
-                //.use("PinnedRouting", npr.getPinnedRouting())
-                .use("ProcessGroup", processGroup)
-                .use("ProductionLife", npr.getProductionLife().toString())
-                .use("ScenarioName", npr.getScenarioName() + System.currentTimeMillis())
-                //.use("Udas", npr.getUdas())
-                .use("VpeName", npr.getVpeName())
-                .use("MaterialName", npr.getMaterialName())
-                .use("generateWatchpointReport", "true")
-            );
-
-        return HTTPRequest.build(requestEntity).postMultipart();
-    }
-
-    public static <T> ResponseWrapper<T> createNewBatchPart(NewPartRequest npr, String batchIdentity) {
-        return createNewBatchPart(npr, batchIdentity, ProcessGroupValue.USE_PROCESS_GROUP);
-    }
-
-
-    public static <T> ResponseWrapper<T> getResultsNoPoll(String batchIdentity, String partIdentity,
-                                                          Class returnType, String customer) {
-        return getResults(batchIdentity, partIdentity, returnType, customer, false);
-
+        return null;
     }
 
     /**
@@ -182,128 +116,91 @@ public class BatchPartResources {
      *
      * @param batchIdentity The batch identity to retrieve parts for
      * @param partIdentity  The identity of the part to retrieve
-     * @param returnType    The parts class object
-     * @param customer      Customer identity
-     * @param doPoll        True will trigger polling the part state
      * @param <T>           The object types in the response
      * @return The response returned from the server
      */
-    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity,
-                                                    Class returnType, String customer, Boolean doPoll) {
-        if (doPoll) {
-            Object partDetails;
-            BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
-            int count = 0;
-            while (count <= Constants.POLLING_TIMEOUT * 2) {
-                partDetails =
-                    BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-                isPartComplete = BcsUtils.pollState(partDetails, Part.class);
-
-                if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
-                    break;
-                }
-                count += 1;
-            }
-        }
-
-        if (!batchIdentity.isEmpty()) {
-            batchIdentity = batchIdentity + "/";
-        }
-
-        if (!partIdentity.isEmpty()) {
-            partIdentity = partIdentity + "/";
-        }
-
-        RequestEntity requestEntity;
-
-        if (StringUtils.isNotBlank(customer)) {
-            requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_RESULTS_BY_BATCH_PART_IDS, returnType)
-                .inlineVariables(customer, batchIdentity, partIdentity);
-        } else {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_RESULTS_BY_BATCH_PART_IDS, returnType)
+    public static <T> ResponseWrapper<T> getBatchPartResults(String batchIdentity, String partIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, Results.class)
                 .inlineVariables(batchIdentity, partIdentity);
-        }
-
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity,
-                                                    Class returnType) {
-        return getResults(batchIdentity, partIdentity, returnType, null, true);
-    }
-
-    public static <T> ResponseWrapper<T> getResults(String batchIdentity, String partIdentity) {
-        return getResults(batchIdentity, partIdentity, Results.class);
-    }
-
-    public static <T> ResponseWrapper<T> getPartReportNoPoll(String batchIdentity, String partIdentity,
-                                                             Class returnType, String customer) {
-        return getPartReport(batchIdentity, partIdentity, returnType, customer, false);
-    }
 
     /**
-     * Get report a specific batch & part
-     *
-     * @param batchIdentity The batch identity to retrieve parts for
-     * @param partIdentity  The identity of the part to retrieve
-     * @param returnType    The parts class object
-     * @param customer      Customer identity
-     * @param <T>           The object types in the response
-     * @return The response returned from the server
+     * Deserialize CreatePartData.json schema and returns POJO.
+     * @return NewPartRequest POJO.
      */
-    public static <T> ResponseWrapper<T> getPartReport(String batchIdentity, String partIdentity,
-                                                       Class returnType, String customer, Boolean doPoll) {
-
-        if (doPoll) {
-            Object partDetails;
-            BcsUtils.State isPartComplete = BcsUtils.State.PROCESSING;
-            int count = 0;
-            while (count <= Constants.POLLING_TIMEOUT) {
-                partDetails =
-                    BatchPartResources.getBatchPartRepresentation(batchIdentity, partIdentity).getResponseEntity();
-                isPartComplete = BcsUtils.pollState(partDetails, Part.class);
-
-                if (isPartComplete.equals(BcsUtils.State.COMPLETED)) {
-                    break;
-                }
-                count += 1;
-            }
-        }
-
-        if (!batchIdentity.isEmpty()) {
-            batchIdentity = batchIdentity + "/";
-        }
-
-        if (!partIdentity.isEmpty()) {
-            partIdentity = partIdentity + "/";
-        }
-
-        RequestEntity requestEntity;
-
-        if (StringUtils.isNotBlank(customer)) {
-            requestEntity = RequestEntityUtil.init(BCSAPICustomersEnum.GET_PART_REPORT_BY_CUSTOMER_BATCH_PART_IDS, returnType)
-                .inlineVariables(customer, batchIdentity, partIdentity);
-        } else {
-            requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PART_REPORT_BY_BATCH_PART_IDS, returnType)
-                .inlineVariables(batchIdentity, partIdentity);
-        }
-
-        return HTTPRequest.build(requestEntity).get();
-
-    }
-
-    /**
-     * Generate a newpartrequest
-     *
-     * @return newPartRequest
-     */
-    public static NewPartRequest getNewPartRequest() {
+    public static NewPartRequest newPartRequest() {
         NewPartRequest newPartRequest =
-            (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+                (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
         newPartRequest.setFilename("bracket_form.prt");
-
         return newPartRequest;
     }
 
+    /**
+     * Deserialize custom json schema and returns POJO
+     * @param jsonSchema can be customized version of CreatePartData.json
+     * @return NewPartRequest POJO.
+     */
+    public static NewPartRequest newPartRequest(String jsonSchema) {
+        NewPartRequest newPartRequest =
+                (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+                        FileResourceUtil.getResourceFileStream(jsonSchema), NewPartRequest.class);
+        newPartRequest.setFilename("bracket_form.prt");
+        return newPartRequest;
+    }
+
+    /**
+     * This overloaded method is to create Batch Part request entity for Batch ID.
+     * @param newPartRequest - Deserialized NewPartRequest POJO.
+     * @param batchIdentity - Batch ID
+     * @return  RequestEntity - Batch Part complete RequestEntity
+     */
+    public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Part.class).inlineVariables(batchIdentity);
+        return setPartRequestFormParams(newPartRequest);
+    }
+
+    /**
+     * This overloaded method is to create Batch Part request entity for Batch ID and Customer ID.
+     * @param newPartRequest - Deserialized NewPartRequest POJO.
+     * @param batchIdentity - Batch ID
+     * @param customerIdentity - Customer ID
+     * @return  RequestEntity - Batch Part complete RequestEntity
+     */
+    public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, String customerIdentity) {
+        return RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class)
+                .inlineVariables(customerIdentity, batchIdentity);
+    }
+
+    /**
+     * This is private method to set the form parameters used in creating batch part
+     * request for batch id and customer id.
+     * @param newPartRequest - NewPartRequest POJO
+     * @return RequestEntity -
+     */
+    private static RequestEntity setPartRequestFormParams(NewPartRequest newPartRequest) {
+        File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(newPartRequest.getProcessGroup()), newPartRequest.getFilename());
+        Map<String,String> header = new HashMap<>();
+        header.put("Accept","*/*");
+        header.put("Content-Type", "multipart/form-data");
+        requestEntity.headers(header)
+            .multiPartFiles(new MultiPartFiles()
+                    .use("data", partFile))
+            .formParams(new FormParams()
+                    .use("filename", newPartRequest.getFilename())
+                    .use("externalId", String.format(newPartRequest.getExternalId(), System.currentTimeMillis()))
+                    .use("AnnualVolume", newPartRequest.getAnnualVolume().toString())
+                    .use("BatchSize", newPartRequest.getBatchSize().toString())
+                    .use("Description", newPartRequest.getDescription())
+                    .use("ProcessGroup", newPartRequest.getProcessGroup())
+                    .use("ProductionLife", newPartRequest.getProductionLife().toString())
+                    .use("ScenarioName", newPartRequest.getScenarioName() + System.currentTimeMillis())
+                    .use("VpeName", newPartRequest.getVpeName())
+                    .use("MaterialName", newPartRequest.getMaterialName())
+                    .use("generateWatchpointReport", "true")
+            );
+        return requestEntity;
+    }
 }

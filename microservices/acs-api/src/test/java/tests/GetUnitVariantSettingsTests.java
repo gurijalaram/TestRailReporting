@@ -1,5 +1,7 @@
 package tests;
 
+import static org.hamcrest.CoreMatchers.anyOf;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -15,6 +17,8 @@ import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class GetUnitVariantSettingsTests {
 
@@ -50,11 +54,11 @@ public class GetUnitVariantSettingsTests {
 
         String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
         String expectedLength = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "mm" : "in";
-        String expectedMass = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "kg" : "lb";
+        List<String> potentialMassValues = new ArrayList<>(Arrays.asList("kg", "oz", "lb"));
 
         assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
         assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
-        assertThat(getCustomUnitVariantSettingsResponse.getMass(), is(equalTo(expectedMass)));
+        assertThat(potentialMassValues.contains(getCustomUnitVariantSettingsResponse.getMass()), is(equalTo(true)));
 
         assertThat(getCustomUnitVariantSettingsResponse.getTime(), is(equalTo("s")));
         assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces(), is(equalTo(2.0)));

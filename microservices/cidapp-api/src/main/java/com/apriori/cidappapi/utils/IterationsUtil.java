@@ -17,7 +17,7 @@ public class IterationsUtil {
      */
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfoBuilder) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GET_COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId());
 
