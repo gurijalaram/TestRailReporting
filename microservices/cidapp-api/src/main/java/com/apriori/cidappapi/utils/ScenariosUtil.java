@@ -310,7 +310,7 @@ public class ScenariosUtil {
 
         ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
 
-        return postPublishScenarioError(postComponentResponse, component.getUser());
+        return publishScenario(postComponentResponse, component.getUser(), ErrorMessage.class);
     }
 
     /**
@@ -318,23 +318,12 @@ public class ScenariosUtil {
      *
      * @param scenarioItem    - the scenario object
      * @param userCredentials - the user credentials
-     * @return scenarioresponse object
+     * @return - scenarioResponse object
      */
     public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials) {
         publishScenario(scenarioItem, userCredentials, ScenarioResponse.class);
 
         return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
-    }
-
-    /**
-     * POST to publish scenario expecting error
-     *
-     * @param scenarioItem    - the item object
-     * @param userCredentials - the user credentials
-     * @return scenario object
-     */
-    public ResponseWrapper<ScenarioResponse> postPublishScenarioError(ScenarioItem scenarioItem, UserCredentials userCredentials) {
-        return publishScenario(scenarioItem, userCredentials, ErrorMessage.class);
     }
 
     /**

@@ -140,6 +140,8 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
+
         //Build & process sub component object based on array list of names
         for (String subComponentName : subComponentNames) {
             uploadComponent(ComponentInfoBuilder.builder()
@@ -163,7 +165,7 @@ public class ScenariosTests {
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(myAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
-        assertThat(assemblyUploadResponse.getBody(), containsString(String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName)));
+        assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));
     }
 
     private ScenarioItem uploadComponent(ComponentInfoBuilder component) {
