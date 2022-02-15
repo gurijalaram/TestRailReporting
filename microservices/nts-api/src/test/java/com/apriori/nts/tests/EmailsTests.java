@@ -16,7 +16,7 @@ import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
-public class Emails extends TestHelper {
+public class EmailsTests extends TestHelper {
 
     @Test
     @TestRail(testCaseId = {"3828", "10472", "3881"})
