@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
@@ -18,7 +18,6 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -34,8 +33,8 @@ import java.util.Set;
 public abstract class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
-    protected static Set<Item> scenariosToDelete = new HashSet<>();
-    private static Item testingComponent;
+    protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
+    private static ScenarioItem testingComponent;
 
     @BeforeClass
     public static  void init() {
@@ -86,7 +85,7 @@ public abstract class SDSTestUtil extends TestUtil {
      *
      * @return object
      */
-    protected static Item postTestingComponentAndAddToRemoveList() {
+    protected static ScenarioItem postTestingComponentAndAddToRemoveList() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "AGC0-LP-700144754.prt.1";
         ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
@@ -116,7 +115,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * Lazy init for Testing component to avoid it if it is not necessary
      * @return
      */
-    protected static Item getTestingComponent() {
+    protected static ScenarioItem getTestingComponent() {
         if (testingComponent == null) {
             testingComponent = postTestingComponentAndAddToRemoveList();
         }
@@ -131,7 +130,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    protected static Item postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
+    protected static ScenarioItem postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
         final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
 
         final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(uniqueComponentName)
@@ -151,7 +150,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    protected static Item postRollUp(String componentName, String scenarioName) {
+    protected static ScenarioItem postRollUp(String componentName, String scenarioName) {
         final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
 
         final PostComponentRequest postComponentRequest = PostComponentRequest.builder()
@@ -164,7 +163,7 @@ public abstract class SDSTestUtil extends TestUtil {
         return postComponent(postComponentRequest);
     }
 
-    protected static Item postComponent(final PostComponentRequest postComponentRequest) {
+    protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
                 .body("component", postComponentRequest);
@@ -174,11 +173,11 @@ public abstract class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", postComponentRequest.getComponentName(), postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<Item> itemResponse = new CssComponent().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName(),
+        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName(),
             testingUser);
 
-        scenariosToDelete.add(itemResponse.get(0));
-        return itemResponse.get(0);
+        scenariosToDelete.add(scenarioItemResponse.get(0));
+        return scenarioItemResponse.get(0);
     }
 
     protected CostingTemplate getFirstCostingTemplate() {
@@ -199,7 +198,7 @@ public abstract class SDSTestUtil extends TestUtil {
     }
 
     protected void addScenarioToDelete(final String identity) {
-        scenariosToDelete.add(Item.builder()
+        scenariosToDelete.add(ScenarioItem.builder()
             .componentIdentity(getComponentId())
             .scenarioIdentity(identity)
             .build()

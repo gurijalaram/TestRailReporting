@@ -2,7 +2,7 @@ package com.apriori.sds.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.AssociationRequest;
 import com.apriori.sds.entity.response.ScenarioAssociation;
@@ -25,7 +25,7 @@ import org.junit.Test;
 import java.util.List;
 
 public class ScenarioAssociationsTest extends SDSTestUtil {
-    private static Item testingRollUp;
+    private static ScenarioItem testingRollUp;
     private static ScenarioAssociation testingAssociation;
 
     @BeforeClass
@@ -148,7 +148,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
             HttpStatus.SC_NO_CONTENT, response.getStatusCode());
     }
 
-    public static Item getTestingRollUp() {
+    public static ScenarioItem getTestingRollUp() {
         if (testingRollUp != null) {
             return testingRollUp;
         }

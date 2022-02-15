@@ -1,5 +1,6 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -11,7 +12,7 @@ import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.Item;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -25,8 +26,8 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class ScenariosTests {
 
@@ -45,7 +46,12 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        Item postComponentResponse = componentsUtil.postComponentQueryCSS(componentName, scenarioName, resourceFile, currentUser);
+        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build(),
+            resourceFile);
 
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
@@ -62,7 +68,7 @@ public class ScenariosTests {
         //Rechecking the original scenario has not changed
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(
             ScenarioRepresentationBuilder.builder()
-                .item(postComponentResponse)
+                .scenarioItem(postComponentResponse)
                 .user(currentUser)
                 .build());
 
@@ -77,7 +83,7 @@ public class ScenariosTests {
         final String assemblyExtension = ".SLDASM";
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        ArrayList<String> subComponentNames = new ArrayList<>(Arrays.asList("big ring", "Pin", "small ring"));
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String componentExtension = ".SLDPRT";
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -96,27 +102,69 @@ public class ScenariosTests {
 
         //Process assembly
         ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-                .componentName(assemblyName)
-                .extension(assemblyExtension)
-                .scenarioName(scenarioName)
-                .processGroup(ProcessGroupEnum.ASSEMBLY)
-                .user(currentUser)
-                .build();
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .user(currentUser)
+            .build();
 
-        Item assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
+        ScenarioItem assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
         myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
         myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
-                myAssembly,
-                ForkRequest.builder()
-                    .override(false)
-                    .build())
+            myAssembly,
+            ForkRequest.builder()
+                .override(false)
+                .build())
             .getResponseEntity();
 
         //assertions
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
         assertThat(editAssemblyResponse.getPublished(), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10758"})
+    @Description("Trigger 409 conflict on trying to publish an assembly that has private sub-components")
+    public void testUploadPublishingAssemblyError() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
+
+        //Build & process sub component object based on array list of names
+        for (String subComponentName : subComponentNames) {
+            scenariosUtil.uploadComponent(ComponentInfoBuilder.builder()
+                .componentName(subComponentName)
+                .extension(componentExtension)
+                .scenarioName(scenarioName)
+                .processGroup(processGroupEnum)
+                .user(currentUser)
+                .build());
+        }
+
+        //Process assembly
+        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .user(currentUser)
+            .build();
+
+        ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(myAssembly);
+
+        assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
+        assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));
     }
 }

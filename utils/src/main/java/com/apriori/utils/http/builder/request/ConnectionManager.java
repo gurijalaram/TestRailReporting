@@ -26,6 +26,7 @@ import io.restassured.specification.RequestSpecification;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URL;
@@ -148,6 +149,11 @@ class ConnectionManager<T> {
         final Headers responseHeaders = response.extract().headers();
 
         if (returnType != null) {
+            Class<InputStream> testClass = InputStream.class;
+            if (returnType == testClass) {
+                T responseEntity = (T) response.extract().asInputStream();
+                return ResponseWrapper.build(responseCode, responseHeaders, responseBody, responseEntity);
+            }
             String schemaLocation;
 
             try {
