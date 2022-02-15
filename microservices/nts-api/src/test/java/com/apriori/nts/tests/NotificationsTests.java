@@ -1,5 +1,9 @@
 package com.apriori.nts.tests;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+
 import com.apriori.nts.entity.response.Notifications;
 import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.utils.TestHelper;
@@ -7,6 +11,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
@@ -22,6 +27,9 @@ public class NotificationsTests extends TestHelper {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_NOTIFICATIONS,
             Notifications.class);
 
-        Assert.assertEquals(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
+        ResponseWrapper<Notifications> notificationResponse = HTTPRequest.build(requestEntity).get();
+
+        Assert.assertEquals(HttpStatus.SC_OK, notificationResponse.getStatusCode());
+        assertThat(notificationResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 }
