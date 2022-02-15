@@ -44,9 +44,7 @@ public class UserUtil {
      * @return User
      */
     public static UserCredentials getUser() {
-        UserCredentials user = UserCommonService.getUser()
-            .generateToken()
-            .generateCloudContext();
+        UserCredentials user = UserCommonService.getUser();
         logInfo(user);
         return user;
     }

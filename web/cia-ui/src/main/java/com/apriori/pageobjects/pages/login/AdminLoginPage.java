@@ -47,8 +47,6 @@ public class AdminLoginPage extends AdminHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private AprioriLoginPage aprioriLoginPage;
-    private UserCredentials userCredentials = UserUtil.getUser();
 
     public AdminLoginPage(WebDriver driver) {
         super(driver);
@@ -87,15 +85,58 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
+
     }
 
     /**
-     * Login to CIA
+     * Enter email details
      *
-     * @param userCredentials - user credentials
+     * @param emailAddress - user email address
+     */
+    private void enterEmail(String emailAddress) {
+        pageUtils.waitForElementAndClick(emailInput);
+        pageUtils.clearInput(emailInput);
+        emailInput.sendKeys(emailAddress);
+    }
+
+    /**
+     * Enter password
+     *
+     * @param password - user password
+     */
+    private void enterPassword(String password) {
+        pageUtils.waitForElementAndClick(passwordInput);
+        pageUtils.clearInput(this.passwordInput);
+        this.passwordInput.sendKeys(password);
+    }
+
+    /**
+     * Single action to submit login credentials
+     */
+    private void submitLogin() {
+        loginButton.click();
+    }
+
+    /**
+     * Execute actions to login
+     *
+     * @param email    - user email
+     * @param password - user password
+     */
+    private void executeLogin(String email, String password) {
+        enterEmail(email);
+        enterPassword(password);
+        submitLogin();
+    }
+
+    /**
+     * Login to CI Admin with passed in user (from Jenkins)
+     *
      * @return new page object
      */
     public AdminHomePage login() {
-        return aprioriLoginPage.login(userCredentials, AdminHomePage.class);
+        UserCredentials userCredentials = UserUtil.getUser();
+        executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
+        return new AdminHomePage(driver);
     }
 }
