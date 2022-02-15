@@ -1,4 +1,4 @@
-package com.apriori.newcustomer;
+package com.apriori.siteLicenses;
 
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.FileImport;
@@ -120,17 +120,28 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     }
 
     /**
-     * @param licenseFile
-     * @param customerName
-     * @param siteId
-     * @param subLicenseId
-     * @param klass
-     * @param <T>
-     * @return
+     * Uploads license file
+     *
+     * @param licenseFile license file
+     * @param customerName name of customer
+     * @param siteId site ID
+     * @param subLicenseId SubLicense ID
+     * @param klass class
+     * @return new page object
      */
     public <T> T uploadLicense(String licenseFile, String customerName, String siteId, String subLicenseId, Class<T> klass) {
         InputStream license = new ByteArrayInputStream(String.format(licenseFile, customerName, siteId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
         fileImport.importFile(FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest.xml"));
         return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Validates if license card is displayed
+     *
+     * @param licenseName - the license name
+     * @return - true or false
+     */
+    public boolean isLicenseCardDisplayed(String licenseName) {
+        return pageUtils.isElementDisplayed(By.xpath(String.format("//div[@class='card-header']//div[.='%s']", licenseName)));
     }
 }

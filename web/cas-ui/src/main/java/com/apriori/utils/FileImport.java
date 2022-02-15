@@ -48,7 +48,7 @@ public class FileImport {
      * @return current page object
      */
     public FileImport selectCard(String fileName) {
-        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", fileName));
+        By card = By.xpath(String.format("//div[@class='card-header']//div[.='%s']", fileName));
         pageUtils.waitForElementAndClick(card);
         return this;
     }

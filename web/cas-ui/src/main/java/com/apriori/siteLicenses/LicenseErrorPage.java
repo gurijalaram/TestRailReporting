@@ -1,4 +1,4 @@
-package com.apriori.newcustomer;
+package com.apriori.siteLicenses;
 
 import com.apriori.utils.PageUtils;
 
@@ -41,7 +41,9 @@ public class LicenseErrorPage extends LoadableComponent<LicenseErrorPage> {
     }
 
     /**
-     * @return
+     * Gets error message
+     *
+     * @return string error message
      */
     public String getErrorMessage() {
         String message = pageUtils.waitForElementToAppear(toastify).getAttribute("textContent");
