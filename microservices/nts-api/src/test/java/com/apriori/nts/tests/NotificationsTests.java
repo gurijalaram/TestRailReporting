@@ -1,5 +1,6 @@
 package com.apriori.nts.tests;
 
+import com.apriori.nts.entity.response.Notifications;
 import com.apriori.nts.enums.NTSAPIEnum;
 import com.apriori.utils.TestHelper;
 import com.apriori.utils.TestRail;
@@ -12,13 +13,14 @@ import org.apache.http.HttpStatus;
 import org.junit.Assert;
 import org.junit.Test;
 
-public class Notifications extends TestHelper {
+public class NotificationsTests extends TestHelper {
 
     @Test
     @TestRail(testCaseId = {"4530"})
     @Description("Get a list of notifications using the NTS API")
     public void getNotifications() {
-        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_NOTIFICATIONS, com.apriori.nts.entity.response.Notifications.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_NOTIFICATIONS,
+            Notifications.class);
 
         Assert.assertEquals(HttpStatus.SC_OK, HTTPRequest.build(requestEntity).get().getStatusCode());
     }
