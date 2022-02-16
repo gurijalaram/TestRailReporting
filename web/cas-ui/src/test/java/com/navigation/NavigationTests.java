@@ -8,7 +8,7 @@ import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
-import com.apriori.newcustomer.SitesLicensesPage;
+import com.apriori.siteLicenses.SitesLicensesPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;

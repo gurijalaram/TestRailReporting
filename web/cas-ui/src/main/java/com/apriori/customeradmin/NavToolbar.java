@@ -16,7 +16,7 @@ public class NavToolbar extends LoadableComponent<NavToolbar> {
 
     private static final Logger logger = LoggerFactory.getLogger(NavToolbar.class);
 
-    @FindBy(css = "[alt='aPriori Customer Admin Logo']")
+    @FindBy(css = "img[alt='Application Logo']")
     private WebElement aprioriLogo;
 
     @FindBy(xpath = "//button[.='Customers']")
