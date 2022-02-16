@@ -15,8 +15,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
@@ -36,6 +38,7 @@ import testsuites.suiteinterface.ReportsTest;
 
 public class CastingDtcReportTests {
 
+    private ChartDataPoint chartDataPoint;
     private static String jSessionId = "";
 
     @BeforeClass
@@ -50,6 +53,7 @@ public class CastingDtcReportTests {
         System.out.println("Login response code :" + con.getResponseCode());
         String session_id = con + "";
         jSessionId = session_id.split(";")[1].substring(11, 43);
+        assertThat(jSessionId, is(notNullValue()));
     }
 
     @Test
@@ -57,13 +61,7 @@ public class CastingDtcReportTests {
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
-        assertThat(jSessionId, is(notNullValue()));
-
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
-        /*reportRequest.getParameters().getReportParameterByName("exportSetName")
-            .setValue(Collections.singletonList("528"));*/
-        /*reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList("GBP"));*/
 
         /*
         values for each export set (set it to change it)
@@ -79,24 +77,26 @@ public class CastingDtcReportTests {
         ---01-top-level-multi-vpe               34986
          */
 
-        JasperReportSummary jasperReportSummary =
-            JasperReportUtil.init(jSessionId)
-                .generateJasperReportSummary(reportRequest);
+        // 1 - Generate report with USD currency setting
+        generateReportAndGetSummary(reportRequest);
 
-        ChartDataPoint chartDataPointToTest = jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+        // 2 - Get values from USD report
+        String usdFullyBurdenedCost = getFbc();
+        double usdAnnualSpend = getAnnualSpend();
 
-        System.out.println(chartDataPointToTest.getAnnualSpend());
-        System.out.println(chartDataPointToTest.getMassMetric());
-        System.out.println(chartDataPointToTest.getCostMetric());
-        System.out.println(chartDataPointToTest.getDTCScore());
+        // 3- Change currency to GBP and re-generate report
+        reportRequest.getParameters().getReportParameterByName("currencyCode")
+            .setValue(Collections.singletonList("GBP"));
 
-        chartDataPointToTest.getPropertyByName("customPropertyName");
+        generateReportAndGetSummary(reportRequest);
 
-        // Get HTML data to validate
+        // 4 - Get values from GBP report
+        String gbpFullyBurdenedCost = getFbc();
+        double gbpAnnualSpend = getAnnualSpend();
 
-       Document reportDoc = jasperReportSummary.getReportHtmlPart();
-
-       assertThat(reportDoc, is(notNullValue()));
+        // 5 - Assert that USD values are not equal to GBP values
+        assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
+        assertThat(gbpAnnualSpend == usdAnnualSpend, is(equalTo(false)));
     }
 
     private static void skipSslCheck() throws NoSuchAlgorithmException, KeyManagementException {
@@ -105,5 +105,19 @@ public class CastingDtcReportTests {
         sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
         HttpsURLConnection.setDefaultHostnameVerifier((string, ssls) -> true);
+    }
+
+    private void generateReportAndGetSummary(ReportRequest reportRequest) {
+        JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
+                .generateJasperReportSummary(reportRequest);
+        chartDataPoint = jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+    }
+
+    private String getFbc() {
+        return chartDataPoint.getFullyBurdenedCost();
+    }
+
+    private double getAnnualSpend() {
+        return chartDataPoint.getAnnualSpend();
     }
 }

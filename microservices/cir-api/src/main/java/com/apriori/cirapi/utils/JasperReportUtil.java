@@ -103,7 +103,7 @@ public class JasperReportUtil {
             .findValue("series");
 
         if (dataNode != null) {
-            dataNode.findValue("data");
+            dataNode = dataNode.findValue("data");
         }
 
         return dataNode != null ? objectMapper.readerFor(new TypeReference<List<ChartDataPoint>>() {}).readValue(dataNode) : null;
