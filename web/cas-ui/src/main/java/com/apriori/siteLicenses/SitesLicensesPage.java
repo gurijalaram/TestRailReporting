@@ -136,6 +136,18 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
     }
 
     /**
+     * Gets error message
+     *
+     * @return string error message
+     */
+    public String getErrorMessage() {
+        String message = pageUtils.waitForElementToAppear(toastify).getAttribute("textContent");
+        pageUtils.waitForElementsToNotAppear(By.cssSelector("[class='Toastify__toast-body']"));
+        pageUtils.clearInput(driver.findElement(By.cssSelector("input[type='file']")));
+        return message;
+    }
+
+    /**
      * Validates if license card is displayed
      *
      * @param licenseName - the license name

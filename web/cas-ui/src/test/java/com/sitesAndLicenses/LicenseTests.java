@@ -9,7 +9,6 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.login.CasLoginPage;
-import com.apriori.siteLicenses.LicenseErrorPage;
 import com.apriori.siteLicenses.SitesLicensesPage;
 import com.apriori.siteLicenses.UploadLicensePopUp;
 import com.apriori.utils.Constants;
@@ -31,7 +30,6 @@ import java.util.UUID;
 
 public class LicenseTests extends TestBase {
     private SitesLicensesPage sitesLicensesPage;
-    private LicenseErrorPage licenseErrorPage;
     private UploadLicensePopUp uploadLicensePopUp;
     private static Customer aprioriInternal;
     private static CdsTestUtil cdsTestUtil;
@@ -63,32 +61,32 @@ public class LicenseTests extends TestBase {
     @Description("Validate error messages when uploading an invalid license for a customer")
     public void validateUploadInvalidLicenses() {
 
-        licenseErrorPage = sitesLicensesPage.uploadLicense(Constants.INVALID_STRUCTURE_LICENSE, customerName, siteId, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file. The internal structure of the license file is invalid.")));
+        sitesLicensesPage.uploadLicense(Constants.INVALID_STRUCTURE_LICENSE, customerName, siteId, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file. The internal structure of the license file is invalid.")));
 
         String missingCustomerName = "";
-        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, missingCustomerName, siteId, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file. The license does not specify the customer name.")));
+        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, missingCustomerName, siteId, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file. The license does not specify the customer name.")));
 
         String customerNameNotExist = "NotExistingCustomerName";
-        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerNameNotExist, siteId, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file. The customer specified in the license file does not exist.")));
+        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerNameNotExist, siteId, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file. The customer specified in the license file does not exist.")));
 
         String existingCustomer = "Gadgets";
-        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, existingCustomer, siteId, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file. The customer specified by the license does not match the current customer.")));
+        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, existingCustomer, siteId, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file. The customer specified by the license does not match the current customer.")));
 
         String missingSiteId = "";
-        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerName, missingSiteId, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file. The license is missing the site ID")));
+        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerName, missingSiteId, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file. The license is missing the site ID")));
 
         String anotherCustomerSiteId = "17a6c35b-efb4-4651-87f1-2f9e4341247f";
-        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerName, anotherCustomerSiteId, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file. The license site ID is in use by another customer.")));
+        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerName, anotherCustomerSiteId, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file. The license site ID is in use by another customer.")));
 
         String siteIdNotExist = new GenerateStringUtil().generateSiteID();
-        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerName, siteIdNotExist, subLicenseId, LicenseErrorPage.class);
-        assertThat(licenseErrorPage.getErrorMessage(), is(equalTo("Cannot upload license file.  License file site ID does not exist in the customer record.")));
+        sitesLicensesPage.uploadLicense(Constants.CAS_LICENSE, customerName, siteIdNotExist, subLicenseId, SitesLicensesPage.class);
+        assertThat(sitesLicensesPage.getErrorMessage(), is(equalTo("Cannot upload license file.  License file site ID does not exist in the customer record.")));
     }
 
     @Test
