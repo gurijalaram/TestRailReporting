@@ -89,7 +89,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-
+      assertTrue("CIR login page was not displayed", aprioriLoginPage.getPageTitle().contains("CI Design APRIORI"));
     }
 
     /**
@@ -109,8 +109,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @param password - user password
      */
     private void enterPassword(String password) {
-        pageUtils.waitForElementAndClick(this.password);
-        pageUtils.clearInput(this.password);
+        pageUtils.waitForElementAndClick(password);
+        pageUtils.clearInput(password);
         this.password.sendKeys(password);
     }
 
