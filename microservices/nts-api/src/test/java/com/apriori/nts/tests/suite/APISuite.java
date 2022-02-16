@@ -1,7 +1,7 @@
 package com.apriori.nts.tests.suite;
 
-import com.apriori.nts.tests.Emails;
-import com.apriori.nts.tests.Notifications;
+import com.apriori.nts.tests.EmailsTests;
+import com.apriori.nts.tests.NotificationsTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
@@ -11,8 +11,8 @@ import org.junit.runners.Suite;
 @ProjectRunID("369")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        Emails.class,
-        Notifications.class
+        EmailsTests.class,
+        NotificationsTests.class
 })
 public class APISuite {
 }

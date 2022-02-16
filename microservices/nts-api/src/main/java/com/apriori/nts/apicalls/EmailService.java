@@ -14,20 +14,17 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashMap;
 import java.util.Map;
 import javax.mail.Message;
 
+@Slf4j
 public class EmailService {
 
-    private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
-    private static final String cloudContext = UserUtil.getUser().getCloudContext();
-    private static SendEmail sendEmail;
-
-    private static Map<String, String> headers = new HashMap<String, String>() {{
+    private final String cloudContext = UserUtil.getUser().getCloudContext();
+    private Map<String, String> headers = new HashMap<String, String>() {{
             put("ap-cloud-context", cloudContext);
         }};
 
@@ -37,7 +34,7 @@ public class EmailService {
      * @param subject Email subject
      * @return True, if the email exits
      */
-    public static Boolean validateEmail(String subject) {
+    public Boolean validateEmail(String subject) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
@@ -60,7 +57,7 @@ public class EmailService {
                 count += 1;
             }
         } catch (Exception e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
         }
 
         return false;
@@ -74,7 +71,7 @@ public class EmailService {
      * @param emailContent Email content
      * @return Service response
      */
-    public static ResponseWrapper<SendEmail> sendEmailWithAttachment(String subject, String filename, String emailContent) {
+    public ResponseWrapper<SendEmail> sendEmailWithAttachment(String subject, String filename, String emailContent) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
@@ -97,7 +94,7 @@ public class EmailService {
      * @param emailContent Email content
      * @return Service response
      */
-    public static ResponseWrapper<SendEmail> sendEmail(String subject, String emailContent) {
+    public ResponseWrapper<SendEmail> sendEmail(String subject, String emailContent) {
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
 
@@ -117,14 +114,14 @@ public class EmailService {
      *
      * @return Service response
      */
-    public static ResponseWrapper<EmailsItems> getEmails() {
+    public ResponseWrapper<EmailsItems> getEmails() {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS, EmailsItems.class)
             .headers(headers);
 
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public static ResponseWrapper<EmailsItems> getEmailsByIdentity(String identity) {
+    public ResponseWrapper<EmailsItems> getEmailsByIdentity(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAILS_BY_ID, EmailsItems.class)
                 .inlineVariables(identity)
                 .headers(headers);
@@ -138,7 +135,7 @@ public class EmailService {
      * @param identity The identity of the email to retrieve
      * @return Service response
      */
-    public static ResponseWrapper<Email> getEmail(String identity) {
+    public ResponseWrapper<Email> getEmail(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(NTSAPIEnum.GET_EMAIL_BY_ID, Email.class)
             .inlineVariables(identity)
             .headers(headers);
