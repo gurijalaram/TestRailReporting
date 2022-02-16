@@ -48,11 +48,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private int index;
-    private String day;
-    private String month;
-    private String year;
-    private String hour;
-    private String minute;
 
     public FilterPage(WebDriver driver) {
         this.driver = driver;
