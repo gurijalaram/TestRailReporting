@@ -155,15 +155,9 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath     - location of the file
      * @return new page object
      */
-    // TODO: 08/02/2022 cn - condition to be removed once we sort out branching
     public FileUploadPage uploadComponent(String scenarioName, File filePath) {
-        if (PropertiesContext.get("${env}.name").equals("qa-cid-perf")) {
-            pageUtils.waitForElementAndClick(newButton);
-            pageUtils.waitForElementAndClick(componentButton);
-        } else {
-            pageUtils.waitForElementAndClick(importButton);
-            pageUtils.waitForElementAndClick(cadButton);
-        }
+        pageUtils.waitForElementAndClick(importButton);
+        pageUtils.waitForElementAndClick(cadButton);
         return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
     }
 

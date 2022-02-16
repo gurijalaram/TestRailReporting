@@ -121,7 +121,7 @@ public class CdsLicenseTests {
         );
 
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(license.getResponseEntity().getResponse().getTotalItemCount(), is(equalTo(1)));
+        assertThat(license.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
     }
 
     @Test
@@ -153,7 +153,7 @@ public class CdsLicenseTests {
             customerIdentity
         );
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
             LicenseResponse.class,
             customerIdentity,
@@ -295,13 +295,13 @@ public class CdsLicenseTests {
         );
 
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getUserIdentity();
 
         assertThat(associationUserItemsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(associationUserItemsResponse.getResponseEntity().getResponse().getCreatedBy(), is(equalTo("#SYSTEM00000")));
+        assertThat(associationUserItemsResponse.getResponseEntity().getCreatedBy(), is(equalTo("#SYSTEM00000")));
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .siteIdentity(siteIdentity)
@@ -352,10 +352,10 @@ public class CdsLicenseTests {
             customerIdentity
         );
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getUserIdentity();
 
         ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_SUB_LICENSE_USERS,
             SubLicenseAssociation.class,
@@ -416,10 +416,10 @@ public class CdsLicenseTests {
             customerIdentity
         );
         assertThat(license.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        String licenseIdentity = license.getResponseEntity().getResponse().getItems().get(0).getIdentity();
+        String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getResponse().getIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getUserIdentity();
 
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
