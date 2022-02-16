@@ -8,6 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 public class FileImport {
 
@@ -31,9 +34,11 @@ public class FileImport {
      * @return current page object
      */
     public FileImport importFile(File filePath) {
-        fileInput.sendKeys(filePath.getAbsolutePath());
-        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", filePath.getName()));
-        pageUtils.waitForElementToAppear(card);
+        try {
+            driver.findElement(By.cssSelector("input[type='file']")).sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         return this;
     }
 
@@ -43,7 +48,7 @@ public class FileImport {
      * @return current page object
      */
     public FileImport selectCard(String fileName) {
-        By card = By.xpath(String.format("//div[@class='card-header']//span[.='%s']", fileName));
+        By card = By.xpath(String.format("//div[@class='card-header']//div[.='%s']", fileName));
         pageUtils.waitForElementAndClick(card);
         return this;
     }
