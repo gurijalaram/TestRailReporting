@@ -28,6 +28,7 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ScenariosTests {
 
@@ -81,44 +82,43 @@ public class ScenariosTests {
     public void testUploadPublishingAndEditAssemblyShallow() {
         String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String componentExtension = ".SLDPRT";
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        //Build & process sub component object based on array list of names
-        for (String subComponentName : subComponentNames) {
-            scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
-                .componentName(subComponentName)
-                .extension(componentExtension)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
-        }
-
-        //Process assembly
-        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
+        List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(subComponentName -> ComponentInfoBuilder.builder()
+            .componentName(subComponentName)
+            .extension(componentExtension)
             .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .processGroup(subComponentProcessGroup)
             .user(currentUser)
+            .build()).collect(Collectors.toList());
+
+        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
+            .assemblyName(assemblyName)
+            .extension(assemblyExtension)
+            .processGroup(assemblyProcessGroup)
+            .subComponents(subComponents)
             .build();
 
-        ScenarioItem assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
-        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
-        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
+        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadAndPublishComponent(
+            subComponent));
+
+        ScenarioItem componentAssemblyResponse = scenariosUtil.uploadAndPublishComponent(componentAssembly);
+
+        componentAssembly.setComponentId(componentAssemblyResponse.getComponentIdentity());
+        componentAssembly.setScenarioId(componentAssemblyResponse.getScenarioIdentity());
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
-            myAssembly,
-            ForkRequest.builder()
-                .override(false)
-                .build())
+                componentAssembly,
+                ForkRequest.builder()
+                    .override(false)
+                    .build())
             .getResponseEntity();
 
         //assertions
@@ -132,8 +132,8 @@ public class ScenariosTests {
     public void testUploadPublishingAssemblyError() {
         String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String componentExtension = ".SLDPRT";
 
@@ -142,27 +142,22 @@ public class ScenariosTests {
 
         String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
 
-        //Build & process sub component object based on array list of names
-        for (String subComponentName : subComponentNames) {
-            scenariosUtil.uploadComponent(ComponentInfoBuilder.builder()
-                .componentName(subComponentName)
-                .extension(componentExtension)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
-        }
-
-        //Process assembly
-        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
+        List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(subComponentName -> ComponentInfoBuilder.builder()
+            .componentName(subComponentName)
+            .extension(componentExtension)
             .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .processGroup(subComponentProcessGroup)
             .user(currentUser)
+            .build()).collect(Collectors.toList());
+
+        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
+            .assemblyName(assemblyName)
+            .extension(assemblyExtension)
+            .processGroup(assemblyProcessGroup)
+            .subComponents(subComponents)
             .build();
 
-        ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(myAssembly);
+        ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(componentAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
         assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));

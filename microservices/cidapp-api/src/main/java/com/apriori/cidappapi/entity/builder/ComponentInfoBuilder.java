@@ -9,6 +9,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Builder
 @Data
 public class ComponentInfoBuilder {
@@ -26,4 +28,6 @@ public class ComponentInfoBuilder {
     private final UserCredentials user;
     @Builder.Default
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
+    private String assemblyName;
+    private List<ComponentInfoBuilder> subComponents;
 }
