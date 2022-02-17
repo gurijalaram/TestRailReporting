@@ -183,6 +183,17 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         return PageFactory.initElements(driver, klass);
     }
 
+    /**
+     * Select the publish button
+     *
+     * @param <T> - the object type
+     * @return - generic page object
+     */
+    public <T> T publish(Class<T> klass) {
+        modalDialogController.publish(klass);
+        return PageFactory.initElements(driver, klass);
+    }
+
 
     /**
      * Select the continue button

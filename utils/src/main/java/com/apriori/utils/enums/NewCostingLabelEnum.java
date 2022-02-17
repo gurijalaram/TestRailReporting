@@ -10,6 +10,8 @@ public enum NewCostingLabelEnum {
     FETCHING("Fetching"),
     NOT_COSTED("Not Costed"),
     UNCOSTED_CHANGES("Uncosted Changes"),
+    PROCESSING_EDIT_ACTION("Processing Edit Action"),
+    PROCESSING_PUBLISH_ACTION("Processing Publish Action"),
     COSTING_FAILED("Costing Failed");
 
     private final String costingText;

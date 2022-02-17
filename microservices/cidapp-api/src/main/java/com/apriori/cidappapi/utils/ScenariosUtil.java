@@ -362,6 +362,49 @@ public class ScenariosUtil {
     }
 
     /**
+     * This method uploads an assembly with all subcomponents and publish all
+     *
+     * @param subComponentNames - the subcomponent names
+     * @param componentExtension - the subcomponent extension
+     * @param processGroupEnum - the process group enum
+     * @param assemblyName - the assembly name
+     * @param assemblyExtension -  the assembly extension
+     * @param scenarioName - the scenario name
+     * @param currentUser - the current user
+     * @return - the object of ComponentInfoBuilder
+     */
+    public ComponentInfoBuilder uploadAndPublishAssembly(List<String> subComponentNames,
+                                                         String componentExtension,
+                                                         ProcessGroupEnum processGroupEnum,
+                                                         String assemblyName, String assemblyExtension, String scenarioName, UserCredentials currentUser) {
+
+        for (String subComponentName : subComponentNames) {
+            uploadAndPublishComponent(ComponentInfoBuilder.builder()
+                .componentName(subComponentName)
+                .extension(componentExtension)
+                .scenarioName(scenarioName)
+                .processGroup(processGroupEnum)
+                .user(currentUser)
+                .build());
+        }
+
+        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(ProcessGroupEnum.ASSEMBLY)
+            .user(currentUser)
+            .build();
+
+        ScenarioItem assemblyUploadResponse = uploadAndPublishComponent(myAssembly);
+
+        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
+        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
+
+        return myAssembly;
+    }
+
+    /**
      * Waits for specified time
      *
      * @param seconds - the seconds
