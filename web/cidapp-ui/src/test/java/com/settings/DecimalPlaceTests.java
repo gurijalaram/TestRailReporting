@@ -158,8 +158,8 @@ public class DecimalPlaceTests extends TestBase {
         assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.15756%"));
         assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.40000, 10));
         assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(33.96328, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(39.781705, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(39.781705, 10));
+        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(29.01580, 10));
+        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(29.01580, 10));
         assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 50));
     }
 }
