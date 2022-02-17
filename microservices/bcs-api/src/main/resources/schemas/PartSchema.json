@@ -36,6 +36,9 @@
         "state": {
           "type": "string"
         },
+        "partType": {
+          "type": "string"
+        },
         "externalId": {
           "type": "string"
         },
