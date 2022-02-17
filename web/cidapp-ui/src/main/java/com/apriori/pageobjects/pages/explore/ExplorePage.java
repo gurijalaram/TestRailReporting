@@ -30,7 +30,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "div[class='card-header'] .left")
     private WebElement scenarioCount;
 
-    @FindBy(css = "[id='qa-scenario-list-configure-button']")
+    @FindBy(css = "[id='qa-scenario-explorer-configure-button']")
     private WebElement configureButton;
 
     @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
