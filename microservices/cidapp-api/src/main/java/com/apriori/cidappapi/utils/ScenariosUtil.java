@@ -376,7 +376,10 @@ public class ScenariosUtil {
     public ComponentInfoBuilder uploadAndPublishAssembly(List<String> subComponentNames,
                                                          String componentExtension,
                                                          ProcessGroupEnum processGroupEnum,
-                                                         String assemblyName, String assemblyExtension, String scenarioName, UserCredentials currentUser) {
+                                                         String assemblyName,
+                                                         String assemblyExtension,
+                                                         String scenarioName,
+                                                         UserCredentials currentUser) {
 
         for (String subComponentName : subComponentNames) {
             uploadAndPublishComponent(ComponentInfoBuilder.builder()
