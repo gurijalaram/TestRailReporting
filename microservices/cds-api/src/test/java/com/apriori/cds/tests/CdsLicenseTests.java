@@ -289,7 +289,7 @@ public class CdsLicenseTests {
         ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.addLicense(customerIdentity, siteIdentity, customerName, siteId, licenseId, subLicenseId);
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().stream()
-            .filter(x-> !x.getName().contains("master"))
+            .filter(x -> !x.getName().contains("master"))
             .collect(Collectors.toList()).get(0).getIdentity();
 
         ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
@@ -349,7 +349,7 @@ public class CdsLicenseTests {
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().stream()
-            .filter(x-> !x.getName().contains("master"))
+            .filter(x -> !x.getName().contains("master"))
             .collect(Collectors.toList()).get(0).getIdentity();
 
         ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
@@ -415,7 +415,7 @@ public class CdsLicenseTests {
         assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
         String subLicenseIdentity = licenseResponse.getResponseEntity().getResponse().getSubLicenses().stream()
-            .filter(x-> !x.getName().contains("master"))
+            .filter(x -> !x.getName().contains("master"))
             .collect(Collectors.toList()).get(0).getIdentity();
 
         ResponseWrapper<Licenses> license = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_LICENSES_BY_CUSTOMER_ID,
