@@ -16,6 +16,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.Arrays;
 import java.util.List;
+import static org.junit.Assert.assertTrue;
 
 /**
  * @author cfrith
@@ -24,8 +25,8 @@ import java.util.List;
 @Slf4j
 public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
-    @FindBy(css = ".active [data-icon='exclamation-circle']")
-    private WebElement issuesTabActive;
+    @FindBy(xpath = "//button[.='Issues']")
+    private WebElement issuesTab;
 
     @FindBy(css = ".design-guidance-detail-card .apriori-table")
     private WebElement chartTable;
@@ -67,7 +68,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(issuesTabActive);
+        assertTrue("Issues tab was not selected", issuesTab.getAttribute("class").contains("active"));
     }
 
     /**
