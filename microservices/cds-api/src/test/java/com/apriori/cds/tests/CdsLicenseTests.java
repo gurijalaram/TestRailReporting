@@ -298,7 +298,7 @@ public class CdsLicenseTests {
         String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getUserIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getIdentity();
 
         assertThat(associationUserItemsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(associationUserItemsResponse.getResponseEntity().getCreatedBy(), is(equalTo("#SYSTEM00000")));
@@ -355,7 +355,7 @@ public class CdsLicenseTests {
         String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getUserIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenseAssociation> associationUserResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_SUB_LICENSE_USERS,
             SubLicenseAssociation.class,
@@ -419,7 +419,7 @@ public class CdsLicenseTests {
         String licenseIdentity = license.getResponseEntity().getItems().get(0).getIdentity();
 
         ResponseWrapper<SubLicenseAssociationUser> associationUserItemsResponse = cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
-        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getUserIdentity();
+        userAssociationIdentity = associationUserItemsResponse.getResponseEntity().getIdentity();
 
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
