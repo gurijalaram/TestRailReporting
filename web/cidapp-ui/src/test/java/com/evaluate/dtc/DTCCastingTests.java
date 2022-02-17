@@ -145,32 +145,32 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface has a draft angle less than the recommended draft angle for this material."));
         assertThat(guidanceIssuesPage.getGcdCount("Curved Wall"), equalTo(87));
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Minimum wall thickness is less than the recommended thickness for this material."));
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Maximum wall thickness is greater than the recommended thickness for this material."));
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Radius Issue, Minimum Internal Edge Radius", "Sharp Edge", "SharpEdge:39");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal edge radius is less than the recommended internal edge radius for this material."));
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Minimum Hole Diameter", "Simple Hole", "SimpleHole:13");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("High Pressure Die Casting is not feasible. Hole Diameter is less than the minimum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Hole diameter is less than the recommended minimum diameter for this material."));
     }
 
     /*@Test
