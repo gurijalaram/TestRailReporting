@@ -5,6 +5,7 @@ import lombok.Data;
 @Data
 public class PropertyInfoMap {
     private PropertyInfoItem artifactTypeName;
+    private PropertyInfoItem minWallThickness;
     private PropertyInfoItem minGcdVersion;
     private PropertyInfoItem surfaceArea;
     private PropertyInfoItem nonSolidSurfaceArea;
@@ -16,6 +17,7 @@ public class PropertyInfoMap {
     private PropertyInfoItem fileBaseName;
     private PropertyInfoItem numInsertCores;
     private PropertyInfoItem height;
+    private PropertyInfoItem minHoleDiameter;
     private PropertyInfoItem cadKeyText;
     private PropertyInfoItem minThickness;
     private PropertyInfoItem toolMinThickness;
@@ -29,6 +31,7 @@ public class PropertyInfoMap {
     private PropertyInfoItem numSideCores;
     private PropertyInfoItem volume;
     private PropertyInfoItem averageThicknessDev;
+    private PropertyInfoItem minRingWidth;
     private PropertyInfoItem cadMaterialName;
     private PropertyInfoItem distanceUnits;
     private PropertyInfoItem width;

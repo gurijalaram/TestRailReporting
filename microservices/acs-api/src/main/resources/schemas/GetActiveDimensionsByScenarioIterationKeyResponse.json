@@ -8,6 +8,9 @@
         "artifactTypeName": {
           "type": "string"
         },
+        "minWallThickness": {
+          "type": "number"
+        },
         "minGcdVersion": {
           "type": "integer"
         },
@@ -37,6 +40,9 @@
         },
         "numInsertCores": {
           "type": "integer"
+        },
+        "minHoleDiameter": {
+          "type": "number"
         },
         "height": {
           "type": "number"
@@ -83,6 +89,9 @@
         "cadMaterialName": {
           "type": "null"
         },
+        "minRingWidth": {
+          "type": "number"
+        },
         "distanceUnits": {
           "type": "integer"
         },
@@ -104,18 +113,17 @@
       },
       "required": [
         "artifactTypeName",
+        "minWallThickness",
         "minGcdVersion",
         "surfaceArea",
         "nonSolidSurfaceArea",
         "engineType",
         "cadVersion",
         "numSurfaces",
-        "descriptor",
-        "cadConfiguration",
         "fileBaseName",
         "numInsertCores",
         "height",
-        "cadKeyText",
+        "minHoleDiameter",
         "minThickness",
         "toolMinThickness",
         "thicknessStdDev",
@@ -128,19 +136,36 @@
         "numSideCores",
         "volume",
         "averageThicknessDev",
-        "cadMaterialName",
         "distanceUnits",
         "width",
         "partModelName",
         "min80Thickness",
         "temperatureUnitName",
         "fileFormat"
+      ],
+      "optional": [
+        "cadConfiguration",
+        "cadKeyText",
+        "cadMaterialName",
+        "descriptor",
+        "maxRingWidth"
       ]
     },
     "propertyInfoMap": {
       "type": "object",
       "properties": {
         "artifactTypeName": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
+          ]
+        },
+        "minWallThickness": {
           "type": "object",
           "properties": {
             "name": {
@@ -282,6 +307,17 @@
           "required": [
             "name",
             "unitTypeName"
+          ]
+        },
+        "minHoleDiameter": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name"
           ]
         },
         "cadKeyText": {
@@ -445,6 +481,21 @@
           ]
         },
         "averageThicknessDev": {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string"
+            },
+            "unitTypeName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "name",
+            "unitTypeName"
+          ]
+        },
+        "minRingWidth": {
           "type": "object",
           "properties": {
             "name": {

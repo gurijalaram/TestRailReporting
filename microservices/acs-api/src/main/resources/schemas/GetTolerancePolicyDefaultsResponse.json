@@ -79,7 +79,6 @@
         "toleranceMode",
         "bendAngleToleranceOverride",
         "runoutOverride",
-        "flatnessOverride",
         "parallelismOverride",
         "useCadToleranceThreshhold",
         "cadToleranceReplacement",
@@ -87,10 +86,13 @@
         "positionToleranceOverride",
         "profileOfSurfaceOverride",
         "roughnessRzOverride",
-        "toleranceOverride",
         "diamToleranceOverride",
         "concentricityOverride",
         "cylindricityOverride"
+      ],
+      "optional": [
+        "flatnessOverride",
+        "toleranceOverride"
       ]
     },
     "propertyInfoMap": {

@@ -58,9 +58,11 @@
         "prod.info.default.material",
         "prod.info.default.annual.volume",
         "prod.info.default.use.vpe.for.all.processes",
-        "prod.info.default.material.catalog.name",
         "prod.info.default.production.life",
-        "prod.info.default.batch.size",
+        "prod.info.default.batch.size"
+      ],
+      "optional": [
+        "prod.info.default.material.catalog.name",
         "prod.info.default.pg",
         "prod.info.default.vpe"
       ]
