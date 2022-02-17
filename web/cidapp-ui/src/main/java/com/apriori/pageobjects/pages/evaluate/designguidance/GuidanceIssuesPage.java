@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.DesignGuidanceController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -16,7 +18,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.Arrays;
 import java.util.List;
-import static org.junit.Assert.assertTrue;
 
 /**
  * @author cfrith
@@ -199,8 +200,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     public String getDtcIssueCount(String issueType) {
         By locator = By.xpath(String.format(
-                "//div[contains(text(), '%s')]/ancestor::div[@class='table-row ']/div[3]/div/div",
-                issueType)
+            "//div[contains(text(), '%s')]/ancestor::div[@class='table-row ']/div[3]/div/div",
+            issueType)
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
