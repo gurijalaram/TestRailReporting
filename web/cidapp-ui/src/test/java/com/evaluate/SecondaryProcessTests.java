@@ -408,7 +408,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart");
 
 
-        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("38.15s (77.35%)"));
+        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("289.91s (96.29%)"));
     }
 
     @Test
