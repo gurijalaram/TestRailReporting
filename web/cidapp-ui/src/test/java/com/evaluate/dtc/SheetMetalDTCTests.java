@@ -195,7 +195,7 @@ public class SheetMetalDTCTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getGuidanceResult("Design Warnings"), is("15"));
+        assertThat(evaluatePage.getGuidanceResult("Design Warnings"), is("18"));
         assertThat(evaluatePage.getGuidanceResult("Design Failures"), is("4"));
         assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("22"));
     }

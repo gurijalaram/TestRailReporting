@@ -33,7 +33,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='conflict-message']")
     private WebElement conflictMessage;
 
-    @FindBy(xpath = "//label[.='Override']")
+    @FindBy(xpath = "//label[.='Override existing public scenario']")
     private WebElement overrideButton;
 
     @FindBy(xpath = "//label[.='Change Name']")
