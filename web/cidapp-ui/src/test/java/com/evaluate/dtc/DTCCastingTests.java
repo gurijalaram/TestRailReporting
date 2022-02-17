@@ -18,6 +18,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -271,16 +272,20 @@ public class DTCCastingTests extends TestBase {
             .costScenario()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Part Thickness is more than the maximum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
+
+        softAssertions.assertAll();
     }
 }
