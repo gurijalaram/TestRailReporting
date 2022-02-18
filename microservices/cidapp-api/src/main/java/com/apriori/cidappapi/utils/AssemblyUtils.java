@@ -17,15 +17,16 @@ public class AssemblyUtils {
 
     /**
      * Associates subcomponents with assemblies then uploads and publishes them
-     * @param assemblyName
-     * @param assemblyExtension
-     * @param assemblyProcessGroup
-     * @param subComponentNames
-     * @param subComponentExtension
-     * @param subComponentProcessGroup
-     * @param scenarioName
-     * @param currentUser
-     * @return
+     *
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the subcomponent names
+     * @param subComponentExtension    - the subcomponent extension
+     * @param subComponentProcessGroup - the subcomponent process group
+     * @param scenarioName             - the scenario name
+     * @param currentUser              - the current user
+     * @return component object
      */
     public ComponentInfoBuilder uploadPublishAssemblyAndSubComponents(String assemblyName,
                                                                       String assemblyExtension,
@@ -62,6 +63,6 @@ public class AssemblyUtils {
         componentAssembly.setComponentId(componentAssemblyResponse.getComponentIdentity());
         componentAssembly.setScenarioId(componentAssemblyResponse.getScenarioIdentity());
 
-        return  componentAssembly;
+        return componentAssembly;
     }
 }
