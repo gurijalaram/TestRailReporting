@@ -1,7 +1,7 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
-import javax.net.ssl.X509TrustManager;
 import java.security.cert.X509Certificate;
+import javax.net.ssl.X509TrustManager;
 
 /**
  * DO NOT USE IN PRODUCTION!!!!

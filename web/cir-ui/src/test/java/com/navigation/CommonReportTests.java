@@ -156,7 +156,7 @@ public class CommonReportTests extends TestBase {
      *
      * @param sortOrder - String
      * @param doFourAsserts - boolean
-     * @param valuesToAssert - ArrayList<String>
+     * @param valuesToAssert - ArrayList of type String
      */
     public void castingDtcDetailsSortOrderTest(String sortOrder, boolean doFourAsserts,
                                                   ArrayList<String> valuesToAssert) {

@@ -2,39 +2,30 @@ package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
-
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.reports.ExportSetEnum;
-import com.apriori.utils.http.utils.WebDriverUtils;
-import com.apriori.utils.web.driver.DriverFactory;
-import com.apriori.utils.web.driver.WebDriverService;
+
 import io.qameta.allure.Description;
-import org.jsoup.nodes.Document;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
+
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
+import java.util.Collections;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
 
 public class CastingDtcReportTests {
 
@@ -51,8 +42,8 @@ public class CastingDtcReportTests {
         con.setRequestMethod("GET");
         con.connect();
         System.out.println("Login response code :" + con.getResponseCode());
-        String session_id = con + "";
-        jSessionId = session_id.split(";")[1].substring(11, 43);
+        String sessionId = con + "";
+        jSessionId = sessionId.split(";")[1].substring(11, 43);
         assertThat(jSessionId, is(notNullValue()));
     }
 
@@ -78,6 +69,8 @@ public class CastingDtcReportTests {
          */
 
         // 1 - Generate report with USD currency setting
+        reportRequest.getParameters().getReportParameterByName("currencyCode")
+            .setValue(Collections.singletonList("USD"));
         generateReportAndGetSummary(reportRequest);
 
         // 2 - Get values from USD report
