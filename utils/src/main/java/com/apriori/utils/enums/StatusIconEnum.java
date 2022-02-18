@@ -10,7 +10,8 @@ public enum StatusIconEnum {
     ASSEMBLY("assembly"),
     PUBLIC("users"),
     MISSING("missing"),
-    VIRTUAL("virtual");
+    VIRTUAL("virtual"),
+    PRIVATE("user");
 
     private final String statusIcon;
 

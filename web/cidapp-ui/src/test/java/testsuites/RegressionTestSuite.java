@@ -14,6 +14,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
+import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -45,6 +46,7 @@ import testsuites.suiteinterface.SmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
+    EditAssembliesTest.class,
     CostAllCadTests.class,
     CostScenarioTests.class,
     NewScenarioNameTests.class,
