@@ -180,7 +180,7 @@ qa-cid-perf:
     default_connector: Automation - NA - WC
 
   cir:
-    vm_url: https://conqbaci02/jasperserver-pro/
+    vm_url: https://conqbaci01/jasperserver-pro/
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html

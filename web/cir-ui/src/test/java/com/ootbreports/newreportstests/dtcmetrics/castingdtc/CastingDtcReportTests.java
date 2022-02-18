@@ -32,11 +32,14 @@ public class CastingDtcReportTests {
     private ChartDataPoint chartDataPoint;
     private static String jSessionId = "";
 
+    /*
+    This before class method skips the invalid ssl cert issue we have with on prem installs
+     */
     @BeforeClass
     public static void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         skipSslCheck();
 
-        String urlLink = String.format("https://conqbaci02/jasperserver-pro/j_spring_security_check?j_username=%s&j_password=%s", "bhegan", "bhegan");
+        String urlLink = String.format("https://conqbaci01/jasperserver-pro/j_spring_security_check?j_username=%s&j_password=%s", "bhegan", "bhegan");
         URL url = new URL(urlLink);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
