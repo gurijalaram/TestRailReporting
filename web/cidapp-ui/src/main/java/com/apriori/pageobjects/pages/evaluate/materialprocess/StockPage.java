@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -18,8 +20,8 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(StockPage.class);
 
-    @FindBy(css = ".tab.active [data-icon='clone']")
-    private WebElement stockTabActive;
+    @FindBy(xpath = "//button[.='Stock']")
+    private WebElement stockTab;
 
     @FindBy(xpath = "//div[.='Dimensions']")
     private WebElement panelHeading;
@@ -44,7 +46,7 @@ public class StockPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(stockTabActive);
+        assertTrue("Part Nesting tab was not selected", stockTab.getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(panelHeading);
     }
 
