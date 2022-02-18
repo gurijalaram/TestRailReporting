@@ -183,7 +183,6 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         return PageFactory.initElements(driver, klass);
     }
 
-
     /**
      * Select the continue button
      *
