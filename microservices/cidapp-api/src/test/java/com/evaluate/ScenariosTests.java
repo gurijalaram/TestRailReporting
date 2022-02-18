@@ -10,6 +10,7 @@ import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
@@ -34,6 +35,7 @@ public class ScenariosTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     @Test
     @TestRail(testCaseId = "10620")
@@ -80,38 +82,24 @@ public class ScenariosTests {
     @TestRail(testCaseId = {"10731", "10730", "10810", "10823"})
     @Description("Upload, publish subcomponents and assembly then Edit the Assembly, shallow basis")
     public void testUploadPublishingAndEditAssemblyShallow() {
-        String assemblyName = "Hinge assembly";
+        final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String componentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(subComponentName -> ComponentInfoBuilder.builder()
-            .componentName(subComponentName)
-            .extension(componentExtension)
-            .scenarioName(scenarioName)
-            .processGroup(subComponentProcessGroup)
-            .user(currentUser)
-            .build()).collect(Collectors.toList());
-
-        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
-            .assemblyName(assemblyName)
-            .extension(assemblyExtension)
-            .processGroup(assemblyProcessGroup)
-            .subComponents(subComponents)
-            .build();
-
-        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadAndPublishComponent(
-            subComponent));
-
-        ScenarioItem componentAssemblyResponse = scenariosUtil.uploadAndPublishComponent(componentAssembly);
-
-        componentAssembly.setComponentId(componentAssemblyResponse.getComponentIdentity());
-        componentAssembly.setScenarioId(componentAssemblyResponse.getScenarioIdentity());
+        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadPublishAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            componentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
@@ -130,12 +118,12 @@ public class ScenariosTests {
     @TestRail(testCaseId = {"10758"})
     @Description("Trigger 409 conflict on trying to publish an assembly that has private sub-components")
     public void testUploadPublishingAssemblyError() {
-        String assemblyName = "Hinge assembly";
+        final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String componentExtension = ".SLDPRT";
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -144,18 +132,23 @@ public class ScenariosTests {
 
         List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(subComponentName -> ComponentInfoBuilder.builder()
             .componentName(subComponentName)
-            .extension(componentExtension)
+            .extension(subComponentExtension)
             .scenarioName(scenarioName)
             .processGroup(subComponentProcessGroup)
             .user(currentUser)
             .build()).collect(Collectors.toList());
 
         ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
-            .assemblyName(assemblyName)
+            .componentName(assemblyName)
             .extension(assemblyExtension)
+            .scenarioName(scenarioName)
             .processGroup(assemblyProcessGroup)
             .subComponents(subComponents)
+            .user(currentUser)
             .build();
+
+        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadComponent(
+            subComponent));
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(componentAssembly);
 
