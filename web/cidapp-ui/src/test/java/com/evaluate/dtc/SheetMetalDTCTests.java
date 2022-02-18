@@ -19,6 +19,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -78,12 +79,16 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Hole - Min Diameter", "Simple Hole", "SimpleHole:2");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("The hole can not be made by a Plasma Cutting operation on the Plasma Cut process as the kerf width is too small"));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole can not be made by a Plasma Cutting operation on the Plasma Cut process as the kerf width is too small.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Hole - Blind", "Simple Hole", "SimpleHole:4");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("The GCD failed feasibility for Plasma Cutting as this process cannot be used to manufacture a blind hole"));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("SimpleHole:4 is blind and Plasma Cutting cannot make blind holes.");
+
+        softAssertions.assertAll();
 
         /*guidanceIssuesPage.closePanel()
             .openDesignGuidance()
@@ -125,12 +130,16 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Complex Hole", "ComplexHole:14");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Increase the distance between the holes to the suggested value."));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("The thin strip of material between the holes is at risk of damage from forces during manufacture or service.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Simple Hole", "SimpleHole:2");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Increase the distance between the holes to the suggested value."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("The thin strip of material between the holes is at risk of damage from forces during manufacture or service.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -157,15 +166,19 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Bend Issue, Bend - Intersects Form", "Straight Bend", "StraightBend:4");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("The intersection between the bend and form cannot be accessed by the tool when using Bending"));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("The intersection between the bend and form cannot be accessed by the tool when using Bending");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance().selectIssueTypeGcd("Bend Issue, Bend - Min Flap Size", "Straight Bend", "StraightBend:11");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("The short bend flap will be difficult to form or will require extra processing to trim after bending"));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Bend flap is too short to be easily made with standard bending operations.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance().selectIssueTypeGcd("Bend Issue, Bend - Min Radius", "Straight Bend", "StraightBend:4");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("the radius is too small for the machine capability"));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Bend radius is too small for the machine capability.");
+
+        softAssertions.assertAll();
     }
 
     @Test
