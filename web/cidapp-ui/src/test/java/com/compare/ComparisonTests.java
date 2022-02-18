@@ -36,6 +36,7 @@ import com.utils.DirectionEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -269,11 +270,13 @@ public class ComparisonTests extends TestBase {
             .collapse("Process")
             .collapse("Cost Result");
 
-        assertThat(comparePage.isComparisonInfoDisplayed("Description"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("Investment"), is(false));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Routing")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Investment")).isEqualTo(false);
 
         comparePage.expand("Info & Inputs")
             .expand("Material & Utilization")
@@ -281,11 +284,13 @@ public class ComparisonTests extends TestBase {
             .expand("Process")
             .expand("Cost Result");
 
-        assertThat(comparePage.isComparisonInfoDisplayed("Description"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("Investment"), is(true));
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Routing")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Investment")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -732,9 +737,13 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS), equalTo("31.97%"));
-        assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS), equalTo("75.00%"));
-        assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME), equalTo("139.98%"));
-        assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT), equalTo("4.10%"));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("31.97%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS)).isEqualTo("75.00%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("139.70%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("4.10%");
+
+        softAssertions.assertAll();
     }
 }
