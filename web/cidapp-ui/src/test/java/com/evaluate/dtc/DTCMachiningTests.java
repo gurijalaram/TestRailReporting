@@ -199,7 +199,7 @@ public class DTCMachiningTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Machining Issues, Obstructed Surfaces", "Planar Face", "PlanarFace:9");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Feature is obstructed"));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Facing: Feature is not accessible by an active setup. Activate a new Setup, override operation feasibility, or select a specialized machining operation."));
     }
 
     /*    @Category({CustomerSmokeTests.class, SmokeTests.class})

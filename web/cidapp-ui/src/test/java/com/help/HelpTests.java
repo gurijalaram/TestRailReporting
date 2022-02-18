@@ -86,7 +86,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Process Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine Material and Process Inputs and Results"));
     }
 
     @Test
@@ -107,7 +107,7 @@ public class HelpTests extends TestBase {
             .openDesignGuidance()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Design Guidance Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine the Design Guidance Results"));
     }
 
     @Test
@@ -128,7 +128,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Process Details"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Process Inputs and Results"));
     }
 
     @Test
