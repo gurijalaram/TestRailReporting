@@ -22,7 +22,7 @@ public class PanelController {
     @FindBy(css = "svg[data-icon='question']")
     private WebElement questionButton;
 
-    @FindBy(css = "svg[data-icon='times']")
+    @FindBy(css = "svg[data-icon='xmark']")
     private WebElement closeButton;
 
     @FindBy(xpath = "//span[normalize-space(@class)='Resizer Resizer horizontal']")

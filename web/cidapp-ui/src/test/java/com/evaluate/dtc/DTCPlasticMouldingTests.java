@@ -15,6 +15,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -57,7 +58,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:3");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface has a draft angle less than the recommended draft angle for this material."));
 
         /*guidanceIssuesPage.closePanel()
             .openProcesses()
@@ -130,7 +131,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Radii Issue, Minimum Internal Edge Radius", "Sharp Edge", "SharpEdge:8");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal Edge Radius is less than the minimum limit"));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal edge radius is less than the recommended internal edge radius for this material."));
     }
 
     @Test
@@ -155,7 +156,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Radii Issue, Minimum External Edge Radius", "Sharp Edge", "SharpEdge:7");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("External Edge Radius is less than the minimum limit"));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("External edge radius is less than the recommended external edge radius for this material."));
     }
 
     /*@Test
@@ -222,8 +223,12 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Molding is not feasible. Part Thickness is more than the maximum limit with this material."));
-        assertThat(guidanceIssuesPage.getGcdSuggested("Component:1"), containsString("<= 3.56mm"));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 3.56mm"));
+
+        softAssertions.assertAll();
 
         /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
         guidanceIssuesPage = designguidanceIssuesPage.closePanel()
@@ -282,7 +287,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Injection Molding is not feasible. Part Thickness is less than the minimum limit with this material."));
+        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Minimum wall thickness is less than the recommended thickness for this material."));
 
         /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
         guidanceIssuesPage = designguidanceIssuesPage.closePanel()
