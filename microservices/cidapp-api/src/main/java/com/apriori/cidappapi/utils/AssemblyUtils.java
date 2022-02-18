@@ -28,16 +28,50 @@ public class AssemblyUtils {
      * @param currentUser              - the current user
      * @return component object
      */
-    public ComponentInfoBuilder uploadPublishAssemblyAndSubComponents(String assemblyName,
-                                                                      String assemblyExtension,
-                                                                      ProcessGroupEnum assemblyProcessGroup,
-                                                                      List<String> subComponentNames,
-                                                                      String subComponentExtension,
-                                                                      ProcessGroupEnum subComponentProcessGroup,
-                                                                      String scenarioName,
-                                                                      UserCredentials currentUser) {
+//    public ComponentInfoBuilder uploadPublishAssemblyAndSubComponents(String assemblyName,
+//                                                                      String assemblyExtension,
+//                                                                      ProcessGroupEnum assemblyProcessGroup,
+//                                                                      List<String> subComponentNames,
+//                                                                      String subComponentExtension,
+//                                                                      ProcessGroupEnum subComponentProcessGroup,
+//                                                                      String scenarioName,
+//                                                                      UserCredentials currentUser) {
+//
+//        List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(
+//            subComponentName -> ComponentInfoBuilder.builder()
+//                .componentName(subComponentName)
+//                .extension(subComponentExtension)
+//                .scenarioName(scenarioName)
+//                .processGroup(subComponentProcessGroup)
+//                .user(currentUser)
+//                .build()).collect(Collectors.toList());
+//
+//        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
+//            .componentName(assemblyName)
+//            .extension(assemblyExtension)
+//            .scenarioName(scenarioName)
+//            .processGroup(assemblyProcessGroup)
+//            .subComponents(subComponents)
+//            .user(currentUser)
+//            .build();
+//
+//        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadAndPublishComponent(
+//            subComponent));
+//
+//        ScenarioItem componentAssemblyResponse = scenariosUtil.uploadAndPublishComponent(componentAssembly);
+//
+//        componentAssembly.setComponentId(componentAssemblyResponse.getComponentIdentity());
+//        componentAssembly.setScenarioId(componentAssemblyResponse.getScenarioIdentity());
+//
+//        return componentAssembly;
+//    }
+    private List<ComponentInfoBuilder> buildSubComponents(List<String> subComponentNames,
+                                                          String subComponentExtension,
+                                                          ProcessGroupEnum subComponentProcessGroup,
+                                                          String scenarioName,
+                                                          UserCredentials currentUser) {
 
-        List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(
+        return subComponentNames.stream().map(
             subComponentName -> ComponentInfoBuilder.builder()
                 .componentName(subComponentName)
                 .extension(subComponentExtension)
@@ -45,24 +79,93 @@ public class AssemblyUtils {
                 .processGroup(subComponentProcessGroup)
                 .user(currentUser)
                 .build()).collect(Collectors.toList());
+    }
 
-        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
+
+    public ComponentInfoBuilder associateAndUploadAssemblyAndSubComponents(String assemblyName,
+                                                                           String assemblyExtension,
+                                                                           ProcessGroupEnum assemblyProcessGroup,
+                                                                           List<String> subComponentNames,
+                                                                           String subComponentExtension,
+                                                                           ProcessGroupEnum subComponentProcessGroup,
+                                                                           String scenarioName,
+                                                                           UserCredentials currentUser) {
+
+        return ComponentInfoBuilder.builder()
             .componentName(assemblyName)
             .extension(assemblyExtension)
             .scenarioName(scenarioName)
             .processGroup(assemblyProcessGroup)
-            .subComponents(subComponents)
+            .subComponents(buildSubComponents(subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser))
             .user(currentUser)
             .build();
+    }
 
-        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadAndPublishComponent(
-            subComponent));
+    public ComponentInfoBuilder uploadAssemblyAndSubComponents(String assemblyName,
+                                                               String assemblyExtension,
+                                                               ProcessGroupEnum assemblyProcessGroup,
+                                                               List<String> subComponentNames,
+                                                               String subComponentExtension,
+                                                               ProcessGroupEnum subComponentProcessGroup,
+                                                               String scenarioName,
+                                                               UserCredentials currentUser) {
 
-        ScenarioItem componentAssemblyResponse = scenariosUtil.uploadAndPublishComponent(componentAssembly);
+        ComponentInfoBuilder componentAssembly = associateAndUploadAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
 
-        componentAssembly.setComponentId(componentAssemblyResponse.getComponentIdentity());
-        componentAssembly.setScenarioId(componentAssemblyResponse.getScenarioIdentity());
+        componentAssembly.getSubComponents().forEach(subComponent -> {
+            ScenarioItem subComponentScenarioItem = scenariosUtil.uploadComponent(subComponent);
+            subComponent.setComponentId(subComponentScenarioItem.getComponentIdentity());
+            subComponent.setScenarioId(subComponentScenarioItem.getScenarioIdentity());
+        });
+
+        ScenarioItem assemblyScenarioItem = scenariosUtil.uploadComponent(componentAssembly);
+        componentAssembly.setComponentId(assemblyScenarioItem.getComponentIdentity());
+        componentAssembly.setScenarioId(assemblyScenarioItem.getScenarioIdentity());
 
         return componentAssembly;
     }
+
+    public ComponentInfoBuilder publishAssembly(ComponentInfoBuilder componentInfoBuilder) {
+
+    }
+
+    public ComponentInfoBuilder publishSubComponent() {
+    }
+
+
+//        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadComponent(
+//            subComponent));
+//
+//        return scenariosUtil.uploadComponent(componentAssembly);
 }
+
+//    public ResponseWrapper<ScenarioResponse> publishAssembly(String assemblyName,
+//                                                             String assemblyExtension,
+//                                                             ProcessGroupEnum assemblyProcessGroup,
+//                                                             List<String> subComponentNames,
+//                                                             String subComponentExtension,
+//                                                             ProcessGroupEnum subComponentProcessGroup,
+//                                                             String scenarioName,
+//                                                             UserCredentials currentUser) {
+//
+//        return scenariosUtil.postPublishScenario(associateAndUploadAssemblyAndSubComponents(assemblyName,
+//            assemblyExtension,
+//            assemblyProcessGroup,
+//            subComponentNames,
+//            subComponentExtension,
+//            subComponentProcessGroup,
+//            scenarioName,
+//            currentUser), currentUser);
+//    }
+//}
