@@ -89,29 +89,14 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        //Build & process sub component object based on array list of names
-        for (String subComponentName : subComponentNames) {
-            scenariosUtil.uploadAndPublishComponent(ComponentInfoBuilder.builder()
-                .componentName(subComponentName)
-                .extension(componentExtension)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
-        }
-
-        //Process assembly
-        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
-            .user(currentUser)
-            .build();
-
-        ScenarioItem assemblyUploadResponse = scenariosUtil.uploadAndPublishComponent(myAssembly);
-        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
-        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
+        ComponentInfoBuilder myAssembly = scenariosUtil.uploadAndPublishAssembly(
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            assemblyName,
+            assemblyExtension,
+            scenarioName,
+            currentUser);
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(

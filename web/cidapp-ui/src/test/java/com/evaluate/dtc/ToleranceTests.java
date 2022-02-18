@@ -25,6 +25,7 @@ import com.utils.EvaluateDfmIconEnum;
 import com.utils.OverridesEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -663,9 +664,11 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
-        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("13"));
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances")).isEqualTo("13");
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         evaluatePage.publishScenario()
             .publish(cssScenarioItem, currentUser, EvaluatePage.class)
@@ -676,7 +679,9 @@ public class ToleranceTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(componentName, testScenarioName);
 
-        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("13"));
+        softAssertions.assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances")).isEqualTo("13");
+
+        softAssertions.assertAll();
 
         /*tolerancesPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab()
