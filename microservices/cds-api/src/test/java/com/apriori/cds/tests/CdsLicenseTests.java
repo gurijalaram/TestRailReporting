@@ -253,7 +253,7 @@ public class CdsLicenseTests {
         );
 
         assertThat(subLicense.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(subLicense.getResponseEntity().getResponse().getName(), containsString("License"));
+        assertThat(subLicense.getResponseEntity().getName(), containsString("License"));
     }
 
     @Test
