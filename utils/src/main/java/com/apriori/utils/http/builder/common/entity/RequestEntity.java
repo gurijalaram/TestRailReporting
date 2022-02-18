@@ -58,7 +58,6 @@ public class RequestEntity {
     @Singular
     private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
 
-
     public RequestEntity body(String node, Object body) {
         this.body = new HashMap<String, Object>() {
             {
