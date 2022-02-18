@@ -32,6 +32,7 @@ import java.util.Map;
 @Builder
 @Accessors(fluent = true)
 public class RequestEntity {
+    private String apUserContext;
     private Object body;
     private int connectionTimeout = 60000;
     private String customBody;
@@ -39,6 +40,7 @@ public class RequestEntity {
     private WebDriver driver;
     private EndpointEnum endpoint;
     private EndpointType endpointType = EndpointType.EXTERNAL;
+    private Integer expectedResponseCode;
     private boolean followRedirection = false;
     private FormParams formParams;
     @Singular
@@ -48,7 +50,6 @@ public class RequestEntity {
     private Class<?> returnType;
     private int socketTimeout = 60000;
     private String token;
-    private String apUserContext;
     private boolean urlEncodingEnabled = true;
     @Singular
     private List<Map<String, ?>> urlParams = new ArrayList<>();
@@ -56,6 +57,7 @@ public class RequestEntity {
     private UserAuthenticationEntity userAuthenticationEntity;
     @Singular
     private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
+
 
     public RequestEntity body(String node, Object body) {
         this.body = new HashMap<String, Object>() {
