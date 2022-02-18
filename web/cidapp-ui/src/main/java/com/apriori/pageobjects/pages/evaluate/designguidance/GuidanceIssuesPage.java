@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.designguidance;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.DesignGuidanceController;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -24,8 +26,8 @@ import java.util.List;
 @Slf4j
 public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
-    @FindBy(css = ".active [data-icon='exclamation-circle']")
-    private WebElement issuesTabActive;
+    @FindBy(xpath = "//button[.='Issues']")
+    private WebElement issuesTab;
 
     @FindBy(css = ".design-guidance-detail-card .apriori-table")
     private WebElement chartTable;
@@ -67,7 +69,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(issuesTabActive);
+        assertTrue("Issues tab was not selected", issuesTab.getAttribute("class").contains("active"));
     }
 
     /**
@@ -198,8 +200,8 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      */
     public String getDtcIssueCount(String issueType) {
         By locator = By.xpath(String.format(
-                "//div[contains(text(), '%s')]/ancestor::div[@class='table-row ']/div[3]/div/div",
-                issueType)
+            "//div[contains(text(), '%s')]/ancestor::div[@class='table-row ']/div[3]/div/div",
+            issueType)
         );
         pageUtils.waitForElementToAppear(locator);
         return driver.findElement(locator).getText();
