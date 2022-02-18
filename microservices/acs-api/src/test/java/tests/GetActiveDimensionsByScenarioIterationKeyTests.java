@@ -67,17 +67,17 @@ public class GetActiveDimensionsByScenarioIterationKeyTests {
         GetActiveDimensionsResponse getActiveDimensionsResponse = acsResources.getActiveDimensionsByScenarioIterationKeyEndpoint(infoToGetDimensions);
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getLength() == 51.5405);
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getName().equals("length"));
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getUnitTypeName().equals("mm"));
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getLength()).isEqualTo(51.5405);
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getName()).isEqualTo("length");
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getLength().getUnitTypeName()).isEqualTo("mm");
 
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getWidth() == 30.2973);
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getWidth().getName().equals("width"));
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getWidth().getUnitTypeName().equals("mm"));
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getWidth()).isEqualTo(30.2973);
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getWidth().getName()).isEqualTo("width");
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getWidth().getUnitTypeName()).isEqualTo("mm");
 
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getHeight() == 25.0);
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getHeight().getName().equals("height"));
-        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getHeight().getUnitTypeName().equals("mm"));
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyValueMap().getHeight()).isEqualTo(25.0);
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getHeight().getName()).isEqualTo("height");
+        softAssertions.assertThat(getActiveDimensionsResponse.getPropertyInfoMap().getHeight().getUnitTypeName()).isEqualTo("mm");
 
         softAssertions.assertAll();
     }

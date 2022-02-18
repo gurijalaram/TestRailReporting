@@ -16,6 +16,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -58,10 +59,14 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getDefinedValue(), is(equalTo(8)));
-        assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)"), is(0.40));
-        assertThat(materialProcessPage.isColorantSelected(), is(true));
-        assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance   (Piece Part Cost Driver)"), is(0.30));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.40);
+        softAssertions.assertThat(materialProcessPage.isColorantSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance   (Piece Part Cost Driver)")).isEqualTo(0.30);
+
+        softAssertions.assertAll();
     }
 
     @Test

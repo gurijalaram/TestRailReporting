@@ -171,18 +171,18 @@ public class GetScenariosInfoTests {
         for (int i = 0; i < scenarioItemsResponse.size(); i++) {
             GetScenariosInfoItem scenariosInfoItem = getScenariosInfoItems.get(i);
 
-            softAssertions.assertThat(!scenariosInfoItem.getInitialized());
-            softAssertions.assertThat(!scenariosInfoItem.getMissing());
-            softAssertions.assertThat(!scenariosInfoItem.getVirtual());
-            softAssertions.assertThat(!scenariosInfoItem.getLocked());
+            softAssertions.assertThat(scenariosInfoItem.getInitialized()).isFalse();
+            softAssertions.assertThat(scenariosInfoItem.getMissing()).isFalse();
+            softAssertions.assertThat(scenariosInfoItem.getVirtual()).isFalse();
+            softAssertions.assertThat(scenariosInfoItem.getLocked()).isFalse();
 
-            softAssertions.assertThat(scenariosInfoItem.getCreatedBy().equals(userToExpect));
-            softAssertions.assertThat(scenariosInfoItem.getUpdatedBy().equals(userToExpect));
+            softAssertions.assertThat(scenariosInfoItem.getCreatedBy()).isEqualTo(userToExpect);
+            softAssertions.assertThat(scenariosInfoItem.getUpdatedBy()).isEqualTo(userToExpect);
 
-            softAssertions.assertThat(scenariosInfoItem.getComponentType().equals(componentTypeToExpect));
-            softAssertions.assertThat(scenariosInfoItem.getFileName().equals(fileNames.get(i).toLowerCase()));
+            softAssertions.assertThat(scenariosInfoItem.getComponentType()).isEqualTo(componentTypeToExpect);
+            softAssertions.assertThat(scenariosInfoItem.getFileName()).isEqualTo(fileNames.get(i).toLowerCase());
 
-            softAssertions.assertThat(scenarioKeys.get(i).getTypeName().equals(typeNameToExpect));
+            softAssertions.assertThat(scenarioKeys.get(i).getTypeName()).isEqualTo(typeNameToExpect);
         }
 
         softAssertions.assertAll();
