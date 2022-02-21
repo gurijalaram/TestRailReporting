@@ -155,11 +155,20 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     }
 
     /**
-     * Cost
+     * Apply & Cost
      *
-     * @return current page object
+     * @return generic page object
      */
-    public <T> T cost(Class<T> klass) {
-        return modalDialogController.cost(klass);
+    public <T> T applyAndCost(Class<T> klass) {
+        return modalDialogController.applyCost(klass);
+    }
+
+    /**
+     * Close
+     *
+     * @return generic page object
+     */
+    public <T> T close(Class<T> klass) {
+        return modalDialogController.close(klass);
     }
 }
