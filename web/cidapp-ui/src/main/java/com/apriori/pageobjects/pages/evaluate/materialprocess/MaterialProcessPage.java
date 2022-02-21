@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.PsoController;
@@ -25,8 +27,8 @@ import java.util.stream.IntStream;
 @Slf4j
 public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> {
 
-    @FindBy(css = ".tab.active [data-icon='clock']")
-    private WebElement processesTabActive;
+    @FindBy(xpath = "//button[.='Processes']")
+    private WebElement processesTab;
 
     @FindBy(css = "div[dir='ltr']")
     private WebElement chartContainer;
@@ -116,7 +118,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(processesTabActive);
+        assertTrue("Processes tab was not selected", processesTab.getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(chartContainer);
     }
 

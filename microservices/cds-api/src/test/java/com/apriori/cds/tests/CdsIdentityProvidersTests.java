@@ -126,7 +126,7 @@ public class CdsIdentityProvidersTests {
         );
 
         assertThat(idpPagination.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(idpPagination.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(idpPagination.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
