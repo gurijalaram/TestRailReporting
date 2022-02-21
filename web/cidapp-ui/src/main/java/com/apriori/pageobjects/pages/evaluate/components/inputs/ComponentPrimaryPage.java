@@ -4,7 +4,6 @@ import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -80,9 +79,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return new page object
      */
-    public SecondaryPage goToSecondaryInputsTab() {
+    public ComponentSecondaryPage goToSecondaryInputsTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryPage(driver);
+        return new ComponentSecondaryPage(driver);
     }
 
     /**
@@ -170,10 +169,10 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     /**
      * Get the text in the annual volume input field
      *
-     * @return string
+     * @return int
      */
-    public String getAnnualVolume() {
-        return pageUtils.waitForElementToAppear(annualVolumeInput).getAttribute("textContent");
+    public int getAnnualVolume() {
+        return Integer.parseInt(pageUtils.waitForElementToAppear(annualVolumeInput).getAttribute("value"));
     }
 
     /**
@@ -192,8 +191,8 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return string
      */
-    public String getYears() {
-        return pageUtils.waitForElementToAppear(productionLifeInput).getAttribute("textContent");
+    public int getYears() {
+        return Integer.parseInt(pageUtils.waitForElementToAppear(productionLifeInput).getAttribute("value"));
     }
 
     /**
