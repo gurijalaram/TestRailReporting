@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -25,8 +27,8 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
     @FindBy(xpath = "//div[contains(@class,'apriori-card dark tabbed')]")
     private WebElement panelDetails;
 
-    @FindBy(css = ".tab.active [data-icon='box']")
-    private WebElement materialTabActive;
+    @FindBy(xpath = "//button[.='Material Utilization']")
+    private WebElement materialTab;
 
     @FindBy(xpath = "//button[.='Stock']")
     private WebElement stockPanel;
@@ -54,7 +56,7 @@ public class MaterialUtilizationPage extends LoadableComponent<MaterialUtilizati
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(materialTabActive);
+        assertTrue("Material Utilization tab was not selected", materialTab.getAttribute("class").contains("active"));
     }
 
     /**
