@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonRootName("response")
 public class SubLicenseAssociationUser {
-    private String userIdentity;
+    private String identity;
     private String createdBy;
+    private String userIdentity;
 }
