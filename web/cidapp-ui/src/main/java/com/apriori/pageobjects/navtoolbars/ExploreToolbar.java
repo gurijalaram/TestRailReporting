@@ -2,12 +2,14 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.FileUploadPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -18,6 +20,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
+import java.util.List;
 
 /**
  * @author cfrith
@@ -131,6 +134,37 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * uploads an assembly with all subcomponents and publish them all
+     *
+     * @param subComponentNames - the subcomponent names
+     * @param componentExtension - the subcomponent extension
+     * @param processGroupEnum - the process group enum
+     * @param assemblyName - the assembly name
+     * @param assemblyExtension -  the assembly extension
+     * @param scenarioName - the scenario name
+     * @param currentUser - the current user
+     * @return - a new page object
+     */
+    public  EvaluatePage uploadPublishAndOpenAssembly(List<String> subComponentNames,
+                                                      String componentExtension,
+                                                      ProcessGroupEnum processGroupEnum,
+                                                      String assemblyName,
+                                                      String assemblyExtension,
+                                                      String scenarioName,
+                                                      UserCredentials currentUser) {
+        ComponentInfoBuilder myAssembly =  new ScenariosUtil().uploadAndPublishAssembly(
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            assemblyName,
+            assemblyExtension,
+            scenarioName,
+            currentUser);
+
+        return navigateToScenario(myAssembly);
+    }
+
+    /**
      * Uploads a component through the API
      *
      * @param componentName   - the component name
@@ -169,6 +203,17 @@ public class ExploreToolbar extends MainNavBar {
      */
     public EvaluatePage navigateToScenario(ScenarioItem cssComponent) {
         driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", cssComponent.getComponentIdentity(), cssComponent.getScenarioIdentity())));
+        return new EvaluatePage(driver);
+    }
+
+    /**
+     * Navigates to the scenario via url
+     *
+     * @param component - the component
+     * @return - A new page object
+     */
+    public EvaluatePage navigateToScenario(ComponentInfoBuilder component) {
+        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentId(), component.getScenarioId())));
         return new EvaluatePage(driver);
     }
 
