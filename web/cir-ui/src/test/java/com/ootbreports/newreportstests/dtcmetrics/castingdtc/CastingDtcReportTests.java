@@ -12,6 +12,7 @@ import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 
 import com.apriori.utils.properties.PropertiesContext;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
