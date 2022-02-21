@@ -12,6 +12,8 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 
+import com.apriori.utils.properties.PropertiesContext;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -34,14 +36,18 @@ public class CastingDtcReportTests {
     private ChartDataPoint chartDataPoint;
     private static String jSessionId = "";
 
-    /*
-    This before class method skips the invalid ssl cert issue we have with on prem installs
+    /**
+     * This before class method skips the invalid ssl cert issue we have with on prem installs
+     *
+     * @throws IOException - potential exception
+     * @throws NoSuchAlgorithmException - potential exception
+     * @throws KeyManagementException - potential exception
      */
     @BeforeClass
     public static void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         skipSslCheck();
 
-        String urlLink = String.format("https://conqbaci01/jasperserver-pro/j_spring_security_check?j_username=%s&j_password=%s", "bhegan", "bhegan");
+        String urlLink = PropertiesContext.get("${env}.reports.on_prem_vm_url").concat("j_spring_security_check?j_username=bhegan&j_password=bhegan");
         URL url = new URL(urlLink);
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("GET");
@@ -88,21 +94,21 @@ public class CastingDtcReportTests {
         // 1 - Generate report with USD currency setting
         reportRequest.getParameters().getReportParameterByName("currencyCode")
             .setValue(Collections.singletonList("USD"));
-        generateReportAndGetSummary(reportRequest);
+        ChartDataPoint usdChartDataPoint = generateReportAndGetSummary(reportRequest);
 
         // 2 - Get values from USD report
-        String usdFullyBurdenedCost = getFbc();
-        double usdAnnualSpend = getAnnualSpend();
+        String usdFullyBurdenedCost = usdChartDataPoint.getFullyBurdenedCost();
+        double usdAnnualSpend = usdChartDataPoint.getAnnualSpend();
 
         // 3- Change currency to GBP and re-generate report
         reportRequest.getParameters().getReportParameterByName("currencyCode")
             .setValue(Collections.singletonList("GBP"));
 
-        generateReportAndGetSummary(reportRequest);
+        ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
 
         // 4 - Get values from GBP report
-        String gbpFullyBurdenedCost = getFbc();
-        double gbpAnnualSpend = getAnnualSpend();
+        String gbpFullyBurdenedCost = gbpChartDataPoint.getFullyBurdenedCost();
+        double gbpAnnualSpend = gbpChartDataPoint.getAnnualSpend();
 
         // 5 - Assert that USD values are not equal to GBP values
         assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
@@ -117,17 +123,9 @@ public class CastingDtcReportTests {
         HttpsURLConnection.setDefaultHostnameVerifier((string, ssls) -> true);
     }
 
-    private void generateReportAndGetSummary(ReportRequest reportRequest) {
+    private ChartDataPoint generateReportAndGetSummary(ReportRequest reportRequest) {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
                 .generateJasperReportSummary(reportRequest);
-        chartDataPoint = jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
-    }
-
-    private String getFbc() {
-        return chartDataPoint.getFullyBurdenedCost();
-    }
-
-    private double getAnnualSpend() {
-        return chartDataPoint.getAnnualSpend();
+        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
     }
 }

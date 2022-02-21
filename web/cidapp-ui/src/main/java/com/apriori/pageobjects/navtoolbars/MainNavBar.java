@@ -49,7 +49,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(css = ".user-dropdown.dropdown")
     private WebElement userDropdown;
 
-    @FindBy(css = "[data-icon='sign-out-alt']")
+    @FindBy(xpath = "//button[.='Logout']")
     private WebElement logoutButton;
 
     private PageUtils pageUtils;
