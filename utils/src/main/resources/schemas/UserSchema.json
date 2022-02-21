@@ -6,6 +6,9 @@
   "properties": {
     "response": {
       "type": "object",
+      "optional": [
+        "sites"
+      ],
       "required": [
         "identity",
         "createdBy",
@@ -15,7 +18,6 @@
         "email",
         "username",
         "active",
-        "sites",
         "customAttributes",
         "customerIdentity",
         "mfaRequired"
