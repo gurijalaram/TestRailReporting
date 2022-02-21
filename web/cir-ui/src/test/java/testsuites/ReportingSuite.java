@@ -41,6 +41,7 @@ import testsuites.suiteinterface.ReportsTest;
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
     CastingDtcReportTests.class,
+    com.ootbreports.newreportstests.dtcmetrics.castingdtc.CastingDtcReportTests.class,
     CastingDtcDetailsReportTests.class,
     CastingDtcComparisonReportTests.class,
     ComponentCostReportTests.class,
