@@ -25,6 +25,6 @@ public enum CIRAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.cir.vm_url") + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("${env}.reports.on_prem_vm_url") + String.format(getEndpointString(), variables);
     }
 }
