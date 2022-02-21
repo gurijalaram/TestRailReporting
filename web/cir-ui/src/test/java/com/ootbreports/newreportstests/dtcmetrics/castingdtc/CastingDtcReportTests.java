@@ -8,11 +8,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
+import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
@@ -49,6 +51,18 @@ public class CastingDtcReportTests {
         jSessionId = sessionId.split(";")[1].substring(11, 43);
         assertThat(jSessionId, is(notNullValue()));
     }
+
+    @Test
+    @Ignore
+    public void exampleOfInputParamsUsage() {
+        InputControl inputControl =  JasperReportUtil.init(jSessionId)
+            .getInputControls();
+
+        inputControl.getExportSetName().getOption("---01-dtc-casting").getValue();
+        inputControl.getCostMetric().getValue();
+        inputControl.getInputControlStateByName("requiredInputControl").getOption("requiredOptionInInputControl");
+    }
+
 
     @Test
     @Category(ReportsTest.class)
