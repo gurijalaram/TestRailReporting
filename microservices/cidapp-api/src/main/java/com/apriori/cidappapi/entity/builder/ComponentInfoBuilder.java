@@ -17,7 +17,9 @@ public class ComponentInfoBuilder {
     private final String componentName;
     private final String extension;
     private final String scenarioName;
+    // TODO: 21/02/2022 cn - refactor to componentIdentity
     private String componentId;
+    // TODO: 21/02/2022 cn - refactor to scenarionIdentity
     private String scenarioId;
     private final ProcessGroupEnum processGroup;
     @Builder.Default

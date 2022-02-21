@@ -29,7 +29,6 @@ import org.junit.Test;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class ScenariosTests {
 
@@ -86,20 +85,24 @@ public class ScenariosTests {
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final String componentExtension = ".SLDPRT";
+        final String subComponentExtension = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadPublishAssemblyAndSubComponents(assemblyName,
+        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
-            componentExtension,
+            subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
             currentUser);
+
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        assemblyUtils.publishAssembly(componentAssembly);
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
@@ -109,7 +112,6 @@ public class ScenariosTests {
                     .build())
             .getResponseEntity();
 
-        //assertions
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
         assertThat(editAssemblyResponse.getPublished(), is(false));
     }
@@ -130,27 +132,16 @@ public class ScenariosTests {
 
         String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
 
-        List<ComponentInfoBuilder> subComponents = subComponentNames.stream().map(subComponentName -> ComponentInfoBuilder.builder()
-            .componentName(subComponentName)
-            .extension(subComponentExtension)
-            .scenarioName(scenarioName)
-            .processGroup(subComponentProcessGroup)
-            .user(currentUser)
-            .build()).collect(Collectors.toList());
+        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
 
-        ComponentInfoBuilder componentAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(assemblyProcessGroup)
-            .subComponents(subComponents)
-            .user(currentUser)
-            .build();
-
-        componentAssembly.getSubComponents().forEach(subComponent -> scenariosUtil.uploadComponent(
-            subComponent));
-
-        ResponseWrapper<ScenarioResponse> assemblyUploadResponse = scenariosUtil.uploadAndPublishComponentError(componentAssembly);
+        ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
         assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));
