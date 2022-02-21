@@ -36,7 +36,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
     private WebElement filterButton;
 
-    @FindBy(css = "[data-icon='angle-double-left']")
+    @FindBy(css = ".small.preview-button")
     private WebElement previewButton;
 
     @FindBy(id = "qa-scenario-explorer-filter-selector")
