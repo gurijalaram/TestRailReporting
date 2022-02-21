@@ -67,4 +67,6 @@ public class ProcessGroupAssociations {
     private TwoModelMachining twoModelMachining;
     @JsonProperty("Sheet Metal - Stretch Forming")
     private SheetMetalStretchForming sheetMetalStretchForming;
+    @JsonProperty("Sheet Metal - Roll Forming")
+    private SheetMetalRollForming sheetMetalRollForming;
 }

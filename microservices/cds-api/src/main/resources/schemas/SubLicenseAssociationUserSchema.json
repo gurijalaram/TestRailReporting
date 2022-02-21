@@ -7,11 +7,14 @@
   "properties": {
     "response": {
       "required": [
-        "userIdentity",
-        "createdBy"
+        "identity",
+        "createdBy",
+        "userIdentity"
       ],
       "properties": {
         "userIdentity": {
+        },
+        "identity": {
         },
         "createdBy": {
         }
