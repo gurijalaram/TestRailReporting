@@ -44,15 +44,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-set-inputs-button'] button")
     private WebElement setInputsButton;
 
-    @FindBy(id = "qa-sub-component-action-bar-override-button")
-    private WebElement pencilButton;
-
-    @FindBy(id = "qa-sub-component-action-bar-exclude-button")
-    private WebElement eyeSlashButton;
-
-    @FindBy(id = "qa-sub-component-action-bar-include-button")
-    private WebElement eyeButton;
-
     @FindBy(id = "qa-sub-component-detail-configure-button")
     private WebElement configureButton;
 
