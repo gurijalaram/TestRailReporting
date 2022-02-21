@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.materialprocess;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -26,7 +28,7 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
     @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] > label")
     private WebElement utilizationMode;
 
-    @FindBy(css = ".active [data-icon='th']")
+    @FindBy(xpath = "//button[.='Part Nesting']")
     private WebElement partNestingTab;
 
     private PageUtils pageUtils;
@@ -47,7 +49,7 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(partNestingTab);
+        assertTrue("Part Nesting tab was not selected", partNestingTab.getAttribute("class").contains("active"));
     }
 
     /**

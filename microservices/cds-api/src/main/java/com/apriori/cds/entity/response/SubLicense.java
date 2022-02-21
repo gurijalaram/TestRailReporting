@@ -5,9 +5,11 @@ import com.apriori.utils.json.deserializers.DateDeserializer_yyyyMMdd;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -15,6 +17,8 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "SubLicenseSchema.json")
+@JsonRootName("response")
+@Data
 public class SubLicense {
     private String identity;
     private String createdBy;
@@ -31,113 +35,4 @@ public class SubLicense {
     private LocalDate expiresAt;
     private String licenseSignature;
     private Integer numAssignedUsers;
-    private SubLicense response;
-
-    public SubLicense getResponse() {
-        return response;
-    }
-
-    public SubLicense setResponse(SubLicense response) {
-        this.response = response;
-        return this;
-    }
-
-    public LocalDateTime getCreatedAt() {
-        return createdAt;
-    }
-
-    public SubLicense setCreatedAt(LocalDateTime createdAt) {
-        this.createdAt = createdAt;
-        return this;
-    }
-
-    public String getCreatedBy() {
-        return createdBy;
-    }
-
-    public SubLicense setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
-        return this;
-    }
-
-    public String getIdentity() {
-        return identity;
-    }
-
-    public SubLicense setIdentity(String identity) {
-        this.identity = identity;
-        return this;
-    }
-
-    public String getLicenseSignature() {
-        return licenseSignature;
-    }
-
-    public SubLicense setLicenseSignature(String licenseSignature) {
-        this.licenseSignature = licenseSignature;
-        return this;
-    }
-
-    public List<String> getLicensedModuleNames() {
-        return licensedModuleNames;
-    }
-
-    public SubLicense setLicensedModuleNames(List<String> licensedModuleNames) {
-        this.licensedModuleNames = licensedModuleNames;
-        return this;
-    }
-
-    public Integer getMaxNumUsers() {
-        return maxNumUsers;
-    }
-
-    public SubLicense setMaxNumUsers(Integer maxNumUsers) {
-        this.maxNumUsers = maxNumUsers;
-        return this;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public SubLicense setName(String name) {
-        this.name = name;
-        return this;
-    }
-
-    public Integer getNumAssignedUsers() {
-        return numAssignedUsers;
-    }
-
-    public SubLicense setNumAssignedUsers(Integer numAssignedUsers) {
-        this.numAssignedUsers = numAssignedUsers;
-        return this;
-    }
-
-    public Integer getNumPurchasedUsers() {
-        return numPurchasedUsers;
-    }
-
-    public SubLicense setNumPurchasedUsers(Integer numPurchasedUsers) {
-        this.numPurchasedUsers = numPurchasedUsers;
-        return this;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public SubLicense setUuid(String uuid) {
-        this.uuid = uuid;
-        return this;
-    }
-
-    public LocalDate getExpiresAt() {
-        return expiresAt;
-    }
-
-    public SubLicense setExpiresAt(LocalDate expiresAt) {
-        this.expiresAt = expiresAt;
-        return this;
-    }
 }
