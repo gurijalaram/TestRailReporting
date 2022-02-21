@@ -161,6 +161,14 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Checks if button is enabled
+     * @return true/false
+     */
+    public boolean isSetInputsEnabled() {
+        return pageUtils.waitForElementToAppear(setInputsButton).isEnabled();
+    }
+
+    /**
      * Opens the help page
      *
      * @return new page object
