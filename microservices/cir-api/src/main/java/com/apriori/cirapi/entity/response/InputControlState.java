@@ -1,6 +1,5 @@
 package com.apriori.cirapi.entity.response;
 
-
 import lombok.Data;
 
 import java.util.List;
