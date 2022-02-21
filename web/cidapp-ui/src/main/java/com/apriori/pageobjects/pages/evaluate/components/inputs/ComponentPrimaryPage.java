@@ -80,7 +80,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return new page object
      */
-    public SecondaryPage openSecondaryInputsTab() {
+    public SecondaryPage goToSecondaryInputsTab() {
         pageUtils.waitForElementAndClick(secondaryTab);
         return new SecondaryPage(driver);
     }
@@ -90,7 +90,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return new page object
      */
-    public CustomAttributesPage openCustomAttributesTab() {
+    public CustomAttributesPage goToCustomAttributesTab() {
         pageUtils.waitForElementAndClick(customAttributesTab);
         return new CustomAttributesPage(driver);
     }
