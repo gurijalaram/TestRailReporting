@@ -1,4 +1,5 @@
 dependencies {
     implementation project(':utils')
     implementation project(':web:cidapp-ui')
+    implementation project(':microservices:cir-api')
 }
