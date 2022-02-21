@@ -23,14 +23,20 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     @FindBy(css = ".modal-body div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
     private WebElement processGroupDropdown;
 
-    @FindBy(css = ".inputs-container div[id='qa-process-group-select-field'] input")
+    @FindBy(css = ".modal-body [id='qa-process-group-select-field'] .apriori-select")
     private WebElement processGroupInput;
 
     @FindBy(css = ".modal-body div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
     private WebElement digitalFactoryDropdown;
 
-    @FindBy(css = ".modal-body div[id='qa-material-modal-select-field'] .input-group-append")
+    @FindBy(css = ".modal-body [id='qa-digital-factory-select-field'] .apriori-select")
+    private WebElement digitalFactoryInput;
+
+    @FindBy(css = ".modal-body div[id='qa-material-modal-select-field'] .input-group-append button")
     private WebElement materialsPencil;
+
+    @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .apriori-select")
+    private WebElement materialInput;
 
     @FindBy(css = ".modal-body input[name='annualVolume']")
     private WebElement annualVolumeInput;
@@ -102,6 +108,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     }
 
     /**
+     * Get the text in the process group dropdown
+     *
+     * @return string
+     */
+    public String getProcessGroup() {
+        return pageUtils.waitForElementToAppear(processGroupInput).getAttribute("textContent");
+    }
+
+    /**
      * Selects the vpe dropdown
      *
      * @param digitalFactory - the vpe
@@ -114,6 +129,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     }
 
     /**
+     * Get the text in the digital factory dropdown
+     *
+     * @return string
+     */
+    public String getDigitalFactory() {
+        return pageUtils.waitForElementToAppear(digitalFactoryInput).getAttribute("textContent");
+    }
+
+    /**
      * Opens the material selector table
      *
      * @return new page object
@@ -121,6 +145,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     public MaterialSelectorPage openMaterialSelectorTable() {
         inputsController.openMaterialSelectorTable(materialsPencil);
         return new MaterialSelectorPage(driver);
+    }
+
+    /**
+     * Get the text in the materials dropdown
+     *
+     * @return string
+     */
+    public String getMaterial() {
+        return pageUtils.waitForElementToAppear(materialInput).getAttribute("textContent");
     }
 
     /**
@@ -135,6 +168,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     }
 
     /**
+     * Get the text in the annual volume input field
+     *
+     * @return string
+     */
+    public String getAnnualVolume() {
+        return pageUtils.waitForElementToAppear(annualVolumeInput).getAttribute("textContent");
+    }
+
+    /**
      * Enters the years of annual volume
      *
      * @param productionLife - the years
@@ -143,6 +185,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     public ComponentPrimaryPage enterAnnualYears(String productionLife) {
         inputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
+    }
+
+    /**
+     * Get the text in the years input field
+     *
+     * @return string
+     */
+    public String getYears() {
+        return pageUtils.waitForElementToAppear(productionLifeInput).getAttribute("textContent");
     }
 
     /**
