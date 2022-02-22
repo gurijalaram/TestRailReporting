@@ -205,7 +205,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(ProcessGroupEnum processGroup) {
-        inputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        inputsController.selectInputsDropdown(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
         return this;
     }
 
@@ -216,7 +216,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
+        inputsController.selectInputsDropdown(digitalFactoryDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
         return this;
     }
 

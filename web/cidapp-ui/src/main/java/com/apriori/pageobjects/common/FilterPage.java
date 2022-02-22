@@ -74,7 +74,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropDown, filter);
+        pageUtils.typeAheadSelect(filterDropDown, "modal-body", filter);
         return this;
     }
 
