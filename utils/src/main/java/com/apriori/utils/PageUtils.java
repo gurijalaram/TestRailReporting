@@ -1139,7 +1139,7 @@ public class PageUtils {
      * Interacts with a dropdown and input the relevant info
      *
      * @param dropdownSelector - the selector
-     * @param root             - the bottom level of the locator
+     * @param root             - the bottom level of the locator. this is the page the element is located on eg. can be in a modal dialog
      * @param locatorValue     - the locator value
      * @return current page object
      */

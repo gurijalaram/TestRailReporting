@@ -10,7 +10,6 @@ import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -57,6 +56,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     private PageUtils pageUtils;
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
+    private String root = "modal-body";
 
     public ComponentPrimaryPage(WebDriver driver) {
         this.driver = driver;
@@ -106,8 +106,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @return current page object
      */
     public ComponentPrimaryPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        pageUtils.waitForElementAndClick(processGroupDropdown);
-        pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", processGroup.getProcessGroup()))));
+        inputsController.selectInputsDropdown(processGroupDropdown, root, processGroup.getProcessGroup());
         return this;
     }
 
@@ -127,8 +126,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @return current page object
      */
     public ComponentPrimaryPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        pageUtils.waitForElementAndClick(digitalFactoryDropdown);
-        pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//div[.='%s']//div[@id]", digitalFactory.getDigitalFactory()))));
+        inputsController.selectInputsDropdown(digitalFactoryDropdown, root, digitalFactory.getDigitalFactory());
         return this;
     }
 

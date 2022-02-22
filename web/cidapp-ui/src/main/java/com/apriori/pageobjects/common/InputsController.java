@@ -43,7 +43,7 @@ public class InputsController {
      * Selects the vpe dropdown
      *
      * @param digitalFactoryDropdown - the vpe dropdown
-     * @param root                   - the bottom level of the locator
+     * @param root                   - the bottom level of the locator. this is the page the element is located on eg. can be in a modal dialog
      * @param value                  - the value
      * @return current page object
      */
