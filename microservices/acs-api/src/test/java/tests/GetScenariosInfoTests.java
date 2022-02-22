@@ -145,7 +145,7 @@ public class GetScenariosInfoTests {
      * @param fileNames - file names to assert against
      */
     private void getScenariosInfoAssertions(List<GetScenariosInfoItem> scenarioItemsResponse, List<String> fileNames) {
-        String userToExpect = "qa-automation-01";
+        String userToExpect = "qa-automation";
         String componentTypeToExpect = "PART";
         String typeNameToExpect = "partState";
 
@@ -159,8 +159,8 @@ public class GetScenariosInfoTests {
             softAssertions.assertThat(scenariosInfoItem.getVirtual()).isFalse();
             softAssertions.assertThat(scenariosInfoItem.getLocked()).isFalse();
 
-            softAssertions.assertThat(scenariosInfoItem.getCreatedBy()).isEqualTo(userToExpect);
-            softAssertions.assertThat(scenariosInfoItem.getUpdatedBy()).isEqualTo(userToExpect);
+            softAssertions.assertThat(scenariosInfoItem.getCreatedBy()).contains(userToExpect);
+            softAssertions.assertThat(scenariosInfoItem.getUpdatedBy()).contains(userToExpect);
 
             softAssertions.assertThat(scenariosInfoItem.getComponentType()).isEqualTo(componentTypeToExpect);
             softAssertions.assertThat(scenariosInfoItem.getFileName()).isEqualTo(fileNames.get(i).toLowerCase());
