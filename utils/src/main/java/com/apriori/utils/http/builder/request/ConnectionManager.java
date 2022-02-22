@@ -131,9 +131,16 @@ class ConnectionManager<T> {
             log.error("Error with URI" + e.getMessage());
         }
 
-        return RestAssured.given()
+        RequestSpecification requestSpecification = RestAssured.given()
             .spec(builder.build())
-            .redirects().follow(requestEntity.followRedirection())
+            .redirects().follow(requestEntity.followRedirection());
+
+        if (requestEntity.expectedResponseCode() != null) {
+            requestSpecification = requestSpecification.expect().statusCode(requestEntity.expectedResponseCode())
+                .request();
+        }
+
+        return requestSpecification
             .log()
             .all();
     }
