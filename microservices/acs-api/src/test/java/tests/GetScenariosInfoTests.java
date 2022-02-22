@@ -10,7 +10,6 @@ import com.apriori.acs.utils.AcsResources;
 import com.apriori.entity.response.upload.FileResponse;
 import com.apriori.entity.response.upload.FileUploadOutputs;
 import com.apriori.entity.response.upload.ScenarioIterationKey;
-import com.apriori.entity.response.upload.ScenarioKey;
 import com.apriori.utils.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -25,9 +24,7 @@ import testsuites.categories.AcsTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class GetScenariosInfoTests {
 
@@ -38,7 +35,7 @@ public class GetScenariosInfoTests {
     public void testGetScenariosInfoTwoParts() {
         List<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt"));
 
-        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
+        List<GetScenariosInfoItem> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
 
         getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
     }
@@ -50,7 +47,7 @@ public class GetScenariosInfoTests {
     public void testGetScenariosInfoFourParts() {
         List<String> fileNames = new ArrayList<>(Arrays.asList("Casting.prt", "tab_forms.prt", "bracket_basic.prt", "flanged_hole.prt"));
 
-        Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
+        List<GetScenariosInfoItem> scenarioItemsResponse = coreGetScenariosInfoTest(fileNames);
 
         getScenariosInfoAssertions(scenarioItemsResponse, fileNames);
     }
@@ -124,9 +121,9 @@ public class GetScenariosInfoTests {
      * Main part of get scenarios info test
      *
      * @param fileNames - List of Strings - file names to upload
-     * @return Map of GetScenariosInfoItem and ScenarioKey
+     * @return List of GetScenariosInfoItems
      */
-    private Map<GetScenariosInfoItem, ScenarioKey> coreGetScenariosInfoTest(List<String> fileNames) {
+    private List<GetScenariosInfoItem> coreGetScenariosInfoTest(List<String> fileNames) {
         List<FileUploadOutputs> fileUploadOutputs = fileUpload(fileNames);
 
         List<ScenarioIterationKey> scenarioIterationKeys = new ArrayList<>();
@@ -138,30 +135,16 @@ public class GetScenariosInfoTests {
         AcsResources acsResources = new AcsResources();
         ResponseWrapper<GetScenariosInfoResponse> response = acsResources.getScenariosInformationOneScenario(scenarioIterationKeys);
 
-        List<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>();
-        List<ScenarioKey> scenarioKeys = new ArrayList<>();
-        Map<GetScenariosInfoItem, ScenarioKey> responseHashMap = new HashMap<>();
-
-        for (int j = 0; j < response.getResponseEntity().size(); j++) {
-            getScenariosInfoItems.add(response.getResponseEntity().get(j));
-            scenarioKeys.add(getScenariosInfoItems.get(j).getScenarioIterationKey().getScenarioKey());
-            responseHashMap.put(getScenariosInfoItems.get(j), scenarioKeys.get(j));
-        }
-
-        return responseHashMap;
+        return new ArrayList<>(response.getResponseEntity());
     }
 
     /**
      * Performs assertions on response from get scenarios info endpoint
      *
-     * @param scenarioItemsResponse - Map of get scenarios info items and scenario keys to allow asserts
+     * @param scenarioItemsResponse - list of scenario items responses
      * @param fileNames - file names to assert against
      */
-    private void getScenariosInfoAssertions(Map<GetScenariosInfoItem, ScenarioKey> scenarioItemsResponse, List<String> fileNames) {
-
-        List<GetScenariosInfoItem> getScenariosInfoItems = new ArrayList<>(scenarioItemsResponse.keySet());
-        List<ScenarioKey> scenarioKeys = new ArrayList<>(scenarioItemsResponse.values());
-
+    private void getScenariosInfoAssertions(List<GetScenariosInfoItem> scenarioItemsResponse, List<String> fileNames) {
         String userToExpect = "qa-automation-01";
         String componentTypeToExpect = "PART";
         String typeNameToExpect = "partState";
@@ -169,7 +152,7 @@ public class GetScenariosInfoTests {
         SoftAssertions softAssertions = new SoftAssertions();
 
         for (int i = 0; i < scenarioItemsResponse.size(); i++) {
-            GetScenariosInfoItem scenariosInfoItem = getScenariosInfoItems.get(i);
+            GetScenariosInfoItem scenariosInfoItem = scenarioItemsResponse.get(i);
 
             softAssertions.assertThat(scenariosInfoItem.getInitialized()).isFalse();
             softAssertions.assertThat(scenariosInfoItem.getMissing()).isFalse();
@@ -182,7 +165,7 @@ public class GetScenariosInfoTests {
             softAssertions.assertThat(scenariosInfoItem.getComponentType()).isEqualTo(componentTypeToExpect);
             softAssertions.assertThat(scenariosInfoItem.getFileName()).isEqualTo(fileNames.get(i).toLowerCase());
 
-            softAssertions.assertThat(scenarioKeys.get(i).getTypeName()).isEqualTo(typeNameToExpect);
+            softAssertions.assertThat(scenariosInfoItem.getScenarioIterationKey().getScenarioKey().getTypeName()).isEqualTo(typeNameToExpect);
         }
 
         softAssertions.assertAll();
