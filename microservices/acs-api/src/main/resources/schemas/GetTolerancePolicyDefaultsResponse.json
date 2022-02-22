@@ -70,29 +70,29 @@
         }
       },
       "required": [
-        "totalRunoutOverride",
-        "perpendicularityOverride",
-        "symmetryOverride",
-        "roughnessOverride",
-        "circularityOverride",
         "minCadToleranceThreshhold",
         "toleranceMode",
-        "bendAngleToleranceOverride",
-        "runoutOverride",
-        "parallelismOverride",
         "useCadToleranceThreshhold",
-        "cadToleranceReplacement",
-        "straightnessOverride",
-        "positionToleranceOverride",
-        "profileOfSurfaceOverride",
-        "roughnessRzOverride",
-        "diamToleranceOverride",
-        "concentricityOverride",
-        "cylindricityOverride"
+        "cadToleranceReplacement"
       ],
       "optional": [
         "flatnessOverride",
-        "toleranceOverride"
+        "toleranceOverride",
+        "bendAngleToleranceOverride",
+        "circularityOverride",
+        "concentricityOverride",
+        "cylindricityOverride",
+        "diamToleranceOverride",
+        "parallelismOverride",
+        "perpendicularityOverride",
+        "positionToleranceOverride",
+        "profileOfSurfaceOverride",
+        "roughnessOverride",
+        "roughnessRzOverride",
+        "runoutOverride",
+        "straightnessOverride",
+        "symmetryOverride",
+        "totalRunoutOverride"
       ]
     },
     "propertyInfoMap": {
