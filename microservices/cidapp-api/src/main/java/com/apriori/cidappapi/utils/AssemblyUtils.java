@@ -157,16 +157,6 @@ public class AssemblyUtils {
     }
 
     /**
-     * Cost assembly
-     *
-     * @param assembly - the assembly
-     * @return list of scenario item
-     */
-    public List<ScenarioItem> costAssembly(ComponentInfoBuilder assembly) {
-        return scenariosUtil.postCostScenario(assembly);
-    }
-
-    /**
      * Cost sub-components
      *
      * @param assemblySubComponent the sub-components
