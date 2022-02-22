@@ -1,9 +1,10 @@
 package com.apriori.pageobjects.pages.evaluate.components.inputs;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -43,6 +44,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     @FindBy(css = ".modal-body input[name='productionLife']")
     private WebElement productionLifeInput;
 
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Primary']")
+    private WebElement primaryTab;
+
     @FindBy(xpath = "//div[@id='modal-body']//button[.='Secondary']")
     private WebElement secondaryTab;
 
@@ -71,6 +75,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
 
     @Override
     protected void isLoaded() throws Error {
+        assertTrue("Primary tab was not selected", primaryTab.getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(processGroupDropdown);
     }
 
@@ -89,9 +94,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return new page object
      */
-    public CustomAttributesPage goToCustomAttributesTab() {
+    public ComponentCustomAttributesPage goToCustomAttributesTab() {
         pageUtils.waitForElementAndClick(customAttributesTab);
-        return new CustomAttributesPage(driver);
+        return new ComponentCustomAttributesPage(driver);
     }
 
     /**

@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.components.inputs;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -19,6 +21,9 @@ import java.util.List;
 
 @Slf4j
 public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondaryPage> {
+
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Secondary']")
+    private WebElement secondaryTab;
 
     @FindBy(css = ".modal-body input[name='batchSize']")
     private WebElement batchSizeInput;
@@ -69,6 +74,7 @@ public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondary
 
     @Override
     protected void isLoaded() throws Error {
+        assertTrue("Secondary tab was not selected", secondaryTab.getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(batchSizeInput);
     }
 
