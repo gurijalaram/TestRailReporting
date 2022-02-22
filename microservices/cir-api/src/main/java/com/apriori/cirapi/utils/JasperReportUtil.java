@@ -5,6 +5,7 @@ import com.apriori.cirapi.entity.enums.CIRAPIEnum;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
+import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.entity.response.ReportStatusResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -34,6 +35,16 @@ public class JasperReportUtil {
 
     public JasperReportUtil(final String jSessionId) {
         this.jSessionValue = String.format(jSessionValue, jSessionId);
+    }
+
+    public InputControl getInputControls() {
+        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.DTC_METRICS, InputControl.class)
+            .headers(initHeadersWithJSession());
+
+        ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
+        Assert.assertEquals(responseResponseWrapper.getStatusCode(), HttpStatus.SC_OK);
+
+        return responseResponseWrapper.getResponseEntity();
     }
 
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
@@ -103,7 +114,7 @@ public class JasperReportUtil {
             .findValue("series");
 
         if (dataNode != null) {
-            dataNode.findValue("data");
+            dataNode = dataNode.findValue("data");
         }
 
         return dataNode != null ? objectMapper.readerFor(new TypeReference<List<ChartDataPoint>>() {}).readValue(dataNode) : null;
