@@ -31,17 +31,19 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
     @FindBy(css = ".scenario-preview")
     private WebElement previewData;
 
-    @FindBy(css = "[data-icon='angle-double-right']")
+    @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
     private StatusIcon statusIcon;
+    private ComponentTableActions componentTableActions;
 
     public PreviewPage(WebDriver driver) {
         this.driver = driver;
         this.statusIcon = new StatusIcon(driver);
         this.pageUtils = new PageUtils(driver);
+        this.componentTableActions = new ComponentTableActions(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
@@ -62,7 +64,7 @@ public class PreviewPage extends LoadableComponent<PreviewPage> {
      * @return new page object
      */
     public ExplorePage closePreviewPanel() {
-        new ComponentTableActions(driver).closePreviewPanel(previewButton);
+        componentTableActions.closePreviewPanel(previewButton);
         return new ExplorePage(driver);
     }
 
