@@ -14,7 +14,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-public class PartNestingPage extends LoadableComponent<StockPage> {
+public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
     @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] .apriori-select")
     private WebElement utilizationModeDropDown;
