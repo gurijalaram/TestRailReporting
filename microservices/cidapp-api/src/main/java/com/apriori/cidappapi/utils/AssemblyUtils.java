@@ -58,14 +58,14 @@ public class AssemblyUtils {
      * @param currentUser              - the current user
      * @return component info builder object
      */
-    public ComponentInfoBuilder associateAndUploadAssemblyAndSubComponents(String assemblyName,
-                                                                           String assemblyExtension,
-                                                                           ProcessGroupEnum assemblyProcessGroup,
-                                                                           List<String> subComponentNames,
-                                                                           String subComponentExtension,
-                                                                           ProcessGroupEnum subComponentProcessGroup,
-                                                                           String scenarioName,
-                                                                           UserCredentials currentUser) {
+    public ComponentInfoBuilder associateAssemblyAndSubComponents(String assemblyName,
+                                                                  String assemblyExtension,
+                                                                  ProcessGroupEnum assemblyProcessGroup,
+                                                                  List<String> subComponentNames,
+                                                                  String subComponentExtension,
+                                                                  ProcessGroupEnum subComponentProcessGroup,
+                                                                  String scenarioName,
+                                                                  UserCredentials currentUser) {
 
         return ComponentInfoBuilder.builder()
             .componentName(assemblyName)
@@ -103,7 +103,7 @@ public class AssemblyUtils {
                                                                String scenarioName,
                                                                UserCredentials currentUser) {
 
-        ComponentInfoBuilder componentAssembly = associateAndUploadAssemblyAndSubComponents(assemblyName,
+        ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
@@ -165,5 +165,15 @@ public class AssemblyUtils {
     public AssemblyUtils costSubComponents(ComponentInfoBuilder assemblySubComponent) {
         assemblySubComponent.getSubComponents().forEach(subComponent -> scenariosUtil.postCostScenario(subComponent));
         return this;
+    }
+
+    /**
+     * Cost assembly
+     *
+     * @param assembly - the assembly
+     * @return list of scenario item
+     */
+    public List<ScenarioItem> costAssembly(ComponentInfoBuilder assembly) {
+        return scenariosUtil.postCostScenario(assembly);
     }
 }
