@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
-    @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] .apriori-select")
+    @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] .apriori-select [data-icon='chevron-down']")
     private WebElement utilizationModeDropDown;
 
     @FindBy(css = ".stock-width")
