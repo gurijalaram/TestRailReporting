@@ -70,7 +70,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
 
     @Override
     protected void load() {
-
+    //Don't really need to do anything here
     }
 
     @Override

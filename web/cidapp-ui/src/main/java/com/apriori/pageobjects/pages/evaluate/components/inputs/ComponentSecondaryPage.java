@@ -69,7 +69,7 @@ public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondary
 
     @Override
     protected void load() {
-
+    //Don't really need to do anything here
     }
 
     @Override
