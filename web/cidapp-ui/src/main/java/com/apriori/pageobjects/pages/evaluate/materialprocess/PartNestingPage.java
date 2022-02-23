@@ -98,7 +98,7 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
      * @return current page object
      */
     public PartNestingPage selectUtilizationModeDropDown(String status) {
-        pageUtils.typeAheadSelect(utilizationModeDropDown, "modal-body", status);
+        pageUtils.typeAheadSelect(utilizationModeDropDown, "qa-part-nesting-utilization-mode-select", status);
         return this;
     }
 

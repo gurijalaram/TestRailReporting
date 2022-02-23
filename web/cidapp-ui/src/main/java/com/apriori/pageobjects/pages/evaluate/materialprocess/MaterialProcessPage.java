@@ -100,7 +100,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private PageUtils pageUtils;
     private PanelController panelController;
     private PsoController psoController;
-    private String root = "modal-body";
+    private String root = "root";
 
     public MaterialProcessPage(WebDriver driver) {
         this.driver = driver;
