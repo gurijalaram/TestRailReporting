@@ -30,7 +30,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
 
-    @FindBy(css = "input[name='scenarioName']")
+    @FindBy(css = "input[name='primaryScenarioName']")
     private WebElement scenarioNameInput;
 
     @FindBy(css = "div[class='Toastify__toast-body']")
