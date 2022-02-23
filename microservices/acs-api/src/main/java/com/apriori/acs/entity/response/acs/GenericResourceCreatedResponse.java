@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 @Data
-@Schema(location = "workorders/GenericResourceCreatedResponse.json")
+@Schema(location = "acs/GenericResourceCreatedResponse.json")
 public class GenericResourceCreatedResponse {
     private String resourceCreated;
 }
