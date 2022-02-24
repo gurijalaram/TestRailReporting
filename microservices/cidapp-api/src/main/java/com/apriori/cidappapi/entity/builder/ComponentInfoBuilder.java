@@ -9,13 +9,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Builder
 @Data
 public class ComponentInfoBuilder {
     private final String componentName;
     private final String extension;
     private final String scenarioName;
+    // TODO: 21/02/2022 cn - refactor to componentIdentity
     private String componentId;
+    // TODO: 21/02/2022 cn - refactor to scenarionIdentity
     private String scenarioId;
     private final ProcessGroupEnum processGroup;
     @Builder.Default
@@ -26,4 +30,6 @@ public class ComponentInfoBuilder {
     private final UserCredentials user;
     @Builder.Default
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
+    private String assemblyName;
+    private List<ComponentInfoBuilder> subComponents;
 }
