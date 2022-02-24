@@ -12,25 +12,31 @@ import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
+import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.apache.commons.lang.StringUtils;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class EditUserTests extends TestBase {
 
     private static final String STAFF_TEST_CUSTOMER = "StaffTestCustomer";
-    private static final String USER_NAME = "NewTestUser";
+    private static final String USER_NAME = new GenerateStringUtil().generateUserName();
 
     private Customer targetCustomer;
     private CustomerWorkspacePage customerViewPage;
@@ -62,7 +68,7 @@ public class EditUserTests extends TestBase {
                 .goToUsersPage()
                 .goToCustomerStaff()
                 .clickNew()
-                .formFillNewUserDetails(USER_NAME, "NewUserTest@" + customerName + ".com", "Test", "User")
+                .formFillNewUserDetails(USER_NAME, USER_NAME + "@" + customerName + ".com", "Test", "User")
                 .save(UserProfilePage.class);
     }
 
@@ -70,6 +76,65 @@ public class EditUserTests extends TestBase {
     public void teardown() {
         cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, targetCustomer.getIdentity());
+    }
+
+    @Test
+    @Category({SmokeTest.class})
+    @Description("Test user profile details, edit mode and cancel edit button")
+    @TestRail(testCaseId = {"5576", "11952", "4374", "4382", "11962"})
+    public void testEditAndCancelUserProfile() {
+        userIdentity = userProfilePage.getUserIdentity();
+        SoftAssertions soft = new SoftAssertions();
+        List<String> userProfileFields = Arrays.asList(
+                "username",
+                "identity",
+                "email",
+                "userType",
+                "active",
+                "userProfile\\.givenName",
+                "userProfile\\.familyName",
+                "userProfile\\.prefix",
+                "userProfile\\.suffix",
+                "userProfile\\.jobTitle",
+                "userProfile\\.townCity",
+                "userProfile\\.county",
+                "userProfile\\.countryCode",
+                "userProfile\\.timezone",
+                "userProfile\\.officePhoneCountryCode",
+                "userProfile\\.officePhoneNumber",
+                "authenticationType"
+        );
+
+        List<String> editModeFields = Arrays.asList(
+                "userProfile.givenName",
+                "userProfile.familyName",
+                "userProfile.prefix",
+                "userProfile.suffix",
+                "userProfile.jobTitle",
+                "userProfile.townCity",
+                "userProfile.county",
+                "country-code",
+                "timezone",
+                "userProfile.officePhoneCountryCode",
+                "userProfile.officePhoneNumber"
+        );
+
+        userProfilePage.assertNonEditable(userProfileFields, soft);
+
+        soft.assertThat(userProfilePage.edit())
+                .overridingErrorMessage("Expected edit button to be displayed and clickable.")
+                .isNotNull();
+
+        userProfilePage.assertNonEditable(Arrays.asList("username", "identity", "email"), soft)
+                .assertEditable(editModeFields, soft)
+                .assertButtonAvailable(soft, "Cancel")
+                .assertButtonAvailable(soft, "Save");
+
+        userProfilePage.cancel()
+                .assertButtonAvailable(soft, "Edit")
+                .assertNonEditable(userProfileFields, soft);
+
+        soft.assertAll();
     }
 
     @Test
