@@ -20,9 +20,9 @@ import java.nio.charset.StandardCharsets;
  * @author cfrith
  */
 
-public class FileUploadPage extends LoadableComponent<FileUploadPage> {
+public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
+    private static final Logger logger = LoggerFactory.getLogger(ImportCadFilePage.class);
 
     @FindBy(css = ".modal-content label")
     private WebElement componentLabel;
@@ -52,7 +52,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public FileUploadPage(WebDriver driver) {
+    public ImportCadFilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -77,7 +77,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath     - file path
      * @return current page object
      */
-    public FileUploadPage inputComponentDetails(String scenarioName, File filePath) {
+    public ImportCadFilePage inputComponentDetails(String scenarioName, File filePath) {
         inputScenarioName(scenarioName)
             .enterFilePath(filePath);
         return this;
@@ -89,7 +89,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    private FileUploadPage inputScenarioName(String scenarioName) {
+    private ImportCadFilePage inputScenarioName(String scenarioName) {
         pageUtils.waitForElementToAppear(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
@@ -102,7 +102,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath - the file path
      * @return current page object
      */
-    public FileUploadPage enterFilePath(File filePath) {
+    public ImportCadFilePage enterFilePath(File filePath) {
         try {
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
@@ -144,7 +144,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      *
      * @return current page object
      */
-    public FileUploadPage override() {
+    public ImportCadFilePage override() {
         pageUtils.waitForElementAndClick(overrideCheckbox);
         return this;
     }
