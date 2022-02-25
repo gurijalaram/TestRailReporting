@@ -32,6 +32,8 @@ public class AssemblyUtils {
                                                           String subComponentExtension,
                                                           ProcessGroupEnum subComponentProcessGroup,
                                                           String scenarioName,
+                                                          String mode,
+                                                          String material,
                                                           UserCredentials currentUser) {
 
         return subComponentNames.stream().map(
@@ -40,10 +42,11 @@ public class AssemblyUtils {
                 .extension(subComponentExtension)
                 .scenarioName(scenarioName)
                 .processGroup(subComponentProcessGroup)
+                .mode(mode)
+                .material(material)
                 .user(currentUser)
                 .build()).collect(Collectors.toList());
     }
-
 
     /**
      * Associate sub-components with assemblies
@@ -65,6 +68,8 @@ public class AssemblyUtils {
                                                                   String subComponentExtension,
                                                                   ProcessGroupEnum subComponentProcessGroup,
                                                                   String scenarioName,
+                                                                  String mode,
+                                                                  String material,
                                                                   UserCredentials currentUser) {
 
         return ComponentInfoBuilder.builder()
@@ -76,7 +81,11 @@ public class AssemblyUtils {
                 subComponentExtension,
                 subComponentProcessGroup,
                 scenarioName,
+                mode,
+                material,
                 currentUser))
+            .mode(mode)
+            .material(material)
             .user(currentUser)
             .build();
     }
@@ -101,6 +110,8 @@ public class AssemblyUtils {
                                                                String subComponentExtension,
                                                                ProcessGroupEnum subComponentProcessGroup,
                                                                String scenarioName,
+                                                               String mode,
+                                                               String material,
                                                                UserCredentials currentUser) {
 
         ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(assemblyName,
@@ -110,6 +121,8 @@ public class AssemblyUtils {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
+            mode,
+            material,
             currentUser);
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
@@ -175,5 +188,51 @@ public class AssemblyUtils {
      */
     public List<ScenarioItem> costAssembly(ComponentInfoBuilder assembly) {
         return scenariosUtil.postCostScenario(assembly);
+    }
+
+    /**
+     * Uploads an assembly with all subcomponents, cost and publish all
+     *
+     * @param assemblyName - the assembly name
+     * @param assemblyExtension - the assembly extension
+     * @param assemblyProcessGroup - the assembly process group
+     * @param subComponentNames - the subComponent names
+     * @param subComponentExtension - the subComponent extension
+     * @param subComponentProcessGroup - the subComponent process group
+     * @param scenarioName - the scenario name
+     * @param mode - the mode for costing
+     * @param currentUser - the current user
+     * @return - the object of ComponentInfoBuilder
+     */
+    public ComponentInfoBuilder uploadCostPublishScenario(String assemblyName,
+                                                          String assemblyExtension,
+                                                          ProcessGroupEnum assemblyProcessGroup,
+                                                          List<String> subComponentNames,
+                                                          String subComponentExtension,
+                                                          ProcessGroupEnum subComponentProcessGroup,
+                                                          String scenarioName,
+                                                          String mode,
+                                                          String material,
+                                                          UserCredentials currentUser) {
+        ComponentInfoBuilder componentAssembly = uploadAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            mode,
+            material,
+            currentUser);
+
+        costSubComponents(componentAssembly);
+        costAssembly(componentAssembly);
+
+        publishSubComponents(componentAssembly);
+
+        publishAssembly(componentAssembly);
+
+        return componentAssembly;
     }
 }
