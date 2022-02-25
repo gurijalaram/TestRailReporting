@@ -3,13 +3,12 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -20,9 +19,8 @@ import java.nio.charset.StandardCharsets;
  * @author cfrith
  */
 
+@Slf4j
 public class FileUploadPage extends LoadableComponent<FileUploadPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
 
     @FindBy(css = ".modal-content label")
     private WebElement componentLabel;
@@ -56,7 +54,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
