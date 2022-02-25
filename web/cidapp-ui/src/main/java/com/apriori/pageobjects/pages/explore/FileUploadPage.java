@@ -103,7 +103,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     public FileUploadPage enterFilePath(File filePath) {
         try {
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
-            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
