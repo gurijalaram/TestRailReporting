@@ -27,7 +27,7 @@ public class GetSetUserPreferencesTests {
         AcsResources acsResources = new AcsResources();
         GetUserPreferencesResponse getUserPreferencesResponse = acsResources.getUserPreferences();
 
-        assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), is(equalTo("2")));
+        assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), anyOf(equalTo("3"), equalTo("2")));
         assertThat(getUserPreferencesResponse.getDefaultScenarioName(), is(equalTo("Initial")));
         assertThat(getUserPreferencesResponse.getProdInfoDefaultAnnualVolume(), is(equalTo("5500")));
         assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"),

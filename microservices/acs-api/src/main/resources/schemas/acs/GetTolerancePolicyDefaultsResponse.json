@@ -70,12 +70,12 @@
         }
       },
       "required": [
-        "minCadToleranceThreshhold",
         "toleranceMode",
-        "useCadToleranceThreshhold",
-        "cadToleranceReplacement"
+        "useCadToleranceThreshhold"
       ],
       "optional": [
+        "minCadToleranceThreshhold",
+        "cadToleranceReplacement",
         "flatnessOverride",
         "toleranceOverride",
         "bendAngleToleranceOverride",
