@@ -1,10 +1,12 @@
 package com.explore;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.explore.ExplorePage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -26,6 +28,7 @@ public class UploadComponentTests extends TestBase {
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private ImportCadFilePage cadFilePage;
 
     @Test
     @Category(SanityTests.class)
@@ -44,5 +47,24 @@ public class UploadComponentTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
+    }
+
+    @Test
+    @Description("Get the message after uploading Cad files")
+    public void testUploadCadFile() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        cadFilePage = loginPage.login(UserUtil.getUser())
+            .uploadComponent(scenarioName, resourceFile)
+            .submit(ImportCadFilePage.class);
+
+        assertThat(cadFilePage.getImportMessage(), is(containsString("1 file(s) Imported Successfully.")));
+
+            cadFilePage.close();
     }
 }
