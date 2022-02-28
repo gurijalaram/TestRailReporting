@@ -27,7 +27,7 @@ public class GetSetUserPreferenceByNameTests {
         String toleranceModeResponse = acsResources.getUserPreferenceByName("TolerancePolicyDefaults.toleranceMode");
 
         assertThat(annualVolumeResponse, is(equalTo("5500")));
-        assertThat(toleranceModeResponse, anyOf(equalTo("PARTOVERRIDE"), equalTo("SYSTEMDEFAULT"), equalTo("CAD")));
+        assertThat(toleranceModeResponse, anyOf(containsString("CAD"), containsString("PARTOVERRIDE"), containsString("SYSTEMDEFAULT")));
     }
 
     @Test

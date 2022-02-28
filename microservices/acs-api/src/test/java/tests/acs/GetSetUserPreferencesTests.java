@@ -30,8 +30,8 @@ public class GetSetUserPreferencesTests {
         assertThat(getUserPreferencesResponse.getCostTableDecimalPlaces(), anyOf(equalTo("3"), equalTo("2")));
         assertThat(getUserPreferencesResponse.getDefaultScenarioName(), is(equalTo("Initial")));
         assertThat(getUserPreferencesResponse.getProdInfoDefaultAnnualVolume(), is(equalTo("5500")));
-        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), anyOf(equalTo("SYSTEMDEFAULT"),
-            equalTo("PARTOVERRIDE"), equalTo("CAD")));
+        assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsToleranceMode(), anyOf(containsString("CAD"),
+            containsString("PARTOVERRIDE"), containsString("SYSTEMDEFAULT")));
         assertThat(getUserPreferencesResponse.getTolerancePolicyDefaultsUseCadToleranceThreshhold(), is(equalTo("false")));
     }
 
