@@ -2,7 +2,7 @@ package com.apriori.acs.entity.response.workorders.publish.publishworkorderresul
 
 import com.apriori.utils.http.enums.Schema;
 
-@Schema(location = "workorders/PublishWorkOrderResultResponse.json")
+@Schema(location = "workorders/PublishWorkorderResultResponse.json")
 public class PublishWorkOrderInfoResult {
     private Integer version;
     private String id;
