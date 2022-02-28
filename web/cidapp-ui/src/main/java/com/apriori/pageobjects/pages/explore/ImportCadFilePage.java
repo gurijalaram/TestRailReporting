@@ -97,7 +97,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Gets details of file for upload
+     * Inputs details of the file to upload
      *
      * @param filePath - the file path
      * @return current page object
