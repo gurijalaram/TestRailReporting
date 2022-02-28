@@ -7,7 +7,7 @@ import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.FileUploadPage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
@@ -189,10 +189,10 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath     - location of the file
      * @return new page object
      */
-    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
+    public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
         pageUtils.waitForElementAndClick(importButton);
         pageUtils.waitForElementAndClick(cadButton);
-        return new FileUploadPage(driver).inputComponentDetails(scenarioName, filePath);
+        return new ImportCadFilePage(driver).inputComponentDetails(scenarioName, filePath);
     }
 
     /**
@@ -357,7 +357,7 @@ public class ExploreToolbar extends MainNavBar {
     public <T> T updateCadFile(File filePath, Class<T> klass) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new FileUploadPage(driver).enterFilePath(filePath).submit(klass);
+        return new ImportCadFilePage(driver).enterFilePath(filePath).submit(klass);
     }
 
     /**

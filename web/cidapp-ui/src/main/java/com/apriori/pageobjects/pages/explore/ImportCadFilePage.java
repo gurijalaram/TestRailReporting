@@ -3,13 +3,12 @@ package com.apriori.pageobjects.pages.explore;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -20,9 +19,8 @@ import java.nio.charset.StandardCharsets;
  * @author cfrith
  */
 
-public class FileUploadPage extends LoadableComponent<FileUploadPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadPage.class);
+@Slf4j
+public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = ".modal-content label")
     private WebElement componentLabel;
@@ -52,11 +50,11 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
 
-    public FileUploadPage(WebDriver driver) {
+    public ImportCadFilePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -77,7 +75,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath     - file path
      * @return current page object
      */
-    public FileUploadPage inputComponentDetails(String scenarioName, File filePath) {
+    public ImportCadFilePage inputComponentDetails(String scenarioName, File filePath) {
         inputScenarioName(scenarioName)
             .enterFilePath(filePath);
         return this;
@@ -89,7 +87,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    private FileUploadPage inputScenarioName(String scenarioName) {
+    private ImportCadFilePage inputScenarioName(String scenarioName) {
         pageUtils.waitForElementToAppear(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
@@ -102,9 +100,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @param filePath - the file path
      * @return current page object
      */
-    public FileUploadPage enterFilePath(File filePath) {
+    public ImportCadFilePage enterFilePath(File filePath) {
         try {
-            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -144,7 +141,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      *
      * @return current page object
      */
-    public FileUploadPage override() {
+    public ImportCadFilePage override() {
         pageUtils.waitForElementAndClick(overrideCheckbox);
         return this;
     }
