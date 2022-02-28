@@ -83,6 +83,13 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
+    public ImportCadFilePage inputMultiComponentDetails(String scenarioName, File filePath) {
+        String file = filePath.getName();
+        enterMultiFilePath(filePath)
+            .inputMultiScenarioName(scenarioName, file);
+        return this;
+    }
+
     /**
      * Input scenario name
      *
@@ -93,6 +100,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         pageUtils.waitForElementToAppear(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
+        return this;
+    }
+
+    private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
+        String[] component = file.split("\\.");
+        By byMultiFileInput = By.cssSelector(String.format("input[name='scenarioNames.%s%s']", component[0], component[component.length - 1]));
+        pageUtils.waitForElementToAppear(byMultiFileInput);
+        pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
         return this;
     }
 
@@ -109,6 +124,11 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             e.printStackTrace();
         }
         return this;
+    }
+
+    public ImportCadFilePage enterMultiFilePath(File filePath) {
+        pageUtils.clearInput(fileInput);
+        return enterFilePath(filePath);
     }
 
     /**

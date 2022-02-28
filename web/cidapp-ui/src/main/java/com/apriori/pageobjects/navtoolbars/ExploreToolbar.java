@@ -114,6 +114,11 @@ public class ExploreToolbar extends MainNavBar {
         return uploadComponent(scenarioName, filePath).submit(klass);
     }
 
+    public ImportCadFilePage multiUploadComponentAndSubmit(String scenarioName, File filePath) {
+
+        return multiUploadComponent(scenarioName, filePath);
+    }
+
     /**
      * Uploads a component through the API and opens it via url
      *
@@ -193,6 +198,13 @@ public class ExploreToolbar extends MainNavBar {
         pageUtils.waitForElementAndClick(importButton);
         pageUtils.waitForElementAndClick(cadButton);
         return new ImportCadFilePage(driver).inputComponentDetails(scenarioName, filePath);
+    }
+
+    public ImportCadFilePage multiUploadComponent(String scenarioName, File file) {
+        pageUtils.waitForElementAndClick(importButton);
+        pageUtils.waitForElementAndClick(cadButton);
+        return new ImportCadFilePage(driver).inputMultiComponentDetails(scenarioName, file);
+//        scenarioNames.forEach(s -> filePaths.forEach(f -> new ImportCadFilePage(driver).inputComponentDetails(s, f)));
     }
 
     /**
