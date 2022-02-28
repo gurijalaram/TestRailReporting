@@ -1,8 +1,11 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -44,9 +47,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = "h4")
     private WebElement fileInputError;
-
-    @FindBy(css = ".modal-body .checkbox-icon")
-    private WebElement overrideCheckbox;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -139,12 +139,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Selects the override checkbox
+     * Selects the apply to all checkbox
      *
      * @return current page object
      */
-    public ImportCadFilePage override() {
-        pageUtils.waitForElementAndClick(overrideCheckbox);
+    public ImportCadFilePage selectCheckbox(String checkbox) {
+        By byApply = with(By.cssSelector("[data-icon='square-check']"))
+            .near(By.xpath(String.format("//div[.='%s']", checkbox)));
+        pageUtils.waitForElementAndClick(byApply);
         return this;
     }
 
