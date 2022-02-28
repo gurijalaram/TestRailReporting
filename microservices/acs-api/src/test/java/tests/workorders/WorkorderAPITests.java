@@ -108,6 +108,14 @@ public class WorkorderAPITests {
     }
 
     @Test
+    @Category(WorkorderTest.class)
+    @TestRail(testCaseId = "11974")
+    @Description("Upload, Cost, and Publish an Assembly")
+    public void testUploadCostAndPublishAssembly() {
+        
+    }
+
+    @Test
     @Issue("AP-69600")
     @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"7710"})
@@ -313,11 +321,11 @@ public class WorkorderAPITests {
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
         SoftAssertions softAssert = new SoftAssertions();
-        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable().equals("true"));
-        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable().equals("true"));
-        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable().equals("false"));
-        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable().equals("true"));
-        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen().equals("false"));
+        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
+        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
+        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
+        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
 
         softAssert.assertAll();
     }
@@ -359,11 +367,11 @@ public class WorkorderAPITests {
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
         SoftAssertions softAssert = new SoftAssertions();
-        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable().equals("true"));
-        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable().equals("true"));
-        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable().equals("false"));
-        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable().equals("true"));
-        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen().equals("false"));
+        softAssert.assertThat(getImageInfoResponse.getDesktopImageAvailable()).isEqualTo("true");
+        softAssert.assertThat(getImageInfoResponse.getThumbnailAvailable()).isEqualTo("true");
+        softAssert.assertThat(getImageInfoResponse.getPartNestingDiagramAvailable()).isEqualTo("false");
+        softAssert.assertThat(getImageInfoResponse.getWebImageAvailable()).isEqualTo("true");
+        softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
 
         softAssert.assertAll();
     }
