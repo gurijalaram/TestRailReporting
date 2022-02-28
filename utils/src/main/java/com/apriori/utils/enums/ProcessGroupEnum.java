@@ -23,6 +23,7 @@ public enum ProcessGroupEnum {
     ROTO_BLOW_MOLDING("Roto & Blow Molding"),
     SHEET_METAL("Sheet Metal"),
     SHEET_METAL_HYDROFORMING("Sheet Metal - Hydroforming"),
+    SHEET_METAL_ROLLFORMING("Sheet Metal - Roll Forming"),
     SHEET_METAL_STRETCH_FORMING("Sheet Metal - Stretch Forming"),
     SHEET_METAL_TRANSFER_DIE("Sheet Metal - Transfer Die"),
     SHEET_PLASTIC("Sheet Plastic"),
