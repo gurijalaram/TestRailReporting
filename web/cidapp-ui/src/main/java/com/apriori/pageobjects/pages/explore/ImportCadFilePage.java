@@ -139,7 +139,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Selects the apply to all checkbox
+     * Selects the checkbox
      *
      * @return current page object
      */
