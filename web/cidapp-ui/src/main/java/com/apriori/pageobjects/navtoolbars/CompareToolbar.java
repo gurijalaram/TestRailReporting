@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
-import com.apriori.pageobjects.pages.explore.FileUploadPage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
 
 import org.openqa.selenium.WebDriver;
@@ -39,7 +39,7 @@ public class CompareToolbar extends MainNavBar {
      * @param filePath     - location of the file
      * @return new page object
      */
-    public FileUploadPage uploadComponent(String scenarioName, File filePath) {
+    public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
         return new ExploreToolbar(driver).uploadComponent(scenarioName, filePath);
     }
 
