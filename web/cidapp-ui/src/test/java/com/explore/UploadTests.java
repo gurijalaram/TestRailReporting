@@ -62,6 +62,7 @@ public class UploadTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,filename);
+        currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(UserUtil.getUser())
