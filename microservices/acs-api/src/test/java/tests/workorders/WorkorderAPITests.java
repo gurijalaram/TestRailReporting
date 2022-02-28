@@ -112,7 +112,76 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11974")
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "CreatePartData.json"
+            ).getPath(), NewPartRequest.class
+        );
+
+        // Upload assembly, components, etc
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
+
+        assemblyComponents.add(
+            AssemblyComponent.builder()
+                .componentName("3574727.prt")
+                .scenarioName(testScenarioName)
+                .processGroup(processGroup)
+                .build()
+        );
+
+        assemblyComponents.add(
+            AssemblyComponent.builder()
+                .componentName("3574875.prt")
+                .scenarioName(testScenarioName)
+                .processGroup(processGroup)
+                .build()
+        );
+
+        Assembly assemblyToUse = Assembly.builder()
+            .assemblyName("PatternThreadHoles.asm")
+            .scenarioName(testScenarioName)
+            .processGroup(processGroup)
+            .components(assemblyComponents)
+            .build();
+
+        for (AssemblyComponent component : assemblyToUse.getComponents()) {
+            FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+                component.getComponentName(),
+                component.getProcessGroup()
+            );
+
+            fileUploadResources.createFileUploadWorkorderSuppressError(
+                fileResponse,
+                component.getScenarioName()
+            );
+        }
+
+        FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
+            assemblyToUse.getAssemblyName(),
+            assemblyToUse.getProcessGroup()
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            assemblyFileResponse,
+            assemblyToUse.getScenarioName()
+        );
+
+        // Cost assembly
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup
+        );
+
+        // Publish assembly
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+
+        // Assert that publish worked properly
     }
 
     @Test
@@ -134,6 +203,7 @@ public class WorkorderAPITests {
                 .processGroup(processGroup)
                 .build()
         );
+
         assemblyComponents.add(
                 AssemblyComponent.builder()
                 .componentName("3574875.prt")
