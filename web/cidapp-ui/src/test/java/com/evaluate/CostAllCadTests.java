@@ -7,7 +7,7 @@ import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.FileUploadPage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -35,7 +35,7 @@ public class CostAllCadTests extends TestBase {
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private CostDetailsPage costDetailsPage;
-    private FileUploadPage fileUploadPage;
+    private ImportCadFilePage importCadFilePage;
 
     public CostAllCadTests() {
         super();
@@ -125,10 +125,10 @@ public class CostAllCadTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
 
         loginPage = new CidAppLoginPage(driver);
-        fileUploadPage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit("<script>alert(document.cookie)</script>", resourceFile, FileUploadPage.class);
+        importCadFilePage = loginPage.login(UserUtil.getUser())
+            .uploadComponentAndSubmit("<script>alert(document.cookie)</script>", resourceFile, ImportCadFilePage.class);
 
-        assertThat(fileUploadPage.getAlertWarning(), containsString("error occurred"));
+        assertThat(importCadFilePage.getAlertWarning(), containsString("error occurred"));
     }
 
     @Test
@@ -140,9 +140,9 @@ public class CostAllCadTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
 
         loginPage = new CidAppLoginPage(driver);
-        fileUploadPage = loginPage.login(UserUtil.getUser())
+        importCadFilePage = loginPage.login(UserUtil.getUser())
             .uploadComponent(" " + Keys.BACK_SPACE, resourceFile);
 
-        assertThat(fileUploadPage.getFieldWarningText(), containsString("Required."));
+        assertThat(importCadFilePage.getFieldWarningText(), containsString("Required."));
     }
 }
