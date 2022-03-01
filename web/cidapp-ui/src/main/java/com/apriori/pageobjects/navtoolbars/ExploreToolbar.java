@@ -13,7 +13,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -112,7 +111,9 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
-        return uploadComponent(scenarioName, filePath).submit(klass);
+        return importCadFile()
+            .inputComponentDetails(scenarioName, filePath)
+            .submit(klass);
     }
 
     public ImportCadFilePage multiUploadComponentAndSubmit(String scenarioName, File filePath) {
@@ -142,23 +143,23 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * uploads an assembly with all subcomponents and publish them all
      *
-     * @param subComponentNames - the subcomponent names
+     * @param subComponentNames  - the subcomponent names
      * @param componentExtension - the subcomponent extension
-     * @param processGroupEnum - the process group enum
-     * @param assemblyName - the assembly name
-     * @param assemblyExtension -  the assembly extension
-     * @param scenarioName - the scenario name
-     * @param currentUser - the current user
+     * @param processGroupEnum   - the process group enum
+     * @param assemblyName       - the assembly name
+     * @param assemblyExtension  -  the assembly extension
+     * @param scenarioName       - the scenario name
+     * @param currentUser        - the current user
      * @return - a new page object
      */
-    public  EvaluatePage uploadPublishAndOpenAssembly(List<String> subComponentNames,
-                                                      String componentExtension,
-                                                      ProcessGroupEnum processGroupEnum,
-                                                      String assemblyName,
-                                                      String assemblyExtension,
-                                                      String scenarioName,
-                                                      UserCredentials currentUser) {
-        ComponentInfoBuilder myAssembly =  new ScenariosUtil().uploadAndPublishAssembly(
+    public EvaluatePage uploadPublishAndOpenAssembly(List<String> subComponentNames,
+                                                     String componentExtension,
+                                                     ProcessGroupEnum processGroupEnum,
+                                                     String assemblyName,
+                                                     String assemblyExtension,
+                                                     String scenarioName,
+                                                     UserCredentials currentUser) {
+        ComponentInfoBuilder myAssembly = new ScenariosUtil().uploadAndPublishAssembly(
             subComponentNames,
             componentExtension,
             processGroupEnum,
@@ -191,20 +192,12 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Selects the file dropdown and enters file details
      *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
      * @return new page object
      */
-    public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
+    public ImportCadFilePage importCadFile() {
         pageUtils.waitForElementAndClick(importButton);
         pageUtils.waitForElementAndClick(cadButton);
-        return new ImportCadFilePage(driver).inputComponentDetails(scenarioName, filePath);
-    }
-
-    public ImportCadFilePage multiUploadComponent(List<MultiUpload> multiUploadList) {
-        pageUtils.waitForElementAndClick(importButton);
-        pageUtils.waitForElementAndClick(cadButton);
-        return new ImportCadFilePage(driver).inputMultiComponentDetails(multiUploadList);
+        return new ImportCadFilePage(driver);
     }
 
     /**
@@ -249,7 +242,9 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
-        return uploadComponent(scenarioName, filePath).cancel(className);
+        return importCadFile()
+            .inputComponentDetails(scenarioName, filePath)
+            .cancel(className);
     }
 
     /**

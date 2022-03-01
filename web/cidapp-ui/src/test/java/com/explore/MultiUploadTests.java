@@ -34,6 +34,8 @@ public class MultiUploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .multiUploadComponent(multiComponents);
+            .importCadFile()
+            .selectCheckbox("Apply to all")
+            .inputMultiComponentDetails(multiComponents);
     }
 }
