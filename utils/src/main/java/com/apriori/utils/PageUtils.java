@@ -201,9 +201,8 @@ public class PageUtils {
     /**
      * Determines if an element contains a class.
      *
-     * @param element The element that contains the class list to search.
+     * @param element     The element that contains the class list to search.
      * @param wantedClass The desired class.
-     *
      * @return True if the element contains the wantedClass.  False otherwise.
      */
     public boolean doesElementHaveClass(WebElement element, String wantedClass) {
@@ -285,7 +284,7 @@ public class PageUtils {
 
     /**
      * Clears the value of an element with a value attribute.
-     *
+     * <p>
      * This method works on all platforms regardless of the OS modifier key
      * (CONTROL on Windows/Linux, COMMAND/META on OSX).
      *
@@ -310,13 +309,12 @@ public class PageUtils {
 
     /**
      * Sets the value of an element by sending it keys.
-     *
+     * <p>
      * This will fully clear the element first before sending any keys. It will
      * also tab out of the element to make sure any form validation is raised.
      *
      * @param elementWithValue The element to set the value for.
-     * @param value The value to set.
-     *
+     * @param value            The value to set.
      */
     public void setValueOfElement(WebElement elementWithValue, String value) {
         setValueOfElement(elementWithValue, value, Keys.TAB);
@@ -324,30 +322,29 @@ public class PageUtils {
 
     /**
      * Sets the value of an element by sending it keys.
-     *
+     * <p>
      * This will fully clear the element first before sending any keys. It will
      * also tab out of the element to make sure any form validation is raised.
      *
      * @param elementWithValue The element to set the value for.
-     * @param value The value to set.
-     * @param endOfInput The last key to send.  This is usually something like Keys.TAB or Keys.ENTER.
-     *                   You can set this to null to not send anything.
+     * @param value            The value to set.
+     * @param endOfInput       The last key to send.  This is usually something like Keys.TAB or Keys.ENTER.
+     *                         You can set this to null to not send anything.
      */
     public void setValueOfElement(WebElement elementWithValue, String value, CharSequence endOfInput) {
-        setValueOfElement(elementWithValue, value, new CharSequence[]{ endOfInput });
+        setValueOfElement(elementWithValue, value, new CharSequence[] {endOfInput});
     }
 
     /**
      * Sets the value of an element by sending it keys.
-     *
+     * <p>
      * This will fully clear the element first before sending any keys. It will
      * also tab out of the element to make sure any form validation is raised.
      *
      * @param elementWithValue The element to set the value for.
-     * @param value The value to set.
-     * @param endOfInput The last set of keys to send.  This is usually something like Keys.TAB or Keys.ENTER.
-     *                   You can set this to null to not send anything.
-     *
+     * @param value            The value to set.
+     * @param endOfInput       The last set of keys to send.  This is usually something like Keys.TAB or Keys.ENTER.
+     *                         You can set this to null to not send anything.
      */
     public void setValueOfElement(WebElement elementWithValue, String value, CharSequence[] endOfInput) {
         clearValueOfElement(elementWithValue);
@@ -478,7 +475,7 @@ public class PageUtils {
     /**
      * Waits for a maximum of forHowLong for a given predicate to be true.
      *
-     * @param toBeTrue The predicate to check for truth.
+     * @param toBeTrue   The predicate to check for truth.
      * @param forHowLong The duration of how long to wait before throwing an exception.
      */
     public void waitForCondition(Supplier<Boolean> toBeTrue, Duration forHowLong) {
@@ -622,12 +619,10 @@ public class PageUtils {
     /**
      * Waits for an element to become visible.
      *
-     * @param by The search query to search the context for.
+     * @param by         The search query to search the context for.
      * @param forHowLong The maximum amount of time to wait.
-     * @param search The parent context to search under.
-     *
+     * @param search     The parent context to search under.
      * @return The WebElement that was found.
-     *
      * @throws TimeoutException If there is never an element that becomes visible.
      */
     public WebElement waitForElementToAppear(By by, Duration forHowLong, SearchContext search) {
@@ -1144,16 +1139,15 @@ public class PageUtils {
      * Interacts with a dropdown and input the relevant info
      *
      * @param dropdownSelector - the selector
-     * @param locatorId        - the locator id
+     * @param root             - the bottom level of the locator. this is the page the element is located on eg. can be in a modal dialog
      * @param locatorValue     - the locator value
      * @return current page object
      */
-    public void typeAheadSelect(WebElement dropdownSelector, String locatorId, String locatorValue) {
-        waitForElementToAppear(dropdownSelector);
-        waitForElementAndClick(dropdownSelector);
-        By byValue = By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", locatorId, locatorValue));
-        waitForElementToAppear(byValue);
-        waitForElementAndClick(byValue);
+    public void typeAheadSelect(WebElement dropdownSelector, String root, String locatorValue) {
+        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@id]", root))).getAttribute("textContent").equals(locatorValue)) {
+            waitForElementAndClick(dropdownSelector);
+            javaScriptClick(waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue))));
+        }
     }
 
     /**
@@ -1211,7 +1205,7 @@ public class PageUtils {
     /**
      * Gets the label for a value in a given section.
      *
-     * @param tag The HTML tag of the target element.
+     * @param tag  The HTML tag of the target element.
      * @param text The text of the element to search for.
      * @param root The parent search context element.
      * @return The web element found or null if no such element appears within a reasonable timeframe.
@@ -1230,7 +1224,6 @@ public class PageUtils {
      * Attempts to find a supported loader element.
      *
      * @param search The search root to search for a loader under.
-     *
      * @return An element that this utilities object thinks is a loader.  Null otherwise.
      */
     public WebElement findLoader(SearchContext search) {
