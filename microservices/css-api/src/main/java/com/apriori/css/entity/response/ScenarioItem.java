@@ -131,12 +131,6 @@ public class ScenarioItem {
     private PartNestingDiagram partNestingDiagram;
     private Thumbnail thumbnail;
 
-    public static class AnalysisOfChildren {
-    }
-
-    public static class AnalysisOfScenarioAndChildren {
-    }
-
     public static class PartNestingDiagram {
     }
 
