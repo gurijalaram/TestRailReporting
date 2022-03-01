@@ -81,6 +81,10 @@ public class FileUploadResources {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
+    private final ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
+
+    private FileUploadOutputs currentFileUploadOutputs;
+
     /**
      * Uploads part to CID
      *
@@ -540,6 +544,42 @@ public class FileUploadResources {
         if (!match) {
             throw new RuntimeException(String.format("Process Group '%s' is not valid", processGroup));
         }
+    }
+
+    /**
+     * Loads CAD Metadata for an Assembly Component and adds to global Array List
+     *
+     * @param fileResponse - FileResponse - to use to load cad metadata
+     */
+    public void loadAssemblyComponentCadMetadataAddToArrayList(FileResponse fileResponse) {
+        componentMetadataOutputs.add(loadCadMetadataSuppressError(fileResponse));
+    }
+
+    /**
+     * Get Component Metadata Outputs ArrayList
+     *
+     * @return ArrayList of LoadCadMetadataOutputs
+     */
+    public ArrayList<LoadCadMetadataOutputs> getComponentMetadataOutputs() {
+        return componentMetadataOutputs;
+    }
+
+    /**
+     * Sets Current FileUploadOutput as Global Variable
+     *
+     * @param fileUploadOutputs - FileUploadOutputs to set
+     */
+    public void setCurrentFileUploadOutputs(FileUploadOutputs fileUploadOutputs) {
+        this.currentFileUploadOutputs = fileUploadOutputs;
+    }
+
+    /**
+     * Get Current FileUploadOutputs
+     *
+     * @return FileUploadOutputs instance currently set
+     */
+    public FileUploadOutputs getCurrentFileUploadOutputs() {
+        return currentFileUploadOutputs;
     }
 
     /**

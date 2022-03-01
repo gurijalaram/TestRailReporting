@@ -37,13 +37,14 @@ import java.util.ArrayList;
 
 public class WorkorderAPITests {
 
+    private final FileUploadResources fileUploadResources = new FileUploadResources();
+
     @Test
     @Issue("AP-69600")
     @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void testLoadCadMetadataAndGeneratePartImages() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
@@ -81,7 +82,6 @@ public class WorkorderAPITests {
                 ).getPath(), NewPartRequest.class
         );
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -119,69 +119,23 @@ public class WorkorderAPITests {
             ).getPath(), NewPartRequest.class
         );
 
-        // Upload assembly, components, etc
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
+        Assembly assemblyToUse = createAndReturnAssembly(testScenarioName, processGroup);
 
-        assemblyComponents.add(
-            AssemblyComponent.builder()
-                .componentName("3574727.prt")
-                .scenarioName(testScenarioName)
-                .processGroup(processGroup)
-                .build()
-        );
+        initialiseAndUploadAssembly(assemblyToUse, false);
 
-        assemblyComponents.add(
-            AssemblyComponent.builder()
-                .componentName("3574875.prt")
-                .scenarioName(testScenarioName)
-                .processGroup(processGroup)
-                .build()
-        );
-
-        Assembly assemblyToUse = Assembly.builder()
-            .assemblyName("PatternThreadHoles.asm")
-            .scenarioName(testScenarioName)
-            .processGroup(processGroup)
-            .components(assemblyComponents)
-            .build();
-
-        for (AssemblyComponent component : assemblyToUse.getComponents()) {
-            FileResponse fileResponse = fileUploadResources.initialisePartUpload(
-                component.getComponentName(),
-                component.getProcessGroup()
-            );
-
-            fileUploadResources.createFileUploadWorkorderSuppressError(
-                fileResponse,
-                component.getScenarioName()
-            );
-        }
-
-        FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
-            assemblyToUse.getAssemblyName(),
-            assemblyToUse.getProcessGroup()
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-            assemblyFileResponse,
-            assemblyToUse.getScenarioName()
-        );
-
-        // Cost assembly
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
-            fileUploadOutputs,
+            fileUploadResources.getCurrentFileUploadOutputs(),
             processGroup
         );
 
-        // Publish assembly
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
-        // Assert that publish worked properly
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("PATTERNTHREADHOLES")));
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));
     }
 
     @Test
@@ -190,35 +144,16 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"7710"})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
-        ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
-        assemblyComponents.add(
-                AssemblyComponent.builder()
-                .componentName("3574727.prt")
-                .scenarioName(scenarioName)
-                .processGroup(processGroup)
-                .build()
+        FileResponse assemblyFileResponse = initialiseAndUploadAssembly(
+            createAndReturnAssembly(scenarioName, processGroup),
+            true
         );
 
-        assemblyComponents.add(
-                AssemblyComponent.builder()
-                .componentName("3574875.prt")
-                .scenarioName(scenarioName)
-                .processGroup(processGroup)
-                .build()
-        );
-
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = prepareForGenerateAssemblyImages(
-                Assembly.builder()
-                .assemblyName("PatternThreadHoles.asm")
-                .scenarioName(scenarioName)
-                .processGroup(processGroup)
-                .components(assemblyComponents)
-                .build());
+        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
         images.add(generateAssemblyImagesOutputs.getDesktopImageIdentity());
@@ -242,7 +177,6 @@ public class WorkorderAPITests {
                 ).getPath(), NewPartRequest.class
         );
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -281,7 +215,6 @@ public class WorkorderAPITests {
                 ).getPath(), NewPartRequest.class
         );
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -313,34 +246,16 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8689"})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
-        ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
-        assemblyComponents.add(
-                AssemblyComponent.builder()
-                        .componentName("3574727.prt")
-                        .scenarioName(scenarioName)
-                        .processGroup(processGroup)
-                        .build()
-        );
-        assemblyComponents.add(
-                AssemblyComponent.builder()
-                        .componentName("3574875.prt")
-                        .scenarioName(scenarioName)
-                        .processGroup(processGroup)
-                        .build()
+        FileResponse assemblyFileResponse = initialiseAndUploadAssembly(
+            createAndReturnAssembly(scenarioName, processGroup),
+            true
         );
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = prepareForGenerateAssemblyImages(
-                Assembly.builder()
-                        .assemblyName("PatternThreadHoles.asm")
-                        .scenarioName(scenarioName)
-                        .processGroup(processGroup)
-                        .components(assemblyComponents)
-                        .build());
+        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
         GetCadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
                 generateAssemblyImagesOutputs.getCadMetadataIdentity());
@@ -367,7 +282,6 @@ public class WorkorderAPITests {
                 ).getPath(), NewPartRequest.class
         );
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -413,7 +327,6 @@ public class WorkorderAPITests {
                 ).getPath(), NewPartRequest.class
         );
 
-        FileUploadResources fileUploadResources = new FileUploadResources();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -446,10 +359,7 @@ public class WorkorderAPITests {
         softAssert.assertAll();
     }
 
-    private GenerateAssemblyImagesOutputs prepareForGenerateAssemblyImages(Assembly assemblyToUse) {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
-
+    private FileResponse initialiseAndUploadAssembly(Assembly assemblyToUse, boolean doLoadCadMetadata) {
         for (AssemblyComponent component : assemblyToUse.getComponents()) {
             FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                     component.getComponentName(),
@@ -461,7 +371,9 @@ public class WorkorderAPITests {
                     component.getScenarioName()
             );
 
-            componentMetadataOutputs.add(fileUploadResources.loadCadMetadataSuppressError(fileResponse));
+            if (doLoadCadMetadata) {
+                fileUploadResources.loadAssemblyComponentCadMetadataAddToArrayList(fileResponse);
+            }
         }
 
         FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
@@ -469,23 +381,52 @@ public class WorkorderAPITests {
                 assemblyToUse.getProcessGroup()
         );
 
-        fileUploadResources.createFileUploadWorkorderSuppressError(
+        fileUploadResources.setCurrentFileUploadOutputs(
+            fileUploadResources.createFileUploadWorkorderSuppressError(
                 assemblyFileResponse,
-                assemblyToUse.getScenarioName()
+                assemblyToUse.getScenarioName())
         );
 
-        LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadataSuppressError(assemblyFileResponse);
+        return assemblyFileResponse;
+    }
 
+    private GenerateAssemblyImagesOutputs loadCadMetadataAndGenerateAssemblyImages(FileResponse assemblyFileResponse) {
+        LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadataSuppressError(assemblyFileResponse);
         return fileUploadResources.generateAssemblyImages(
-                assemblyFileResponse,
-                componentMetadataOutputs,
-                assemblyMetadataOutput
+            assemblyFileResponse,
+            fileUploadResources.getComponentMetadataOutputs(),
+            assemblyMetadataOutput
         );
     }
 
-    private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
-        FileUploadResources fileUploadResources = new FileUploadResources();
+    private Assembly createAndReturnAssembly(String testScenarioName, String processGroup) {
+        ArrayList<AssemblyComponent> assemblyComponents = new ArrayList<>();
 
+        assemblyComponents.add(
+            AssemblyComponent.builder()
+                .componentName("3574727.prt")
+                .scenarioName(testScenarioName)
+                .processGroup(processGroup)
+                .build()
+        );
+
+        assemblyComponents.add(
+            AssemblyComponent.builder()
+                .componentName("3574875.prt")
+                .scenarioName(testScenarioName)
+                .processGroup(processGroup)
+                .build()
+        );
+
+        return Assembly.builder()
+            .assemblyName("PatternThreadHoles.asm")
+            .scenarioName(testScenarioName)
+            .processGroup(processGroup)
+            .components(assemblyComponents)
+            .build();
+    }
+
+    private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
         GetImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
 
         assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));

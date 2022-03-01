@@ -2,7 +2,6 @@ package com.apriori.acs.entity.response.workorders;
 
 import com.apriori.acs.entity.response.workorders.upload.ManifestItem;
 import com.apriori.acs.entity.response.workorders.upload.PmiItem;
-
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;

@@ -1,7 +1,6 @@
 package com.apriori.acs.entity.response.workorders.upload;
 
 import lombok.Builder;
-
 import lombok.Data;
 
 import java.util.List;

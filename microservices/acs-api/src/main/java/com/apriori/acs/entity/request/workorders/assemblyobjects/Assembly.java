@@ -1,7 +1,6 @@
 package com.apriori.acs.entity.request.workorders.assemblyobjects;
 
 import lombok.Data;
-
 import lombok.experimental.SuperBuilder;
 
 import java.util.ArrayList;
