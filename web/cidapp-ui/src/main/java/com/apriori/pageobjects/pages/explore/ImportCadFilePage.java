@@ -180,14 +180,34 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Selects the checkbox
+     * Selects the option
      *
+     * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
      * @return current page object
      */
-    public ImportCadFilePage selectCheckbox(String checkbox) {
-        By byApply = with(By.cssSelector("[data-icon='square-check']"))
-            .near(By.xpath(String.format("//div[.='%s']", checkbox)));
-        pageUtils.waitForElementAndClick(byApply);
+    public ImportCadFilePage tick(String option) {
+        By byCheckbox = with(By.cssSelector(".option-icon"))
+            .near(By.xpath(String.format("//div[.='%s']", option)));
+
+        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+            pageUtils.waitForElementAndClick(byCheckbox);
+        }
+        return this;
+    }
+
+    /**
+     * Selects the option
+     *
+     * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
+     * @return current page object
+     */
+    public ImportCadFilePage unTick(String option) {
+        By byCheckbox = with(By.cssSelector(".option-icon"))
+            .near(By.xpath(String.format("//div[.='%s']", option)));
+
+        if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+            pageUtils.waitForElementAndClick(byCheckbox);
+        }
         return this;
     }
 
