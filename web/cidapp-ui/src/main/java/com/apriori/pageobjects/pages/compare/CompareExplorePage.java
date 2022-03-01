@@ -84,7 +84,7 @@ public class CompareExplorePage extends LoadableComponent<CompareExplorePage> {
      * @return current page object
      */
     public CompareExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, filter);
+        pageUtils.typeAheadSelect(filterDropdown, "modal-body", filter);
         return this;
     }
 

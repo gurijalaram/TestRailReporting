@@ -14,9 +14,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
-public class PartNestingPage extends LoadableComponent<StockPage> {
+public class PartNestingPage extends LoadableComponent<PartNestingPage> {
 
-    @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] .apriori-select")
+    @FindBy(css = "[id='qa-part-nesting-utilization-mode-select'] .apriori-select [data-icon='chevron-down']")
     private WebElement utilizationModeDropDown;
 
     @FindBy(css = ".stock-width")
@@ -98,7 +98,7 @@ public class PartNestingPage extends LoadableComponent<StockPage> {
      * @return current page object
      */
     public PartNestingPage selectUtilizationModeDropDown(String status) {
-        pageUtils.typeAheadSelect(utilizationModeDropDown, status);
+        pageUtils.typeAheadSelect(utilizationModeDropDown, "qa-part-nesting-utilization-mode-select", status);
         return this;
     }
 

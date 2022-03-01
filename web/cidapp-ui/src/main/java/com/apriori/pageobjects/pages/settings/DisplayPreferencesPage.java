@@ -60,6 +60,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
     private SettingsNavigation settingsNavigation;
+    private String root = "modal-body";
 
     public DisplayPreferencesPage(WebDriver driver) {
         this.driver = driver;
@@ -114,7 +115,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectUnits(UnitsEnum units) {
-        pageUtils.typeAheadSelect(unitsDropdown, units.getUnits());
+        pageUtils.typeAheadSelect(unitsDropdown, root, units.getUnits());
         return this;
     }
 
@@ -125,7 +126,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectLength(LengthEnum length) {
-        pageUtils.typeAheadSelect(lengthDropdown, length.getLength());
+        pageUtils.typeAheadSelect(lengthDropdown, root, length.getLength());
         return this;
     }
 
@@ -136,7 +137,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectMass(MassEnum mass) {
-        pageUtils.typeAheadSelect(massDropdown, mass.getMass());
+        pageUtils.typeAheadSelect(massDropdown, root, mass.getMass());
         return this;
     }
 
@@ -147,7 +148,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectTime(TimeEnum time) {
-        pageUtils.typeAheadSelect(timeDropdown, time.getTime());
+        pageUtils.typeAheadSelect(timeDropdown, root, time.getTime());
         return this;
     }
 
@@ -158,7 +159,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectDecimalPlaces(DecimalPlaceEnum decimalPlaces) {
-        pageUtils.typeAheadSelect(decimalDropdown, decimalPlaces.getDecimalPlaces());
+        pageUtils.typeAheadSelect(decimalDropdown, root, decimalPlaces.getDecimalPlaces());
         return this;
     }
 
@@ -169,7 +170,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectLanguage(String language) {
-        pageUtils.typeAheadSelect(languageDropdown, language);
+        pageUtils.typeAheadSelect(languageDropdown, root, language);
         return this;
     }
 
@@ -180,7 +181,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectCurrency(CurrencyEnum currency) {
-        pageUtils.typeAheadSelect(currencyDropdown, currency.getCurrency());
+        pageUtils.typeAheadSelect(currencyDropdown, root, currency.getCurrency());
         return this;
     }
 
@@ -191,7 +192,7 @@ public class DisplayPreferencesPage extends LoadableComponent<DisplayPreferences
      * @return current page object
      */
     public DisplayPreferencesPage selectERT(String ert) {
-        pageUtils.typeAheadSelect(ertDropdown, ert);
+        pageUtils.typeAheadSelect(ertDropdown, root, ert);
         return this;
     }
 
