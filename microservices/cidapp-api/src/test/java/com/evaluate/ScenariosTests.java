@@ -86,6 +86,8 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
+        final String mode = "Manual";
+        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -98,6 +100,8 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
+            mode,
+            material,
             currentUser);
 
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -125,6 +129,8 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
+        final String mode = "Manual";
+        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -139,11 +145,53 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
+            mode,
+            material,
             currentUser);
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
         assertThat(assemblyUploadResponse.getBody(), containsString(errorMessage));
+    }
+
+    @Test
+    @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
+    @TestRail(testCaseId = {"10799", "10768"})
+    public void testUploadCostPublishAndEditAssembly() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final String mode = "Manual";
+        final String material = "Steel, Cold Worked, AISI 1010";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadCostPublishScenario(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            mode,
+            material,
+            currentUser);
+
+        //Edit Assembly
+        Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
+            componentAssembly,
+            ForkRequest.builder()
+                .override(false)
+                .build())
+            .getResponseEntity();
+
+        assertThat(editAssemblyResponse.getLastAction(), is("FORK"));
+        assertThat(editAssemblyResponse.getPublished(), is(false));
     }
 }
