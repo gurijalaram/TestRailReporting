@@ -13,6 +13,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -116,7 +117,7 @@ public class ExploreToolbar extends MainNavBar {
 
     public ImportCadFilePage multiUploadComponentAndSubmit(String scenarioName, File filePath) {
 
-        return multiUploadComponent(scenarioName, filePath);
+        return null;
     }
 
     /**
@@ -200,11 +201,10 @@ public class ExploreToolbar extends MainNavBar {
         return new ImportCadFilePage(driver).inputComponentDetails(scenarioName, filePath);
     }
 
-    public ImportCadFilePage multiUploadComponent(String scenarioName, File file) {
+    public ImportCadFilePage multiUploadComponent(List<MultiUpload> multiUploadList) {
         pageUtils.waitForElementAndClick(importButton);
         pageUtils.waitForElementAndClick(cadButton);
-        return new ImportCadFilePage(driver).inputMultiComponentDetails(scenarioName, file);
-//        scenarioNames.forEach(s -> filePaths.forEach(f -> new ImportCadFilePage(driver).inputComponentDetails(s, f)));
+        return new ImportCadFilePage(driver).inputMultiComponentDetails(multiUploadList);
     }
 
     /**

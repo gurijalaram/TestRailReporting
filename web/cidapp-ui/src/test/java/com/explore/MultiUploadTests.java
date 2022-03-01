@@ -9,10 +9,13 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MultiUploadTests extends TestBase {
 
@@ -24,15 +27,13 @@ public class MultiUploadTests extends TestBase {
     @Test
     @Description()
     public void multiupload() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic.prt";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName);
         currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), new GenerateStringUtil().generateScenarioName()));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), new GenerateStringUtil().generateScenarioName()));
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .multiUploadComponent(scenarioName, resourceFile);
+            .multiUploadComponent(multiComponents);
     }
 }

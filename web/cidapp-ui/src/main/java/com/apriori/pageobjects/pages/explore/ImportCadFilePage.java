@@ -5,8 +5,9 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
+import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 /**
  * @author cfrith
@@ -81,10 +83,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    public ImportCadFilePage inputMultiComponentDetails(String scenarioName, File filePath) {
-        String file = filePath.getName();
-        enterMultiFilePath(filePath)
-            .inputMultiScenarioName(scenarioName, file);
+    /**
+     * Input multiple component details
+     *
+     * @param multiUploadList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponentDetails(List<MultiUpload> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            String file = multiUpload.getResourceFile().getName();
+
+            enterMultiFilePath(multiUpload.getResourceFile())
+                .inputMultiScenarioName(multiUpload.getScenarioName(), file);
+        });
         return this;
     }
 
@@ -101,6 +112,12 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
+    /**
+     * Input multiple scenario name
+     *
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
     private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
         String[] component = file.split("\\.");
         By byMultiFileInput = By.cssSelector(String.format("input[name='scenarioNames.%s%s']", component[0], component[component.length - 1]));
@@ -124,6 +141,12 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
+    /**
+     * Inputs details of the file to upload
+     *
+     * @param filePath - the file path
+     * @return current page object
+     */
     public ImportCadFilePage enterMultiFilePath(File filePath) {
         pageUtils.clearInput(fileInput);
         return enterFilePath(filePath);
