@@ -48,6 +48,9 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = ".modal-body .checkbox-icon")
     private WebElement overrideCheckbox;
 
+    @FindBy(css = ".file-selection-list [placeholder='Scenario Name']")
+    private WebElement scenarioNameBox;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -164,5 +167,14 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Check if scenario name text box field is enabled
+     *
+     * @return - boolean
+     */
+    public boolean scenarioNameTextBoxEnabled() {
+        return pageUtils.isElementClickable(scenarioNameBox);
     }
 }

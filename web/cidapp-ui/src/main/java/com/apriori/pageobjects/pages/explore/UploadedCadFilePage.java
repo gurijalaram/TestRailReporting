@@ -8,7 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 @Slf4j
-public class ImportCadFilePage extends EagerPageComponent<ImportCadFilePage> {
+public class UploadedCadFilePage extends EagerPageComponent<UploadedCadFilePage> {
 
     @FindBy(xpath = "//button[contains(text(), 'Close')]")
     private WebElement closeButton;
@@ -21,7 +21,7 @@ public class ImportCadFilePage extends EagerPageComponent<ImportCadFilePage> {
      *  @param driver The web driver that the page exists on.
      *
      */
-    public ImportCadFilePage(WebDriver driver) {
+    public UploadedCadFilePage(WebDriver driver) {
         super(driver, log);
     }
 
