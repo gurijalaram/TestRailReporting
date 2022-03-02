@@ -186,8 +186,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage tick(String option) {
-        By byCheckbox = with(By.cssSelector(".option-icon"))
-            .near(By.xpath(String.format("//div[.='%s']", option)));
+        By byCheckbox = byCheckbox(option);
 
         if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
             pageUtils.waitForElementAndClick(byCheckbox);
@@ -202,13 +201,17 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     public ImportCadFilePage unTick(String option) {
-        By byCheckbox = with(By.cssSelector(".option-icon"))
-            .near(By.xpath(String.format("//div[.='%s']", option)));
+        By byCheckbox = byCheckbox(option);
 
         if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
             pageUtils.waitForElementAndClick(byCheckbox);
         }
         return this;
+    }
+
+    private By byCheckbox(String option) {
+        return with(By.cssSelector(".checkbox-icon"))
+            .near(By.xpath(String.format("//div[.='%s']", option)));
     }
 
     /**
