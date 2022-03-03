@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders;
+package com.apriori.acs.entity.response.workorders.genericclasses;
 
 public class StatusDetailsResponse {
     private String failureMessage;

@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders;
+package com.apriori.acs.entity.response.workorders.getadmininfo;
 
 import com.apriori.utils.http.enums.Schema;
 

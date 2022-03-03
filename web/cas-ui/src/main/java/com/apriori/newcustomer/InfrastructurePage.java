@@ -5,7 +5,6 @@ import com.apriori.common.UsersTableController;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
-
 import com.apriori.utils.web.components.SourceListComponent;
 
 import org.assertj.core.api.SoftAssertions;
