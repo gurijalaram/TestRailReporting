@@ -1,8 +1,7 @@
-package com.apriori.acs.entity.response.workorders;
+package com.apriori.acs.entity.response.workorders.loadcadmetadata;
 
-import com.apriori.acs.entity.response.workorders.upload.ManifestItem;
-import com.apriori.acs.entity.response.workorders.upload.PmiItem;
-
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.ManifestItem;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.PmiItem;
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
