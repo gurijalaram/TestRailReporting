@@ -40,6 +40,7 @@ import java.util.ArrayList;
 public class WorkorderAPITests {
 
     private final FileUploadResources fileUploadResources = new FileUploadResources();
+    private final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
     @Test
     @Issue("AP-69600")
@@ -77,7 +78,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
@@ -87,12 +87,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
-                "Casting.prt",
-                processGroup
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadFile("Casting.prt", processGroup);
 
         getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
@@ -114,7 +109,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11974")
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"
@@ -124,7 +118,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        Assembly assemblyToUse = createAndReturnAssembly(testScenarioName, processGroup);
+        Assembly assemblyToUse = createAndReturnAssembly(scenarioName, processGroup);
 
         initialiseAndUploadAssembly(assemblyToUse, false);
 
@@ -146,7 +140,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"7710"})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -172,7 +165,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8681"})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
@@ -182,11 +174,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
-                "bracket_basic.prt",
-                processGroup
-        );
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadFile("bracket_basic.prt", processGroup);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -248,7 +236,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8689"})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
@@ -277,7 +264,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
@@ -287,15 +273,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
-                "bracket_basic.prt",
-                processGroup
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-                fileResponse,
-                testScenarioName
-        );
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadFile("bracket_basic.prt", processGroup);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -322,7 +300,6 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
@@ -339,7 +316,7 @@ public class WorkorderAPITests {
 
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderExposeError(
                 fileResponse,
-                testScenarioName
+                scenarioName
         );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
@@ -366,19 +343,10 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11981")
     @Description("Delete Scenario")
     public void testDeleteScenario() {
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
-            "bracket_basic.prt",
-            processGroup
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-            fileResponse,
-            testScenarioName
-        );
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadFile("bracket_basic.prt", processGroup);
 
         DeleteScenarioOutputs deleteScenarioOutputs = fileUploadResources.createDeleteScenarioWorkorderSuppressError(fileUploadOutputs);
 
@@ -387,6 +355,18 @@ public class WorkorderAPITests {
         assertThat(deleteScenarioOutputs.getScenarioKey().getMasterName(), is(equalTo(scenarioKeyToAssertOn.getMasterName())));
         assertThat(deleteScenarioOutputs.getScenarioKey().getTypeName(), is(equalTo(scenarioKeyToAssertOn.getTypeName())));
         assertThat(deleteScenarioOutputs.getScenarioKey().getWorkspaceId(), is(equalTo(scenarioKeyToAssertOn.getWorkspaceId())));
+    }
+
+    private FileUploadOutputs initialiseAndUploadFile(String fileName, String processGroup) {
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+            fileName,
+            processGroup
+        );
+
+        return fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            scenarioName
+        );
     }
 
     private FileResponse initialiseAndUploadAssembly(Assembly assemblyToUse, boolean doLoadCadMetadata) {
