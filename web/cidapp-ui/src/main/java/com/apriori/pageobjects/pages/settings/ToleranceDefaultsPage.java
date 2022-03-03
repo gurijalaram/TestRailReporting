@@ -35,6 +35,9 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     private WebElement cadRadioButton;
 
     @FindBy(css = "[id='qa-tolerance-defaults-use-cad-tolerance-threshold'] .checkbox-icon")
+    private WebElement replaceValuesCheckboxIcon;
+
+    @FindBy(css = "[id='qa-tolerance-defaults-use-cad-tolerance-threshold'] .checkbox")
     private WebElement replaceValuesCheckbox;
 
     @FindBy(css = "[name='tolerance.minCadToleranceThreshold']")
@@ -142,7 +145,7 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
      * @return current page object
      */
     public ToleranceDefaultsPage replaceValues(String cadValue, String toleranceValue) {
-        pageUtils.waitForElementAndClick(replaceValuesCheckbox);
+        pageUtils.waitForElementAndClick(replaceValuesCheckboxIcon);
         inputCadValue(cadValue)
             .inputCadTolerance(toleranceValue);
         return this;
@@ -209,7 +212,7 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
      * @throws NullPointerException if attribute doesn't exist
      */
     public boolean isCadSelected() {
-        return !cadRadioButton.getAttribute("checked").equals("null");
+        return !replaceValuesCheckbox.getDomAttribute("class").contains("disabled");
     }
 
     /**

@@ -1,8 +1,6 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.utils.PageUtils;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.Keys;
@@ -28,18 +26,6 @@ public class InputsController {
     }
 
     /**
-     * Selects the pg dropdown
-     *
-     * @param processGroupDropdown - the process group dropdown
-     * @param processGroup         - the process group
-     * @return current page object
-     */
-    public InputsController selectProcessGroup(WebElement processGroupDropdown, ProcessGroupEnum processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
-        return this;
-    }
-
-    /**
      * Enters the annual volume
      *
      * @param annualVolumeInput - the annual volume input
@@ -57,11 +43,12 @@ public class InputsController {
      * Selects the vpe dropdown
      *
      * @param digitalFactoryDropdown - the vpe dropdown
-     * @param digitalFactory         - the vpe
+     * @param root                   - the bottom level of the locator. this is the page the element is located on eg. can be in a modal dialog
+     * @param value                  - the value
      * @return current page object
      */
-    public InputsController selectDigitalFactory(WebElement digitalFactoryDropdown, DigitalFactoryEnum digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, digitalFactory.getDigitalFactory());
+    public InputsController selectInputsDropdown(WebElement digitalFactoryDropdown, String root, String value) {
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, root, value);
         return this;
     }
 
