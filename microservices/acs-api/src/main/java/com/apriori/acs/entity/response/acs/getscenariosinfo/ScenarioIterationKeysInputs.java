@@ -1,6 +1,6 @@
 package com.apriori.acs.entity.response.acs.getscenariosinfo;
 
-import com.apriori.acs.entity.response.workorders.upload.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 
 import lombok.Builder;
 import lombok.Data;

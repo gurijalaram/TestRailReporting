@@ -6,9 +6,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.response.acs.getscenariosinfo.GetScenariosInfoItem;
 import com.apriori.acs.entity.response.acs.getscenariosinfo.GetScenariosInfoResponse;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.entity.response.workorders.upload.ScenarioIterationKey;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.utils.GenerateStringUtil;

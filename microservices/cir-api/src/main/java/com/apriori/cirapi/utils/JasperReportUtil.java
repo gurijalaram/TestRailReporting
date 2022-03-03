@@ -27,14 +27,14 @@ import java.util.List;
 
 public class JasperReportUtil {
 
-    private String jSessionValue = "JSESSIONID=%s";
+    private String jasperSessionValue = "JSESSIONID=%s";
 
-    public static JasperReportUtil init(final String jSessionId) {
-        return new JasperReportUtil(jSessionId);
+    public static JasperReportUtil init(final String jasperSessionId) {
+        return new JasperReportUtil(jasperSessionId);
     }
 
-    public JasperReportUtil(final String jSessionId) {
-        this.jSessionValue = String.format(jSessionValue, jSessionId);
+    public JasperReportUtil(final String jasperSessionId) {
+        this.jasperSessionValue = String.format(jasperSessionValue, jasperSessionId);
     }
 
     public InputControl getInputControls() {
@@ -123,7 +123,7 @@ public class JasperReportUtil {
     private HashMap<String, String> initHeadersWithJSession() {
         return new HashMap<String, String>() {
             {
-                put("Cookie", jSessionValue);
+                put("Cookie", jasperSessionValue);
             }
         };
     }
