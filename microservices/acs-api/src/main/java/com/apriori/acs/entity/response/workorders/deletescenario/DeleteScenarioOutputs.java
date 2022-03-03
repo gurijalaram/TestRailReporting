@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.workorders.deletescenario;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
