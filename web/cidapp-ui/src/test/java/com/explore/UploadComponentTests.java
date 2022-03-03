@@ -40,7 +40,9 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(scenarioName, resourceFile, CadFileStatusPage.class)
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .submit(CadFileStatusPage.class)
             .close(ExplorePage.class)
             .clickSearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
