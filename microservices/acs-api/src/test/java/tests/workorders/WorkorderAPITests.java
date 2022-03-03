@@ -7,17 +7,19 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.request.workorders.assemblyobjects.Assembly;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyComponent;
-import com.apriori.acs.entity.response.workorders.GetAdminInfoResponse;
-import com.apriori.acs.entity.response.workorders.GetCadMetadataResponse;
-import com.apriori.acs.entity.response.workorders.GetImageInfoResponse;
+import com.apriori.acs.entity.response.workorders.getadmininfo.GetAdminInfoResponse;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadataResponse;
+import com.apriori.acs.entity.response.workorders.getimageinfo.GetImageInfoResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
-import com.apriori.acs.entity.response.workorders.upload.GenerateAssemblyImagesOutputs;
-import com.apriori.acs.entity.response.workorders.upload.GeneratePartImagesOutputs;
-import com.apriori.acs.entity.response.workorders.upload.LoadCadMetadataOutputs;
-import com.apriori.acs.entity.response.workorders.upload.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.utils.FileResourceUtil;
@@ -357,6 +359,34 @@ public class WorkorderAPITests {
         softAssert.assertThat(getImageInfoResponse.getWebImageRequiresRegen()).isEqualTo("false");
 
         softAssert.assertAll();
+    }
+
+    @Test
+    @Category(WorkorderTest.class)
+    @TestRail(testCaseId = "11981")
+    @Description("Delete Scenario")
+    public void testDeleteScenario() {
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+            "bracket_basic.prt",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        DeleteScenarioOutputs deleteScenarioOutputs = fileUploadResources.createDeleteScenarioWorkorderSuppressError(fileUploadOutputs);
+
+        ScenarioKey scenarioKeyToAssertOn = fileUploadOutputs.getScenarioIterationKey().getScenarioKey();
+        assertThat(deleteScenarioOutputs.getScenarioKey().getStateName(), is(equalTo(scenarioKeyToAssertOn.getStateName())));
+        assertThat(deleteScenarioOutputs.getScenarioKey().getMasterName(), is(equalTo(scenarioKeyToAssertOn.getMasterName())));
+        assertThat(deleteScenarioOutputs.getScenarioKey().getTypeName(), is(equalTo(scenarioKeyToAssertOn.getTypeName())));
+        assertThat(deleteScenarioOutputs.getScenarioKey().getWorkspaceId(), is(equalTo(scenarioKeyToAssertOn.getWorkspaceId())));
     }
 
     private FileResponse initialiseAndUploadAssembly(Assembly assemblyToUse, boolean doLoadCadMetadata) {

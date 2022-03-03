@@ -17,29 +17,31 @@ import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionI
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishInputs;
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishScenarioIterationKey;
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishScenarioKey;
-import com.apriori.acs.entity.response.workorders.CreateWorkorderResponse;
-import com.apriori.acs.entity.response.workorders.GetAdminInfoResponse;
-import com.apriori.acs.entity.response.workorders.GetCadMetadataResponse;
-import com.apriori.acs.entity.response.workorders.GetImageInfoResponse;
+import com.apriori.acs.entity.response.workorders.genericclasses.CreateWorkorderResponse;
+import com.apriori.acs.entity.response.workorders.getadmininfo.GetAdminInfoResponse;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadataResponse;
+import com.apriori.acs.entity.response.workorders.getimageinfo.GetImageInfoResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.cost.iterations.CostIteration;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioInputs;
+import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
-import com.apriori.acs.entity.response.workorders.upload.GenerateAssemblyImagesInputs;
-import com.apriori.acs.entity.response.workorders.upload.GenerateAssemblyImagesOutputs;
-import com.apriori.acs.entity.response.workorders.upload.GeneratePartImagesInputs;
-import com.apriori.acs.entity.response.workorders.upload.GeneratePartImagesOutputs;
-import com.apriori.acs.entity.response.workorders.upload.LoadCadMetadataInputs;
-import com.apriori.acs.entity.response.workorders.upload.LoadCadMetadataOutputs;
-import com.apriori.acs.entity.response.workorders.upload.ScenarioIterationKey;
-import com.apriori.acs.entity.response.workorders.upload.ScenarioKey;
-import com.apriori.acs.entity.response.workorders.upload.WorkorderCommand;
-import com.apriori.acs.entity.response.workorders.upload.WorkorderCommands;
-import com.apriori.acs.entity.response.workorders.upload.WorkorderDetailsResponse;
-import com.apriori.acs.entity.response.workorders.upload.WorkorderRequest;
+import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
+import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
+import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
+import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderCommand;
+import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderCommands;
+import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderDetailsResponse;
+import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderRequest;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
@@ -332,6 +334,28 @@ public class FileUploadResources {
      */
     public void imageValidation(String imageResponse) {
         assertThat(Base64.isBase64(imageResponse), is(equalTo(true)));
+    }
+
+    /**
+     * Create delete scenario workorder
+     *
+     * @param fileUploadOutputs - FileUploadOutputs - for use in building request
+     * @return DeleteScenarioOutputs instance
+     */
+    public DeleteScenarioOutputs createDeleteScenarioWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+        String deleteScenarioWorkorderId = createWorkorder(WorkorderCommands.DELETE.getWorkorderCommand(),
+            DeleteScenarioInputs.builder()
+                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
+                .iteration(fileUploadOutputs.getScenarioIterationKey().getIteration())
+                .includeOtherWorkspace(false)
+                .build(),
+            true
+        );
+        submitWorkorder(deleteScenarioWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(deleteScenarioWorkorderId),
+            DeleteScenarioOutputs.class
+        );
     }
 
     /**

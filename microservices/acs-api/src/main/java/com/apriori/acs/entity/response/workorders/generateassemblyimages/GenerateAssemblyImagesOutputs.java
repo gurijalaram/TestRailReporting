@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders.upload;
+package com.apriori.acs.entity.response.workorders.generateassemblyimages;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;

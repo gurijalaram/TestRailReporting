@@ -1,5 +1,6 @@
 package com.apriori.acs.entity.response.workorders.upload;
 
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

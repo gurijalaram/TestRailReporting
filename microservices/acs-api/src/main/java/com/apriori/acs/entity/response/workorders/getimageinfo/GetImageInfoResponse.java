@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders;
+package com.apriori.acs.entity.response.workorders.getimageinfo;
 
 import com.apriori.utils.http.enums.Schema;
 
