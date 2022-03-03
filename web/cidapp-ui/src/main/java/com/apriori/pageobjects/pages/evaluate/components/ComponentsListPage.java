@@ -8,7 +8,7 @@ import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.inputs.PrimaryInputsPage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -41,17 +41,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(id = "qa-sub-component-action-bar-upload-button")
     private WebElement uploadButton;
 
-    @FindBy(id = "qa-sub-component-action-bar-set-inputs-button")
-    private WebElement costInputsButton;
-
-    @FindBy(id = "qa-sub-component-action-bar-override-button")
-    private WebElement pencilButton;
-
-    @FindBy(id = "qa-sub-component-action-bar-exclude-button")
-    private WebElement eyeSlashButton;
-
-    @FindBy(id = "qa-sub-component-action-bar-include-button")
-    private WebElement eyeButton;
+    @FindBy(css = "[id='qa-sub-component-action-bar-set-inputs-button'] button")
+    private WebElement setInputsButton;
 
     @FindBy(id = "qa-sub-component-detail-configure-button")
     private WebElement configureButton;
@@ -164,9 +155,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return new page object
      */
-    public PrimaryInputsPage setCostInputs() {
-        pageUtils.waitForElementAndClick(costInputsButton);
-        return new PrimaryInputsPage(driver);
+    public ComponentPrimaryPage setInputs() {
+        pageUtils.waitForElementAndClick(setInputsButton);
+        return new ComponentPrimaryPage(driver);
+    }
+
+    /**
+     * Checks if button is enabled
+     * @return true/false
+     */
+    public boolean isSetInputsEnabled() {
+        return pageUtils.waitForElementToAppear(setInputsButton).isEnabled();
     }
 
     /**
@@ -185,6 +184,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public EvaluatePage closePanel() {
         return panelController.closePanel();
+    }
+
+    /**
+     * Highlights the scenario in the table
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ComponentsListPage highlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.highlightScenario(componentName, scenarioName);
+        return this;
     }
 
     /**

@@ -7,6 +7,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentSecondaryPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -65,7 +68,7 @@ public class UploadTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName,scenarioName,resourceFile, currentUser)
             .createScenario()
             .enterScenarioName(newScenarioName)
