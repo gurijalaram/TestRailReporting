@@ -79,7 +79,7 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
      */
     public SecondaryDFPage selectDropdown(String secondaryProcess, DigitalFactoryEnum digitalFactory) {
         WebElement machiningDropdown = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("[id='qa-%s-select-field'] .apriori-select", secondaryProcess))));
-        inputsController.selectDigitalFactory(machiningDropdown, digitalFactory);
+        inputsController.selectInputsDropdown(machiningDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
         return this;
     }
 

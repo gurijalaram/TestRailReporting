@@ -65,6 +65,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     private ModalDialogController modalDialogController;
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private PeopleUtil peopleUtil = new PeopleUtil();
+    private String root = "modal-body";
 
     public PublishPage(WebDriver driver) {
         this.driver = driver;
@@ -91,7 +92,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectStatus(String status) {
-        pageUtils.typeAheadSelect(statusDropdown, status);
+        pageUtils.typeAheadSelect(statusDropdown, root, status);
         return this;
     }
 
@@ -102,7 +103,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectCostMaturity(String costMaturity) {
-        pageUtils.typeAheadSelect(costMaturityDropdown, costMaturity);
+        pageUtils.typeAheadSelect(costMaturityDropdown, root, costMaturity);
         return this;
     }
 
@@ -114,7 +115,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public PublishPage selectAssignee(UserCredentials assignee) {
         PersonResponse currentPerson = peopleUtil.getCurrentPerson(assignee);
-        pageUtils.typeAheadSelect(assigneeDropdown, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
+        pageUtils.typeAheadSelect(assigneeDropdown, root, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 
@@ -172,9 +173,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     /**
      * Select the publish button
      *
-     * @param cssScenarioItem     - the css item
-     * @param currentUser - the current user
-     * @param <T>         - the object type
+     * @param cssScenarioItem - the css item
+     * @param currentUser     - the current user
+     * @param <T>             - the object type
      * @return generic page object
      */
     public <T> T publish(ScenarioItem cssScenarioItem, UserCredentials currentUser, Class<T> klass) {

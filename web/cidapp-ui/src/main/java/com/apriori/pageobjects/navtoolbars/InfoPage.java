@@ -60,6 +60,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     private ModalDialogController modalDialogController;
     private StatusIcon statusIcon;
     private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private String root = "modal-body";
 
     public InfoPage(WebDriver driver) {
         this.driver = driver;
@@ -87,7 +88,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage selectStatus(String status) {
-        pageUtils.typeAheadSelect(statusDropdown, status);
+        pageUtils.typeAheadSelect(statusDropdown, root, status);
         return this;
     }
 
@@ -98,7 +99,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage inputCostMaturity(String costMaturity) {
-        pageUtils.typeAheadSelect(costMaturityDropdown, costMaturity);
+        pageUtils.typeAheadSelect(costMaturityDropdown, root, costMaturity);
         return this;
     }
 

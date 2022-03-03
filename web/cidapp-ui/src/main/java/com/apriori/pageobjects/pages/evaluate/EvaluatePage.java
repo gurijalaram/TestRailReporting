@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate;
 
-import com.apriori.pageobjects.common.CustomAttributesInputsController;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
@@ -151,7 +150,6 @@ public class EvaluatePage extends EvaluateToolbar {
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
-    private CustomAttributesInputsController customAttributesInputsController;
     private StatusIcon statusIcon;
     private ModalDialogController modalDialogController;
 
@@ -160,7 +158,6 @@ public class EvaluatePage extends EvaluateToolbar {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
-        this.customAttributesInputsController = new CustomAttributesInputsController(driver);
         this.statusIcon = new StatusIcon(driver);
         this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
@@ -208,7 +205,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectProcessGroup(ProcessGroupEnum processGroup) {
-        inputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        inputsController.selectInputsDropdown(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
         return this;
     }
 
@@ -219,7 +216,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return current page object
      */
     public EvaluatePage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
+        inputsController.selectInputsDropdown(digitalFactoryDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
         return this;
     }
 

@@ -80,7 +80,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, filter);
+        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
         setPagination();
         return this;
     }
