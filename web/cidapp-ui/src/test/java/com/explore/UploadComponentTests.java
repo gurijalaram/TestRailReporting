@@ -70,6 +70,6 @@ public class UploadComponentTests extends TestBase {
 
         assertThat(cadFilePage.getImportMessage(), is(containsString("1 file(s) Imported Successfully.")));
 
-            cadFilePage.close();
+        cadFilePage.close();
     }
 }
