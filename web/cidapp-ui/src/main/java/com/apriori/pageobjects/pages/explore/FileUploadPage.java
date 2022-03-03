@@ -175,6 +175,6 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return - boolean
      */
     public boolean scenarioNameTextBoxEnabled() {
-        return pageUtils.isElementClickable(scenarioNameBox);
+        return pageUtils.isElementEnabled(scenarioNameBox);
     }
 }
