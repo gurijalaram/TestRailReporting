@@ -13,6 +13,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -110,15 +111,23 @@ public class ExploreToolbar extends MainNavBar {
      * @param klass        - the class name
      * @return new page object
      */
-    public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
+    public <T> T importComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
         return importCadFile()
             .inputComponentDetails(scenarioName, filePath)
             .submit(klass);
     }
 
-    public ImportCadFilePage multiUploadComponentAndSubmit(String scenarioName, File filePath) {
-
-        return null;
+    /**
+     * Collective method to upload a number of files then select Submit
+     *
+     * @param multiUploadList - component details as a list
+     * @param klass           - the class name
+     * @return new page object
+     */
+    public <T> T importMultiComponentAndSubmit(List<MultiUpload> multiUploadList, Class<T> klass) {
+        return importCadFile()
+            .inputMultiComponentDetails(multiUploadList)
+            .submit(klass);
     }
 
     /**
