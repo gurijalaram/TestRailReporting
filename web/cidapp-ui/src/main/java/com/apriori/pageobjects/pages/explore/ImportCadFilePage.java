@@ -195,7 +195,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Selects the option
+     * Selects one of the checkboxes based on the option provided
      *
      * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
      * @return current page object
