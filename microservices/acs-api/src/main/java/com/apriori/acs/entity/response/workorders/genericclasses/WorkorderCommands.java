@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders.upload;
+package com.apriori.acs.entity.response.workorders.genericclasses;
 
 public enum WorkorderCommands {
 
@@ -7,7 +7,8 @@ public enum WorkorderCommands {
     GENERATE_PART_IMAGES("GENERATE_PART_IMAGES"),
     LOAD_CAD_FILE("LOADCADFILE"),
     LOAD_CAD_METADATA("LOAD_CAD_METADATA"),
-    PUBLISH("PUBLISH");
+    PUBLISH("PUBLISH"),
+    DELETE("DELETE");
 
     private final String workorderCommand;
 

@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders.upload;
+package com.apriori.acs.entity.response.workorders.genericclasses;
 
 public class WorkorderCommand {
 

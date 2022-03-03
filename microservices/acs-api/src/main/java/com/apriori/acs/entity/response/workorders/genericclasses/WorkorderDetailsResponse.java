@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders.upload;
+package com.apriori.acs.entity.response.workorders.genericclasses;
 
 import com.apriori.utils.http.enums.Schema;
 

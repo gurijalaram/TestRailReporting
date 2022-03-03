@@ -1,7 +1,6 @@
-package com.apriori.acs.entity.response.workorders.upload;
+package com.apriori.acs.entity.response.workorders.generateassemblyimages;
 
 import lombok.Builder;
-
 import lombok.Data;
 
 import java.util.List;
