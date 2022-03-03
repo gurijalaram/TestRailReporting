@@ -21,6 +21,8 @@ import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostO
 import com.apriori.acs.entity.response.workorders.cost.iterations.CostIteration;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioInputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
+import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioInputs;
+import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
@@ -355,6 +357,27 @@ public class FileUploadResources {
         return objectMapper.convertValue(
             checkGetWorkorderDetails(deleteScenarioWorkorderId),
             DeleteScenarioOutputs.class
+        );
+    }
+
+    /**
+     * Create edit scenario workorder
+     *
+     * @param publishResultOutputs - PublishResultOutputs - for use in building request
+     * @return EditScenariosOutputs instance
+     */
+    public EditScenarioOutputs createEditScenarioWorkorderSuppressError(PublishResultOutputs publishResultOutputs) {
+        String editScenarioWorkorderId = createWorkorder(WorkorderCommands.EDIT.getWorkorderCommand(),
+            EditScenarioInputs.builder()
+                .scenarioIterationKey(publishResultOutputs.getScenarioIterationKey())
+                .newScenarioName("Test")
+                .build(),
+            true
+        );
+        submitWorkorder(editScenarioWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(editScenarioWorkorderId),
+            EditScenarioOutputs.class
         );
     }
 
