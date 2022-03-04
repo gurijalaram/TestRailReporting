@@ -11,6 +11,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
@@ -359,5 +360,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public String getSortOrder(ColumnsEnum column) {
         By byColumn = By.xpath(String.format("//div[.='%s']//div[@class]//*[local-name()='svg']", column.getColumns()));
         return driver.findElement(byColumn).getAttribute("data-icon");
+    }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return string
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return Color.fromString(driver.findElement(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
+            scenarioName.trim(), componentName.toUpperCase().trim()))).getCssValue("background-color")).asHex();
     }
 }
