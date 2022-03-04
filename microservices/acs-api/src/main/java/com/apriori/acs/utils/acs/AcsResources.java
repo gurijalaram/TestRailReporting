@@ -90,6 +90,7 @@ public class AcsResources {
             .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GetScenarioInfoByScenarioIterationKeyResponse.class)
             .headers(headers)
             .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
                 scenarioIterationKey.getScenarioKey().getTypeName(),
                 scenarioIterationKey.getScenarioKey().getMasterName(),
                 scenarioIterationKey.getScenarioKey().getStateName(),
@@ -98,6 +99,30 @@ public class AcsResources {
 
         return (GetScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
                 .build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get Scenario Information by Scenario Iteration Key
+     * Negative version for use after scenario deletion to confirm deletion worked
+     *
+     * @param scenarioIterationKey - ScenarioIterationKey to use in API request
+     * @return String of 404 and error message
+     */
+    public String getScenarioInfoByScenarioIterationKeyNegative(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, null)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.acs.getscenarioinfobyscenarioiterationkey;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
+
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
@@ -15,8 +16,11 @@ public class GetScenarioInfoByScenarioIterationKeyResponse {
     private String componentType;
     private String configurationName;
     private String scenarioName;
+    private String description;
+    private String notes;
     private String locked;
     private String fileName;
+    private String fileMetadataIdentity;
     private String createdBy;
     private String createdAt;
     private String updatedBy;

@@ -70,6 +70,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -88,6 +89,8 @@ public class FileUploadResources {
     private final ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
 
     private FileUploadOutputs currentFileUploadOutputs;
+
+    private String currentWorkorderId;
 
     /**
      * Uploads part to CID
@@ -353,11 +356,22 @@ public class FileUploadResources {
                 .build(),
             true
         );
+        currentWorkorderId = deleteScenarioWorkorderId;
         submitWorkorder(deleteScenarioWorkorderId);
         return objectMapper.convertValue(
             checkGetWorkorderDetails(deleteScenarioWorkorderId),
             DeleteScenarioOutputs.class
         );
+    }
+
+    /**
+     * Gets delete scenario workorder details, in order to get iteration to ensure deletion worked
+     *
+     * @return Object of the scenario iteration key, extracted from inputs
+     */
+    public Object getDeleteScenarioWorkorderDetails() {
+        WorkorderDetailsResponse workorderDetailsResponse = (WorkorderDetailsResponse) getWorkorderDetails(currentWorkorderId);
+        return ((LinkedHashMap<?, ?>) workorderDetailsResponse.getCommand().getInputs()).get("scenarioIterationKey");
     }
 
     /**
