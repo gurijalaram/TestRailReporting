@@ -21,7 +21,7 @@ import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferen
 import com.apriori.acs.entity.response.acs.getsetuserpreferences.SetUserPreferencesInputs;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.UnitVariantSetting;
-import com.apriori.acs.entity.response.workorders.upload.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.utils.Constants;
 import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.utils.GenerateStringUtil;
