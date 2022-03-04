@@ -16,8 +16,8 @@ import java.util.List;
 @Data
 @JsonRootName("response")
 @Schema(location = "VPESchema.json")
-public class VPE extends Pagination {
-    private List<VPE> items;
+public class CustomerVPE extends Pagination {
+    private List<CustomerVPE> items;
     private String identity;
     private String createdBy;
     private String updatedBy;

@@ -111,6 +111,7 @@
               "roundToDollar",
               "currencyCode",
               "partNumber",
+              "partLink",
               "exportSetName",
               "scenarioName"
             ]
@@ -121,6 +122,9 @@
                 "type": "boolean"
               },
               "currencyCode": {
+                "type": "string"
+              },
+              "partLink": {
                 "type": "string"
               },
               "partNumber": {

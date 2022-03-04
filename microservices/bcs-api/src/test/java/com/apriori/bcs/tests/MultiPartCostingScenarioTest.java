@@ -19,7 +19,6 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
-
 import com.apriori.utils.reader.file.part.PartData;
 import com.apriori.utils.reader.file.part.PartUtil;
 
@@ -50,8 +49,8 @@ public class MultiPartCostingScenarioTest extends TestUtil {
 
     @BeforeClass
     public static void testSetup() {
-        ResponseWrapper<Object> responseWrapper = BatchResources.createBatch();
-        Batch batch = (Batch)BatchResources.createBatch().getResponseEntity();
+        ResponseWrapper<Batch> responseWrapper = BatchResources.createBatch();
+        Batch batch = BatchResources.createBatch().getResponseEntity();
         batchIdentity = batch.getIdentity();
         batchData = BCSBatchDTO.builder()
             .batchId(batchIdentity)
