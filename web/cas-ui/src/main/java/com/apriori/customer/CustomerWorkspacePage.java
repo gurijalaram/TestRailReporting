@@ -63,7 +63,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         profileTab = new RoutingComponent(getDriver(), profileTabRoot);
         usersTab = new RoutingComponent(getDriver(), usersTabRoot);
         siteLicenseTab = new RoutingComponent(getDriver(), siteLicenseTabRoot);
-        infrastructureTab = new RoutingComponent(getDriver(), infrastructureTabRoot);
         systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
 
         // Optional Tabs
@@ -79,7 +78,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementAppear(profileTabRoot);
         getPageUtils().waitForElementAppear(usersTabRoot);
-        getPageUtils().waitForElementToAppear(siteLicenseTabRoot);
         getPageUtils().waitForElementToAppear(infrastructureTabRoot);
         getPageUtils().waitForElementToAppear(systemConfigurationTabRoot);
     }
