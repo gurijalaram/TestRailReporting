@@ -5,6 +5,7 @@ import com.apriori.cirapi.entity.enums.CIRAPIEnum;
 import com.apriori.cirapi.entity.request.ReportExportRequest;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
+import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.entity.response.ReportStatusResponse;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -26,14 +27,24 @@ import java.util.List;
 
 public class JasperReportUtil {
 
-    private String jSessionValue = "JSESSIONID=%s";
+    private String jasperSessionValue = "JSESSIONID=%s";
 
-    public static JasperReportUtil init(final String jSessionId) {
-        return new JasperReportUtil(jSessionId);
+    public static JasperReportUtil init(final String jasperSessionId) {
+        return new JasperReportUtil(jasperSessionId);
     }
 
-    public JasperReportUtil(final String jSessionId) {
-        this.jSessionValue = String.format(jSessionValue, jSessionId);
+    public JasperReportUtil(final String jasperSessionId) {
+        this.jasperSessionValue = String.format(jasperSessionValue, jasperSessionId);
+    }
+
+    public InputControl getInputControls() {
+        RequestEntity requestEntity = RequestEntityUtil.init(CIRAPIEnum.DTC_METRICS, InputControl.class)
+            .headers(initHeadersWithJSession());
+
+        ResponseWrapper<InputControl> responseResponseWrapper = HTTPRequest.build(requestEntity).post();
+        Assert.assertEquals(responseResponseWrapper.getStatusCode(), HttpStatus.SC_OK);
+
+        return responseResponseWrapper.getResponseEntity();
     }
 
     public JasperReportSummary generateJasperReportSummary(ReportRequest reportRequest) {
@@ -112,7 +123,7 @@ public class JasperReportUtil {
     private HashMap<String, String> initHeadersWithJSession() {
         return new HashMap<String, String>() {
             {
-                put("Cookie", jSessionValue);
+                put("Cookie", jasperSessionValue);
             }
         };
     }

@@ -36,7 +36,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
     private WebElement filterButton;
 
-    @FindBy(css = ".small.preview-button")
+    @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
 
     @FindBy(id = "qa-scenario-explorer-filter-selector")
@@ -80,7 +80,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, filter);
+        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
         setPagination();
         return this;
     }
