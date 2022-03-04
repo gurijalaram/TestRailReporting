@@ -91,7 +91,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return current page object
      */
     public SourceModelExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, filter);
+        pageUtils.typeAheadSelect(filterDropdown, "modal-body", filter);
         setPagination();
         return this;
     }

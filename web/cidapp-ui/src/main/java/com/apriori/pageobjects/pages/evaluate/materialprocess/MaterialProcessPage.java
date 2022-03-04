@@ -100,6 +100,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     private PageUtils pageUtils;
     private PanelController panelController;
     private PsoController psoController;
+    private String root = "root";
 
     public MaterialProcessPage(WebDriver driver) {
         this.driver = driver;
@@ -159,7 +160,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectDropdown(String filter) {
-        pageUtils.typeAheadSelect(processDropdown, filter);
+        pageUtils.typeAheadSelect(processDropdown, root, filter);
         return this;
     }
 
@@ -386,7 +387,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage selectDefinedValue(String value) {
         pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities  (Piece Part & Tooling Cost Driver)", "user"));
-        pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), value);
+        pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), root, value);
         return this;
     }
 
@@ -397,7 +398,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectMoldMaterial(String value) {
-        pageUtils.typeAheadSelect(psoController.dropdownLocator("Mold Material"), value);
+        pageUtils.typeAheadSelect(psoController.dropdownLocator("Mold Material"), root, value);
         return this;
     }
 
@@ -426,7 +427,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectTolerances(String value) {
-        pageUtils.typeAheadSelect(psoController.dropdownLocator("Part Tolerance"), value);
+        pageUtils.typeAheadSelect(psoController.dropdownLocator("Part Tolerance"), root, value);
         return this;
     }
 

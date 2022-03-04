@@ -46,7 +46,9 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(UserUtil.getUser())
-            .uploadComponent(testScenarioName, resourceFile).getFileInputError();
+            .importCadFile()
+            .inputComponentDetails(testScenarioName, resourceFile)
+            .getFileInputError();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
@@ -57,16 +59,16 @@ public class UploadTests extends TestBase {
     public void testUploadAssemblyAndRenameScenario() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
 
-        String filename  = "oldham.asm.1";
+        String filename = "oldham.asm.1";
         String componentName = "OLDHAM";
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum,filename);
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndOpen(componentName,scenarioName,resourceFile, currentUser)
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .createScenario()
             .enterScenarioName(newScenarioName)
             .submit(EvaluatePage.class);

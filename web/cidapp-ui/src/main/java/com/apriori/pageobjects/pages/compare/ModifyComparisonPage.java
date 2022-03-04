@@ -5,7 +5,6 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.ScenarioTableController;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
@@ -74,7 +73,7 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
      * @return current page object
      */
     public ModifyComparisonPage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, filter);
+        pageUtils.typeAheadSelect(filterDropdown, "modal-body", filter);
         return this;
     }
 
@@ -94,7 +93,7 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
      * Selects the scenario by checkbox
      *
      * @param componentName - component name
-     * @param scenarioName - scenario name
+     * @param scenarioName  - scenario name
      * @return current page object
      */
     public ModifyComparisonPage selectScenario(String componentName, String scenarioName) {

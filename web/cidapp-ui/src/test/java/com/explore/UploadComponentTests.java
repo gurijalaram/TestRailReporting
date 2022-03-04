@@ -5,17 +5,20 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.FileUploadPage;
-import com.apriori.pageobjects.pages.explore.UploadedCadFilePage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
+import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
@@ -23,14 +26,16 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UploadComponentTests extends TestBase {
 
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private UploadedCadFilePage cadFilePage;
-    private FileUploadPage fileUploadPage;
+    private CadFileStatusPage cadFileStatusPage;
+    private ImportCadFilePage importCadFilePage;
 
     @Test
     @Category(SanityTests.class)
@@ -44,7 +49,10 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit(scenarioName, resourceFile, ExplorePage.class)
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .submit(CadFileStatusPage.class)
+            .close(ExplorePage.class)
             .clickSearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -52,24 +60,26 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @Description("Get the success message after uploading Cad file")
-    public void testUploadCadFile() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
-
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+    @TestRail(testCaseId = "11879")
+    @Description("Validate messaging upon successful upload of multiple files")
+    public void multiUploadTests() {
+        UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), new GenerateStringUtil().generateScenarioName()));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), new GenerateStringUtil().generateScenarioName()));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), new GenerateStringUtil().generateScenarioName()));
 
         loginPage = new CidAppLoginPage(driver);
-        fileUploadPage = loginPage.login(UserUtil.getUser())
-            .uploadComponent(scenarioName, resourceFile);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .uploadMultipleCadFiles(multiComponents);
 
-        assertThat(fileUploadPage.scenarioNameTextBoxEnabled(), is(false));
+        assertThat(importCadFilePage.scenarioNameTextBoxEnabled(), is(false));
 
-        cadFilePage = fileUploadPage.submit(UploadedCadFilePage.class);
+        cadFileStatusPage = importCadFilePage.submit(CadFileStatusPage.class);
 
-        assertThat(cadFilePage.getImportMessage(), is(containsString("1 file(s) Imported Successfully.")));
-
-        cadFilePage.close();
+        assertThat(cadFileStatusPage.getImportMessage(), is(containsString(String.format("%s file(s) Imported Successfully.", multiComponents.size()))));
     }
 }

@@ -7,19 +7,17 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@Slf4j
 public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
-
-    private final Logger logger = LoggerFactory.getLogger(PrimaryInputsPage.class);
 
     @FindBy(css = ".inputs-container input[name='annualVolume']")
     private WebElement annualVolumeInput;
@@ -67,7 +65,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -109,7 +107,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        inputsController.selectProcessGroup(processGroupDropdown, processGroup);
+        inputsController.selectInputsDropdown(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
         return this;
     }
 
@@ -120,7 +118,7 @@ public class PrimaryInputsPage extends LoadableComponent<PrimaryInputsPage> {
      * @return current page object
      */
     public PrimaryInputsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectDigitalFactory(digitalFactoryDropdown, digitalFactory);
+        inputsController.selectInputsDropdown(digitalFactoryDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
         return this;
     }
 
