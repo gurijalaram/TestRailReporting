@@ -4,7 +4,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -42,8 +41,8 @@ public class UploadComponentTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser())
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile)
-            .submit(CadFileStatusPage.class)
-            .close(ExplorePage.class)
+            .submit()
+            .close()
             .clickSearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 

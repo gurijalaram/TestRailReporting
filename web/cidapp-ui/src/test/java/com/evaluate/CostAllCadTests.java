@@ -126,7 +126,8 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(UserUtil.getUser())
-            .importComponentAndSubmit("<script>alert(document.cookie)</script>", resourceFile, ImportCadFilePage.class);
+            .importCadFile()
+            .inputComponentDetails("<script>alert(document.cookie)</script>", resourceFile);
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("error occurred"));
     }
