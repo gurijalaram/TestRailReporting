@@ -90,12 +90,12 @@ public class EditUserTests extends TestBase {
                 "identity",
                 "email",
                 "userType",
-                "active",
                 "userProfile\\.givenName",
                 "userProfile\\.familyName",
                 "userProfile\\.prefix",
                 "userProfile\\.suffix",
                 "userProfile\\.jobTitle",
+                "userProfile\\.department",
                 "userProfile\\.townCity",
                 "userProfile\\.county",
                 "userProfile\\.countryCode",
@@ -111,6 +111,7 @@ public class EditUserTests extends TestBase {
                 "userProfile.prefix",
                 "userProfile.suffix",
                 "userProfile.jobTitle",
+                "userProfile.department",
                 "userProfile.townCity",
                 "userProfile.county",
                 "country-code",
@@ -133,6 +134,33 @@ public class EditUserTests extends TestBase {
         userProfilePage.cancel()
                 .assertButtonAvailable(soft, "Edit")
                 .assertNonEditable(userProfileFields, soft);
+
+        soft.assertAll();
+    }
+
+    @Test
+    @Category({SmokeTest.class})
+    @Description("Test that user details can be edited and saved")
+    @TestRail(testCaseId = {"11963"})
+    public void testEditUserAndSave() {
+        userIdentity = userProfilePage.getUserIdentity();
+        SoftAssertions soft = new SoftAssertions();
+
+        userProfilePage = userProfilePage.edit();
+
+        soft.assertThat(userProfilePage.canSave())
+                .overridingErrorMessage("Expected save button to be disabled.")
+                .isFalse();
+
+        String newGivenName = "EditedGivenName";
+
+        userProfilePage.editGivenName(newGivenName)
+                .save();
+
+        String savedGivenName = userProfilePage.getReadOnlyLabel("userProfile\\.givenName").getText();
+        soft.assertThat(savedGivenName)
+                .overridingErrorMessage(String.format("Expected changed description to equal %s. Actual %s.", newGivenName, savedGivenName))
+                .isEqualTo(newGivenName);
 
         soft.assertAll();
     }

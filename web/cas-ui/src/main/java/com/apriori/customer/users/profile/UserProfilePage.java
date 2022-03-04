@@ -33,6 +33,9 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
     @FindBy(css = "[type='checkbox']")
     private WebElement statusCheckbox;
 
+    @FindBy(css = "input[name='userProfile.givenName']")
+    private WebElement givenNameInput;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -128,7 +131,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @param name - name of field
      * @return The label for the given name.
      */
-    private WebElement getReadOnlyLabel(String name) {
+    public WebElement getReadOnlyLabel(String name) {
         return pageUtils.waitForElementToAppear(By.cssSelector((String.format(".read-field-%s", name))));
     }
 
@@ -210,5 +213,16 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      */
     public boolean canSave() {
         return isButtonEnabled(saveButton);
+    }
+
+    /**
+     * Enter given name
+     *
+     * @param givenName - given name
+     * @return current page object
+     */
+    public UserProfilePage editGivenName(String givenName) {
+        pageUtils.setValueOfElement(givenNameInput, givenName);
+        return this;
     }
 }
