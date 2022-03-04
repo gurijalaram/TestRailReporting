@@ -6,6 +6,7 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
@@ -13,7 +14,6 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
-import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -101,33 +101,6 @@ public class ExploreToolbar extends MainNavBar {
      */
     public boolean isDeleteButtonPresent() {
         return deleteButton.isDisplayed();
-    }
-
-    /**
-     * Collective method to upload a file then select Submit
-     *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @param klass        - the class name
-     * @return new page object
-     */
-    public <T> T importComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
-        return importCadFile()
-            .inputComponentDetails(scenarioName, filePath)
-            .submit(klass);
-    }
-
-    /**
-     * Collective method to upload a number of files then select Submit
-     *
-     * @param multiUploadList - component details as a list
-     * @param klass           - the class name
-     * @return new page object
-     */
-    public <T> T importMultiComponentAndSubmit(List<MultiUpload> multiUploadList, Class<T> klass) {
-        return importCadFile()
-            .inputMultiComponentDetails(multiUploadList)
-            .submit(klass);
     }
 
     /**
@@ -366,14 +339,12 @@ public class ExploreToolbar extends MainNavBar {
      * Uploads a cad file and select submit
      *
      * @param filePath - location of the file
-     * @param klass-   the class name
-     * @param <T>      - generic type
      * @return generic page object
      */
-    public <T> T updateCadFile(File filePath, Class<T> klass) {
+    public CadFileStatusPage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new ImportCadFilePage(driver).enterFilePath(filePath).submit(klass);
+        return new ImportCadFilePage(driver).enterFilePath(filePath).submit();
     }
 
     /**
