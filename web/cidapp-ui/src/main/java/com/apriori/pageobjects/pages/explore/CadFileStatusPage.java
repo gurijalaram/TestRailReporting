@@ -48,13 +48,11 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     /**
      * Close the import modal dialog
      *
-     * @param klass - the class
-     * @param <T>   - the generic page object
-     * @return generic page object
+     * @return new page object
      */
-    public <T> T close(Class<T> klass) {
+    public ExplorePage close() {
         pageUtils.waitForElementAndClick(closeButton);
-        return PageFactory.initElements(driver, klass);
+        return new ExplorePage(driver);
     }
 
     /**

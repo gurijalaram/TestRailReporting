@@ -2,68 +2,48 @@ package com.apriori.bcs.controller;
 
 import com.apriori.bcs.entity.request.PatchCostingPreferenceRequest;
 import com.apriori.bcs.entity.response.CostingPreferences;
-import com.apriori.bcs.entity.response.CustomAttributes;
-import com.apriori.bcs.entity.response.Customers;
-import com.apriori.bcs.entity.response.DigitalFactories;
-import com.apriori.bcs.entity.response.ProcessGroups;
-import com.apriori.bcs.entity.response.UserDefinedAttributes;
-import com.apriori.bcs.entity.response.VPE;
 import com.apriori.bcs.enums.BCSAPIEnum;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
+import java.util.Random;
+
+/**
+ * This class contains the methods related to customer-controller APIs
+ */
 public class CustomerResources {
 
-    public static <T> ResponseWrapper<T> getCustomers() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.CUSTOMERS, Customers.class);
-
-        return HTTPRequest.build(requestEntity).get();
+    /**
+     * Update customer patch costing preferences
+     *
+     * @return response  - Object of responseWrapper
+     */
+    public static ResponseWrapper<CostingPreferences> patchCostingPreferences() {
+        PatchCostingPreferenceRequest request =
+            (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromInputStream(
+                FileResourceUtil.getResourceFileStream("schemas/requests/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
+        request.setCadToleranceReplacement(100.00);
+        request.setMinCadToleranceThreshold(new Random().nextDouble());
+        RequestEntity requestEntity = RequestEntityUtil
+            .init(BCSAPIEnum.CUSTOMER_COSTING_PREFERENCES, CostingPreferences.class)
+            .body(request);
+        return HTTPRequest.build(requestEntity).patch();
     }
 
-    public static <T> ResponseWrapper<T> getCostingPreferences() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_COSTING_PREFERENCES, CostingPreferences.class);
 
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    public static CostingPreferences patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PATCH_COSTING_PREFERENCES, CostingPreferences.class)
+    /**
+     * Update customer patch costing preferences with custom data sent as argument
+     *
+     * @return response  - Object of responseWrapper
+     */
+    public static ResponseWrapper<CostingPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
+        RequestEntity requestEntity = RequestEntityUtil
+            .init(BCSAPIEnum.CUSTOMER_COSTING_PREFERENCES, CostingPreferences.class)
             .body(patchCostingPreferenceRequest);
-
-        return (CostingPreferences) HTTPRequest.build(requestEntity).patch()
-            .getResponseEntity();
+        return HTTPRequest.build(requestEntity).patch();
     }
-
-    public static <T> ResponseWrapper<T> getProcessGroups() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_PROCESS_GROUPS, ProcessGroups.class);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    public static <T> ResponseWrapper<T> getUserDefinedAttributes() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_USER_DEFINED_ATTRIBUTES, UserDefinedAttributes.class);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    public static <T> ResponseWrapper<T> getVirtualProductEnvironments() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_VPEs, VPE.class);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    public static <T> ResponseWrapper<T> getDigitalFactories() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_DIGITAL_FACTORIES, DigitalFactories.class);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    public static <T> ResponseWrapper<T> getCustomAttributes() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributes.class);
-
-        return HTTPRequest.build(requestEntity).get();
-    }
-
 }

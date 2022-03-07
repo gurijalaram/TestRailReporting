@@ -233,10 +233,10 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     /**
      * Selects the submit button
      *
-     * @return generic page object
+     * @return new page object
      */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(submitButton, klass);
+    public CadFileStatusPage submit() {
+        return modalDialogController.submit(submitButton, CadFileStatusPage.class);
     }
 
     /**

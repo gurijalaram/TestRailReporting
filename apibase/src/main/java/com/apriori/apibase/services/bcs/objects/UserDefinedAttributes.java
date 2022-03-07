@@ -3,10 +3,15 @@ package com.apriori.apibase.services.bcs.objects;
 import com.apriori.apibase.services.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
+import lombok.Builder;
+
 import java.util.List;
 
-@Schema(location = "CisUserDefinedAttributesSchema.json")
+@Builder
+@Schema(location = "UserDefinedAttributesSchema.json")
 public class UserDefinedAttributes extends Pagination {
+    private String identity;
+    private String customerIdentity;
     private String name;
     private String displayName;
     private String type;
@@ -15,6 +20,9 @@ public class UserDefinedAttributes extends Pagination {
     private String[] allowedValues;
     private Integer decimalPlaces;
     private String defaultValue;
+    private Integer ordinal;
+    private String requiredAttributeType;
+    private List<String> options = null;
     private UserDefinedAttributes response;
     private List<UserDefinedAttributes> items;
 
