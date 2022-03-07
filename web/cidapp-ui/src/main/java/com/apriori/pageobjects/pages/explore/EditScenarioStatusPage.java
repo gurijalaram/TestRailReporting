@@ -9,6 +9,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
 public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatusPage> {
@@ -48,11 +49,11 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
     /**
      * close the Edit scenario status modal dialog
      *
-     * @return - new page object
+     * @return current page object
      */
-    public EvaluatePage close() {
-        getPageUtils().waitForElementAndClick(closeButton);
-        return new EvaluatePage(getDriver());
+    public <T> T close(Class<T> klass) {
+        getPageUtils().waitForElementToAppear(closeButton);
+        return PageFactory.initElements(getDriver(), klass);
     }
 
     /**
