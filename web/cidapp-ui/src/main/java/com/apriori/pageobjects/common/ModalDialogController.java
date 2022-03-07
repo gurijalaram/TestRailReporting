@@ -60,7 +60,7 @@ public class ModalDialogController {
     @FindBy(xpath = "//button[.='Back']")
     private WebElement backFromError;
 
-    @FindBy(xpath = ".modal-content .close-modal")
+    @FindBy(css = ".modal-content .close-modal")
     private WebElement closeButton;
 
     private WebDriver driver;
