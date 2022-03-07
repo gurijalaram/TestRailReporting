@@ -53,6 +53,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
     private WebElement excludeButton;
 
+    @FindBy(css = "[id='qa-sub-component-action-bar-update-cad-file-button'] button")
+    private WebElement updateCadButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -299,5 +302,13 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public String getCellColour(String componentName, String scenarioName) {
         return scenarioTableController.getCellColour(componentName, scenarioName);
+    }
+
+    /**
+     * Checks if the cad button is enabled
+     * @return true/false
+     */
+    public boolean isCadButtonEnabled() {
+        return pageUtils.isElementEnabled(updateCadButton);
     }
 }
