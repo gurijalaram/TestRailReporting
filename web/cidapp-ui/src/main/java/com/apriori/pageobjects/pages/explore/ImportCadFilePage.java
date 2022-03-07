@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -47,9 +48,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = "h4")
     private WebElement fileInputError;
-
-    @FindBy(css = ".file-selection-list [placeholder='Scenario Name']")
-    private WebElement scenarioNameBox;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -251,9 +249,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     /**
      * Check if scenario name text box field is enabled
      *
-     * @return - boolean
+     * @return - string
      */
-    public boolean scenarioNameTextBoxEnabled() {
-        return pageUtils.isElementEnabled(scenarioNameBox);
+    public List<String> scenarioNameTextBoxDisabled() {
+        return driver.findElements(By.cssSelector(".cell-text [placeholder='Scenario Name']")).stream().map(x -> x.getAttribute("disabled")).collect(Collectors.toList());
     }
 }

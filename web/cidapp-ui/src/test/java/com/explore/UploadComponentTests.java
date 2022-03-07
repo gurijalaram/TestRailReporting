@@ -1,6 +1,7 @@
 package com.explore;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -76,10 +77,10 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .uploadMultipleCadFiles(multiComponents);
 
-        assertThat(importCadFilePage.scenarioNameTextBoxEnabled(), is(false));
+        assertThat(importCadFilePage.scenarioNameTextBoxDisabled(), hasItems("true"));
 
         cadFileStatusPage = importCadFilePage.submit();
 
-        assertThat(cadFileStatusPage.getImportMessage(), is(containsString(String.format("%s file(s) Imported Successfully.", multiComponents.size()))));
+        assertThat(cadFileStatusPage.getImportMessage(), is(containsString(String.format("%s file(s) imported successfully.", multiComponents.size()))));
     }
 }
