@@ -7,6 +7,7 @@ public class ReportParametersResponse {
     private boolean roundToDollar;
     private String currencyCode;
     private String partNumber;
+    private String partLink;
     private String exportSetName;
     private String scenarioName;
     private String sortMetric;

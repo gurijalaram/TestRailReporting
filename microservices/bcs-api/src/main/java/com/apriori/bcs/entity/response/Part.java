@@ -27,6 +27,7 @@ public class Part {
     private LocalDateTime updatedAt;
     private String customerIdentity;
     private String state;
+    private String partType;
     private String externalId;
     private Boolean requireWatchpointReport;
     private String errors;
@@ -34,7 +35,6 @@ public class Part {
     private String partName;
     private String costingResult;
     private String message;
-    private String partType;
 
 
     public BCSPartBenchmarkingDTO convertToBCSPartBenchData() {
