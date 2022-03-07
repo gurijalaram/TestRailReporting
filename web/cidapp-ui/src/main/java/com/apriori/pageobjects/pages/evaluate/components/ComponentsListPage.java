@@ -9,6 +9,7 @@ import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
+import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -168,6 +169,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Checks if button is enabled
+     *
      * @return true/false
      */
     public boolean isSetInputsEnabled() {
@@ -287,6 +289,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Selects the exclude button
+     *
      * @return current page object
      */
     public ComponentsListPage exclude() {
@@ -296,8 +299,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Gets the background colour of the cell
+     *
      * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     * @param scenarioName  - the scenario name
      * @return current page object
      */
     public String getCellColour(String componentName, String scenarioName) {
@@ -305,7 +309,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Updates a cad file
+     *
+     * @return new page object
+     */
+    public ImportCadFilePage updateCadFile() {
+        pageUtils.waitForElementAndClick(updateCadButton);
+        return new ImportCadFilePage(driver);
+    }
+
+    /**
      * Checks if the cad button is enabled
+     *
      * @return true/false
      */
     public boolean isCadButtonEnabled() {
