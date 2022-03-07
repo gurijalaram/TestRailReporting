@@ -16,6 +16,9 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
     @FindBy(css = ".scenario-group-operations-success-message")
     private WebElement editScenarioMessage;
 
+    @FindBy(xpath = "//button[.='Close']")
+    private WebElement closeButton;
+
     private ModalDialogController modalDialogController;
 
     /**
@@ -40,18 +43,16 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
      */
     public String getEditScenarioMessage() {
         return getPageUtils().waitForElementToAppear(editScenarioMessage).getText();
-
     }
 
     /**
-     * Close the import modal dialog
+     * close the Edit scenario status modal dialog
      *
-     * @param klass - the class
-     * @param <T>   - the generic page object
-     * @return generic page object
+     * @return - new page object
      */
-    public <T> T close(Class<T> klass) {
-        return modalDialogController.close(klass);
+    public EvaluatePage close() {
+        getPageUtils().waitForElementAndClick(closeButton);
+        return new EvaluatePage(getDriver());
     }
 
     /**

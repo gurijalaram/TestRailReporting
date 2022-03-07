@@ -54,7 +54,7 @@ public class EditAssembliesTest extends TestBase {
                 scenarioName,
                 currentUser)
             .editScenario()
-            .close(EvaluatePage.class);
+            .close();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION), is(true));
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
