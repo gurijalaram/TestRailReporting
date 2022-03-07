@@ -20,10 +20,10 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     @FindBy(css = "input[name='batchSize']")
     private WebElement batchSizeInput;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
+    @FindBy(css = ".secondary-process-modal-select-field button")
     private WebElement secondaryProcessesPencil;
 
-    @FindBy(css = "div[id='qa-secondary-digital-factory-select'] button")
+    @FindBy(css = ".secondary-digital-factory-modal-select-field button")
     private WebElement secondaryDFPencil;
 
     @FindBy(css = "[id='qa-secondary-digital-factory-select']")
