@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -77,7 +78,7 @@ public class UploadComponentTests extends TestBase {
 
         assertThat(importCadFilePage.scenarioNameTextBoxEnabled(), is(false));
 
-        cadFileStatusPage = importCadFilePage.submit(CadFileStatusPage.class);
+        cadFileStatusPage = importCadFilePage.submit();
 
         assertThat(cadFileStatusPage.getImportMessage(), is(containsString(String.format("%s file(s) Imported Successfully.", multiComponents.size()))));
     }
