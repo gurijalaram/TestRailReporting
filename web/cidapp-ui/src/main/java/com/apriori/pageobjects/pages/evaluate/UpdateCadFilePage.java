@@ -120,10 +120,10 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
     /**
      * Select the Try Again button
      *
-     * @return generic page object
+     * @return current page object
      */
-    public <T> T tryAgain(Class<T> klass) {
-        return modalDialogController.tryAgain(klass);
+    public UpdateCadFilePage tryAgain() {
+        return modalDialogController.tryAgain(UpdateCadFilePage.class);
     }
 
     /**
