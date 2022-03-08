@@ -6,7 +6,7 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
@@ -342,10 +342,10 @@ public class ExploreToolbar extends MainNavBar {
      * @param filePath - location of the file
      * @return generic page object
      */
-    public CadFileStatusPage updateCadFile(File filePath) {
+    public EvaluatePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new ImportCadFilePage(driver).enterFilePath(filePath).submit();
+        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit();
     }
 
     /**
