@@ -3,6 +3,9 @@ package com.apriori.bcs.entity.request;
 import com.apriori.bcs.entity.response.CostingPreferences;
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
+
+@JsonRootName("response")
 @Schema(location = "CostingPreferencesSchema.json")
 public class PatchCostingPreferenceRequest {
     private CostingPreferences costingPreferences;

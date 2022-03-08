@@ -1,24 +1,27 @@
 package com.apriori.bcs.tests;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.controller.ReportResources;
-import com.apriori.bcs.entity.request.reports.NewReportRequest;
 import com.apriori.bcs.entity.request.reports.ReportParameters;
+import com.apriori.bcs.entity.request.reports.ReportRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.Report;
+import com.apriori.bcs.entity.response.ReportError;
+import com.apriori.bcs.entity.response.ReportExport;
 import com.apriori.bcs.entity.response.ReportTemplates;
 import com.apriori.bcs.entity.response.Reports;
 import com.apriori.bcs.enums.BCSState;
-import com.apriori.bcs.utils.BcsTestUtils;
-import com.apriori.bcs.utils.BcsUtils;
-import com.apriori.bcs.utils.Constants;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -32,64 +35,48 @@ import org.junit.runners.MethodSorters;
 
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ReportResourcesTest extends TestUtil {
-    private static ResponseWrapper<Report> report;
-    private static ReportTemplates reportTemplates;
+
     private static Part part;
     private static Batch batch;
+    private static Report report;
 
     @BeforeClass
     public static void testSetup() {
-        ResponseWrapper<Object> responseWrapper = BatchResources.createBatch();
-        batch = (Batch)BatchResources.createBatch().getResponseEntity();
-        part = (Part) BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
-        if (BcsTestUtils.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity()).equals(BCSState.COMPLETED.toString())) {
-            reportTemplates = (ReportTemplates) ReportResources.getReportTemplatesPartReport()
-                    .getResponseEntity();
-            ReportParameters reportParameters = new ReportParameters();
-            reportParameters.setCurrencyCode("USD");
-            reportParameters.setRoundToDollar(true);
-            NewReportRequest newReportRequest = generateReportRequest(reportParameters);
-            report = ReportResources.createReport(newReportRequest);
-        }
-    }
-
-    @AfterClass
-    public static void testCleanup() {
-        BcsTestUtils.checkAndCancelBatch(batch);
+        batch = BatchResources.createBatch().getResponseEntity();
+        part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
+        assertTrue("Verify Part is in completed state", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), part.getIdentity()));
+        report = ReportResources.createReport().getResponseEntity();
+        assertTrue("Verify Report is in completed state", ReportResources.waitUntilReportStateIsCompleted(report.getIdentity()));
     }
 
     @Test
     @TestRail(testCaseId = {"4180"})
     @Description("API returns a list of all the reports in the CIS DB")
     public void getReports() {
-        Reports reports = (Reports)ReportResources.getReports().getResponseEntity();
-        Assert.assertNotEquals(reports.getItems().size(), 0);
+        Reports reports = ReportResources.getReports().getResponseEntity();
+        assertNotEquals(reports.getItems().size(), 0);
     }
 
     @Test
     @TestRail(testCaseId = {"4182"})
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
-        ReportResources.getReportRepresentation(report.getResponseEntity().getIdentity());
+        ResponseWrapper<Report> reportResponse = ReportResources.getReportRepresentation(report.getIdentity());
+        assertThat(reportResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }
 
     @Test
     @TestRail(testCaseId = {"4181"})
     @Description("Create a new report using the CIS API")
     public void createNewReport() {
-        Assert.assertNotNull("No report was created", report.getResponseEntity().getIdentity());
+        ReportRequest reportRequestTestData = ReportResources.getReportRequestData();
 
-        int intervals = Constants.POLLING_TIMEOUT;
-        int interval = 0;
-        BcsUtils.State reportState;
-        while (interval <= intervals) {
-            reportState = getReportState();
-            if (reportState.equals(BcsUtils.State.ERRORED)) {
-                Assert.fail(String.format("Report processing failed with error: '%s'",
-                        BcsUtils.getErrors(report, Report.class)));
-            }
-            interval++;
-        }
+        reportRequestTestData.setExternalId(String.format(reportRequestTestData.getExternalId(), System.currentTimeMillis()));
+        reportRequestTestData.setScopedIdentity(part.getIdentity());
+        reportRequestTestData.setReportTemplateIdentity(ReportResources.getPartReportTemplateId());
+
+        Report report = ReportResources.createReport(reportRequestTestData).getResponseEntity();
+        assertThat(report.getState(), is(equalTo(BCSState.CREATED.toString())));
     }
 
     @Test
@@ -97,38 +84,18 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = "8691")
     @Description("Create a report with unsupported roundToDollar values")
     public void createReportWithRoundToDollarSettings() {
-        NewReportRequest newReportRequest;
-        ReportParameters reportParameters = new ReportParameters();
-        reportParameters.setCurrencyCode("USD");
+        ReportRequest setReportRequestTestData = ReportResources.getReportRequestData();
+        ReportParameters reportParameters = ReportParameters.builder().roundToDollar("hello").currencyCode("USD").build();
 
-        reportParameters.setRoundToDollar("true");
-        newReportRequest = generateReportRequest(reportParameters);
-        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_CONFLICT, null);
-        Assert.assertEquals("Test passed with string 'true' roundToDollar value",
-                report.getResponseEntity().getErrors(),
-                "Value 'true' is not a 'BOOLEAN' parameter 'roundToDollar'");
+        setReportRequestTestData.setExternalId(String.format(setReportRequestTestData.getExternalId(), System.currentTimeMillis()));
+        setReportRequestTestData.setScopedIdentity(part.getIdentity());
+        setReportRequestTestData.setReportTemplateIdentity(ReportResources.getPartReportTemplateId());
+        setReportRequestTestData.setReportParameters(reportParameters);
 
-
-        reportParameters.setRoundToDollar("hello");
-        newReportRequest = generateReportRequest(reportParameters);
-        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_CONFLICT, null);
+        ReportError reportError = ReportResources.createReportWithInvalidData(setReportRequestTestData).getResponseEntity();
         Assert.assertEquals("Test passed with string roundToDollar value",
-                report.getResponseEntity().getErrors(),
-                "Value 'hello' is not a 'BOOLEAN' parameter 'roundToDollar'");
-
-        reportParameters.setRoundToDollar("");
-        newReportRequest = generateReportRequest(reportParameters);
-        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_CONFLICT, null);
-        Assert.assertEquals("Test passed with empty string roundToDollar value",
-                report.getResponseEntity().getErrors(),
-                "Value '' is not a 'BOOLEAN' parameter 'roundToDollar'");
-
-        reportParameters.setRoundToDollar(null);
-        newReportRequest = generateReportRequest(reportParameters);
-        report  = ReportResources.createReport(newReportRequest, HttpStatus.SC_NOT_FOUND, null);
-        Assert.assertEquals("Test passed with NULL roundToDollar value",
-                report.getResponseEntity().getErrors(),
-                "Can't find mandatory report parameter 'roundToDollar' for report template 'DTC Part Summary'");
+            "Value 'hello' is not a 'BOOLEAN' parameter 'roundToDollar'",
+            reportError.getMessage());
     }
 
 
@@ -136,69 +103,22 @@ public class ReportResourcesTest extends TestUtil {
     @TestRail(testCaseId = {"4183"})
     @Description("Export a report using the CIS API")
     public void exportReport() {
-        int intervals = Constants.POLLING_TIMEOUT;
-        int interval = 0;
-        BcsUtils.State reportState;
-        boolean isReportReady = false;
-        while (interval <= intervals) {
-            reportState = getReportState();
-            if (reportState.equals(BcsUtils.State.ERRORED)) {
-                Assert.fail(String.format("Report processing failed with error: '%s'",
-                        report.getResponseEntity().getErrors()));
-                return;
-
-            } else if (reportState.equals(BcsUtils.State.COMPLETED)) {
-                isReportReady = true;
-                break;
-            }
-            interval++;
-        }
-
-        if (!isReportReady) {
-            Assert.fail(String.format("After %d seconds, the report hasn't completed processing (state = %s)",
-                    Constants.POLLING_TIMEOUT * 10,
-                    getReportState().toString()));
-        }
-
-        ReportResources.exportReport(report.getResponseEntity().getIdentity());
+        ResponseWrapper<ReportExport> reportExportResponse = ReportResources.exportReport(report.getIdentity());
+        ReportExport reportExport = reportExportResponse.getResponseEntity();
+        assertThat(reportExportResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(report.getIdentity(), is(equalTo(reportExport.getReportIdentity())));
     }
 
     @Test
     @TestRail(testCaseId = {"7957"})
     @Description("Get a list of report templates")
     public void getReportTemplates() {
-        ReportTemplates reportTemplates = (ReportTemplates)ReportResources.getReportTemplates().getResponseEntity();
-        Assert.assertNotEquals(reportTemplates.getItems().size(), 0);
+        ReportTemplates reportTemplates = ReportResources.getReportTemplates().getResponseEntity();
+        assertNotEquals(reportTemplates.getItems().size(), 0);
     }
 
-    /**
-     * Get current report state
-     *
-     * @return Report state
-     */
-    private BcsUtils.State getReportState() {
-        Report rpt =
-                (Report) ReportResources.getReportRepresentation(report.getResponseEntity().getIdentity()).getResponseEntity();
-        return BcsUtils.pollState(rpt, Report.class);
-    }
-
-    /**
-     * Generate a new report request
-     *
-     * @param reportParameters Report parameter set
-     * @return new report request
-     */
-    private static NewReportRequest generateReportRequest(ReportParameters reportParameters) {
-        reportParameters.setCurrencyCode("USD");
-
-        NewReportRequest newReportRequest =
-                (NewReportRequest) JsonManager.deserializeJsonFromInputStream(
-                        FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"),
-                        NewReportRequest.class);
-        newReportRequest.setScopedIdentity(part.getIdentity());
-        newReportRequest.setReportTemplateIdentity(reportTemplates.getItems().get(0).getIdentity());
-        newReportRequest.setReportParameters(reportParameters);
-
-        return newReportRequest;
+    @AfterClass
+    public static void testCleanup() {
+        BatchResources.checkAndCancelBatch(batch);
     }
 }

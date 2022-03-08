@@ -5,7 +5,7 @@
   ],
   "properties": {
     "response": {
-      "$ref": "ReportTemplateSchema.json"
+      "$ref": "ReportTemplateItemsResponseSchema.json"
     }
   }
 }
