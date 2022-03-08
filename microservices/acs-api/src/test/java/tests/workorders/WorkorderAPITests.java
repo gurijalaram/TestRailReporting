@@ -133,10 +133,10 @@ public class WorkorderAPITests {
             processGroup
         );
 
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        /*PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
         assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("PATTERNTHREADHOLES")));
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));*/
     }
 
     @Test
@@ -371,6 +371,18 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11990")
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
+        testShallowEditOfScenario("Casting.prt", ProcessGroupEnum.CASTING.getProcessGroup());
+    }
+
+    @Test
+    @Category(WorkorderTest.class)
+    @TestRail(testCaseId = "11991")
+    @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
+    public void testShallowEditAssemblyScenario() {
+        testShallowEditOfScenario("PatternThreadHoles.asm", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+    }
+
+    private void testShallowEditOfScenario(String fileName, String processGroup) {
         AcsResources acsResources = new AcsResources();
 
         Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
@@ -379,10 +391,9 @@ public class WorkorderAPITests {
             ).getPath(), NewPartRequest.class
         );
 
-        String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("Casting.prt", processGroup);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(fileName, processGroup);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
@@ -403,17 +414,9 @@ public class WorkorderAPITests {
         assertThat(postEditScenarioKey.getWorkspaceId(), is(not(equalTo(0))));
 
         assertThat(acsResources
-            .getScenarioInfoByScenarioIterationKey(editScenarioOutputs.getScenarioIterationKey()).getScenarioName(),
+                .getScenarioInfoByScenarioIterationKey(editScenarioOutputs.getScenarioIterationKey()).getScenarioName(),
             is(equalTo("Test"))
         );
-    }
-
-    @Test
-    @Category(WorkorderTest.class)
-    @TestRail(testCaseId = "11991")
-    @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
-    public void testShallowEditAssemblyPartScenario() {
-
     }
 
     private FileUploadOutputs initialiseAndUploadPartFile(String fileName, String processGroup) {
