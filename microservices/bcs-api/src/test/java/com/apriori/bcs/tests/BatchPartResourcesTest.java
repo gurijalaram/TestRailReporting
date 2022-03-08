@@ -1,8 +1,7 @@
 package com.apriori.bcs.tests;
 
-import com.apriori.bcs.utils.BcsTestUtils;
 
-public class BatchPartResourcesTest extends BcsTestUtils {
+public class BatchPartResourcesTest {
    /* private static Batch batch;
     private static Batch batch2;
     private static Part part;

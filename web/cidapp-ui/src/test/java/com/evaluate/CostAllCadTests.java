@@ -126,7 +126,8 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndSubmit("<script>alert(document.cookie)</script>", resourceFile, ImportCadFilePage.class);
+            .importCadFile()
+            .inputComponentDetails("<script>alert(document.cookie)</script>", resourceFile);
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("error occurred"));
     }
@@ -141,7 +142,8 @@ public class CostAllCadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(UserUtil.getUser())
-            .uploadComponent(" " + Keys.BACK_SPACE, resourceFile);
+            .importCadFile()
+            .inputComponentDetails(" " + Keys.BACK_SPACE, resourceFile);
 
         assertThat(importCadFilePage.getFieldWarningText(), containsString("Required."));
     }

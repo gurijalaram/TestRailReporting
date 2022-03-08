@@ -40,7 +40,8 @@ public class CompareToolbar extends MainNavBar {
      * @return new page object
      */
     public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
-        return new ExploreToolbar(driver).uploadComponent(scenarioName, filePath);
+        return new ExploreToolbar(driver).importCadFile()
+            .inputComponentDetails(scenarioName, filePath);
     }
 
     /**

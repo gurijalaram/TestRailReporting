@@ -228,7 +228,7 @@ qa-cid-perf-sandbox:
   base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
 
   bcs:
-    api_url: https://bcs.na-1.sandbox.qa-cid-perf.apriori.net/
+    api_url: https://bcs.na-1-v22-1.qa-cid-perf.apriori.net/
     number_of_parts: 5
 
   sds:
@@ -341,6 +341,7 @@ staging:
 ######################################################## MIGRATION #####################################################
 migration:
   name: migration
+  customer_identity: 3KED5H5BKN85
   secret_key: X0V4XXK2SF87
 
   cidapp:
@@ -352,6 +353,9 @@ migration:
 
   css:
     api_url: https://css.na-1-v21-1.qa-20-1.apriori.net/
+
+  bcs:
+    api_url: https://bcs.na-1-v22-1.preview.qa-20-1.apriori.net/
 
 ######################################################## MIGRATION-PREVIEW #####################################################
 migration-preview:

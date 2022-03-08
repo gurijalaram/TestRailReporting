@@ -6,6 +6,8 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
@@ -103,18 +105,6 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Collective method to upload a file then select Submit
-     *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
-     * @param klass        - the class name
-     * @return new page object
-     */
-    public <T> T uploadComponentAndSubmit(String scenarioName, File filePath, Class<T> klass) {
-        return uploadComponent(scenarioName, filePath).submit(klass);
-    }
-
-    /**
      * Uploads a component through the API and opens it via url
      *
      * @param componentName - the component name
@@ -136,23 +126,23 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * uploads an assembly with all subcomponents and publish them all
      *
-     * @param subComponentNames - the subcomponent names
+     * @param subComponentNames  - the subcomponent names
      * @param componentExtension - the subcomponent extension
-     * @param processGroupEnum - the process group enum
-     * @param assemblyName - the assembly name
-     * @param assemblyExtension -  the assembly extension
-     * @param scenarioName - the scenario name
-     * @param currentUser - the current user
+     * @param processGroupEnum   - the process group enum
+     * @param assemblyName       - the assembly name
+     * @param assemblyExtension  -  the assembly extension
+     * @param scenarioName       - the scenario name
+     * @param currentUser        - the current user
      * @return - a new page object
      */
-    public  EvaluatePage uploadPublishAndOpenAssembly(List<String> subComponentNames,
-                                                      String componentExtension,
-                                                      ProcessGroupEnum processGroupEnum,
-                                                      String assemblyName,
-                                                      String assemblyExtension,
-                                                      String scenarioName,
-                                                      UserCredentials currentUser) {
-        ComponentInfoBuilder myAssembly =  new ScenariosUtil().uploadAndPublishAssembly(
+    public EvaluatePage uploadPublishAndOpenAssembly(List<String> subComponentNames,
+                                                     String componentExtension,
+                                                     ProcessGroupEnum processGroupEnum,
+                                                     String assemblyName,
+                                                     String assemblyExtension,
+                                                     String scenarioName,
+                                                     UserCredentials currentUser) {
+        ComponentInfoBuilder myAssembly = new ScenariosUtil().uploadAndPublishAssembly(
             subComponentNames,
             componentExtension,
             processGroupEnum,
@@ -185,14 +175,12 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Selects the file dropdown and enters file details
      *
-     * @param scenarioName - the name of the scenario
-     * @param filePath     - location of the file
      * @return new page object
      */
-    public ImportCadFilePage uploadComponent(String scenarioName, File filePath) {
+    public ImportCadFilePage importCadFile() {
         pageUtils.waitForElementAndClick(importButton);
         pageUtils.waitForElementAndClick(cadButton);
-        return new ImportCadFilePage(driver).inputComponentDetails(scenarioName, filePath);
+        return new ImportCadFilePage(driver);
     }
 
     /**
@@ -237,7 +225,9 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
-        return uploadComponent(scenarioName, filePath).cancel(className);
+        return importCadFile()
+            .inputComponentDetails(scenarioName, filePath)
+            .cancel(className);
     }
 
     /**
@@ -265,9 +255,9 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public EvaluatePage editScenario() {
+    public EditScenarioStatusPage editScenario() {
         pageUtils.waitForElementAndClick(editButton);
-        return new EvaluatePage(driver);
+        return new EditScenarioStatusPage(driver);
     }
 
     /**
@@ -350,14 +340,12 @@ public class ExploreToolbar extends MainNavBar {
      * Uploads a cad file and select submit
      *
      * @param filePath - location of the file
-     * @param klass-   the class name
-     * @param <T>      - generic type
      * @return generic page object
      */
-    public <T> T updateCadFile(File filePath, Class<T> klass) {
+    public CadFileStatusPage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new ImportCadFilePage(driver).enterFilePath(filePath).submit(klass);
+        return new ImportCadFilePage(driver).enterFilePath(filePath).submit();
     }
 
     /**

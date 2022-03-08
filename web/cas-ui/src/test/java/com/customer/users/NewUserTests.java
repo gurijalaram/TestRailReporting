@@ -1,6 +1,7 @@
 package com.customer.users;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
@@ -126,5 +127,15 @@ public class NewUserTests extends TestBase {
 
         long rows = usersTable.getRows().count();
         assertThat("There are no users on a page.", rows, is(greaterThan(0L)));
+    }
+
+    @Test
+    @Description("Clicking the cancel button returns the user to the user list.")
+    @TestRail(testCaseId = {"4072"})
+    public void testCancelReturnsToTheUserListPage() {
+        UsersListPage actual = newUserPage
+                .formFillNewUserDetails("newUser", "email@com", "givenName", "familyName")
+                .cancel(UsersListPage.class);
+        assertThat(actual, is(notNullValue()));
     }
 }

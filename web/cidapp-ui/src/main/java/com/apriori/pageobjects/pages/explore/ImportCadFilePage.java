@@ -1,9 +1,13 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,6 +18,8 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -42,9 +48,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = "h4")
     private WebElement fileInputError;
-
-    @FindBy(css = ".modal-body .checkbox-icon")
-    private WebElement overrideCheckbox;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -82,12 +85,41 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Input multiple component details
+     *
+     * @param multiUploadList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponentDetails(List<MultiUpload> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            String file = multiUpload.getResourceFile().getName();
+
+            enterMultiFilePath(multiUpload.getResourceFile())
+                .inputMultiScenarioName(multiUpload.getScenarioName(), file);
+        });
+        return this;
+    }
+
+    /**
+     * Upload multiple cad files
+     *
+     * @param multiUploadList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            enterMultiFilePath(multiUpload.getResourceFile());
+        });
+        return this;
+    }
+
+    /**
      * Input scenario name
      *
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    private ImportCadFilePage inputScenarioName(String scenarioName) {
+    public ImportCadFilePage inputScenarioName(String scenarioName) {
         pageUtils.waitForElementToAppear(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
@@ -95,7 +127,21 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Gets details of file for upload
+     * Input multiple scenario name
+     *
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
+        String[] component = file.split("\\.");
+        By byMultiFileInput = By.cssSelector(String.format("input[name='scenarioNames.%s%s']", component[0], component[component.length - 1]));
+        pageUtils.waitForElementToAppear(byMultiFileInput);
+        pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
+        return this;
+    }
+
+    /**
+     * Inputs details of the file to upload
      *
      * @param filePath - the file path
      * @return current page object
@@ -107,6 +153,17 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             e.printStackTrace();
         }
         return this;
+    }
+
+    /**
+     * Inputs details of the file to upload
+     *
+     * @param filePath - the file path
+     * @return current page object
+     */
+    public ImportCadFilePage enterMultiFilePath(File filePath) {
+        pageUtils.clearInput(fileInput);
+        return enterFilePath(filePath);
     }
 
     /**
@@ -137,22 +194,47 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Selects the override checkbox
+     * Selects the option
      *
+     * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
      * @return current page object
      */
-    public ImportCadFilePage override() {
-        pageUtils.waitForElementAndClick(overrideCheckbox);
+    public ImportCadFilePage tick(String option) {
+        By byCheckbox = byCheckbox(option);
+
+        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+            pageUtils.waitForElementAndClick(byCheckbox);
+        }
         return this;
+    }
+
+    /**
+     * Selects one of the checkboxes based on the option provided
+     *
+     * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
+     * @return current page object
+     */
+    public ImportCadFilePage unTick(String option) {
+        By byCheckbox = byCheckbox(option);
+
+        if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+            pageUtils.waitForElementAndClick(byCheckbox);
+        }
+        return this;
+    }
+
+    private By byCheckbox(String option) {
+        return with(By.cssSelector(".checkbox-icon"))
+            .near(By.xpath(String.format("//div[.='%s']", option)));
     }
 
     /**
      * Selects the submit button
      *
-     * @return generic page object
+     * @return new page object
      */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(submitButton, klass);
+    public CadFileStatusPage submit() {
+        return modalDialogController.submit(submitButton, CadFileStatusPage.class);
     }
 
     /**
@@ -162,5 +244,17 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Check if scenario name text box field is enabled
+     *
+     * @return - string
+     */
+    public List<String> scenarioNameTextBoxDisabled() {
+        return driver.findElements(By.cssSelector(".cell-text [placeholder='Scenario Name']"))
+            .stream()
+            .map(x -> x.getAttribute("disabled"))
+            .collect(Collectors.toList());
     }
 }
