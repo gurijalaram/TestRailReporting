@@ -19,6 +19,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -100,12 +101,25 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Upload multiple cad files
+     *
+     * @param multiUploadList - component details as a list
+     * @return current page object
+     */
+    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
+        multiUploadList.forEach(multiUpload -> {
+            enterMultiFilePath(multiUpload.getResourceFile());
+        });
+        return this;
+    }
+
+    /**
      * Input scenario name
      *
      * @param scenarioName - the scenario name
      * @return current page object
      */
-    private ImportCadFilePage inputScenarioName(String scenarioName) {
+    public ImportCadFilePage inputScenarioName(String scenarioName) {
         pageUtils.waitForElementToAppear(scenarioNameInput);
         pageUtils.clearInput(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
@@ -230,5 +244,17 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Check if scenario name text box field is enabled
+     *
+     * @return - string
+     */
+    public List<String> scenarioNameTextBoxDisabled() {
+        return driver.findElements(By.cssSelector(".cell-text [placeholder='Scenario Name']"))
+            .stream()
+            .map(x -> x.getAttribute("disabled"))
+            .collect(Collectors.toList());
     }
 }
