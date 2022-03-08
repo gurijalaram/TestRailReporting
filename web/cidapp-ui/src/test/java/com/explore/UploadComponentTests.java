@@ -1,7 +1,6 @@
 package com.explore;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
@@ -35,6 +34,7 @@ public class UploadComponentTests extends TestBase {
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private UserCredentials currentUser;
     private CadFileStatusPage cadFileStatusPage;
     private ImportCadFilePage importCadFilePage;
 
@@ -63,7 +63,7 @@ public class UploadComponentTests extends TestBase {
     @Test
     @TestRail(testCaseId = "11879")
     @Description("Validate messaging upon successful upload of multiple files")
-    public void multiUploadTests() {
+    public void testDisabledScenarioNameTextBox() {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         List<MultiUpload> multiComponents = new ArrayList<>();
@@ -75,12 +75,33 @@ public class UploadComponentTests extends TestBase {
         importCadFilePage = loginPage.login(currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName)
-            .uploadMultipleCadFiles(multiComponents);
+            .inputMultiComponents(multiComponents);
 
-        assertThat(importCadFilePage.scenarioNameTextBoxDisabled(), hasItems("true"));
+        importCadFilePage.scenarioNameTextBoxDisabled().forEach(box -> assertThat(box, is("true")));
 
         cadFileStatusPage = importCadFilePage.submit();
 
         assertThat(cadFileStatusPage.getImportMessage(), is(containsString(String.format("%s file(s) imported successfully.", multiComponents.size()))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "CIS-304")
+    @Description("Validate multi-upload through explorer menu")
+    public void multiUploadTests() {
+        currentUser = UserUtil.getUser();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), new GenerateStringUtil().generateScenarioName()));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), new GenerateStringUtil().generateScenarioName()));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), new GenerateStringUtil().generateScenarioName()));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .unTick("Apply to all")
+            .inputMultiComponentDetails(multiComponents)
+            .submit()
+            .close();
+
+        multiComponents.forEach(component -> assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0], component.getScenarioName()), is(equalTo(0))));
     }
 }

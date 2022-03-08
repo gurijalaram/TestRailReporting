@@ -106,7 +106,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @param multiUploadList - component details as a list
      * @return current page object
      */
-    public ImportCadFilePage uploadMultipleCadFiles(List<MultiUpload> multiUploadList) {
+    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
         multiUploadList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
         });
@@ -252,6 +252,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return - string
      */
     public List<String> scenarioNameTextBoxDisabled() {
-        return driver.findElements(By.cssSelector(".cell-text [placeholder='Scenario Name']")).stream().map(x -> x.getAttribute("disabled")).collect(Collectors.toList());
+        return driver.findElements(By.cssSelector(".cell-text [placeholder='Scenario Name']"))
+            .stream()
+            .map(x -> x.getAttribute("disabled"))
+            .collect(Collectors.toList());
     }
 }
