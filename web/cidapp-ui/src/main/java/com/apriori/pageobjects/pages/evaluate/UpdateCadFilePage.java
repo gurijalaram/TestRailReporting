@@ -61,7 +61,7 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Update CAD File modal was not displayed", "Update CAD File", pageUtils.waitForElementToAppear(componentHeader).getAttribute("textContent"));
+        assertEquals("Update CAD File page was not displayed", "Update CAD File", pageUtils.waitForElementToAppear(componentHeader).getAttribute("textContent"));
     }
 
 
