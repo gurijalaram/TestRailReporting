@@ -9,6 +9,7 @@
         "createdAt",
         "customerIdentity",
         "state",
+        "partType",
         "externalId",
         "requireWatchpointReport",
         "url",

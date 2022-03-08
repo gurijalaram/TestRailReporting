@@ -32,7 +32,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
     private WebElement treeButton;
 
-    @FindBy(css = ".scenario-preview-card .left")
+    @FindBy(css = "[id='qa-sub-component-detail-preview-button'] button")
     private WebElement previewButton;
 
     @FindBy(xpath = "//button[.='Selection']")
@@ -49,6 +49,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @FindBy(id = "qa-sub-component-detail-filter-button")
     private WebElement filterButton;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
+    private WebElement excludeButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -277,5 +280,24 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         scenarioTableController.openScenario(componentName, scenarioName);
         pageUtils.windowHandler(1);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Selects the exclude button
+     * @return current page object
+     */
+    public ComponentsListPage exclude() {
+        pageUtils.waitForElementAndClick(excludeButton);
+        return this;
+    }
+
+    /**
+     * Gets the background colour of the cell
+     * @param componentName - the component name
+     * @param scenarioName - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return scenarioTableController.getCellColour(componentName, scenarioName);
     }
 }

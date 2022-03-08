@@ -1,8 +1,8 @@
 package com.apriori.customer.users.profile;
 
-import com.apriori.customer.users.UsersListPage;
 import com.apriori.utils.PageUtils;
 
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 public class UserProfilePage extends LoadableComponent<UserProfilePage> {
 
@@ -30,6 +32,9 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
 
     @FindBy(css = "[type='checkbox']")
     private WebElement statusCheckbox;
+
+    @FindBy(css = "input[name='userProfile.givenName']")
+    private WebElement givenNameInput;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -108,7 +113,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return string
      */
     public String getUserIdentity() {
-        return driver.findElement(By.xpath("//span[.='Identity']/following-sibling::span[@class='display-field-value']")).getAttribute("textContent");
+        return driver.findElement(By.xpath("//div[@class='text-overflow read-field read-field-identity']")).getAttribute("textContent");
     }
 
     /**
@@ -118,5 +123,106 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      */
     public boolean isStatusCheckboxEditable() {
         return pageUtils.isElementEnabled(statusCheckbox);
+    }
+
+    /**
+     * Gets the label for the given name.
+     *
+     * @param name - name of field
+     * @return The label for the given name.
+     */
+    public WebElement getReadOnlyLabel(String name) {
+        return pageUtils.waitForElementToAppear(By.cssSelector((String.format(".read-field-%s", name))));
+    }
+
+    /**
+     * Gets the input for the given name.
+     *
+     * @param name - name of field
+     * @return The input for the given name.
+     */
+    private WebElement getInput(String name) {
+        if (name.equals("country-code") || name.equals("timezone")) {
+            return pageUtils.waitForElementToAppear(By.cssSelector(String.format(".select-field-user-profile-%s", name)));
+        } else {
+            return pageUtils.waitForElementToAppear(By.xpath(String.format("//input[@name='%s']", name)));
+        }
+    }
+
+    /**
+     * Asserts that fields are read only
+     *
+     * @param namesOfFields - list of names of the fields
+     * @param soft - soft assertions
+     * @return - current page object
+     */
+    public UserProfilePage assertNonEditable(List<String> namesOfFields, SoftAssertions soft) {
+        namesOfFields.forEach(name -> {
+            soft.assertThat(getReadOnlyLabel(name))
+                    .overridingErrorMessage(String.format("Expected field of %s to be read only.", name))
+                    .isNotNull();
+        });
+        return this;
+    }
+
+    /**
+     * Asserts that fields are editable
+     *
+     * @param nameOfFields - list of names of the fields
+     * @param soft - soft assertions
+     * @return - current page object
+     */
+    public UserProfilePage assertEditable(List<String> nameOfFields, SoftAssertions soft) {
+        nameOfFields.forEach(name -> {
+            soft.assertThat(getInput(name))
+                    .overridingErrorMessage(String.format("Expected field of %s to be editable.", name))
+                    .isNotNull();
+        });
+        return this;
+    }
+
+    /**
+     * Checks if buttons are available
+     *
+     * @param soft - soft assertions
+     * @param label - button label
+     * @return - current page object
+     */
+    public UserProfilePage assertButtonAvailable(SoftAssertions soft, String label) {
+        List<WebElement> elements = driver.findElements(By.xpath(String.format("//button[.='%s']", label)));
+        soft.assertThat(elements.size())
+                .overridingErrorMessage(String.format("Could not find the %s button", label))
+                .isGreaterThan(0);
+        return this;
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @param button - name of button
+     * @return - true or false
+     */
+    private boolean isButtonEnabled(WebElement button) {
+        return button != null && button.isEnabled();
+    }
+
+    /**
+     * Can click the save button.
+     *
+     * @return Boolean representing can click save button
+     */
+    public boolean canSave() {
+        return isButtonEnabled(saveButton);
+    }
+
+    /**
+     * Enter given name
+     *
+     * @param givenName - given name
+     * @return current page object
+     */
+    public UserProfilePage editGivenName(String givenName) {
+        pageUtils.setValueOfElement(givenNameInput, givenName);
+        return this;
     }
 }
