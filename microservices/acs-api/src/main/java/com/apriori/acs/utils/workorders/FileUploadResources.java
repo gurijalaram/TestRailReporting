@@ -21,6 +21,8 @@ import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostO
 import com.apriori.acs.entity.response.workorders.cost.iterations.CostIteration;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioInputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
+import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioInputs;
+import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
@@ -68,6 +70,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -86,6 +89,8 @@ public class FileUploadResources {
     private final ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
 
     private FileUploadOutputs currentFileUploadOutputs;
+
+    private String currentWorkorderId;
 
     /**
      * Uploads part to CID
@@ -351,10 +356,42 @@ public class FileUploadResources {
                 .build(),
             true
         );
+        currentWorkorderId = deleteScenarioWorkorderId;
         submitWorkorder(deleteScenarioWorkorderId);
         return objectMapper.convertValue(
             checkGetWorkorderDetails(deleteScenarioWorkorderId),
             DeleteScenarioOutputs.class
+        );
+    }
+
+    /**
+     * Gets delete scenario workorder details, in order to get iteration to ensure deletion worked
+     *
+     * @return Object of the scenario iteration key, extracted from inputs
+     */
+    public Object getDeleteScenarioWorkorderDetails() {
+        WorkorderDetailsResponse workorderDetailsResponse = (WorkorderDetailsResponse) getWorkorderDetails(currentWorkorderId);
+        return ((LinkedHashMap<?, ?>) workorderDetailsResponse.getCommand().getInputs()).get("scenarioIterationKey");
+    }
+
+    /**
+     * Create edit scenario workorder
+     *
+     * @param publishResultOutputs - PublishResultOutputs - for use in building request
+     * @return EditScenariosOutputs instance
+     */
+    public EditScenarioOutputs createEditScenarioWorkorderSuppressError(PublishResultOutputs publishResultOutputs) {
+        String editScenarioWorkorderId = createWorkorder(WorkorderCommands.EDIT.getWorkorderCommand(),
+            EditScenarioInputs.builder()
+                .scenarioIterationKey(publishResultOutputs.getScenarioIterationKey())
+                .newScenarioName("Test")
+                .build(),
+            true
+        );
+        submitWorkorder(editScenarioWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(editScenarioWorkorderId),
+            EditScenarioOutputs.class
         );
     }
 
