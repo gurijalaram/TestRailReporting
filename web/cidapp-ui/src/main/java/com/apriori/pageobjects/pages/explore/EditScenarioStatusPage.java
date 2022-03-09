@@ -52,7 +52,7 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
      * @return current page object
      */
     public <T> T close(Class<T> klass) {
-        getPageUtils().waitForElementToAppear(closeButton);
+        getPageUtils().waitForElementAndClick(closeButton);
         return PageFactory.initElements(getDriver(), klass);
     }
 

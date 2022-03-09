@@ -15,8 +15,11 @@ public class GetScenarioInfoByScenarioIterationKeyResponse {
     private String componentType;
     private String configurationName;
     private String scenarioName;
+    private String description;
+    private String notes;
     private String locked;
     private String fileName;
+    private String fileMetadataIdentity;
     private String createdBy;
     private String createdAt;
     private String updatedBy;
