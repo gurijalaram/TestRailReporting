@@ -43,14 +43,7 @@ public class Get2DImageByScenarioIterationKeyTests {
 
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
 
-        List<String> infoToGetImage = new ArrayList<>();
-        infoToGetImage.add(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId().toString());
-        infoToGetImage.add(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getTypeName());
-        infoToGetImage.add(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getMasterName());
-        infoToGetImage.add(fileUploadOutputs.getScenarioIterationKey().getScenarioKey().getStateName());
-        infoToGetImage.add(fileUploadOutputs.getScenarioIterationKey().getIteration().toString());
-
-        String base64Image = acsResources.get2DImageByScenarioIterationKey(infoToGetImage);
+        String base64Image = acsResources.get2DImageByScenarioIterationKey(fileUploadOutputs.getScenarioIterationKey());
 
         assertThat(Base64.isBase64(base64Image), is(equalTo(true)));
     }

@@ -12,6 +12,7 @@ import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyCompone
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
+import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
@@ -32,6 +33,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.json.utils.JsonManager;
 
+import org.apache.commons.codec.binary.Base64;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -133,10 +135,10 @@ public class WorkorderAPITests {
             processGroup
         );
 
-        /*PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
 
         assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("PATTERNTHREADHOLES")));
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));*/
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));
     }
 
     @Test
@@ -380,6 +382,27 @@ public class WorkorderAPITests {
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
         testShallowEditOfScenario("PatternThreadHoles.asm", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+    }
+
+    @Test
+    @Category(WorkorderTest.class)
+    @TestRail(testCaseId = "12044")
+    @Description("Generate All Images - Part File")
+    public void testGenerateAllPartImages() {
+        AcsResources acsResources = new AcsResources();
+
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("3574727.prt", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+
+        GenerateAllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
+
+        assertThat(Base64.isBase64(
+            acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), true)),
+            is(equalTo(true))
+        );
+        assertThat(Base64.isBase64(
+            acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), false)),
+            is(equalTo(true))
+        );
     }
 
     private void testShallowEditOfScenario(String fileName, String processGroup) {

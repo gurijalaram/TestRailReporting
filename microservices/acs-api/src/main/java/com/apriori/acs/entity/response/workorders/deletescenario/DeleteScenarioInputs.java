@@ -8,7 +8,7 @@ import lombok.Data;
 @Data
 @Builder
 public class DeleteScenarioInputs {
-    public ScenarioIterationKey scenarioIterationKey;
-    public int iteration;
-    public boolean includeOtherWorkspace;
+    private ScenarioIterationKey scenarioIterationKey;
+    private int iteration;
+    private boolean includeOtherWorkspace;
 }

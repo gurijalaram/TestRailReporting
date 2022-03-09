@@ -23,6 +23,8 @@ import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioI
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioInputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
+import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesInputs;
+import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
@@ -392,6 +394,29 @@ public class FileUploadResources {
         return objectMapper.convertValue(
             checkGetWorkorderDetails(editScenarioWorkorderId),
             EditScenarioOutputs.class
+        );
+    }
+
+    /**
+     * Create Generate All Images Workorder
+     *
+     * @param fileUploadOutputs - scenario iteration key to use
+     * @return GenerateAllImagesOutputs - new scenario iteration key
+     */
+    public GenerateAllImagesOutputs createGenerateAllImagesWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+        String generateAllImagesWorkorderId = createWorkorder(WorkorderCommands.GENERATE_ALL_IMAGES.getWorkorderCommand(),
+            GenerateAllImagesInputs.builder()
+                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
+                .keepFreeBodies(false)
+                .freeBodiesPreserveCad(false)
+                .freeBodiesIgnoreMissingComponents(true)
+                .build(),
+            true
+        );
+        submitWorkorder(generateAllImagesWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(generateAllImagesWorkorderId),
+            GenerateAllImagesOutputs.class
         );
     }
 
