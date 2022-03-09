@@ -32,8 +32,6 @@ public class AssemblyUtils {
                                                           String subComponentExtension,
                                                           ProcessGroupEnum subComponentProcessGroup,
                                                           String scenarioName,
-                                                          String mode,
-                                                          String material,
                                                           UserCredentials currentUser) {
 
         return subComponentNames.stream().map(
@@ -42,8 +40,6 @@ public class AssemblyUtils {
                 .extension(subComponentExtension)
                 .scenarioName(scenarioName)
                 .processGroup(subComponentProcessGroup)
-                .mode(mode)
-                .material(material)
                 .user(currentUser)
                 .build()).collect(Collectors.toList());
     }
@@ -68,8 +64,6 @@ public class AssemblyUtils {
                                                                   String subComponentExtension,
                                                                   ProcessGroupEnum subComponentProcessGroup,
                                                                   String scenarioName,
-                                                                  String mode,
-                                                                  String material,
                                                                   UserCredentials currentUser) {
 
         return ComponentInfoBuilder.builder()
@@ -81,11 +75,7 @@ public class AssemblyUtils {
                 subComponentExtension,
                 subComponentProcessGroup,
                 scenarioName,
-                mode,
-                material,
                 currentUser))
-            .mode(mode)
-            .material(material)
             .user(currentUser)
             .build();
     }
@@ -110,8 +100,6 @@ public class AssemblyUtils {
                                                                String subComponentExtension,
                                                                ProcessGroupEnum subComponentProcessGroup,
                                                                String scenarioName,
-                                                               String mode,
-                                                               String material,
                                                                UserCredentials currentUser) {
 
         ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(assemblyName,
@@ -121,8 +109,6 @@ public class AssemblyUtils {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
@@ -200,7 +186,6 @@ public class AssemblyUtils {
      * @param subComponentExtension - the subComponent extension
      * @param subComponentProcessGroup - the subComponent process group
      * @param scenarioName - the scenario name
-     * @param mode - the mode for costing
      * @param currentUser - the current user
      * @return - the object of ComponentInfoBuilder
      */
@@ -211,8 +196,6 @@ public class AssemblyUtils {
                                                           String subComponentExtension,
                                                           ProcessGroupEnum subComponentProcessGroup,
                                                           String scenarioName,
-                                                          String mode,
-                                                          String material,
                                                           UserCredentials currentUser) {
         ComponentInfoBuilder componentAssembly = uploadAssemblyAndSubComponents(
             assemblyName,
@@ -222,8 +205,6 @@ public class AssemblyUtils {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         costSubComponents(componentAssembly);

@@ -143,6 +143,7 @@ public class ExploreToolbar extends MainNavBar {
                                                      String assemblyExtension,
                                                      String scenarioName,
                                                      UserCredentials currentUser) {
+
         ComponentInfoBuilder myAssembly = new ScenariosUtil().uploadAndPublishAssembly(
             subComponentNames,
             componentExtension,
@@ -180,6 +181,7 @@ public class ExploreToolbar extends MainNavBar {
                                                          String mode,
                                                          String material,
                                                          UserCredentials currentUser) {
+
         ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
             assemblyName,
             assemblyExtension,
@@ -188,8 +190,6 @@ public class ExploreToolbar extends MainNavBar {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         return navigateToScenario(myAssembly);

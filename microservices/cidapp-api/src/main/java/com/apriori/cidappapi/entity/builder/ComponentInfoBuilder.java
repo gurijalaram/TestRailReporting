@@ -23,8 +23,10 @@ public class ComponentInfoBuilder {
     @Builder.Default
     @JsonProperty("vpeName")
     private final DigitalFactoryEnum digitalFactory = DigitalFactoryEnum.APRIORI_USA;
-    private final String mode;
-    private final String material;
+    @Builder.Default
+    private final String mode = "Manual";
+    @Builder.Default
+    private final String material = "Use Default";
     private final UserCredentials user;
     @Builder.Default
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;

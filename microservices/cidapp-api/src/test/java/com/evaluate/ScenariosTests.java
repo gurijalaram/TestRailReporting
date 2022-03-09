@@ -86,8 +86,6 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -100,8 +98,6 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         assemblyUtils.publishSubComponents(componentAssembly);
@@ -129,8 +125,6 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -145,8 +139,6 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
@@ -164,8 +156,6 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -179,8 +169,6 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         //Edit Assembly
