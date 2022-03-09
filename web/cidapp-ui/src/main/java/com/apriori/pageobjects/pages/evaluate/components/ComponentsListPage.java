@@ -53,6 +53,15 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
     private WebElement excludeButton;
 
+    @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] button")
+    private WebElement includeButton;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] .disabled")
+    private WebElement disabledIncludeButton;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] .disabled")
+    private WebElement disabledExcludeButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -289,6 +298,34 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public ComponentsListPage exclude() {
         pageUtils.waitForElementAndClick(excludeButton);
         return this;
+    }
+
+    /**
+     * Selects the include button
+     *
+     * @return - the current page object
+     */
+    public ComponentsListPage include() {
+        pageUtils.waitForElementAndClick(includeButton);
+        return this;
+    }
+
+    /**
+     * Check if the include button is disabled
+     *
+     * @return - boolean
+     */
+    public boolean isIncludeButtonEnabled() {
+        return pageUtils.isElementEnabled(disabledIncludeButton);
+    }
+
+    /**
+     * Check if the exclude button is disabled
+     *
+     * @return - boolean
+     */
+    public boolean isExcludeButtonEnabled() {
+        return pageUtils.isElementEnabled(disabledExcludeButton);
     }
 
     /**
