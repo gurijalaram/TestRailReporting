@@ -54,4 +54,13 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
         pageUtils.waitForElementAndClick(closeButton);
         return new ExplorePage(driver);
     }
+
+    /**
+     * This get the message after upload is completed
+     *
+     * @return - string
+     */
+    public String getImportMessage() {
+        return pageUtils.waitForElementToAppear(messageText).getText();
+    }
 }
