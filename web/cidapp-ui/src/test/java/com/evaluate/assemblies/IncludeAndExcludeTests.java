@@ -1,6 +1,10 @@
 package com.evaluate.assemblies;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
+
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -17,6 +21,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private ComponentsListPage componentsListPage;
 
     public IncludeAndExcludeTests() {
         super();
@@ -35,7 +40,7 @@ public class IncludeAndExcludeTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        componentsListPage = loginPage.login(currentUser)
             .uploadPublishAndOpenAssembly(
                 subComponentNames,
                 componentExtension,
@@ -43,9 +48,10 @@ public class IncludeAndExcludeTests extends TestBase {
                 assemblyName,
                 assemblyExtension,
                 scenarioName,
-                currentUser);
+                currentUser)
+            .openComponents();
 
-
-
+        assertThat(componentsListPage.isExcludeButtonEnabled(), is(false));
+        assertThat(componentsListPage.isIncludeButtonEnabled(), is(false));
     }
 }
