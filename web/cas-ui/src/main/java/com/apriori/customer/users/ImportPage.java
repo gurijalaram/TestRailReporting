@@ -1,10 +1,13 @@
 package com.apriori.customer.users;
 
+import com.apriori.common.UsersTableController;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.FileImport;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
+import com.apriori.utils.web.components.SourceListComponent;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -34,10 +37,14 @@ public class ImportPage extends LoadableComponent<ImportPage> {
     @FindBy(css = "div[class='pl-2'] [aria-label='Search']")
     private WebElement userNameSearch;
 
+    @FindBy(xpath = "//div[.='testusers.csv']//button[@title='Delete the csv file']")
+    private WebElement deleteCsvFile;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
     private FileImport fileImport;
+    private UsersTableController usersTableController;
 
     public ImportPage(WebDriver driver) {
         this.driver = driver;
@@ -124,5 +131,17 @@ public class ImportPage extends LoadableComponent<ImportPage> {
         String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/import";
         driver.navigate().to(String.format(url, customer));
         return new ImportPage(driver);
+    }
+
+    public ImportPage validateImportTableArePageableAndRefreshable(SoftAssertions soft) {
+        return usersTableController.validateUsersTableArePageableAndRefreshable(soft, ImportPage.class);
+    }
+
+    public ImportPage validateImportUsersTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft) {
+        return usersTableController.validateUsersTableHasCorrectColumns(expectedName, id, soft, ImportPage.class);
+    }
+
+    public SourceListComponent getUsersList() {
+        return usersTableController.getUsersTable();
     }
 }
