@@ -550,6 +550,13 @@ public class AcsResources {
         return HTTPRequest.build(requestEntity).get().getBody();
     }
 
+    /**
+     * Gets image by scenario iteration key
+     *
+     * @param scenarioIterationKey - values to input into url
+     * @param getWebImage - flag to call desktop or web image endpoint (url is only different, so this reduces duplication)
+     * @return String - Base64 image
+     */
     public String getImageByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey, boolean getWebImage) {
         setupHeader();
 

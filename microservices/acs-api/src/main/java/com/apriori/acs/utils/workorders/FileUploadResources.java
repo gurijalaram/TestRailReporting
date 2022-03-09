@@ -29,6 +29,8 @@ import com.apriori.acs.entity.response.workorders.generateassemblyimages.Generat
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataInputs;
+import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.CreateWorkorderResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
@@ -74,6 +76,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 
 public class FileUploadResources {
@@ -398,9 +401,9 @@ public class FileUploadResources {
     }
 
     /**
-     * Create Generate All Images Workorder
+     * Create generate all images workorder
      *
-     * @param fileUploadOutputs - scenario iteration key to use
+     * @param fileUploadOutputs - contains scenario iteration key to use
      * @return GenerateAllImagesOutputs - new scenario iteration key
      */
     public GenerateAllImagesOutputs createGenerateAllImagesWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
@@ -417,6 +420,24 @@ public class FileUploadResources {
         return objectMapper.convertValue(
             checkGetWorkorderDetails(generateAllImagesWorkorderId),
             GenerateAllImagesOutputs.class
+        );
+    }
+
+    /**
+     * Create generate simple image data workorder
+     *
+     * @param fileUploadOutputs - contains scenario iteration key to use
+     * @return GenerateSimpleImageDataOutputs - new scenario iteration key
+     */
+    public GenerateSimpleImageDataOutputs createGenerateSimpleImageDataWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+        String generateSimpleImageDataWorkorderId = createWorkorder(WorkorderCommands.GENERATE_SIMPLE_IMAGE_DATA.getWorkorderCommand(),
+            GenerateSimpleImageDataInputs.builder()
+                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey()),
+            true);
+        submitWorkorder(generateSimpleImageDataWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(generateSimpleImageDataWorkorderId),
+            GenerateSimpleImageDataOutputs.class
         );
     }
 

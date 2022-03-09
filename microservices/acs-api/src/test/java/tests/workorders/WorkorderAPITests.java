@@ -15,6 +15,7 @@ import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutpu
 import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
 import com.apriori.acs.entity.response.workorders.getadmininfo.GetAdminInfoResponse;
@@ -401,6 +402,23 @@ public class WorkorderAPITests {
         );
         assertThat(Base64.isBase64(
             acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), false)),
+            is(equalTo(true))
+        );
+    }
+
+    @Test
+    @Category(WorkorderTest.class)
+    @TestRail(testCaseId = "12047")
+    @Description("Generate Simple Image - Part")
+    public void testGenerateSimpleImageData() {
+        AcsResources acsResources = new AcsResources();
+
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("3574727.prt", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+
+        GenerateSimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources.createGenerateSimpleImageDataWorkorderSuppressError(fileUploadOutputs);
+
+        assertThat(Base64.isBase64(
+            acsResources.getImageByScenarioIterationKey(generateSimpleImageDataOutputs.getScenarioIterationKey(), false)),
             is(equalTo(true))
         );
     }
