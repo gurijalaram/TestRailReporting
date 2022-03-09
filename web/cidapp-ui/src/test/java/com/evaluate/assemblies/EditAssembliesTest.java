@@ -59,4 +59,37 @@ public class EditAssembliesTest extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION), is(true));
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"10799", "10768"})
+    @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
+    public void testUploadCostPublishAssemblyAndEdit() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final String mode = "Manual";
+        final String material = "Steel, Cold Worked, AISI 1010";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        loginPage.login(currentUser)
+            .uploadCostPublishAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                mode,
+                material,
+                currentUser)
+            .editScenario()
+            .close(EvaluatePage.class);
+    }
 }
