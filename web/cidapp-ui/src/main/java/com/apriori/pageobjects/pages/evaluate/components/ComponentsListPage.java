@@ -8,8 +8,8 @@ import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
-import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
@@ -313,9 +313,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return new page object
      */
-    public ImportCadFilePage updateCadFile() {
+    public UpdateCadFilePage updateCadFile() {
         pageUtils.waitForElementAndClick(updateCadButton);
-        return new ImportCadFilePage(driver);
+        return new UpdateCadFilePage(driver);
     }
 
     /**

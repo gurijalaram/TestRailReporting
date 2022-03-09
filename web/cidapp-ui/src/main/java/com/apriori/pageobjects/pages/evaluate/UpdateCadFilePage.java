@@ -113,8 +113,8 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
      *
      * @return new page object
      */
-    public EvaluatePage submit() {
-        return modalDialogController.submit(submitButton, EvaluatePage.class);
+    public <T> T submit(Class<T> klass) {
+        return modalDialogController.submit(submitButton, klass);
     }
 
     /**
