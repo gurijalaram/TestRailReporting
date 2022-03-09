@@ -3,6 +3,7 @@ package com.apriori.acs.entity.response.workorders.genericclasses;
 public enum WorkorderCommands {
 
     COSTING("COSTING"),
+    EDIT("EDIT"),
     GENERATE_ASSEMBLY_IMAGES("GENERATE_ASSEMBLY_IMAGES"),
     GENERATE_PART_IMAGES("GENERATE_PART_IMAGES"),
     LOAD_CAD_FILE("LOADCADFILE"),
