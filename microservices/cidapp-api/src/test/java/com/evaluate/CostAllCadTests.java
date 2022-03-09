@@ -60,8 +60,8 @@ public class CostAllCadTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
                 .mode("manual")
                 .material("Steel, Hot Worked, AISI 1010")
@@ -70,8 +70,8 @@ public class CostAllCadTests {
 
         ResponseWrapper<ComponentIteration> componentIterationResponse = iterationsUtil.getComponentIterationLatest(
             ComponentInfoBuilder.builder()
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .user(currentUser)
                 .build());
 
@@ -209,8 +209,8 @@ public class CostAllCadTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
                 .mode("manual")
                 .material(material)

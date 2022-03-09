@@ -58,8 +58,8 @@ public class ScenariosTests {
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
             .scenarioName(newScenarioName)
-            .componentId(postComponentResponse.getComponentIdentity())
-            .scenarioId(postComponentResponse.getScenarioIdentity())
+            .componentIdentity(postComponentResponse.getComponentIdentity())
+            .scenarioIdentity(postComponentResponse.getScenarioIdentity())
             .user(currentUser)
             .build());
 

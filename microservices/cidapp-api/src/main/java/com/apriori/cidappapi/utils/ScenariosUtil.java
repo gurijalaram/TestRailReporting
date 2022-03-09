@@ -129,8 +129,8 @@ public class ScenariosUtil {
 
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfoBuilder, String lastAction, boolean published) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentId = componentInfoBuilder.getComponentId();
-        String scenarioId = componentInfoBuilder.getScenarioId();
+        String componentId = componentInfoBuilder.getComponentIdentity();
+        String scenarioId = componentInfoBuilder.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
@@ -249,7 +249,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder()
                         .costingTemplateIdentity(
@@ -273,7 +273,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario",
                     ScenarioRequest.builder()
                         .scenarioName(componentInfoBuilder.getScenarioName())
@@ -293,7 +293,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", forkRequest);
 
         return HTTPRequest.build(requestEntity).post();
@@ -412,7 +412,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
                     .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
                     .costMaturity("Initial".toUpperCase())
@@ -464,8 +464,8 @@ public class ScenariosUtil {
 
         ScenarioItem assemblyUploadResponse = uploadAndPublishComponent(myAssembly);
 
-        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
-        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
+        myAssembly.setComponentIdentity(assemblyUploadResponse.getComponentIdentity());
+        myAssembly.setScenarioIdentity(assemblyUploadResponse.getScenarioIdentity());
 
         return myAssembly;
     }
