@@ -25,13 +25,13 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
 
     private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
-    @FindBy(xpath = "//li[.='Explore']")
+    @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
 
-    @FindBy(xpath = "//li[.='Evaluate']")
+    @FindBy(xpath = "//button[.='Evaluate']")
     private WebElement evaluateButton;
 
-    @FindBy(xpath = "//li[.='Compare']")
+    @FindBy(xpath = "//button[.='Compare']")
     private WebElement compareButton;
 
     @FindBy(css = "[id='qa-header-preferences-button'] button")
