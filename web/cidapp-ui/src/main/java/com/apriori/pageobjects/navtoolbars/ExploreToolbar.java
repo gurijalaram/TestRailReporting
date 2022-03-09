@@ -340,12 +340,12 @@ public class ExploreToolbar extends MainNavBar {
      * Uploads a cad file and select submit
      *
      * @param filePath - location of the file
-     * @return generic page object
+     * @return new page object
      */
     public EvaluatePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit();
+        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
     }
 
     /**
