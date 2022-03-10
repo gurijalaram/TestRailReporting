@@ -18,9 +18,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Get2DImageByScenarioIterationKeyTests {
 
     @Test
