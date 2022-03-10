@@ -53,9 +53,9 @@ public class ReCostScenarioTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
@@ -97,9 +97,9 @@ public class ReCostScenarioTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
@@ -159,9 +159,9 @@ public class ReCostScenarioTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

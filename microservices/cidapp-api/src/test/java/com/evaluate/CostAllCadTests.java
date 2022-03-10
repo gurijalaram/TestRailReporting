@@ -52,9 +52,9 @@ public class CostAllCadTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
@@ -199,11 +199,11 @@ public class CostAllCadTests {
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
         ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

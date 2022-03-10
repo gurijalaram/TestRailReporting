@@ -43,11 +43,11 @@ public class ComponentsControllerTests {
         currentUser = UserUtil.getUser();
 
         ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         assertThat(postComponentResponse.getScenarioIdentity(), is(not(emptyString())));
     }
@@ -65,9 +65,9 @@ public class ComponentsControllerTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         ResponseWrapper<GetComponentResponse> getComponentResponse = componentsUtil.getComponents();
 
@@ -89,9 +89,9 @@ public class ComponentsControllerTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         ResponseWrapper<ComponentIdentityResponse> componentIdentityResponse = componentsUtil.getComponentIdentity(scenarioItem);
 

@@ -118,9 +118,9 @@ public class ExploreToolbar extends MainNavBar {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(userCredentials)
-                .build(),
-            resourceFile);
+                .build());
         return navigateToScenario(component);
     }
 
@@ -159,16 +159,16 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * uploads an assembly with all subcomponents, cost and publish them all
      *
-     * @param assemblyName - the assembly name
-     * @param assemblyExtension - the assembly extension
-     * @param assemblyProcessGroup - the assembly process group
-     * @param subComponentNames - the subcomponent names
-     * @param subComponentExtension - the subcomponent extension
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the subcomponent names
+     * @param subComponentExtension    - the subcomponent extension
      * @param subComponentProcessGroup - the subcomponent process group
-     * @param scenarioName - the scenario name
-     * @param mode - the mode
-     * @param material - the material
-     * @param currentUser - the current user
+     * @param scenarioName             - the scenario name
+     * @param mode                     - the mode
+     * @param material                 - the material
+     * @param currentUser              - the current user
      * @return - a new page object
      */
     public EvaluatePage uploadCostPublishAndOpenAssembly(String assemblyName,
@@ -206,11 +206,11 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ScenarioItem uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(userCredentials)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(userCredentials)
+            .build());
     }
 
     /**

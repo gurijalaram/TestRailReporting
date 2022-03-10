@@ -49,11 +49,11 @@ public class ScenariosTests {
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
         ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
@@ -173,10 +173,10 @@ public class ScenariosTests {
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
-            componentAssembly,
-            ForkRequest.builder()
-                .override(false)
-                .build())
+                componentAssembly,
+                ForkRequest.builder()
+                    .override(false)
+                    .build())
             .getResponseEntity();
 
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));

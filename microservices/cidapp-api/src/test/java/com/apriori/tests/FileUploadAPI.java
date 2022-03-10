@@ -47,11 +47,11 @@ public class FileUploadAPI {
         UserCredentials currentUser = UserUtil.getUser();
 
         ScenarioItem scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()

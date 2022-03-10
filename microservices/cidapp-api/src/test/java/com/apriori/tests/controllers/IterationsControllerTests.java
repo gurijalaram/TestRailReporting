@@ -39,9 +39,9 @@ public class IterationsControllerTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
 

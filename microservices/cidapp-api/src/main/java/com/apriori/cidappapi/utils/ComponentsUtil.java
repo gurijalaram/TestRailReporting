@@ -33,13 +33,12 @@ public class ComponentsUtil {
      * POST new component
      *
      * @param componentBuilder - the component object
-     * @param resourceFile     - the resource file
      * @return Item
      */
-    public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder, File resourceFile) {
+    public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
+                .multiPartFiles(new MultiPartFiles().use("data", componentBuilder.getResourceFile()))
                 .formParams(new FormParams().use("filename", componentBuilder.getComponentName())
                     .use("override", "false")
                     .use("scenarioName", componentBuilder.getScenarioName()))
@@ -132,6 +131,10 @@ public class ComponentsUtil {
     public ScenarioItem postComponent(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
-        return postComponentQueryCSS(component, resourceFile);
+        ComponentInfoBuilder.builder()
+            .resourceFile(resourceFile)
+            .build();
+
+        return postComponentQueryCSS(component);
     }
 }

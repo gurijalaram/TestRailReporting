@@ -48,9 +48,9 @@ public class ComponentImageTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
         ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(
             ScenarioItem.builder()
@@ -92,11 +92,12 @@ public class ComponentImageTests {
         currentUser = UserUtil.getUser();
 
         ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(
             ScenarioItem.builder()
@@ -135,11 +136,12 @@ public class ComponentImageTests {
         currentUser = UserUtil.getUser();
 
         ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(
             ScenarioItem.builder()
