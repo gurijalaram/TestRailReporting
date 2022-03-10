@@ -3,7 +3,6 @@ package com.apriori.bcs.entity.response;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

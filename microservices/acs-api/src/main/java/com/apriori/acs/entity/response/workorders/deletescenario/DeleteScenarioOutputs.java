@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class DeleteScenarioOutputs {
-    public ScenarioKey scenarioKey;
+    private ScenarioKey scenarioKey;
 }
