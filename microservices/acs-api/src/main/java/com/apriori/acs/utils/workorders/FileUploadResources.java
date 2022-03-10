@@ -432,7 +432,8 @@ public class FileUploadResources {
     public GenerateSimpleImageDataOutputs createGenerateSimpleImageDataWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
         String generateSimpleImageDataWorkorderId = createWorkorder(WorkorderCommands.GENERATE_SIMPLE_IMAGE_DATA.getWorkorderCommand(),
             GenerateSimpleImageDataInputs.builder()
-                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey()),
+                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
+                .build(),
             true);
         submitWorkorder(generateSimpleImageDataWorkorderId);
         return objectMapper.convertValue(

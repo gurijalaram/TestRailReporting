@@ -34,9 +34,9 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.json.utils.JsonManager;
 
-import org.apache.commons.codec.binary.Base64;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -409,7 +409,7 @@ public class WorkorderAPITests {
     @Test
     @Category(WorkorderTest.class)
     @TestRail(testCaseId = "12047")
-    @Description("Generate Simple Image - Part")
+    @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
         AcsResources acsResources = new AcsResources();
 
