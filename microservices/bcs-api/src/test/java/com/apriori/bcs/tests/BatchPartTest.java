@@ -17,6 +17,8 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Issues;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -46,7 +48,7 @@ public class BatchPartTest {
         assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(batchObject.getState(), is(equalTo(BCSState.CREATED.toString())));
 
-        ResponseWrapper<Part> partResponse =  BatchPartResources.createNewBatchPartByID(batchObject.getIdentity());
+        ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(batchObject.getIdentity());
         assertThat(partResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.LOADING.toString())));
     }
@@ -77,7 +79,20 @@ public class BatchPartTest {
     public void createBatchPartsInvalidFormDataAnnualVolume() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         newPartRequest.setAnnualVolume(123);
-        ResponseWrapper<Part> partResponse =  BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
+        ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
+        assertEquals("Response code didn't match expected code", HttpStatus.SC_CREATED, partResponse.getStatusCode());
+        assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.LOADING.toString())));
+    }
+
+    @Test
+    @Issues({
+        @Issue("CIG-292"),
+        @Issue("CIG-288")
+    })
+    @TestRail(testCaseId = {"4280"})
+    @Description("Create part with Valid UDA Field in form data")
+    public void createBatchPartWithValidUDAField() {
+        ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartWithValidUDA(batch.getIdentity());
         assertEquals("Response code didn't match expected code", HttpStatus.SC_CREATED, partResponse.getStatusCode());
         assertThat(partResponse.getResponseEntity().getState(), is(equalTo(BCSState.LOADING.toString())));
     }
