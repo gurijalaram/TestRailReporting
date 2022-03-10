@@ -15,7 +15,6 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -27,7 +26,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.io.File;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -334,35 +332,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * Upload and Publish a subcomponent/assembly
-     *
-     * @param component - the copy component object
-     * @return - the Item
-     */
-    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
-        ScenarioItem postComponentResponse = uploadComponent(component);
-
-        postPublishScenario(postComponentResponse, component.getUser());
-
-        return postComponentResponse;
-    }
-
-    /**
-     * Upload a component
-     *
-     * @param component - the component
-     * @return - scenario object
-     */
-    public ScenarioItem uploadComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        ScenarioItem postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
-
-        return postComponentResponse;
-    }
-
-    /**
      * POST to publish scenario
      *
      * @param scenarioItem    - the scenario object
@@ -445,7 +414,7 @@ public class ScenariosUtil {
                                                          UserCredentials currentUser) {
 
         for (String subComponentName : subComponentNames) {
-            uploadAndPublishComponent(ComponentInfoBuilder.builder()
+            postAndPublishComponent(ComponentInfoBuilder.builder()
                 .componentName(subComponentName)
                 .extension(componentExtension)
                 .scenarioName(scenarioName)
@@ -462,12 +431,26 @@ public class ScenariosUtil {
             .user(currentUser)
             .build();
 
-        ScenarioItem assemblyUploadResponse = uploadAndPublishComponent(myAssembly);
+        ScenarioItem assemblyUploadResponse = postAndPublishComponent(myAssembly);
 
         myAssembly.setComponentIdentity(assemblyUploadResponse.getComponentIdentity());
         myAssembly.setScenarioIdentity(assemblyUploadResponse.getScenarioIdentity());
 
         return myAssembly;
+    }
+
+    /**
+     * Upload and Publish a subcomponent/assembly
+     *
+     * @param component - the copy component object
+     * @return - the Item
+     */
+    public ScenarioItem postAndPublishComponent(ComponentInfoBuilder component) {
+        ScenarioItem postComponentResponse = componentsUtil.postComponent(component);
+
+        postPublishScenario(postComponentResponse, component.getUser());
+
+        return postComponentResponse;
     }
 
     /**

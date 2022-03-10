@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 public class AssemblyUtils {
 
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     /**
      * Associates subcomponents with assemblies then uploads and publishes them
@@ -112,12 +113,12 @@ public class AssemblyUtils {
             currentUser);
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
-            ScenarioItem subComponentScenarioItem = scenariosUtil.uploadComponent(subComponent);
+            ScenarioItem subComponentScenarioItem = componentsUtil.postComponent(subComponent);
             subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
             subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
         });
 
-        ScenarioItem assemblyScenarioItem = scenariosUtil.uploadComponent(componentAssembly);
+        ScenarioItem assemblyScenarioItem = componentsUtil.postComponent(componentAssembly);
         componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
         componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
 

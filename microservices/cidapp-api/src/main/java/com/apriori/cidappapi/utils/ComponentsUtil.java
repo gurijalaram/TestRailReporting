@@ -10,6 +10,7 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
@@ -120,5 +121,17 @@ public class ComponentsUtil {
         } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return axesEntriesResponse;
+    }
+
+    /**
+     * Upload a component
+     *
+     * @param component - the component
+     * @return - scenario object
+     */
+    public ScenarioItem postComponent(ComponentInfoBuilder component) {
+        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+
+        return postComponentQueryCSS(component, resourceFile);
     }
 }
