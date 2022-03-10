@@ -104,7 +104,7 @@ public class SourceModelExplorePage extends LoadableComponent<SourceModelExplore
      * @return current page object
      */
     public SourceModelExplorePage highlightScenario(String componentName, String scenarioName) {
-        pageUtils.waitForElementAndClick(getByScenario(componentName, scenarioName));
+        scenarioTableController.highlightScenario(componentName, scenarioName);
         return this;
     }
 

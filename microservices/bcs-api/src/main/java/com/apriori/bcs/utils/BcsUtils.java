@@ -15,6 +15,13 @@ import java.util.Map;
 @Slf4j
 public class BcsUtils extends ApiUtil {
 
+
+    public static String convertSecsToMins(long secs) {
+        long minutes = (secs % 3600) / 60;
+        long seconds = secs % 60;
+        return minutes + " minutes " + seconds + " seconds";
+    }
+
     public enum State {
         COMPLETED("COMPLETED"),
         COSTING("COSTING"),
@@ -35,35 +42,17 @@ public class BcsUtils extends ApiUtil {
                     return true;
                 }
             }
-
             return false;
         }
-
     }
 
-    /*public enum TerminalState {
-        COMPLETED("COMPLETED"),
-        ERRORED("ERRORED"),
-        REJECTED("REJECTED"),
-        CANCELED("CANCELLED");
-
-        private final String terminalState;
-
-        TerminalState(String ts) {
-            terminalState = ts;
-        }
-
-        public static boolean contains(String objectsState) {
-            for (BcsUtils.TerminalState state : BcsUtils.TerminalState.values()) {
-                if (state.name().equals(objectsState)) {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-    }*/
+    public static Object[][] convertMapToArray(HashMap<String, Object> hashMap) {
+        Object[][] arr =
+            hashMap.entrySet().stream()
+                .map(e -> new Object[] {e.getKey(), e.getValue()})
+                .toArray(Object[][]::new);
+        return arr;
+    }
 
     /**
      * Get the entity's identity
@@ -122,53 +111,6 @@ public class BcsUtils extends ApiUtil {
         return value;
     }
 
-   /* *//**
-     * Cancel any batch in a non-terminal state
-     *
-     * @param batch
-     * @return
-     *//*
-    public static boolean checkAndCancelBatch(Batch batch) {
-        Batch currentBatch = (Batch)BatchResources.getBatchRepresentation(batch.getIdentity()).getResponseEntity();
-        if (!TerminalState.contains(currentBatch.getState())) {
-            BatchResources.cancelBatchProccessing(batch.getIdentity());
-            return true;
-        }
-        return false;
-    }*/
-
-    /**
-     * Polls BCS to get a batch/part's costing status
-     *
-     * @param obj
-     * @param klass
-     * @return Costing Status
-     */
-    public static State pollState(Object obj, Class klass) {
-        String state = BcsUtils.getState(obj, klass);
-
-        // TODO ALL: should be refactored to switch
-        if (state.toUpperCase().equals("COMPLETED")) {
-            return State.COMPLETED;
-        } else if (state.toUpperCase().equals("ERRORED")) {
-            return State.ERRORED;
-        } else if (state.toUpperCase().equals("REJECTED")) {
-            return State.REJECTED;
-        } else if (state.toUpperCase().equals("CANCELED")) {
-            return State.CANCELED;
-        } else {
-            try {
-                Thread.sleep(10000);
-            } catch (Exception e) {
-                log.error(e.getMessage());
-                log.error(Arrays.toString(e.getStackTrace()));
-                throw new IllegalArgumentException();
-            }
-        }
-
-        return State.PROCESSING;
-    }
-
     /**
      * Polls BCS to get a batch/part's costing status
      *
@@ -218,8 +160,8 @@ public class BcsUtils extends ApiUtil {
 
         while (count <= defaultTimeout) {
             partDetails =
-                    BatchPartResources.getBatchPartRepresentation(batchIdentity,
-                            partIdentity);
+                BatchPartResources.getBatchPartRepresentation(batchIdentity,
+                    partIdentity);
             try {
                 partState = BcsUtils.pollForCostingState(partDetails, Part.class);
             } catch (InterruptedException e) {
@@ -239,50 +181,5 @@ public class BcsUtils extends ApiUtil {
             }
             count += 1;
         }
-
-
     }
-
-    /**
-     * Generate new batch properties
-     *
-     * @return
-     */
-    /*    public static NewBatchProperties generateNewBatchProperties(
-            String externalId,
-            String name,
-            String scenarioName,
-            String exportSetName) {
-        Long currentMillis = System.currentTimeMillis();
-
-        if (externalId == null) {
-            externalId = "Auto-Batch-" + currentMillis;
-        }
-
-        if (name == null) {
-            name = "Auto-Name-" + currentMillis;
-        }
-
-        if (scenarioName == null) {
-            scenarioName = "Auto-Scenario-" + currentMillis;
-        }
-
-        if (exportSetName == null) {
-            exportSetName = "Auto-ExportSet-" + currentMillis;
-        }
-
-        NewBatchProperties newBatch = new NewBatchProperties();
-        newBatch.setExternalId(externalId);
-        newBatch.setRollupName(name);
-        newBatch.setRollupScenarioName(scenarioName);
-        newBatch.setExportSetName(exportSetName);
-
-        return newBatch;
-    }
-
-    public static NewBatchProperties generateNewBatchProperties() {
-        return generateNewBatchProperties(null, null, null, null);
-    }*/
-
-
 }

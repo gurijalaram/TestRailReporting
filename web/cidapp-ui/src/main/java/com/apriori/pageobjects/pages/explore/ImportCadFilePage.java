@@ -40,7 +40,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
-    @FindBy(xpath = "//input[@name='scenarioName']/following-sibling::span")
+    @FindBy(xpath = "//input[@name='primaryScenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
 
     @FindBy(css = ".form-action-buttons [type='submit']")

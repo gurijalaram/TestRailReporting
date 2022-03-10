@@ -33,7 +33,7 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
     private WebElement cancelButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.=' Try Again']")
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Try Again']")
     private WebElement tryAgainButton;
 
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Publish']")

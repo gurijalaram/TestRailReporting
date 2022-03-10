@@ -35,7 +35,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Primary']")
     private WebElement primaryTab;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] .pill-box")
+    @FindBy(css = ".secondary-process-modal-select-field .pill-box")
     private WebElement secondaryProcesses;
 
     private WebDriver driver;
