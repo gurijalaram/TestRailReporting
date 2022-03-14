@@ -154,6 +154,6 @@ public class SitesLicensesPage extends LoadableComponent<SitesLicensesPage> {
      * @return - true or false
      */
     public boolean isLicenseCardDisplayed(String licenseName) {
-        return pageUtils.isElementDisplayed(By.xpath(String.format("//div[@class='card-header']//div[.='%s']", licenseName)));
+        return fileImport.isCardDisplayed(licenseName);
     }
 }
