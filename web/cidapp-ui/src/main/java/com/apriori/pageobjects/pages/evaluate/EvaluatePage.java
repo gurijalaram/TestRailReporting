@@ -89,7 +89,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-secondary-process-modal-select-field'] .pill-box")
     private WebElement secondaryProcessBox;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
+    @FindBy(css = ".secondary-process-modal-select-field button")
     private WebElement secondaryProcessesPencil;
 
     @FindBy(css = "div[id='qa-material-modal-select-field'] button")
@@ -351,7 +351,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isSecondaryProcessButtonEnabled() {
-        return pageUtils.waitForElementToAppear(secondaryProcessesPencil).isEnabled();
+        return pageUtils.isElementEnabled(secondaryProcessesPencil);
     }
 
     /**

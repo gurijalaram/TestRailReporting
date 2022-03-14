@@ -1,12 +1,13 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
@@ -149,6 +150,46 @@ public class ExploreToolbar extends MainNavBar {
             assemblyName,
             assemblyExtension,
             scenarioName,
+            currentUser);
+
+        return navigateToScenario(myAssembly);
+    }
+
+    /**
+     * uploads an assembly with all subcomponents, cost and publish them all
+     *
+     * @param assemblyName - the assembly name
+     * @param assemblyExtension - the assembly extension
+     * @param assemblyProcessGroup - the assembly process group
+     * @param subComponentNames - the subcomponent names
+     * @param subComponentExtension - the subcomponent extension
+     * @param subComponentProcessGroup - the subcomponent process group
+     * @param scenarioName - the scenario name
+     * @param mode - the mode
+     * @param material - the material
+     * @param currentUser - the current user
+     * @return - a new page object
+     */
+    public EvaluatePage uploadCostPublishAndOpenAssembly(String assemblyName,
+                                                         String assemblyExtension,
+                                                         ProcessGroupEnum assemblyProcessGroup,
+                                                         List<String> subComponentNames,
+                                                         String subComponentExtension,
+                                                         ProcessGroupEnum subComponentProcessGroup,
+                                                         String scenarioName,
+                                                         String mode,
+                                                         String material,
+                                                         UserCredentials currentUser) {
+        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            mode,
+            material,
             currentUser);
 
         return navigateToScenario(myAssembly);
@@ -340,12 +381,12 @@ public class ExploreToolbar extends MainNavBar {
      * Uploads a cad file and select submit
      *
      * @param filePath - location of the file
-     * @return generic page object
+     * @return new page object
      */
-    public CadFileStatusPage updateCadFile(File filePath) {
+    public EvaluatePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new ImportCadFilePage(driver).enterFilePath(filePath).submit();
+        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.workorders.deletescenario;
+package com.apriori.acs.entity.response.workorders.generatesimpleimagedata;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 
@@ -7,8 +7,6 @@ import lombok.Data;
 
 @Data
 @Builder
-public class DeleteScenarioInputs {
+public class GenerateSimpleImageDataInputs {
     private ScenarioIterationKey scenarioIterationKey;
-    private int iteration;
-    private boolean includeOtherWorkspace;
 }

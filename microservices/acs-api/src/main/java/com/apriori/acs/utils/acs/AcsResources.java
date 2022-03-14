@@ -90,6 +90,7 @@ public class AcsResources {
             .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GetScenarioInfoByScenarioIterationKeyResponse.class)
             .headers(headers)
             .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
                 scenarioIterationKey.getScenarioKey().getTypeName(),
                 scenarioIterationKey.getScenarioKey().getMasterName(),
                 scenarioIterationKey.getScenarioKey().getStateName(),
@@ -98,6 +99,30 @@ public class AcsResources {
 
         return (GetScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
                 .build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get Scenario Information by Scenario Iteration Key
+     * Negative version for use after scenario deletion to confirm deletion worked
+     *
+     * @param scenarioIterationKey - ScenarioIterationKey to use in API request
+     * @return String of 404 and error message
+     */
+    public String getScenarioInfoByScenarioIterationKeyNegative(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, null)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return HTTPRequest.build(requestEntity).get().getBody();
     }
 
     /**
@@ -505,21 +530,48 @@ public class AcsResources {
     /**
      * Gets 2D image of costed part by scenario iteration key
      *
-     * @param paramsForUrl - list of values to input into url
+     * @param scenarioIterationKey - values for url
      * @return String - base64 encoded image
      */
-    public String get2DImageByScenarioIterationKey(List<String> paramsForUrl) {
+    public String get2DImageByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.GET_2D_IMAGE, null)
             .headers(headers)
             .inlineVariables(
-                paramsForUrl.get(0),
-                paramsForUrl.get(1),
-                paramsForUrl.get(2),
-                paramsForUrl.get(3),
-                paramsForUrl.get(4)
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return HTTPRequest.build(requestEntity).get().getBody();
+    }
+
+    /**
+     * Gets image by scenario iteration key
+     *
+     * @param scenarioIterationKey - values to input into url
+     * @param getWebImage - flag to call desktop or web image endpoint (url is only different, so this reduces duplication)
+     * @return String - Base64 image
+     */
+    public String getImageByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey, boolean getWebImage) {
+        setupHeader();
+
+        AcsApiEnum getImageUrl = getWebImage ? AcsApiEnum.GET_WEB_IMAGE_BY_SCENARIO_ITERATION_KEY :
+            AcsApiEnum.GET_DESKTOP_IMAGE_BY_SCENARIO_ITERATION_KEY;
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(getImageUrl, null)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
             );
 
         return HTTPRequest.build(requestEntity).get().getBody();
