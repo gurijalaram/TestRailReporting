@@ -8,5 +8,5 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class EditScenarioOutputs {
-    public ScenarioIterationKey scenarioIterationKey;
+    private ScenarioIterationKey scenarioIterationKey;
 }

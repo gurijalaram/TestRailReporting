@@ -20,7 +20,9 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     GET_SET_USER_PREFERENCE_BY_NAME("ws/workspace/users/%s/preferences/preference?key=%s"),
     GET_2D_IMAGE("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-2d"),
     GET_ACTIVE_DIMENSIONS("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/gcd-info"),
-    GET_ACTIVE_AXES("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/axes-info/active-axes");
+    GET_ACTIVE_AXES("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/axes-info/active-axes"),
+    GET_WEB_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/web"),
+    GET_DESKTOP_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/desktop");
 
     private final String endpoint;
 
