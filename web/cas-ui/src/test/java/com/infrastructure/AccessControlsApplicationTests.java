@@ -209,7 +209,6 @@ public class AccessControlsApplicationTests extends TestBase {
                 .validateAccessControlsTableHasCorrectColumns("Email", "user.email", soft)
                 .validateAccessControlsTableHasCorrectColumns("Family Name", "user.userProfile.familyName", soft)
                 .validateAccessControlsTableHasCorrectColumns("Given Name", "user.userProfile.givenName", soft)
-                .validateAccessControlsTableHasCorrectColumns("Status", "user.active", soft)
                 .validateAccessControlsTableHasCorrectColumns("Role", "roleName", soft)
                 .validateAccessControlsTableHasCorrectColumns("Job Title", "user.userProfile.jobTitle", soft)
                 .validateAccessControlsTableHasCorrectColumns("Department", "user.userProfile.department", soft)
