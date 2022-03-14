@@ -1,13 +1,10 @@
-package com.apriori.acs.entity.response.workorders.editscenario;
+package com.apriori.acs.entity.response.workorders.generatesimpleimagedata;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data
-@Builder
-public class EditScenarioInputs {
+public class GenerateSimpleImageDataOutputs {
     private ScenarioIterationKey scenarioIterationKey;
-    private String newScenarioName;
 }
