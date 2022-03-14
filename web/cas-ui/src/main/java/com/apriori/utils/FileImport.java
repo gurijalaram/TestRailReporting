@@ -49,7 +49,17 @@ public class FileImport {
      */
     public FileImport selectCard(String fileName) {
         By card = By.xpath(String.format("//div[@class='card-header']//div[.='%s']", fileName));
-        pageUtils.waitForElementAndClick(card);
+        pageUtils.actionClick(card);
         return this;
+    }
+
+    /**
+     * Validates if license card is displayed
+     *
+     * @param fileName - the file name
+     * @return - true or false
+     */
+    public boolean isCardDisplayed(String fileName) {
+        return pageUtils.isElementDisplayed(By.xpath(String.format("//div[@class='card-header']//div[.='%s']", fileName)));
     }
 }
