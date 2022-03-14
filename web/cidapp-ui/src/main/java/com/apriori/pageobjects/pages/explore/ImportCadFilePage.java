@@ -100,6 +100,15 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
+    /** Upload multiple cad files
+     * @param multiComponents - component details as a file list
+     * @return current page object
+     */
+    public ImportCadFilePage uploadMultiComponents(List<File> multiComponents) {
+        multiComponents.forEach(this::enterMultiFilePath);
+        return this;
+    }
+
     /**
      * Upload multiple cad files
      *
