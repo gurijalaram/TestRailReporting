@@ -16,8 +16,8 @@ import org.openqa.selenium.WebElement;
  */
 public final class CheckboxComponent extends CommonComponent {
     private static final String ATTRIBUTE_CHECK_ICON = "data-icon";
-    private static final String ATTRIBUTE_CHECK_ICON_CHECKED = "check-square";
-    private static final String ATTRIBUTE_CHECK_ICON_INDETERMINATE = "minus-square";
+    private static final String ATTRIBUTE_CHECK_ICON_CHECKED = "square-check";
+    private static final String ATTRIBUTE_CHECK_ICON_INDETERMINATE = "square-minus";
     private static final By BY_SVG = By.tagName("svg");
 
     /**
@@ -93,7 +93,6 @@ public final class CheckboxComponent extends CommonComponent {
         }
 
         getSvg().click();
-        getPageUtils().waitForCondition(() -> isChecked() == checked, PageUtils.DURATION_FAST);
         return this;
     }
 }
