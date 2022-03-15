@@ -45,10 +45,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-set-inputs-button'] button")
     private WebElement setInputsButton;
 
-    @FindBy(id = "qa-sub-component-detail-configure-button")
+    @FindBy(css = "[id='qa-sub-component-detail-configure-button'] button")
     private WebElement configureButton;
 
-    @FindBy(id = "qa-sub-component-detail-filter-button")
+    @FindBy(css = "[id='qa-sub-component-detail-preview-button'] button")
     private WebElement filterButton;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
