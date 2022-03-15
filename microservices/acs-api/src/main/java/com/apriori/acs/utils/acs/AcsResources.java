@@ -6,6 +6,7 @@ import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingSc
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
+import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.acs.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
 import com.apriori.acs.entity.response.acs.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
@@ -621,6 +622,23 @@ public class AcsResources {
             );
 
         return (GetActiveAxesByScenarioIterationKeyResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     *
+     */
+    public GetArtifactTableInfoResponse getArtifactTableInfo() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ARTIFACT_TABLE_INFO, GetArtifactTableInfoResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                "Sheet Metal",
+                "SimpleHole"
+            );
+
+        return (GetArtifactTableInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
