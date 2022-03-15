@@ -62,6 +62,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] .disabled")
     private WebElement disabledExcludeButton;
 
+    @FindBy(css = ".table-head [data-icon='square']")
+    private WebElement thumbnail;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
+    private WebElement editButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -329,6 +335,26 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * clicks the thumbnail box
+     *
+     * @return - the current page object
+     */
+    public ComponentsListPage thumbnail() {
+        pageUtils.waitForElementAndClick(thumbnail);
+        return this;
+    }
+
+    /**
+     * clicks the edit button
+     *
+     * @return - the current page object
+     */
+    public ComponentsListPage edit() {
+        pageUtils.waitForElementAndClick(editButton);
+        return this;
+    }
+
+    /**
      * Gets the background colour of the cell
      * @param componentName - the component name
      * @param scenarioName - the scenario name
@@ -336,5 +362,15 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public String getCellColour(String componentName, String scenarioName) {
         return scenarioTableController.getCellColour(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the struck out component name
+     *
+     * @param componentName - the component name
+     * @return - string
+     */
+    public String getTextDecoration(String componentName, String scenarioName) {
+        return scenarioTableController.getTextDecoration(componentName, scenarioName);
     }
 }
