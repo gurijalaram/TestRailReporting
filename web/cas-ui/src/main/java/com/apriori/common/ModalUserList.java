@@ -21,7 +21,7 @@ public class ModalUserList {
     @FindBy(css = ".user-candidate-modal  .modal-footer .btn-secondary")
     private WebElement candidatesCancelButton;
 
-    @FindBy(css = ".user-candidate-modal  .modal-header .close")
+    @FindBy(css = ".close-modal")
     private WebElement candidatesCloseButton;
 
     @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-primary")
@@ -30,7 +30,7 @@ public class ModalUserList {
     @FindBy(css = ".candidate-confirm-modal .modal-footer .btn-secondary")
     private WebElement candidatesConfirmCancelButton;
 
-    @FindBy(css = ".candidate-confirm-modal .modal-header .close")
+    @FindBy(xpath = "//div[.='Confirmation']//button[@class='light background-animation small close-modal btn btn-link']")
     private WebElement candidatesConfirmCloseButton;
 
     private WebDriver driver;

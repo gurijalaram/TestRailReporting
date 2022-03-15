@@ -24,6 +24,8 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -104,10 +106,14 @@ public class PreviewPanelTests extends TestBase {
             .highlightScenario(componentName, testScenarioName)
             .openPreviewPanel();
 
-        assertThat(previewPage.isImageDisplayed(), is(true));
-        assertThat(previewPage.getMaterialResult("Piece Part Cost"), closeTo(0.48, 1));
-        assertThat(previewPage.getMaterialResult("Fully Burdened Cost"), closeTo(0.86, 1));
-        assertThat(previewPage.getMaterialResult("Total Capital Investment"), closeTo(10514.67, 10));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).isCloseTo(Double.valueOf(0.48), Offset.offset(3.0));
+        softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.86), Offset.offset(3.0));
+        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).isCloseTo(Double.valueOf(10483.88), Offset.offset(15.00));
+
+        softAssertions.assertAll();
     }
 
     @Test

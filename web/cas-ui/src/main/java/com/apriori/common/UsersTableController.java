@@ -60,7 +60,7 @@ public class UsersTableController extends LoadableComponent<UsersTableController
      * @return This object
      */
     public <T> T validateUsersTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft, Class<T> klass) {
-        SourceListComponent list = usersTable;
+        SourceListComponent list = getUsersTable();
         TableComponent table = Obligation.mandatory(list::getTable, "The access controls table is missing");
 
         TableHeaderComponent header = table.getHeader(id);
@@ -87,7 +87,7 @@ public class UsersTableController extends LoadableComponent<UsersTableController
      * @return This object
      */
     public <T> T validateUsersTableArePageableAndRefreshable(SoftAssertions soft, Class<T> klass) {
-        SourceListComponent list = usersTable;
+        SourceListComponent list = getUsersTable();
         soft.assertThat(list.getPaginator())
                 .overridingErrorMessage("The customer staff table has no pagination.")
                 .isNotNull();
