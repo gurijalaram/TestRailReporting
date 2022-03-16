@@ -166,7 +166,7 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return list of scenario item
      */
-    public List<ScenarioItem> costAssembly(ComponentInfoBuilder assembly) {
+    public ResponseWrapper<ScenarioResponse> costAssembly(ComponentInfoBuilder assembly) {
         return scenariosUtil.postCostScenario(assembly);
     }
 
