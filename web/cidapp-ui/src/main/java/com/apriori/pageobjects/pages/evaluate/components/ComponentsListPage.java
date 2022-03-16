@@ -303,6 +303,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public ComponentsListPage exclude() {
         pageUtils.waitForElementAndClick(excludeButton);
+        pageUtils.waitFor(1000);
         return this;
     }
 
