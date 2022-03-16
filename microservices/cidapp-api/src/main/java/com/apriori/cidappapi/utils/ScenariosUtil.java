@@ -127,7 +127,7 @@ public class ScenariosUtil {
         );
     }
 
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfoBuilder, String lastAction, boolean published) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfoBuilder) {
         final int SOCKET_TIMEOUT = 240000;
         String componentId = componentInfoBuilder.getComponentIdentity();
         String scenarioId = componentInfoBuilder.getScenarioIdentity();
@@ -159,8 +159,8 @@ public class ScenariosUtil {
                     });
 
                 if (scenarioResponse.isPresent() &&
-                    scenarioResponse.get().getLastAction().equals(lastAction) &&
-                    scenarioResponse.get().getPublished() == published) {
+                    scenarioResponse.get().getLastAction().equals(componentInfoBuilder.getLastAction()) &&
+                    scenarioResponse.get().getPublished() == componentInfoBuilder.getPublished()) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation;
@@ -379,7 +379,10 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfoBuilder) {
         publishScenario(componentInfoBuilder, ScenarioResponse.class);
 
-        return getScenarioRepresentation(componentInfoBuilder, "PUBLISH", true);
+        componentInfoBuilder.setLastAction("PUBLISH");
+        componentInfoBuilder.setPublished(true);
+
+        return getScenarioRepresentation(componentInfoBuilder);
     }
 
     /**

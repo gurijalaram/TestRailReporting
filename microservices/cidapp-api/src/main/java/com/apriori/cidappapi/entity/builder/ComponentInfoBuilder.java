@@ -30,4 +30,6 @@ public class ComponentInfoBuilder {
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
     private String assemblyName;
     private List<ComponentInfoBuilder> subComponents;
+    private String lastAction;
+    private Boolean published;
 }
