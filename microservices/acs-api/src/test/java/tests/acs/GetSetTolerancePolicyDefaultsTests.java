@@ -1,14 +1,14 @@
 package tests.acs;
 
 import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.GenericResourceCreatedResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.PropertyInfoItem;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.PropertyValueMap;
@@ -49,9 +49,9 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
         AcsResources acsResources = new AcsResources();
-        String http400ErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS);
 
-        assertInvalidResponse(http400ErrorResponse);
+        assertOnInvalidResponse(genericErrorResponse);
     }
 
     @Test
@@ -86,13 +86,13 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        String http400ErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername();
+        GenericErrorResponse genericErrorResponse = acsResources.setTolerancePolicyDefaultsInvalidUsername();
 
-        assertInvalidResponse(http400ErrorResponse);
+        assertOnInvalidResponse(genericErrorResponse);
     }
 
-    private void assertInvalidResponse(String invalidUserResponse) {
-        assertThat(invalidUserResponse, is(containsString("400")));
-        assertThat(invalidUserResponse, is(containsString("User is not found")));
+    private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(400)));
+        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
     }
 }

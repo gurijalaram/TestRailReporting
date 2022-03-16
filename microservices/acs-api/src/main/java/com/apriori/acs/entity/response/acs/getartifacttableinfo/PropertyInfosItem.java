@@ -9,12 +9,12 @@ public class PropertyInfosItem {
     private String type;
     private String name;
     private String cachedDisplayName;
-    private String formatterName;
-    private String alignment;
     private String propertyAccessor;
     private Boolean isEditable;
     private Boolean isLargeTextField;
     private Boolean hideDelta;
     private Boolean showDeltaIfInvalid;
     private Boolean invertedGoodness;
+    private String formatterName;
+    private String alignment;
 }

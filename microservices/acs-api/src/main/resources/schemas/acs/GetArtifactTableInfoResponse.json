@@ -82,12 +82,6 @@
             "cachedDisplayName": {
               "type": "string"
             },
-            "formatterName": {
-              "type": "string"
-            },
-            "alignment": {
-              "type": "string"
-            },
             "propertyAccessor": {
               "type": "string"
             },
@@ -2169,9 +2163,6 @@
               "required": [
                 "name"
               ]
-            },
-            "expandFromColumn": {
-              "type": "string"
             },
             "nullGroup": {
               "type": "boolean"

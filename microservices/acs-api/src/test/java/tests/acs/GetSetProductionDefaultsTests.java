@@ -1,13 +1,13 @@
 package tests.acs;
 
 import static org.hamcrest.CoreMatchers.anyOf;
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.GenericResourceCreatedResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
@@ -36,9 +36,9 @@ public class GetSetProductionDefaultsTests {
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        String invalidUserResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS);
 
-        assertInvalidResponse(invalidUserResponse);
+        assertOnInvalidResponse(genericErrorResponse);
     }
 
     @Test
@@ -68,13 +68,13 @@ public class GetSetProductionDefaultsTests {
     @Description("Set Production Defaults Negative Test")
     public void testNegativeSetProductionDefaults() {
         AcsResources acsResources = new AcsResources();
-        String invalidUserResponse = acsResources.setProductionDefaultsInvalidUsername();
+        GenericErrorResponse genericErrorResponse = acsResources.setProductionDefaultsInvalidUsername();
 
-        assertInvalidResponse(invalidUserResponse);
+        assertOnInvalidResponse(genericErrorResponse);
     }
 
-    private void assertInvalidResponse(String invalidUserResponse) {
-        assertThat(invalidUserResponse, is(containsString("400")));
-        assertThat(invalidUserResponse, is(containsString("User is not found")));
+    private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(400)));
+        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
     }
 }

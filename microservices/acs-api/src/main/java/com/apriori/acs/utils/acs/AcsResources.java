@@ -1,7 +1,8 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.GenericResourceCreatedResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
@@ -109,11 +110,11 @@ public class AcsResources {
      * @param scenarioIterationKey - ScenarioIterationKey to use in API request
      * @return String of 404 and error message
      */
-    public String getScenarioInfoByScenarioIterationKeyNegative(ScenarioIterationKey scenarioIterationKey) {
+    public GenericErrorResponse getScenarioInfoByScenarioIterationKeyNegative(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, null)
+            .init(AcsApiEnum.GET_SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -123,7 +124,7 @@ public class AcsResources {
                 scenarioIterationKey.getIteration().toString()
             );
 
-        return HTTPRequest.build(requestEntity).get().getBody();
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -316,18 +317,18 @@ public class AcsResources {
     /**
      * Set Tolerance Policy Defaults with Invalid Username to produce error
      *
-     * @return String of error
+     * @return instance of GenericErrorResponse
      */
-    public String setTolerancePolicyDefaultsInvalidUsername() {
+    public GenericErrorResponse setTolerancePolicyDefaultsInvalidUsername() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, null)
+            .init(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS, GenericErrorResponse.class)
             .headers(headers)
             .body(null)
             .inlineVariables(invalidUsername);
 
-        return HTTPRequest.build(requestEntity).post().getBody();
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -373,18 +374,18 @@ public class AcsResources {
     /**
      * Calls set production defaults endpoint with invalid username
      *
-     * @return String of body, which contains the error
+     * @return instance of GenericErrorResponse
      */
-    public String setProductionDefaultsInvalidUsername() {
+    public GenericErrorResponse setProductionDefaultsInvalidUsername() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, null)
+            .init(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS, GenericErrorResponse.class)
             .headers(headers)
             .body(null)
             .inlineVariables(invalidUsername);
 
-        return HTTPRequest.build(requestEntity).post().getBody();
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -423,34 +424,34 @@ public class AcsResources {
     /**
      * Gets user preferences with invalid username
      *
-     * @return String
+     * @return instance of GenericErrorResponse
      */
-    public String getUserPreferenceByNameInvalidUser() {
+    public GenericErrorResponse getUserPreferenceByNameInvalidUser() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_SET_USER_PREFERENCE_BY_NAME, null)
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCE_BY_NAME, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(invalidUsername, "TolerancePolicyDefaults.toleranceMode");
 
-        return HTTPRequest.build(requestEntity).get().getBody();
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
      * Generic call for get endpoint with invalid username
      *
      * @param endpoint - endpoint to call
-     * @return String - error
+     * @return instance of GenericErrorResponse
      */
-    public String getEndpointInvalidUsername(EndpointEnum endpoint) {
+    public GenericErrorResponse getEndpointInvalidUsername(EndpointEnum endpoint) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(endpoint, null)
+            .init(endpoint, GenericErrorResponse.class)
             .headers(headers)
             .inlineVariables(invalidUsername);
 
-        return HTTPRequest.build(requestEntity).get().getBody();
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -482,16 +483,16 @@ public class AcsResources {
      *
      * @return String - 400 error response body
      */
-    public String setUserPreferencesInvalidUser() {
+    public GenericErrorResponse setUserPreferencesInvalidUser() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_SET_USER_PREFERENCES, null)
+            .init(AcsApiEnum.GET_SET_USER_PREFERENCES, GenericErrorResponse.class)
             .headers(headers)
             .body(null)
             .inlineVariables(invalidUsername);
 
-        return HTTPRequest.build(requestEntity).post().getBody();
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
@@ -625,7 +626,9 @@ public class AcsResources {
     }
 
     /**
+     * Gets Artifact Table Info
      *
+     * @return Instance of GetArtifactTableInfoResponse
      */
     public GetArtifactTableInfoResponse getArtifactTableInfo() {
         setupHeader();
@@ -639,6 +642,25 @@ public class AcsResources {
             );
 
         return (GetArtifactTableInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Negative version of Get Artifact Table Info - invalid process group
+     *
+     * @return String of body, containing 404 status code and error
+     */
+    public GenericErrorResponse getArtifactTableInfoInvalidProcessGroup() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ARTIFACT_TABLE_INFO, GenericErrorResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                "Sheet Metals",
+                "SimpleHole"
+            );
+
+        return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

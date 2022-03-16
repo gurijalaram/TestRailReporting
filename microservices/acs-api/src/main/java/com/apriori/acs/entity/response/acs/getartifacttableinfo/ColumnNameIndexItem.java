@@ -7,6 +7,7 @@ public class ColumnNameIndexItem {
     private Integer requested;
     private Integer selected;
     private Integer time;
+    private Integer status;
     private Integer name;
     private Integer excludedFromBundling;
     private Integer diameter;
