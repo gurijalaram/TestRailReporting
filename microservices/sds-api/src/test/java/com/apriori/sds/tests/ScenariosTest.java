@@ -408,8 +408,8 @@ public class ScenariosTest extends SDSTestUtil {
         List<ScenarioItem> testingScenarios = new ScenariosUtil().postCostScenario(
             ComponentInfoBuilder.builder().componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentId)
-                .scenarioId(scenarioId)
+                .componentIdentity(componentId)
+                .scenarioIdentity(scenarioId)
                 .processGroup(pg)
                 .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
                 .mode(mode)
