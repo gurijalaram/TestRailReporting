@@ -299,6 +299,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Selects the exclude button
+     * 
      * @return current page object
      */
     public ComponentsListPage exclude() {
