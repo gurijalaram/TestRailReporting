@@ -4,14 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
+import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.EncodedFileUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -192,10 +191,10 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    protected static ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+    protected static ResponseWrapper<Scenario> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
 
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
                 .token(userCredentials.getToken());
 
@@ -203,7 +202,7 @@ public abstract class SDSTestUtil extends TestUtil {
         final long POLLING_INTERVAL = 5L;
         final long MAX_WAIT_TIME = 180L;
         String scenarioState;
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
+        ResponseWrapper<Scenario> scenarioRepresentation;
 
         waitSeconds(2);
         do {
