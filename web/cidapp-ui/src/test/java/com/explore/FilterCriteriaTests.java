@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -36,7 +36,7 @@ public class FilterCriteriaTests extends TestBase {
     private ExplorePage explorePage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ScenarioItem cssScenarioItem;
+    private ComponentInfoBuilder cidComponentItem;
 
     public FilterCriteriaTests() {
         super();
@@ -165,10 +165,10 @@ public class FilterCriteriaTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("High")
@@ -176,7 +176,7 @@ public class FilterCriteriaTests extends TestBase {
             .inputNotes("Test Notes")
             .submit(EvaluatePage.class)
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, ExplorePage.class)
+            .publish(cidComponentItem, currentUser, ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -199,12 +199,12 @@ public class FilterCriteriaTests extends TestBase {
         String filterName = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -263,17 +263,17 @@ public class FilterCriteriaTests extends TestBase {
         String filterName2 = generateStringUtil.generateFilterName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        String scenarioCreatedByName = cssScenarioItem.getScenarioCreatedByName();
+        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .publishScenario()
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
             .selectAssignee(currentUser)
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -286,7 +286,7 @@ public class FilterCriteriaTests extends TestBase {
             .filter()
             .newFilter()
             .inputName(filterName2)
-            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, cssScenarioItem.getScenarioCreatedAt())
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, cidComponentItem.getScenarioItem().getScenarioCreatedAt())
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
             .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)

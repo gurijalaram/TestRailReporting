@@ -7,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -35,7 +34,7 @@ public class IterationsControllerTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -43,7 +42,7 @@ public class IterationsControllerTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
+        ResponseWrapper<ComponentIteration> getComponentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse);
 
         assertThat(getComponentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
     }

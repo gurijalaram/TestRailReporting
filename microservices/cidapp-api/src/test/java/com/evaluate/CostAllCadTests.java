@@ -6,14 +6,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -48,7 +46,7 @@ public class CostAllCadTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -198,7 +196,7 @@ public class CostAllCadTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
@@ -212,16 +210,11 @@ public class CostAllCadTests {
                 .componentIdentity(componentResponse.getComponentIdentity())
                 .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
-                .mode("manual")
                 .material(material)
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(
-            ScenarioRepresentationBuilder.builder()
-                .scenarioItem(componentResponse)
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(componentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }

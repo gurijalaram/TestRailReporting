@@ -6,14 +6,12 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.response.componentiteration.AnalysisOfScenario;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -49,7 +47,7 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -59,7 +57,7 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(currentUser, componentResponse);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(componentResponse);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
@@ -67,7 +65,7 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(currentUser, componentResponse);
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
@@ -93,7 +91,7 @@ public class ReCostScenarioTests {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -103,7 +101,7 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_USA);
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(currentUser, componentResponse);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(componentResponse);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
@@ -111,7 +109,7 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, DigitalFactoryEnum.APRIORI_BRAZIL);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(currentUser, componentResponse);
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
@@ -155,7 +153,7 @@ public class ReCostScenarioTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
 
-        ScenarioItem componentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -170,12 +168,10 @@ public class ReCostScenarioTests {
                 .componentIdentity(componentResponse.getComponentIdentity())
                 .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
-                .material("Use Default")
-                .mode("manual")
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(currentUser, componentResponse);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = getComponentIterationResponseWrapper(componentResponse);
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
@@ -183,40 +179,29 @@ public class ReCostScenarioTests {
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, digitalFactoryEnum);
 
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(currentUser, componentResponse);
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
     }
 
-    private void postCostScenario(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, UserCredentials currentUser, ScenarioItem componentResponse, DigitalFactoryEnum digitalFactory) {
+    private void postCostScenario(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, UserCredentials currentUser, ComponentInfoBuilder componentInfo, DigitalFactoryEnum digitalFactory) {
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentIdentity(componentResponse.getComponentIdentity())
-                .scenarioIdentity(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentInfo.getComponentIdentity())
+                .scenarioIdentity(componentInfo.getScenarioIdentity())
                 .processGroup(processGroupEnum)
                 .digitalFactory(digitalFactory)
-                .material("Use Default")
-                .mode("manual")
                 .user(currentUser)
                 .build());
     }
 
-    private ResponseWrapper<ScenarioResponse> getScenarioResponseResponseWrapper(UserCredentials currentUser, ScenarioItem componentResponse) {
-        return scenariosUtil.getScenarioRepresentation(
-            ScenarioRepresentationBuilder.builder()
-                .scenarioItem(componentResponse)
-                .user(currentUser)
-                .build());
+    private ResponseWrapper<ScenarioResponse> getScenarioResponseResponseWrapper(ComponentInfoBuilder componentInfo) {
+        return scenariosUtil.getScenarioRepresentation(componentInfo);
     }
 
-    private ResponseWrapper<ComponentIteration> getComponentIterationResponseWrapper(UserCredentials currentUser, ScenarioItem componentResponse) {
-        return iterationsUtil.getComponentIterationLatest(
-            ComponentInfoBuilder.builder()
-                .componentIdentity(componentResponse.getComponentIdentity())
-                .scenarioIdentity(componentResponse.getScenarioIdentity())
-                .user(currentUser)
-                .build());
+    private ResponseWrapper<ComponentIteration> getComponentIterationResponseWrapper(ComponentInfoBuilder componentInfo) {
+        return iterationsUtil.getComponentIterationLatest(componentInfo);
     }
 }

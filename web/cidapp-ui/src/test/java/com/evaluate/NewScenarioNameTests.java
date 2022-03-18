@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -34,16 +34,16 @@ import java.io.File;
 
 public class NewScenarioNameTests extends TestBase {
 
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ScenarioItem cssScenarioItem;
-    private ScenarioItem cssScenarioItemA;
-    private ScenarioItem cssScenarioItemB;
-    private ScenarioItem cssScenarioItemC;
+    private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder cidComponentItemC;
+    private ComponentInfoBuilder cidComponentItemD;
 
     public NewScenarioNameTests() {
         super();
@@ -87,10 +87,10 @@ public class NewScenarioNameTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem);
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
@@ -100,7 +100,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -128,10 +128,10 @@ public class NewScenarioNameTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItemA = loginPage.login(currentUser)
+        cidComponentItemB = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioA, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItemA)
+        cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
@@ -139,10 +139,10 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemA, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
-        cssScenarioItemC = new EvaluatePage(driver).navigateToScenario(cssScenarioItemB)
+        cidComponentItemD = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -150,17 +150,17 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemC, currentUser, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
-        explorePage = new EvaluatePage(driver).navigateToScenario(cssScenarioItemC)
+        explorePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
             .selectProcessGroup(PLASTIC_MOLDING)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemC, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemD, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

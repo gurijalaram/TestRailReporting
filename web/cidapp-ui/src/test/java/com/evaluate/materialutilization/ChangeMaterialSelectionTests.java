@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -29,12 +29,12 @@ import java.io.File;
 
 public class ChangeMaterialSelectionTests extends TestBase {
 
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private File resourceFile;
     private MaterialUtilizationPage materialUtilizationPage;
-    private ScenarioItem cssScenarioItem;
+    private ComponentInfoBuilder cidComponentItem;
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -177,10 +177,10 @@ public class ChangeMaterialSelectionTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();
@@ -192,7 +192,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
