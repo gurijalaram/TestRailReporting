@@ -113,12 +113,12 @@ public class AssemblyUtils {
             currentUser);
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
-            ScenarioItem subComponentScenarioItem = componentsUtil.postComponent(subComponent);
+            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.postComponent(subComponent);
             subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
             subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
         });
 
-        ScenarioItem assemblyScenarioItem = componentsUtil.postComponent(componentAssembly);
+        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.postComponent(componentAssembly);
         componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
         componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
 
