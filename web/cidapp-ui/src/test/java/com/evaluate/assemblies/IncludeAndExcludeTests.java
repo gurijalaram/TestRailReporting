@@ -55,8 +55,8 @@ public class IncludeAndExcludeTests extends TestBase {
                 currentUser)
             .openComponents();
 
-        assertThat(componentsListPage.isExcludeButtonEnabled(), is(false));
-        assertThat(componentsListPage.isIncludeButtonEnabled(), is(false));
+        assertThat(componentsListPage.isIncludeOrExcludeButtonEnabled("include"), is(false));
+        assertThat(componentsListPage.isIncludeOrExcludeButtonEnabled("exclude"), is(false));
     }
 
     @Test

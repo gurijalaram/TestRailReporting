@@ -318,21 +318,19 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Check if the include button is disabled
+     * Check if the include or the exclude button is enabled
      *
      * @return - boolean
      */
-    public boolean isIncludeButtonEnabled() {
-        return pageUtils.isElementEnabled(includeButton);
-    }
-
-    /**
-     * Check if the exclude button is disabled
-     *
-     * @return - boolean
-     */
-    public boolean isExcludeButtonEnabled() {
-        return pageUtils.isElementEnabled(excludeButton);
+    public boolean isIncludeOrExcludeButtonEnabled(String buttonType) {
+        switch (buttonType.toLowerCase()) {
+            case "include":
+                return pageUtils.isElementEnabled(includeButton);
+            case "exclude":
+                return pageUtils.isElementEnabled(excludeButton);
+            default:
+                return false;
+        }
     }
 
     /**
