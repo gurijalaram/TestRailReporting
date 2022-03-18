@@ -17,7 +17,6 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -35,7 +34,7 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return Item
      */
-    public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
+    public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("data", componentBuilder.getResourceFile()))
@@ -51,7 +50,11 @@ public class ComponentsUtil {
 
         List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
 
-        return scenarioItemResponse.get(0);
+        componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
+        componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+        componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+
+        return componentBuilder;
     }
 
     /**
@@ -69,13 +72,13 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity
      *
-     * @param scenarioItem - the scenario object
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ScenarioItem scenarioItem) {
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(scenarioItem.getComponentIdentity());
+                .inlineVariables(componentInfo.getComponentIdentity());
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -83,15 +86,14 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity and component
      *
-     * @param scenarioItem    - the scenario item object
-     * @param userCredentials - the user credentials
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
-                .token(userCredentials.getToken());
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken());
 
         return checkNonNullIterationLatest(requestEntity);
     }
@@ -128,7 +130,7 @@ public class ComponentsUtil {
      * @param component - the component
      * @return - scenario object
      */
-    public ScenarioItem postComponent(ComponentInfoBuilder component) {
+    public ComponentInfoBuilder postComponent(ComponentInfoBuilder component) {
         File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
 
         ComponentInfoBuilder.builder()
