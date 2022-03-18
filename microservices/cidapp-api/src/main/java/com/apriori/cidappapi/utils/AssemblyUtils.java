@@ -3,7 +3,6 @@ package com.apriori.cidappapi.utils;
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -89,7 +88,7 @@ public class AssemblyUtils {
     public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
-            ScenarioItem subComponentScenarioItem = scenariosUtil.uploadComponent(subComponent);
+            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.postComponent(subComponent);
             subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
             subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
         });
@@ -102,7 +101,7 @@ public class AssemblyUtils {
      * @return component info builder object
      */
     public ComponentInfoBuilder uploadAssembly(ComponentInfoBuilder componentAssembly) {
-        ScenarioItem assemblyScenarioItem = scenariosUtil.uploadComponent(componentAssembly);
+        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.postComponent(componentAssembly);
         componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
         componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
 
@@ -171,7 +170,6 @@ public class AssemblyUtils {
      * @param subComponentExtension    - the subComponent extension
      * @param subComponentProcessGroup - the subComponent process group
      * @param scenarioName             - the scenario name
-     * @param mode                     - the mode for costing
      * @param currentUser              - the current user
      * @return - the object of ComponentInfoBuilder
      */

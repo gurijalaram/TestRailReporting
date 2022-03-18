@@ -14,7 +14,6 @@ import com.apriori.sds.entity.request.PostComponentRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
-import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.EncodedFileUtil;
 import com.apriori.utils.GenerateStringUtil;
