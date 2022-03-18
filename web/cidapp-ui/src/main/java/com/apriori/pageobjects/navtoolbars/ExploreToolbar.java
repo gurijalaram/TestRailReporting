@@ -114,7 +114,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ScenarioItem component = new ComponentsUtil().postComponentQueryCSS(
+        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -204,7 +204,7 @@ public class ExploreToolbar extends MainNavBar {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ScenarioItem uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
