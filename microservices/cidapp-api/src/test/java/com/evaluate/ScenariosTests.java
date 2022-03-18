@@ -85,7 +85,7 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssemblyAndSubComponents(assemblyName,
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
@@ -94,9 +94,11 @@ public class ScenariosTests {
             scenarioName,
             currentUser);
 
-        assemblyUtils.publishSubComponents(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
@@ -126,7 +128,7 @@ public class ScenariosTests {
 
         String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssemblyAndSubComponents(assemblyName,
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
@@ -134,6 +136,9 @@ public class ScenariosTests {
             subComponentProcessGroup,
             scenarioName,
             currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 

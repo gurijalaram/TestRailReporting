@@ -120,9 +120,10 @@ public class ComparePage extends CompareToolbar {
      */
     private void expandCollapseSection(String section, String action) {
         By byChevron = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] [data-icon='chevron-down']", section));
-        WebElement chevron = driver.findElement(byChevron);
+        WebElement chevron = pageUtils.waitForElementToAppear(byChevron);
         if (chevron.getAttribute("class").contains(action)) {
             pageUtils.waitForElementAndClick(chevron);
+            pageUtils.waitForElementsToNotAppear(By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .%s", section, action)));
         }
     }
 

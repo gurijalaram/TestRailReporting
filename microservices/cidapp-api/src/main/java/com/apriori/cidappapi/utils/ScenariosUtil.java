@@ -15,6 +15,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -191,7 +192,7 @@ public class ScenariosUtil {
      * @param componentInfoBuilder - the cost component object
      * @return list of scenario items
      */
-    public List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
@@ -206,7 +207,7 @@ public class ScenariosUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+        return getScenarioRepresentation(componentInfoBuilder);
     }
 
     /**

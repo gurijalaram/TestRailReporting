@@ -402,7 +402,7 @@ public class ScenariosTest extends SDSTestUtil {
         String mode = "manual";
         String materialName = "Use Default";
 
-        List<ScenarioItem> testingScenarios = new ScenariosUtil().postCostScenario(
+        List<ScenarioItem> testingScenarios = postCostScenario(
             ComponentInfoBuilder.builder().componentName(componentName)
                 .scenarioName(scenarioName)
                 .componentIdentity(componentId)
