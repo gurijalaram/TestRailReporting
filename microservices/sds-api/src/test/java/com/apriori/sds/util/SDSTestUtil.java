@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -37,8 +41,8 @@ public abstract class SDSTestUtil extends TestUtil {
     private static ScenarioItem testingComponent;
 
     @BeforeClass
-    public static  void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser =  UserUtil.getUser());
+    public static void init() {
+        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
     }
 
     @AfterClass
@@ -103,7 +107,7 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(componentId, scenarioId);
+                .inlineVariables(componentId, scenarioId);
 
         ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
 
@@ -113,6 +117,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     /**
      * Lazy init for Testing component to avoid it if it is not necessary
+     *
      * @return
      */
     protected static ScenarioItem getTestingComponent() {
@@ -203,5 +208,63 @@ public abstract class SDSTestUtil extends TestUtil {
             .scenarioIdentity(identity)
             .build()
         );
+    }
+
+    /**
+     * POST to cost a scenario
+     *
+     * @param componentInfoBuilder - the cost component object
+     * @return list of scenario items
+     */
+    public static List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .body("costingInputs",
+                    CostRequest.builder()
+                        .costingTemplateIdentity(
+                            getCostingTemplateId(componentInfoBuilder)
+                                .getIdentity())
+                        .deleteTemplateAfterUse(true)
+                        .build());
+
+        HTTPRequest.build(requestEntity).post();
+
+        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+    }
+
+    /**
+     * GET costing template id
+     *
+     * @return scenario object
+     */
+    private static Scenario getCostingTemplateId(ComponentInfoBuilder componentInfoBuilder) {
+        return postCostingTemplate(componentInfoBuilder);
+    }
+
+    /**
+     * POST costing template
+     *
+     * @return scenario object
+     */
+    private static Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .body("costingTemplate", CostRequest.builder()
+                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
+                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
+                    .materialName(componentInfoBuilder.getMaterial())
+                    .annualVolume(5500)
+                    .productionLife(5.0)
+                    .batchSize(458)
+                    .propertiesToReset(null)
+                    .build());
+
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
     }
 }
