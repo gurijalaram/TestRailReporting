@@ -63,6 +63,7 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         profileTab = new RoutingComponent(getDriver(), profileTabRoot);
         usersTab = new RoutingComponent(getDriver(), usersTabRoot);
         siteLicenseTab = new RoutingComponent(getDriver(), siteLicenseTabRoot);
+        infrastructureTab = new RoutingComponent(getDriver(), infrastructureTabRoot);
         systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
 
         // Optional Tabs

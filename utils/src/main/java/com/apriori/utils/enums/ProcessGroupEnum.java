@@ -30,6 +30,7 @@ public enum ProcessGroupEnum {
     STOCK_MACHINING("Stock Machining"),
     TWO_MODEL_MACHINING("2-Model Machining"),
     USER_GUIDED("User Guided"),
+    INVALID_PG("Invalid PG"),
     WITHOUT_PG("Without PG");
 
     private final String processGroup;

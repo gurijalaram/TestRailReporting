@@ -7,7 +7,7 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
@@ -242,7 +242,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return - A new page object
      */
     public EvaluatePage navigateToScenario(ComponentInfoBuilder component) {
-        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentId(), component.getScenarioId())));
+        driver.navigate().to(PropertiesContext.get("${env}.cidapp.ui_url").concat(String.format("components/%s/scenarios/%s", component.getComponentIdentity(), component.getScenarioIdentity())));
         return new EvaluatePage(driver);
     }
 
@@ -381,12 +381,12 @@ public class ExploreToolbar extends MainNavBar {
      * Uploads a cad file and select submit
      *
      * @param filePath - location of the file
-     * @return generic page object
+     * @return new page object
      */
-    public CadFileStatusPage updateCadFile(File filePath) {
+    public EvaluatePage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
-        return new ImportCadFilePage(driver).enterFilePath(filePath).submit();
+        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
     }
 
     /**

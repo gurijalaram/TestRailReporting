@@ -167,8 +167,8 @@ public class ReCostScenarioTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
                 .material("Use Default")
                 .mode("manual")
@@ -193,8 +193,8 @@ public class ReCostScenarioTests {
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .processGroup(processGroupEnum)
                 .digitalFactory(digitalFactory)
                 .material("Use Default")
@@ -214,8 +214,8 @@ public class ReCostScenarioTests {
     private ResponseWrapper<ComponentIteration> getComponentIterationResponseWrapper(UserCredentials currentUser, ScenarioItem componentResponse) {
         return iterationsUtil.getComponentIterationLatest(
             ComponentInfoBuilder.builder()
-                .componentId(componentResponse.getComponentIdentity())
-                .scenarioId(componentResponse.getScenarioIdentity())
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
                 .user(currentUser)
                 .build());
     }

@@ -40,7 +40,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = "div[class='Toastify__toast-body']")
     private WebElement alertWarning;
 
-    @FindBy(xpath = "//input[@name='scenarioName']/following-sibling::span")
+    @FindBy(xpath = "//input[@name='primaryScenarioName']/following-sibling::span")
     private WebElement scenarioNameWarning;
 
     @FindBy(css = ".form-action-buttons [type='submit']")
@@ -97,6 +97,15 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             enterMultiFilePath(multiUpload.getResourceFile())
                 .inputMultiScenarioName(multiUpload.getScenarioName(), file);
         });
+        return this;
+    }
+
+    /** Upload multiple cad files
+     * @param multiComponents - component details as a file list
+     * @return current page object
+     */
+    public ImportCadFilePage uploadMultiComponents(List<File> multiComponents) {
+        multiComponents.forEach(this::enterMultiFilePath);
         return this;
     }
 

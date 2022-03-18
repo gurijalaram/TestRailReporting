@@ -8,6 +8,7 @@ import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
@@ -45,10 +46,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-set-inputs-button'] button")
     private WebElement setInputsButton;
 
-    @FindBy(id = "qa-sub-component-detail-configure-button")
+    @FindBy(css = "[id='qa-sub-component-detail-configure-button'] button")
     private WebElement configureButton;
 
-    @FindBy(id = "qa-sub-component-detail-filter-button")
+    @FindBy(css = "[id='qa-sub-component-detail-preview-button'] button")
     private WebElement filterButton;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
@@ -62,6 +63,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
     private WebElement editButton;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-update-cad-file-button'] button")
+    private WebElement updateCadButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -353,8 +357,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Gets the background colour of the cell
+     *
      * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     * @param scenarioName  - the scenario name
      * @return current page object
      */
     public String getCellColour(String componentName, String scenarioName) {
@@ -371,5 +376,24 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             componentName.toUpperCase().trim()));
         return driver.findElement(byComponentName).getCssValue("text-decoration");
+    }
+
+    /**
+     * Updates a cad file
+     *
+     * @return new page object
+     */
+    public UpdateCadFilePage updateCadFile() {
+        pageUtils.waitForElementAndClick(updateCadButton);
+        return new UpdateCadFilePage(driver);
+    }
+
+    /**
+     * Checks if the cad button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isCadButtonEnabled() {
+        return pageUtils.isElementEnabled(updateCadButton);
     }
 }

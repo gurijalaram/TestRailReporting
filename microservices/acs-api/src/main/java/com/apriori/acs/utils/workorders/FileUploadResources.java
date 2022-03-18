@@ -23,10 +23,14 @@ import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioI
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioInputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
+import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesInputs;
+import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataInputs;
+import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.CreateWorkorderResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
@@ -392,6 +396,48 @@ public class FileUploadResources {
         return objectMapper.convertValue(
             checkGetWorkorderDetails(editScenarioWorkorderId),
             EditScenarioOutputs.class
+        );
+    }
+
+    /**
+     * Create generate all images workorder
+     *
+     * @param fileUploadOutputs - contains scenario iteration key to use
+     * @return GenerateAllImagesOutputs - new scenario iteration key
+     */
+    public GenerateAllImagesOutputs createGenerateAllImagesWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+        String generateAllImagesWorkorderId = createWorkorder(WorkorderCommands.GENERATE_ALL_IMAGES.getWorkorderCommand(),
+            GenerateAllImagesInputs.builder()
+                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
+                .keepFreeBodies(false)
+                .freeBodiesPreserveCad(false)
+                .freeBodiesIgnoreMissingComponents(true)
+                .build(),
+            true
+        );
+        submitWorkorder(generateAllImagesWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(generateAllImagesWorkorderId),
+            GenerateAllImagesOutputs.class
+        );
+    }
+
+    /**
+     * Create generate simple image data workorder
+     *
+     * @param fileUploadOutputs - contains scenario iteration key to use
+     * @return GenerateSimpleImageDataOutputs - new scenario iteration key
+     */
+    public GenerateSimpleImageDataOutputs createGenerateSimpleImageDataWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+        String generateSimpleImageDataWorkorderId = createWorkorder(WorkorderCommands.GENERATE_SIMPLE_IMAGE_DATA.getWorkorderCommand(),
+            GenerateSimpleImageDataInputs.builder()
+                .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
+                .build(),
+            true);
+        submitWorkorder(generateSimpleImageDataWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(generateSimpleImageDataWorkorderId),
+            GenerateSimpleImageDataOutputs.class
         );
     }
 

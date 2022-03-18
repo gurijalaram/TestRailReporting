@@ -86,10 +86,10 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-digital-factory-select-field']//div[@class='text-overflow']")
     private WebElement selectedVPE;
 
-    @FindBy(css = "[id='qa-secondary-process-modal-select-field'] .pill-box")
+    @FindBy(css = ".secondary-process-modal-select-field .modal-select-content")
     private WebElement secondaryProcessBox;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field'] button")
+    @FindBy(css = ".secondary-process-modal-select-field button")
     private WebElement secondaryProcessesPencil;
 
     @FindBy(css = "div[id='qa-material-modal-select-field'] button")
@@ -351,7 +351,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return boolean
      */
     public boolean isSecondaryProcessButtonEnabled() {
-        return pageUtils.waitForElementToAppear(secondaryProcessesPencil).isEnabled();
+        return pageUtils.isElementEnabled(secondaryProcessesPencil);
     }
 
     /**

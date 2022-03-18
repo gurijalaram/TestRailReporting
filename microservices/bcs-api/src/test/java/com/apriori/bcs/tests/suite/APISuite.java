@@ -1,9 +1,9 @@
 package com.apriori.bcs.tests.suite;
 
+import com.apriori.bcs.tests.BatchPartNegativeTest;
 import com.apriori.bcs.tests.BatchPartTest;
 import com.apriori.bcs.tests.BatchResourcesTest;
 import com.apriori.bcs.tests.CostingScenarioTest;
-
 import com.apriori.bcs.tests.CustomerResourcesTest;
 import com.apriori.bcs.tests.ReportResourcesTest;
 import com.apriori.utils.ProjectRunID;
@@ -19,7 +19,8 @@ import org.junit.runners.Suite;
     BatchPartTest.class,
     CustomerResourcesTest.class,
     ReportResourcesTest.class,
-    CostingScenarioTest.class
+    CostingScenarioTest.class,
+    BatchPartNegativeTest.class
 })
 public class APISuite {
 }
