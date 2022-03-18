@@ -1,5 +1,6 @@
 package com.apriori.cidappapi.entity.builder;
 
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -34,4 +35,5 @@ public class ComponentInfoBuilder {
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
     private String assemblyName;
     private List<ComponentInfoBuilder> subComponents;
+    private ScenarioItem scenarioItem;
 }
