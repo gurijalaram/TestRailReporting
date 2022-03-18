@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class IncludeAndExcludeTests extends TestBase {
 
@@ -68,7 +69,6 @@ public class IncludeAndExcludeTests extends TestBase {
         List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
-        String uncostedCellColour = "#fff4d3";
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -84,10 +84,11 @@ public class IncludeAndExcludeTests extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            .thumbnail()
-            .exclude();
+            .selectCheckAllBox()
+            .excludeSubcomponent();
 
-        assertThat(componentsListPage.getCellColour(subComponentNames.get(0), scenarioName), is(uncostedCellColour));
-        assertThat(componentsListPage.getTextDecoration(subComponentNames.get(0), scenarioName), containsString("line-through"));
+        Stream.of(subComponentNames.toArray())
+            .forEach(componentName ->
+                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), containsString("line-through")));
     }
 }

@@ -373,16 +373,4 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return Color.fromString(driver.findElement(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             scenarioName.trim(), componentName.toUpperCase().trim()))).getCssValue("background-color")).asHex();
     }
-
-    /**
-     * Gets the struck out component name
-     *
-     * @param componentName - the component name
-     * @return - string
-     */
-    public String getTextDecoration(String componentName, String scenarioName) {
-        By byComponentName = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
-            scenarioName.trim(), componentName.toUpperCase().trim()));
-        return driver.findElement(byComponentName).getCssValue("text-decoration");
-    }
 }

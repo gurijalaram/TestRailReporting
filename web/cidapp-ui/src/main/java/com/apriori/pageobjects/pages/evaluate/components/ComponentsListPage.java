@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimary
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,14 +57,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] button")
     private WebElement includeButton;
 
-    @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] .disabled")
-    private WebElement disabledIncludeButton;
-
-    @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] .disabled")
-    private WebElement disabledExcludeButton;
-
     @FindBy(css = ".table-head [data-icon='square']")
-    private WebElement thumbnail;
+    private WebElement checkAllBox;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
     private WebElement editButton;
@@ -299,12 +294,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Selects the exclude button
-     * 
+     *
      * @return current page object
      */
-    public ComponentsListPage exclude() {
+    public ComponentsListPage excludeSubcomponent() {
         pageUtils.waitForElementAndClick(excludeButton);
-        pageUtils.waitFor(1000);
+        pageUtils.isElementClickable(excludeButton);
         return this;
     }
 
@@ -313,7 +308,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage include() {
+    public ComponentsListPage includeSubcomponent() {
         pageUtils.waitForElementAndClick(includeButton);
         return this;
     }
@@ -324,7 +319,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - boolean
      */
     public boolean isIncludeButtonEnabled() {
-        return pageUtils.isElementEnabled(disabledIncludeButton);
+        return pageUtils.isElementEnabled(includeButton);
     }
 
     /**
@@ -333,16 +328,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - boolean
      */
     public boolean isExcludeButtonEnabled() {
-        return pageUtils.isElementEnabled(disabledExcludeButton);
+        return pageUtils.isElementEnabled(excludeButton);
     }
 
     /**
-     * clicks the thumbnail box
+     * clicks the box to select all subcomponents
      *
      * @return - the current page object
      */
-    public ComponentsListPage thumbnail() {
-        pageUtils.waitForElementAndClick(thumbnail);
+    public ComponentsListPage selectCheckAllBox() {
+        pageUtils.waitForElementAndClick(checkAllBox);
         return this;
     }
 
@@ -351,7 +346,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage edit() {
+    public ComponentsListPage editSubcomponent() {
         pageUtils.waitForElementAndClick(editButton);
         return this;
     }
@@ -372,7 +367,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return - string
      */
-    public String getTextDecoration(String componentName, String scenarioName) {
-        return scenarioTableController.getTextDecoration(componentName, scenarioName);
+    public String isTextDecorationStruckOut(String componentName) {
+        By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
+            componentName.toUpperCase().trim()));
+        return driver.findElement(byComponentName).getCssValue("text-decoration");
     }
 }
