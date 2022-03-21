@@ -6,6 +6,7 @@ import com.apriori.utils.properties.PropertiesContext;
 public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //COMPONENTS
+    CAD_FILES("cad-files"),
     COMPONENTS("components"),
     COMPONENTS_BY_COMPONENT_ID("components/%s"),
     HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/hoops-image"),
