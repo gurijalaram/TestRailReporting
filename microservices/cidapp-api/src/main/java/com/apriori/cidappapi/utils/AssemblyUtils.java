@@ -91,49 +91,29 @@ public class AssemblyUtils {
     }
 
     /**
-     * Upload assembly and sub-components
+     * Upload sub-components
      *
-     * @param assemblyName             - the assembly name
-     * @param assemblyExtension        - the assembly extension
-     * @param assemblyProcessGroup     - the assembly process group
-     * @param subComponentNames        - the subcomponent names
-     * @param subComponentExtension    - the subcomponent extension
-     * @param subComponentProcessGroup - the subcomponent process group
-     * @param scenarioName             - the scenario name
-     * @param currentUser              - the current user
-     * @return component info builder object
+     * @return current object
      */
-    public ComponentInfoBuilder uploadAssemblyAndSubComponents(String assemblyName,
-                                                               String assemblyExtension,
-                                                               ProcessGroupEnum assemblyProcessGroup,
-                                                               List<String> subComponentNames,
-                                                               String subComponentExtension,
-                                                               ProcessGroupEnum subComponentProcessGroup,
-                                                               String scenarioName,
-                                                               String mode,
-                                                               String material,
-                                                               UserCredentials currentUser) {
-
-        ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(assemblyName,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            mode,
-            material,
-            currentUser);
+    public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
             ScenarioItem subComponentScenarioItem = scenariosUtil.uploadComponent(subComponent);
-            subComponent.setComponentId(subComponentScenarioItem.getComponentIdentity());
-            subComponent.setScenarioId(subComponentScenarioItem.getScenarioIdentity());
+            subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
+            subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
         });
+        return this;
+    }
 
+    /**
+     * Upload assembly
+     *
+     * @return component info builder object
+     */
+    public ComponentInfoBuilder uploadAssembly(ComponentInfoBuilder componentAssembly) {
         ScenarioItem assemblyScenarioItem = scenariosUtil.uploadComponent(componentAssembly);
-        componentAssembly.setComponentId(assemblyScenarioItem.getComponentIdentity());
-        componentAssembly.setScenarioId(assemblyScenarioItem.getScenarioIdentity());
+        componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
+        componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
 
         return componentAssembly;
     }
@@ -186,22 +166,22 @@ public class AssemblyUtils {
      * @param assembly - the assembly
      * @return list of scenario item
      */
-    public List<ScenarioItem> costAssembly(ComponentInfoBuilder assembly) {
+    public ResponseWrapper<ScenarioResponse> costAssembly(ComponentInfoBuilder assembly) {
         return scenariosUtil.postCostScenario(assembly);
     }
 
     /**
      * Uploads an assembly with all subcomponents, cost and publish all
      *
-     * @param assemblyName - the assembly name
-     * @param assemblyExtension - the assembly extension
-     * @param assemblyProcessGroup - the assembly process group
-     * @param subComponentNames - the subComponent names
-     * @param subComponentExtension - the subComponent extension
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the subComponent names
+     * @param subComponentExtension    - the subComponent extension
      * @param subComponentProcessGroup - the subComponent process group
-     * @param scenarioName - the scenario name
-     * @param mode - the mode for costing
-     * @param currentUser - the current user
+     * @param scenarioName             - the scenario name
+     * @param mode                     - the mode for costing
+     * @param currentUser              - the current user
      * @return - the object of ComponentInfoBuilder
      */
     public ComponentInfoBuilder uploadCostPublishScenario(String assemblyName,
@@ -214,7 +194,8 @@ public class AssemblyUtils {
                                                           String mode,
                                                           String material,
                                                           UserCredentials currentUser) {
-        ComponentInfoBuilder componentAssembly = uploadAssemblyAndSubComponents(
+
+        ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
@@ -226,8 +207,9 @@ public class AssemblyUtils {
             material,
             currentUser);
 
-        costSubComponents(componentAssembly);
-        costAssembly(componentAssembly);
+        uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         publishSubComponents(componentAssembly);
 

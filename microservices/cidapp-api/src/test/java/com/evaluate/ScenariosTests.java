@@ -58,8 +58,8 @@ public class ScenariosTests {
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
             .scenarioName(newScenarioName)
-            .componentId(postComponentResponse.getComponentIdentity())
-            .scenarioId(postComponentResponse.getScenarioIdentity())
+            .componentIdentity(postComponentResponse.getComponentIdentity())
+            .scenarioIdentity(postComponentResponse.getScenarioIdentity())
             .user(currentUser)
             .build());
 
@@ -93,7 +93,7 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssemblyAndSubComponents(assemblyName,
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
@@ -104,9 +104,11 @@ public class ScenariosTests {
             material,
             currentUser);
 
-        assemblyUtils.publishSubComponents(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
@@ -138,7 +140,7 @@ public class ScenariosTests {
 
         String errorMessage = String.format("All sub-components of scenario '%s' must be published, scenario can not be published", scenarioName);
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssemblyAndSubComponents(assemblyName,
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
             subComponentNames,
@@ -148,6 +150,9 @@ public class ScenariosTests {
             mode,
             material,
             currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 
@@ -185,10 +190,10 @@ public class ScenariosTests {
 
         //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
-            componentAssembly,
-            ForkRequest.builder()
-                .override(false)
-                .build())
+                componentAssembly,
+                ForkRequest.builder()
+                    .override(false)
+                    .build())
             .getResponseEntity();
 
         assertThat(editAssemblyResponse.getLastAction(), is("FORK"));

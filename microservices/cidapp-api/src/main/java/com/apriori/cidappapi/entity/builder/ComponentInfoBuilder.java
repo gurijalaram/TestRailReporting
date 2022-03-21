@@ -17,10 +17,8 @@ public class ComponentInfoBuilder {
     private final String componentName;
     private final String extension;
     private final String scenarioName;
-    // TODO: 21/02/2022 cn - refactor to componentIdentity
-    private String componentId;
-    // TODO: 21/02/2022 cn - refactor to scenarionIdentity
-    private String scenarioId;
+    private String componentIdentity;
+    private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
     @Builder.Default
     @JsonProperty("vpeName")
@@ -32,4 +30,6 @@ public class ComponentInfoBuilder {
     private final ScenarioStateEnum scenarioState = ScenarioStateEnum.COST_COMPLETE;
     private String assemblyName;
     private List<ComponentInfoBuilder> subComponents;
+    private String lastAction;
+    private Boolean published;
 }

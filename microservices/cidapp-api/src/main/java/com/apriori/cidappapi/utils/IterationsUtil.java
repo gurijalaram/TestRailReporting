@@ -19,7 +19,7 @@ public class IterationsUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId());
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity());
 
         return HTTPRequest.build(requestEntity).get();
     }

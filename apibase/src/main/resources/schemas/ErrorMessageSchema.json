@@ -3,14 +3,14 @@
   "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
-    "method",
     "status",
     "error",
     "message",
     "path"
   ],
   "optional": [
-    "timestamp"
+    "timestamp",
+    "method"
   ],
   "properties": {
     "timestamp": {
