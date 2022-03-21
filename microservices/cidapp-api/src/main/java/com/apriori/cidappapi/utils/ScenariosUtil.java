@@ -13,21 +13,16 @@ import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.css.entity.response.ScenarioItem;
-import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -316,51 +311,6 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    /**
-     * This method uploads an assembly with all subcomponents and publish all
-     *
-     * @param subComponentNames  - the subcomponent names
-     * @param componentExtension - the subcomponent extension
-     * @param processGroupEnum   - the process group enum
-     * @param assemblyName       - the assembly name
-     * @param assemblyExtension  -  the assembly extension
-     * @param scenarioName       - the scenario name
-     * @param currentUser        - the current user
-     * @return - the object of ComponentInfoBuilder
-     */
-    public ComponentInfoBuilder uploadAndPublishAssembly(List<String> subComponentNames,
-                                                         String componentExtension,
-                                                         ProcessGroupEnum processGroupEnum,
-                                                         String assemblyName,
-                                                         String assemblyExtension,
-                                                         String scenarioName,
-                                                         UserCredentials currentUser) {
-
-        for (String subComponentName : subComponentNames) {
-            postAndPublishComponent(ComponentInfoBuilder.builder()
-                .componentName(subComponentName)
-                .extension(componentExtension)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
-        }
-
-        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
-            .user(currentUser)
-            .build();
-
-        ComponentInfoBuilder assemblyUploadResponse = postAndPublishComponent(myAssembly);
-
-        myAssembly.setComponentIdentity(assemblyUploadResponse.getComponentIdentity());
-        myAssembly.setScenarioIdentity(assemblyUploadResponse.getScenarioIdentity());
-
-        return myAssembly;
-    }
 
     /**
      * Upload and Publish a subcomponent/assembly
