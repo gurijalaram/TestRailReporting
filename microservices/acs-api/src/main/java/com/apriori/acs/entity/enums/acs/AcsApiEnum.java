@@ -8,6 +8,7 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     CREATE_MISSING_SCENARIO("ws/workspace/0/scenarios"),
     GET_ACTIVE_DIMENSIONS("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/gcd-info"),
     GET_ACTIVE_AXES("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/axes-info/active-axes"),
+    GET_ARTIFACT_PROPERTIES("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-mapping"),
     GET_ARTIFACT_TABLE_INFO("ws/workspace/process-groups/%s/artifact-tableinfos/%s"),
     GET_CUSTOM_UNIT_VARIANT_SETTINGS("ws/workspace/users/%s/custom-unit-variant-settings"),
     GET_DISPLAY_UNITS("ws/workspace/users/%s/display-units"),

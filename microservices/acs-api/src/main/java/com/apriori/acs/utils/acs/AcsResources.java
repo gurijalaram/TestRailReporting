@@ -9,6 +9,7 @@ import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.G
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
+import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.acs.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
 import com.apriori.acs.entity.response.acs.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.getscenariosinfo.GetScenariosInfoResponse;
@@ -661,6 +662,29 @@ public class AcsResources {
             );
 
         return (GenericErrorResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Get GCD Mapping by Scenario Iteration Key
+     *
+     * @param scenarioIterationKey - ScenarioIterationKey instance
+     * @return GetGcdMappingResponse instance
+     */
+    public GetGcdMappingResponse getGcdMapping(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ARTIFACT_PROPERTIES, GetGcdMappingResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return (GetGcdMappingResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
