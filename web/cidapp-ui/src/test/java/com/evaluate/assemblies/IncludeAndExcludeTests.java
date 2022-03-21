@@ -13,6 +13,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
@@ -55,8 +56,8 @@ public class IncludeAndExcludeTests extends TestBase {
                 currentUser)
             .openComponents();
 
-        assertThat(componentsListPage.isIncludeOrExcludeButtonEnabled("include"), is(false));
-        assertThat(componentsListPage.isIncludeOrExcludeButtonEnabled("exclude"), is(false));
+        assertThat(componentsListPage.isButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
+        assertThat(componentsListPage.isButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
     }
 
     @Test
@@ -85,7 +86,7 @@ public class IncludeAndExcludeTests extends TestBase {
                 currentUser)
             .openComponents()
             .selectCheckAllBox()
-            .excludeSubcomponent();
+            .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->

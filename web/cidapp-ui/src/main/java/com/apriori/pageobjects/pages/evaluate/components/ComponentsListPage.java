@@ -13,6 +13,7 @@ import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimary
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ButtonTypeEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -297,23 +298,22 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Selects the exclude button
-     *
-     * @return current page object
-     */
-    public ComponentsListPage excludeSubcomponent() {
-        pageUtils.waitForElementAndClick(excludeButton);
-        pageUtils.isElementClickable(excludeButton);
-        return this;
-    }
-
-    /**
-     * Selects the include button
+     * Selects the include or the exclude button
      *
      * @return - the current page object
      */
-    public ComponentsListPage includeSubcomponent() {
-        pageUtils.waitForElementAndClick(includeButton);
+    public ComponentsListPage selectButtonType(ButtonTypeEnum buttonTypeEnum) {
+        switch (buttonTypeEnum) {
+            case INCLUDE:
+                pageUtils.waitForElementAndClick(includeButton);
+                break;
+            case EXCLUDE:
+                pageUtils.waitForElementAndClick(excludeButton);
+                pageUtils.isElementClickable(excludeButton);
+                break;
+            default:
+                return this;
+        }
         return this;
     }
 
@@ -322,11 +322,11 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - boolean
      */
-    public boolean isIncludeOrExcludeButtonEnabled(String buttonType) {
-        switch (buttonType.toLowerCase()) {
-            case "include":
+    public boolean isButtonEnabled(ButtonTypeEnum buttonTypeEnum) {
+        switch (buttonTypeEnum) {
+            case INCLUDE:
                 return pageUtils.isElementEnabled(includeButton);
-            case "exclude":
+            case EXCLUDE:
                 return pageUtils.isElementEnabled(excludeButton);
             default:
                 return false;
