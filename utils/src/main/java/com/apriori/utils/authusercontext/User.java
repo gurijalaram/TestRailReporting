@@ -33,6 +33,7 @@ public class User {
     private Boolean active;
     private List<UserSite> sites;
     private CustomAttributes customAttributes;
+    private List<Roles> roles;
     private String customerIdentity;
     private String updatedBy;
     private Boolean mfaRequired;

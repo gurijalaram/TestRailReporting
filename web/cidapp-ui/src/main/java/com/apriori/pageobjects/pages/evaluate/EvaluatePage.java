@@ -86,7 +86,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-digital-factory-select-field']//div[@class='text-overflow']")
     private WebElement selectedVPE;
 
-    @FindBy(css = "[id='qa-secondary-process-modal-select-field'] .pill-box")
+    @FindBy(css = ".secondary-process-modal-select-field .modal-select-content")
     private WebElement secondaryProcessBox;
 
     @FindBy(css = ".secondary-process-modal-select-field button")

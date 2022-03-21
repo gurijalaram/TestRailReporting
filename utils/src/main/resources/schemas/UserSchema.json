@@ -34,28 +34,22 @@
           ]
         },
         "identity": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "createdBy": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "createdAt": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "updatedBy": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "updatedAt": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "userType": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "userProfile": {
           "type": "object",
@@ -68,76 +62,59 @@
           ],
           "properties": {
             "identity": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "createdBy": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "createdAt": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "givenName": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "familyName": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "jobTitle": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "department": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "supervisor": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "timezone": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "townCity": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "countryCode": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "prefix": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
 
             },
             "suffix": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
 
             },
             "stateProvince": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             },
             "county": {
-              "type": "string",
-              "pattern": "^(.*)$"
+              "type": "string"
             }
           }
         },
         "email": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "username": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         },
         "active": {
           "type": "boolean"
@@ -154,27 +131,22 @@
             ],
             "properties": {
               "identity": {
-                "type": "string",
-                "pattern": "^(.*)$"
+                "type": "string"
               },
               "createdBy": {
-                "type": "string",
-                "pattern": "^(.*)$"
+                "type": "string"
               },
               "createdAt": {
-                "type": "string",
-                "pattern": "^(.*)$"
+                "type": "string"
               },
               "siteIdentity": {
-                "type": "string",
-                "pattern": "^(.*)$"
+                "type": "string"
               }
             }
           }
         },
         "customerIdentity": {
-          "type": "string",
-          "pattern": "^(.*)$"
+          "type": "string"
         }
       }
     }

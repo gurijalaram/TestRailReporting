@@ -1,5 +1,6 @@
 package com.apriori.bcs.controller;
 
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.PartReport;
@@ -7,6 +8,7 @@ import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.enums.FileType;
 import com.apriori.bcs.utils.BcsUtils;
 import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.utils.FileResourceUtil;
@@ -131,6 +133,27 @@ public class BatchPartResources {
     }
 
     /**
+     * Create batch part with non-supported file types.
+     *
+     * @param newPartRequest - deserialized pojo.
+     * @param batchIdentity  - batch Identity
+     * @param fileType       - (txt or pdf)
+     * @return - response of class (ErrorMessage) object
+     */
+    public static ResponseWrapper<ErrorMessage> createBatchPartWithInvalidData(NewPartRequest newPartRequest, String batchIdentity, FileType fileType) {
+        RequestEntity requestEntity = BatchPartResources.batchPartRequestEntity(newPartRequest, batchIdentity, ErrorMessage.class);
+        switch (fileType.toString()) {
+            case "TXT":
+                requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/Testfile.txt")));
+                break;
+            case "PDF":
+                requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/TestFile.pdf")));
+                break;
+        }
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
      * Gets costing results a specific batch & part
      *
      * @param batchIdentity The batch identity to retrieve parts for
@@ -181,6 +204,19 @@ public class BatchPartResources {
     }
 
     /**
+     * This overloaded method is to create Batch Part request entity for Batch ID.
+     *
+     * @param newPartRequest - Deserialized NewPartRequest POJO.
+     * @param batchIdentity  - Batch ID
+     * @param klass          - Response class
+     * @return RequestEntity - Batch Part complete RequestEntity
+     */
+    public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class klass) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(batchIdentity);
+        return setPartRequestFormParams(newPartRequest);
+    }
+
+    /**
      * This overloaded method is to create Batch Part request entity for Batch ID and Customer ID.
      *
      * @param newPartRequest   - Deserialized NewPartRequest POJO.
@@ -220,6 +256,33 @@ public class BatchPartResources {
     }
 
     /**
+     * Checks an wait until the batch part status is completed
+     *
+     * @param batchIdentity    - Batch ID to send
+     * @param partIdentity     - Part ID to send
+     * @param bcsExpectedState - Expected State
+     * @return boolean - true (expected state matches actual) or false
+     */
+    public static boolean waitUntilPartStateIsCompleted(String batchIdentity, String partIdentity, BCSState bcsExpectedState) {
+        long initialTime = System.currentTimeMillis() / 1000;
+        Part part;
+        do {
+            requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
+                .inlineVariables(batchIdentity, partIdentity);
+            part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        } while (!part.getState().equals(bcsExpectedState.toString())
+            && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
+
+        return (part.getState().equals(bcsExpectedState.toString())) ? true : false;
+    }
+
+    /**
      * Add number of parts (configured in config file) to batch
      *
      * @param numberOfParts- number of parts
@@ -235,24 +298,6 @@ public class BatchPartResources {
             benchData.setBatchIdentity(batchIdentity);
             partsCollector.put(batchPart.getIdentity(), benchData);
         }
-    }
-
-    /**
-     * Overides NewPartRequest class object with deserialized json test data with aws cloud data files
-     *
-     * @param newPartRequest
-     * @return newPartRequest - deserialized class object
-     */
-    private static NewPartRequest getNewPartRequestAndOverridePartData(NewPartRequest newPartRequest) {
-        PartData partData = PartUtil.getPartData();
-
-        newPartRequest.setFilename(partData.getFileName());
-        newPartRequest.setProcessGroup(partData.getProcessGroup());
-        newPartRequest.setMaterialName(partData.getMaterial());
-        newPartRequest.setAnnualVolume(partData.getAnnualVolume());
-        newPartRequest.setBatchSize(partData.getBatchSize());
-
-        return newPartRequest;
     }
 
     /**
@@ -276,39 +321,6 @@ public class BatchPartResources {
         } while (getFinishedPartsCount(parts.getItems()) != parts.getItems().size() && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return (getFinishedPartsCount(parts.getItems()) == parts.getItems().size()) ? true : false;
-    }
-
-    /**
-     * Consolidates Part class data and New Part Request for reporting purpose
-     *
-     * @param batchPart
-     * @param newPartRequest
-     * @return BCSPartBenchmarkingDTO object - combined version of Part and NewPartRequest class object
-     */
-    private static BCSPartBenchmarkingDTO consolidatePartsStatus(Part batchPart, NewPartRequest newPartRequest) {
-        BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
-        benchData.setFilename(newPartRequest.getFilename());
-        benchData.setProcessGroup(newPartRequest.getProcessGroup());
-        benchData.setMaterialName(newPartRequest.getMaterialName());
-        benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
-        benchData.setBatchSize(newPartRequest.getBatchSize());
-
-        return benchData;
-    }
-
-    /**
-     * Batch parts costing processed count
-     *
-     * @param parts
-     * @return - count of batch parts costing processed count (state should in COMPLETED, ERRORED, AND REJECTED)
-     */
-    private static long getFinishedPartsCount(List<Part> parts) {
-        List<BCSState> states = Arrays.asList(BCSState.COMPLETED, BCSState.ERRORED, BCSState.REJECTED);
-        return parts.stream()
-            .filter(part ->
-                states.contains(BCSState.valueOf(part.getState()))
-            )
-            .count();
     }
 
     /**
@@ -348,6 +360,57 @@ public class BatchPartResources {
         for (BCSPartBenchmarkingDTO partDTO : partsReport) {
             Assert.assertEquals("Verfiy Part State", BCSState.COMPLETED.toString(), partDTO.getState());
         }
+    }
+
+    /**
+     * Overides NewPartRequest class object with deserialized json test data with aws cloud data files
+     *
+     * @param newPartRequest
+     * @return newPartRequest - deserialized class object
+     */
+    private static NewPartRequest getNewPartRequestAndOverridePartData(NewPartRequest newPartRequest) {
+        PartData partData = PartUtil.getPartData();
+
+        newPartRequest.setFilename(partData.getFileName());
+        newPartRequest.setProcessGroup(partData.getProcessGroup());
+        newPartRequest.setMaterialName(partData.getMaterial());
+        newPartRequest.setAnnualVolume(partData.getAnnualVolume());
+        newPartRequest.setBatchSize(partData.getBatchSize());
+
+        return newPartRequest;
+    }
+
+    /**
+     * Consolidates Part class data and New Part Request for reporting purpose
+     *
+     * @param batchPart
+     * @param newPartRequest
+     * @return BCSPartBenchmarkingDTO object - combined version of Part and NewPartRequest class object
+     */
+    private static BCSPartBenchmarkingDTO consolidatePartsStatus(Part batchPart, NewPartRequest newPartRequest) {
+        BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
+        benchData.setFilename(newPartRequest.getFilename());
+        benchData.setProcessGroup(newPartRequest.getProcessGroup());
+        benchData.setMaterialName(newPartRequest.getMaterialName());
+        benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
+        benchData.setBatchSize(newPartRequest.getBatchSize());
+
+        return benchData;
+    }
+
+    /**
+     * Batch parts costing processed count
+     *
+     * @param parts
+     * @return - count of batch parts costing processed count (state should in COMPLETED, ERRORED, AND REJECTED)
+     */
+    private static long getFinishedPartsCount(List<Part> parts) {
+        List<BCSState> states = Arrays.asList(BCSState.COMPLETED, BCSState.ERRORED, BCSState.REJECTED);
+        return parts.stream()
+            .filter(part ->
+                states.contains(BCSState.valueOf(part.getState()))
+            )
+            .count();
     }
 
     /**
