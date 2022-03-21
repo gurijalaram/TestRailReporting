@@ -127,16 +127,14 @@ public class ComponentsUtil {
     /**
      * Upload a component
      *
-     * @param component - the component
+     * @param componentBuilder - the component
      * @return - scenario object
      */
-    public ComponentInfoBuilder postComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
+    public ComponentInfoBuilder postComponent(ComponentInfoBuilder componentBuilder) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
 
-        ComponentInfoBuilder.builder()
-            .resourceFile(resourceFile)
-            .build();
+        componentBuilder.setResourceFile(resourceFile);
 
-        return postComponentQueryCSS(component);
+        return postComponentQueryCSS(componentBuilder);
     }
 }
