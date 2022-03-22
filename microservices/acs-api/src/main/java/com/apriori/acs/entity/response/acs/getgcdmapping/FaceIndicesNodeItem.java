@@ -5,6 +5,7 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class AxesEntry {
-    private List<AxesEntry> axesEntries;
+public class FaceIndicesNodeItem {
+    private ArtifactKeyItem key;
+    private List<Integer> value;
 }

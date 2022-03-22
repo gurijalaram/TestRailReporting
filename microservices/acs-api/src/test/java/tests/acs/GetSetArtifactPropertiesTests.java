@@ -1,5 +1,11 @@
 package tests.acs;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileResponse;
@@ -48,6 +54,8 @@ public class GetSetArtifactPropertiesTests {
         GetGcdMappingResponse getGcdMappingResponse = acsResources.getGcdMapping(costOutputs.getScenarioIterationKey());
 
         // get artifact properties
-        acsResources.getArtifactTableInfo();
+        GetArtifactPropertiesResponse getArtifactPropertiesResponse = acsResources.getArtifactProperties(costOutputs.getScenarioIterationKey(), getGcdMappingResponse);
+
+        assertThat(getArtifactPropertiesResponse, is(notNullValue()));
     }
 }

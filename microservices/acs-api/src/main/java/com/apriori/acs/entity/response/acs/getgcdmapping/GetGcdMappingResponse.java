@@ -12,6 +12,6 @@ public class GetGcdMappingResponse {
     private List<Integer> boundingBox;
     private boolean requiresRegen;
     private List<DrawableNodeItem> drawableNodesByArtifactKeyEntries;
-    private List<AxesEntry> axesEntries;
-    private List<DrawableNodeItem> faceIndicesByArtifactKeyEntries;
+    private List<AxesEntryValueItem> axesEntries;
+    private List<FaceIndicesNodeItem> faceIndeciesByArtifactKeyEntries;
 }

@@ -4,6 +4,6 @@ import lombok.Data;
 
 @Data
 public class DrawableNodeItem {
-    private ArtifactKeyItem artifactKeyItem;
-    private String value;
+    private ArtifactKeyItem key;
+    private Integer value;
 }

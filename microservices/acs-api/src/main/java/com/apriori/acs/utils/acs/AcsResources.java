@@ -1,12 +1,14 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
+import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesInputs;
+import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
@@ -674,7 +676,7 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GET_ARTIFACT_PROPERTIES, GetGcdMappingResponse.class)
+            .init(AcsApiEnum.GET_GCD_IMAGE_MAPPING, GetGcdMappingResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -685,6 +687,36 @@ public class AcsResources {
             );
 
         return (GetGcdMappingResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Gets Artifact Properties
+     *
+     * @param scenarioIterationKey - ScenarioIterationKey to use in url
+     * @param getGcdMappingResponse - GetGcdMappingResponse to use in body
+     * @return GetArtifactPropertiesResponse instance
+     */
+    public GetArtifactPropertiesResponse getArtifactProperties(ScenarioIterationKey scenarioIterationKey, GetGcdMappingResponse getGcdMappingResponse) {
+        setupHeader();
+
+        List<String> displayNames = new ArrayList<>();
+        displayNames.add(getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(0).getKey().getDisplayName());
+        displayNames.add(getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(1).getKey().getDisplayName());
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_ARTIFACT_PROPERTIES, GetArtifactPropertiesResponse.class)
+            .headers(headers)
+            .customBody("[\"Edge:57\", \"Edge:61\"]")
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString(),
+                displayNames.get(0).split(":")[0]
+            );
+
+        return (GetArtifactPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**

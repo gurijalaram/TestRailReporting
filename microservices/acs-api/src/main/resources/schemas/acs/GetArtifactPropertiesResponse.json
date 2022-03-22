@@ -1,0 +1,2236 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "artifactList": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "@type": {
+              "type": "string"
+            },
+            "overrideStatus": {
+              "type": "string"
+            },
+            "requested": {
+              "type": "string"
+            },
+            "volumeFields": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string"
+                },
+                "maxToolDiameter": {
+                  "type": "number"
+                },
+                "totalVolume": {
+                  "type": "number"
+                },
+                "cornerPickCount": {
+                  "type": "integer"
+                },
+                "cornerPickVolume": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "@type",
+                "maxToolDiameter",
+                "totalVolume",
+                "cornerPickCount",
+                "cornerPickVolume"
+              ]
+            },
+            "roughness": {
+              "type": "object"
+            },
+            "artifactKey": {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            "roughnessRz": {
+              "type": "object"
+            },
+            "tolerance": {
+              "type": "object"
+            },
+            "diamTolerance": {
+              "type": "object"
+            },
+            "positionTolerance": {
+              "type": "object"
+            },
+            "circularity": {
+              "type": "object"
+            },
+            "concentricity": {
+              "type": "object"
+            },
+            "cylindricity": {
+              "type": "object"
+            },
+            "flatness": {
+              "type": "object"
+            },
+            "perpendicularity": {
+              "type": "object"
+            },
+            "profileOfSurface": {
+              "type": "object"
+            },
+            "runout": {
+              "type": "object"
+            },
+            "totalRunout": {
+              "type": "object"
+            },
+            "straightness": {
+              "type": "object"
+            },
+            "symmetry": {
+              "type": "object"
+            },
+            "bendAngleTolerance": {
+              "type": "object"
+            },
+            "minTolerance": {
+              "type": "object"
+            },
+            "surfaceFinishingRate": {
+              "type": "number"
+            },
+            "volumeRemovalRate": {
+              "type": "number"
+            },
+            "parallelism": {
+              "type": "object"
+            },
+            "selected": {
+              "type": "string"
+            },
+            "time": {
+              "type": "number"
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "type": "string"
+                },
+                "dirty": {
+                  "type": "boolean"
+                },
+                "locked": {
+                  "type": "boolean"
+                },
+                "initialized": {
+                  "type": "boolean"
+                },
+                "overrideStatus": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "severity",
+                "dirty",
+                "locked",
+                "initialized",
+                "overrideStatus"
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "artifactData": {
+              "type": "object",
+              "properties": {
+                "propertyValueMap": {
+                  "type": "object",
+                  "properties": {
+                    "angle": {
+                      "type": "number"
+                    },
+                    "artifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "artifactTypeName": {
+                          "type": "string"
+                        },
+                        "sequenceNumber": {
+                          "type": "integer"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifactTypeName",
+                        "sequenceNumber",
+                        "displayName"
+                      ]
+                    },
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "cadKeyText": {
+                      "type": "string"
+                    },
+                    "childArtifactCount": {
+                      "type": "integer"
+                    },
+                    "convex": {
+                      "type": "boolean"
+                    },
+                    "edgeLength": {
+                      "type": "number"
+                    },
+                    "minGcdVersion": {
+                      "type": "integer"
+                    },
+                    "parentArtifact": {
+                      "type": "object"
+                    },
+                    "parentArtifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "artifactTypeName": {
+                          "type": "string"
+                        },
+                        "sequenceNumber": {
+                          "type": "integer"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifactTypeName",
+                        "sequenceNumber",
+                        "displayName"
+                      ]
+                    },
+                    "relations": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "roundRadius": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "angle",
+                    "artifactKey",
+                    "artifactTypeName",
+                    "cadKeyText",
+                    "childArtifactCount",
+                    "convex",
+                    "edgeLength",
+                    "minGcdVersion",
+                    "parentArtifact",
+                    "parentArtifactKey",
+                    "relations",
+                    "roundRadius"
+                  ]
+                },
+                "propertyInfoMap": {
+                  "type": "object",
+                  "properties": {
+                    "angle": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "unitTypeName",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "artifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "artifactTypeName": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "cadKeyText": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "childArtifactCount": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "childArtifacts": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "convex": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "edgeLength": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "unitTypeName",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "minGcdVersion": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "parentArtifact": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "parentArtifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "relations": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "roundRadius": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "unitTypeName",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "setupGroupId": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "angle",
+                    "artifactKey",
+                    "artifactTypeName",
+                    "cadKeyText",
+                    "childArtifactCount",
+                    "childArtifacts",
+                    "convex",
+                    "edgeLength",
+                    "minGcdVersion",
+                    "parentArtifact",
+                    "parentArtifactKey",
+                    "relations",
+                    "roundRadius",
+                    "setupGroupId"
+                  ]
+                }
+              },
+              "required": [
+                "propertyValueMap",
+                "propertyInfoMap"
+              ]
+            }
+          },
+          "required": [
+            "@type",
+            "overrideStatus",
+            "requested",
+            "volumeFields",
+            "roughness",
+            "artifactKey",
+            "roughnessRz",
+            "tolerance",
+            "diamTolerance",
+            "positionTolerance",
+            "circularity",
+            "concentricity",
+            "cylindricity",
+            "flatness",
+            "perpendicularity",
+            "profileOfSurface",
+            "runout",
+            "totalRunout",
+            "straightness",
+            "symmetry",
+            "bendAngleTolerance",
+            "minTolerance",
+            "surfaceFinishingRate",
+            "volumeRemovalRate",
+            "parallelism",
+            "selected",
+            "time",
+            "status",
+            "name",
+            "artifactData"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "@type": {
+              "type": "string"
+            },
+            "overrideStatus": {
+              "type": "string"
+            },
+            "requested": {
+              "type": "string"
+            },
+            "volumeFields": {
+              "type": "object",
+              "properties": {
+                "@type": {
+                  "type": "string"
+                },
+                "maxToolDiameter": {
+                  "type": "number"
+                },
+                "totalVolume": {
+                  "type": "number"
+                },
+                "cornerPickCount": {
+                  "type": "integer"
+                },
+                "cornerPickVolume": {
+                  "type": "number"
+                }
+              },
+              "required": [
+                "@type",
+                "maxToolDiameter",
+                "totalVolume",
+                "cornerPickCount",
+                "cornerPickVolume"
+              ]
+            },
+            "roughness": {
+              "type": "object"
+            },
+            "artifactKey": {
+              "type": "object",
+              "properties": {
+                "artifactTypeName": {
+                  "type": "string"
+                },
+                "sequenceNumber": {
+                  "type": "integer"
+                },
+                "displayName": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "artifactTypeName",
+                "sequenceNumber",
+                "displayName"
+              ]
+            },
+            "roughnessRz": {
+              "type": "object"
+            },
+            "tolerance": {
+              "type": "object"
+            },
+            "diamTolerance": {
+              "type": "object"
+            },
+            "positionTolerance": {
+              "type": "object"
+            },
+            "circularity": {
+              "type": "object"
+            },
+            "concentricity": {
+              "type": "object"
+            },
+            "cylindricity": {
+              "type": "object"
+            },
+            "flatness": {
+              "type": "object"
+            },
+            "perpendicularity": {
+              "type": "object"
+            },
+            "profileOfSurface": {
+              "type": "object"
+            },
+            "runout": {
+              "type": "object"
+            },
+            "totalRunout": {
+              "type": "object"
+            },
+            "straightness": {
+              "type": "object"
+            },
+            "symmetry": {
+              "type": "object"
+            },
+            "bendAngleTolerance": {
+              "type": "object"
+            },
+            "minTolerance": {
+              "type": "object"
+            },
+            "surfaceFinishingRate": {
+              "type": "number"
+            },
+            "volumeRemovalRate": {
+              "type": "number"
+            },
+            "parallelism": {
+              "type": "object"
+            },
+            "selected": {
+              "type": "string"
+            },
+            "time": {
+              "type": "number"
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "severity": {
+                  "type": "string"
+                },
+                "dirty": {
+                  "type": "boolean"
+                },
+                "locked": {
+                  "type": "boolean"
+                },
+                "initialized": {
+                  "type": "boolean"
+                },
+                "overrideStatus": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "severity",
+                "dirty",
+                "locked",
+                "initialized",
+                "overrideStatus"
+              ]
+            },
+            "name": {
+              "type": "string"
+            },
+            "artifactData": {
+              "type": "object",
+              "properties": {
+                "propertyValueMap": {
+                  "type": "object",
+                  "properties": {
+                    "angle": {
+                      "type": "number"
+                    },
+                    "artifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "artifactTypeName": {
+                          "type": "string"
+                        },
+                        "sequenceNumber": {
+                          "type": "integer"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifactTypeName",
+                        "sequenceNumber",
+                        "displayName"
+                      ]
+                    },
+                    "artifactTypeName": {
+                      "type": "string"
+                    },
+                    "cadKeyText": {
+                      "type": "string"
+                    },
+                    "childArtifactCount": {
+                      "type": "integer"
+                    },
+                    "convex": {
+                      "type": "boolean"
+                    },
+                    "edgeLength": {
+                      "type": "number"
+                    },
+                    "minGcdVersion": {
+                      "type": "integer"
+                    },
+                    "parentArtifact": {
+                      "type": "object"
+                    },
+                    "parentArtifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "artifactTypeName": {
+                          "type": "string"
+                        },
+                        "sequenceNumber": {
+                          "type": "integer"
+                        },
+                        "displayName": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "artifactTypeName",
+                        "sequenceNumber",
+                        "displayName"
+                      ]
+                    },
+                    "relations": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "object"
+                        },
+                        {
+                          "type": "object"
+                        }
+                      ]
+                    },
+                    "roundRadius": {
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "angle",
+                    "artifactKey",
+                    "artifactTypeName",
+                    "cadKeyText",
+                    "childArtifactCount",
+                    "convex",
+                    "edgeLength",
+                    "minGcdVersion",
+                    "parentArtifact",
+                    "parentArtifactKey",
+                    "relations",
+                    "roundRadius"
+                  ]
+                },
+                "propertyInfoMap": {
+                  "type": "object",
+                  "properties": {
+                    "angle": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "unitTypeName",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "artifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "artifactTypeName": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "cadKeyText": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "childArtifactCount": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "childArtifacts": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "convex": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "edgeLength": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "unitTypeName",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "minGcdVersion": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "parentArtifact": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "parentArtifactKey": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "relations": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "roundRadius": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "unitTypeName": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "unitTypeName",
+                        "supportedSerializedType"
+                      ]
+                    },
+                    "setupGroupId": {
+                      "type": "object",
+                      "properties": {
+                        "name": {
+                          "type": "string"
+                        },
+                        "supportedSerializedType": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "name",
+                        "supportedSerializedType"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "angle",
+                    "artifactKey",
+                    "artifactTypeName",
+                    "cadKeyText",
+                    "childArtifactCount",
+                    "childArtifacts",
+                    "convex",
+                    "edgeLength",
+                    "minGcdVersion",
+                    "parentArtifact",
+                    "parentArtifactKey",
+                    "relations",
+                    "roundRadius",
+                    "setupGroupId"
+                  ]
+                }
+              },
+              "required": [
+                "propertyValueMap",
+                "propertyInfoMap"
+              ]
+            }
+          },
+          "required": [
+            "@type",
+            "overrideStatus",
+            "requested",
+            "volumeFields",
+            "roughness",
+            "artifactKey",
+            "roughnessRz",
+            "tolerance",
+            "diamTolerance",
+            "positionTolerance",
+            "circularity",
+            "concentricity",
+            "cylindricity",
+            "flatness",
+            "perpendicularity",
+            "profileOfSurface",
+            "runout",
+            "totalRunout",
+            "straightness",
+            "symmetry",
+            "bendAngleTolerance",
+            "minTolerance",
+            "surfaceFinishingRate",
+            "volumeRemovalRate",
+            "parallelism",
+            "selected",
+            "time",
+            "status",
+            "name",
+            "artifactData"
+          ]
+        }
+      ]
+    },
+    "typedMapBean": {
+      "type": "object",
+      "properties": {
+        "propertyInfoMap": {
+          "type": "object",
+          "properties": {
+            "actionHandler": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "artifact": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "artifactKey": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "artifactObject": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "artifacts": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "axiGrooveFields": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "bendAngleTolerance": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "bundleMessage": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "catalog": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "centroid": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "circularity": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "class": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "classOfInterest": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "componentModel": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "concentricity": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "cylindricity": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "data": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "dbgCadKeyText": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "dbgMinGcdVersion": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "diamTolerance": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "distanceUnits": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "editModeStringFormatter": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "firstArtifact": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "flatness": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "formatInfo": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "homogeneous": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "isMolded": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "manualGcdFields": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "menuName": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "minTolerance": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "name": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "objectHolder": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "overrideStatus": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "parallelism": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "perpendicularity": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "positionTolerance": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "predicateManager": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "profileOfSurface": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "rawPropertyValue": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "requested": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "roughness": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "roughnessRz": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "runout": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "selected": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "setupType": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "status": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "straightness": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "stringFormatter": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "subType": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "subTypePicklistValueSupplier": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "surfaceFinishingRate": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "symmetry": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "thickness": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "time": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "tolerance": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "toolTipText": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "totalRunout": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "transferable": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "underlyingBean": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "unitSystem": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "userDefinedSetupAxis": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "userDefinedSetupAxisKey": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "volumeFields": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            },
+            "volumeRemovalRate": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "unitTypeName": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "unitTypeName",
+                "supportedSerializedType"
+              ]
+            },
+            "weldFields": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                },
+                "supportedSerializedType": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "name",
+                "supportedSerializedType"
+              ]
+            }
+          },
+          "required": [
+            "actionHandler",
+            "artifact",
+            "artifactKey",
+            "artifactObject",
+            "artifacts",
+            "axiGrooveFields",
+            "bendAngleTolerance",
+            "bundleMessage",
+            "catalog",
+            "centroid",
+            "circularity",
+            "class",
+            "classOfInterest",
+            "componentModel",
+            "concentricity",
+            "cylindricity",
+            "data",
+            "dbgCadKeyText",
+            "dbgMinGcdVersion",
+            "diamTolerance",
+            "distanceUnits",
+            "editModeStringFormatter",
+            "firstArtifact",
+            "flatness",
+            "formatInfo",
+            "homogeneous",
+            "isMolded",
+            "manualGcdFields",
+            "menuName",
+            "minTolerance",
+            "name",
+            "objectHolder",
+            "overrideStatus",
+            "parallelism",
+            "perpendicularity",
+            "positionTolerance",
+            "predicateManager",
+            "profileOfSurface",
+            "rawPropertyValue",
+            "requested",
+            "roughness",
+            "roughnessRz",
+            "runout",
+            "selected",
+            "setupType",
+            "status",
+            "straightness",
+            "stringFormatter",
+            "subType",
+            "subTypePicklistValueSupplier",
+            "surfaceFinishingRate",
+            "symmetry",
+            "thickness",
+            "time",
+            "tolerance",
+            "toolTipText",
+            "totalRunout",
+            "transferable",
+            "underlyingBean",
+            "unitSystem",
+            "userDefinedSetupAxis",
+            "userDefinedSetupAxisKey",
+            "volumeFields",
+            "volumeRemovalRate",
+            "weldFields"
+          ]
+        }
+      },
+      "required": [
+        "propertyInfoMap"
+      ]
+    }
+  },
+  "required": [
+    "artifactList",
+    "typedMapBean"
+  ]
+}
