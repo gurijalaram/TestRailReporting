@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 
+import java.io.File;
 import java.util.List;
 
 @Builder
@@ -17,6 +18,7 @@ public class ComponentInfoBuilder {
     private final String componentName;
     private final String extension;
     private final String scenarioName;
+    private File resourceFile;
     private String componentIdentity;
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
