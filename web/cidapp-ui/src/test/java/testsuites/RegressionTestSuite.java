@@ -15,6 +15,7 @@ import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.EditAssembliesTest;
+import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -78,6 +79,7 @@ import testsuites.suiteinterface.SmokeTests;
     ThreadTests.class,
     PartNestingTests.class,
     PsoEditTests.class,
+    IncludeAndExcludeTests.class,
 })
 public class RegressionTestSuite {
 }
