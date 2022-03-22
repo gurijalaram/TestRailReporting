@@ -25,6 +25,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -33,7 +34,9 @@ import org.junit.BeforeClass;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public abstract class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
@@ -185,6 +188,36 @@ public abstract class SDSTestUtil extends TestUtil {
         return scenarioItemResponse.get(0);
     }
 
+    /**
+     * GET scenario representation
+     *
+     * @param scenarioItem    - the scenario object
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    protected static ResponseWrapper<Scenario> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
+                .token(userCredentials.getToken());
+
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long POLLING_INTERVAL = 5L;
+        final long MAX_WAIT_TIME = 180L;
+        String scenarioState;
+        ResponseWrapper<Scenario> scenarioRepresentation;
+
+        waitSeconds(2);
+        do {
+            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
+            waitSeconds(POLLING_INTERVAL);
+        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
+        return scenarioRepresentation;
+    }
+
     protected CostingTemplate getFirstCostingTemplate() {
         List<CostingTemplate> costingTemplates = getCostingTemplates();
         assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
@@ -266,5 +299,19 @@ public abstract class SDSTestUtil extends TestUtil {
         ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
 
         return response.getResponseEntity();
+    }
+
+    /**
+     * Waits for specified time
+     *
+     * @param seconds - the seconds
+     */
+    private static void waitSeconds(long seconds) {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
     }
 }
