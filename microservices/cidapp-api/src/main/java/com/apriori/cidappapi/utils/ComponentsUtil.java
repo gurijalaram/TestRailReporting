@@ -53,10 +53,9 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return Item
      */
-    public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder, File resourceFile) {
+    public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
         String resourceName = postCadFiles(componentBuilder).getResponseEntity().getCadFiles().stream()
-            .filter(x -> x.getFilename().equals(resourceFile.getName()))
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
