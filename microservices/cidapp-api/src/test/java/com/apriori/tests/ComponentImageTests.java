@@ -12,7 +12,6 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -44,39 +43,27 @@ public class ComponentImageTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(currentUser)
-                .build(),
-            resourceFile);
+                .build());
 
-        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(
-            ScenarioItem.builder()
-                .componentIdentity(postComponentResponse.getComponentIdentity())
-                .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-                .scenarioState("processing")
-                .build(),
-            currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(postComponentResponse);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(postComponentResponse);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation(
-            ScenarioItem.builder()
-                .componentIdentity(postComponentResponse.getComponentIdentity())
-                .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-                .scenarioState("processing")
-                .build(),
-            currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation(postComponentResponse);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ImageResponse> imageResponse = scenariosUtil.getHoopsImage(postComponentResponse.getComponentIdentity(), postComponentResponse.getScenarioIdentity());
         assertThat(imageResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getBoundingBox(), hasItems(-1.25, 0.0, 0.0, 1.25, 0.800000011920929, 0.012000000104308128));
     }
@@ -91,35 +78,24 @@ public class ComponentImageTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
-        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(
-            ScenarioItem.builder()
-                .componentIdentity(postComponentResponse.getComponentIdentity())
-                .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-                .scenarioState("processing")
-                .build(),
-            currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(postComponentResponse);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(postComponentResponse);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation(
-            ScenarioItem.builder()
-                .componentIdentity(postComponentResponse.getComponentIdentity())
-                .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-                .scenarioState("processing")
-                .build(),
-            currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation(postComponentResponse);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getAxesEntries().size(), is(equalTo(6)));
     }
@@ -134,35 +110,24 @@ public class ComponentImageTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
-        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(
-            ScenarioItem.builder()
-                .componentIdentity(postComponentResponse.getComponentIdentity())
-                .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-                .scenarioState("processing")
-                .build(),
-            currentUser);
+        ResponseWrapper<ScenarioResponse> preCostState = scenariosUtil.getScenarioRepresentation(postComponentResponse);
         assertThat(preCostState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostComponent(postComponentResponse);
         assertThat(costResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation(
-            ScenarioItem.builder()
-                .componentIdentity(postComponentResponse.getComponentIdentity())
-                .scenarioIdentity(postComponentResponse.getScenarioIdentity())
-                .scenarioState("processing")
-                .build(),
-            currentUser);
+        ResponseWrapper<ScenarioResponse> costState = scenariosUtil.getScenarioRepresentation(postComponentResponse);
         assertThat(costState.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse, currentUser);
+        ResponseWrapper<ComponentIteration> componentIterationResponse = componentsUtil.getComponentIterationLatest(postComponentResponse);
         assertThat(componentIterationResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(componentIterationResponse.getResponseEntity().getScenarioMetadata().getActiveAxes().stream().map(ActiveAxes::getDisplayName).collect(Collectors.toList()), hasItems("SetupAxis:1"));
     }

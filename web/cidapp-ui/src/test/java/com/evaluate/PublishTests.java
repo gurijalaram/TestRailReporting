@@ -4,7 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -30,11 +30,11 @@ import java.io.File;
 
 public class PublishTests extends TestBase {
 
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private File resourceFile;
-    private ScenarioItem cssScenarioItem;
+    private ComponentInfoBuilder cidComponentItem;
 
     public PublishTests() {
         super();
@@ -53,10 +53,10 @@ public class PublishTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -64,7 +64,7 @@ public class PublishTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
@@ -86,10 +86,10 @@ public class PublishTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -100,7 +100,7 @@ public class PublishTests extends TestBase {
             .selectStatus("Analysis")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

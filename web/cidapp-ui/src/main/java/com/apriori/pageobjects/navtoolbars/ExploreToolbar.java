@@ -3,7 +3,6 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -114,13 +113,13 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ScenarioItem component = new ComponentsUtil().postComponentQueryCSS(
+        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSS(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
                 .user(userCredentials)
-                .build(),
-            resourceFile);
+                .build());
         return navigateToScenario(component);
     }
 
@@ -143,7 +142,8 @@ public class ExploreToolbar extends MainNavBar {
                                                      String assemblyExtension,
                                                      String scenarioName,
                                                      UserCredentials currentUser) {
-        ComponentInfoBuilder myAssembly = new ScenariosUtil().uploadAndPublishAssembly(
+
+        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadAndPublishAssembly(
             subComponentNames,
             componentExtension,
             processGroupEnum,
@@ -158,16 +158,16 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * uploads an assembly with all subcomponents, cost and publish them all
      *
-     * @param assemblyName - the assembly name
-     * @param assemblyExtension - the assembly extension
-     * @param assemblyProcessGroup - the assembly process group
-     * @param subComponentNames - the subcomponent names
-     * @param subComponentExtension - the subcomponent extension
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the subcomponent names
+     * @param subComponentExtension    - the subcomponent extension
      * @param subComponentProcessGroup - the subcomponent process group
-     * @param scenarioName - the scenario name
-     * @param mode - the mode
-     * @param material - the material
-     * @param currentUser - the current user
+     * @param scenarioName             - the scenario name
+     * @param mode                     - the mode
+     * @param material                 - the material
+     * @param currentUser              - the current user
      * @return - a new page object
      */
     public EvaluatePage uploadCostPublishAndOpenAssembly(String assemblyName,
@@ -180,6 +180,7 @@ public class ExploreToolbar extends MainNavBar {
                                                          String mode,
                                                          String material,
                                                          UserCredentials currentUser) {
+
         ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
             assemblyName,
             assemblyExtension,
@@ -188,8 +189,6 @@ public class ExploreToolbar extends MainNavBar {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         return navigateToScenario(myAssembly);
@@ -204,13 +203,13 @@ public class ExploreToolbar extends MainNavBar {
      * @param userCredentials - the user credentials
      * @return response object
      */
-    public ScenarioItem uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+    public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(userCredentials)
-                .build(),
-            resourceFile);
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(userCredentials)
+            .build());
     }
 
     /**
