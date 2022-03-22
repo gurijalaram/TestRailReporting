@@ -6,14 +6,12 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -48,12 +46,12 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, filename);
 
-        ScenarioItem postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         ResponseWrapper<Scenario> copyScenarioResponse = scenariosUtil.postCopyScenario(ComponentInfoBuilder
             .builder()
@@ -68,11 +66,7 @@ public class ScenariosTests {
         assertThat(copyScenarioResponse.getResponseEntity().getLastAction(), is(equalTo("COPY")));
 
         //Rechecking the original scenario has not changed
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(
-            ScenarioRepresentationBuilder.builder()
-                .scenarioItem(postComponentResponse)
-                .user(currentUser)
-                .build());
+        ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenariosUtil.getScenarioRepresentation(postComponentResponse);
 
         assertThat(scenarioRepresentation.getResponseEntity().getScenarioName(), is(equalTo(scenarioName)));
     }
@@ -86,8 +80,6 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -100,8 +92,6 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly)
@@ -131,8 +121,6 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -147,8 +135,6 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly)
@@ -169,8 +155,6 @@ public class ScenariosTests {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
@@ -184,8 +168,6 @@ public class ScenariosTests {
             subComponentExtension,
             subComponentProcessGroup,
             scenarioName,
-            mode,
-            material,
             currentUser);
 
         //Edit Assembly

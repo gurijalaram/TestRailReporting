@@ -4,9 +4,8 @@ import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -28,16 +27,13 @@ import java.io.File;
 public class PublishAssembliesTests extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
     private UserCredentials currentUser;
-    private ScenarioItem cssScenarioItem;
-    private ScenarioItem cssScenarioItemB;
-    private ScenarioItem cssScenarioItemC;
+    private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder cidComponentItemC;
     private File subComponentA;
     private File subComponentB;
-    private File subComponentC;
     private File assembly;
 
     public PublishAssembliesTests() {
@@ -61,30 +57,30 @@ public class PublishAssembliesTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(subComponentAName, scenarioName, subComponentA, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .uploadComponent(subComponentBName, scenarioName, subComponentB, currentUser);
 
-        cssScenarioItemC = new ExplorePage(driver).navigateToScenario(cssScenarioItemB)
+        cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
             .costScenario(3)
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItemC)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
             .selectProcessGroup(ASSEMBLY)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemC, currentUser, EvaluatePage.class);
+            .publish(cidComponentItemC, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }

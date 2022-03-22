@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -38,8 +38,8 @@ public class TwoModelMachiningTests extends TestBase {
     private File twoModelFile;
     private File twoModelFile2;
     private UserCredentials currentUser;
-    private ScenarioItem cssScenarioItem;
-    private ScenarioItem cssScenarioItemB;
+    private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder cidComponentItemB;
     private GuidanceIssuesPage guidanceIssuesPage;
 
     public TwoModelMachiningTests() {
@@ -222,17 +222,17 @@ public class TwoModelMachiningTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(sourcePartName, sourceScenarioName, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssScenarioItemB)
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnumTwoModel)
             .selectSourcePart()
             .selectFilter("Recent")
@@ -242,7 +242,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
