@@ -306,17 +306,20 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - the current page object
      */
     public ComponentsListPage selectButtonType(ButtonTypeEnum buttonTypeEnum) {
+        WebElement buttonToPress;
+
         switch (buttonTypeEnum) {
             case INCLUDE:
-                pageUtils.waitForElementAndClick(includeButton);
+                buttonToPress = includeButton;
                 break;
             case EXCLUDE:
-                pageUtils.waitForElementAndClick(excludeButton);
-                pageUtils.waitForElementNotDisplayed(subcomponentCard, 1);
+                buttonToPress = excludeButton;
                 break;
             default:
                 return this;
         }
+        pageUtils.waitForElementAndClick(buttonToPress);
+        pageUtils.waitForElementNotDisplayed(subcomponentCard, 1);
         return this;
     }
 
