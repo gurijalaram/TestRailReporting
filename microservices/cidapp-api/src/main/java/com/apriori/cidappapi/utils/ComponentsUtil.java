@@ -4,6 +4,9 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.entity.request.request.ComponentRequest;
+import com.apriori.cidappapi.entity.response.CadFile;
+import com.apriori.cidappapi.entity.response.CadFilesResponse;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
@@ -12,7 +15,6 @@ import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -22,11 +24,28 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ComponentsUtil {
+
+    /**
+     * POST cad files
+     *
+     * @param componentBuilder - the component object
+     * @return cad file response object
+     */
+    public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
+                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentBuilder.getResourceFile()))
+                .token(componentBuilder.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
 
     /**
      * POST new component
@@ -36,18 +55,25 @@ public class ComponentsUtil {
      * @return Item
      */
     public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder, File resourceFile) {
+
+        String resourceName = postCadFiles(componentBuilder).getResponseEntity().getCadFiles().stream()
+            .filter(x -> x.getFilename().equals(resourceFile.getName()))
+            .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
+
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, PostComponentResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("data", resourceFile))
-                .formParams(new FormParams().use("filename", componentBuilder.getComponentName())
-                    .use("override", "false")
-                    .use("scenarioName", componentBuilder.getScenarioName()))
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+                .body("groupItems", Collections.singletonList(ComponentRequest.builder()
+                    .filename(componentBuilder.getResourceFile().getName())
+                    .override(false)
+                    .resourceName(resourceName)
+                    .scenarioName(componentBuilder.getScenarioName())
+                    .build()))
                 .token(componentBuilder.getUser().getToken());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
-            HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
+            HttpStatus.SC_OK, responseWrapper.getStatusCode());
 
         List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
 
