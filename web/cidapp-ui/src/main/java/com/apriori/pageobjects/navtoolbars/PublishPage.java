@@ -1,10 +1,10 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -173,14 +173,14 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     /**
      * Select the publish button
      *
-     * @param cssScenarioItem - the css item
-     * @param currentUser     - the current user
-     * @param <T>             - the object type
+     * @param cidComponentItem - the cid representation item
+     * @param currentUser      - the current user
+     * @param <T>              - the object type
      * @return generic page object
      */
-    public <T> T publish(ScenarioItem cssScenarioItem, UserCredentials currentUser, Class<T> klass) {
+    public <T> T publish(ComponentInfoBuilder cidComponentItem, UserCredentials currentUser, Class<T> klass) {
         modalDialogController.publish(klass);
-        new ScenariosUtil().getScenarioRepresentation(cssScenarioItem, "PUBLISH", true, currentUser);
+        new ScenariosUtil().getPublishedScenarioRepresentation(cidComponentItem, "PUBLISH", true);
         return PageFactory.initElements(driver, klass);
     }
 

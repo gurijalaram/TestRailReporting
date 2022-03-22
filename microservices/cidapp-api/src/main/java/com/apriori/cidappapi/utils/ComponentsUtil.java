@@ -13,12 +13,12 @@ import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -51,7 +51,6 @@ public class ComponentsUtil {
      * POST new component
      *
      * @param componentBuilder - the component object
-     * @param resourceFile     - the resource file
      * @return Item
      */
     public ScenarioItem postComponentQueryCSS(ComponentInfoBuilder componentBuilder, File resourceFile) {
@@ -77,7 +76,11 @@ public class ComponentsUtil {
 
         List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
 
-        return scenarioItemResponse.get(0);
+        componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
+        componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+        componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+
+        return componentBuilder;
     }
 
     /**
@@ -95,13 +98,13 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity
      *
-     * @param scenarioItem - the scenario object
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ScenarioItem scenarioItem) {
+    public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(scenarioItem.getComponentIdentity());
+                .inlineVariables(componentInfo.getComponentIdentity());
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -109,15 +112,14 @@ public class ComponentsUtil {
     /**
      * GET components for the current user matching an identity and component
      *
-     * @param scenarioItem    - the scenario item object
-     * @param userCredentials - the user credentials
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+    public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
-                .token(userCredentials.getToken());
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken());
 
         return checkNonNullIterationLatest(requestEntity);
     }
@@ -146,5 +148,19 @@ public class ComponentsUtil {
         } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return axesEntriesResponse;
+    }
+
+    /**
+     * Upload a component
+     *
+     * @param componentBuilder - the component
+     * @return - scenario object
+     */
+    public ComponentInfoBuilder postComponent(ComponentInfoBuilder componentBuilder) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
+
+        componentBuilder.setResourceFile(resourceFile);
+
+        return postComponentQueryCSS(componentBuilder);
     }
 }
