@@ -68,6 +68,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-update-cad-file-button'] button")
     private WebElement updateCadButton;
 
+    @FindBy(css = ".component-display-name-container [data-icon='arrow-up-right-from-square']")
+    private WebElement subcomponentCard;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -309,7 +312,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
                 break;
             case EXCLUDE:
                 pageUtils.waitForElementAndClick(excludeButton);
-                pageUtils.isElementClickable(excludeButton);
+                pageUtils.waitForElementNotDisplayed(subcomponentCard, 1);
                 break;
             default:
                 return this;
