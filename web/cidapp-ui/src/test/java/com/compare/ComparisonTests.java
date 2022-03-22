@@ -12,7 +12,7 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -46,8 +46,9 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class ComparisonTests extends TestBase {
+
     private final String notFoundMessage = "Oops! Looks like the component or scenario you were looking for could not be found.";
-    UserCredentials currentUser;
+    private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ComparePage comparePage;
     private ExplorePage explorePage;
@@ -58,9 +59,9 @@ public class ComparisonTests extends TestBase {
     private File resourceFile3;
     private File resourceFile4;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private ScenarioItem cssScenarioItemA;
-    private ScenarioItem cssScenarioItemB;
-    private ScenarioItem cssScenarioItem;
+    private ComponentInfoBuilder cidComponentItemC;
+    private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder cidComponentItem;
 
     public ComparisonTests() {
         super();
@@ -142,12 +143,12 @@ public class ComparisonTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItemA = loginPage.login(currentUser)
+        cidComponentItemC = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItemB)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -160,7 +161,7 @@ public class ComparisonTests extends TestBase {
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemA, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemC, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -168,7 +169,7 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -242,23 +243,23 @@ public class ComparisonTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore();
 
-        cssScenarioItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        comparePage = new ExplorePage(driver).navigateToScenario(cssScenarioItemB)
+        comparePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -315,17 +316,17 @@ public class ComparisonTests extends TestBase {
         String scenarioName4 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         comparePage = new ExplorePage(driver).uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
-            .navigateToScenario(cssScenarioItem)
+            .navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -574,21 +575,21 @@ public class ComparisonTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        evaluatePage = new EvaluatePage(driver).navigateToScenario(cssScenarioItemB)
+        evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -624,15 +625,15 @@ public class ComparisonTests extends TestBase {
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItemA = loginPage.login(currentUser)
+        cidComponentItemC = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        cssScenarioItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItemA)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .navigateToScenario(cssScenarioItemB)
+            .navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .clickExplore()
@@ -645,7 +646,7 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
             .publishScenario()
-            .publish(cssScenarioItemB, currentUser, ExplorePage.class)
+            .publish(cidComponentItemB, currentUser, ExplorePage.class)
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
@@ -660,7 +661,7 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .publishScenario()
-            .publish(cssScenarioItemA, currentUser, ExplorePage.class)
+            .publish(cidComponentItemC, currentUser, ExplorePage.class)
             .clickCompare()
             .openBasisScenario();
 

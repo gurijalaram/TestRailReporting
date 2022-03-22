@@ -4,7 +4,7 @@ import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -32,7 +32,7 @@ public class DeleteTests extends TestBase {
     private ExplorePage explorePage;
     private File resourceFile;
     private UserCredentials currentUser;
-    private ScenarioItem cssScenarioItem;
+    private ComponentInfoBuilder cidComponentItem;
 
     public DeleteTests() {
         super();
@@ -83,10 +83,10 @@ public class DeleteTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
-        explorePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(STOCK_MACHINING)
             .openMaterialSelectorTable()
             .search("AISI 1010")
@@ -94,7 +94,7 @@ public class DeleteTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser,EvaluatePage.class)
+            .publish(cidComponentItem, currentUser,EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

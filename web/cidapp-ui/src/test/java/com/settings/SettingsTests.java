@@ -5,8 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
@@ -45,7 +45,7 @@ public class SettingsTests extends TestBase {
     private ProductionDefaultsPage productionDefaultPage;
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
-    private ScenarioItem cssScenarioItem;
+    private ComponentInfoBuilder cidComponentItem;
     private SecondaryPage secondaryPage;
     private MaterialSelectorPage materialSelectorPage;
 
@@ -101,17 +101,17 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        cssScenarioItem = loginPage.login(currentUser)
+        cidComponentItem = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING)
             .submit(ExplorePage.class)
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cssScenarioItem)
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .costScenario()
             .publishScenario()
-            .publish(cssScenarioItem, currentUser, EvaluatePage.class);
+            .publish(cidComponentItem, currentUser, EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
