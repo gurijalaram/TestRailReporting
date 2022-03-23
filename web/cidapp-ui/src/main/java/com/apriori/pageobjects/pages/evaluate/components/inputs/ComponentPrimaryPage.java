@@ -179,6 +179,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     }
 
     /**
+     * Get the text in the annual volume input field
+     *
+     * @return String
+     */
+    public String getAnnualVolumePlaceholder() {
+        return pageUtils.waitForElementToAppear(annualVolumeInput).getAttribute("placeholder");
+    }
+
+    /**
      * Enters the years of annual volume
      *
      * @param productionLife - the years
@@ -196,6 +205,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      */
     public int getYears() {
         return Integer.parseInt(pageUtils.waitForElementToAppear(productionLifeInput).getAttribute("value"));
+    }
+
+    /**
+     * Get the text in the years input field
+     *
+     * @return string
+     */
+    public String getYearsPlaceholder() {
+        return pageUtils.waitForElementToAppear(productionLifeInput).getAttribute("placeholder");
     }
 
     /**
