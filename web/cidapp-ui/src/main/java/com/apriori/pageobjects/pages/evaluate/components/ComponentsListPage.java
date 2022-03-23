@@ -50,7 +50,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-detail-configure-button'] button")
     private WebElement configureButton;
 
-    @FindBy(css = "[id='qa-sub-component-detail-preview-button'] button")
+    @FindBy(css = "[id='qa-sub-component-detail-filter-button'] button")
     private WebElement filterButton;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
@@ -106,7 +106,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return current page object
      */
     public ComponentsListPage tableView() {
-        pageUtils.waitForElementToAppear(listButton);
+        pageUtils.waitForElementAndClick(listButton);
         return this;
     }
 
@@ -116,7 +116,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return current page object
      */
     public ComponentsListPage treeView() {
-        pageUtils.waitForElementToAppear(treeButton);
+        pageUtils.waitForElementAndClick(treeButton);
         return this;
     }
 
