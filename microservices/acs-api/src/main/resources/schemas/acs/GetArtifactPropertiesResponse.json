@@ -493,8 +493,6 @@
                     "cadKeyText",
                     "childArtifactCount",
                     "childArtifacts",
-                    "convex",
-                    "edgeLength",
                     "minGcdVersion",
                     "parentArtifact",
                     "parentArtifactKey",

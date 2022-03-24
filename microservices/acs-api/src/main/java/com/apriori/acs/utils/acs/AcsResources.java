@@ -699,21 +699,25 @@ public class AcsResources {
     public GetArtifactPropertiesResponse getArtifactProperties(ScenarioIterationKey scenarioIterationKey, GetGcdMappingResponse getGcdMappingResponse) {
         setupHeader();
 
-        List<String> displayNames = new ArrayList<>();
-        displayNames.add(getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(0).getKey().getDisplayName());
-        displayNames.add(getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(1).getKey().getDisplayName());
+        String displayNameOne = getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(0).getKey().getDisplayName();
+        String displayNameTwo = getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(1).getKey().getDisplayName();
 
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.GET_ARTIFACT_PROPERTIES, GetArtifactPropertiesResponse.class)
             .headers(headers)
-            .customBody("[\"Edge:57\", \"Edge:61\"]")
+            .customBody(
+                String.format(
+                    "[\"%s\", \"%s\"]",
+                    displayNameOne,
+                    displayNameTwo
+                ))
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
                 scenarioIterationKey.getScenarioKey().getTypeName(),
                 scenarioIterationKey.getScenarioKey().getMasterName(),
                 scenarioIterationKey.getScenarioKey().getStateName(),
                 scenarioIterationKey.getIteration().toString(),
-                displayNames.get(0).split(":")[0]
+                displayNameOne.split(":")[0]
             );
 
         return (GetArtifactPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
