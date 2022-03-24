@@ -7,7 +7,6 @@ import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
-import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesInputs;
 import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
