@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: local
 
 # Define the global properties not related to environment
 global:
@@ -316,7 +316,7 @@ migration-preview:
 ######################################################## LOCAL ########################################################
 local:
   name: local
-  secret_key: DogCatMonkey
+  secret_key: 65J1ID2B6LDG
   base_url: http://localhost
   ap_user_context:
 
@@ -330,6 +330,7 @@ local:
 
   cidapp:
     ui_url: ${local.base_url}:3003
+    api_url: ${local.base_url}:8813/
 
   bcs:
     api_url: ${local.base_url}:8810/
