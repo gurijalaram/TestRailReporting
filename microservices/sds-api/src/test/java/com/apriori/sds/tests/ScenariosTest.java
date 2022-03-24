@@ -226,19 +226,16 @@ public class ScenariosTest extends SDSTestUtil {
     public void testGetWatchPoint() {
         ScenarioItem scenarioWithCreatedWatchpoint = this.createWatchpoint();
 
-        new ScenariosUtil().getScenarioRepresentation(
-            ScenarioItem.builder()
+        getScenarioRepresentation(ScenarioItem.builder()
                 .componentIdentity(scenarioWithCreatedWatchpoint.getComponentIdentity())
                 .scenarioIdentity(scenarioWithCreatedWatchpoint.getScenarioIdentity())
-                .scenarioState("processing")
                 .build(),
             testingUser);
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_WATCHPOINT_REPORT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, null)
                 .inlineVariables(
-                    scenarioWithCreatedWatchpoint.getComponentIdentity(), scenarioWithCreatedWatchpoint.getScenarioIdentity()
-                );
+                    scenarioWithCreatedWatchpoint.getComponentIdentity(), scenarioWithCreatedWatchpoint.getScenarioIdentity());
 
         ResponseWrapper<ScenarioHoopsImage> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
@@ -405,11 +402,11 @@ public class ScenariosTest extends SDSTestUtil {
         String mode = "manual";
         String materialName = "Use Default";
 
-        List<ScenarioItem> testingScenarios = new ScenariosUtil().postCostScenario(
+        List<ScenarioItem> testingScenarios = postCostScenario(
             ComponentInfoBuilder.builder().componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(componentId)
-                .scenarioId(scenarioId)
+                .componentIdentity(componentId)
+                .scenarioIdentity(scenarioId)
                 .processGroup(pg)
                 .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
                 .mode(mode)

@@ -7,7 +7,6 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -46,19 +45,19 @@ public class FileUploadAPI {
         String materialName = "Use Default";
         UserCredentials currentUser = UserUtil.getUser();
 
-        ScenarioItem scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build(),
-            resourceFile);
+        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build());
 
         scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
-                .componentId(scenarioItem.getComponentIdentity())
-                .scenarioId(scenarioItem.getScenarioIdentity())
+                .componentIdentity(scenarioItem.getComponentIdentity())
+                .scenarioIdentity(scenarioItem.getScenarioIdentity())
                 .processGroup(pg)
                 .digitalFactory(DigitalFactoryEnum.APRIORI_USA)
                 .mode(mode)
@@ -66,7 +65,7 @@ public class FileUploadAPI {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> publishResponse = scenariosUtil.postPublishScenario(scenarioItem, currentUser);
+        ResponseWrapper<ScenarioResponse> publishResponse = scenariosUtil.postPublishScenario(scenarioItem);
 
         assertThat(publishResponse.getResponseEntity().getLastAction(), is("PUBLISH"));
         assertThat(publishResponse.getResponseEntity().getPublished(), is(true));

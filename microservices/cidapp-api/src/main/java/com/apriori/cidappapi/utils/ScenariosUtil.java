@@ -1,10 +1,10 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.builder.ScenarioRepresentationBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.ForkRequest;
@@ -13,22 +13,16 @@ import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
-import com.apriori.css.entity.response.ScenarioItem;
-import com.apriori.utils.CssComponent;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.io.File;
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -38,53 +32,75 @@ public class ScenariosUtil {
     private ComponentsUtil componentsUtil = new ComponentsUtil();
 
     /**
-     * GET scenario representation
+     * GET scenario representation of a part
      *
-     * @param scenarioItem    - the scenario object
-     * @param userCredentials - the user credentials
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
+        final int SOCKET_TIMEOUT = 240000;
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
-                .token(userCredentials.getToken());
+                .inlineVariables(componentId, scenarioId)
+                .token(componentInfo.getUser().getToken())
+                .socketTimeout(SOCKET_TIMEOUT);
 
-        long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5L;
-        final long MAX_WAIT_TIME = 180L;
-        String scenarioState;
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation;
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 240;
+        final long START_TIME = System.currentTimeMillis() / 1000;
 
-        waitSeconds(2);
-        do {
-            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
-            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
-            waitSeconds(POLLING_INTERVAL);
-        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+        try {
+            do {
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-        return scenarioRepresentation;
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
+                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
+
+                scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
+                    .ifPresent(y -> {
+                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentId, scenarioId));
+                    });
+
+                if (scenarioResponse.isPresent() && !scenarioResponse.get().getScenarioState().equals(PROCESSING.getState())) {
+
+                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+                    return scenarioRepresentation;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentId, scenarioId, WAIT_TIME)
+        );
     }
 
     /**
      * GET scenario representation of a published part
      *
-     * @param lastAction      - the last action
-     * @param published       - scenario published
-     * @param userCredentials - the user credentials
+     * @param componentInfo - the component info builder object
      * @return response object
      */
-    // TODO: 21/02/2022 cn - method is overloaded for now but will be refactored to take componentinfobuilder
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioItem cssScenarioItem, String lastAction, boolean published, UserCredentials userCredentials) {
+    public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
         final int SOCKET_TIMEOUT = 240000;
-        String componentId = cssScenarioItem.getComponentIdentity();
-        String scenarioId = cssScenarioItem.getScenarioIdentity();
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
                 .inlineVariables(componentId, scenarioId)
-                .token(userCredentials.getToken())
+                .token(componentInfo.getUser().getToken())
                 .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
@@ -125,92 +141,18 @@ public class ScenariosUtil {
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
                 componentId, scenarioId, WAIT_TIME)
         );
-    }
-
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfoBuilder, String lastAction, boolean published) {
-        final int SOCKET_TIMEOUT = 240000;
-        String componentId = componentInfoBuilder.getComponentId();
-        String scenarioId = componentInfoBuilder.getScenarioId();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
-                .token(componentInfoBuilder.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
-
-        final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
-        final long START_TIME = System.currentTimeMillis() / 1000;
-
-        try {
-            do {
-                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
-
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
-
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
-                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-
-                final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
-
-                scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
-                    .ifPresent(y -> {
-                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentId, scenarioId));
-                    });
-
-                if (scenarioResponse.isPresent() &&
-                    scenarioResponse.get().getLastAction().equals(lastAction) &&
-                    scenarioResponse.get().getPublished() == published) {
-
-                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-                    return scenarioRepresentation;
-                }
-
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
-        throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentId, scenarioId, WAIT_TIME)
-        );
-    }
-
-    /**
-     * GET scenario representation of a published part
-     *
-     * @param scenarioRepresentationBuilder - the scenario representation builder
-     * @return response object
-     */
-    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ScenarioRepresentationBuilder scenarioRepresentationBuilder) {
-        final int SOCKET_TIMEOUT = 240000;
-        String componentId = scenarioRepresentationBuilder.getScenarioItem().getComponentIdentity();
-        String scenarioId = scenarioRepresentationBuilder.getScenarioItem().getScenarioIdentity();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
-                .token(scenarioRepresentationBuilder.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
-
-        ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
-
-        assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
-        return scenarioRepresentation;
     }
 
     /**
      * POST to cost a component
      *
-     * @param scenarioItem - the scenario object
+     * @param componentInfoBuilder - the component object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> postCostComponent(ScenarioItem scenarioItem) {
+    public ResponseWrapper<ScenarioResponse> postCostComponent(ComponentInfoBuilder componentInfoBuilder) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)
                         .batchSize(458)
@@ -245,11 +187,11 @@ public class ScenariosUtil {
      * @param componentInfoBuilder - the cost component object
      * @return list of scenario items
      */
-    public List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder()
                         .costingTemplateIdentity(
@@ -260,7 +202,7 @@ public class ScenariosUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+        return getScenarioRepresentation(componentInfoBuilder);
     }
 
     /**
@@ -273,7 +215,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario",
                     ScenarioRequest.builder()
                         .scenarioName(componentInfoBuilder.getScenarioName())
@@ -293,7 +235,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", forkRequest);
 
         return HTTPRequest.build(requestEntity).post();
@@ -334,85 +276,30 @@ public class ScenariosUtil {
     }
 
     /**
-     * Upload and Publish a subcomponent/assembly
-     *
-     * @param component - the copy component object
-     * @return - the Item
-     */
-    public ScenarioItem uploadAndPublishComponent(ComponentInfoBuilder component) {
-        ScenarioItem postComponentResponse = uploadComponent(component);
-
-        postPublishScenario(postComponentResponse, component.getUser());
-
-        return postComponentResponse;
-    }
-
-    /**
-     * Upload a component
-     *
-     * @param component - the component
-     * @return - scenario object
-     */
-    public ScenarioItem uploadComponent(ComponentInfoBuilder component) {
-        File resourceFile = FileResourceUtil.getCloudFile(component.getProcessGroup(), component.getComponentName() + component.getExtension());
-
-        ScenarioItem postComponentResponse;
-        postComponentResponse = componentsUtil.postComponentQueryCSS(component, resourceFile);
-
-        return postComponentResponse;
-    }
-
-    /**
      * POST to publish scenario
      *
-     * @param scenarioItem    - the scenario object
-     * @param userCredentials - the user credentials
+     * @param componentInfoBuilder - the component info builder object
      * @return - scenarioResponse object
      */
-    // TODO: 21/02/2022 cn - method is overloaded for now but will be refactored to take componentinfobuilder
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials) {
-        publishScenario(scenarioItem, userCredentials, ScenarioResponse.class);
-
-        return getScenarioRepresentation(scenarioItem, "PUBLISH", true, userCredentials);
-    }
-
     public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfoBuilder) {
         publishScenario(componentInfoBuilder, ScenarioResponse.class);
 
-        return getScenarioRepresentation(componentInfoBuilder, "PUBLISH", true);
+        return getPublishedScenarioRepresentation(componentInfoBuilder, "PUBLISH", true);
     }
 
     /**
      * POST to publish scenario
      *
-     * @param scenarioItem    - the item object
-     * @param userCredentials - the user credentials
-     * @param klass           - the  class
-     * @param <T>             - the generic return type
+     * @param componentInfoBuilder - the component info builder object
+     * @param klass                - the  class
+     * @param <T>                  - the generic return type
      * @return generic object
      */
-    // TODO: 21/02/2022 cn - method is overloaded for now but will be refactored to take componentinfobuilder
-    private <T> ResponseWrapper<ScenarioResponse> publishScenario(ScenarioItem scenarioItem, UserCredentials userCredentials, Class<T> klass) {
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
-                .token(userCredentials.getToken())
-                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
-                .body("scenario", PublishRequest.builder()
-                    .assignedTo(new PeopleUtil().getCurrentUser(userCredentials).getIdentity())
-                    .costMaturity("Initial".toUpperCase())
-                    .override(false)
-                    .status("New".toUpperCase())
-                    .build()
-                );
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
     public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfoBuilder, Class<T> klass) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
                 .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentId(), componentInfoBuilder.getScenarioId())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
                     .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
                     .costMaturity("Initial".toUpperCase())
@@ -424,63 +311,18 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-    /**
-     * This method uploads an assembly with all subcomponents and publish all
-     *
-     * @param subComponentNames - the subcomponent names
-     * @param componentExtension - the subcomponent extension
-     * @param processGroupEnum - the process group enum
-     * @param assemblyName - the assembly name
-     * @param assemblyExtension -  the assembly extension
-     * @param scenarioName - the scenario name
-     * @param currentUser - the current user
-     * @return - the object of ComponentInfoBuilder
-     */
-    public ComponentInfoBuilder uploadAndPublishAssembly(List<String> subComponentNames,
-                                                         String componentExtension,
-                                                         ProcessGroupEnum processGroupEnum,
-                                                         String assemblyName,
-                                                         String assemblyExtension,
-                                                         String scenarioName,
-                                                         UserCredentials currentUser) {
-
-        for (String subComponentName : subComponentNames) {
-            uploadAndPublishComponent(ComponentInfoBuilder.builder()
-                .componentName(subComponentName)
-                .extension(componentExtension)
-                .scenarioName(scenarioName)
-                .processGroup(processGroupEnum)
-                .user(currentUser)
-                .build());
-        }
-
-        ComponentInfoBuilder myAssembly = ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(ProcessGroupEnum.ASSEMBLY)
-            .user(currentUser)
-            .build();
-
-        ScenarioItem assemblyUploadResponse = uploadAndPublishComponent(myAssembly);
-
-        myAssembly.setComponentId(assemblyUploadResponse.getComponentIdentity());
-        myAssembly.setScenarioId(assemblyUploadResponse.getScenarioIdentity());
-
-        return myAssembly;
-    }
 
     /**
-     * Waits for specified time
+     * Upload and Publish a subcomponent/assembly
      *
-     * @param seconds - the seconds
+     * @param component - the copy component object
+     * @return - the Item
      */
-    private void waitSeconds(long seconds) {
-        try {
-            TimeUnit.SECONDS.sleep(seconds);
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
-        }
+    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder component) {
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(component);
+
+        postPublishScenario(postComponentResponse);
+
+        return postComponentResponse;
     }
 }

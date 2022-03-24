@@ -4,6 +4,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.entity.request.CostRequest;
+import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -21,6 +25,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
@@ -29,7 +34,9 @@ import org.junit.BeforeClass;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public abstract class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
@@ -37,8 +44,8 @@ public abstract class SDSTestUtil extends TestUtil {
     private static ScenarioItem testingComponent;
 
     @BeforeClass
-    public static  void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser =  UserUtil.getUser());
+    public static void init() {
+        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
     }
 
     @AfterClass
@@ -103,7 +110,7 @@ public abstract class SDSTestUtil extends TestUtil {
     protected static void removeTestingScenario(final String componentId, final String scenarioId) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.DELETE_SCENARIO_BY_COMPONENT_SCENARIO_IDS, null)
-            .inlineVariables(componentId, scenarioId);
+                .inlineVariables(componentId, scenarioId);
 
         ResponseWrapper<String> response = HTTPRequest.build(requestEntity).delete();
 
@@ -113,6 +120,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     /**
      * Lazy init for Testing component to avoid it if it is not necessary
+     *
      * @return
      */
     protected static ScenarioItem getTestingComponent() {
@@ -180,6 +188,36 @@ public abstract class SDSTestUtil extends TestUtil {
         return scenarioItemResponse.get(0);
     }
 
+    /**
+     * GET scenario representation
+     *
+     * @param scenarioItem    - the scenario object
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    protected static ResponseWrapper<Scenario> getScenarioRepresentation(ScenarioItem scenarioItem, UserCredentials userCredentials) {
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .inlineVariables(scenarioItem.getComponentIdentity(), scenarioItem.getScenarioIdentity())
+                .token(userCredentials.getToken());
+
+        long START_TIME = System.currentTimeMillis() / 1000;
+        final long POLLING_INTERVAL = 5L;
+        final long MAX_WAIT_TIME = 180L;
+        String scenarioState;
+        ResponseWrapper<Scenario> scenarioRepresentation;
+
+        waitSeconds(2);
+        do {
+            scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+            scenarioState = scenarioRepresentation.getResponseEntity().getScenarioState();
+            waitSeconds(POLLING_INTERVAL);
+        } while (scenarioState.equals(scenarioItem.getScenarioState().toUpperCase()) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
+
+        return scenarioRepresentation;
+    }
+
     protected CostingTemplate getFirstCostingTemplate() {
         List<CostingTemplate> costingTemplates = getCostingTemplates();
         assertFalse("To get CostingTemplate it should present in response", costingTemplates.isEmpty());
@@ -203,5 +241,77 @@ public abstract class SDSTestUtil extends TestUtil {
             .scenarioIdentity(identity)
             .build()
         );
+    }
+
+    /**
+     * POST to cost a scenario
+     *
+     * @param componentInfoBuilder - the cost component object
+     * @return list of scenario items
+     */
+    public static List<ScenarioItem> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .body("costingInputs",
+                    CostRequest.builder()
+                        .costingTemplateIdentity(
+                            getCostingTemplateId(componentInfoBuilder)
+                                .getIdentity())
+                        .deleteTemplateAfterUse(true)
+                        .build());
+
+        HTTPRequest.build(requestEntity).post();
+
+        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+    }
+
+    /**
+     * GET costing template id
+     *
+     * @return scenario object
+     */
+    private static Scenario getCostingTemplateId(ComponentInfoBuilder componentInfoBuilder) {
+        return postCostingTemplate(componentInfoBuilder);
+    }
+
+    /**
+     * POST costing template
+     *
+     * @return scenario object
+     */
+    private static Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .body("costingTemplate", CostRequest.builder()
+                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
+                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
+                    .materialName(componentInfoBuilder.getMaterial())
+                    .annualVolume(5500)
+                    .productionLife(5.0)
+                    .batchSize(458)
+                    .propertiesToReset(null)
+                    .build());
+
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).post();
+
+        return response.getResponseEntity();
+    }
+
+    /**
+     * Waits for specified time
+     *
+     * @param seconds - the seconds
+     */
+    private static void waitSeconds(long seconds) {
+        try {
+            TimeUnit.SECONDS.sleep(seconds);
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
     }
 }
