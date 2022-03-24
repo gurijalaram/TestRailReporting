@@ -1,13 +1,17 @@
 package com.apriori.utils.http.utils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author kpatel
  */
-public class MultiPartFiles  {
+public class MultiPartFiles {
     private HashMap<String, File> multiPartsFileData = new HashMap<>();
+    private Map<String, List<File>> multiPartsFilesData = new HashMap<>();
     private HashMap<String, String> multiPartsTextData = new HashMap<>();
 
     public MultiPartFiles use(String key, File value) {
@@ -20,6 +24,11 @@ public class MultiPartFiles  {
         return this;
     }
 
+    public MultiPartFiles use(String key, List<File> values) {
+        values.forEach(value -> multiPartsFilesData.computeIfAbsent(key,  k -> new ArrayList<>()).add(value));
+        return this;
+    }
+
     public HashMap<String, File> getMultiPartsFileData() {
         return multiPartsFileData;
     }
@@ -28,4 +37,7 @@ public class MultiPartFiles  {
         return multiPartsTextData;
     }
 
+    public Map<String, List<File>> getMultiPartsFilesData() {
+        return multiPartsFilesData;
+    }
 }
