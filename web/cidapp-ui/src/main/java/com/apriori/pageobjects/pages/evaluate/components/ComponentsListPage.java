@@ -13,6 +13,8 @@ import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimary
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
+import com.utils.ButtonTypeEnum;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -54,8 +56,20 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-exclude-button'] button")
     private WebElement excludeButton;
 
+    @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] button")
+    private WebElement includeButton;
+
+    @FindBy(css = ".table-head [data-icon='square']")
+    private WebElement checkAllBox;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
+    private WebElement editButton;
+
     @FindBy(css = "[id='qa-sub-component-action-bar-update-cad-file-button'] button")
     private WebElement updateCadButton;
+
+    @FindBy(css = ".component-display-name-container [data-icon='arrow-up-right-from-square']")
+    private WebElement subcomponentCard;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -169,7 +183,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Checks if button is enabled
-     *
      * @return true/false
      */
     public boolean isSetInputsEnabled() {
@@ -288,12 +301,61 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Selects the exclude button
+     * Selects the include or the exclude button
      *
-     * @return current page object
+     * @return - the current page object
      */
-    public ComponentsListPage exclude() {
-        pageUtils.waitForElementAndClick(excludeButton);
+    public ComponentsListPage selectButtonType(ButtonTypeEnum buttonTypeEnum) {
+        WebElement buttonToPress;
+
+        switch (buttonTypeEnum) {
+            case INCLUDE:
+                buttonToPress = includeButton;
+                break;
+            case EXCLUDE:
+                buttonToPress = excludeButton;
+                break;
+            default:
+                return this;
+        }
+        pageUtils.waitForElementAndClick(buttonToPress);
+        pageUtils.waitForElementNotDisplayed(subcomponentCard, 1);
+        return this;
+    }
+
+    /**
+     * Check if the include or the exclude button is enabled
+     *
+     * @return - boolean
+     */
+    public boolean isButtonEnabled(ButtonTypeEnum buttonTypeEnum) {
+        switch (buttonTypeEnum) {
+            case INCLUDE:
+                return pageUtils.isElementEnabled(includeButton);
+            case EXCLUDE:
+                return pageUtils.isElementEnabled(excludeButton);
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * clicks the box to select all subcomponents
+     *
+     * @return - the current page object
+     */
+    public ComponentsListPage selectCheckAllBox() {
+        pageUtils.waitForElementAndClick(checkAllBox);
+        return this;
+    }
+
+    /**
+     * clicks the edit button
+     *
+     * @return - the current page object
+     */
+    public ComponentsListPage editSubcomponent() {
+        pageUtils.waitForElementAndClick(editButton);
         return this;
     }
 
@@ -306,6 +368,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public String getCellColour(String componentName, String scenarioName) {
         return scenarioTableController.getCellColour(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the struck out component name
+     *
+     * @param componentName - the component name
+     * @return - string
+     */
+    public String isTextDecorationStruckOut(String componentName) {
+        By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
+            componentName.toUpperCase().trim()));
+        return driver.findElement(byComponentName).getCssValue("text-decoration");
     }
 
     /**
