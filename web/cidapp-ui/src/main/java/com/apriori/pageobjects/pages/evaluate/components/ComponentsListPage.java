@@ -30,7 +30,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     private final Logger logger = LoggerFactory.getLogger(ComponentsListPage.class);
 
     @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
-    private WebElement listButton;
+    private WebElement tableButton;
 
     @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
     private WebElement treeButton;
@@ -95,7 +95,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(listButton);
+        pageUtils.waitForElementToAppear(tableButton);
         pageUtils.waitForElementToAppear(previewButton);
         assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
@@ -106,7 +106,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return current page object
      */
     public ComponentsListPage tableView() {
-        pageUtils.waitForElementAndClick(listButton);
+        pageUtils.waitForElementAndClick(tableButton);
         return this;
     }
 
