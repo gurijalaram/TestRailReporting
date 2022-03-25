@@ -15,6 +15,7 @@ import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
@@ -55,6 +56,7 @@ public class UsersStaffAssociationTests extends TestBase {
         Map<String, Object> existingUsers = Collections.singletonMap("username[CN]", STAFF_TEST_USER);
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "test.com";
 
@@ -70,7 +72,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, now, salesforce, email).getResponseEntity()
+            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, cloudRef, salesforce, email).getResponseEntity()
             : targetCustomer;
 
         staffPage = new CasLoginPage(driver)
@@ -140,7 +142,6 @@ public class UsersStaffAssociationTests extends TestBase {
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
         userCandidatesTable.getRows().findFirst().ifPresent((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
-        ++selected;
         paginator.clickFirstPage().getPageSize().select("50").select("100");
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
@@ -165,9 +166,9 @@ public class UsersStaffAssociationTests extends TestBase {
     }
 
     @Test
-    @Description("Verify enable and disable.")
-    @TestRail(testCaseId = {"5592", "5593"})
-    public void testVerifyAssociatedStaffCanBeDisabledAndEnabled() {
+    @Description("Verify user can be removed from aPriori Staff table.")
+    @TestRail(testCaseId = {"12081"})
+    public void testVerifyAssociatedStaffCanBeRemoved() {
 
         populateStaffTestUsers(2);
 
@@ -190,15 +191,23 @@ public class UsersStaffAssociationTests extends TestBase {
         assertThat("The candidates were not added.", count, is(greaterThan(0L)));
 
         checkHeader.check(true);
-        updated.clickDisableButton();
-        utils.waitForCondition(candidates::isStable, PageUtils.DURATION_LOADING);
-        long disabled = staffTable.getRows().filter((row) -> row.getCell("deletedAt").hasValue("No")).count();
-        assertThat("The associated users were not disabled.", disabled, is(equalTo(count)));
+        updated.clickRemoveButton()
+                .clickConfirmRemoveCancelButton();
+        utils.waitForCondition(staffTable::isStable, PageUtils.DURATION_LOADING);
+        long usersNotDeleted = staffTable.getRows().count();
+        assertThat("The associated users were removed.", usersNotDeleted, is(equalTo(count)));
 
-        checkHeader.check(true);
-        updated.clickEnableButton();
-        utils.waitForCondition(candidates::isStable, PageUtils.DURATION_LOADING);
-        long enabled = staffTable.getRows().filter((row) -> row.getCell("deletedAt").hasValue("Yes")).count();
-        assertThat("The associated users were not enabled.", enabled, is(equalTo(count)));
+        updated.clickRemoveButton()
+                .clickConfirmRemoveOkButton();
+        utils.waitForCondition(staffTable::isStable, PageUtils.DURATION_LOADING);
+        long usersAdded = staffTable.getRows().count();
+        assertThat("The associated users were not removed.", usersAdded, is(equalTo(0L)));
+
+        staffPage.clickAddFromList();
+        SourceListComponent candidatesUpd = staffPage.getCandidates();
+        TableComponent candidatesUpdTable = Obligation.mandatory(candidatesUpd::getTable, "The candidate table is missing.");
+        Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search("qatest");
+        long removedUser = candidatesUpdTable.getRows().count();
+        assertThat("Users do not appear in the list of aPriori staff candidates", removedUser, is(equalTo(count)));
     }
 }
