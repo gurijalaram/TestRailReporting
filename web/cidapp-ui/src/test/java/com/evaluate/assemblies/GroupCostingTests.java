@@ -1,15 +1,10 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -18,47 +13,29 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
 public class GroupCostingTests extends TestBase {
 
-    private CidAppLoginPage loginPage;
-    private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private ComponentsListPage componentsListPage;
     private ComponentPrimaryPage componentPrimaryPage;
     private UserCredentials currentUser;
     private List<File> subComponents = new ArrayList<File>();
-    private File assembly;
 
     public GroupCostingTests() {
         super();
     }
 
-    private EvaluatePage uploadPartsThenAssembly(String[] subComponentNames, String assemblyName, String scenarioName, UserCredentials currentUser,
-                                                 ProcessGroupEnum prtProcessGroupEnum, ProcessGroupEnum asmProcessGroupEnum) {
-        for (int i=0; i<subComponentNames.length; i++) {
-            subComponents.add(FileResourceUtil.getCloudFile(prtProcessGroupEnum, subComponentNames[i] + ".SLDPRT"));
-        }
-        assembly = FileResourceUtil.getCloudFile(asmProcessGroupEnum, assemblyName + ".SLDASM");
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
-
-        for (int i=0; i<subComponents.size(); i++) {
-            explorePage.uploadComponent(subComponentNames[i], scenarioName, subComponents.get(i), currentUser);
-        }
-
-        return explorePage.uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
-    }
-
     @Test
-    // @TestRail(testCaseId = {"11088", "11089"})
+    @TestRail(testCaseId = {"11088", "11089"})
     @Description("Verify set inputs button only available for 10 or less sub-components")
     public void selectMaxTenSubComponentsTest() {
 
@@ -66,43 +43,48 @@ public class GroupCostingTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        String[] subComponentNames = {
+        final List<String> subComponentNames = Arrays.asList(
             "50mmArc", "50mmCube", "50mmEllipse", "50mmOctagon", "75mmCube", "75mmHexagon",
-            "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder", "500mmBlob"};
+            "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder", "500mmBlob");
+        String subComponentExtension = ".SLDPRT";
         String assemblyName = "RandomShapeAsm";
+        String assemblyExtension = ".SLDASM";
 
-//        for (int i=0; i<subComponentNames.length; i++) {
-//            subComponents.add(FileResourceUtil.getCloudFile(processGroupEnum, subComponentNames[i] + ".SLDPRT"));
-//        }
-//        assembly = FileResourceUtil.getCloudFile(processGroupEnum, assemblyName + ".SLDASM");
-//
-//        loginPage = new CidAppLoginPage(driver);
-//        explorePage = loginPage.login(currentUser);
-//
-//        for (int i=0; i<subComponents.size(); i++) {
-//            explorePage.uploadComponent(subComponentNames[i], scenarioName, subComponents.get(i), currentUser);
-//        }
-//
-//        evaluatePage = explorePage.uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            processGroupEnum,
+            subComponentNames,
+            subComponentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
 
-        evaluatePage = uploadPartsThenAssembly(subComponentNames, assemblyName, scenarioName, currentUser, processGroupEnum, processGroupEnum);
-        componentsListPage = evaluatePage.openComponents();
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
-        assertThat(componentsListPage.isSetInputsEnabled(), is(false));
+        componentsListPage = new CidAppLoginPage(driver)
+            .login(currentUser)
+            .selectFilter("Recent")
+            .openScenario(assemblyName, scenarioName)
+            .openComponents();
 
-        /* Verify that the set inputs button is enabled on first item selection and remains active up to 10 sub-components*/
-        for (int i=0; i<subComponentNames.length-1; i++){
-            componentsListPage.multiHighlightScenarios(subComponentNames[i].toUpperCase() +"," + scenarioName);
-            assertThat(componentsListPage.isSetInputsEnabled(), is(true));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
+
+        for (int i=0; i<subComponentNames.size()-1; i++){
+            componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
+            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
         }
 
-        /* Verify that set inputs button becomes inactive when more than 10 sub-components selected */
-        componentsListPage.highlightScenario(subComponentNames[subComponentNames.length-1].toUpperCase(), scenarioName);
-        assertThat(componentsListPage.isSetInputsEnabled(), is(false));
+        componentsListPage.selectScenario(subComponentNames.get(subComponentNames.size()-1).toUpperCase(), scenarioName);
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
-        componentsListPage.highlightScenario(subComponentNames[rand.nextInt(subComponentNames.length)].toUpperCase(), scenarioName);
-        assertThat(componentsListPage.isSetInputsEnabled(), is(true));
+        componentsListPage.selectScenario(subComponentNames.get(rand.nextInt(subComponentNames.size())).toUpperCase(), scenarioName);
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -115,38 +97,41 @@ public class GroupCostingTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        String[] subComponentNames = {"big ring", "small ring", "Pin"};
+        final List<String> subComponentNames = Arrays.asList("big ring", "small ring", "Pin");
+        String subComponentExtension = ".SLDPRT";
         String assemblyName = "Hinge assembly";
+        String assemblyExtension = ".SLDASM";
 
-        evaluatePage = uploadPartsThenAssembly(subComponentNames, assemblyName, scenarioName, currentUser, prtProcessGroupEnum, asmProcessGroupEnum);
-        componentsListPage = evaluatePage.openComponents();
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            asmProcessGroupEnum,
+            subComponentNames,
+            subComponentExtension,
+            prtProcessGroupEnum,
+            scenarioName,
+            currentUser);
 
-        // Select each of the sub-components
-        for (int i=0; i<subComponentNames.length; i++){
-            componentsListPage.multiHighlightScenarios(subComponentNames[i].toUpperCase() +"," + scenarioName);
-        }
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        componentsListPage = new CidAppLoginPage(driver)
+            .login(currentUser)
+            .selectFilter("Recent")
+            .openScenario(assemblyName, scenarioName)
+            .openComponents();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        subComponentNames.forEach(subComponentName->componentsListPage.selectScenario(subComponentName.toUpperCase(), scenarioName));
 
         componentPrimaryPage = componentsListPage.setInputs();
 
-        // Verify default text in Set Inputs Primary - If text is not as expected add to the error list
-        List<String> errors = new ArrayList<String>();
+        softAssertions.assertThat(componentPrimaryPage.getProcessGroup()).as("Process Group Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentPrimaryPage.getDigitalFactory()).as("Digital Factory Text").isEqualTo(retainText);
+        //softAssertions.assertThat(componentPrimaryPage.getMaterial()).as("Material Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentPrimaryPage.getAnnualVolumePlaceholder()).as("Annual Volume Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentPrimaryPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
 
-        if (!componentPrimaryPage.getProcessGroup().equals(retainText)) {
-            errors.add(componentPrimaryPage.getProcessGroup());
-        }
-        if (!componentPrimaryPage.getDigitalFactory().equals(retainText)) {
-            errors.add(componentPrimaryPage.getDigitalFactory());
-        }
-        if (!componentPrimaryPage.getMaterial().equals(retainText)) {
-            errors.add(componentPrimaryPage.getMaterial());
-        }
-        if (!componentPrimaryPage.getAnnualVolumePlaceholder().equals(retainText)) {
-            errors.add(componentPrimaryPage.getAnnualVolumePlaceholder());
-        }
-        if (!componentPrimaryPage.getYearsPlaceholder().equals(retainText)) {
-            errors.add(componentPrimaryPage.getYearsPlaceholder());
-        }
-
-        assertThat(errors, is(empty()));
+        softAssertions.assertAll();
     }
 }
