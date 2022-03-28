@@ -15,16 +15,19 @@ import org.openqa.selenium.support.FindBy;
  */
 @Slf4j
 public final class StaffPage extends EagerPageComponent<StaffPage> {
-    @FindBy(className = "staff-association-add-button")
+    @FindBy(className = "customer-user-associations-add-button")
     private WebElement addButton;
 
-    @FindBy(className = "staff-association-disable-button")
-    private WebElement disableButton;
+    @FindBy(className = "customer-user-associations-remove-button")
+    private WebElement removeButton;
 
-    @FindBy(className = "staff-association-enable-button")
-    private WebElement enableButton;
+    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    private WebElement confirmRemoveOkButton;
 
-    @FindBy(className = "staff-association-list-view")
+    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    private WebElement confirmRemoveCancelButton;
+
+    @FindBy(className = "user-list-apriroi-staff")
     private WebElement staffAssociationListViewRoot;
     private SourceListComponent staffAssociationList;
 
@@ -47,8 +50,7 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
     @Override
     protected void isLoaded() throws Error {
         getPageUtils().waitForElementToAppear(addButton);
-        getPageUtils().waitForElementToAppear(disableButton);
-        getPageUtils().waitForElementToAppear(enableButton);
+        getPageUtils().waitForElementToAppear(removeButton);
         getPageUtils().waitForElementToAppear(staffAssociationListViewRoot);
     }
 
@@ -78,23 +80,15 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
     }
 
     /**
-     * Clicks the enable button.
-     *
-     * @return This object.
-     */
-    public StaffPage clickEnableButton() {
-        return clickAndWait(enableButton);
-    }
-
-    /**
-     * Clicks the disable button.
+     * Clicks the 'Remove from list' button.
      *
      * @return This object.
      *
      * @throws org.openqa.selenium.ElementNotInteractableException If the button is disabled.
      */
-    public StaffPage clickDisableButton() {
-        return clickAndWait(disableButton);
+    public StaffPage clickRemoveButton() {
+        getPageUtils().waitForElementAndClick(removeButton);
+        return this;
     }
 
     /**
@@ -168,5 +162,24 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
      */
     public StaffPage clickCandidatesConfirmCloseButton() {
         return modalUserList.clickCandidatesConfirmCloseButton(StaffPage.class);
+    }
+
+    /**
+     * Clicks on OK button of remove confirm dialog
+     *
+     * @return this object
+     */
+    public StaffPage clickConfirmRemoveOkButton() {
+        return clickAndWait(confirmRemoveOkButton);
+    }
+
+    /**
+     * Clicks on Cncel button of remove confirm dialog
+     *
+     * @return
+     */
+    public StaffPage clickConfirmRemoveCancelButton() {
+        getPageUtils().waitForElementAndClick(confirmRemoveCancelButton);
+        return this;
     }
 }

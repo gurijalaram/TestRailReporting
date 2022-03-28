@@ -98,7 +98,7 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateCloudReference() {
-        return "AutoCloudRef" + RandomStringUtils.randomAlphabetic(4);
+        return "autocloudref" + RandomStringUtils.randomAlphabetic(4).toLowerCase();
     }
 
     /**

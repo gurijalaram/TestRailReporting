@@ -6,6 +6,7 @@ import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import com.utils.MultiUpload;
+import com.utils.UploadStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -48,6 +49,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = "h4")
     private WebElement fileInputError;
+
+    @FindBy(css = ".import-cad-file-status-message")
+    private WebElement uploadStatus;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -265,5 +269,27 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             .stream()
             .map(x -> x.getAttribute("disabled"))
             .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the upload status state by text
+     *
+     * @return - current page object
+     */
+    public ImportCadFilePage getUploadStatusText() {
+        pageUtils.waitForElementToAppear(uploadStatus).getText();
+        return this;
+    }
+
+    /**
+     * This method checks for upload status
+     *
+     * @return - current page object
+     */
+    public ImportCadFilePage waitForUploadStatus(UploadStatusEnum uploadStatusEnum) {
+        By byUpload = By.xpath(String.format("//*[text()='%s']", uploadStatusEnum.getUploadStatus()));
+
+        pageUtils.waitForElementToAppear(byUpload);;
+        return this;
     }
 }
