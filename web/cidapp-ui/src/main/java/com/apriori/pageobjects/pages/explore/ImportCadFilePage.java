@@ -296,13 +296,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     /**
      * Deletes a row after importing the CAD file
      *
-     * @param tableNumber - the table number to delete
+     * @param tableNumbers - the table number to delete
      * @return - current page object
      */
-    public ImportCadFilePage tableRowToDelete(int tableNumber) {
-        By byUpload = By.cssSelector(String.format("[data-row-id='%s'] [data-icon='xmark']", tableNumber - 1));
-        pageUtils.waitForElementAndClick(byUpload);
-
+    public ImportCadFilePage tableRowToDelete(List<Integer> tableNumbers) {
+        for (Integer tableNumber : tableNumbers) {
+                By byUpload = By.cssSelector(String.format("[data-row-id='%s'] [data-icon='xmark']", tableNumber - 1));
+                pageUtils.waitForElementAndClick(byUpload);
+        }
         return this;
     }
 }
