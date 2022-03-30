@@ -25,7 +25,6 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -117,7 +116,6 @@ public class PreviewPanelTests extends TestBase {
     }
 
     @Test
-    @Ignore
     @Category(SmokeTests.class)
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(testCaseId = {"6202", "6203", "6204"})
