@@ -5,7 +5,6 @@ import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -26,6 +25,7 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -117,6 +117,7 @@ public class PreviewPanelTests extends TestBase {
     }
 
     @Test
+    @Ignore
     @Category(SmokeTests.class)
     @Description("Validate user can select multiple items with the checkboxes or all items on a page by checkbox on a top")
     @TestRail(testCaseId = {"6202", "6203", "6204"})
