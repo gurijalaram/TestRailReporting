@@ -38,7 +38,7 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return cad file response object
      */
-    public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
+    public ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentBuilder) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
                 .multiPartFiles(new MultiPartFiles().use("cadFiles", componentBuilder.getResourceFile()))
@@ -55,7 +55,7 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
-        String resourceName = postCadFiles(componentBuilder).getResponseEntity().getCadFiles().stream()
+        String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
