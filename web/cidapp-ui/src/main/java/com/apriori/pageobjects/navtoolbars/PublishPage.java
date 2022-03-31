@@ -27,7 +27,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='header-message'] p")
     private WebElement headerMessage;
 
-    @FindBy(css = "div[class='checkbox-icon']")
+    @FindBy(css = "[id='qa-publish-form-lock']")
     private WebElement lockTickBox;
 
     @FindBy(css = "div[class='conflict-message']")

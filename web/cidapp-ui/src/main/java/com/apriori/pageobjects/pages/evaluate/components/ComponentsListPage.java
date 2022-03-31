@@ -7,6 +7,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
@@ -70,6 +71,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @FindBy(css = ".component-display-name-container [data-icon='arrow-up-right-from-square']")
     private WebElement subcomponentCard;
+
+    @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
+    private WebElement publishButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -334,6 +338,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
                 return pageUtils.isElementEnabled(includeButton);
             case EXCLUDE:
                 return pageUtils.isElementEnabled(excludeButton);
+            case PUBLISH:
+                return pageUtils.isElementEnabled(publishButton);
             default:
                 return false;
         }
@@ -357,6 +363,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public ComponentsListPage editSubcomponent() {
         pageUtils.waitForElementAndClick(editButton);
         return this;
+    }
+
+    /**
+     * clicks the publish button
+     *
+     * @return - the current page object
+     */
+    public PublishPage publishSubcomponent() {
+        pageUtils.waitForElementAndClick(publishButton);
+        return new PublishPage(driver);
     }
 
     /**
