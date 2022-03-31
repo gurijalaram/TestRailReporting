@@ -2,6 +2,16 @@ package com.apriori.utils.reader.file.user;
 
 import com.apriori.utils.authorization.AuthorizationUtil;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
+
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Base64;
+import java.util.Date;
+
 public class UserCredentials {
 
     private String email;
@@ -9,6 +19,7 @@ public class UserCredentials {
     private String token;
     private String username;
     private String cloudContext;
+    private final int TIME_TO_GET_TOKEN = 10;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -69,11 +80,14 @@ public class UserCredentials {
     }
 
     public String getToken() {
+        if (tokenTimeRemain() <= TIME_TO_GET_TOKEN || token == null) {
+            generateToken();
+        }
         return token;
     }
 
     public UserCredentials generateToken() {
-        this.token = token != null ? token : new AuthorizationUtil(this).getToken()
+        this.token = new AuthorizationUtil(this).getToken()
             .getResponseEntity()
             .getToken();
         return this;
@@ -86,5 +100,21 @@ public class UserCredentials {
     public UserCredentials generateCloudContext() {
         this.cloudContext = cloudContext != null ? cloudContext : new AuthorizationUtil().getAuthTargetCloudContext(this);
         return this;
+    }
+
+    @SneakyThrows
+    private long tokenTimeRemain() {
+        String[] tokens = token.split("\\.");
+
+        Base64.Decoder decoder = Base64.getUrlDecoder();
+
+        String header = new String(decoder.decode(tokens[0]));
+        String payload = new String(decoder.decode(tokens[1]));
+
+        TokenEntity tokenEntity = new ObjectMapper().readValue(payload, TokenEntity.class);
+
+        Date expiredAt = Date.from(Instant.ofEpochSecond(Integer.parseInt(tokenEntity.getExpireAt())));
+
+        return ChronoUnit.MINUTES.between(LocalTime.now(), Instant.ofEpochMilli(expiredAt.getTime()).atZone(ZoneId.systemDefault()).toLocalTime());
     }
 }
