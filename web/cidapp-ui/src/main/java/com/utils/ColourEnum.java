@@ -14,6 +14,7 @@ public enum ColourEnum {
     SUSHI("#8Bc34a"),
     PEAR("#cddc39"),
     YELLOW("#ffeb3b"),
+    YELLOW_LIGHT("#fff4d3"),
     AMBER("#ffc107"),
     ORANGE_PEEL("#ff9800"),
     ORANGE("#ff5722"),
