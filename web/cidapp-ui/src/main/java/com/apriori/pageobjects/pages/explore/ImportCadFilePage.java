@@ -104,7 +104,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    /** Upload multiple cad files
+    /**
+     * Upload multiple cad files
+     *
      * @param multiComponents - component details as a file list
      * @return current page object
      */
@@ -289,7 +291,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage waitForUploadStatus(UploadStatusEnum uploadStatusEnum) {
         By byUpload = By.xpath(String.format("//*[text()='%s']", uploadStatusEnum.getUploadStatus()));
 
-        pageUtils.waitForElementToAppear(byUpload);;
+        pageUtils.waitForElementToAppear(byUpload);
         return this;
     }
 
@@ -301,8 +303,8 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      */
     public ImportCadFilePage tableRowToDelete(List<Integer> tableNumbers) {
         for (Integer tableNumber : tableNumbers) {
-                By byUpload = By.cssSelector(String.format("[data-row-id='%s'] [data-icon='xmark']", tableNumber - 1));
-                pageUtils.waitForElementAndClick(byUpload);
+            By byUpload = By.cssSelector(String.format("[data-row-id='%s'] [data-icon='xmark']", tableNumber - 1));
+            pageUtils.waitForElementAndClick(byUpload);
         }
         return this;
     }
