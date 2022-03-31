@@ -106,11 +106,11 @@ public class UserCredentials {
      * @return long
      */
     private long tokenTimeRemaining() {
-        String[] tokens = token.split("\\.");
+        String[] tokenArray = token.split("\\.");
 
         Base64.Decoder decoder = Base64.getUrlDecoder();
 
-        String payload = new String(decoder.decode(tokens[1]));
+        String payload = new String(decoder.decode(tokenArray[1]));
 
         TokenInfo tokenEntity = JsonManager.deserializeJsonFromString(payload, TokenInfo.class);
 
