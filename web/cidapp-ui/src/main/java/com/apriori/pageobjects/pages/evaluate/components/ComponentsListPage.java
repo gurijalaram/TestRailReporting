@@ -218,6 +218,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ComponentsListPage selectScenario(String componentName, String scenarioName) {
+        scenarioTableController.selectScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Multi-select scenario
      *
      * @param componentScenarioName - component name and method name
