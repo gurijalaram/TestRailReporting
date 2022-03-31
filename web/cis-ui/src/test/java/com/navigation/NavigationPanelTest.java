@@ -1,5 +1,6 @@
 package com.navigation;
 
+import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
@@ -20,6 +21,7 @@ public class NavigationPanelTest extends TestBase {
 
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
+    private CisHeaderBar cisHeaderBar;
     private SoftAssertions softAssertions;
 
     @Before
@@ -39,6 +41,16 @@ public class NavigationPanelTest extends TestBase {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.CisLogin(UserUtil.getUser());
         softAssertions.assertThat(leftHandNavigationBar.getNavigationPanelDefaultState()).isEqualTo("non-collapsed");
+
+    }
+
+    @Test
+    @TestRail(testCaseId = "12014")
+    @Description("Verify the Welcome text on the header")
+    public void testWelcomeTextOnHeader() {
+        loginPage = new CisLoginPage(driver);
+        cisHeaderBar = loginPage.CisLogin(UserUtil.getUser());
+        softAssertions.assertThat(cisHeaderBar.getWelcomeText()).isEqualTo("Welcome Back!");
 
     }
 }

@@ -12,7 +12,7 @@ import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 
 @Slf4j
-public class LeftHandNavigationBar extends EagerPageComponent<LeftHandNavigationBar> {
+public class LeftHandNavigationBar extends CisHeaderBar {
 
     @FindBy(xpath = "//button[@data-testid='non-collapsed']")
     private WebElement hamburgerIcon;
