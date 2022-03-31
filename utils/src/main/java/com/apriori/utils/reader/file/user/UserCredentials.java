@@ -17,7 +17,7 @@ public class UserCredentials {
     private String token;
     private String username;
     private String cloudContext;
-    private final int TIME_TO_GET_TOKEN = 10;
+    private final int TOKEN_MIN_TIME = 10;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -78,7 +78,7 @@ public class UserCredentials {
     }
 
     public String getToken() {
-        if (tokenTimeRemain() <= TIME_TO_GET_TOKEN || token == null) {
+        if (tokenTimeRemaining() <= TOKEN_MIN_TIME || token == null) {
             generateToken();
         }
         return token;
@@ -100,7 +100,12 @@ public class UserCredentials {
         return this;
     }
 
-    private long tokenTimeRemain() {
+    /**
+     * Calculates how much time remains on the token
+     *
+     * @return long
+     */
+    private long tokenTimeRemaining() {
         String[] tokens = token.split("\\.");
 
         Base64.Decoder decoder = Base64.getUrlDecoder();
