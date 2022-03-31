@@ -20,6 +20,7 @@ public class ComponentInfoBuilder {
     private final String extension;
     private final String scenarioName;
     private File resourceFile;
+    private List<File> resourceFiles;
     private String componentIdentity;
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
