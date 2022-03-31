@@ -1,9 +1,7 @@
 package com.apriori.utils.reader.file.user;
 
 import com.apriori.utils.authorization.AuthorizationUtil;
-
-import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.SneakyThrows;
+import com.apriori.utils.json.utils.JsonManager;
 
 import java.time.Instant;
 import java.time.LocalTime;
@@ -102,19 +100,17 @@ public class UserCredentials {
         return this;
     }
 
-    @SneakyThrows
     private long tokenTimeRemain() {
         String[] tokens = token.split("\\.");
 
         Base64.Decoder decoder = Base64.getUrlDecoder();
 
-        String header = new String(decoder.decode(tokens[0]));
         String payload = new String(decoder.decode(tokens[1]));
 
-        TokenEntity tokenEntity = new ObjectMapper().readValue(payload, TokenEntity.class);
+        TokenInfo tokenEntity = JsonManager.deserializeJsonFromString(payload, TokenInfo.class);
 
-        Date expiredAt = Date.from(Instant.ofEpochSecond(Integer.parseInt(tokenEntity.getExpireAt())));
+        Date expireAt = Date.from(Instant.ofEpochSecond(Integer.parseInt(tokenEntity.getExpireAt())));
 
-        return ChronoUnit.MINUTES.between(LocalTime.now(), Instant.ofEpochMilli(expiredAt.getTime()).atZone(ZoneId.systemDefault()).toLocalTime());
+        return ChronoUnit.MINUTES.between(LocalTime.now(), Instant.ofEpochMilli(expireAt.getTime()).atZone(ZoneId.systemDefault()).toLocalTime());
     }
 }

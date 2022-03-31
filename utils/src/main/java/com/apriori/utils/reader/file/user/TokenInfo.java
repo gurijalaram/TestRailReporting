@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TokenEntity {
+public class TokenInfo {
     @JsonProperty("aud")
     private String audience;
     @JsonProperty("sub")
