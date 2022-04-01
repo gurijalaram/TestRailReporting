@@ -1,5 +1,9 @@
 package com.navigation;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
@@ -8,9 +12,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
-import org.junit.After;
-import org.junit.Before;
+
 import org.junit.Test;
 
 public class NavigationPanelTest extends TestBase {
@@ -22,35 +24,19 @@ public class NavigationPanelTest extends TestBase {
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
     private CisHeaderBar cisHeaderBar;
-    private SoftAssertions softAssertions;
-
-    @Before
-    public void setUp() {
-        softAssertions = new SoftAssertions();
-    }
-
-    @After
-    public void tearDown() {
-        softAssertions.assertAll();
-    }
 
     @Test
-    @TestRail(testCaseId = "11992")
-    @Description("Verify the navigation bar position and default state on the home page")
-    public void testNavigationBarDefaultState() {
+    @TestRail(testCaseId = {"11992","12014"})
+    @Description("Verify the navigation bar default state and Welcome text on the home page")
+    public void testNavigationBarDefaultStateAndWelcomeText() {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
-        softAssertions.assertThat(leftHandNavigationBar.getNavigationPanelDefaultState()).isEqualTo("non-collapsed");
 
-    }
+        assertThat(leftHandNavigationBar.getNavigationPanelDefaultState(), is(equalTo("non-collapsed")));
 
-    @Test
-    @TestRail(testCaseId = "12014")
-    @Description("Verify the Welcome text on the header")
-    public void testWelcomeTextOnHeader() {
-        loginPage = new CisLoginPage(driver);
-        cisHeaderBar = loginPage.cisLogin(UserUtil.getUser());
-        softAssertions.assertThat(cisHeaderBar.getWelcomeText()).isEqualTo("Welcome Back!");
+        cisHeaderBar = new CisHeaderBar(driver);
+
+        assertThat(cisHeaderBar.getWelcomeText(), is(equalTo("Welcome Back!")));
 
     }
 }
