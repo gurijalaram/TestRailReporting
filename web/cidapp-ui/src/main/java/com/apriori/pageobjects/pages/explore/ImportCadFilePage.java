@@ -313,6 +313,22 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Delete cad files in the drop zone
+     *
+     * @param componentNames - the component names
+     * @return - the current page object
+     */
+    public ImportCadFilePage cadFilesToDelete(List<String> componentNames) {
+        unTick("Apply to all");
+
+        for (String componentName : componentNames) {
+            By byComponentName = By.xpath(String.format("//*[text()='%s']/following::div[@data-header-id='delete-icon']", componentName));
+            pageUtils.waitForElementAndClick(byComponentName);
+        }
+        return this;
+    }
+
+    /**
      * sorts out the row numbers in descending order
      *
      * @param tableRowNumbers - table row numbers
