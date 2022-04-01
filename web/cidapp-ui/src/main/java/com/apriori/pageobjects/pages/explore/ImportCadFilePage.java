@@ -296,23 +296,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Deletes a row after importing the CAD file
-     *
-     * @param tableRowNumbers - the table number to delete
-     * @return - current page object
-     */
-    public ImportCadFilePage tableRowsToDelete(List<Integer> tableRowNumbers) {
-        unTick("Apply to all");
-        sortTableRowNumbers(tableRowNumbers);
-
-        for (Integer tableRowNumber : tableRowNumbers) {
-            By byUpload = By.cssSelector(String.format("[data-row-id='%s'] [data-icon='xmark']", tableRowNumber - 1));
-            pageUtils.waitForElementAndClick(byUpload);
-        }
-        return this;
-    }
-
-    /**
      * Delete cad files in the drop zone
      *
      * @param componentNames - the component names
@@ -326,23 +309,5 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             pageUtils.waitForElementAndClick(byComponentName);
         }
         return this;
-    }
-
-    /**
-     * sorts out the row numbers in descending order
-     *
-     * @param tableRowNumbers - table row numbers
-     * @return - Integer
-     */
-    private List<Integer> sortTableRowNumbers(List<Integer> tableRowNumbers) {
-        for (int i = 0; i < tableRowNumbers.size() - 1; i++) {
-            if (tableRowNumbers.get(i) < tableRowNumbers.get(i + 1)) {
-                int temp = tableRowNumbers.get(i);
-                tableRowNumbers.set(i, tableRowNumbers.get(i + 1));
-                tableRowNumbers.set(i + 1, temp);
-                i = -1;
-            }
-        }
-        return tableRowNumbers;
     }
 }
