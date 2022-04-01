@@ -55,7 +55,7 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      * @param userCredentials - object with users credentials and access level
      * @return new page object
      */
-    public LeftHandNavigationBar CisLogin(UserCredentials userCredentials) {
+    public LeftHandNavigationBar cisLogin(UserCredentials userCredentials) {
         return aprioriLoginPage.login(userCredentials, LeftHandNavigationBar.class);
     }
 }

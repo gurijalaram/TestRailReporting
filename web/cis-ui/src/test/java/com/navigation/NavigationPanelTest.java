@@ -2,11 +2,11 @@ package com.navigation;
 
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -39,7 +39,7 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify the navigation bar position and default state on the home page")
     public void testNavigationBarDefaultState() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.CisLogin(UserUtil.getUser());
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
         softAssertions.assertThat(leftHandNavigationBar.getNavigationPanelDefaultState()).isEqualTo("non-collapsed");
 
     }
@@ -49,7 +49,7 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify the Welcome text on the header")
     public void testWelcomeTextOnHeader() {
         loginPage = new CisLoginPage(driver);
-        cisHeaderBar = loginPage.CisLogin(UserUtil.getUser());
+        cisHeaderBar = loginPage.cisLogin(UserUtil.getUser());
         softAssertions.assertThat(cisHeaderBar.getWelcomeText()).isEqualTo("Welcome Back!");
 
     }
