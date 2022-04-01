@@ -38,10 +38,31 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return cad file response object
      */
+    public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
+        return postCadFile(componentBuilder, componentBuilder.getResourceFiles());
+    }
+
+    /**
+     * POST cad files
+     *
+     * @param componentBuilder - the component object
+     * @return cad file response object
+     */
     public ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentBuilder) {
+        return postCadFile(componentBuilder, Collections.singletonList(componentBuilder.getResourceFile()));
+    }
+
+    /**
+     * POST cad files
+     *
+     * @param componentBuilder - the component object
+     * @param files            - the list of files
+     * @return cad file response object
+     */
+    private ResponseWrapper<CadFilesResponse> postCadFile(ComponentInfoBuilder componentBuilder, List<File> files) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
-                .multiPartFiles(new MultiPartFiles().use("cadFiles", componentBuilder.getResourceFile()))
+                .multiPartFiles(new MultiPartFiles().use("cadFiles", files))
                 .token(componentBuilder.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
