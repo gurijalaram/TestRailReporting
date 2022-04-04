@@ -128,7 +128,7 @@ public class ComponentsUtil {
                             .collect(Collectors.toList())
                             .get(0))
                         // TODO: 04/04/2022 cn - need to find a way to make this work for 1 scenario name also
-                        .scenarioName(new GenerateStringUtil().generateScenarioName())
+                        .scenarioName(componentInfoBuilder.getScenarioName())
                         .build())
                 .collect(Collectors.toList()))
             .token(componentInfoBuilder.getUser().getToken());

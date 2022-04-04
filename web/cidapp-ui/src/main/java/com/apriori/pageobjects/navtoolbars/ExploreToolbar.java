@@ -114,12 +114,12 @@ public class ExploreToolbar extends MainNavBar {
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSS(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(userCredentials)
-                .build());
+                ComponentInfoBuilder.builder()
+                        .componentName(componentName)
+                        .scenarioName(scenarioName)
+                        .resourceFile(resourceFile)
+                        .user(userCredentials)
+                        .build());
         return navigateToScenario(component);
     }
 
@@ -144,13 +144,13 @@ public class ExploreToolbar extends MainNavBar {
                                                      UserCredentials currentUser) {
 
         ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadAndPublishAssembly(
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            assemblyName,
-            assemblyExtension,
-            scenarioName,
-            currentUser);
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                assemblyName,
+                assemblyExtension,
+                scenarioName,
+                currentUser);
 
         return navigateToScenario(myAssembly);
     }
@@ -182,14 +182,14 @@ public class ExploreToolbar extends MainNavBar {
                                                          UserCredentials currentUser) {
 
         ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
+                assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser);
 
         return navigateToScenario(myAssembly);
     }
@@ -205,18 +205,19 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(userCredentials)
-            .build());
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(userCredentials)
+                .build());
     }
 
-    public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, UserCredentials currentUser) {
+    public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
         return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
-            .resourceFiles(resourceFiles)
-            .user(currentUser)
-            .build());
+                .resourceFiles(resourceFiles)
+                .scenarioName(scenarioName)
+                .user(currentUser)
+                .build());
     }
 
     /**
@@ -273,8 +274,8 @@ public class ExploreToolbar extends MainNavBar {
      */
     public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
         return importCadFile()
-            .inputComponentDetails(scenarioName, filePath)
-            .cancel(className);
+                .inputComponentDetails(scenarioName, filePath)
+                .cancel(className);
     }
 
     /**

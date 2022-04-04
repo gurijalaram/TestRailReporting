@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -32,6 +33,7 @@ public class UploadTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
+    private ComponentsListPage componentsListPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -48,9 +50,9 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(UserUtil.getUser())
-            .importCadFile()
-            .inputComponentDetails(testScenarioName, resourceFile)
-            .getFileInputError();
+                .importCadFile()
+                .inputComponentDetails(testScenarioName, resourceFile)
+                .getFileInputError();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
@@ -70,10 +72,10 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .createScenario()
-            .enterScenarioName(newScenarioName)
-            .submit(EvaluatePage.class);
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .createScenario()
+                .enterScenarioName(newScenarioName)
+                .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
@@ -91,8 +93,8 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
-            .clickSearch(componentName);
+                .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
+                .clickSearch(componentName);
 
         assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(equalTo(0)));
     }
@@ -110,23 +112,23 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
-            .logout()
-            .login(UserUtil.getUser())
-            .selectFilter("Public")
-            .clickSearch(componentName)
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, scenarioName);
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .publishScenario()
+                .publish(cidComponentItem, currentUser, EvaluatePage.class)
+                .logout()
+                .login(UserUtil.getUser())
+                .selectFilter("Public")
+                .clickSearch(componentName)
+                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+                .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }
@@ -134,18 +136,27 @@ public class UploadTests extends TestBase {
     @Test
     @Description("Upload multi-components")
     public void multiUploadComponents() {
-        final File resource1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt");
-        final File resource2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Plastic moulded cap DFM.CATPart");
-        final List<File> resourceFiles = Arrays.asList(resource1, resource2);
+        final File resource1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt");
+        final File resource2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt");
+        final File resource3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt");
+        final File resource4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt");
+        final File resource5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt");
+        final List<File> resourceFiles = Arrays.asList(resource1, resource2, resource3, resource4, resource5);
         final UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-            .uploadMultiComponents(resourceFiles, currentUser);
+                .uploadMultiComponents(resourceFiles, scenarioName, currentUser);
 
-        cidComponentItem.getScenarioItems().forEach(scenarioItem -> {
-            evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
-            assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), (is(true)));
-        });
+        evaluatePage = new ExplorePage(driver).selectFilter("Recent")
+                .clickSearch("v6 piston assembly")
+                .openScenario("V6 PISTON ASSEMBLY_ASM1", scenarioName);
+
+        componentsListPage = new ComponentsListPage(driver);
+        componentsListPage.selectCheckAllBox()
+                .setInputs()
+                .selectProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT)
+                .applyAndCost(ComponentsListPage.class);
     }
 }
