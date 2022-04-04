@@ -140,8 +140,8 @@ public class ComponentsUtil {
         // TODO: 04/04/2022 cn - may want to do this kind of check in the test so may also be unnecessary
         assertEquals("The component(s) was not uploaded.", HttpStatus.SC_OK, postComponentResponse.getStatusCode());
 
-        List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(x ->
-            new CssComponent().getUnCostedCssComponent(x.getFilename(), x.getScenarioName(), componentInfoBuilder.getUser()).stream()).collect(Collectors.toList());
+        List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
+            new CssComponent().getUnCostedCssComponent(component.getFilename(), component.getScenarioName(), componentInfoBuilder.getUser()).stream()).collect(Collectors.toList());
 
         scenarioItemList.forEach(scenario -> {
             componentInfoBuilder.setComponentIdentity(scenario.getComponentIdentity());
