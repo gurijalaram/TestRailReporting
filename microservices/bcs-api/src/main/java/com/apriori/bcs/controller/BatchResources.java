@@ -6,6 +6,8 @@ import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Batches;
 import com.apriori.bcs.entity.response.Cancel;
 import com.apriori.bcs.enums.BCSAPIEnum;
+import com.apriori.bcs.enums.BCSState;
+import com.apriori.bcs.utils.BcsBase;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class contains methods Utils related Batch-Controller APIs.
@@ -27,7 +30,7 @@ import java.util.Map;
  * <li>Start-Costing
  */
 @Slf4j
-public class BatchResources {
+public class BatchResources extends BcsBase {
 
     /**
      * Creates Batch
@@ -117,5 +120,32 @@ public class BatchResources {
         if (batchState.stream().anyMatch(state -> !state.contains(batch.getState()))) {
             BatchResources.cancelBatchProcessing(batch.getIdentity());
         }
+    }
+
+    /**
+     * Checks an wait until the batch costing state reached to expected state
+     *
+     * @param batchIdentity - Batch ID to send
+     * @param bcsExpectedState - expected BCS State
+     * @return BCSState
+     */
+    public static boolean waitUntilBatchCostingReachedExpected(String batchIdentity, BCSState bcsExpectedState) {
+        long initialTime = System.currentTimeMillis() / 1000;
+        RequestEntity requestEntity;
+        Batch batch;
+        do {
+            requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
+                .inlineVariables(batchIdentity, batchIdentity);
+            batch = (Batch) HTTPRequest.build(requestEntity).get().getResponseEntity();
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            } catch (InterruptedException e) {
+                log.error(e.getMessage());
+                Thread.currentThread().interrupt();
+            }
+        } while (!batch.getState().equals(bcsExpectedState.toString())
+            && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
+
+        return (batch.getState().equals(BCSState.COMPLETED.toString())) ? true : false;
     }
 }

@@ -9,8 +9,6 @@ import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
-import com.apriori.bcs.utils.BcsUtils;
-import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -20,19 +18,15 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
-import com.apriori.utils.reader.file.part.PartData;
-import com.apriori.utils.reader.file.part.PartUtil;
 
 import lombok.extern.slf4j.Slf4j;
-import org.junit.Assert;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 /**
  * This class contains the methods related to batch-parts-controller APIs
@@ -41,8 +35,9 @@ import java.util.stream.Collectors;
 public class BatchPartResources {
 
     private static RequestEntity requestEntity = null;
-    private static Map<String, BCSPartBenchmarkingDTO> partsCollector;
     private static final long WAIT_TIME = 300;
+    private static String batchID;
+    static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(10);
 
     /**
      * Creates a new batch part for specific batch ID.
@@ -282,177 +277,7 @@ public class BatchPartResources {
         return (part.getState().equals(bcsExpectedState.toString())) ? true : false;
     }
 
-    /**
-     * Add number of parts (configured in config file) to batch
-     *
-     * @param numberOfParts- number of parts
-     * @param batchIdentity- Batch Identity
-     */
-    public static void addPartsToBatch(int numberOfParts, String batchIdentity) {
-        partsCollector = new HashMap<>();
 
-        for (int i = 0; i < numberOfParts; i++) {
-            NewPartRequest newPartRequest = getNewPartRequestAndOverridePartData(BatchPartResources.newPartRequest());
-            Part batchPart = BatchPartResources.createNewBatchPartByID(newPartRequest, batchIdentity).getResponseEntity();
-            BCSPartBenchmarkingDTO benchData = consolidatePartsStatus(batchPart, newPartRequest);
-            benchData.setBatchIdentity(batchIdentity);
-            partsCollector.put(batchPart.getIdentity(), benchData);
-        }
-    }
-
-    /**
-     * Checks an wait until the batch part status is completed
-     *
-     * @param batchIdentity - Batch ID to send
-     * @return boolean - true or false (true => all parts are in finished state, false => all parts are not processed in 5 minutes)
-     */
-    public static boolean waitUntilBatchPartsCostingAreCompleted(String batchIdentity) {
-        long initialTime = System.currentTimeMillis() / 1000;
-        Parts parts;
-        do {
-            parts = BatchPartResources.getBatchPartById(batchIdentity).getResponseEntity();
-            try {
-                TimeUnit.SECONDS.sleep(10);
-            } catch (InterruptedException e) {
-                log.error(e.getMessage());
-                Thread.currentThread().interrupt();
-            }
-
-        } while (getFinishedPartsCount(parts.getItems()) != parts.getItems().size() && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
-
-        return (getFinishedPartsCount(parts.getItems()) == parts.getItems().size()) ? true : false;
-    }
-
-    /**
-     * Summarize the batch parts costing state and reports the performance metrics for each part in a batch.
-     *
-     * @param batchIdentity
-     */
-    public static void summarizeAndLogPartsCostingInfo(String batchIdentity) {
-        Parts parts = BatchPartResources.getBatchPartById(batchIdentity).getResponseEntity();
-        parts.getItems().forEach(part -> {
-            BCSPartBenchmarkingDTO benchData = partsCollector.get(part.getIdentity());
-            benchData.setState(part.getState());
-            benchData.setCostingResults(part.getCostingResult());
-            benchData.setErrorMessage(part.getErrors());
-            benchData.setCostingDuration(part.getUpdatedAt());
-            partsCollector.put(part.getIdentity(), benchData);
-        });
-
-        List<BCSPartBenchmarkingDTO> partsReport = partsCollector.values()
-            .stream()
-            .collect(Collectors.toList());
-
-        String formattedString = getFormattedString(partsReport);
-
-        log.info("================== Batch Parts Benchmarking Data ==================");
-        log.info("--------------------------------------------------------------------------------------------------------------------------------------");
-        log.info(String.format(formattedString, "PART_ID", "PART_NAME", "PROCESS_GROUP", "PART_STATE", "COSTING_RESULT", "PROCESSING_TIME", "ERRORS"));
-        log.info("--------------------------------------------------------------------------------------------------------------------------------------");
-
-        for (BCSPartBenchmarkingDTO partDTO : partsReport) {
-            log.info(String.format(formattedString, partDTO.getIdentity(), partDTO.getPartName(),
-                partDTO.getProcessGroup(), partDTO.getState(), partDTO.getCostingResults(),
-                BcsUtils.convertSecsToMins(partDTO.getCostingDuration()), partDTO.getErrorMessage()));
-        }
-        log.info("--------------------------------------------------------------------------------------------------------------------------------------");
-
-        for (BCSPartBenchmarkingDTO partDTO : partsReport) {
-            Assert.assertEquals("Verfiy Part State", BCSState.COMPLETED.toString(), partDTO.getState());
-        }
-    }
-
-    /**
-     * Overides NewPartRequest class object with deserialized json test data with aws cloud data files
-     *
-     * @param newPartRequest
-     * @return newPartRequest - deserialized class object
-     */
-    private static NewPartRequest getNewPartRequestAndOverridePartData(NewPartRequest newPartRequest) {
-        PartData partData = PartUtil.getPartData();
-
-        newPartRequest.setFilename(partData.getFileName());
-        newPartRequest.setProcessGroup(partData.getProcessGroup());
-        newPartRequest.setMaterialName(partData.getMaterial());
-        newPartRequest.setAnnualVolume(partData.getAnnualVolume());
-        newPartRequest.setBatchSize(partData.getBatchSize());
-
-        return newPartRequest;
-    }
-
-    /**
-     * Consolidates Part class data and New Part Request for reporting purpose
-     *
-     * @param batchPart
-     * @param newPartRequest
-     * @return BCSPartBenchmarkingDTO object - combined version of Part and NewPartRequest class object
-     */
-    private static BCSPartBenchmarkingDTO consolidatePartsStatus(Part batchPart, NewPartRequest newPartRequest) {
-        BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
-        benchData.setFilename(newPartRequest.getFilename());
-        benchData.setProcessGroup(newPartRequest.getProcessGroup());
-        benchData.setMaterialName(newPartRequest.getMaterialName());
-        benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
-        benchData.setBatchSize(newPartRequest.getBatchSize());
-
-        return benchData;
-    }
-
-    /**
-     * Batch parts costing processed count
-     *
-     * @param parts
-     * @return - count of batch parts costing processed count (state should in COMPLETED, ERRORED, AND REJECTED)
-     */
-    private static long getFinishedPartsCount(List<Part> parts) {
-        List<BCSState> states = Arrays.asList(BCSState.COMPLETED, BCSState.ERRORED, BCSState.REJECTED);
-        return parts.stream()
-            .filter(part ->
-                states.contains(BCSState.valueOf(part.getState()))
-            )
-            .count();
-    }
-
-    /**
-     * Formats parts reporting class object and returns formatted string for reporting purpose.
-     *
-     * @param parts
-     * @return String (example : returns formatted string based calculation of data size %6s %4s %10s)
-     */
-    private static String getFormattedString(List<BCSPartBenchmarkingDTO> parts) {
-        StringBuilder formattedString = new StringBuilder("");
-        int identity = 1;
-        int partName = 1;
-        int processGroup = 1;
-        int state = 1;
-        int costingResult = 1;
-        int processingTime = 1;
-        int errors = 1;
-
-        for (BCSPartBenchmarkingDTO partReport : parts) {
-            identity = (partReport.getIdentity().length() > identity) ? partReport.getIdentity().length() : identity;
-            partName = (partReport.getPartName().length() > partName) ? partReport.getPartName().length() : partName;
-            processGroup = (partReport.getProcessGroup().length() > processGroup) ? partReport.getProcessGroup().length() : processGroup;
-            state = (partReport.getState().length() > state) ? partReport.getState().length() : state;
-            if (null != partReport.getCostingResults()) {
-                costingResult = (partReport.getCostingResults().length() > costingResult) ? partReport.getCostingResults().length() : costingResult;
-            }
-            processingTime = (partReport.getCostingDuration().toString().length() > processingTime) ? partReport.getCostingDuration().toString().length() : processingTime;
-            if (null != partReport.getErrorMessage()) {
-                errors = (partReport.getErrorMessage().length() > errors) ? partReport.getErrorMessage().length() : errors;
-            }
-
-        }
-        formattedString.append("  %" + identity + "s")
-            .append("  %" + partName + "s")
-            .append("  %" + processGroup + "s")
-            .append("  %" + state + "s")
-            .append("  %" + costingResult + "s")
-            .append("  %" + processingTime + "s")
-            .append("  %" + errors + "s");
-
-        return formattedString.toString();
-    }
 
     /**
      * This is private method to set the form parameters used in creating batch part

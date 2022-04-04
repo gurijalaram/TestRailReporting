@@ -6,6 +6,7 @@ import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import com.utils.MultiUpload;
+import com.utils.UploadStatusEnum;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -48,6 +49,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = "h4")
     private WebElement fileInputError;
+
+    @FindBy(css = ".import-cad-file-status-message")
+    private WebElement uploadStatus;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -100,7 +104,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    /** Upload multiple cad files
+    /**
+     * Upload multiple cad files
+     *
      * @param multiComponents - component details as a file list
      * @return current page object
      */
@@ -265,5 +271,44 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             .stream()
             .map(x -> x.getAttribute("disabled"))
             .collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the upload status state by text
+     *
+     * @return - current page object
+     */
+    public ImportCadFilePage getUploadStatusText() {
+        pageUtils.waitForElementToAppear(uploadStatus).getText();
+        return this;
+    }
+
+    /**
+     * This method checks for upload status
+     *
+     * @return - current page object
+     */
+    public ImportCadFilePage waitForUploadStatus(UploadStatusEnum uploadStatusEnum) {
+        By byUpload = By.xpath(String.format("//*[text()='%s']", uploadStatusEnum.getUploadStatus()));
+
+        pageUtils.waitForElementToAppear(byUpload);
+        return this;
+    }
+
+    /**
+     * Delete cad files in the drop zone
+     *
+     * @param componentNames - the component names
+     * @return - the current page object
+     */
+    public ImportCadFilePage cadFilesToDelete(List<String> componentNames) {
+        // TODO untick() to be removed once the multi upload drop zone is fixed(CID-407) Ticket number BA-2273
+        unTick("Apply to all");
+
+        for (String componentName : componentNames) {
+            By byComponentName = By.xpath(String.format("//*[text()='%s']/following::div[@data-header-id='delete-icon']", componentName));
+            pageUtils.waitForElementAndClick(byComponentName);
+        }
+        return this;
     }
 }
