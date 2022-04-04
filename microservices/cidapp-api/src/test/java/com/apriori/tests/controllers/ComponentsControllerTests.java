@@ -25,8 +25,6 @@ import org.apache.http.HttpStatus;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 import java.util.stream.Collectors;
 
 public class ComponentsControllerTests {
@@ -51,25 +49,6 @@ public class ComponentsControllerTests {
             .build());
 
         assertThat(postComponentResponse.getScenarioIdentity(), is(not(emptyString())));
-    }
-
-    @Test
-    @Description("Add new components")
-    public void postComponents() {
-        final File file1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt");
-        final File file2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Plastic moulded cap DFM.CATPart");
-        final List<File> resourceFiles = Arrays.asList(file1, file2);
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-        final List<String> scenarioNames = Arrays.asList(scenarioName1, scenarioName2);
-        final UserCredentials currentUser = UserUtil.getUser();
-
-        // TODO: 04/04/2022 cn - @moya we need to discuss and decide how to write this test
-        ComponentsUtil postComponentResponse = componentsUtil.postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
-            .scenarioNames(scenarioNames)
-            .resourceFiles(resourceFiles)
-            .user(currentUser)
-            .build());
     }
 
     @Test

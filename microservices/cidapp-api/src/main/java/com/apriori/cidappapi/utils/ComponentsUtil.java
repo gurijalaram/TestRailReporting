@@ -112,7 +112,7 @@ public class ComponentsUtil {
      * @param componentInfoBuilder - the component object
      * @return
      */
-    public ComponentsUtil postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
+    public ComponentInfoBuilder postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
         List<CadFile> resources = new ArrayList<>(postCadFiles(componentInfoBuilder).getResponseEntity().getCadFiles());
 
         RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
@@ -135,13 +135,22 @@ public class ComponentsUtil {
 
         ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
 
+        componentInfoBuilder.setComponent(postComponentResponse.getResponseEntity());
+
         // TODO: 04/04/2022 cn - may want to do this kind of check in the test so may also be unnecessary
         assertEquals("The component(s) was not uploaded.", HttpStatus.SC_OK, postComponentResponse.getStatusCode());
 
-        // TODO: 04/04/2022 cn - may want to do this kind of check in the test so may also be unnecessary
-        postComponentResponse.getResponseEntity().getSuccesses().forEach(successes ->
-            new CssComponent().getUnCostedCssComponent(successes.getFilename(), successes.getScenarioName(), componentInfoBuilder.getUser()));
-        return this;
+        List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(x ->
+            new CssComponent().getUnCostedCssComponent(x.getFilename(), x.getScenarioName(), componentInfoBuilder.getUser()).stream()).collect(Collectors.toList());
+
+        scenarioItemList.forEach(scenario -> {
+            componentInfoBuilder.setComponentIdentity(scenario.getComponentIdentity());
+            componentInfoBuilder.setScenarioIdentity(scenario.getScenarioIdentity());
+
+        });
+        componentInfoBuilder.setScenarioItems(scenarioItemList);
+
+        return componentInfoBuilder;
     }
 
     /**

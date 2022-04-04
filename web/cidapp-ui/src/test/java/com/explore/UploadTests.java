@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -25,6 +26,8 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class UploadTests extends TestBase {
     private CidAppLoginPage loginPage;
@@ -127,5 +130,27 @@ public class UploadTests extends TestBase {
             .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
+    }
+
+    @Test
+    @Description("Upload multi-components")
+    public void multiUploadComponents() {
+        final File resource1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt");
+        final File resource2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Plastic moulded cap DFM.CATPart");
+        final List<File> resourceFiles = Arrays.asList(resource1, resource2);
+        final UserCredentials currentUser = UserUtil.getUser();
+
+        ComponentInfoBuilder postComponentResponse = new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
+            .resourceFiles(resourceFiles)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser);
+
+        postComponentResponse.getScenarioItems().forEach(scenarioItem -> {
+            evaluatePage = explorePage.navigateToScenario(postComponentResponse);
+            assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), (is(true)));
+        });
     }
 }
