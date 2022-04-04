@@ -20,6 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
+import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -44,14 +45,16 @@ public class UploadComponentTests extends TestBase {
     public void testUploadComponent() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        String componentName = "Casting";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String componentName = "Case_17";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile)
+            .waitForUploadStatus(UploadStatusEnum.UPLOADING)
+            .getUploadStatusText()
             .submit()
             .close()
             .clickSearch(componentName)
