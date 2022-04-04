@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 
 import com.utils.ButtonTypeEnum;
+import com.utils.ComponentStateEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -415,5 +416,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public boolean isCadButtonEnabled() {
         return pageUtils.isElementEnabled(updateCadButton);
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon - the icon
+     * @return - boolean
+     */
+    public boolean isIconDisplayed(ComponentStateEnum icon) {
+        By iconStatus = By.cssSelector(String.format(".table-body [data-icon='%s']", icon.getComponentStatus()));
+        return pageUtils.waitForElementToAppear(iconStatus).isDisplayed();
     }
 }
