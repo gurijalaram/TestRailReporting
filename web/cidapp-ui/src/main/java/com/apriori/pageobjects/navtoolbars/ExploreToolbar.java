@@ -212,6 +212,13 @@ public class ExploreToolbar extends MainNavBar {
             .build());
     }
 
+    public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, UserCredentials currentUser) {
+        return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
+            .resourceFiles(resourceFiles)
+            .user(currentUser)
+            .build());
+    }
+
     /**
      * Selects the file dropdown and enters file details
      *

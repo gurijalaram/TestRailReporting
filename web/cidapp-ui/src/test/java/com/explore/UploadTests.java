@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -140,16 +139,12 @@ public class UploadTests extends TestBase {
         final List<File> resourceFiles = Arrays.asList(resource1, resource2);
         final UserCredentials currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder postComponentResponse = new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
-            .resourceFiles(resourceFiles)
-            .user(currentUser)
-            .build());
-
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadMultiComponents(resourceFiles, currentUser);
 
-        postComponentResponse.getScenarioItems().forEach(scenarioItem -> {
-            evaluatePage = explorePage.navigateToScenario(postComponentResponse);
+        cidComponentItem.getScenarioItems().forEach(scenarioItem -> {
+            evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
             assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), (is(true)));
         });
     }
