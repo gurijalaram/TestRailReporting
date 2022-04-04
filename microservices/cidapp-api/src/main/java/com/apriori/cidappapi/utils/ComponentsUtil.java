@@ -14,6 +14,7 @@ import com.apriori.cidappapi.entity.response.componentiteration.ComponentIterati
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
@@ -24,6 +25,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -81,12 +83,13 @@ public class ComponentsUtil {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-                .body("groupItems", Collections.singletonList(ComponentRequest.builder()
-                    .filename(componentBuilder.getResourceFile().getName())
-                    .override(false)
-                    .resourceName(resourceName)
-                    .scenarioName(componentBuilder.getScenarioName())
-                    .build()))
+                .body("groupItems",
+                    Collections.singletonList(ComponentRequest.builder()
+                        .filename(componentBuilder.getResourceFile().getName())
+                        .override(false)
+                        .resourceName(resourceName)
+                        .scenarioName(componentBuilder.getScenarioName())
+                        .build()))
                 .token(componentBuilder.getUser().getToken());
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
@@ -101,6 +104,44 @@ public class ComponentsUtil {
         componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
 
         return componentBuilder;
+    }
+
+    /**
+     * POST new multicomponent
+     *
+     * @param componentInfoBuilder - the component object
+     * @return
+     */
+    public ComponentsUtil postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
+        List<CadFile> resources = new ArrayList<>(postCadFiles(componentInfoBuilder).getResponseEntity().getCadFiles());
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+            .body("groupItems", componentInfoBuilder.getResourceFiles()
+                .stream()
+                .map(resourceFile ->
+                    ComponentRequest.builder()
+                        .filename(resourceFile.getName())
+                        .override(false)
+                        .resourceName(resources.stream()
+                            .filter(x -> x.getFilename().equals(resourceFile.getName()))
+                            .map(CadFile::getResourceName)
+                            .collect(Collectors.toList())
+                            .get(0))
+                        // TODO: 04/04/2022 cn - need to find a way to make this work for 1 scenario name also
+                        .scenarioName(new GenerateStringUtil().generateScenarioName())
+                        .build())
+                .collect(Collectors.toList()))
+            .token(componentInfoBuilder.getUser().getToken());
+
+        ResponseWrapper<PostComponentResponse> postComponentResponse = HTTPRequest.build(requestEntity).post();
+
+        // TODO: 04/04/2022 cn - may want to do this kind of check in the test so may also be unnecessary
+        assertEquals("The component(s) was not uploaded.", HttpStatus.SC_OK, postComponentResponse.getStatusCode());
+
+        // TODO: 04/04/2022 cn - may want to do this kind of check in the test so may also be unnecessary
+        postComponentResponse.getResponseEntity().getSuccesses().forEach(successes ->
+            new CssComponent().getUnCostedCssComponent(successes.getFilename(), successes.getScenarioName(), componentInfoBuilder.getUser()));
+        return this;
     }
 
     /**
