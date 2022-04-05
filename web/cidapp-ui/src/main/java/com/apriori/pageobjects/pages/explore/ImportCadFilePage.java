@@ -276,6 +276,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     /**
      * This method checks for upload status
+     * To search multiple/group status in test eg. waitForUploadStatus(componentName + extension, UploadStatusEnum.completedGroup.stream().findAny().get())
      *
      * @return - current page object
      */
