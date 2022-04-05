@@ -7,12 +7,14 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ButtonTypeEnum;
 import com.utils.ComponentStateEnum;
@@ -333,7 +335,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - boolean
      */
-    public boolean isButtonEnabled(ButtonTypeEnum buttonTypeEnum) {
+    public boolean isAssemblyTableButtonEnabled(ButtonTypeEnum buttonTypeEnum) {
         switch (buttonTypeEnum) {
             case INCLUDE:
                 return pageUtils.isElementEnabled(includeButton);
@@ -424,8 +426,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param icon - the icon
      * @return - boolean
      */
-    public boolean isIconDisplayed(ComponentStateEnum icon) {
-        By iconStatus = By.cssSelector(String.format(".table-body [data-icon='%s']", icon.getComponentStatus()));
+    public boolean isIconDisplayed(StatusIconEnum icon) {
+        By iconStatus = By.cssSelector(String.format(".table-row [data-icon='%s']", icon.getStatusIcon()));
         return pageUtils.waitForElementToAppear(iconStatus).isDisplayed();
     }
 }
