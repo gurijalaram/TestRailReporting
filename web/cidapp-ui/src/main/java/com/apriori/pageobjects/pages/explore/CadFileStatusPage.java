@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +27,6 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private ModalDialogController modalDialogController;
 
     public CadFileStatusPage(WebDriver driver) {
         this.driver = driver;
