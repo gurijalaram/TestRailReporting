@@ -1,14 +1,13 @@
 package com.apriori.utils.reader.file.user;
 
 import com.apriori.utils.authorization.AuthorizationUtil;
-import com.apriori.utils.json.utils.JsonManager;
+
+import com.auth0.jwt.JWT;
 
 import java.time.Instant;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
-import java.util.Base64;
-import java.util.Date;
 
 public class UserCredentials {
 
@@ -17,7 +16,7 @@ public class UserCredentials {
     private String token;
     private String username;
     private String cloudContext;
-    private final int TOKEN_MIN_TIME = 10;
+    private final int TOKEN_MIN_TIME_IN_MINUTES = 10;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -78,7 +77,10 @@ public class UserCredentials {
     }
 
     public String getToken() {
-        if (tokenTimeRemaining() <= TOKEN_MIN_TIME || token == null) {
+        if (ChronoUnit.MINUTES.between(LocalTime.now(),
+            Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
+                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES || token == null) {
+
             generateToken();
         }
         return token;
@@ -98,24 +100,5 @@ public class UserCredentials {
     public UserCredentials generateCloudContext() {
         this.cloudContext = cloudContext != null ? cloudContext : new AuthorizationUtil().getAuthTargetCloudContext(this);
         return this;
-    }
-
-    /**
-     * Calculates how much time remains on the token
-     *
-     * @return long
-     */
-    private long tokenTimeRemaining() {
-        String[] tokenArray = token.split("\\.");
-
-        Base64.Decoder decoder = Base64.getUrlDecoder();
-
-        String payload = new String(decoder.decode(tokenArray[1]));
-
-        TokenInfo tokenEntity = JsonManager.deserializeJsonFromString(payload, TokenInfo.class);
-
-        Date expireAt = Date.from(Instant.ofEpochSecond(Integer.parseInt(tokenEntity.getExpireAt())));
-
-        return ChronoUnit.MINUTES.between(LocalTime.now(), Instant.ofEpochMilli(expireAt.getTime()).atZone(ZoneId.systemDefault()).toLocalTime());
     }
 }
