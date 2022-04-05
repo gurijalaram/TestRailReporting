@@ -21,7 +21,7 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     private WebElement closeButton;
 
     @FindBy(css = ".modal-body .mb-3")
-    private WebElement successMessageText;
+    private WebElement uploadStatusText;
 
     @FindBy(css = ".modal-body .message")
     private WebElement messageText;
@@ -64,6 +64,6 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
      * @return - string
      */
     public String getImportMessage() {
-        return pageUtils.waitForElementToAppear(successMessageText).getText();
+        return pageUtils.waitForElementToAppear(uploadStatusText).getText();
     }
 }
