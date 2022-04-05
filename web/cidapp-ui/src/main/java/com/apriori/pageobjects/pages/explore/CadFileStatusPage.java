@@ -57,7 +57,7 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     }
 
     /**
-     * This gets the success message after upload is completed
+     * This gets the message of the import status
      *
      * @return - string
      */
