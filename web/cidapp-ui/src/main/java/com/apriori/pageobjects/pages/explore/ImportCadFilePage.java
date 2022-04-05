@@ -104,7 +104,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    /** Upload multiple cad files
+    /**
+     * Upload multiple cad files
+     *
      * @param multiComponents - component details as a file list
      * @return current page object
      */
@@ -119,9 +121,10 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @param multiUploadList - component details as a list
      * @return current page object
      */
-    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
+    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList, UploadStatusEnum statusEnum) {
         multiUploadList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
+            waitForUploadStatus(multiUpload.getResourceFile().getName(), statusEnum);
         });
         return this;
     }
@@ -272,24 +275,13 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Gets the upload status state by text
-     *
-     * @return - current page object
-     */
-    public ImportCadFilePage getUploadStatusText() {
-        pageUtils.waitForElementToAppear(uploadStatus).getText();
-        return this;
-    }
-
-    /**
      * This method checks for upload status
      *
      * @return - current page object
      */
-    public ImportCadFilePage waitForUploadStatus(UploadStatusEnum uploadStatusEnum) {
-        By byUpload = By.xpath(String.format("//*[text()='%s']", uploadStatusEnum.getUploadStatus()));
-
-        pageUtils.waitForElementToAppear(byUpload);;
+    public ImportCadFilePage waitForUploadStatus(String componentName, UploadStatusEnum uploadStatusEnum) {
+        By byUpload = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'succeeded')]", componentName));
+        pageUtils.waitForElementToAppear(byUpload);
         return this;
     }
 }

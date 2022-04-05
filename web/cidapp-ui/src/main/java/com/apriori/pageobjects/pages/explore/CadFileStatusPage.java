@@ -20,6 +20,9 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     @FindBy(xpath = "//button[.='Close']")
     private WebElement closeButton;
 
+    @FindBy(css = ".modal-body .mb-3")
+    private WebElement successMessageText;
+
     @FindBy(css = ".modal-body .message")
     private WebElement messageText;
 
@@ -56,11 +59,11 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     }
 
     /**
-     * This get the message after upload is completed
+     * This gets the success message after upload is completed
      *
      * @return - string
      */
     public String getImportMessage() {
-        return pageUtils.waitForElementToAppear(messageText).getText();
+        return pageUtils.waitForElementToAppear(successMessageText).getText();
     }
 }
