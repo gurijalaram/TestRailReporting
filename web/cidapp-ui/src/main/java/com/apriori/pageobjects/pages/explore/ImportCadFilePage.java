@@ -280,7 +280,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return - current page object
      */
     public ImportCadFilePage waitForUploadStatus(String componentName, UploadStatusEnum uploadStatusEnum) {
-        By byUpload = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'succeeded')]", componentName));
+        By byUpload = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, uploadStatusEnum.getUploadStatus()));
         pageUtils.waitForElementToAppear(byUpload);
         return this;
     }
