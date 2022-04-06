@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ReportRequest {
 
     public static ReportRequest initFromJsonFile(final String jsonFileNameWithoutType) {
-        return (ReportRequest) JsonManager.deserializeJsonFromInputStream(
+        return JsonManager.deserializeJsonFromInputStream(
             FileResourceUtil.getResourceFileStream(jsonFileNameWithoutType + ".json"), ReportRequest.class);
     }
 
