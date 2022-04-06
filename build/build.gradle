@@ -201,6 +201,7 @@ subprojects {
         implementation 'com.sun.mail:smtp:1.6.5'
         implementation 'pl.pragmatists:JUnitParams:1.1.1'
         implementation 'org.assertj:assertj-core:3.21.0'
+        implementation 'com.auth0:java-jwt:3.19.1'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-yaml', version: '2.13.0'
         implementation group: 'com.fasterxml.jackson.dataformat', name: 'jackson-dataformat-csv', version: '2.13.0'
         implementation group: 'software.amazon.awssdk', name: 'sso', version: '2.17.129'
