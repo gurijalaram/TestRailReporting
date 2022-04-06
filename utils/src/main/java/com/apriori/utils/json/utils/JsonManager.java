@@ -10,40 +10,38 @@ import java.io.InputStream;
 public class JsonManager {
     private static ObjectMapper mapper = new ObjectMapper();
 
-    public static Object deserializeJsonFromInputStream(InputStream inputStream, Class klass) {
-        Object obj = null;
+    public static <T> T deserializeJsonFromInputStream(InputStream inputStream, Class<T> klass) {
+        T value = null;
         try {
-            obj = mapper.readValue(inputStream, klass);
+            value = mapper.readValue(inputStream, klass);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return obj;
+        return value;
     }
 
+    public static <T> T deserializeJsonFromFile(String fileName, Class<T> klass) {
 
-    public static Object deserializeJsonFromFile(String fileName, Class klass) {
-
-        Object obj = null;
+        T value = null;
         try {
-            obj = mapper.readValue(new File(fileName), klass);
+            value = mapper.readValue(new File(fileName), klass);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return obj;
+        return value;
     }
 
-    public static Object deserializeJsonFromString(String json, Class klass) {
+    public static <T> T deserializeJsonFromString(String json, Class<T> klass) {
 
-        Object obj = null;
+        T value = null;
         try {
-            obj = mapper.readValue(json, klass);
+            value = mapper.readValue(json, klass);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        return obj;
+        return value;
     }
 
     public static void serializeJsonToFile(String fileName, Object object) {

@@ -66,6 +66,7 @@ class ConnectionManager<T> {
             builder.setContentType("multipart/form-data");
             multiPartFiles.getMultiPartsFileData().forEach(builder::addMultiPart);
             multiPartFiles.getMultiPartsTextData().forEach(builder::addMultiPart);
+            multiPartFiles.getMultiPartsFilesData().forEach(builder::addMultiPart);
         } else {
             builder.setContentType(ContentType.JSON);
         }
