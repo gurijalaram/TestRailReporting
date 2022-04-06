@@ -7,7 +7,6 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
-import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
@@ -17,7 +16,6 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ButtonTypeEnum;
-import com.utils.ComponentStateEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -424,10 +422,11 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * Checks icon is displayed
      *
      * @param icon - the icon
+     * @param componentName
      * @return - boolean
      */
-    public boolean isIconDisplayed(StatusIconEnum icon) {
-        By iconStatus = By.cssSelector(String.format(".table-row [data-icon='%s']", icon.getStatusIcon()));
-        return pageUtils.waitForElementToAppear(iconStatus).isDisplayed();
+    public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
+        By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[8]/*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
+        return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
     }
 }

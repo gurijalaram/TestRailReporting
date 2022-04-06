@@ -4,15 +4,16 @@ public enum ComponentStateEnum {
 
     NOT_COSTED("circle-minus"),
     PROCESSING_PUBLISH_ACTION("gear"),
-    COST_INCOMPLETE("triangle-exclamation");
+    COST_INCOMPLETE("triangle-exclamation"),
+    COSTING_FAILED("circle-xmark");
 
-    private final String componentStatus;
+    private final String componentState;
 
     ComponentStateEnum(String componentStatus) {
-        this.componentStatus = componentStatus;
+        this.componentState = componentStatus;
     }
 
-    public String getComponentStatus() {
-        return this.componentStatus;
+    public String getComponentState() {
+        return this.componentState;
     }
 }
