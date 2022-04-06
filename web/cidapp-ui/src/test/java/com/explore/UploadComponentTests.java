@@ -78,7 +78,7 @@ public class UploadComponentTests extends TestBase {
         importCadFilePage = loginPage.login(currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents, UploadStatusEnum.UPLOADED);
+            .inputMultiComponents(multiComponents);
 
         importCadFilePage.scenarioNameTextBoxDisabled().forEach(textBox -> assertThat(textBox, is("true")));
 

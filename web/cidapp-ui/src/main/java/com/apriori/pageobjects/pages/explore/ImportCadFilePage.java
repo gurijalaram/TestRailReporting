@@ -121,10 +121,10 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @param multiUploadList - component details as a list
      * @return current page object
      */
-    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList, UploadStatusEnum statusEnum) {
+    public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
         multiUploadList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
-            waitForUploadStatus(multiUpload.getResourceFile().getName(), statusEnum);
+            waitForUploadStatus(multiUpload.getResourceFile().getName(), UploadStatusEnum.UPLOADED);
         });
         return this;
     }

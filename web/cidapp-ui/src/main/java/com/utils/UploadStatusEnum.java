@@ -4,12 +4,10 @@ import java.util.EnumSet;
 
 public enum UploadStatusEnum {
 
-    // TODO: 05/04/2022 cn - need to find locator for this
-    FAILED("Failed"),
+    FAILED("failed"),
     UPLOADED("succeeded"),
     UPLOADING("submitting"),
-    // TODO: 05/04/2022 cn - need to find locator for this
-    PENDING("Pending");
+    PENDING("pending");
 
     private final String uploadStatus;
 
@@ -21,6 +19,6 @@ public enum UploadStatusEnum {
         return this.uploadStatus;
     }
 
-    public static EnumSet<UploadStatusEnum> completedGroup = EnumSet.of(FAILED,UPLOADED);
-    public static EnumSet<UploadStatusEnum> waitingGroup = EnumSet.of(UPLOADING,PENDING);
+    public static EnumSet<UploadStatusEnum> completedGroup = EnumSet.of(UPLOADED, FAILED);
+    public static EnumSet<UploadStatusEnum> waitingGroup = EnumSet.of(UPLOADING, PENDING);
 }
