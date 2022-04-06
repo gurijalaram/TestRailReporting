@@ -110,7 +110,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Band Saw"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Material Stock / Tube Laser"));
     }
 
     @Test

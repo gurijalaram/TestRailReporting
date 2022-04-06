@@ -168,7 +168,7 @@ public class BatchPartResources {
      */
     public static NewPartRequest newPartRequest() {
         NewPartRequest newPartRequest =
-            (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+            JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
         return newPartRequest;
     }
@@ -181,7 +181,7 @@ public class BatchPartResources {
      */
     public static NewPartRequest newPartRequest(String jsonSchema) {
         NewPartRequest newPartRequest =
-            (NewPartRequest) JsonManager.deserializeJsonFromInputStream(
+            JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream(jsonSchema), NewPartRequest.class);
         return newPartRequest;
     }

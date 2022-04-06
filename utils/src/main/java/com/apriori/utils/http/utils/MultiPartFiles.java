@@ -1,14 +1,20 @@
 package com.apriori.utils.http.utils;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+
 import java.io.File;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * @author kpatel
  */
-public class MultiPartFiles  {
+public class MultiPartFiles {
     private HashMap<String, File> multiPartsFileData = new HashMap<>();
+    private Multimap<String, File> multiPartsFilesData = ArrayListMultimap.create();
     private HashMap<String, String> multiPartsTextData = new HashMap<>();
+
 
     public MultiPartFiles use(String key, File value) {
         multiPartsFileData.put(key, value);
@@ -20,6 +26,11 @@ public class MultiPartFiles  {
         return this;
     }
 
+    public MultiPartFiles use(String key, List<File> values) {
+        values.forEach(value -> multiPartsFilesData.put(key, value));
+        return this;
+    }
+
     public HashMap<String, File> getMultiPartsFileData() {
         return multiPartsFileData;
     }
@@ -28,4 +39,7 @@ public class MultiPartFiles  {
         return multiPartsTextData;
     }
 
+    public Multimap<String, File> getMultiPartsFilesData() {
+        return multiPartsFilesData;
+    }
 }

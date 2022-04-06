@@ -87,7 +87,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
                 ).getPath(), NewPartRequest.class
@@ -118,7 +118,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11974")
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"
             ).getPath(), NewPartRequest.class
@@ -267,7 +267,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
                 ).getPath(), NewPartRequest.class
@@ -303,7 +303,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
                 ).getPath(), NewPartRequest.class
@@ -427,7 +427,7 @@ public class WorkorderAPITests {
     private void testShallowEditOfScenario(String fileName, String processGroup) {
         AcsResources acsResources = new AcsResources();
 
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"
             ).getPath(), NewPartRequest.class

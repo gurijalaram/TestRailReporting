@@ -21,7 +21,7 @@ public class EmailSetup {
 
         try {
             String content = EncryptionUtil.decryptFile(key, credentialFile);
-            credentials = (Credentials) JsonManager.deserializeJsonFromString(content, Credentials.class);
+            credentials = JsonManager.deserializeJsonFromString(content, Credentials.class);
         } catch (Exception ex) {
             logger.error(ex.getMessage());
         }
