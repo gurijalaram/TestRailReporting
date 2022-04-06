@@ -1,5 +1,6 @@
 package com.apriori.cidappapi.entity.builder;
 
+import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -18,8 +19,10 @@ import java.util.List;
 public class ComponentInfoBuilder {
     private final String componentName;
     private final String extension;
-    private final String scenarioName;
+    private String scenarioName;
+    private List<String> scenarioNames;
     private File resourceFile;
+    private List<File> resourceFiles;
     private String componentIdentity;
     private String scenarioIdentity;
     private final ProcessGroupEnum processGroup;
@@ -36,4 +39,6 @@ public class ComponentInfoBuilder {
     private String assemblyName;
     private List<ComponentInfoBuilder> subComponents;
     private ScenarioItem scenarioItem;
+    private List<ScenarioItem> scenarioItems;
+    private PostComponentResponse component;
 }
