@@ -23,11 +23,11 @@ import com.apriori.acs.entity.response.workorders.getimageinfo.GetImageInfoRespo
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadataResponse;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -552,12 +552,15 @@ public class WorkorderAPITests {
     private ScenarioIterationKey setupScenarioIterationKey(DeleteScenarioOutputs deleteScenarioOutputs, String iteration) {
         ScenarioIterationKey scenarioIterationKey = new ScenarioIterationKey();
         ScenarioKey scenarioKey = new ScenarioKey();
+
         scenarioKey.setWorkspaceId(deleteScenarioOutputs.getScenarioKey().getWorkspaceId());
         scenarioKey.setTypeName(deleteScenarioOutputs.getScenarioKey().getTypeName());
         scenarioKey.setMasterName(deleteScenarioOutputs.getScenarioKey().getMasterName());
         scenarioKey.setStateName(deleteScenarioOutputs.getScenarioKey().getStateName());
+
         scenarioIterationKey.setScenarioKey(scenarioKey);
         scenarioIterationKey.setIteration(Integer.parseInt(iteration));
+
         return scenarioIterationKey;
     }
 }

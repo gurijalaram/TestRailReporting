@@ -1,11 +1,11 @@
 package tests.workorders;
 
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.json.utils.JsonManager;
 

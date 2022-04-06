@@ -44,7 +44,6 @@ import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadata
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
@@ -52,13 +51,12 @@ import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.fms.controller.FileManagementController;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -449,17 +447,11 @@ public class FileUploadResources {
      * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        setupHeaders("multipart/form-data");
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
-            .headers(headers)
-            .multiPartFiles(new MultiPartFiles().use("data",
-                FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
-            .formParams(new FormParams().use("filename", fileName));
-
-        assertThat(HTTPRequest.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
-        return (FileResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return FileManagementController.uploadFile(
+            UserUtil.getUser(),
+            ProcessGroupEnum.fromString(processGroup),
+            fileName
+        );
     }
 
     /**
