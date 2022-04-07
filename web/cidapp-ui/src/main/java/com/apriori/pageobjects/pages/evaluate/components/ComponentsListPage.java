@@ -16,20 +16,18 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ButtonTypeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@Slf4j
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
-
-    private final Logger logger = LoggerFactory.getLogger(ComponentsListPage.class);
 
     @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
     private WebElement tableButton;
@@ -88,7 +86,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         this.panelController = new PanelController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -426,7 +424,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - boolean
      */
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
-        By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[8]/*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
+        By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@class=' css-4ijb3n-singleValue']/*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
         return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
     }
 }
