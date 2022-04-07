@@ -122,7 +122,7 @@ public class ReportResources {
      */
     public static ReportRequest getReportRequestData() {
         ReportRequest newReportRequest =
-            (ReportRequest) JsonManager.deserializeJsonFromInputStream(
+            JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/CreateReportData.json"),
                 ReportRequest.class);
         return newReportRequest;

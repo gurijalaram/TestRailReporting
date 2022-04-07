@@ -194,7 +194,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return true/false
      */
     public boolean isCurrentScenarioNameDisplayed(String scenarioName) {
-        By byCurrentScenario = By.xpath(String.format("//div[@id='qa-scenario-select-field']//div[.='%s']//div[@id]", scenarioName));
+        By byCurrentScenario = By.xpath(String.format("//div[@class='costing-inputs']//div[text()='%s']", scenarioName));
         return pageUtils.waitForElementToAppear(byCurrentScenario).isDisplayed();
     }
 

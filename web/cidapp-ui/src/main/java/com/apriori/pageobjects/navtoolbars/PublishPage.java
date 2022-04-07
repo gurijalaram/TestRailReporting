@@ -2,7 +2,6 @@ package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.PersonResponse;
-import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -63,7 +62,6 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     private PageUtils pageUtils;
     private WebDriver driver;
     private ModalDialogController modalDialogController;
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private PeopleUtil peopleUtil = new PeopleUtil();
     private String root = "modal-body";
 

@@ -2,8 +2,8 @@ package com.apriori.bcs.tests;
 
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
+import com.apriori.bcs.controller.MultiPartResources;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;
@@ -29,8 +29,8 @@ public class MultiPartCostingTest {
     @Description("Test costing scenario, includes creating a new batch, with multiple parts and waiting for the " +
         "costing process to complete for all parts. Then retrieve costing results.")
     public void costParts() {
-        BatchPartResources.addPartsToBatch(NUMBER_OF_PARTS, batch.getIdentity());
-        assertTrue("Track and verify All Batch Parts Costing is completed", BatchPartResources.waitUntilBatchPartsCostingAreCompleted(batch.getIdentity()));
-        BatchPartResources.summarizeAndLogPartsCostingInfo(batch.getIdentity());
+        MultiPartResources.addPartsToBatch(NUMBER_OF_PARTS, batch.getIdentity());
+        assertTrue("Track and verify All Batch Parts Costing is completed", MultiPartResources.waitUntilBatchPartsCostingAreCompleted(batch.getIdentity()));
+        MultiPartResources.summarizeAndLogPartsCostingInfo(batch.getIdentity());
     }
 }
