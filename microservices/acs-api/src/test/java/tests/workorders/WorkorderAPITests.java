@@ -288,7 +288,7 @@ public class WorkorderAPITests {
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
                 fileUploadOutputs,
-                processGroup.toString()
+                processGroup
         );
 
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
@@ -462,7 +462,7 @@ public class WorkorderAPITests {
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
             fileUploadOutputs,
-            processGroup.toString()
+            processGroup
         );
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
