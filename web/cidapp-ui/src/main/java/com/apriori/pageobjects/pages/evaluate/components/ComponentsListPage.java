@@ -424,7 +424,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - boolean
      */
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
-        By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@class=' css-4ijb3n-singleValue']/*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
+        By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@id='qa-scenario-select-field']//*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
         return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
     }
 }
