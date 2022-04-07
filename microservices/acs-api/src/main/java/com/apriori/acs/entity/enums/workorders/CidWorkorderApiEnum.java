@@ -16,7 +16,7 @@ public enum CidWorkorderApiEnum implements ExternalEndpointEnum {
     GET_LATEST_ITERATION("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s"),
     GET_IMAGE_BY_SCENARIO_ITERATION_KEY("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-info/"),
     GET_CAD_METADATA("apriori/cost/session/ws/workspace/cad-metadata/%s"),
-    INITIALIZE_COST_SCENARIO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info");
+    INITIALISE_COST_SCENARIO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info");
 
     private final String endpoint;
 

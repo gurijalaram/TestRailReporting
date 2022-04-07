@@ -95,7 +95,10 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("Casting.prt", processGroup);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+            "Casting.prt",
+            processGroup
+        );
 
         getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
@@ -182,7 +185,10 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("bracket_basic.prt", processGroup);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+            "bracket_basic.prt",
+            processGroup
+        );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
@@ -207,12 +213,11 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8682"})
     @Description("Upload a part, load cad metadata with part name and extension and get cad metadata to verify")
     public void testFileNameAndExtensionInputAndOutput() {
-        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
-        fileUploadResources.checkValidProcessGroup(processGroup);
+        fileUploadResources.checkValidProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
         FileResponse fileResponse = fileUploadResources.initialisePartUpload(
                 "bracket_basic.prt",
-                processGroup
+                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataExposeError(fileResponse);
@@ -275,12 +280,15 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("bracket_basic.prt", processGroup);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+            "bracket_basic.prt",
+            processGroup
+        );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
                 productionInfoInputs,
                 fileUploadOutputs,
-                processGroup
+                processGroup.toString()
         );
 
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
@@ -347,10 +355,12 @@ public class WorkorderAPITests {
     public void testDeleteScenario() {
         AcsResources acsResources = new AcsResources();
 
-        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
-        fileUploadResources.checkValidProcessGroup(processGroup);
+        fileUploadResources.checkValidProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("bracket_basic.prt", processGroup);
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+            "bracket_basic.prt",
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+        );
 
         DeleteScenarioOutputs deleteScenarioOutputs = fileUploadResources.createDeleteScenarioWorkorderSuppressError(fileUploadOutputs);
 
@@ -374,7 +384,10 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11990")
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
-        testShallowEditOfScenario("Casting.prt", ProcessGroupEnum.CASTING.getProcessGroup());
+        testShallowEditOfScenario(
+            "Casting.prt",
+            ProcessGroupEnum.CASTING.getProcessGroup()
+        );
     }
 
     @Test
@@ -382,7 +395,10 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11991")
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
-        testShallowEditOfScenario("PatternThreadHoles.asm", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+        testShallowEditOfScenario(
+            "PatternThreadHoles.asm",
+            ProcessGroupEnum.ASSEMBLY.getProcessGroup()
+        );
     }
 
     @Test
@@ -392,7 +408,10 @@ public class WorkorderAPITests {
     public void testGenerateAllPartImages() {
         AcsResources acsResources = new AcsResources();
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("3574727.prt", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+            "3574727.prt",
+            ProcessGroupEnum.ASSEMBLY.getProcessGroup()
+        );
 
         GenerateAllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
 
@@ -413,9 +432,13 @@ public class WorkorderAPITests {
     public void testGenerateSimpleImageData() {
         AcsResources acsResources = new AcsResources();
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile("3574727.prt", ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+            "3574727.prt",
+            ProcessGroupEnum.ASSEMBLY.getProcessGroup()
+        );
 
-        GenerateSimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources.createGenerateSimpleImageDataWorkorderSuppressError(fileUploadOutputs);
+        GenerateSimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
+            .createGenerateSimpleImageDataWorkorderSuppressError(fileUploadOutputs);
 
         assertThat(Base64.isBase64(
             acsResources.getImageByScenarioIterationKey(generateSimpleImageDataOutputs.getScenarioIterationKey(), false)),
@@ -439,7 +462,7 @@ public class WorkorderAPITests {
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
             fileUploadOutputs,
-            processGroup
+            processGroup.toString()
         );
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
@@ -490,8 +513,8 @@ public class WorkorderAPITests {
         }
 
         FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
-                assemblyToUse.getAssemblyName(),
-                assemblyToUse.getProcessGroup()
+            assemblyToUse.getAssemblyName(),
+            assemblyToUse.getProcessGroup()
         );
 
         fileUploadResources.setCurrentFileUploadOutputs(

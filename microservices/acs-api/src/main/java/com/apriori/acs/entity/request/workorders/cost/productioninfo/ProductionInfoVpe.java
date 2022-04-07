@@ -9,7 +9,7 @@ public class ProductionInfoVpe {
     private String primaryVpeName;
     private AutoSelectedSecondaryVpes autoSelectedSecondaryVpes;
     private Boolean usePrimaryAsDefault;
-    private Boolean initialized;
+    private Boolean initialised;
     private MaterialCatalogKeyData materialCatalogKeyData;
 
     public ProductionInfoScenarioKey getScenarioKey() {
@@ -57,12 +57,12 @@ public class ProductionInfoVpe {
         return this;
     }
 
-    public Boolean getInitialized() {
-        return initialized;
+    public Boolean getInitialised() {
+        return initialised;
     }
 
-    public ProductionInfoVpe setInitialized(Boolean initialized) {
-        this.initialized = initialized;
+    public ProductionInfoVpe setInitialised(Boolean initialised) {
+        this.initialised = initialised;
         return this;
     }
 

@@ -7,6 +7,7 @@ import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -40,8 +41,12 @@ public class CidWorkorderAPITests extends TestUtil {
         );
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, scenarioName);
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources
-                .costPart(productionInfoInputs, fileUploadOutputs, processGroup);
+        CostOrderStatusOutputs costOutputs =
+            fileUploadResources.costPart(
+                    productionInfoInputs,
+                    fileUploadOutputs,
+                    processGroup
+                );
 
         fileUploadResources.publishPart(costOutputs);
     }

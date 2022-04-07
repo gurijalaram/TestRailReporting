@@ -102,7 +102,7 @@ public class FileUploadResources {
      * @return FileResponse - response to use in next call
      */
     public FileResponse initialisePartUpload(String fileName, String processGroup) {
-        return initializeFileUpload(fileName, processGroup);
+        return initialiseFileUpload(fileName, processGroup);
     }
 
     /**
@@ -285,7 +285,7 @@ public class FileUploadResources {
      * @return CostOrderStatusOutputs
      */
     public CostOrderStatusOutputs costPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup) {
-        int inputSetId = initializeCostScenario(
+        int inputSetId = initialiseCostScenario(
             productionInfoInputs,
             fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
             processGroup
@@ -440,13 +440,13 @@ public class FileUploadResources {
     }
 
     /**
-     * Initializes file upload
+     * Initialises file upload
      *
      * @param fileName     - the filename
      * @param processGroup - the process group
      * @return FileResponse
      */
-    private FileResponse initializeFileUpload(String fileName, String processGroup) {
+    private FileResponse initialiseFileUpload(String fileName, String processGroup) {
         return FileManagementController.uploadFile(
             UserUtil.getUser(),
             ProcessGroupEnum.fromString(processGroup),
@@ -733,17 +733,17 @@ public class FileUploadResources {
     }
 
     /**
-     * Initialize cost scenario
+     * Initialise cost scenario
      *
      * @param scenarioKey  scenario iteration
      * @param processGroup process group
      * @return Integer
      */
-    private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
+    private Integer initialiseCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.INITIALIZE_COST_SCENARIO, CreateWorkorderResponse.class)
+            .init(CidWorkorderApiEnum.INITIALISE_COST_SCENARIO, CreateWorkorderResponse.class)
             .headers(headers)
             .body(productionInfo(fileObject, scenarioKey, processGroup))
             .inlineVariables(
@@ -858,7 +858,7 @@ public class FileUploadResources {
                 .setStateName(stateName)
                 .setMasterName(masterName))
             .setCompType(newPartRequest.getCompType())
-            .setInitialized(false)
+            .setInitialised(false)
             .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
 
             .setProcessGroupName(processGroup)
@@ -875,13 +875,13 @@ public class FileUploadResources {
                 .setPrimaryVpeName(newPartRequest.getVpeName())
                 .setAutoSelectedSecondaryVpes(null)
                 .setUsePrimaryAsDefault(true)
-                .setInitialized(false)
+                .setInitialised(false)
 
                 .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst(newPartRequest.getVpeName())
                     .setSecond(newPartRequest.getVpeName())))
 
             .setSupportsMaterials(true)
-            .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
+            .setMaterialBean(new ProductionInfoMaterial().setInitialised(false)
                 .setMaterialMode(newPartRequest.getMaterialMode())
                 .setIsUserMaterialNameValid(false)
                 .setIsCadMaterialNameValid(false))
