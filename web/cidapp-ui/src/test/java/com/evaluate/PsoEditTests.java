@@ -61,7 +61,7 @@ public class PsoEditTests extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(8);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.40);
         softAssertions.assertThat(materialProcessPage.isColorantSelected()).isEqualTo(true);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance   (Piece Part Cost Driver)")).isEqualTo(0.30);

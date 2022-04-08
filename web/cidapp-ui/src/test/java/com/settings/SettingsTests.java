@@ -109,9 +109,7 @@ public class SettingsTests extends TestBase {
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class);
+            .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }

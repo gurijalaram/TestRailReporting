@@ -104,7 +104,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    /** Upload multiple cad files
+    /**
+     * Upload multiple cad files
+     *
      * @param multiComponents - component details as a file list
      * @return current page object
      */
@@ -289,7 +291,24 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage waitForUploadStatus(UploadStatusEnum uploadStatusEnum) {
         By byUpload = By.xpath(String.format("//*[text()='%s']", uploadStatusEnum.getUploadStatus()));
 
-        pageUtils.waitForElementToAppear(byUpload);;
+        pageUtils.waitForElementToAppear(byUpload);
+        return this;
+    }
+
+    /**
+     * Delete cad files in the drop zone
+     *
+     * @param componentNames - the component names
+     * @return - the current page object
+     */
+    public ImportCadFilePage cadFilesToDelete(List<String> componentNames) {
+        // TODO untick() to be removed once the multi upload drop zone is fixed(CID-407) Ticket number BA-2273
+        unTick("Apply to all");
+
+        for (String componentName : componentNames) {
+            By byComponentName = By.xpath(String.format("//*[text()='%s']/following::div[@data-header-id='delete-icon']", componentName));
+            pageUtils.waitForElementAndClick(byComponentName);
+        }
         return this;
     }
 }
