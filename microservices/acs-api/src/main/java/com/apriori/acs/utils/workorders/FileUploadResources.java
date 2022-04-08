@@ -44,7 +44,6 @@ import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadata
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
@@ -52,13 +51,12 @@ import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.fms.controller.FileManagementController;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -104,7 +102,7 @@ public class FileUploadResources {
      * @return FileResponse - response to use in next call
      */
     public FileResponse initialisePartUpload(String fileName, String processGroup) {
-        return initializeFileUpload(fileName, processGroup);
+        return initialiseFileUpload(fileName, processGroup);
     }
 
     /**
@@ -287,7 +285,7 @@ public class FileUploadResources {
      * @return CostOrderStatusOutputs
      */
     public CostOrderStatusOutputs costPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup) {
-        int inputSetId = initializeCostScenario(
+        int inputSetId = initialiseCostScenario(
             productionInfoInputs,
             fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
             processGroup
@@ -442,24 +440,18 @@ public class FileUploadResources {
     }
 
     /**
-     * Initializes file upload
+     * Initialises file upload
      *
      * @param fileName     - the filename
      * @param processGroup - the process group
      * @return FileResponse
      */
-    private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        setupHeaders("multipart/form-data");
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
-            .headers(headers)
-            .multiPartFiles(new MultiPartFiles().use("data",
-                FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
-            .formParams(new FormParams().use("filename", fileName));
-
-        assertThat(HTTPRequest.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
-        return (FileResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    private FileResponse initialiseFileUpload(String fileName, String processGroup) {
+        return FileManagementController.uploadFile(
+            UserUtil.getUser(),
+            ProcessGroupEnum.fromString(processGroup),
+            fileName
+        );
     }
 
     /**
@@ -741,17 +733,17 @@ public class FileUploadResources {
     }
 
     /**
-     * Initialize cost scenario
+     * Initialise cost scenario
      *
      * @param scenarioKey  scenario iteration
      * @param processGroup process group
      * @return Integer
      */
-    private Integer initializeCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
+    private Integer initialiseCostScenario(Object fileObject, ScenarioKey scenarioKey, String processGroup) {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.INITIALIZE_COST_SCENARIO, CreateWorkorderResponse.class)
+            .init(CidWorkorderApiEnum.INITIALISE_COST_SCENARIO, CreateWorkorderResponse.class)
             .headers(headers)
             .body(productionInfo(fileObject, scenarioKey, processGroup))
             .inlineVariables(
@@ -866,7 +858,7 @@ public class FileUploadResources {
                 .setStateName(stateName)
                 .setMasterName(masterName))
             .setCompType(newPartRequest.getCompType())
-            .setInitialized(false)
+            .setInitialised(false)
             .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
 
             .setProcessGroupName(processGroup)
@@ -883,13 +875,13 @@ public class FileUploadResources {
                 .setPrimaryVpeName(newPartRequest.getVpeName())
                 .setAutoSelectedSecondaryVpes(null)
                 .setUsePrimaryAsDefault(true)
-                .setInitialized(false)
+                .setInitialised(false)
 
                 .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst(newPartRequest.getVpeName())
                     .setSecond(newPartRequest.getVpeName())))
 
             .setSupportsMaterials(true)
-            .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
+            .setMaterialBean(new ProductionInfoMaterial().setInitialised(false)
                 .setMaterialMode(newPartRequest.getMaterialMode())
                 .setIsUserMaterialNameValid(false)
                 .setIsCadMaterialNameValid(false))

@@ -8,7 +8,7 @@ import java.util.List;
 public class ProductionInfo {
     private ProductionInfoScenario scenarioKey;
     private String compType;
-    private Boolean initialized;
+    private Boolean initialised;
     private List<String> availablePgNames = null;
     private String processGroupName;
     private Boolean pgEnabled;
@@ -52,12 +52,12 @@ public class ProductionInfo {
         return this;
     }
 
-    public Boolean getInitialized() {
-        return initialized;
+    public Boolean getInitialised() {
+        return initialised;
     }
 
-    public ProductionInfo setInitialized(Boolean initialized) {
-        this.initialized = initialized;
+    public ProductionInfo setInitialised(Boolean initialised) {
+        this.initialised = initialised;
         return this;
     }
 

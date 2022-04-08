@@ -1,19 +1,19 @@
 package com.apriori.acs.entity.request.workorders.cost.productioninfo;
 
 public class ProductionInfoMaterial {
-    private Boolean initialized;
+    private Boolean initialised;
     private String vpeDefaultMaterialName;
     private String materialMode;
     private Boolean isUserMaterialNameValid;
     private Boolean isCadMaterialNameValid;
     private Integer userUtilizationOverride;
 
-    public Boolean getInitialized() {
-        return initialized;
+    public Boolean getInitialised() {
+        return initialised;
     }
 
-    public ProductionInfoMaterial setInitialized(Boolean initialized) {
-        this.initialized = initialized;
+    public ProductionInfoMaterial setInitialised(Boolean initialised) {
+        this.initialised = initialised;
         return this;
     }
 
