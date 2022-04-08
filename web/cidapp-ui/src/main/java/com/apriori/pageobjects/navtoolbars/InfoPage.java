@@ -2,7 +2,6 @@ package com.apriori.pageobjects.navtoolbars;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
@@ -59,7 +58,6 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private StatusIcon statusIcon;
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private String root = "modal-body";
 
     public InfoPage(WebDriver driver) {

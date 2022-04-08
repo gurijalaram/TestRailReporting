@@ -4,6 +4,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.response.Batch;
@@ -72,7 +73,8 @@ public class BatchResourcesTest {
     }
 
     @Test
-    @Description("Create and Cost the batch")
+    @TestRail(testCaseId = {"4988"})
+    @Description("Create and Cost the empty batch")
     public void createBatchCosting() {
         ResponseWrapper<Batch> batchResponse = BatchResources.createBatch();
         assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
@@ -80,6 +82,7 @@ public class BatchResourcesTest {
 
         ResponseWrapper<String> batchCostingResponse = BatchResources.startBatchCosting(batchResponse.getResponseEntity());
         assertThat(batchCostingResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
+        assertTrue("Verify Batch costing state is completed", BatchResources.waitUntilBatchCostingReachedExpected(batchResponse.getResponseEntity().getIdentity(), BCSState.COMPLETED));
     }
 
     @AfterClass
