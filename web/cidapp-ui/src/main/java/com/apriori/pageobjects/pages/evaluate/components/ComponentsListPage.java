@@ -7,27 +7,27 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ButtonTypeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+@Slf4j
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
-
-    private final Logger logger = LoggerFactory.getLogger(ComponentsListPage.class);
 
     @FindBy(css = "[id='qa-scenario-list-table-view-button'] button")
     private WebElement tableButton;
@@ -71,6 +71,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = ".component-display-name-container [data-icon='arrow-up-right-from-square']")
     private WebElement subcomponentCard;
 
+    @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
+    private WebElement publishButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -83,7 +86,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         this.panelController = new PanelController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -328,12 +331,14 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - boolean
      */
-    public boolean isButtonEnabled(ButtonTypeEnum buttonTypeEnum) {
+    public boolean isAssemblyTableButtonEnabled(ButtonTypeEnum buttonTypeEnum) {
         switch (buttonTypeEnum) {
             case INCLUDE:
                 return pageUtils.isElementEnabled(includeButton);
             case EXCLUDE:
                 return pageUtils.isElementEnabled(excludeButton);
+            case PUBLISH:
+                return pageUtils.isElementEnabled(publishButton);
             default:
                 return false;
         }
@@ -357,6 +362,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public ComponentsListPage editSubcomponent() {
         pageUtils.waitForElementAndClick(editButton);
         return this;
+    }
+
+    /**
+     * clicks the publish button
+     *
+     * @return - the current page object
+     */
+    public PublishPage publishSubcomponent() {
+        pageUtils.waitForElementAndClick(publishButton);
+        return new PublishPage(driver);
     }
 
     /**
@@ -399,5 +414,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public boolean isCadButtonEnabled() {
         return pageUtils.isElementEnabled(updateCadButton);
+    }
+
+    /**
+     * Checks icon is displayed
+     *
+     * @param icon - the icon
+     * @param componentName
+     * @return - boolean
+     */
+    public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
+        By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@id='qa-scenario-select-field']//*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
+        return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
     }
 }

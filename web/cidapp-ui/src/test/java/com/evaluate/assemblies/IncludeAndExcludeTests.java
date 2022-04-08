@@ -57,8 +57,8 @@ public class IncludeAndExcludeTests extends TestBase {
                         currentUser)
                 .openComponents();
 
-        assertThat(componentsListPage.isButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
     }
 
     @Test
