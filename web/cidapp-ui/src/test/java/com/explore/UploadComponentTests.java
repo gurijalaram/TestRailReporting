@@ -25,6 +25,7 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -64,6 +65,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = "11879")
     @Description("Validate messaging upon successful upload of multiple files")
     public void testDisabledScenarioNameTextBox() {
@@ -106,5 +108,46 @@ public class UploadComponentTests extends TestBase {
             .close();
 
         multiComponents.forEach(component -> assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0], component.getScenarioName()), is(equalTo(0))));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = "{11878},{11883}")
+    @Description("Validate multi-upload through explorer menu")
+    public void testMultiUpload() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close();
+
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(equalTo(0))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "{11881},{11882}")
+    @Description("Validate prompt if invalid files are submitted")
+    public void testInvalidFileUpload() {
+        currentUser = UserUtil.getUser();
+        resourceFile = FileResourceUtil.getResourceAsFile("auto_api_upload.csv");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile);
+
+        assertThat(importCadFilePage.getFileInputError(), containsString("The file type of the selected file is not supported"));
     }
 }

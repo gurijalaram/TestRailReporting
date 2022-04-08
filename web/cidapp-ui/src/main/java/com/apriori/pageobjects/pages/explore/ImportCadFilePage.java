@@ -47,7 +47,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = ".form-action-buttons [type='submit']")
     private WebElement submitButton;
 
-    @FindBy(css = "h4")
+    @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
 
     @FindBy(css = ".import-cad-file-status-message")
