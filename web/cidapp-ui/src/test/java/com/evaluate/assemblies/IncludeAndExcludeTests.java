@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -46,15 +47,15 @@ public class IncludeAndExcludeTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
-            .uploadPublishAndOpenAssembly(
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                assemblyName,
-                assemblyExtension,
-                scenarioName,
-                currentUser)
-            .openComponents();
+                .uploadPublishAndOpenAssembly(
+                        subComponentNames,
+                        componentExtension,
+                        processGroupEnum,
+                        assemblyName,
+                        assemblyExtension,
+                        scenarioName,
+                        currentUser)
+                .openComponents();
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
@@ -76,20 +77,20 @@ public class IncludeAndExcludeTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
-            .uploadPublishAndOpenAssembly(
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                assemblyName,
-                assemblyExtension,
-                scenarioName,
-                currentUser)
-            .openComponents()
-            .selectCheckAllBox()
-            .selectButtonType(ButtonTypeEnum.EXCLUDE);
+                .uploadPublishAndOpenAssembly(
+                        subComponentNames,
+                        componentExtension,
+                        processGroupEnum,
+                        assemblyName,
+                        assemblyExtension,
+                        scenarioName,
+                        currentUser)
+                .openComponents()
+                .selectCheckAllBox()
+                .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         Stream.of(subComponentNames.toArray())
-            .forEach(componentName ->
-                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), containsString("line-through")));
+                .forEach(componentName ->
+                        assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), containsString("line-through")));
     }
 }

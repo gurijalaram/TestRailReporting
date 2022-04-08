@@ -363,7 +363,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Axis Mill"));
     }
 
     @Test
@@ -388,7 +388,7 @@ public class ProcessGroupsTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("3 Axis Mill"));
+        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Axis Mill"));
     }
 
     @Test
