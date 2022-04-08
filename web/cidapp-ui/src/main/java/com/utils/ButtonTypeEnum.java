@@ -3,7 +3,8 @@ package com.utils;
 public enum ButtonTypeEnum {
 
     INCLUDE("include"),
-    EXCLUDE("exclude");
+    EXCLUDE("exclude"),
+    PUBLISH("publish");
 
     private final String buttonType;
 
