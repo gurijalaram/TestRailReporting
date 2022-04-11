@@ -77,7 +77,7 @@ default:
     api_url: https://vds.${default.aws_region}-v22-1.${env}.apriori.net/
 
   cis:
-    ui_url: https://cis.dev-cis-qa.apriori.net/
+    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
     api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
 
 #  Specific environment configurations
