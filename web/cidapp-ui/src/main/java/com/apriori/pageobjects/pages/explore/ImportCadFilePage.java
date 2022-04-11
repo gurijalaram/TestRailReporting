@@ -124,7 +124,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
         multiUploadList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
-            waitForUploadStatus(multiUpload.getResourceFile().getName(), UploadStatusEnum.UPLOADED);
+            waitForUploadToBeDone(multiUpload.getResourceFile().getName());
         });
         return this;
     }
@@ -283,6 +283,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage waitForUploadStatus(String componentName, UploadStatusEnum uploadStatusEnum) {
         By byUploadStatus = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, uploadStatusEnum.getUploadStatus()));
         pageUtils.waitForElementToAppear(byUploadStatus);
+        return this;
+    }
+
+    /**
+     * Waits for uploaded status to be in a done state.  Use carefully as this method will only check for 'succeeded' or 'failed'
+     *
+     * @param componentName - the component name
+     * @return current page object
+     */
+    public ImportCadFilePage waitForUploadToBeDone(String componentName) {
+        By bySucceeded = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "succeeded"));
+        By byFailed = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "failed"));
+        pageUtils.waitForEitherElementAppear(bySucceeded, byFailed);
         return this;
     }
 
