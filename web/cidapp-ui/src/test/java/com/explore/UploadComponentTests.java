@@ -3,6 +3,7 @@ package com.explore;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
@@ -29,6 +30,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UploadComponentTests extends TestBase {
@@ -90,7 +92,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "CIS-304")
+    @TestRail(testCaseId = "{CIS-304},{11884}")
     @Description("Validate multi-upload through explorer menu")
     public void multiUploadTests() {
         currentUser = UserUtil.getUser();
@@ -149,5 +151,65 @@ public class UploadComponentTests extends TestBase {
             .inputComponentDetails(scenarioName, resourceFile);
 
         assertThat(importCadFilePage.getFileInputError(), containsString("The file type of the selected file is not supported"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11891")
+    @Description("Validate that user can delete components from the Import CAD File modal")
+    public void testOverrideExistingScenario() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
+
+        List<String> componentNames = Arrays.asList("big ring.SLDPRT", "Pin.SLDPRT", "small ring.SLDPRT");
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(multiComponents)
+            .cadFilesToDelete(componentNames);
+    }
+
+    @Test
+    @TestRail(testCaseId = "11901")
+    @Description("Validate that user is blocked from adding to a list of 20 uploads")
+    public void testOverTwentyCadFileMultiUpload() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
+
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "225_gasket-1-solid1.prt.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Piston_assembly.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "M3CapScrew.CATPart"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "case_002_006-8611543_prt.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "BasicScenario_Forging.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp"), scenarioName));
+
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        importCadFilePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(multiComponents);
+
+        assertThat(importCadFilePage.getFileInputError(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time."));
     }
 }
