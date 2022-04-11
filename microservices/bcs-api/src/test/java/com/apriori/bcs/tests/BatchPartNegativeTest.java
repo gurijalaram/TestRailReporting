@@ -84,6 +84,20 @@ public class BatchPartNegativeTest {
             "Invalid file type, file type 'pdf' is not permitted", errorMessageResponse.getResponseEntity().getMessage());
     }
 
+    @Test
+    @TestRail(testCaseId = {"4368"})
+    @Description("Create a part with invalid UDA")
+    public void createBatchPartInvalidUDA() {
+        NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
+        newPartRequest.setUdas("{\"UDARegion\":\"Invalid UDA\"}");
+        ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
+        assertTrue("Track and wait until part is errored", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED));
+        partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
+
+        Assert.assertEquals("Verify the error when part is created with invalid UDA",
+            "Custom attribute with name 'UDARegion' was not found", partResponse.getResponseEntity().getErrors());
+    }
+
     @AfterClass
     public static void testCleanup() {
         BatchResources.checkAndCancelBatch(batch);

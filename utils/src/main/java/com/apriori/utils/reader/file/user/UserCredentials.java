@@ -2,6 +2,13 @@ package com.apriori.utils.reader.file.user;
 
 import com.apriori.utils.authorization.AuthorizationUtil;
 
+import com.auth0.jwt.JWT;
+
+import java.time.Instant;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+
 public class UserCredentials {
 
     private String email;
@@ -9,6 +16,7 @@ public class UserCredentials {
     private String token;
     private String username;
     private String cloudContext;
+    private final int TOKEN_MIN_TIME_IN_MINUTES = 10;
 
     public static UserCredentials init(String username, String password) {
         return new UserCredentials(username, password);
@@ -69,11 +77,17 @@ public class UserCredentials {
     }
 
     public String getToken() {
+        if (ChronoUnit.MINUTES.between(LocalTime.now(),
+            Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
+                .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES || token == null) {
+
+            generateToken();
+        }
         return token;
     }
 
     public UserCredentials generateToken() {
-        this.token = token != null ? token : new AuthorizationUtil(this).getToken()
+        this.token = new AuthorizationUtil(this).getToken()
             .getResponseEntity()
             .getToken();
         return this;
