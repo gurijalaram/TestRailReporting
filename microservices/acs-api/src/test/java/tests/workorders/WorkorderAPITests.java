@@ -56,7 +56,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void testLoadCadMetadataAndGeneratePartImages() {
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
                 "bracket_basic.prt",
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
@@ -95,7 +95,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "Casting.prt",
             processGroup
         );
@@ -131,7 +131,7 @@ public class WorkorderAPITests {
 
         Assembly assemblyToUse = createAndReturnAssembly(scenarioName, processGroup);
 
-        initialiseAndUploadAssemblyFile(assemblyToUse, false);
+        initializeAndUploadAssemblyFile(assemblyToUse, false);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
@@ -154,7 +154,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse assemblyFileResponse = initialiseAndUploadAssemblyFile(
+        FileResponse assemblyFileResponse = initializeAndUploadAssemblyFile(
             createAndReturnAssembly(scenarioName, processGroup),
             true
         );
@@ -185,7 +185,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "bracket_basic.prt",
             processGroup
         );
@@ -215,7 +215,7 @@ public class WorkorderAPITests {
     public void testFileNameAndExtensionInputAndOutput() {
         fileUploadResources.checkValidProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
                 "bracket_basic.prt",
                 ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
@@ -246,7 +246,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse assemblyFileResponse = initialiseAndUploadAssemblyFile(
+        FileResponse assemblyFileResponse = initializeAndUploadAssemblyFile(
             createAndReturnAssembly(scenarioName, processGroup),
             true
         );
@@ -280,7 +280,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "bracket_basic.prt",
             processGroup
         );
@@ -319,7 +319,7 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
                 "bracket_basic.prt",
                 processGroup
         );
@@ -357,7 +357,7 @@ public class WorkorderAPITests {
 
         fileUploadResources.checkValidProcessGroup(ProcessGroupEnum.SHEET_METAL.getProcessGroup());
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "bracket_basic.prt",
             ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
@@ -408,7 +408,7 @@ public class WorkorderAPITests {
     public void testGenerateAllPartImages() {
         AcsResources acsResources = new AcsResources();
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup()
         );
@@ -432,7 +432,7 @@ public class WorkorderAPITests {
     public void testGenerateSimpleImageData() {
         AcsResources acsResources = new AcsResources();
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup()
         );
@@ -457,7 +457,7 @@ public class WorkorderAPITests {
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initialiseAndUploadPartFile(fileName, processGroup);
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
@@ -483,8 +483,8 @@ public class WorkorderAPITests {
         );
     }
 
-    private FileUploadOutputs initialiseAndUploadPartFile(String fileName, String processGroup) {
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+    private FileUploadOutputs initializeAndUploadPartFile(String fileName, String processGroup) {
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
             fileName,
             processGroup
         );
@@ -495,9 +495,9 @@ public class WorkorderAPITests {
         );
     }
 
-    private FileResponse initialiseAndUploadAssemblyFile(Assembly assemblyToUse, boolean doLoadCadMetadata) {
+    private FileResponse initializeAndUploadAssemblyFile(Assembly assemblyToUse, boolean doLoadCadMetadata) {
         for (AssemblyComponent component : assemblyToUse.getComponents()) {
-            FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+            FileResponse fileResponse = fileUploadResources.initializePartUpload(
                     component.getComponentName(),
                     component.getProcessGroup()
             );
@@ -512,7 +512,7 @@ public class WorkorderAPITests {
             }
         }
 
-        FileResponse assemblyFileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse assemblyFileResponse = fileUploadResources.initializePartUpload(
             assemblyToUse.getAssemblyName(),
             assemblyToUse.getProcessGroup()
         );

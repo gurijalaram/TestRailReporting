@@ -65,7 +65,7 @@ public class FileManagementController {
     }
 
     /**
-     * Initialises headers (for both file upload and get file(s))
+     * Initializes headers (for both file upload and get file(s))
      *
      * @param userCredentials - user to authenticate with
      * @param addMultiPartFile - boolean flag to determine if content type needs set
