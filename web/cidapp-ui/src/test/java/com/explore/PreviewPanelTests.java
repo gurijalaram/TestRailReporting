@@ -110,7 +110,7 @@ public class PreviewPanelTests extends TestBase {
         softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
         softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).isCloseTo(Double.valueOf(0.48), Offset.offset(3.0));
         softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.86), Offset.offset(3.0));
-        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).isCloseTo(Double.valueOf(10483.88), Offset.offset(15.00));
+        softAssertions.assertThat(previewPage.getMaterialResult("Total Capital Investment")).isCloseTo(Double.valueOf(12194.27), Offset.offset(30.00));
 
         softAssertions.assertAll();
     }
