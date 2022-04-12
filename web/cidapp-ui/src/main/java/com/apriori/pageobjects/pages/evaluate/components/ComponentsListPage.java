@@ -2,6 +2,8 @@ package com.apriori.pageobjects.pages.evaluate.components;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -25,6 +27,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
@@ -372,6 +375,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public PublishPage publishSubcomponent() {
         pageUtils.waitForElementAndClick(publishButton);
         return new PublishPage(driver);
+    }
+
+    public ComponentsListPage checkSubComponentState(ComponentInfoBuilder componentInfo, String subComponentName) {
+        ComponentInfoBuilder subComponent = componentInfo.getSubComponents().stream().filter(x -> x.getComponentName().equals(subComponentName)).collect(Collectors.toList()).get(0);
+        new ScenariosUtil().getScenarioRepresentation(subComponent);
+        return this;
     }
 
     /**
