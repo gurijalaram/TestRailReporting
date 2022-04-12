@@ -2,6 +2,8 @@ package com.apriori.pageobjects.pages.evaluate.components;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -24,7 +26,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
@@ -186,6 +190,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Checks if button is enabled
+     *
      * @return true/false
      */
     public boolean isSetInputsEnabled() {
@@ -375,6 +380,26 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Checks the subcomponent is in a completed state
+     *
+     * @param componentInfo     - the component info
+     * @param subcomponentNames - the subcomponent names
+     * @return current page object
+     */
+    public ComponentsListPage checkSubcomponentState(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
+        List<String> componentNames = Arrays.stream(subcomponentNames)
+            .flatMap(x -> Arrays.stream(x.split(","))
+                .map(String::trim))
+            .collect(Collectors.toList());
+
+        componentNames.forEach(componentName -> new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
+            .stream()
+            .filter(x -> x.getComponentName().equals(componentName))
+            .collect(Collectors.toList()).get(0)));
+        return this;
+    }
+
+    /**
      * Gets the background colour of the cell
      *
      * @param componentName - the component name
@@ -419,7 +444,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     /**
      * Checks icon is displayed
      *
-     * @param icon - the icon
+     * @param icon          - the icon
      * @param componentName
      * @return - boolean
      */
