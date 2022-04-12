@@ -175,8 +175,8 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11901")
-    @Description("Validate that user is blocked from adding to a list of 20 uploads")
+    @TestRail(testCaseId = "11898")
+    @Description("Upload 20 different components through the explorer modal")
     public void testOverTwentyCadFileMultiUpload() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -193,23 +193,71 @@ public class UploadComponentTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
-
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "225_gasket-1-solid1.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Piston_assembly.stp"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "M3CapScrew.CATPart"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "case_002_006-8611543_prt.stp"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "BasicScenario_Forging.stp"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp"), scenarioName));
-
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        importCadFilePage = loginPage.login(currentUser)
+        explorePage = loginPage.login(currentUser)
             .importCadFile()
-            .inputMultiComponents(multiComponents);
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close()
+            .setPagination();
 
-        assertThat(importCadFilePage.getFileInputError(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time."));
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11889")
+    @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
+    public void testOverrideExistingScenariosFail() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = "AutoScenario999-1547662979384300";
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11888")
+    @Description("Validate override existing scenario is successful through multiple uploads when checked")
+    public void testOverrideExistingScenariosSuccess() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = "AutoScenario999-1547662979384300";
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .tick("Override existing scenario")
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close();
     }
 }

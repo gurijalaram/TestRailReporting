@@ -21,7 +21,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -120,7 +119,7 @@ public class UploadAssembliesTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), Matchers.is(greaterThanOrEqualTo(0))));
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
     }
 
     @Test
@@ -144,7 +143,7 @@ public class UploadAssembliesTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), Matchers.is(greaterThanOrEqualTo(0))));
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
     }
 
     @Test
@@ -169,7 +168,7 @@ public class UploadAssembliesTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), Matchers.is(greaterThanOrEqualTo(0))));
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
     }
 
     @Test
@@ -194,7 +193,7 @@ public class UploadAssembliesTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), Matchers.is(greaterThanOrEqualTo(0))));
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
     }
 
     @Test
@@ -220,6 +219,70 @@ public class UploadAssembliesTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), Matchers.is(greaterThanOrEqualTo(0))));
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11907")
+    @Description("Upload Assembly with sub-components from Inventor")
+    public void testInventorMultiUpload() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close();
+
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11908")
+    @Description("Upload multiple Assemblies")
+    public void testMultipleAssemblyUpload() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> firstMultiComponentBatch = new ArrayList<>();
+        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
+        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
+        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0003.ipt"), scenarioName));
+        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
+        firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
+
+        List<MultiUpload> secondMultiComponentBatch = new ArrayList<>();
+        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston rod_model1.prt"), scenarioName));
+        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_model1.prt"), scenarioName));
+        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston cover_model1.prt"), scenarioName));
+        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston pin_model1.prt"), scenarioName));
+        secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(firstMultiComponentBatch)
+            .inputMultiComponents(secondMultiComponentBatch)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close();
+
+        firstMultiComponentBatch.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+
+        secondMultiComponentBatch.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
     }
 }
