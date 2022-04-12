@@ -44,7 +44,6 @@ import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadata
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
@@ -52,13 +51,12 @@ import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.fms.controller.FileManagementController;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -103,14 +101,14 @@ public class FileUploadResources {
      * @param processGroup - process group of file
      * @return FileResponse - response to use in next call
      */
-    public FileResponse initialisePartUpload(String fileName, String processGroup) {
+    public FileResponse initializePartUpload(String fileName, String processGroup) {
         return initializeFileUpload(fileName, processGroup);
     }
 
     /**
      * Upload part, suppress 500 error (retry file upload three times)
      *
-     * @param fileResponse response from file upload initialise
+     * @param fileResponse response from file upload initialize
      * @param scenarioName scenario name to use
      * @return FileUploadOutputs instance
      */
@@ -136,7 +134,7 @@ public class FileUploadResources {
     /**
      * Upload part, expose 500 error (only one file upload attempt)
      *
-     * @param fileResponse response from file upload initialise
+     * @param fileResponse response from file upload initialize
      * @param scenarioName scenario name to use
      * @return FileUploadOutputs instance
      */
@@ -449,17 +447,11 @@ public class FileUploadResources {
      * @return FileResponse
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        setupHeaders("multipart/form-data");
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
-            .headers(headers)
-            .multiPartFiles(new MultiPartFiles().use("data",
-                FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
-            .formParams(new FormParams().use("filename", fileName));
-
-        assertThat(HTTPRequest.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
-        return (FileResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return FileManagementController.uploadFile(
+            UserUtil.getUser(),
+            ProcessGroupEnum.fromString(processGroup),
+            fileName
+        );
     }
 
     /**
@@ -472,7 +464,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_ADMIN_INFO, GetAdminInfoResponse.class)
+            .init(CidWorkorderApiEnum.ADMIN_INFO, GetAdminInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 publishScenarioKey.getWorkspaceId().toString(),
@@ -493,7 +485,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_IMAGE_INFO, GetImageInfoResponse.class)
+            .init(CidWorkorderApiEnum.IMAGE_INFO, GetImageInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -515,7 +507,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_CAD_METADATA, GetCadMetadataResponse.class)
+            .init(CidWorkorderApiEnum.CAD_METADATA, GetCadMetadataResponse.class)
             .headers(headers)
             .inlineVariables(fileMetadataIdentity);
 
@@ -609,7 +601,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_WORKORDER_DETAILS, WorkorderDetailsResponse.class)
+            .init(CidWorkorderApiEnum.WORKORDER_DETAILS, WorkorderDetailsResponse.class)
             .headers(headers)
             .inlineVariables(workorderId);
 
@@ -626,7 +618,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_IMAGES, null)
+            .init(CidWorkorderApiEnum.IMAGES, null)
             .headers(headers)
             .inlineVariables(imageId);
 
@@ -774,7 +766,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_LATEST_ITERATION, CostIteration.class)
+            .init(CidWorkorderApiEnum.LATEST_ITERATION, CostIteration.class)
             .headers(headers)
             .inlineVariables(
                 scenarioKey.getWorkspaceId().toString(),
@@ -859,58 +851,54 @@ public class FileUploadResources {
         String stateName = scenarioKey.getStateName();
         String masterName = scenarioKey.getMasterName();
 
-        return new ProductionInfo()
-            .setScenarioKey(new ProductionInfoScenario()
-                .setWorkspaceId(workspaceId)
-                .setTypeName(typeName)
-                .setStateName(stateName)
-                .setMasterName(masterName))
-            .setCompType(newPartRequest.getCompType())
-            .setInitialized(false)
-            .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
-
-            .setProcessGroupName(processGroup)
-            .setPgEnabled(true)
-
-            .setVpeBean(new ProductionInfoVpe()
-                .setScenarioKey(new ProductionInfoScenarioKey()
-                    .setWorkspaceId(workspaceId)
-                    .setTypeName(typeName)
-                    .setStateName(stateName)
-                    .setMasterName(masterName))
-
-                .setPrimaryPgName(processGroup)
-                .setPrimaryVpeName(newPartRequest.getVpeName())
-                .setAutoSelectedSecondaryVpes(null)
-                .setUsePrimaryAsDefault(true)
-                .setInitialized(false)
-
-                .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst(newPartRequest.getVpeName())
-                    .setSecond(newPartRequest.getVpeName())))
-
-            .setSupportsMaterials(true)
-            .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
-                .setMaterialMode(newPartRequest.getMaterialMode())
-                .setIsUserMaterialNameValid(false)
-                .setIsCadMaterialNameValid(false))
-
-            .setAnnualVolume(4400)
-            .setAnnualVolumeOverridden(true)
-            .setProductionLife(4)
-            .setProductionLifeOverridden(false)
-            .setBatchSizeOverridden(null)
-            .setComputedBatchSize(458)
-            .setBatchSizeOverridden(false)
-            .setComponentsPerProduct(1)
-            .setManuallyCosted(false)
-            .setAvailableCurrencyCodes(Arrays.asList(newPartRequest.getCurrencyCode()))
-            .setManualCurrencyCode(newPartRequest.getCurrencyCode())
-            .setMachiningMode(newPartRequest.getMachiningMode())
-            .setHasTargetCost(false)
-            .setHasTargetFinishMass(null)
-            .setHasTargetFinishMass(false)
-            .setCadModelLoaded(true)
-            .setThicknessVisible(true);
+        return ProductionInfo.builder()
+            .scenarioKey(ProductionInfoScenario.builder()
+                .workspaceId(workspaceId)
+                .typeName(typeName)
+                .stateName(stateName)
+                .masterName(masterName).build())
+            .compType(newPartRequest.getCompType())
+            .initialized(false)
+            .availablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
+            .processGroupName(processGroup)
+            .pgEnabled(true)
+            .vpeBean(ProductionInfoVpe.builder()
+                .scenarioKey(ProductionInfoScenarioKey.builder()
+                    .workspaceId(workspaceId)
+                    .typeName(typeName)
+                    .stateName(stateName)
+                    .masterName(masterName).build())
+                .primaryPgName(processGroup)
+                .primaryVpeName(newPartRequest.getVpeName())
+                .autoSelectedSecondaryVpes(null)
+                .usePrimaryAsDefault(true)
+                .initialized(false)
+                .materialCatalogKeyData(
+                    MaterialCatalogKeyData.builder()
+                        .first(newPartRequest.getVpeName())
+                        .second(newPartRequest.getVpeName()).build()).build())
+            .supportsMaterials(true)
+            .materialBean(ProductionInfoMaterial.builder()
+                .initialized(false)
+                .materialMode(newPartRequest.getMaterialMode())
+                .isUserMaterialNameValid(false)
+                .isCadMaterialNameValid(false).build())
+            .annualVolume(4400)
+            .annualVolumeOverridden(true)
+            .productionLife(4)
+            .productionLifeOverridden(false)
+            .batchSizeOverridden(null)
+            .computedBatchSize(458)
+            .batchSizeOverridden(false)
+            .componentsPerProduct(1)
+            .manuallyCosted(false)
+            .availableCurrencyCodes(Arrays.asList(newPartRequest.getCurrencyCode()))
+            .manualCurrencyCode(newPartRequest.getCurrencyCode())
+            .machiningMode(newPartRequest.getMachiningMode())
+            .hasTargetCost(false)
+            .hasTargetFinishMass(false)
+            .cadModelLoaded(true)
+            .thicknessVisible(true).build();
     }
 
     /**
