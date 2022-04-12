@@ -18,7 +18,9 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
+import net.sf.saxon.functions.ConstantFunction;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -435,12 +437,14 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(5);
 
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(639, 10));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(639), Offset.offset(10.0));
 
         evaluatePage.updateCadFile(cadResourceFile);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), is(closeTo(372, 1)));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(372), Offset.offset(1.0));
 
         // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()

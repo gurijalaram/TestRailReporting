@@ -3,11 +3,11 @@ package tests.acs;
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -34,7 +34,7 @@ public class GetActiveDimensionsByScenarioIterationKeyTests {
         AcsResources acsResources = new AcsResources();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"
             ).getPath(), NewPartRequest.class
@@ -43,7 +43,7 @@ public class GetActiveDimensionsByScenarioIterationKeyTests {
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
             "Casting.prt",
             processGroup
         );

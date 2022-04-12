@@ -1,11 +1,11 @@
 package tests.workorders;
 
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.workorders.FileUploadResources;
 import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -27,21 +27,25 @@ public class CidWorkorderAPITests extends TestUtil {
     @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")
     @Description("Upload, cost and publish a part using CID API")
     public void createDataUploadApi(String fileName, String scenarioName, String processGroup) {
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
                         "CreatePartData.json"
                 ).getPath(), NewPartRequest.class
         );
 
         FileUploadResources fileUploadResources = new FileUploadResources();
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
                 fileName,
                 processGroup
         );
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, scenarioName);
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources
-                .costPart(productionInfoInputs, fileUploadOutputs, processGroup);
+        CostOrderStatusOutputs costOutputs =
+            fileUploadResources.costPart(
+                    productionInfoInputs,
+                    fileUploadOutputs,
+                    processGroup
+                );
 
         fileUploadResources.publishPart(costOutputs);
     }

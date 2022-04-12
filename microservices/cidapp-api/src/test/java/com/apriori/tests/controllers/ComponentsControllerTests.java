@@ -34,7 +34,7 @@ public class ComponentsControllerTests {
 
     @Test
     @Description("Add a new component")
-    public void postComponents() {
+    public void postComponent() {
         final ProcessGroupEnum processGroup = ProcessGroupEnum.CASTING_DIE;
         final String componentName = "Casting";
         File resourceFile = FileResourceUtil.getCloudFile(processGroup, componentName + ".prt");
