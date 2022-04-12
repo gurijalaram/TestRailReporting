@@ -5,9 +5,8 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum FMSAPIEnum implements ExternalEndpointEnum {
 
-    GET_FILES("files"),
-    GET_FILE_BY_ID("files/%s"),
-    POST_FILES("files");
+    FILES("files"),
+    FILE_BY_ID("files/%s");
 
     private final String endpoint;
 
@@ -22,6 +21,8 @@ public enum FMSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.fms.api_url") + String.format(getEndpointString(), variables);
+        return PropertiesContext.get("${env}.fms.api_url")
+            .concat(String.format(getEndpointString(), variables))
+            .concat("?key=" + PropertiesContext.get("${env}.secret_key"));
     }
 }
