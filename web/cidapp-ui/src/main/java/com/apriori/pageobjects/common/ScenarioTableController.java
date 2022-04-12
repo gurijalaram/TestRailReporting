@@ -288,6 +288,24 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Multi-select subcomponents
+     * This method takes any number of subcomponents arguments as string eg. {"big ring, small ring"}
+     *
+     * @param subcomponentNames - component names
+     * @param scenarioName      - the scenario name
+     * @return current page object
+     */
+    public ScenarioTableController multiSelectSubcomponents(String scenarioName, String... subcomponentNames) {
+        List<String> componentNames = Arrays.stream(subcomponentNames)
+            .flatMap(x -> Arrays.stream(x.split(","))
+                .map(String::trim))
+            .collect(Collectors.toList());
+
+        componentNames.forEach(componentName -> findScenarioCheckbox(componentName, scenarioName).click());
+        return this;
+    }
+
+    /**
      * Multi-select scenario
      * This method takes any number of arguments as string. A combination of component and scenario name needs to passed in the argument eg. {"PISTON, Initial", "Television, AutoScenario101"}
      *
