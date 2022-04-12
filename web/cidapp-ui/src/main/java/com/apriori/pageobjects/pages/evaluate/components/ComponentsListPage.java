@@ -26,6 +26,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -189,6 +190,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Checks if button is enabled
+     *
      * @return true/false
      */
     public boolean isSetInputsEnabled() {
@@ -377,9 +379,23 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         return new PublishPage(driver);
     }
 
-    public ComponentsListPage checkSubComponentState(ComponentInfoBuilder componentInfo, String subComponentName) {
-        ComponentInfoBuilder subComponent = componentInfo.getSubComponents().stream().filter(x -> x.getComponentName().equals(subComponentName)).collect(Collectors.toList()).get(0);
-        new ScenariosUtil().getScenarioRepresentation(subComponent);
+    /**
+     * Checks the subcomponent is in a completed state
+     *
+     * @param componentInfo     - the component info
+     * @param subcomponentNames - the subcomponent names
+     * @return current page object
+     */
+    public ComponentsListPage checkSubcomponentState(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
+        List<String> componentNames = Arrays.stream(subcomponentNames)
+            .flatMap(x -> Arrays.stream(x.split(","))
+                .map(String::trim))
+            .collect(Collectors.toList());
+
+        componentNames.forEach(componentName -> new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
+            .stream()
+            .filter(x -> x.getComponentName().equals(componentName))
+            .collect(Collectors.toList()).get(0)));
         return this;
     }
 
@@ -428,7 +444,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     /**
      * Checks icon is displayed
      *
-     * @param icon - the icon
+     * @param icon          - the icon
      * @param componentName
      * @return - boolean
      */
