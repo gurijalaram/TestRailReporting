@@ -5,18 +5,16 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum CidWorkorderApiEnum implements ExternalEndpointEnum {
 
-    INITIALISE_FILE_UPLOAD("apriori/cost/session/ws/files"),
     CREATE_WORKORDER("apriori/cost/session/ws/workorder/orders"),
     SUBMIT_WORKORDER("apriori/cost/session/ws/workorder/orderstatus"),
-    GET_WORKORDER_DETAILS("apriori/cost/session/ws/workorder/orders/%s"),
+    WORKORDER_DETAILS("apriori/cost/session/ws/workorder/orders/%s"),
     CHECK_WORKORDER_STATUS("apriori/cost/session/ws/workorder/orderstatus/%s"),
-    GET_ADMIN_INFO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/latest/admin-info"),
-    GET_IMAGES("ws/viz/images/%s"),
-    GET_IMAGE_INFO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-info"),
-    GET_LATEST_ITERATION("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s"),
-    GET_IMAGE_BY_SCENARIO_ITERATION_KEY("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-info/"),
-    GET_CAD_METADATA("apriori/cost/session/ws/workspace/cad-metadata/%s"),
-    INITIALISE_COST_SCENARIO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info");
+    ADMIN_INFO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/latest/admin-info"),
+    IMAGES("ws/viz/images/%s"),
+    IMAGE_INFO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/image-info"),
+    LATEST_ITERATION("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s"),
+    CAD_METADATA("apriori/cost/session/ws/workspace/cad-metadata/%s"),
+    INITIALIZE_COST_SCENARIO("apriori/cost/session/ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info");
 
     private final String endpoint;
 

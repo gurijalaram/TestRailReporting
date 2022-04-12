@@ -105,7 +105,7 @@ public class GetScenariosInfoTests {
 
         for (int i = 0; i < fileNames.size(); i++) {
             String processGroup = i == 0 ? ProcessGroupEnum.CASTING.getProcessGroup() : ProcessGroupEnum.SHEET_METAL.getProcessGroup();
-            fileResponses.add(fileUploadResources.initialisePartUpload(
+            fileResponses.add(fileUploadResources.initializePartUpload(
                     fileNames.get(i),
                     processGroup
             ));

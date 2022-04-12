@@ -7,7 +7,6 @@ import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
@@ -35,7 +34,7 @@ public class CidWorkorderAPITests extends TestUtil {
         );
 
         FileUploadResources fileUploadResources = new FileUploadResources();
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
                 fileName,
                 processGroup
         );

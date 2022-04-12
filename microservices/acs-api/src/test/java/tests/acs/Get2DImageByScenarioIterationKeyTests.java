@@ -33,7 +33,7 @@ public class Get2DImageByScenarioIterationKeyTests {
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileResponse fileResponse = fileUploadResources.initialisePartUpload(
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
             "Casting.prt",
             processGroup
         );
