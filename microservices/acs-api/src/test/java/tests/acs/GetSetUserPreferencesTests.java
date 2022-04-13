@@ -42,7 +42,7 @@ public class GetSetUserPreferencesTests {
     @Description("Get User Preferences Negative Test - Invalid Username")
     public void testGetUserPreferencesInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_USER_PREFERENCES);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.USER_PREFERENCES);
 
         assertOnInvalidResponse(genericErrorResponse);
     }

@@ -36,7 +36,7 @@ public class GetSetProductionDefaultsTests {
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_PRODUCTION_DEFAULTS);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.PRODUCTION_DEFAULTS);
 
         assertOnInvalidResponse(genericErrorResponse);
     }

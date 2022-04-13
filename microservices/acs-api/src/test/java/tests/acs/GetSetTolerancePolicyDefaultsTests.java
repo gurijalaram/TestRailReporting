@@ -49,7 +49,7 @@ public class GetSetTolerancePolicyDefaultsTests {
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
         AcsResources acsResources = new AcsResources();
-        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.GET_SET_TOLERANCE_POLICY_DEFAULTS);
+        GenericErrorResponse genericErrorResponse = acsResources.getEndpointInvalidUsername(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS);
 
         assertOnInvalidResponse(genericErrorResponse);
     }

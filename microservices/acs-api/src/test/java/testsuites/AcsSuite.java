@@ -13,6 +13,7 @@ import tests.acs.GetArtifactTableInfoTests;
 import tests.acs.GetEnabledCurrencyRateVersionsTests;
 import tests.acs.GetPartPrimaryProcessGroupsTests;
 import tests.acs.GetScenariosInfoTests;
+import tests.acs.GetSetArtifactPropertiesTests;
 import tests.acs.GetSetDisplayUnitsTests;
 import tests.acs.GetSetProductionDefaultsTests;
 import tests.acs.GetSetTolerancePolicyDefaultsTests;
@@ -28,6 +29,7 @@ import testsuites.categories.AcsTest;
     GetActiveAxesByScenarioIterationKeyTests.class,
     GetActiveDimensionsByScenarioIterationKeyTests.class,
     GetArtifactTableInfoTests.class,
+    GetSetArtifactPropertiesTests.class,
     GetEnabledCurrencyRateVersionsTests.class,
     GetPartPrimaryProcessGroupsTests.class,
     GetScenariosInfoTests.class,
