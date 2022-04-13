@@ -76,7 +76,7 @@
               "type": "object"
             },
             "positionTolerance": {
-              "type": "object"
+              "type": "number"
             },
             "circularity": {
               "type": "object"
@@ -251,8 +251,6 @@
                     "artifactTypeName",
                     "cadKeyText",
                     "childArtifactCount",
-                    "convex",
-                    "edgeLength",
                     "minGcdVersion",
                     "parentArtifact",
                     "parentArtifactKey",
@@ -612,7 +610,7 @@
               "type": "object"
             },
             "positionTolerance": {
-              "type": "object"
+              "type": "number"
             },
             "circularity": {
               "type": "object"
@@ -793,8 +791,6 @@
                     "artifactTypeName",
                     "cadKeyText",
                     "childArtifactCount",
-                    "convex",
-                    "edgeLength",
                     "minGcdVersion",
                     "parentArtifact",
                     "parentArtifactKey",
@@ -1035,8 +1031,6 @@
                     "cadKeyText",
                     "childArtifactCount",
                     "childArtifacts",
-                    "convex",
-                    "edgeLength",
                     "minGcdVersion",
                     "parentArtifact",
                     "parentArtifactKey",

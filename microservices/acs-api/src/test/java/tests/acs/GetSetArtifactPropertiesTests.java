@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
@@ -17,7 +18,10 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.json.utils.JsonManager;
+
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import io.qameta.allure.Issues;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
@@ -25,12 +29,17 @@ import testsuites.categories.AcsTest;
 public class GetSetArtifactPropertiesTests {
 
     @Test
+    @Issues({
+        @Issue("COST-282"),
+        @Issue("COST-283")
+    })
     @Category(AcsTest.class)
     @TestRail(testCaseId = "12079")
     @Description("Verify Get Artifact Properties Endpoint")
     public void testGetArtifactPropertiesEndpoint() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
+
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
@@ -49,10 +58,8 @@ public class GetSetArtifactPropertiesTests {
             processGroup
         );
 
-        // get gcd image mapping by scenario iteration key
         GetGcdMappingResponse getGcdMappingResponse = acsResources.getGcdMapping(costOutputs.getScenarioIterationKey());
 
-        // get artifact properties
         GetArtifactPropertiesResponse getArtifactPropertiesResponse = acsResources.getArtifactProperties(costOutputs.getScenarioIterationKey(), getGcdMappingResponse);
 
         assertThat(getArtifactPropertiesResponse, is(notNullValue()));
