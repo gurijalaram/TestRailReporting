@@ -4,7 +4,6 @@ import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
@@ -27,6 +26,7 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UploadAssembliesTests extends TestBase {
@@ -101,107 +101,90 @@ public class UploadAssembliesTests extends TestBase {
     @TestRail(testCaseId = "11902")
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName = "FLANGE C";
+        List<String> componentNames = Arrays.asList("BOLT", "NUT", "FLANGE");
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "flange.CATPart"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "nut.CATPart"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "bolt.CATPart"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "flange c.CATProduct"), scenarioName));
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+        uploadAndOpenAssembly(multiComponents, scenarioName, assemblyName.toUpperCase().trim());
 
-        multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
     @TestRail(testCaseId = "11903")
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName = "piston_assembly";
+        List<String> componentNames = Arrays.asList("piston_pin", "piston");
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+        uploadAndOpenAssembly(multiComponents, scenarioName, assemblyName.toUpperCase().trim());
 
-        multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
     @TestRail(testCaseId = "11904")
     @Description("Upload Assembly with sub-components from Solidworks")
     public void testSolidworksMultiUpload() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName = "Hinge assembly";
+        List<String> componentNames = Arrays.asList("big ring", "Pin", "small ring");
+        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+        uploadAndOpenAssembly(multiComponents, scenarioName, assemblyName.toUpperCase().trim());
 
-        multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
     @TestRail(testCaseId = "11905")
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName = "oldham";
+        List<String> componentNames = Arrays.asList("stand", "drive", "joint");
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "stand.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "drive.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "joint.prt.1"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "oldham.asm.1"), scenarioName));
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+        uploadAndOpenAssembly(multiComponents, scenarioName, assemblyName.toUpperCase().trim());
 
-        multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
     @TestRail(testCaseId = "11906")
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName = "v6 piston assembly_asm1";
+        List<String> componentNames = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston rod_model1.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_model1.prt"), scenarioName));
@@ -209,25 +192,20 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston pin_model1.prt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+        uploadAndOpenAssembly(multiComponents, scenarioName, assemblyName.toUpperCase().trim());
 
-        multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
     @TestRail(testCaseId = "11907")
     @Description("Upload Assembly with sub-components from Inventor")
     public void testInventorMultiUpload() {
-        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName = "Assembly01";
+        List<String> componentNames = Arrays.asList("Part0001", "Part0002", "Part0003", "Part0004");
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
@@ -235,17 +213,10 @@ public class UploadAssembliesTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Assembly01.iam"), scenarioName));
 
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+        uploadAndOpenAssembly(multiComponents, scenarioName, assemblyName.toUpperCase().trim());
 
-        multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
     @Test
@@ -254,6 +225,11 @@ public class UploadAssembliesTests extends TestBase {
     public void testMultipleAssemblyUpload() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String assemblyName1 = "Assembly01";
+        String assemblyName2 = "v6 piston assembly_asm1";
+        List<String> componentNames1 = Arrays.asList("Part0001", "Part0002", "Part0003", "Part0004");
+        List<String> componentNames2 = Arrays.asList("piston rod_model1", "piston_model1", "piston cover_model1", "piston pin_model1");
+
         List<MultiUpload> firstMultiComponentBatch = new ArrayList<>();
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0001.ipt"), scenarioName));
         firstMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0002.ipt"), scenarioName));
@@ -269,20 +245,46 @@ public class UploadAssembliesTests extends TestBase {
         secondMultiComponentBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
+        componentsListPage = loginPage.login(currentUser)
             .importCadFile()
             .inputMultiComponents(firstMultiComponentBatch)
             .inputMultiComponents(secondMultiComponentBatch)
             .inputScenarioName(scenarioName)
             .submit()
-            .close();
+            .close()
+            .selectFilter("Recent")
+            .clickSearch(assemblyName1)
+            .refresh()
+            .refresh()
+            .openScenario(assemblyName1.toUpperCase(), scenarioName)
+            .openComponents();
 
-        firstMultiComponentBatch.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentNames1.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
 
-        secondMultiComponentBatch.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+        componentsListPage.clickExploreButton()
+            .selectFilter("Recent")
+            .clickSearch(assemblyName2)
+            .openScenario(assemblyName2.toUpperCase(), scenarioName)
+            .openComponents();
+
+        componentNames2.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+    }
+
+    private void uploadAndOpenAssembly(List<MultiUpload> multiComponents, String scenarioName, String assemblyName) {
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close()
+            .selectFilter("Recent")
+            .clickSearch(assemblyName)
+            .refreshPage()
+            .openScenario(assemblyName, scenarioName)
+            .openComponents();
     }
 }

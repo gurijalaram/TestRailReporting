@@ -50,9 +50,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
 
-    @FindBy(css = ".import-cad-file-status-message")
-    private WebElement uploadStatus;
-
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -314,5 +311,16 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             pageUtils.waitForElementAndClick(byComponentName);
         }
         return this;
+    }
+
+    /**
+     * Gets the message in the drop zone box
+     *
+     * @param message - the message
+     * @return - string
+     */
+    public String getDropZoneText(String message) {
+        By byDropZone = By.xpath(String.format("//div[@class='select-a-file-message']//*[text()='%s']", message));
+        return pageUtils.waitForElementToAppear(byDropZone).getText();
     }
 }
