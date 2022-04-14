@@ -124,6 +124,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage inputMultiComponents(List<MultiUpload> multiUploadList) {
         multiUploadList.forEach(multiUpload -> {
             enterMultiFilePath(multiUpload.getResourceFile());
+            waitForUploadToBeDone(multiUpload.getResourceFile().getName());
         });
         return this;
     }
@@ -274,24 +275,27 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Gets the upload status state by text
+     * This method checks for upload status
+     * To search multiple/group status in test eg. waitForUploadStatus(componentName + extension, UploadStatusEnum.completedGroup.stream().findAny().get())
      *
      * @return - current page object
      */
-    public ImportCadFilePage getUploadStatusText() {
-        pageUtils.waitForElementToAppear(uploadStatus).getText();
+    public ImportCadFilePage waitForUploadStatus(String componentName, UploadStatusEnum uploadStatusEnum) {
+        By byUploadStatus = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, uploadStatusEnum.getUploadStatus()));
+        pageUtils.waitForElementToAppear(byUploadStatus);
         return this;
     }
 
     /**
-     * This method checks for upload status
+     * Waits for uploaded status to be in a done state.  Use carefully as this method will only check for 'succeeded' or 'failed'
      *
-     * @return - current page object
+     * @param componentName - the component name
+     * @return current page object
      */
-    public ImportCadFilePage waitForUploadStatus(UploadStatusEnum uploadStatusEnum) {
-        By byUpload = By.xpath(String.format("//*[text()='%s']", uploadStatusEnum.getUploadStatus()));
-
-        pageUtils.waitForElementToAppear(byUpload);
+    public ImportCadFilePage waitForUploadToBeDone(String componentName) {
+        By bySucceeded = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "succeeded"));
+        By byFailed = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//div[contains(@class,'%s')]", componentName, "failed"));
+        pageUtils.waitForEitherElementAppear(bySucceeded, byFailed);
         return this;
     }
 

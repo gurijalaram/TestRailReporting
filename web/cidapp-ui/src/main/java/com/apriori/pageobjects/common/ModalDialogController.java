@@ -60,7 +60,7 @@ public class ModalDialogController {
     @FindBy(xpath = "//button[.='Back']")
     private WebElement backFromError;
 
-    @FindBy(css = ".modal-content .close-modal")
+    @FindBy(css = "//div[@id='modal-body']//button[.='Close']")
     private WebElement closeButton;
 
     private WebDriver driver;
@@ -199,7 +199,7 @@ public class ModalDialogController {
      * @return current page object
      */
     public <T> T cost(Class<T> klass) {
-        pageUtils.waitForElementToAppear(costButton);
+        pageUtils.waitForElementAndClick(costButton);
         return PageFactory.initElements(driver, klass);
     }
 
@@ -209,7 +209,7 @@ public class ModalDialogController {
      * @return current page object
      */
     public <T> T applyCost(Class<T> klass) {
-        pageUtils.waitForElementToAppear(applyCostButton);
+        pageUtils.waitForElementAndClick(applyCostButton);
         return PageFactory.initElements(driver, klass);
     }
 
@@ -219,7 +219,7 @@ public class ModalDialogController {
      * @return current page object
      */
     public <T> T close(Class<T> klass) {
-        pageUtils.waitForElementToAppear(closeButton);
+        pageUtils.waitForElementAndClick(closeButton);
         return PageFactory.initElements(driver, klass);
     }
 

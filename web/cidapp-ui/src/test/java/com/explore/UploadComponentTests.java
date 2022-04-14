@@ -45,16 +45,16 @@ public class UploadComponentTests extends TestBase {
     public void testUploadComponent() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
 
-        String componentName = "Case_17";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        final String componentName = "Case_17";
+        final String extension = ".stp";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile)
-            .waitForUploadStatus(UploadStatusEnum.UPLOADING)
-            .getUploadStatusText()
+            .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
             .submit()
             .close()
             .clickSearch(componentName)
@@ -80,7 +80,7 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents);
 
-        importCadFilePage.scenarioNameTextBoxDisabled().forEach(box -> assertThat(box, is("true")));
+        importCadFilePage.scenarioNameTextBoxDisabled().forEach(textBox -> assertThat(textBox, is("true")));
 
         cadFileStatusPage = importCadFilePage.submit();
 

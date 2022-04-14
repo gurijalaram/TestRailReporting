@@ -4,6 +4,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static org.openqa.selenium.support.ui.ExpectedConditions.or;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElementsLocatedBy;
@@ -689,6 +690,22 @@ public class PageUtils {
             }
         }
         return element;
+    }
+
+    /**
+     * Checks element is displayed
+     *
+     * @param element - the element
+     * @return webelement
+     */
+    public void waitForEitherElementAppear(By element, By element2) {
+        long webDriverWait = 60L;
+
+        new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(or(visibilityOfElementLocated(element),
+                visibilityOfElementLocated(element2)
+            ));
     }
 
     /**
