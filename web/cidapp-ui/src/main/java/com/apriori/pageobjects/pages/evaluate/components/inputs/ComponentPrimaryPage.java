@@ -5,6 +5,7 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -37,6 +38,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .apriori-select")
     private WebElement materialInput;
 
+    @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .placeholder")
+    private WebElement materialInputPlaceholder;
+
     @FindBy(css = ".modal-body input[name='annualVolume']")
     private WebElement annualVolumeInput;
 
@@ -51,6 +55,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
 
     @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom Attributes']")
     private WebElement customAttributesTab;
+
+    @FindBy(css = "button[data-testid='primary-button']")
+    private WebElement applyAndCostBtn;
+
+    @FindBy(css = "div[class='scenario-group-operations-success-message'] button")
+    private WebElement closeBtn;
+
+    @FindBy(css = "div[role='status']")
+    private WebElement costingSpinner;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -159,6 +172,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     }
 
     /**
+     * Get the text in the materials dropdown
+     *
+     * @return string
+     */
+    public String getMaterialPlaceholder() {
+        return pageUtils.waitForElementToAppear(materialInputPlaceholder).getAttribute("textContent");
+    }
+
+    /**
      * Enters the annual volume
      *
      * @param annualVolume - the annual volume
@@ -231,7 +253,18 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @return generic page object
      */
     public <T> T applyAndCost(Class<T> klass) {
+
         return modalDialogController.applyCost(klass);
+    }
+
+    /**
+     * Click Apply and Cost
+     */
+    public ComponentPrimaryPage clickApplyAndCost() {
+        pageUtils.waitForElementAndClick(applyAndCostBtn);
+        pageUtils.waitForElementToAppear(costingSpinner);
+        pageUtils.waitForElementNotVisible(costingSpinner, 1);
+        return this;
     }
 
     /**
@@ -241,5 +274,15 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      */
     public <T> T close(Class<T> klass) {
         return modalDialogController.close(klass);
+    }
+
+    /**
+     * Close
+     *
+     * @return generic page object
+     */
+    public ComponentsListPage clickCloseBtn() {
+        pageUtils.waitForElementAndClick(closeBtn);
+        return new ComponentsListPage(driver);
     }
 }

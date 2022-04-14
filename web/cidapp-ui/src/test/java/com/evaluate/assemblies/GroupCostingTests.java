@@ -122,15 +122,28 @@ public class GroupCostingTests extends TestBase {
             .openComponents();
 
         SoftAssertions softAssertions = new SoftAssertions();
+
+        List<String> before = componentsListPage.getRowDetails(subComponentNames.get(0), scenarioName);
+
+        subComponentNames.forEach(subComponentName->{
+            List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
+            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("circle-minus");
+        });
+
         subComponentNames.forEach(subComponentName->componentsListPage.selectScenario(subComponentName.toUpperCase(), scenarioName));
 
         componentPrimaryPage = componentsListPage.setInputs();
 
         softAssertions.assertThat(componentPrimaryPage.getProcessGroup()).as("Process Group Text").isEqualTo(retainText);
         softAssertions.assertThat(componentPrimaryPage.getDigitalFactory()).as("Digital Factory Text").isEqualTo(retainText);
-        //softAssertions.assertThat(componentPrimaryPage.getMaterial()).as("Material Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentPrimaryPage.getMaterialPlaceholder()).as("Material Text").isEqualTo(retainText);
         softAssertions.assertThat(componentPrimaryPage.getAnnualVolumePlaceholder()).as("Annual Volume Text").isEqualTo(retainText);
         softAssertions.assertThat(componentPrimaryPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
+
+        componentsListPage = componentPrimaryPage.clickApplyAndCost()
+                .clickCloseBtn();
+
+        List<String> after = componentsListPage.getRowDetails(subComponentNames.get(0), scenarioName);
 
         softAssertions.assertAll();
     }
