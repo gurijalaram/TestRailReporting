@@ -201,15 +201,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Gets file input error
-     *
-     * @return string
-     */
-    public String getFileInputError() {
-        return pageUtils.waitForElementToAppear(fileInputError).getText();
-    }
-
-    /**
      * Selects the option
      *
      * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
