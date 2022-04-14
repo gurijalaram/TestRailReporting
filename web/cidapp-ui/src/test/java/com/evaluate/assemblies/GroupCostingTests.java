@@ -2,6 +2,7 @@ package com.evaluate.assemblies;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -25,6 +26,7 @@ import java.util.Random;
 public class GroupCostingTests extends TestBase {
 
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
     private ComponentPrimaryPage componentPrimaryPage;
     private UserCredentials currentUser;
@@ -62,11 +64,10 @@ public class GroupCostingTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        componentsListPage = new CidAppLoginPage(driver)
+        evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .selectFilter("Recent")
-            .openScenario(assemblyName, scenarioName)
-            .openComponents();
+            .openScenario(assemblyName, scenarioName);
+        componentsListPage = evaluatePage.openComponents();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -115,11 +116,10 @@ public class GroupCostingTests extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        componentsListPage = new CidAppLoginPage(driver)
+        evaluatePage = new CidAppLoginPage(driver)
             .login(currentUser)
-            .selectFilter("Recent")
-            .openScenario(assemblyName, scenarioName)
-            .openComponents();
+            .openScenario(assemblyName, scenarioName);
+        componentsListPage = evaluatePage.openComponents();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -143,7 +143,20 @@ public class GroupCostingTests extends TestBase {
         componentsListPage = componentPrimaryPage.clickApplyAndCost()
                 .clickCloseBtn();
 
-        List<String> after = componentsListPage.getRowDetails(subComponentNames.get(0), scenarioName);
+        subComponentNames.forEach(subComponentName->{
+            List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
+            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("gear");
+        });
+
+        componentsListPage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
+        evaluatePage.refresh();
+        componentsListPage = evaluatePage.openComponents();
+        //ToDo:- Find some way to make this wait until the page has finished refreshing
+
+        subComponentNames.forEach(subComponentName->{
+            List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
+            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("check");
+        });
 
         softAssertions.assertAll();
     }

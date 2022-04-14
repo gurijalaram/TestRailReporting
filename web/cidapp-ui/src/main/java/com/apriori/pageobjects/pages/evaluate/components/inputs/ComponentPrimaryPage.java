@@ -65,6 +65,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     @FindBy(css = "div[role='status']")
     private WebElement costingSpinner;
 
+    @FindBy(css = "div[data-testid='loader']")
+    private WebElement loadingSpinner;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
@@ -283,6 +286,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      */
     public ComponentsListPage clickCloseBtn() {
         pageUtils.waitForElementAndClick(closeBtn);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         return new ComponentsListPage(driver);
     }
 }
