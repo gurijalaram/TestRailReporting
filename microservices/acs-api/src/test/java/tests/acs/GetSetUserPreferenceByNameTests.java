@@ -6,7 +6,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.acs.GenericResourceCreatedResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.utils.TestRail;
 
@@ -36,9 +37,9 @@ public class GetSetUserPreferenceByNameTests {
     @Description("Validate Get User Preference By Name Endpoint - Negative - Invalid User")
     public void testGetUserPreferenceByNameInvalid() {
         AcsResources acsResources = new AcsResources();
-        String errorResponse = acsResources.getUserPreferenceByNameInvalidUser();
+        GenericErrorResponse genericErrorResponse = acsResources.getUserPreferenceByNameInvalidUser();
 
-        assertInvalidResponse(errorResponse);
+        assertOnInvalidResponse(genericErrorResponse);
     }
 
     @Test
@@ -71,13 +72,13 @@ public class GetSetUserPreferenceByNameTests {
     @Description("Validate Set User Preferences By Name - Negative - Invalid User")
     public void testSetUserPreferenceByNameInvalidUser() {
         AcsResources acsResources = new AcsResources();
-        String setUserPrefInvalidResponse = acsResources.setUserPreferencesInvalidUser();
+        GenericErrorResponse genericErrorResponse = acsResources.setUserPreferencesInvalidUser();
 
-        assertInvalidResponse(setUserPrefInvalidResponse);
+        assertOnInvalidResponse(genericErrorResponse);
     }
 
-    private void assertInvalidResponse(String invalidUserResponse) {
-        assertThat(invalidUserResponse, is(containsString("400")));
-        assertThat(invalidUserResponse, is(containsString("User is not found")));
+    private void assertOnInvalidResponse(GenericErrorResponse genericErrorResponse) {
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(400)));
+        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("User is not found")));
     }
 }

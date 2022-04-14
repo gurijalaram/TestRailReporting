@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.explore;
 
-import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,12 +19,14 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     @FindBy(xpath = "//button[.='Close']")
     private WebElement closeButton;
 
+    @FindBy(css = ".modal-body .mb-3")
+    private WebElement uploadStatusText;
+
     @FindBy(css = ".modal-body .message")
     private WebElement messageText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private ModalDialogController modalDialogController;
 
     public CadFileStatusPage(WebDriver driver) {
         this.driver = driver;
@@ -56,11 +57,11 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     }
 
     /**
-     * This get the message after upload is completed
+     * This gets the message of the import status
      *
      * @return - string
      */
     public String getImportMessage() {
-        return pageUtils.waitForElementToAppear(messageText).getText();
+        return pageUtils.waitForElementToAppear(uploadStatusText).getText();
     }
 }
