@@ -2,6 +2,8 @@ package com.help;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -86,7 +88,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine Material and Process Inputs and Results"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
     }
 
     @Test
@@ -128,7 +130,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Process Inputs and Results"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
     }
 
     @Test
@@ -149,6 +151,6 @@ public class HelpTests extends TestBase {
             .openCostDetails()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Results Details"));
+        assertThat(helpDocPage.getChildPageTitle(), is(equalTo("Examine the Cost Results Details")));
     }
 }
