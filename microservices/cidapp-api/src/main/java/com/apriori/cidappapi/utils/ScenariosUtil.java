@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.utils;
 
-import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
+import static com.apriori.utils.enums.ScenarioStateEnum.transientGroup;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -68,7 +68,7 @@ public class ScenariosUtil {
                         throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentId, scenarioId));
                     });
 
-                if (scenarioResponse.isPresent() && !scenarioResponse.get().getScenarioState().equals(PROCESSING.getState())) {
+                if (scenarioResponse.isPresent() && transientGroup.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation;

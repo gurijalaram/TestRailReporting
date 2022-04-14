@@ -1,11 +1,13 @@
 package com.utils;
 
+import java.util.EnumSet;
+
 public enum UploadStatusEnum {
 
-    FAILED("Failed"),
-    UPLOADING("Uploading"),
-    UPLOADED("Uploaded"),
-    PENDING("Pending");
+    FAILED("failed"),
+    UPLOADED("succeeded"),
+    UPLOADING("submitting"),
+    PENDING("pending");
 
     private final String uploadStatus;
 
@@ -16,4 +18,7 @@ public enum UploadStatusEnum {
     public String getUploadStatus() {
         return this.uploadStatus;
     }
+
+    public static EnumSet<UploadStatusEnum> completedGroup = EnumSet.of(UPLOADED, FAILED);
+    public static EnumSet<UploadStatusEnum> waitingGroup = EnumSet.of(UPLOADING, PENDING);
 }
