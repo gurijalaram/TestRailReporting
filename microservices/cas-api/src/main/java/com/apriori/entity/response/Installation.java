@@ -27,6 +27,10 @@ public class Installation {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    private LocalDateTime updatedAt;
+    private String updatedBy;
     private String customerIdentity;
     private String deploymentIdentity;
     private String name;

@@ -38,7 +38,7 @@ public class CasLicenseTests {
 
     private String token;
     private IdentityHolder deleteIdentityHolder;
-    private com.apriori.entity.IdentityHolder userIdentityHolder;
+    private IdentityHolder userIdentityHolder;
     private IdentityHolder customerIdentityHolder;
     private CasTestUtil casTestUtil = new CasTestUtil();
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
