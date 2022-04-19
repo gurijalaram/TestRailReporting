@@ -456,8 +456,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isCostResultDisplayed(String label, String value) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.mouseMove(driver.findElement(By.cssSelector("[data-testid='left-panel']")));
-        return pageUtils.scrollWithJavaScript(driver.findElement(costResult), true).isDisplayed();
+        return pageUtils.waitForElementToAppear(costResult).isDisplayed();
     }
 
     /**
