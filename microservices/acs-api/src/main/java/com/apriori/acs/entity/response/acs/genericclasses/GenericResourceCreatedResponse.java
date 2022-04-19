@@ -1,4 +1,4 @@
-package com.apriori.acs.entity.response.acs;
+package com.apriori.acs.entity.response.acs.genericclasses;
 
 import com.apriori.utils.http.enums.Schema;
 

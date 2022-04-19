@@ -115,9 +115,9 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        userIdentity = user.getResponseEntity().getIdentity();
+        User userResponse = user.getResponseEntity();
 
-        ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(customerIdentity, userIdentity);
+        ResponseWrapper<User> patchResponse = cdsTestUtil.patchUser(userResponse);
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("Design Dept")));
     }
