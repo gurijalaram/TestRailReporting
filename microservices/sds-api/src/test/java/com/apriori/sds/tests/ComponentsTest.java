@@ -45,6 +45,4 @@ public class ComponentsTest extends SDSTestUtil {
     public void postComponents() {
         postTestingComponentAndAddToRemoveList();
     }
-
-
 }
