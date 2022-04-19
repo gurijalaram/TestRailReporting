@@ -52,7 +52,7 @@ public class UploadTests extends TestBase {
         fileError = loginPage.login(UserUtil.getUser())
                 .importCadFile()
                 .inputComponentDetails(testScenarioName, resourceFile)
-                .getFileInputError();
+                .getAlertWarning();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }

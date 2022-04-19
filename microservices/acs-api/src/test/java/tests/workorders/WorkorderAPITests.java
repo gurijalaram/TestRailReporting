@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.request.workorders.assemblyobjects.Assembly;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyComponent;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
@@ -373,10 +374,10 @@ public class WorkorderAPITests {
         String iteration = ((LinkedHashMap<?, ?>) fileUploadResources.getDeleteScenarioWorkorderDetails()).get("iteration").toString();
         ScenarioIterationKey scenarioIterationKey = setupScenarioIterationKey(deleteScenarioOutputs, iteration);
 
-        String fourZeroFourResponse = acsResources.getScenarioInfoByScenarioIterationKeyNegative(scenarioIterationKey);
+        GenericErrorResponse genericErrorResponse = acsResources.getScenarioInfoByScenarioIterationKeyNegative(scenarioIterationKey);
 
-        assertThat(fourZeroFourResponse, is(containsString("404")));
-        assertThat(fourZeroFourResponse, is(containsString("No scenario found for key: ")));
+        assertThat(genericErrorResponse.getErrorCode(), is(equalTo(404)));
+        assertThat(genericErrorResponse.getErrorMessage(), is(containsString("No scenario found for key: ")));
     }
 
     @Test
