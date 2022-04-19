@@ -2,9 +2,6 @@ package com.settings;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
@@ -93,9 +90,9 @@ public class DecimalPlaceTests extends TestBase {
         softAssertions.assertThat(evaluatePage.isMaterial("Finish Mass")).isEqualTo("5.3kg");
         softAssertions.assertThat(evaluatePage.isMaterial("Utilization")).isEqualTo("81.2%");
         softAssertions.assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4s")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$44.0")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$51.0")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$51.0")).isTrue();
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$33.9")).isTrue();
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$40.4")).isTrue();
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$40.4")).isTrue();
         softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Capital Investment", "$0.0")).isTrue();
         materialProcessPage = evaluatePage.openMaterialProcess();
 
