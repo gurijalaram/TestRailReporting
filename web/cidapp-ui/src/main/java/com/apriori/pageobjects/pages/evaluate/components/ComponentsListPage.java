@@ -376,9 +376,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage editSubcomponent() {
+    public EditComponentsPage editSubcomponent() {
         pageUtils.waitForElementAndClick(editButton);
-        return this;
+        return new EditComponentsPage(driver);
     }
 
     /**
