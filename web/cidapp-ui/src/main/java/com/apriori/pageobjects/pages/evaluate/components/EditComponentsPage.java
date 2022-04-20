@@ -47,7 +47,7 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Edit Scenario dialog is not displayed", conflictsForm.isDisplayed());
+        assertTrue("Edit Scenarios dialog is not displayed", pageUtils.waitForElementToAppear(conflictsForm).isDisplayed());
     }
 
     /**
