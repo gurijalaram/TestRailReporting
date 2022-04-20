@@ -109,7 +109,9 @@ public class UploadComponentTests extends TestBase {
             .submit()
             .close();
 
-        multiComponents.forEach(component -> assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0], component.getScenarioName()), is(equalTo(1))));
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -134,7 +136,7 @@ public class UploadComponentTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(0))));
+                component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -153,7 +155,7 @@ public class UploadComponentTests extends TestBase {
             .importCadFile()
             .inputComponentDetails(scenarioName, resourceFile);
 
-        assertThat(importCadFilePage.getFileInputError(), is(message));
+        assertThat(importCadFilePage.getFileInputErrorMessage(), is(message));
     }
 
     @Test
@@ -169,8 +171,7 @@ public class UploadComponentTests extends TestBase {
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
 
-        List<String> componentNames = Arrays.asList("big ring.SLDPRT", "Pin.SLDPRT", "small ring.SLDPRT", "Hinge assembly.SLDASM");
-        String message = "Drag and drop or click here to import CAD file(s).";
+        List<String> componentNames = Arrays.asList("big ring.SLDPRT", "Pin.SLDPRT", "small ring.SLDPRT");
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
@@ -178,7 +179,7 @@ public class UploadComponentTests extends TestBase {
             .inputMultiComponents(multiComponents)
             .cadFilesToDelete(componentNames);
 
-        assertThat(importCadFilePage.getDropZoneText(message), is(message));
+        assertThat(importCadFilePage.getDeletedCadFileNames(componentNames), is(componentNames));
     }
 
     @Test
@@ -220,6 +221,6 @@ public class UploadComponentTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(0))));
+                component.getScenarioName()), is(greaterThanOrEqualTo(1))));
     }
 }

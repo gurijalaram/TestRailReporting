@@ -254,8 +254,7 @@ public class UploadAssembliesTests extends TestBase {
             .close()
             .selectFilter("Recent")
             .clickSearch(assemblyName1)
-            .refresh()
-            .refresh()
+            .refreshPage()
             .openScenario(assemblyName1.toUpperCase(), scenarioName)
             .openComponents();
 
@@ -265,6 +264,7 @@ public class UploadAssembliesTests extends TestBase {
         componentsListPage.clickExploreButton()
             .selectFilter("Recent")
             .clickSearch(assemblyName2)
+            .refreshPage()
             .openScenario(assemblyName2.toUpperCase(), scenarioName)
             .openComponents();
 
@@ -272,7 +272,7 @@ public class UploadAssembliesTests extends TestBase {
             assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
     }
 
-    private void uploadAndOpenAssembly(List<MultiUpload> multiComponents, String scenarioName, String assemblyName) {
+    private ComponentsListPage uploadAndOpenAssembly(List<MultiUpload> multiComponents, String scenarioName, String assemblyName) {
         currentUser = UserUtil.getUser();
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
@@ -286,5 +286,6 @@ public class UploadAssembliesTests extends TestBase {
             .refreshPage()
             .openScenario(assemblyName, scenarioName)
             .openComponents();
+        return new ComponentsListPage(driver);
     }
 }

@@ -282,6 +282,7 @@ public class ExplorePage extends ExploreToolbar {
         setPagination();
         refresh();
         setPagination();
+        refresh();
         return this;
     }
 

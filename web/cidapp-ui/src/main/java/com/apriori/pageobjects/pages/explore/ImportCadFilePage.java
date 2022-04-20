@@ -198,6 +198,15 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Gets file input error
+     *
+     * @return string
+     */
+    public String getFileInputErrorMessage() {
+        return pageUtils.waitForElementToAppear(fileInputError).getText();
+    }
+
+    /**
      * Selects the option
      *
      * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
@@ -313,5 +322,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public String getDropZoneText(String message) {
         By byDropZone = By.xpath(String.format("//div[@class='select-a-file-message']//*[text()='%s']", message));
         return pageUtils.waitForElementToAppear(byDropZone).getText();
+    }
+
+    /**
+     * Get the deleted component names
+     *
+     * @param componentNames - the component names
+     * @return - string
+     */
+    public List<String> getDeletedCadFileNames(List<String> componentNames) {
+        for (String componentName : componentNames) {
+            By byComponentName = By.xpath(String.format("//div[@class='table-body']//div[@class='table-row']//*[text()='%s']", componentName));
+            pageUtils.waitForElementsToNotAppear(byComponentName);
+        }
+        return componentNames;
     }
 }
