@@ -83,20 +83,20 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
     }
 
     /**
-     * Close
-     *
-     * @return generic page object
-     */
-    public <T> T clickClose(Class<T> klass) {
-        return modalDialogController.close(klass);
-    }
-
-    /**
      * Select the continue button
      *
      * @return generic page object
      */
     public <T> T clickContinue(Class<T> klass) {
         return modalDialogController.clickContinue(klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T clickCancel(Class<T> klass) {
+        return modalDialogController.cancel(klass);
     }
 }
