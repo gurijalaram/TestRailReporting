@@ -382,6 +382,15 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Checks is edit button disabled
+     *
+     * @return boolean
+     */
+    public boolean isEditButtonDisabled() {
+        return pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
+    }
+
+    /**
      * clicks the publish button
      *
      * @return - the current page object
