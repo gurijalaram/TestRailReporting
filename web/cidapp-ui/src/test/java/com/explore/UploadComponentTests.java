@@ -109,7 +109,7 @@ public class UploadComponentTests extends TestBase {
             .submit()
             .close();
 
-        multiComponents.forEach(component -> assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0], component.getScenarioName()), is(equalTo(0))));
+        multiComponents.forEach(component -> assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0], component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test

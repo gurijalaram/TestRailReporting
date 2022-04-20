@@ -96,6 +96,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             String file = multiUpload.getResourceFile().getName();
 
             enterMultiFilePath(multiUpload.getResourceFile())
+                .waitForUploadToBeDone(file)
                 .inputMultiScenarioName(multiUpload.getScenarioName(), file);
         });
         return this;
@@ -146,8 +147,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
-        String[] component = file.split("\\.");
-        By byMultiFileInput = By.cssSelector(String.format("input[name='scenarioNames.%s%s']", component[0], component[component.length - 1]));
+        By byMultiFileInput = By.xpath(String.format("//input[contains(@name,'%s')]", file));
         pageUtils.waitForElementToAppear(byMultiFileInput);
         pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
         return this;
@@ -195,15 +195,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      */
     public String getFieldWarningText() {
         return pageUtils.waitForElementToAppear(scenarioNameWarning).getText();
-    }
-
-    /**
-     * Gets file input error
-     *
-     * @return string
-     */
-    public String getFileInputError() {
-        return pageUtils.waitForElementToAppear(fileInputError).getText();
     }
 
     /**

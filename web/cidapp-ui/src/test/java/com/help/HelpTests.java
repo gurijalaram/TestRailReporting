@@ -2,6 +2,8 @@ package com.help;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.help.HelpDocPage;
@@ -42,14 +44,14 @@ public class HelpTests extends TestBase {
             .goToHelp()
             .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight DesignUser Guide"));
+        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design\nUser Guide"));
     }
 
     @Test
     @Ignore("Currently no help button for inputs")
     @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"264"})
-    @Description("Have links to a detailed help pages in relevant areas of the UI")
+    @Description("Have links to a detailed help page in relevant areas of the UI")
     public void moreInputsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -70,7 +72,7 @@ public class HelpTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"264"})
-    @Description("Have links to a detailed help pages in relevant areas of the UI")
+    @Description("Have links to a detailed help page in relevant areas of the UI")
     public void materialUtilHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -86,12 +88,12 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine Material and Process Inputs and Results"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
     }
 
     @Test
     @TestRail(testCaseId = {"264"})
-    @Description("Have links to a detailed help pages in relevant areas of the UI")
+    @Description("Have links to a detailed help page in relevant areas of the UI")
     public void designGuidanceHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -112,7 +114,7 @@ public class HelpTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"264"})
-    @Description("Have links to a detailed help pages in relevant areas of the UI")
+    @Description("Have links to a detailed help page in relevant areas of the UI")
     public void processDetailsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -128,12 +130,12 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Process Inputs and Results"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
     }
 
     @Test
     @TestRail(testCaseId = {"264"})
-    @Description("Have links to a detailed help pages in relevant areas of the UI")
+    @Description("Have links to a detailed help page in relevant areas of the UI")
     public void costResultsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
@@ -149,6 +151,6 @@ public class HelpTests extends TestBase {
             .openCostDetails()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Results Details"));
+        assertThat(helpDocPage.getChildPageTitle(), is(equalTo("Examine the Cost Results Details")));
     }
 }
