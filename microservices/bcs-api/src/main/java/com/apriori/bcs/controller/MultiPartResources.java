@@ -174,13 +174,14 @@ public class MultiPartResources {
         int errors = 1;
 
         for (BCSPartBenchmarkingDTO partReport : parts) {
-            identity = (null != partReport.getIdentity()) ? (partReport.getIdentity().length() > identity) ? partReport.getIdentity().length() : identity : null;
-            partName = (null != partReport.getPartName()) ? (partReport.getPartName().length() > partName) ? partReport.getPartName().length() : partName : null;
-            processGroup = (null != partReport.getProcessGroup()) ? (partReport.getProcessGroup().length() > processGroup) ? partReport.getProcessGroup().length() : processGroup : null;
-            state = (null != partReport.getState()) ? (partReport.getState().length() > state) ? partReport.getState().length() : state : null;
-            costingResult = (null != partReport.getCostingResults()) ? (partReport.getCostingResults().length() > costingResult) ? partReport.getCostingResults().length() : costingResult : null;
+            identity = (null != partReport.getIdentity()) ? (partReport.getIdentity().length() > identity) ? partReport.getIdentity().length() : identity : identity;
+            partName = (null != partReport.getPartName()) ? (partReport.getPartName().length() > partName) ? partReport.getPartName().length() : partName : partName;
+            processGroup = (null != partReport.getProcessGroup()) ? (partReport.getProcessGroup().length() > processGroup) ? partReport.getProcessGroup().length() : processGroup : processGroup;
+            state = (null != partReport.getState()) ? (partReport.getState().length() > state) ? partReport.getState().length() : state : state;
+            costingResult = (null != partReport.getCostingResults()) ? (partReport.getCostingResults().length() > costingResult) ? partReport.getCostingResults().length() : costingResult : costingResult;
             processingTime = (partReport.getCostingDuration().toString().length() > processingTime) ? partReport.getCostingDuration().toString().length() : processingTime;
-            errors = (null != partReport.getErrorMessage()) ? (partReport.getErrorMessage().length() > errors) ? partReport.getErrorMessage().length() : errors : null;
+            errors = (null != partReport.getErrorMessage()) ? (partReport.getErrorMessage().length() > errors) ? partReport.getErrorMessage().length() : errors : errors;
+
         }
         formattedString.append("  %" + identity + "s")
             .append("  %" + partName + "s")

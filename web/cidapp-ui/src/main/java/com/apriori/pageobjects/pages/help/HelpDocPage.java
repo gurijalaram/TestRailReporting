@@ -14,11 +14,14 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(HelpDocPage.class);
 
-    @FindBy(css = ".ww_skin_search_form")
-    private WebElement brandImage;
+    @FindBy(css = ".logo")
+    private WebElement brandLogo;
 
     @FindBy(xpath = "//div[@id='gdpr']//button[.='Yes I Agree']")
     private WebElement agreeButton;
+
+    @FindBy(css = "h2")
+    private WebElement userGuideTitle;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -38,7 +41,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(brandImage);
+        pageUtils.waitForElementToAppear(brandLogo);
     }
 
     /**
@@ -55,6 +58,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
      * @return string
      */
     public String getChildPageTitle() {
-        return pageUtils.windowHandler(1).getTitle();
+        pageUtils.windowHandler(1);
+        return pageUtils.waitForElementToAppear(userGuideTitle).getText();
     }
 }
