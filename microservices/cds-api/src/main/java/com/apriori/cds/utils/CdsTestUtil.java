@@ -111,15 +111,19 @@ public class CdsTestUtil extends TestUtil {
     /**
      * PATCH call to update a user
      *
-     * @param customerIdentity - the customer id
-     * @param userIdentity     - the user id
+     * @param user - the user
      * @return new object
      */
-    public ResponseWrapper<User> patchUser(String customerIdentity, String userIdentity) {
+    public ResponseWrapper<User> patchUser(User user) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_USERS_BY_CUSTOMER_USER_IDS, User.class)
-            .inlineVariables(customerIdentity, userIdentity)
+            .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .body("user",
                 User.builder()
+                    .identity(user.getIdentity())
+                    .username(user.getUsername())
+                    .email(user.getEmail())
+                    .createdBy(user.getCreatedBy())
+                        .active(user.getActive())
                     .userProfile(UserProfile.builder()
                         .department("Design Dept")
                         .supervisor("Moya Parker").build())
