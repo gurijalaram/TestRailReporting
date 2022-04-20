@@ -188,7 +188,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return generic page object
      */
     public <T> T continues(Class<T> klass) {
-        return modalDialogController.modalContinue(klass);
+        return modalDialogController.clickContinue(klass);
     }
 
     /**
