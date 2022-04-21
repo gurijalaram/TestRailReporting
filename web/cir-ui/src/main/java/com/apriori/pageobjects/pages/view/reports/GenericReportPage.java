@@ -511,13 +511,13 @@ public class GenericReportPage extends ReportsPageHeader {
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[24]")
     private WebElement designOutlierApCostOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[11]/td[24]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[12]/td[24]")
     private WebElement designOutlierApCostTwo;
 
     @FindBy(xpath = "//div[@id='reportContainer']//table//tr[10]/td[21]")
     private WebElement designOutlierMassOne;
 
-    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[11]/td[21]")
+    @FindBy(xpath = "//div[@id='reportContainer']//table//tr[12]/td[21]")
     private WebElement designOutlierMassTwo;
 
     protected final String genericDeselectLocator = "//span[contains(text(), '%s')]/..//li[@title='Deselect All']";
@@ -2212,7 +2212,7 @@ public class GenericReportPage extends ReportsPageHeader {
     }
 
     /**
-     * Gets Cost min or max above chart value
+     * Gets Cost or Mass min or max value from above chart
      *
      * @param reportName - report name
      * @param massOrCost - max or cost to get
@@ -2220,23 +2220,14 @@ public class GenericReportPage extends ReportsPageHeader {
      * @return mass or cost min or max above chart value as String
      */
     public String getMassOrCostMinOrMaxAboveChartValue(String reportName, String massOrCost, String maxOrMin) {
-        By generalLocator = By.xpath(
-                String.format(
-                        "//span[contains(text(), 'aPriori %s %s:')]/ancestor::td/following-sibling::td[1]/span",
-                        massOrCost,
-                        maxOrMin)
-        );
-        By designDetailsLocator = By.xpath(
-                String.format(
-                        "//span[contains(text(), '%simum aPriori %s')]/ancestor::td/following-sibling::td[1]/span",
-                        maxOrMin,
-                        massOrCost)
-        );
-        By locator = reportName.equals(ReportNamesEnum.DESIGN_OUTLIER_IDENTIFICATION_DETAILS.getReportName())
-                ? designDetailsLocator : generalLocator;
+        Map<String, String> siblingValues = initialiseCostMassLocatorMap();
 
-        pageUtils.waitForElementToAppear(locator);
-        return driver.findElement(locator).getText();
+        By locatorToUse = By.xpath(
+            siblingValues.get(String.format("%s %s %s Report", maxOrMin, massOrCost, reportName))
+        );
+
+        pageUtils.waitForElementToAppear(locatorToUse);
+        return driver.findElement(locatorToUse).getText();
     }
 
     /**
@@ -2404,5 +2395,34 @@ public class GenericReportPage extends ReportsPageHeader {
         costDesignOutlierMap.put("Design Outlier Identification Details Cost 2", designOutlierApCostTwo);
         costDesignOutlierMap.put("Design Outlier Identification Details Mass", designOutlierMassOne);
         costDesignOutlierMap.put("Design Outlier Identification Details Mass 2", designOutlierMassTwo);
+    }
+
+    /**
+     * Initialises Cost Mass locator hash map
+     *
+     * @return HashMap of type String, String
+     */
+    private Map<String, String> initialiseCostMassLocatorMap() {
+        String shortGenericLocator = "(//td[@colspan='%s'])[%s]/span";
+        String longGenericLocator = "(//td[@colspan='%s'])[%s]/following-sibling::td[1]/span";
+
+        Map<String, String> siblingValues = new HashMap<>();
+        siblingValues.put("Min Cost Design Outlier Identification Report", String.format(longGenericLocator, "6", "1"));
+        siblingValues.put("Max Cost Design Outlier Identification Report", String.format(longGenericLocator, "6", "2"));
+        siblingValues.put("Min Mass Design Outlier Identification Report", String.format(longGenericLocator, "6", "1"));
+        siblingValues.put("Max Mass Design Outlier Identification Report", String.format(longGenericLocator, "6", "2"));
+
+        siblingValues.put("Min Cost Design Outlier Identification Details Report", String.format(shortGenericLocator, "3", "3"));
+        siblingValues.put("Max Cost Design Outlier Identification Details Report", String.format(shortGenericLocator, "3", "5"));
+        siblingValues.put("Min Mass Design Outlier Identification Details Report", String.format(shortGenericLocator, "3", "7"));
+        siblingValues.put("Max Mass Design Outlier Identification Details Report", String.format(shortGenericLocator, "3", "8"));
+
+        siblingValues.put("Min Cost Cost Outlier Identification Report", String.format(shortGenericLocator, "2", "3"));
+        siblingValues.put("Max Cost Cost Outlier Identification Report", String.format(shortGenericLocator, "2", "6"));
+
+        siblingValues.put("Min Cost Cost Outlier Identification Details Report", String.format(shortGenericLocator, "6", "1"));
+        siblingValues.put("Max Cost Cost Outlier Identification Details Report", String.format(shortGenericLocator, "6", "2"));
+
+        return siblingValues;
     }
 }
