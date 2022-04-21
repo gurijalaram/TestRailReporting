@@ -1,9 +1,11 @@
 package tests.acs;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.response.acs.getartifactproperties.ArtifactListItem;
 import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -29,10 +31,6 @@ import testsuites.categories.AcsTest;
 public class GetSetArtifactPropertiesTests {
 
     @Test
-    @Issues({
-        @Issue("COST-282"),
-        @Issue("COST-283")
-    })
     @Category(AcsTest.class)
     @TestRail(testCaseId = "12079")
     @Description("Verify Get Artifact Properties Endpoint")
@@ -62,6 +60,16 @@ public class GetSetArtifactPropertiesTests {
 
         GetArtifactPropertiesResponse getArtifactPropertiesResponse = acsResources.getArtifactProperties(costOutputs.getScenarioIterationKey(), getGcdMappingResponse);
 
-        assertThat(getArtifactPropertiesResponse, is(notNullValue()));
+        performAssertions(getArtifactPropertiesResponse.getArtifactList().get(0), "Edge:57");
+        performAssertions(getArtifactPropertiesResponse.getArtifactList().get(1), "Edge:61");
+    }
+
+    private void performAssertions(ArtifactListItem listItemToUse, String valueToAssertOn) {
+        assertThat(listItemToUse.getArtifactKey().getDisplayName().equals(valueToAssertOn), is(equalTo(true)));
+        assertThat(listItemToUse.getName().equals(valueToAssertOn), is(equalTo(true)));
+        assertThat(
+            listItemToUse.getArtifactData().getPropertyValueMap().getArtifactKey().getDisplayName().equals(valueToAssertOn),
+            is(equalTo(true))
+        );
     }
 }
