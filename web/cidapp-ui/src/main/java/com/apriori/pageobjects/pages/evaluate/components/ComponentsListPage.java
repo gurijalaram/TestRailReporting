@@ -374,8 +374,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return boolean
      */
-    public boolean isEditButtonDisabled() {
-        return pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
+    public boolean isEditButtonEnabled() {
+        return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
     /**
