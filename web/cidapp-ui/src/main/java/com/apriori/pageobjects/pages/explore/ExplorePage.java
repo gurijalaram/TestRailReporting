@@ -272,21 +272,6 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * This method is temp, used for multiple refresh of page
-     *
-     * @return - current page object
-     */
-    public ExplorePage refreshPage() {
-        // TODO Delete method once suitable replacement is ready
-        refresh();
-        setPagination();
-        refresh();
-        setPagination();
-        refresh();
-        return this;
-    }
-
-    /**
      * Sorts the column
      *
      * @param column - the column
