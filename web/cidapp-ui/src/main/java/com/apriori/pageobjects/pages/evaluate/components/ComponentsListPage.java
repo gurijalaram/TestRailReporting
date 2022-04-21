@@ -239,18 +239,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Multi-select subcomponents with same scenario name
-     *
-     * @param scenarioName      - the scenario name
-     * @param subcomponentNames - the subcomponent names eg. {subcomponent1, subcomponent2}
-     * @return current page object
-     */
-    public ComponentsListPage multiSelectSubcomponents(String scenarioName, String... subcomponentNames) {
-        scenarioTableController.multiSelectSubcomponents(scenarioName, subcomponentNames);
-        return this;
-    }
-
-    /**
      * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name
@@ -376,9 +364,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage editSubcomponent() {
+    public <T> T editSubcomponent(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return this;
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks is edit button disabled
+     *
+     * @return boolean
+     */
+    public boolean isEditButtonEnabled() {
+        return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
     /**

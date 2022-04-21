@@ -118,7 +118,7 @@ public class ModalDialogController {
      *
      * @return generic page object
      */
-    public <T> T continues(Class<T> klass) {
+    public <T> T clickContinue(Class<T> klass) {
         pageUtils.waitForElementAndClick(continueButton);
         return PageFactory.initElements(driver, klass);
     }
