@@ -114,4 +114,5 @@ public class TestBase extends TestHelper {
     public String getLocale() {
         return locale;
     }
+
 }

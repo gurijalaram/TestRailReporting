@@ -1,0 +1,35 @@
+{
+  "detailsData": {
+    "workflowName": "0 0 0 0 Auto wf",
+    "workflowDescription": "Auto wf description",
+    "connectorName": "RG-WS",
+    "componentName": "Query Definition"
+  },
+  "queryDefinitionsData": [
+    {
+      "revisionNumber": "",
+      "partNumber": "0000001040"
+    },
+    {
+      "revisionNumber": "",
+      "partNumber": "0000001041"
+    }
+  ],
+  "costingInputsData": {
+    "processGroup": "",
+    "materialName": "",
+    "description": "",
+    "annualVolume": 300,
+    "batchSize": "",
+    "productionLife": "",
+    "digitalFactory": "",
+    "scenarioName": ""
+  },
+    "emailTemplate": "DFM Part Summary",
+    "emailRecipient":"Constant",
+    "recipientEmailAddress": "rgurijala@apriori.com",
+    "reportName": "DTC Part Summary [CIR]",
+    "reportCurrencyCode": "USD",
+    "reportCostRounding": "No"
+
+}

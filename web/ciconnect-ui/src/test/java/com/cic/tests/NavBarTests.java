@@ -1,31 +1,21 @@
 package com.cic.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.startsWith;
-import static org.hamcrest.MatcherAssert.assertThat;
-
-import com.apriori.connectors.ConnectorList;
-import com.apriori.header.CostingServiceSettings;
-import com.apriori.header.PageHeader;
-import com.apriori.pageobjects.LoginPage;
-import com.apriori.users.UserList;
+import com.apriori.pages.connectors.ConnectorsPage;
+import com.apriori.pages.home.help.cicuserguide.CicUserGuide;
+import com.apriori.pages.home.settings.CostingServiceSettings;
+import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.users.UsersPage;
+import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-import com.apriori.workflows.Schedule;
 
-import cicuserguide.CicUserGuide;
+import org.junit.Assert;
 import org.junit.Test;
 
 public class NavBarTests extends TestBase {
 
-    private UserList userList;
-    private ConnectorList connectorList;
-    private Schedule schedule;
-    private PageHeader pageHeader;
-    private CicUserGuide cicUserGuide;
-    private CostingServiceSettings costingServiceSettings;
     private UserCredentials currentUser = UserUtil.getUser();
 
     public NavBarTests() {
@@ -35,75 +25,64 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3653"})
     public void testNavigateToUsersTab() {
-        userList = new LoginPage(driver)
+        UsersPage usersPage = new LoginPage(driver)
             .login(currentUser)
             .clickUsersMenu();
-
-        assertThat(userList.getUsersText(), equalTo("Users"));
+        Assert.assertEquals("Verify users menu", "Users", usersPage.getUsersText());
     }
 
     @Test
     @TestRail(testCaseId = {"3654"})
     public void testNavigateToConnectorsTab() {
-        connectorList = new LoginPage(driver)
+        ConnectorsPage connectorsPage = new LoginPage(driver)
             .login(currentUser)
             .clickConnectorsMenu();
 
-        assertThat(connectorList.getConnectorText(), equalTo("Connectors"));
+        Assert.assertEquals("Verify Connectors menu", "Connectors", connectorsPage.getConnectorText());
+
     }
 
     @Test
     @TestRail(testCaseId = {"3652"})
     public void testNavigateToWorkflowsTab() {
-        schedule = new LoginPage(driver)
+        WorkflowHome workflowHome = new LoginPage(driver)
             .login(currentUser)
-            .clickConnectorsMenu()
             .clickWorkflowMenu();
 
-        assertThat(schedule.getNewWorkflowBtnText(), equalTo("New"));
+        Assert.assertEquals("Verify Workflows menu", "Workflows", workflowHome.getWorkflowText());
     }
 
     @Test
     @TestRail(testCaseId = {"3659"})
     public void testUserDropDownInfo() {
-        pageHeader = new LoginPage(driver)
+        WorkflowHome workflowHome = new LoginPage(driver)
             .login(currentUser)
             .expandUserInfoDropdown();
 
-        assertThat(pageHeader.getLoginID(), equalTo(pageHeader.getCurrentUser()));
-        assertThat(pageHeader.getCurrentCompany(), equalTo("aPriori Internal"));
+        Assert.assertEquals("Verify Login ID", currentUser.getEmail(), workflowHome.getLoginID());
+        Assert.assertEquals("Verify Company Name", "aPriori Internal", workflowHome.getCurrentCompany());
     }
 
     @Test
     @TestRail(testCaseId = {"3655"})
     public void testCicUserGuideNavigation() throws Exception {
-        cicUserGuide = new LoginPage(driver)
+        CicUserGuide cicUserGuide = new LoginPage(driver)
             .login(currentUser)
             .navigateToCicUserGuide()
-            .switchTab()
-            .switchToIFrameUserGuide("page_iframe");
+            .switchTab();
 
-        assertThat(cicUserGuide.getURL(), startsWith("https://www.apriori.com/Collateral/Documents/English-US/online_help/CIConnect"));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"3656"})
-    public void testAboutAPrioriLinkNavigation() {
-        pageHeader = new LoginPage(driver)
-            .login(currentUser)
-            .navigateToAboutAPriori();
-
-        assertThat(pageHeader.getCicVersionText(), startsWith("Cost Insight Connect"));
+        Assert.assertEquals("Verify Online help documentation guide", "https://www.apriori.com/Collateral/Documents/English-US/online_help/CIC/",
+            cicUserGuide.getURL().split("2022")[0]);
     }
 
     @Test
     @TestRail(testCaseId = {"4002"})
     public void testNavigateToCostingServiceSettings() {
-        costingServiceSettings = new LoginPage(driver)
+        CostingServiceSettings costingServiceSettings = new LoginPage(driver)
             .login(currentUser)
             .openCostingServiceSettings();
 
-        assertThat(costingServiceSettings.getCostingServiceSettingsText(), equalTo("Costing Service Settings"));
+        Assert.assertEquals("Verify Settings model page", "Costing Service Settings", costingServiceSettings.getCostingServiceSettingsText());
     }
 }
 

@@ -9,6 +9,6 @@ import java.util.List;
 @Data
 @Schema(location = "acs/GetArtifactPropertiesResponse.json")
 public class GetArtifactPropertiesResponse {
-    private List<ArtifactData> artifactList;
+    private List<ArtifactListItem> artifactList;
     private TypedMapBean typedMapBean;
 }
