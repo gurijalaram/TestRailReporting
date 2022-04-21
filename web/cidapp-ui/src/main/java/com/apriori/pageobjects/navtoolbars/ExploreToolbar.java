@@ -213,7 +213,7 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Uploads multicomponents via api
+     * Upload multi-components via api
      *
      * @param resourceFiles - the resource files
      * @param scenarioName  - the scenario name
