@@ -174,7 +174,7 @@ qa-cid-perf:
     identity_role: 67J517C9L763
 
   ci-connect:
-    ui_url: https://ci-connect.na-1.qa-cid-perf.apriori.net/
+    ui_url: https://ci-connect.na-1-v22-1.qa-cid-perf.apriori.net/
     second_page_starting_range_number: 26
     default_connector: Automation - NA - WC
 

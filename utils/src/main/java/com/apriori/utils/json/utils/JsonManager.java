@@ -1,11 +1,15 @@
 package com.apriori.utils.json.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
 
 public class JsonManager {
     private static ObjectMapper mapper = new ObjectMapper();
@@ -47,9 +51,33 @@ public class JsonManager {
     public static void serializeJsonToFile(String fileName, Object object) {
         try {
             mapper.writeValue(
-                    new FileOutputStream(fileName), object);
+                new FileOutputStream(fileName), object);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    public static Map<String, Object> deserializeJsonToMap(String jsonKeyValuePairString) {
+        if (null == jsonKeyValuePairString || jsonKeyValuePairString.equals("") || !isJsonValid(jsonKeyValuePairString)) {
+            throw new IllegalArgumentException("No valid JSON string was provided for deserialization!");
+        }
+        Map<String, Object> returnMap = null;
+        try {
+            returnMap = mapper.readValue(jsonKeyValuePairString, HashMap.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return returnMap;
+    }
+
+    public static boolean isJsonValid(String json) {
+        Gson gson = new Gson();
+        try {
+            gson.fromJson(json, Object.class);
+            return true;
+        } catch (JsonSyntaxException e) {
+            return false;
+        }
+    }
+
 }
