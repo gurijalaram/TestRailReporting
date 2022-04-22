@@ -181,7 +181,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return list of string
      */
     private List<String> getRowText(String componentName, String scenarioName) {
-        return getByParentLocator(componentName, scenarioName)
+        return pageUtils.scrollWithJavaScript(driver.findElement(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim()))), true)
             .findElements(By.cssSelector("[class='cell-text']"))
             .stream()
             .map(x -> x.getAttribute("textContent"))
