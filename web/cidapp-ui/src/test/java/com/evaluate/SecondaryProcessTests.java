@@ -378,6 +378,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("COST-309")
     @TestRail(testCaseId = {"5132"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
