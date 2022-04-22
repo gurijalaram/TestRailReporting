@@ -107,7 +107,7 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     private void selectIssue(String issueDropdown) {
         String[] issues = issueDropdown.split(",");
 
-        Arrays.stream(issues).map(issue -> pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']", issue.trim())))
+        Arrays.stream(issues).map(issue -> pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@role='cell'][.='%s']", issue.trim())))
                 .findElement(By.cssSelector("[data-icon='circle-chevron-down']")))
             .forEach(dropdown -> pageUtils.scrollWithJavaScript(dropdown, true).click());
     }
