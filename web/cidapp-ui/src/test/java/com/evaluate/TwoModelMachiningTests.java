@@ -23,6 +23,7 @@ import com.utils.ColumnsEnum;
 import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
@@ -325,6 +326,7 @@ public class TwoModelMachiningTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2320")
     @Description("Validate the user cannot use two completely different CAD models")
     @TestRail(testCaseId = {"7871"})
     public void testTwoModelCorrectCADModels() {
