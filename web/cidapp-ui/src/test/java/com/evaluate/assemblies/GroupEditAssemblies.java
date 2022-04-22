@@ -12,12 +12,15 @@ import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -48,7 +51,7 @@ public class GroupEditAssemblies extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10882"})
+    @TestRail(testCaseId = {"10882", "10890", "10893"})
     @Description("group Edit sub Components")
     public void editButtonAvailable() {
 
@@ -77,13 +80,21 @@ public class GroupEditAssemblies extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
-                .enterKeySearch(assemblyName)
                 .navigateToScenario(componentAssembly)
                 .openComponents()
                 .multiSelectSubcomponents("big ring, " + scenarioName + "", "pin, " + scenarioName + "");
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(true);
+
+        componentsListPage.editSubcomponent(EditComponentsPage.class)
+                .overrideScenarios()
+                .clickContinue(EditScenarioStatusPage.class)
+                .close(ComponentsListPage.class)
+                .checkSubcomponentState(componentAssembly, "big ring, pin");
+
+        softAssertions.assertThat(componentsListPage.getRowDetails("pin", scenarioName)).contains(String.valueOf(StatusIconEnum.PRIVATE));
+
         softAssertions.assertAll();
 
     }
