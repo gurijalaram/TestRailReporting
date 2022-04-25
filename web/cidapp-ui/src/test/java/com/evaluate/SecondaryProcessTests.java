@@ -30,6 +30,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -377,6 +378,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("COST-309")
     @TestRail(testCaseId = {"5132"})
     @Description("Test secondary process Paint")
     public void secondaryProcessPaint() {
@@ -412,6 +414,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("SUSTAIN-16")
     @TestRail(testCaseId = {"5141", "5142", "5143"})
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
@@ -594,33 +597,6 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario();
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize / Carton Forming / Pack & Load"));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"5131"})
-    @Description("secondary process automatically added by aPriori")
-    public void cannotDeselectSP() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        String componentName = "DTCCastingIssues";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        secondaryProcessPage = loginPage.login(currentUser)
-            .openSettings()
-            .goToToleranceTab()
-            .selectCad()
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
-            .costScenario()
-            .goToSecondaryTab()
-            .openSecondaryProcesses()
-            .expandSecondaryProcessTree("High Pressure Die Cast, Trim");
-
-        assertThat(secondaryProcessPage.isCheckboxSelected("Trim"), is(true));
     }
 
     @Test

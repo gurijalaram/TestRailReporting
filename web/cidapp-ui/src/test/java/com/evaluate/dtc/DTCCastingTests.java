@@ -18,6 +18,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -249,6 +250,7 @@ public class DTCCastingTests extends TestBase {
     } */
 
     @Test
+    @Issue("BA-2313")
     @TestRail(testCaseId = {"6385", "6393", "6394", "8333"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
