@@ -5,8 +5,8 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import com.explore.SearchTests;
 import com.explore.StartComparisonTests;
-import com.partsandassemblies.PartsAndAssemblyTest;
 import com.navigation.NavigationPanelTest;
+import com.partsandassemblies.PartsAndAssemblyTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
