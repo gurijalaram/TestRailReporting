@@ -403,7 +403,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
         componentNames.forEach(componentName -> new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
             .stream()
-            .filter(x -> x.getComponentName().equals(componentName))
+            .filter(x -> x.getComponentName().equalsIgnoreCase(componentName))
             .collect(Collectors.toList()).get(0)));
         return this;
     }
