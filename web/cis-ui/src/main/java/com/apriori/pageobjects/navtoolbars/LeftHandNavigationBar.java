@@ -3,7 +3,8 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpPage;
-import com.apriori.pageobjects.pages.myuser.MyUserPage;import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
+import com.apriori.pageobjects.pages.myuser.MyUserPage;
+import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
