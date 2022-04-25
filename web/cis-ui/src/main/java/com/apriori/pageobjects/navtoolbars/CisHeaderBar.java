@@ -11,8 +11,8 @@ import org.slf4j.Logger;
 @Slf4j
 public class CisHeaderBar extends EagerPageComponent<CisHeaderBar> {
 
-    @FindBy(xpath = "//div[@class='MuiTypography-root MuiTypography-d1 css-5mobn1']")
-    private WebElement welcomeText;
+    @FindBy(css = "div.MuiTypography-root")
+    private WebElement headerText;
 
     public CisHeaderBar(WebDriver driver) {
         this(driver, log);
@@ -29,11 +29,11 @@ public class CisHeaderBar extends EagerPageComponent<CisHeaderBar> {
     }
 
     /**
-     * Gets the welcome text on header bar
+     * Gets the header text on header bar
      *
      * @return String
      */
-    public String getWelcomeText() {
-        return getPageUtils().waitForElementToAppear(welcomeText).getText();
+    public String getHeaderText() {
+        return getPageUtils().waitForElementToAppear(headerText).getText();
     }
 }

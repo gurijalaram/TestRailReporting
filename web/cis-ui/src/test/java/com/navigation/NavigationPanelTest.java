@@ -27,7 +27,7 @@ public class NavigationPanelTest extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"11992","12014"})
-    @Description("Verify the navigation bar default state and Welcome text on the home page")
+    @Description("Verify the navigation bar default state and Header text on the home page")
     public void testNavigationBarDefaultStateAndWelcomeText() {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
@@ -36,7 +36,7 @@ public class NavigationPanelTest extends TestBase {
 
         cisHeaderBar = new CisHeaderBar(driver);
 
-        assertThat(cisHeaderBar.getWelcomeText(), is(equalTo("Welcome Back!")));
+        assertThat(cisHeaderBar.getHeaderText(), is(equalTo("Dashboard")));
 
     }
 }
