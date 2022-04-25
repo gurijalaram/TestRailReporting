@@ -3,6 +3,7 @@ package com.apriori.tests.newendpoint;
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.enums.Direction;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
+import com.apriori.css.entity.response.CostingInput;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -14,6 +15,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 public class ScenarioIterationPostTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
@@ -132,5 +134,30 @@ public class ScenarioIterationPostTests {
 
         assertThat(items)
                 .doesNotContain("bracket_basic");
+    }
+
+    @Test
+    @Description("Verify that POST scenario-iterations returns parts - isNull operator")
+    public void getPartsWithIsNullOperatorTest() {
+
+        ScenarioIterationRequest scenarioIterationRequest = ScenarioIterationRequest.builder()
+                .query(ScenarioIterationRequest.Query.builder()
+                        .filter(ScenarioIterationRequest.Query.LogicalOperator.builder()
+                                .and(Arrays.asList(ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
+                                        .isNull(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
+                                                .property("costingInput")
+                                                .build())
+                                        .build()))
+                                .build())
+                        .build())
+                .build();
+
+        ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
+                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+        List<CostingInput> costingInput = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
+                .map(ScenarioItem::getCostingInput).collect(Collectors.toList());
+
+        costingInput.stream()
+                .forEach(t -> assertNull(t));
     }
 }

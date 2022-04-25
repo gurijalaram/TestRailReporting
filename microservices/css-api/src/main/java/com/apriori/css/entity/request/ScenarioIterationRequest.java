@@ -49,6 +49,7 @@ public class ScenarioIterationRequest {
                 private Params starts;
                 private Params in;
                 private Params between;
+                private Params isNull;
             }
 
             @JsonInclude(JsonInclude.Include.NON_NULL)
