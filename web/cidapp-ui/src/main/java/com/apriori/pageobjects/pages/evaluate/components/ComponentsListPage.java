@@ -190,6 +190,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     /**
      * Checks if button is enabled
+     *
      * @return true/false
      */
     public boolean isSetInputsEnabled() {
@@ -387,9 +388,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage editSubcomponent() {
+    public <T> T editSubcomponent(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return this;
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks is edit button disabled
+     *
+     * @return boolean
+     */
+    public boolean isEditButtonEnabled() {
+        return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
     /**

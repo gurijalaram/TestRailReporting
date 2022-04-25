@@ -12,6 +12,9 @@ import lombok.NoArgsConstructor;
 @Data
 @Builder
 public class CustomAttributes {
+    private String location;
+    private String manager;
+    private String department;
     private String function;
     private int workspaceId;
 }

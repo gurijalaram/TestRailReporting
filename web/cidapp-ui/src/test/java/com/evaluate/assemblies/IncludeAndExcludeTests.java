@@ -16,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -32,6 +33,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2294")
     @TestRail(testCaseId = "11154")
     @Description("Include and Exclude buttons disabled by default")
     public void testIncludeAndExcludeDisabledButtons() {
@@ -62,6 +64,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2294")
     @TestRail(testCaseId = "11150")
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeButtons() {

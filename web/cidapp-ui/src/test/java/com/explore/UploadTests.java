@@ -52,7 +52,7 @@ public class UploadTests extends TestBase {
         fileError = loginPage.login(UserUtil.getUser())
                 .importCadFile()
                 .inputComponentDetails(testScenarioName, resourceFile)
-                .getFileInputError();
+                .getAlertWarning();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
@@ -131,32 +131,5 @@ public class UploadTests extends TestBase {
                 .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
-    }
-
-    @Test
-    @Description("Upload multi-components")
-    public void multiUploadComponents() {
-        final File resource1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt");
-        final File resource2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt");
-        final File resource3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt");
-        final File resource4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt");
-        final File resource5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt");
-        final List<File> resourceFiles = Arrays.asList(resource1, resource2, resource3, resource4, resource5);
-        final UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-                .uploadMultiComponents(resourceFiles, scenarioName, currentUser);
-
-        evaluatePage = new ExplorePage(driver).selectFilter("Recent")
-                .clickSearch("v6 piston assembly")
-                .openScenario("V6 PISTON ASSEMBLY_ASM1", scenarioName);
-
-        componentsListPage = new ComponentsListPage(driver);
-        componentsListPage.selectCheckAllBox()
-                .setInputs()
-                .selectProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT)
-                .applyAndCost(ComponentsListPage.class);
     }
 }
