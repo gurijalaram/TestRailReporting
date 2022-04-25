@@ -1,0 +1,27 @@
+PLASTIC_MOLDING,stand.prt.1
+PLASTIC_MOLDING,drive.prt.1
+PLASTIC_MOLDING,joint.prt.1
+ASSEMBLY,oldham.asm.1
+PLASTIC_MOLDING,flange.CATPart
+PLASTIC_MOLDING,nut.CATPart
+PLASTIC_MOLDING,bolt.CATPart
+ASSEMBLY,flange c.CATProduct
+PLASTIC_MOLDING,piston_pin.prt.1
+PLASTIC_MOLDING,piston.prt.5
+ASSEMBLY,piston_assembly.asm.1
+FORGING,big ring.SLDPRT
+FORGING,Pin.SLDPRT
+FORGING,small ring.SLDPRT
+ASSEMBLY,Hinge assembly.SLDASM
+PLASTIC_MOLDING,piston rod_model1.prt
+PLASTIC_MOLDING,piston_model1.prt
+PLASTIC_MOLDING,piston cover_model1.prt
+PLASTIC_MOLDING,piston pin_model1.prt
+ASSEMBLY,v6 piston assembly_asm1.prt
+SHEET_METAL,Part0001.ipt
+SHEET_METAL,Part0002.ipt
+SHEET_METAL,Part0003.ipt
+SHEET_METAL,Part0004.ipt
+ASSEMBLY,Assembly01.iam
+
+
