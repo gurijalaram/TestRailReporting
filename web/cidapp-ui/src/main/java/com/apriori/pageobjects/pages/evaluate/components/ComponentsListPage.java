@@ -454,7 +454,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * Checks icon is displayed
      *
      * @param icon          - the icon
-     * @param componentName
+     * @param componentName - the component name
      * @return - boolean
      */
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
