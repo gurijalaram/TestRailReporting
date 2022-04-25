@@ -46,7 +46,7 @@ public class CssComponent {
     }
 
     public List<ScenarioItem> getProcessingFailedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials, PROCESSING_FAILED);
+        return getCssComponent2(componentName, scenarioName, userCredentials, PROCESSING_FAILED);
     }
 
     /**
@@ -58,6 +58,10 @@ public class CssComponent {
      */
     public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
         return getCssComponent(componentName, scenarioName, userCredentials, scenarioState, true);
+    }
+
+    public List<ScenarioItem> getCssComponent2(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState) {
+        return getCssComponent2(componentName, scenarioName, userCredentials, scenarioState, true);
     }
 
     public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
@@ -120,4 +124,48 @@ public class CssComponent {
             componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
         );
     }
+
+    public List<ScenarioItem> getCssComponent2(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
+        final int SOCKET_TIMEOUT = 270000;
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
+            .token(userCredentials.getToken())
+            .socketTimeout(SOCKET_TIMEOUT);
+
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 240;
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<CssComponentResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+
+                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
+                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                final Optional<List<ScenarioItem>> items = Optional.of(scenarioRepresentation.getResponseEntity().getItems());
+
+                    Supplier<Stream<ScenarioItem>> distinctItem = () -> items.get().stream().distinct();
+
+                    distinctItem.get()
+                        .filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()) && !scenarioState.getState().equals(PROCESSING_FAILED.getState()))
+                        .findAny()
+                        .ifPresent(y -> {
+                            throw new RuntimeException(String.format("Processing has failed for component name: %s, scenario name: %s", componentName, scenarioName));
+                        });
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds. \n Expected: %s \n Found: %s",
+            componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
+        );
+    }
+
 }

@@ -28,6 +28,7 @@ import testsuites.suiteinterface.SanityTests;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class UploadComponentTests extends TestBase {
@@ -133,5 +134,10 @@ public class UploadComponentTests extends TestBase {
             .inputMultiComponents(multiComponents)
             .submit()
             .close();
+
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getProcessingFailedState(component.getScenarioName(),
+                component.getResourceFile().getName().split("\\.")[0], currentUser), is(true)));
+
     }
 }

@@ -1,12 +1,16 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -52,6 +56,7 @@ public class ExplorePage extends ExploreToolbar {
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
+    private CssComponent cssComponent;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
@@ -291,5 +296,15 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getSortOrder(ColumnsEnum column) {
         return scenarioTableController.getSortOrder(column);
+    }
+
+    public ScenarioItem getProcessingFailedState(String componentName, String scenarioName, UserCredentials currentUser) {
+        List<ScenarioItem> itemResponse = new CssComponent().getProcessingFailedCssComponent(
+            componentName,
+            scenarioName,
+            currentUser);
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())).findFirst().get();
     }
 }
