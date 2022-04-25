@@ -22,6 +22,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,6 +33,7 @@ public class GroupEditAssemblies extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
+    private EditScenarioStatusPage editScenarioStatusPage;
     private UserCredentials currentUser;
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
@@ -41,6 +44,7 @@ public class GroupEditAssemblies extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"10882", "10890", "10893"})
     @Description("group Edit sub Components")
     public void editButtonAvailable() {
@@ -88,11 +92,10 @@ public class GroupEditAssemblies extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails("small ring", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
-
     }
 
     @Test
-    @TestRail(testCaseId = {"10883", "10884", "10885", "10894"})
+    @TestRail(testCaseId = {"10883", "10884", "10885", "10894", "11140"})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {
 
@@ -195,6 +198,101 @@ public class GroupEditAssemblies extends TestBase {
 
         componentsListPage.multiSelectSubcomponents("left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "steer wheel support, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "");
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10891", "11132"})
+    @Description("group Edit sub Components")
+    public void overridePrivateSubComponent() {
+
+        String assemblyName = "Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+                .uploadAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+                .navigateToScenario(componentAssembly)
+                .openComponents()
+                .multiSelectSubcomponents("big ring, " + scenarioName + "")
+                .editSubcomponent(EditScenarioStatusPage.class);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(editScenarioStatusPage.getEditScenarioMessage()).contains("Scenario was successfully edited, click here to open in the evaluate view.");
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class)
+                .checkSubcomponentState(componentAssembly, "big ring");
+
+        softAssertions.assertThat(componentsListPage.getRowDetails("pin", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails("big ring", scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails("small ring", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10889", "11953"})
+    @Description("group Edit sub Components")
+    public void privateAndPublicSubComponents() {
+
+        String assemblyName = "flange c";
+        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList("bolt", "flange", "nut");
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String subComponentExtension = ".CATPart";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+                .uploadAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+                .navigateToScenario(componentAssembly)
+                .openComponents()
+                .multiSelectSubcomponents("bolt, " + scenarioName + "")
+                .editSubcomponent(EditScenarioStatusPage.class)
+                .close(ComponentsListPage.class)
+                .checkSubcomponentState(componentAssembly, "bolt")
+                .multiSelectSubcomponents("bolt, " + scenarioName + "", "flange, " + scenarioName + "");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.getRowDetails("flange", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails("nut", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails("bolt", scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }
