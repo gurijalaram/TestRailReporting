@@ -45,6 +45,10 @@ public class CssComponent {
         return getCssComponent(componentName, scenarioName, userCredentials, NOT_COSTED);
     }
 
+    public List<ScenarioItem> getProcessingFailedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return getCssComponent(componentName, scenarioName, userCredentials, PROCESSING_FAILED);
+    }
+
     /**
      * Gets component from CSS
      *
