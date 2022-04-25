@@ -242,16 +242,12 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
             .info()
             .selectStatus("New")
             .inputCostMaturity("High")
             .inputDescription("infoNotesPanel")
             .inputNotes("Panel Test")
-            .submit(EvaluatePage.class)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Cold Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
             .info();

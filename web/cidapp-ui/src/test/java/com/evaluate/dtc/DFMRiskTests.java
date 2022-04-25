@@ -3,7 +3,6 @@ package com.evaluate.dtc;
 import static com.apriori.utils.enums.ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -18,7 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
-import net.sf.saxon.functions.ConstantFunction;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
@@ -161,6 +160,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
+    @Issue("CIG-343")
     @TestRail(testCaseId = {"6471"})
     @Description("Validate DFM Risk - Low for Sand Casting")
     public void sandCastLowDFM() {
@@ -215,6 +215,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2315")
     @TestRail(testCaseId = {"6472", "6824", "6473"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
@@ -240,7 +241,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
@@ -256,6 +258,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2315")
     @TestRail(testCaseId = {"6480", "6481"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
@@ -280,7 +283,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
@@ -297,6 +301,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
+    @Issue("CIG-371")
     @TestRail(testCaseId = {"6474", "6475"})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
@@ -322,7 +327,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE), is(true));
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
@@ -363,7 +369,8 @@ public class DFMRiskTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
@@ -379,6 +386,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
+    @Issue("CIG-343")
     @TestRail(testCaseId = {"6478", "6479"})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
@@ -404,7 +412,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
@@ -441,7 +450,8 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(639), Offset.offset(10.0));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(372), Offset.offset(1.0));

@@ -800,6 +800,7 @@ public class PageUtils {
                 throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
         }
+        this.waitForJavascriptLoadComplete();
     }
 
     /**
@@ -1275,4 +1276,33 @@ public class PageUtils {
         final WebElement fontAwesomeSpinner = Obligation.optional(() -> waitForElementToAppear(fontAwesomeSpinnerQuery, DURATION_INSTANT, search));
         return fontAwesomeSpinner;
     }
+
+    /**
+     * Waits for a page to load, and to complete running all default JavaScript that might be associated
+     * with loading that page.
+     * before throwing exception
+     */
+    public void waitForJavascriptLoadComplete() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+    }
+
+    /**
+     * Waits for a WebElement to become visible.
+     *
+     * @param element          - WebElement for which visibility is being waited.
+     * @param timeoutInSeconds Number of seconds to wait for WebElement to become visible before assuming
+     *                         it will not become visible. Defaults to 60 seconds.
+     * @return <b>True</b> if WebElement is visible, <b>false</b> if not visisble
+     */
+    public Boolean waitForWebElement(WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
 }
