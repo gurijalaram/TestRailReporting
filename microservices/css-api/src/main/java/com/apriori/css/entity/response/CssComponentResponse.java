@@ -5,10 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 
@@ -20,5 +17,6 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class CssComponentResponse extends Pagination {
+    @Getter
     private List<ScenarioItem> items;
 }

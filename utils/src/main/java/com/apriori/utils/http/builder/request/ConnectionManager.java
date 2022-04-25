@@ -9,6 +9,7 @@ import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import com.google.gson.Gson;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.config.EncoderConfig;
@@ -221,6 +222,23 @@ class ConnectionManager<T> {
                 .post(requestEntity.buildEndpoint())
                 .then()
                 .log().all()
+        );
+    }
+
+    /**
+     * Sends request to desired endpoint with the desired specifications and body using HTTP POST method
+     *
+     * @return JSON POJO object instance of @returnType
+     */
+    public <T> ResponseWrapper<T> postWithBody(Object body) {
+        return resultOf(
+                createRequestSpecification()
+                        .when()
+                        .relaxedHTTPSValidation()
+                        .body(body)
+                        .post(requestEntity.buildEndpoint())
+                        .then()
+                        .log().all()
         );
     }
 

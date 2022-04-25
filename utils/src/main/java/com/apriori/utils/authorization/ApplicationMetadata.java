@@ -24,5 +24,5 @@ public class ApplicationMetadata {
     private String installationName;
     private String applicationName;
     private Integer maxCadFileSize;
-    private String salesforceId;
+//    private String salesforceId;
 }

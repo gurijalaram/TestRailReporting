@@ -12,7 +12,7 @@ import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.ScenarioItem;
-import com.apriori.utils.CssComponent;
+import com.apriori.css.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;

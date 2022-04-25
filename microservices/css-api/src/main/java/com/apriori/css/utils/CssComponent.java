@@ -1,4 +1,4 @@
-package com.apriori.utils;
+package com.apriori.css.utils;
 
 import static com.apriori.utils.enums.ScenarioStateEnum.NOT_COSTED;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;

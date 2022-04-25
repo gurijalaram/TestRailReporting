@@ -27,6 +27,11 @@ class BaseRequestImpl implements Request {
     }
 
     @Override
+    public <T> ResponseWrapper<T> postWithBody(Object body) {
+        return initRequestData().postWithBody(body);
+    }
+
+    @Override
     public <T> ResponseWrapper<T> postMultipart() {
         return initRequestData().postMultiPart();
     }
