@@ -243,18 +243,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Multi-select subcomponents with same scenario name
-     *
-     * @param scenarioName      - the scenario name
-     * @param subcomponentNames - the subcomponent names eg. {subcomponent1, subcomponent2}
-     * @return current page object
-     */
-    public ComponentsListPage multiSelectSubcomponents(String scenarioName, String... subcomponentNames) {
-        scenarioTableController.multiSelectSubcomponents(scenarioName, subcomponentNames);
-        return this;
-    }
-
-    /**
      * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name
@@ -380,9 +368,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage editSubcomponent() {
+    public <T> T editSubcomponent(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return this;
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks is edit button disabled
+     *
+     * @return boolean
+     */
+    public boolean isEditButtonEnabled() {
+        return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
     /**
@@ -410,7 +407,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
         componentNames.forEach(componentName -> new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
             .stream()
-            .filter(x -> x.getComponentName().equals(componentName))
+            .filter(x -> x.getComponentName().equalsIgnoreCase(componentName))
             .collect(Collectors.toList()).get(0)));
         return this;
     }
@@ -461,7 +458,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * Checks icon is displayed
      *
      * @param icon          - the icon
-     * @param componentName
+     * @param componentName - the component name
      * @return - boolean
      */
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
@@ -488,5 +485,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public ExplorePage clickExploreButton() {
         pageUtils.waitForElementAndClick(exploreButton);
         return new ExplorePage(driver);
+    }
+
+    /**
+     * Gets subcomponent scenario name
+     *
+     * @param componentName - the component name
+     * @return string
+     */
+    public String getSubcomponentScenarioName(String componentName) {
+        By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
+        return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
     }
 }

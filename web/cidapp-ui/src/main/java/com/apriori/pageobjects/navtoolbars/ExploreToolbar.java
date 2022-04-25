@@ -236,6 +236,14 @@ public class ExploreToolbar extends MainNavBar {
             .build());
     }
 
+    /**
+     * Upload multi-components via api
+     *
+     * @param resourceFiles - the resource files
+     * @param scenarioName  - the scenario name
+     * @param currentUser   - the user credentials
+     * @return response object
+     */
     public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
         return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
             .resourceFiles(resourceFiles)
