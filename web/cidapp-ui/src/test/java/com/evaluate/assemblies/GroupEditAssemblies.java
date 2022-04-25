@@ -153,4 +153,49 @@ public class GroupEditAssemblies extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"10886", "10887", "10888"})
+    @Description("group Edit private sub Components disallowed")
+    public void cannotEditPrivateComponents() {
+
+        String assemblyName = "Gym Bike";
+        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
+        final String assemblyExtension = ".iam";
+
+        List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle", "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin", "right paddle", "seat lock", "seat", "steer wheel support", "washer");
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String subComponentExtension = ".ipt";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+                .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+                .navigateToScenario(componentAssembly)
+                .openComponents()
+                .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "");
+        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "steer wheel support, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "");
+        softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
 }
