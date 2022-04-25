@@ -155,7 +155,7 @@ public class GroupCostingTests extends TestBase {
 
         subComponentNames.forEach(subComponentName->{
             List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
-            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("check");
+            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon - " + subComponentName).isEqualTo("check");
         });
 
         softAssertions.assertAll();
