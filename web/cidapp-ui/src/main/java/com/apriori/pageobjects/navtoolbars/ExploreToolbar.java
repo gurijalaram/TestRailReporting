@@ -130,14 +130,14 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens the uploaded component
+     * Opens the uploaded component when it is in a ready state
      *
      * @param componentName -the component name
      * @param scenarioName  - the scenario name
      * @param currentUser   - the current user
      * @return - new page object
      */
-    public EvaluatePage openAssembly(String componentName, String scenarioName, UserCredentials currentUser) {
+    public EvaluatePage openComponent(String componentName, String scenarioName, UserCredentials currentUser) {
         List<ScenarioItem> itemResponses = cssComponent.getUnCostedCssComponent(
             componentName,
             scenarioName,
@@ -445,7 +445,7 @@ public class ExploreToolbar extends MainNavBar {
             .inputScenarioName(scenarioName)
             .submit()
             .close()
-            .openAssembly(assemblyName, scenarioName, currentUser)
+            .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents();
         return new ComponentsListPage(driver);
     }

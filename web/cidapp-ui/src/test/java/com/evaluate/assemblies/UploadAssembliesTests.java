@@ -262,14 +262,14 @@ public class UploadAssembliesTests extends TestBase {
             .inputScenarioName(scenarioName)
             .submit()
             .close()
-            .openAssembly(assemblyName1, scenarioName, currentUser)
+            .openComponent(assemblyName1, scenarioName, currentUser)
             .openComponents();
 
         componentNames1.forEach(component ->
             assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
 
         componentsListPage.clickExploreButton()
-            .openAssembly(assemblyName2, scenarioName, currentUser)
+            .openComponent(assemblyName2, scenarioName, currentUser)
             .openComponents();
 
         componentNames2.forEach(component ->

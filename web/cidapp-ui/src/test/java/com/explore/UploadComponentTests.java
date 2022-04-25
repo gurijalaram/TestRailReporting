@@ -3,7 +3,6 @@ package com.explore;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
@@ -110,9 +109,9 @@ public class UploadComponentTests extends TestBase {
             .submit()
             .close();
 
-        assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName3), equalTo(1));
-        assertThat(explorePage.getListOfScenarios("Bracket Basic", scenarioName1), equalTo(1));
-        assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName2), equalTo(1));
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -222,6 +221,6 @@ public class UploadComponentTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(greaterThanOrEqualTo(1))));
+                component.getScenarioName()), is(equalTo(1))));
     }
 }
