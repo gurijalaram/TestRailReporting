@@ -78,7 +78,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -91,7 +91,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -127,7 +127,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .editScenario()
             .close(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
@@ -135,10 +135,10 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .lock(EvaluatePage.class)
             .publishScenario()
-            .publish(cidComponentItem, currentUser, ExplorePage.class);
+            .publish(cidComponentItem, ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
     }
@@ -170,7 +170,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore();
 
         cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
@@ -183,7 +183,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario()
             .override()
             .continues(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class);
+            .publish(cidComponentItemB, EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
@@ -214,14 +214,14 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, ExplorePage.class)
+            .publish(cidComponentItem, ExplorePage.class)
             .lock(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .selectProcessGroup(FORGING)
             .costScenario()
             .publishScenario()
             .changeName(scenarioName2)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class);
+            .publish(cidComponentItem, EvaluatePage.class);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
     }

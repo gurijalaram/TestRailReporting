@@ -552,7 +552,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
 
         evaluatePage.publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -565,7 +565,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
 
-    @Category({SmokeTests.class, IgnoreTests.class})
+    @Category( {SmokeTests.class, IgnoreTests.class})
     @Test
     @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5117"})

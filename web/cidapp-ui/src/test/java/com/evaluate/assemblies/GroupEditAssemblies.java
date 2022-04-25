@@ -4,9 +4,6 @@ import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
@@ -31,12 +28,8 @@ import java.util.List;
 public class GroupEditAssemblies extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
     private EditScenarioStatusPage editScenarioStatusPage;
-    private UserCredentials currentUser;
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     public GroupEditAssemblies() {
@@ -60,6 +53,8 @@ public class GroupEditAssemblies extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -78,7 +73,6 @@ public class GroupEditAssemblies extends TestBase {
                 .openComponents()
                 .multiSelectSubcomponents("big ring, " + scenarioName + "", "pin, " + scenarioName + "");
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(true);
 
         componentsListPage.editSubcomponent(EditComponentsPage.class)
@@ -111,6 +105,8 @@ public class GroupEditAssemblies extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -128,7 +124,7 @@ public class GroupEditAssemblies extends TestBase {
                 .navigateToScenario(componentAssembly)
                 .openComponents()
                 .multiSelectSubcomponents("centre bolt, " + scenarioName + "", "centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "", "left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "leg, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "", "pin, " + scenarioName + "");
-        SoftAssertions softAssertions = new SoftAssertions();
+
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")
@@ -173,6 +169,8 @@ public class GroupEditAssemblies extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -190,7 +188,6 @@ public class GroupEditAssemblies extends TestBase {
                 .openComponents()
                 .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "");
@@ -218,6 +215,8 @@ public class GroupEditAssemblies extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -237,7 +236,6 @@ public class GroupEditAssemblies extends TestBase {
                 .multiSelectSubcomponents("big ring, " + scenarioName + "")
                 .editSubcomponent(EditScenarioStatusPage.class);
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(editScenarioStatusPage.getEditScenarioMessage()).contains("Scenario was successfully edited, click here to open in the evaluate view.");
 
         componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class)
@@ -266,6 +264,8 @@ public class GroupEditAssemblies extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -288,7 +288,6 @@ public class GroupEditAssemblies extends TestBase {
                 .checkSubcomponentState(componentAssembly, "bolt")
                 .multiSelectSubcomponents("bolt, " + scenarioName + "", "flange, " + scenarioName + "");
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
         softAssertions.assertThat(componentsListPage.getRowDetails("flange", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsListPage.getRowDetails("nut", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());

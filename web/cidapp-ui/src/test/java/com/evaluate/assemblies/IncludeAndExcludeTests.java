@@ -1,10 +1,10 @@
 package com.evaluate.assemblies;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -95,5 +95,22 @@ public class IncludeAndExcludeTests extends TestBase {
         Stream.of(subComponentNames.toArray())
                 .forEach(componentName ->
                         assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), containsString("line-through")));
+    }
+
+
+    @Test
+    @Issue("BA-2294")
+    @TestRail(testCaseId = "11150")
+    @Description("Exclude all sub-components from top-level assembly")
+    public void testExcludeButtons2() {
+
+        UserCredentials currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario("https://ci-design.na-1-v22-1.qa-cid-perf.apriori.net/components/LE0H3GEHG9CD/scenarios/977N57MAD6NI")
+            .openComponents();
+
+        assertThat(componentsListPage.getSubcomponentScenarioName("PIN"), is(equalTo("MoyaScenarios210429")));
     }
 }
