@@ -478,11 +478,22 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * Checks icon is displayed
      *
      * @param icon          - the icon
-     * @param componentName
+     * @param componentName - the component name
      * @return - boolean
      */
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
         By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@id='qa-scenario-select-field']//*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
         return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
+    }
+
+    /**
+     * Gets subcomponent scenario name
+     *
+     * @param componentName - the component name
+     * @return string
+     */
+    public String getSubcomponentScenarioName(String componentName) {
+        By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
+        return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
     }
 }
