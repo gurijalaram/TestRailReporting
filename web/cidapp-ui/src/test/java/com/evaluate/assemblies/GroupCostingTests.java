@@ -123,8 +123,6 @@ public class GroupCostingTests extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        List<String> before = componentsListPage.getRowDetails(subComponentNames.get(0), scenarioName);
-
         subComponentNames.forEach(subComponentName->{
             List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
             softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("circle-minus");
@@ -140,8 +138,9 @@ public class GroupCostingTests extends TestBase {
         softAssertions.assertThat(componentPrimaryPage.getAnnualVolumePlaceholder()).as("Annual Volume Text").isEqualTo(retainText);
         softAssertions.assertThat(componentPrimaryPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
 
-        componentsListPage = componentPrimaryPage.clickApplyAndCost()
-                .clickCloseBtn();
+        componentsListPage = componentPrimaryPage.selectProcessGroup(prtProcessGroupEnum)
+            .clickApplyAndCost()
+            .clickCloseBtn();
 
         subComponentNames.forEach(subComponentName->{
             List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
