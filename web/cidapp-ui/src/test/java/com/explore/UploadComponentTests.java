@@ -13,6 +13,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -135,9 +136,18 @@ public class UploadComponentTests extends TestBase {
             .submit()
             .close();
 
+        //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
             assertThat(explorePage.getProcessingFailedState(component.getScenarioName(),
                 component.getResourceFile().getName().split("\\.")[0], currentUser), is(1)));
+
+        explorePage.refresh();
+
+        //UI Assertion that the explore page shows the Processing Failed Icon
+        multiComponents.forEach(component ->
+                assertThat(explorePage.getListOfScenariosWithStatus(component.getScenarioName(),
+                        component.getResourceFile().getName().split("\\.")[0], ScenarioStateEnum.PROCESSING_FAILED), is(1)));
+
     }
 
     @Test
@@ -149,6 +159,7 @@ public class UploadComponentTests extends TestBase {
 
         String componentName = "Casting.prt";
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName);
+
         List<MultiUpload> multiComponents = new ArrayList<>();
         try {
             multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
@@ -171,8 +182,7 @@ public class UploadComponentTests extends TestBase {
             multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.RAPID_PROTOTYPING, "Rapid Prototyping.stp"), scenarioName));
             multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE, "SheetMetal.prt"), scenarioName));
             multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL_HYDROFORMING, "FlangedRound.SLDPRT"), scenarioName));
-//            multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, "Casting.prt"), scenarioName));
-            resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName);
+
         }catch (Exception e) {
             e.printStackTrace();
         }finally {
@@ -181,9 +191,40 @@ public class UploadComponentTests extends TestBase {
                 .importCadFile()
                 .inputScenarioName(scenarioName)
                 .inputMultiComponents(multiComponents)
-                .inputComponent(resourceFile);
+                .enterMultiFilePath(resourceFile);
 
             assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
         }
+    }
+
+    @Test
+    public void testJV1() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String componentName = "Casting.prt";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .enterMultiFilePath(resourceFile)
+                .submit()
+                .close()
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .enterMultiFilePath(resourceFile)
+                .submit()
+                .close();
+
+        explorePage.getProcessingFailedState(componentName, scenarioName, currentUser);
+
+        explorePage.refresh();
+
+        assertThat(explorePage.getScenarioWithStatus(componentName.split("\\.")[0], scenarioName), is(equalTo(1)));
+
+
+
     }
 }

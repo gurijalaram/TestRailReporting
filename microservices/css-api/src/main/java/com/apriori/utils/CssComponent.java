@@ -46,7 +46,7 @@ public class CssComponent {
     }
 
     public List<ScenarioItem> getProcessingFailedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent2(componentName, scenarioName, userCredentials, PROCESSING_FAILED);
+        return getCssComponent(componentName, scenarioName, userCredentials, PROCESSING_FAILED);
     }
 
     /**
