@@ -6,6 +6,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 import com.explore.SearchTests;
 import com.explore.StartComparisonTests;
 import com.navigation.NavigationPanelTest;
+import com.partsandassemblies.PartsAndAssemblyTest;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
@@ -14,6 +15,7 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         StartComparisonTests.class,
         SearchTests.class,
+        PartsAndAssemblyTest.class,
         NavigationPanelTest.class
 })
 public class RegressionTestSuite {
