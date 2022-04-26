@@ -179,7 +179,7 @@ public class UploadComponentTests extends TestBase {
             .inputMultiComponents(multiComponents)
             .cadFilesToDelete(componentsToDelete);
 
-        assertThat(importCadFilePage.getDeletedCadFileNames(componentsToDelete), is(componentsToDelete));
+        assertThat(importCadFilePage.getDeletedComponentNames(componentsToDelete), is(componentsToDelete));
     }
 
     @Test

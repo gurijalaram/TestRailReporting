@@ -330,7 +330,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @param componentNames - the component names
      * @return - string
      */
-    public List<String> getDeletedCadFileNames(List<String> componentNames) {
+    public List<String> getDeletedComponentNames(List<String> componentNames) {
         for (String componentName : componentNames) {
             By byComponentName = By.xpath(String.format("//div[@class='table-body']//div[@class='table-row']//*[text()='%s']", componentName));
             pageUtils.waitForElementsToNotAppear(byComponentName);

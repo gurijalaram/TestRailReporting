@@ -9,6 +9,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.MainNavBar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
@@ -79,14 +80,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
     private WebElement publishButton;
 
-    @FindBy(xpath = "//button[.='Explore']")
-    private WebElement exploreButton;
-
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
     private ComponentTableActions componentTableActions;
     private ScenarioTableController scenarioTableController;
+    private MainNavBar mainNavBar;
 
     public ComponentsListPage(WebDriver driver) {
         this.driver = driver;
@@ -94,6 +93,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         this.panelController = new PanelController(driver);
         this.componentTableActions = new ComponentTableActions(driver);
         this.scenarioTableController = new ScenarioTableController(driver);
+        this.mainNavBar = new MainNavBar(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -483,7 +483,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - new page object
      */
     public ExplorePage clickExploreButton() {
-        pageUtils.waitForElementAndClick(exploreButton);
+        mainNavBar.clickExplore();
         return new ExplorePage(driver);
     }
 
