@@ -90,7 +90,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .override()
-            .continues(PublishPage.class)
+            .clickContinue(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
@@ -134,7 +134,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .publishScenario()
             .override()
-            .continues(PublishPage.class)
+            .clickContinue(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .lock(EvaluatePage.class)
             .publishScenario()
@@ -182,7 +182,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario()
             .override()
-            .continues(PublishPage.class)
+            .clickContinue(PublishPage.class)
             .publish(cidComponentItemB, EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
