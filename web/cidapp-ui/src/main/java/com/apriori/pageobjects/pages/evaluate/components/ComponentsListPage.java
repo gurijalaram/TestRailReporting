@@ -251,18 +251,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Multi-select subcomponents with same scenario name
-     *
-     * @param scenarioName      - the scenario name
-     * @param subcomponentNames - the subcomponent names eg. {subcomponent1, subcomponent2}
-     * @return current page object
-     */
-    public ComponentsListPage multiSelectSubcomponents(String scenarioName, String... subcomponentNames) {
-        scenarioTableController.multiSelectSubcomponents(scenarioName, subcomponentNames);
-        return this;
-    }
-
-    /**
      * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name

@@ -150,7 +150,6 @@ public class GroupCostingTests extends TestBase {
         componentsListPage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
         evaluatePage.refresh();
         componentsListPage = evaluatePage.openComponents();
-        //ToDo:- Find some way to make this wait until the page has finished refreshing
 
         subComponentNames.forEach(subComponentName->{
             List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
