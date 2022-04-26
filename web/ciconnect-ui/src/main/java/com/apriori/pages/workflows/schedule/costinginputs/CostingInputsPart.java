@@ -45,9 +45,11 @@ public class CostingInputsPart extends CICBasePage {
     private WebElement worflowNameField;
 
     private String ciConnectFieldCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-3";
+    private String operatorDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-4";
     private String valueDDCss = "#CIC_CostingInputCell_MU-[ID]_DrowpdownWidget-20";
     private String valueTxtCss = "#CIC_CostingInputCell_MU-[ID]" + "_textbox-5 > table > tbody > tr > td > input";
     private String connectFieldDDCss = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
+
 
     public CostingInputsPart(WebDriver driver) {
         super(driver);
@@ -138,6 +140,14 @@ public class CostingInputsPart extends CICBasePage {
         if (workFlowData.getCostingInputsData().get(rowNum).getFieldName().equals("Scenario Name")) {
             this.selectValueFromDDL(workFlowData.getCostingInputsData().get(rowNum).getFieldName());
             pageUtils.waitFor(Constants.DEFAULT_WAIT);
+
+            // Select Operator
+            WebElement ciConnectOperatorDropdownElement = driver.findElement(By.cssSelector(operatorDDCss.replace("[ID]", rowID.toString())));
+            pageUtils.waitForElementAndClick(ciConnectOperatorDropdownElement);
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+            this.selectValueFromDDL(workFlowData.getCostingInputsData().get(rowNum).getOperatorName());
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+
             WebElement ciConnectFieldValueTxtElement = driver.findElement(By.cssSelector(valueTxtCss.replace("[ID]", rowID.toString())));
             workFlowData.getCostingInputsData().get(rowNum).setFieldValue(UIUtils.saltString(workFlowData.getCostingInputsData().get(rowNum).getFieldValue()));
             pageUtils.waitForElementAndClick(ciConnectFieldValueTxtElement);
@@ -148,6 +158,15 @@ public class CostingInputsPart extends CICBasePage {
             || workFlowData.getCostingInputsData().get(rowNum).getFieldName().equals("Digital Factory")) {
             this.selectValueFromDDL(workFlowData.getCostingInputsData().get(rowNum).getFieldName());
             pageUtils.waitFor(Constants.DEFAULT_WAIT);
+
+            // Select Operator
+            WebElement ciConnectOperatorDropdownElement = driver.findElement(By.cssSelector(operatorDDCss.replace("[ID]", rowID.toString())));
+            pageUtils.waitForElementAndClick(ciConnectOperatorDropdownElement);
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+            this.selectValueFromDDL(workFlowData.getCostingInputsData().get(rowNum).getOperatorName());
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+
+            //Select Field Value
             WebElement ciConnectFieldValueDropDownElement = driver.findElement(By.cssSelector(valueDDCss.replace("[ID]", rowID.toString())));
             pageUtils.waitForElementAndClick(ciConnectFieldValueDropDownElement);
             pageUtils.waitFor(Constants.DEFAULT_WAIT);
@@ -156,6 +175,13 @@ public class CostingInputsPart extends CICBasePage {
         } else {
             this.selectValueFromDDL(workFlowData.getCostingInputsData().get(rowNum).getFieldName());
             pageUtils.waitFor(Constants.DEFAULT_WAIT);
+            // Select Operator
+            WebElement ciConnectOperatorDropdownElement = driver.findElement(By.cssSelector(operatorDDCss.replace("[ID]", rowID.toString())));
+            pageUtils.waitForElementAndClick(ciConnectOperatorDropdownElement);
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+            this.selectValueFromDDL(workFlowData.getCostingInputsData().get(rowNum).getOperatorName());
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+            //Select Field Value
             WebElement ciConnectFieldValueTextboxElement = driver.findElement(By.cssSelector(valueTxtCss.replace("[ID]", rowID.toString())));
             pageUtils.waitForElementAndClick(ciConnectFieldValueTextboxElement);
             ciConnectFieldValueTextboxElement.sendKeys(workFlowData.getCostingInputsData().get(rowNum).getFieldValue());

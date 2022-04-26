@@ -1,35 +1,50 @@
 {
-  "detailsData": {
-    "workflowName": "0 0 0 0 Auto wf",
-    "workflowDescription": "Auto wf description",
-    "connectorName": "RG-WS",
-    "componentName": "Query Definition"
+  "workflowName": "0 0 Auto WF ",
+  "workflowDescription": "Auto wf description",
+  "connectorName": "WC - consvwc02",
+  "componentName": "Query Definition",
+  "scheduleData": {
+    "enabled": "off",
+    "schedule": "MINUTES",
+    "numberOfMinutes": 30
+  },
+  "notificationsData": {
+    "emailTemplate": "DFM Part Summary",
+    "recipientEmailType": "Constant",
+    "recipientEmailAddress": "rgurijala@apriori.com",
+    "reportName": "DTC Component Summary [CIR]",
+    "reportCurrencyCode": "USD",
+    "reportCostRounding": "No"
   },
   "queryDefinitionsData": [
     {
-      "revisionNumber": "",
-      "partNumber": "0000001040"
-    },
-    {
-      "revisionNumber": "",
-      "partNumber": "0000001041"
+      "fieldName": "partNumber",
+      "fieldOperator" : "",
+      "fieldValue": "0000001040"
     }
   ],
-  "costingInputsData": {
-    "processGroup": "",
-    "materialName": "",
-    "description": "",
-    "annualVolume": 300,
-    "batchSize": "",
-    "productionLife": "",
-    "digitalFactory": "",
-    "scenarioName": ""
-  },
-    "emailTemplate": "DFM Part Summary",
-    "emailRecipient":"Constant",
-    "recipientEmailAddress": "rgurijala@apriori.com",
-    "reportName": "DTC Part Summary [CIR]",
-    "reportCurrencyCode": "USD",
-    "reportCostRounding": "No"
-
+  "costingInputsData": [
+    {
+      "fieldName": "Process Group",
+      "fieldValue": "Sheet Metal"
+    },
+    {
+      "fieldName": "Material",
+      "fieldValue": "Steel, Cold Worked, AISI 1020"
+    },
+    {
+      "fieldName": "Digital Factory",
+      "fieldValue": "aPriori Brazil"
+    },
+    {
+      "fieldName": "Scenario Name",
+      "fieldValue": "Auto_SN "
+    }
+  ],
+  "publishResultsData":{
+    "writeFieldsData": [{"fieldName1": "fieldValue1"},{"fieldName2": "fieldValue2"}],
+    "reportName": "Part Cost [SSR]",
+    "reportCurrencyCode": "",
+    "reportCostRounding": ""
+  }
 }
