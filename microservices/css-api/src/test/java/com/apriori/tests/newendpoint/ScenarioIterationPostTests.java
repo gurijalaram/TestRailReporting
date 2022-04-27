@@ -1,5 +1,9 @@
 package com.apriori.tests.newendpoint;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.enums.Direction;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
@@ -7,15 +11,15 @@ import com.apriori.css.entity.response.CostingInput;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import java.util.*;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 public class ScenarioIterationPostTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
@@ -43,7 +47,7 @@ public class ScenarioIterationPostTests {
                 .build();
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
 
         ScenarioItem scenarioItem = scenarioIterationRespond.getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
@@ -68,7 +72,7 @@ public class ScenarioIterationPostTests {
                 .build();
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
 
         Assertions.assertEquals(5,scenarioIterationRespond.getResponseEntity().getItems().size());
     }
@@ -103,7 +107,7 @@ public class ScenarioIterationPostTests {
                 .build();
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
-                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<String> items = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
                         .map(ScenarioItem::getComponentName).collect(Collectors.toList());
         assertThat(items)
@@ -128,7 +132,7 @@ public class ScenarioIterationPostTests {
                 .build();
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
-                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<String> items = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
                 .map(ScenarioItem::getComponentName).collect(Collectors.toList());
 
@@ -153,7 +157,7 @@ public class ScenarioIterationPostTests {
                 .build();
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
-                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         List<CostingInput> costingInput = scenarioIterationRespondComponentNames.getResponseEntity().getItems().stream()
                 .map(ScenarioItem::getCostingInput).collect(Collectors.toList());
 

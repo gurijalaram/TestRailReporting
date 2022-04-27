@@ -18,7 +18,11 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -32,7 +36,13 @@ public class ScenarioIterationService {
         currentUser = UserUtil.getUser();
     }
 
-    public ResponseWrapper getScenarioIterationWithParams(List<Map<String, ?>> urlParams) {
+    /**
+     * calls 'scenario-iterations' GET endpoint
+     *
+     * @param urlParams - pass parameters to the curl
+     */
+
+    public ResponseWrapper getScenarioIterationWithParams(List<Map<String,?>> urlParams) {
 
         RequestEntity requestEntity =
                 RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO, CssComponentResponse.class)
@@ -41,42 +51,26 @@ public class ScenarioIterationService {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public ResponseWrapper getScenarioIterationWithParamsNew(ScenarioIterationRequest scenarioIterationRequest) {
+    /**
+     * calls 'scenario-iterations' POST endpoint
+     *
+     * @param scenarioIterationRequest - pass the body
+     */
+    public ResponseWrapper getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
                 RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NEW, CssComponentResponse.class)
+                    .body(scenarioIterationRequest)
                         .token(currentUser.getToken());
-        return HTTPRequest.build(requestEntity).postWithBody(scenarioIterationRequest);
+        return HTTPRequest.build(requestEntity).post();
     }
 
-    public ResponseWrapper getScenarioIterationExactPart(List<Map<String, ?>> urlParams) {
-
-        String componentName = "M3CapScrew.CATPart";
-        String processGroup = "Plastic Molding";
-        String[] component = componentName.split("\\.", 2);
-        ProcessGroupEnum pg = ProcessGroupEnum.fromString(processGroup);
-        File resourceFile = FileResourceUtil.getCloudFile(pg, component[0] + "." + component[1]);
-        String scenarioName = ("AutoAPI" + processGroup + component[0]).replace(" ", "");
-        String mode = "manual";
-        String materialName = "Use Default";
-
-        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build());
-
-
-        RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO, CssComponentResponse.class)
-                        .token(currentUser.getToken())
-                        .urlParams(urlParams);
-        return HTTPRequest.build(requestEntity).get();
-    }
-
+    /**
+     * runs in @BeforeClass method to ensure that data is loaded before tests startsv
+     * (especially when running on local env)
+     */
     public void loadDataIfNotExists() {
-        Map dataMap = new HashMap();
+        Map<String,String> dataMap = new HashMap();
         dataMap.put("bracket_basic.prt", "Sheet Metal - Stretch Forming");
         dataMap.put("case_002_006-8611543_prt.stp", "Stock Machining");
         dataMap.put("oldham.asm.1", "Assembly");
@@ -93,19 +87,19 @@ public class ScenarioIterationService {
         Iterator<Map.Entry<String, String>> iterator = dataMap.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, String> entry = iterator.next();
-            ifNotExistsLoad(currentUser, entry, dataMap);
+            ifNotExistsLoad(currentUser, entry);
         }
     }
 
-    private void ifNotExistsLoad(UserCredentials currentUser, Map.Entry<String, String> entry, Map urlParams) {
-        if (!ifExists(currentUser, entry)) {
+    private void ifNotExistsLoad(UserCredentials currentUser, Map.Entry<String, String> entry) {
+        if (!ifExists(entry)) {
             String componentName = entry.getKey();
             String[] component = componentName.split("\\.", 2);
             ProcessGroupEnum pg = ProcessGroupEnum.fromString(entry.getValue());
             File resourceFile = FileResourceUtil.getCloudFile(pg, component[0] + "." + component[1]);
             String scenarioName = ("AutoAPI" + entry.getValue() + component[0]).replace(" ", "");
 
-            ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+            componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
                     .componentName(componentName)
                     .scenarioName(scenarioName)
                     .resourceFile(resourceFile)
@@ -114,14 +108,13 @@ public class ScenarioIterationService {
         }
     }
 
-    private boolean ifExists(UserCredentials currentUser, Map.Entry<String, String> entry) {
+    private boolean ifExists(Map.Entry<String, String> entry) {
         String[] component = entry.getKey().split("\\.", 2);
         String searchedItem = component[0];
         String property = "componentName[EQ]";
         Map urlParams = new HashMap();
         urlParams.put(property, searchedItem);
 
-//        ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
                 getScenarioIterationWithParams(Arrays.asList(urlParams));
         if (scenarioIterationRespond.getResponseEntity().getItems().size() > 0) {
@@ -129,6 +122,10 @@ public class ScenarioIterationService {
         }
         return false;
     }
+
+    /**
+     * assertion method used in tests
+     */
 
     public boolean validateIfTrue(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
         for (ScenarioItem item : scenarioIterationRespond.getResponseEntity().getItems()) {
@@ -142,6 +139,10 @@ public class ScenarioIterationService {
         return true;
     }
 
+    /**
+     * assertion method used in tests
+     */
+
     public boolean validateIfTrueWithAndOperator(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
         for (ScenarioItem item : scenarioIterationRespond.getResponseEntity().getItems()) {
             if (item.getComponentType().equals("PART") && item.getComponentName().equals("bracket_basic")) {
@@ -153,6 +154,10 @@ public class ScenarioIterationService {
         }
         return true;
     }
+
+    /**
+     * assertion method used in tests
+     */
 
     public boolean validateIfTrueWithSwOperator(ResponseWrapper<CssComponentResponse> scenarioIterationRespond) {
         Pattern p = Pattern.compile("BR.*",Pattern.CASE_INSENSITIVE);

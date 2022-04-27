@@ -226,23 +226,6 @@ class ConnectionManager<T> {
     }
 
     /**
-     * Sends request to desired endpoint with the desired specifications and body using HTTP POST method
-     *
-     * @return JSON POJO object instance of @returnType
-     */
-    public <T> ResponseWrapper<T> postWithBody(Object body) {
-        return resultOf(
-                createRequestSpecification()
-                        .when()
-                        .relaxedHTTPSValidation()
-                        .body(body)
-                        .post(requestEntity.buildEndpoint())
-                        .then()
-                        .log().all()
-        );
-    }
-
-    /**
      * Sends request to desired endpoint with the desired specifications using HTTP POST method
      * As a request it sends {@link MultiPartFiles}
      *

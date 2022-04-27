@@ -1,6 +1,7 @@
 package com.apriori.css.entity.response.componentiteration;
 
 import com.apriori.css.entity.response.Thumbnail;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

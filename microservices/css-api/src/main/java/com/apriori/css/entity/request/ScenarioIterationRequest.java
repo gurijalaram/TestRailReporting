@@ -1,6 +1,7 @@
 package com.apriori.css.entity.request;
 
 import com.apriori.css.entity.enums.Direction;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

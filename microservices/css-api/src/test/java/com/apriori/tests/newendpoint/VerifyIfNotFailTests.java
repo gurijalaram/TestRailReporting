@@ -1,16 +1,19 @@
 package com.apriori.tests.newendpoint;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import java.util.Arrays;
-import static org.junit.Assert.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class VerifyIfNotFailTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
@@ -38,7 +41,7 @@ public class VerifyIfNotFailTests {
                 .build();
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
 
         ScenarioItem scenarioItem = scenarioIterationRespond.getResponseEntity().getItems().stream()
                 .findFirst().orElse(null);
@@ -67,7 +70,7 @@ public class VerifyIfNotFailTests {
 
         try {
             scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
@@ -97,7 +100,7 @@ public class VerifyIfNotFailTests {
 
         try {
             scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
@@ -127,7 +130,7 @@ public class VerifyIfNotFailTests {
 
         try {
             scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
@@ -157,7 +160,7 @@ public class VerifyIfNotFailTests {
 
         try {
             scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
@@ -187,7 +190,7 @@ public class VerifyIfNotFailTests {
 
         try {
             scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
@@ -218,7 +221,7 @@ public class VerifyIfNotFailTests {
 
         try {
             scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsNew(scenarioIterationRequest);
+                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(

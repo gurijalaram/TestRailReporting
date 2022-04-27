@@ -1,9 +1,15 @@
 package com.apriori.css.utils;
 
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.css.entity.builder.ComponentInfoBuilder;
 import com.apriori.css.entity.enums.CidAppAPIEnum;
 import com.apriori.css.entity.request.ComponentRequest;
-import com.apriori.css.entity.response.*;
+import com.apriori.css.entity.response.CadFile;
+import com.apriori.css.entity.response.CadFilesResponse;
+import com.apriori.css.entity.response.ComponentIdentityResponse;
+import com.apriori.css.entity.response.GetComponentResponse;
+import com.apriori.css.entity.response.PostComponentResponse;
 import com.apriori.css.entity.response.componentiteration.ComponentIteration;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -11,16 +17,14 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
 import java.util.Collections;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
-
-import static org.junit.Assert.assertEquals;
 
 @Slf4j
 public class ComponentsUtil {
@@ -65,12 +69,6 @@ public class ComponentsUtil {
 
         assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
                 HttpStatus.SC_OK, responseWrapper.getStatusCode());
-
-//        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
-//
-//        componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
-//        componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
-//        componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
 
         return componentBuilder;
     }
