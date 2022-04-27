@@ -5,7 +5,9 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 import com.apriori.utils.PageUtils;
 
 import com.apriori.utils.enums.ScenarioStateEnum;
+
 import com.utils.ColumnsEnum;
+
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -285,7 +287,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return by
      */
-    private By byScenarioNameAndProcessingFailed(String componentName, String scenarioName, ScenarioStateEnum scenarioState ) {
+    private By byScenarioNameAndProcessingFailed(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
         By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[contains(text(),'%s')]", scenarioName.trim(), componentName.toUpperCase().trim()));
         return byScenario;
     }
