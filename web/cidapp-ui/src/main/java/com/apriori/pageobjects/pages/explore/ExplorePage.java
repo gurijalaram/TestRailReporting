@@ -5,6 +5,7 @@ import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.CssComponent;
@@ -153,6 +154,18 @@ public class ExplorePage extends ExploreToolbar {
     public int getListOfScenarios(String componentName, String scenarioName) {
         return scenarioTableController.getListOfScenarios(componentName, scenarioName);
     }
+
+    /**
+     * Gets the number of elements present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
+    }
+
 
     /**
      * Open configure page
