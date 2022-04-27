@@ -11,6 +11,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class CostingInputsData {
     private String fieldName;
+    private String operatorName;
     private String fieldValue;
 }
 
