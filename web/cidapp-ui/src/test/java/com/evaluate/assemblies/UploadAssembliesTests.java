@@ -268,7 +268,8 @@ public class UploadAssembliesTests extends TestBase {
         componentNames1.forEach(component ->
             assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
 
-        componentsListPage.clickExploreButton()
+        componentsListPage.closePanel()
+            .clickExplore()
             .openComponent(assemblyName2, scenarioName, currentUser)
             .openComponents();
 

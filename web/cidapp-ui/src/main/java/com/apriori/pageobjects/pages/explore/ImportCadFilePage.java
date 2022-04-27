@@ -314,27 +314,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * Gets the message in the drop zone box
-     *
-     * @param message - the message
-     * @return - string
-     */
-    public String getDropZoneText(String message) {
-        By byDropZone = By.xpath(String.format("//div[@class='select-a-file-message']//*[text()='%s']", message));
-        return pageUtils.waitForElementToAppear(byDropZone).getText();
-    }
-
-    /**
-     * Get the deleted component names
+     * components displayed in the drop zone
      *
      * @param componentNames - the component names
-     * @return - string
+     * @return - boolean
      */
-    public List<String> getDeletedComponentNames(List<String> componentNames) {
-        for (String componentName : componentNames) {
-            By byComponentName = By.xpath(String.format("//div[@class='table-body']//div[@class='table-row']//*[text()='%s']", componentName));
-            pageUtils.waitForElementsToNotAppear(byComponentName);
+    public boolean isComponentDisplayedInDropzone(List<String> componentNames) {
+        try {
+            for (String componentName : componentNames) {
+                pageUtils.isElementDisplayed(By.xpath(String.format("//div[@data-header-id='name']//div[text()='%s']", componentName)));
+            }
+            return false;
+        } catch (Exception e) {
+            return true;
         }
-        return componentNames;
     }
 }
