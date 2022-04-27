@@ -169,12 +169,15 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public int getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
         String dataIcon;
-
         switch (scenarioState) {
             case PROCESSING_FAILED:
                 dataIcon = "circle-xmark";
+                break;
             case NOT_COSTED:
-                dataIcon = "";
+                dataIcon = "circle-minus";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scenarioState);
         }
         return pageUtils.waitForElementsToAppear(byScenarioNameWithStatus(componentName, scenarioName, dataIcon)).size();
     }
@@ -271,7 +274,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     private By byScenarioNameWithStatus(String componentName, String scenarioName, String dataIcon) {
         //change locator to include the dataIcon thats passed
-        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[contains(text(),'%s')]", scenarioName.trim(), componentName.toUpperCase().trim()));
+        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']", scenarioName.trim(), componentName.toUpperCase().trim()));
         return byScenario;
     }
 
