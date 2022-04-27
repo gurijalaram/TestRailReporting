@@ -12,7 +12,7 @@
     "emailTemplate": "DFM Part Summary",
     "recipientEmailType": "Constant",
     "recipientEmailAddress": "rgurijala@apriori.com",
-    "reportName": "DTC Part Summary [CIR]",
+    "reportName": "DTC Component Summary [CIR]",
     "reportCurrencyCode": "USD",
     "reportCostRounding": "No"
   },
@@ -26,19 +26,29 @@
   "costingInputsData": [
     {
       "fieldName": "Process Group",
+      "operatorName": "Constant",
       "fieldValue": "Sheet Metal"
     },
     {
       "fieldName": "Material",
+      "operatorName": "Constant",
       "fieldValue": "Steel, Cold Worked, AISI 1020"
     },
     {
       "fieldName": "Digital Factory",
+      "operatorName": "Constant",
       "fieldValue": "aPriori Brazil"
     },
     {
       "fieldName": "Scenario Name",
+      "operatorName": "Constant",
       "fieldValue": "Auto_SN "
     }
-  ]
+  ],
+  "publishResultsData":{
+    "writeFieldsData": [{"fieldName1": "fieldValue1"},{"fieldName2": "fieldValue2"}],
+    "reportName": "DTC Component Summary [CIR]",
+    "reportCurrencyCode": "USD",
+    "reportCostRounding": "No"
+  }
 }
