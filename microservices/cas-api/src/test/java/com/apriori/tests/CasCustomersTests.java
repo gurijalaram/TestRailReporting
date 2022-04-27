@@ -112,15 +112,16 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customer.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customers.class)
             .token(token)
+            .urlEncodingEnabled(false)
             .inlineVariables("?name[CN]=" + generateStringUtil.generateCustomerName())).get();
 
         assertThat(response.getResponseEntity().getTotalItemCount(), is(0));
     }
 
     @Test
-    @Issue("MIC-1679")
+    @Issue("IDS-446")
     @TestRail(testCaseId = {"5642", "5644"})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
