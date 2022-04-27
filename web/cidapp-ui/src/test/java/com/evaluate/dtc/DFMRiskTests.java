@@ -3,7 +3,6 @@ package com.evaluate.dtc;
 import static com.apriori.utils.enums.ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -19,7 +18,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import net.sf.saxon.functions.ConstantFunction;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
@@ -243,7 +241,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
@@ -284,7 +283,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
@@ -327,7 +327,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_INCOMPLETE), is(true));
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("Low"));
@@ -368,7 +369,8 @@ public class DFMRiskTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
@@ -410,7 +412,8 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
         assertThat(evaluatePage.getDfmRisk(), is("High"));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
@@ -447,7 +450,8 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(639), Offset.offset(10.0));
 
-        evaluatePage.updateCadFile(cadResourceFile);
+        evaluatePage.updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(372), Offset.offset(1.0));

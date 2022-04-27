@@ -12,6 +12,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
+import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -40,38 +41,39 @@ import testsuites.suiteinterface.AdhocTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(AdhocTests.class)
 @Suite.SuiteClasses({
-    CostAllCadTests.class,
-    CostScenarioTests.class,
-    NewScenarioNameTests.class,
-    ProcessGroupsTests.class,
-    SecondaryProcessTests.class,
-    ChangeMaterialSelectionTests.class,
-    MaterialStockTests.class,
-    UploadComponentTests.class,
-    UploadTests.class,
-    HelpTests.class,
-    DecimalPlaceTests.class,
-    UploadAssembliesTests.class,
-    PublishExistingCostedTests.class,
-    PreviewPanelTests.class,
-    DFMRiskTests.class,
-    DeleteTests.class,
-    DFMRiskTests.class,
-    PublishTests.class,
-    SheetMetalDTCTests.class,
-    DTCPlasticMouldingTests.class,
-    SheetMetalDTCTests.class,
-    ActionsTests.class,
-    TableHeadersTests.class,
-    DTCMachiningTests.class,
-    DTCCastingTests.class,
-    TwoModelMachiningTests.class,
-    MaterialPMITests.class,
-    SettingsTests.class,
-    ToleranceTests.class,
-    ComparisonTests.class,
-    ThreadTests.class,
-    PartNestingTests.class
+        CostAllCadTests.class,
+        CostScenarioTests.class,
+        NewScenarioNameTests.class,
+        ProcessGroupsTests.class,
+        SecondaryProcessTests.class,
+        ChangeMaterialSelectionTests.class,
+        MaterialStockTests.class,
+        UploadComponentTests.class,
+        UploadTests.class,
+        HelpTests.class,
+        DecimalPlaceTests.class,
+        UploadAssembliesTests.class,
+        PublishExistingCostedTests.class,
+        PreviewPanelTests.class,
+        DFMRiskTests.class,
+        DeleteTests.class,
+        DFMRiskTests.class,
+        PublishTests.class,
+        SheetMetalDTCTests.class,
+        DTCPlasticMouldingTests.class,
+        SheetMetalDTCTests.class,
+        ActionsTests.class,
+        TableHeadersTests.class,
+        DTCMachiningTests.class,
+        DTCCastingTests.class,
+        TwoModelMachiningTests.class,
+        MaterialPMITests.class,
+        SettingsTests.class,
+        ToleranceTests.class,
+        ComparisonTests.class,
+        ThreadTests.class,
+        PartNestingTests.class,
+        GroupEditAssemblies.class
 })
 public class AdhocTestSuite {
 }

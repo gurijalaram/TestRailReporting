@@ -82,6 +82,13 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
+     * Method to check cost label is in correct state
+     */
+    public void waitForCostLabelNotContain(NewCostingLabelEnum costLabel, int timeoutInMinutes) {
+        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", costLabel.getCostingText())), timeoutInMinutes);
+    }
+
+    /**
      * Gets cost label
      *
      * @return boolean
