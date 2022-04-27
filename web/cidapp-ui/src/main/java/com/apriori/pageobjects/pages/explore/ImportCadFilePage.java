@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -321,8 +322,12 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      *
      * @return
      */
-    public List<String> isComponentDisplayedInDropzone() {
-        pageUtils.waitForElementsToAppear(fileName);
-        return fileName.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
+    public List<String> getComponentsInDropZone() {
+        try {
+            pageUtils.waitForElementsToAppear(fileName);
+            return fileName.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 }
