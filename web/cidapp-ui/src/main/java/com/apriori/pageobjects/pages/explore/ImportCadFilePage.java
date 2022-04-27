@@ -47,11 +47,8 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = ".form-action-buttons [type='submit']")
     private WebElement submitButton;
 
-    @FindBy(css = "h4")
+    @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
-
-    @FindBy(css = ".import-cad-file-status-message")
-    private WebElement uploadStatus;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -206,6 +203,15 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Gets file input error
+     *
+     * @return string
+     */
+    public String getFileInputErrorMessage() {
+        return pageUtils.waitForElementToAppear(fileInputError).getText();
+    }
+
+    /**
      * Selects the option
      *
      * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
@@ -310,5 +316,22 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             pageUtils.waitForElementAndClick(byComponentName);
         }
         return this;
+    }
+
+    /**
+     * components displayed in the drop zone
+     *
+     * @param componentNames - the component names
+     * @return - boolean
+     */
+    public boolean isComponentDisplayedInDropzone(List<String> componentNames) {
+        try {
+            for (String componentName : componentNames) {
+                pageUtils.isElementDisplayed(By.xpath(String.format("//div[@data-header-id='name']//div[text()='%s']", componentName)));
+            }
+            return false;
+        } catch (Exception e) {
+            return true;
+        }
     }
 }
