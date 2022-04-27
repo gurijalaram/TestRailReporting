@@ -16,10 +16,10 @@
         "description",
         "active",
         "apVersion",
-        "installations",
-        "deploymentType"
+        "installations"
       ],
       "optional": [
+        "deploymentType",
         "updatedAt",
         "applications",
         "siteIdentities"
@@ -121,12 +121,9 @@
                   "createdAt",
                   "createdBy",
                   "customerIdentity",
-                  "deploymentIdentity",
                   "name",
                   "cloudReference",
                   "description",
-                  "customerType",
-                  "salesforceId",
                   "active",
                   "url",
                   "realm",
@@ -137,6 +134,13 @@
                   "clientSecret",
                   "cidGlobalKey",
                   "region"
+                ],
+                "optional": [
+                  "deploymentIdentity",
+                  "customerType",
+                  "salesforceId",
+                  "apVersion",
+                  "applications"
                 ],
                 "properties": {
                   "identity": {
@@ -197,6 +201,9 @@
                     "type": "string"
                   },
                   "region": {
+                    "type": "string"
+                  },
+                  "apVersion": {
                     "type": "string"
                   }
                 }

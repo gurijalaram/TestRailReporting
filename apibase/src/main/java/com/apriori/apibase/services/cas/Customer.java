@@ -26,7 +26,6 @@ import java.util.List;
 @Data
 @CreatableModel("customer")
 @Builder
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class Customer {
     private String identity;
     @JsonSerialize(using = ToStringSerializer.class)
