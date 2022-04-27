@@ -3,7 +3,7 @@ package com.apriori.css.entity.enums;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
-public enum CidAppAPIEnum implements ExternalEndpointEnum {
+public enum CssCidAppRelatedEnum implements ExternalEndpointEnum {
 
     //COMPONENT GROUP
     COMPONENTS_CREATE("components/create"),
@@ -50,7 +50,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     private final String endpoint;
 
-    CidAppAPIEnum(String endpoint) {
+    CssCidAppRelatedEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 

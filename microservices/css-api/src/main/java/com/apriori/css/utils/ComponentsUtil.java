@@ -3,7 +3,7 @@ package com.apriori.css.utils;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.css.entity.builder.ComponentInfoBuilder;
-import com.apriori.css.entity.enums.CidAppAPIEnum;
+import com.apriori.css.entity.enums.CssCidAppRelatedEnum;
 import com.apriori.css.entity.request.ComponentRequest;
 import com.apriori.css.entity.response.CadFile;
 import com.apriori.css.entity.response.CadFilesResponse;
@@ -37,7 +37,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<CadFilesResponse> postCadFiles(ComponentInfoBuilder componentBuilder) {
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.CAD_FILES, CadFilesResponse.class)
+                RequestEntityUtil.init(CssCidAppRelatedEnum.CAD_FILES, CadFilesResponse.class)
                         .multiPartFiles(new MultiPartFiles().use("cadFiles", componentBuilder.getResourceFile()))
                         .token(componentBuilder.getUser().getToken());
 
@@ -56,7 +56,7 @@ public class ComponentsUtil {
                 .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+                RequestEntityUtil.init(CssCidAppRelatedEnum.COMPONENTS_CREATE, PostComponentResponse.class)
                         .body("groupItems", Collections.singletonList(ComponentRequest.builder()
                                 .filename(componentBuilder.getResourceFile().getName())
                                 .override(false)
@@ -80,7 +80,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<GetComponentResponse> getComponents() {
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS, GetComponentResponse.class);
+                RequestEntityUtil.init(CssCidAppRelatedEnum.COMPONENTS, GetComponentResponse.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -93,7 +93,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
+                RequestEntityUtil.init(CssCidAppRelatedEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                         .inlineVariables(componentInfo.getComponentIdentity());
 
         return HTTPRequest.build(requestEntity).get();
@@ -107,7 +107,7 @@ public class ComponentsUtil {
      */
     public ResponseWrapper<ComponentIteration> getComponentIterationLatest(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
+                RequestEntityUtil.init(CssCidAppRelatedEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
                         .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                         .token(componentInfo.getUser().getToken());
 
