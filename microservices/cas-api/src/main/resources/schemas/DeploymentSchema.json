@@ -11,16 +11,16 @@
         "identity",
         "createdAt",
         "createdBy",
-        "updatedAt",
         "customerIdentity",
         "name",
         "description",
         "active",
         "apVersion",
-        "installations",
-        "deploymentType"
+        "installations"
       ],
       "optional": [
+        "deploymentType",
+        "updatedAt",
         "applications",
         "siteIdentities"
       ],
@@ -35,9 +35,6 @@
           "type": "string"
         },
         "createdBy": {
-          "type": "string"
-        },
-        "updatedAt": {
           "type": "string"
         },
         "customerIdentity": {
@@ -124,12 +121,9 @@
                   "createdAt",
                   "createdBy",
                   "customerIdentity",
-                  "deploymentIdentity",
                   "name",
                   "cloudReference",
                   "description",
-                  "customerType",
-                  "salesforceId",
                   "active",
                   "url",
                   "realm",
@@ -140,6 +134,13 @@
                   "clientSecret",
                   "cidGlobalKey",
                   "region"
+                ],
+                "optional": [
+                  "deploymentIdentity",
+                  "customerType",
+                  "salesforceId",
+                  "apVersion",
+                  "applications"
                 ],
                 "properties": {
                   "identity": {
@@ -201,6 +202,9 @@
                   },
                   "region": {
                     "type": "string"
+                  },
+                  "apVersion": {
+                    "type": "string"
                   }
                 }
               }
@@ -211,6 +215,9 @@
           "type": "array",
           "items": {
           }
+        },
+        "updatedAt": {
+          "type": "string"
         },
         "deploymentType": {
           "type": "string"
