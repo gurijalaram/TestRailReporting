@@ -320,13 +320,12 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return - boolean
      */
     public boolean isComponentDisplayedInDropzone(List<String> componentNames) {
-        try {
-            for (String componentName : componentNames) {
+        for (String componentName : componentNames) {
+            if (!componentName.isEmpty()) {
                 pageUtils.isElementDisplayed(By.xpath(String.format("//div[@data-header-id='name']//div[text()='%s']", componentName)));
             }
             return false;
-        } catch (Exception e) {
-            return true;
         }
+        return true;
     }
 }
