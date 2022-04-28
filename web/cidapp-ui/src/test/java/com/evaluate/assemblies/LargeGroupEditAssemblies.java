@@ -58,7 +58,6 @@ public class LargeGroupEditAssemblies extends TestBase {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
-
     }
 
     @Test
