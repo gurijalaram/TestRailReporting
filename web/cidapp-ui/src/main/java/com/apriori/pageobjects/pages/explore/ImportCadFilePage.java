@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,6 +50,9 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
+
+    @FindBy(xpath = "//div[@role='rowgroup']//div[@data-header-id='name']")
+    private List<WebElement> fileName;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -314,15 +318,16 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
-     * components displayed in the drop zone
+     * components deleted in the drop zone
      *
-     * @param componentNames - the component names
-     * @return - boolean
+     * @return
      */
-    public boolean isComponentDisplayedInDropzone(List<String> componentNames) {
-        for (String componentName : componentNames) {
-            pageUtils.isElementDisplayed(By.xpath(String.format("//div[@data-header-id='name']//div[text()='%s']", componentName)));
+    public List<String> getComponentsInDropZone() {
+        try {
+            pageUtils.waitForElementsToAppear(fileName);
+            return fileName.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
+        } catch (Exception e) {
+            return Collections.emptyList();
         }
-        return false;
     }
 }

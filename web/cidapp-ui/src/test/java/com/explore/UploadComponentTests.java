@@ -180,7 +180,8 @@ public class UploadComponentTests extends TestBase {
             .inputMultiComponents(multiComponents)
             .cadFilesToDelete(componentsToDelete);
 
-        assertThat(importCadFilePage.isComponentDisplayedInDropzone(componentsToDelete), is(false));
+        importCadFilePage.getComponentsInDropZone().forEach(component ->
+            assertThat(componentsToDelete.contains(component), is(false)));
     }
 
     @Test
