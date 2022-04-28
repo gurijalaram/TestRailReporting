@@ -27,6 +27,7 @@ import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllI
 import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesSubComponent;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataInputs;
@@ -44,6 +45,8 @@ import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadata
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.acs.entity.response.workorders.upload.Assembly;
+import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
@@ -132,6 +135,34 @@ public class FileUploadResources {
     }
 
     /**
+     * Create file upload workorder for assembly, inc subcomponents
+     *
+     * @param assembly - Assembly object to use in request
+     * @return FileUploadOutputs instance - response from API
+     */
+    public FileUploadOutputs createFileUploadWorkorderAssemblySuppressError(Assembly assembly) {
+        List<AssemblyComponent> assemblyComponentsList = assembly.getSubComponents().isEmpty() ? null : assembly.getSubComponents();
+
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+            FileUploadInputs.builder()
+                .keepFreeBodies(false)
+                .freeBodiesPreserveCad(false)
+                .freeBodiesIgnoreMissingComponents(true)
+                .scenarioName(assembly.getScenarioName())
+                .fileKey(assembly.getFileKey())
+                .fileName(assembly.getFileName())
+                .subComponents(assemblyComponentsList)
+                .build(),
+            true
+        );
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(fileUploadWorkorderId),
+            FileUploadOutputs.class
+        );
+    }
+
+    /**
      * Upload part, expose 500 error (only one file upload attempt)
      *
      * @param fileResponse response from file upload initialize
@@ -171,7 +202,6 @@ public class FileUploadResources {
                 .freeBodiesIgnoreMissingComponents(true)
                 .fileMetadataIdentity(fileResponse.getIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
-                .fileName(fileResponse.getFilename())
                 .build(),
             true
         );
@@ -196,7 +226,6 @@ public class FileUploadResources {
                 .freeBodiesIgnoreMissingComponents(true)
                 .fileMetadataIdentity(fileResponse.getIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
-                .fileName(fileResponse.getFilename())
                 .build(),
             false
         );
@@ -246,11 +275,11 @@ public class FileUploadResources {
 
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
-        List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
+        List<GenerateAssemblyImagesSubComponent> subComponentsList = new ArrayList<>();
 
         for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
             subComponentsList.add(
-                GenerateAssemblyImagesInputs.builder()
+                GenerateAssemblyImagesSubComponent.builder()
                     .componentIdentity(generateStringUtil.getRandomString())
                     .scenarioIdentity(generateStringUtil.getRandomString())
                     .cadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
