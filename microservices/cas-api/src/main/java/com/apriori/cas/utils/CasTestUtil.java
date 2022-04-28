@@ -204,7 +204,7 @@ public class CasTestUtil extends TestUtil {
      * @return ResponseWrapper <SingleCustomer>
      */
     public static ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String description, String email) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customer.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customer.class)
             .token(token)
             .body("customer",
                 Customer.builder().name(name)
@@ -231,7 +231,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static ResponseWrapper<Customer> updateCustomer(String identity, String email) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customer.class)
             .token(token)
             .body("customer",
                 Customer.builder()
@@ -383,7 +383,7 @@ public class CasTestUtil extends TestUtil {
         LocalDateTime updatedAt = LocalDateTime.parse("2021-02-19T10:25");
         LocalDateTime profileCreatedAt = LocalDateTime.parse("2020-11-23T13:34");
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.PATCH_USERS, UpdateUser.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.USER, UpdateUser.class)
             .token(token)
             .body("user",
                 UpdateUser.builder().userType("AP_CLOUD_USER")
@@ -408,7 +408,8 @@ public class CasTestUtil extends TestUtil {
                         .setJobTitle("Automation Engineer")
                         .setDepartment("QA")
                         .setSupervisor("Ciene Frith"))
-                    .build());
+                    .build())
+                .inlineVariables(customerIdentity, identity);
 
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -433,9 +434,9 @@ public class CasTestUtil extends TestUtil {
      */
     public static <T> ResponseWrapper<T> deleteBatch(String customerIdentity, String batchIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMER_BATCHES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_BATCH, null)
             .token(token)
-            .inlineVariables(customerIdentity, "batches", batchIdentity);
+            .inlineVariables(customerIdentity, batchIdentity);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -447,11 +448,11 @@ public class CasTestUtil extends TestUtil {
      */
     public static <T> ResponseWrapper<T> newUsersFromBatch(String customerIdentity, String batchIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, null)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, null)
             .token(token)
             .body(BatchItemsPost.builder().batchItems(Collections.singletonList(batchIdentity))
                 .build())
-            .inlineVariables(customerIdentity, "batches", batchIdentity, "items");
+            .inlineVariables(customerIdentity, batchIdentity);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -464,7 +465,7 @@ public class CasTestUtil extends TestUtil {
      */
     public static ResponseWrapper<BatchItem> updateBatchItem(String customerIdentity, String batchIdentity, String itemIdentity) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItem.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, BatchItem.class)
             .token(token)
             .body("batchItem",
                 BatchItem.builder().userName("maggie")
@@ -473,7 +474,7 @@ public class CasTestUtil extends TestUtil {
                     .prefix("Miss")
                     .cityTown("Springfield")
                     .jobTitle("QA"))
-            .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemIdentity);
+            .inlineVariables(customerIdentity, batchIdentity, itemIdentity);
 
         return HTTPRequest.build(requestEntity).patch();
     }

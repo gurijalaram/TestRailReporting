@@ -30,6 +30,7 @@ public class PublishResultsPart extends CICBasePage {
     protected WebElement saveButton;
 
 
+
     protected String reportConfigRootElementsRowsCss = "div[class='BMCollectionViewCellWrapper'] div[class='BMCollectionViewCell BMCollectionViewCellHoverable'][id^='CIC_ReportConfigurationCell_MU-']";
 
 
@@ -66,11 +67,11 @@ public class PublishResultsPart extends CICBasePage {
      *
      * @return AttachReportTab
      */
-    public AttachReportTab selectAttachReportTab() {
+    public PRAttachReportTab selectAttachReportTab() {
         if (this.attachReportTab.isEnabled()) {
             pageUtils.waitForElementAndClick(attachReportTab);
         }
-        return new AttachReportTab(driver);
+        return new PRAttachReportTab(driver);
     }
 
     /**
