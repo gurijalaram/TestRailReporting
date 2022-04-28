@@ -15,7 +15,9 @@
         "description",
         "siteId",
         "active",
-        "deployments",
+        "deployments"
+      ],
+      "optional": [
         "createdByName"
       ],
       "properties": {
@@ -58,10 +60,10 @@
                   "description",
                   "active",
                   "apVersion",
-                  "installations",
-                  "deploymentType"
+                  "installations"
                 ],
                 "optional": [
+                  "deploymentType",
                   "applications",
                   "customerIdentity",
                   "siteIdentities"
@@ -162,7 +164,6 @@
                             "identity",
                             "createdAt",
                             "createdBy",
-                            "deploymentIdentity",
                             "name",
                             "cloudReference",
                             "description",
@@ -178,7 +179,9 @@
                             "region"
                           ],
                           "optional": [
-                            "customerIdentity"
+                            "deploymentIdentity",
+                            "customerIdentity",
+                            "applications"
                           ],
                           "properties": {
                             "identity": {
@@ -259,4 +262,4 @@
       }
     }
   }
-    }
+}

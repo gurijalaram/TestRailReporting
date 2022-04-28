@@ -9,6 +9,8 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.CasErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -20,6 +22,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,17 +32,26 @@ public class CasCustomersTests {
 
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private String customerIdentity;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void getToken() {
         token = new AuthorizationUtil().getTokenAsString();
     }
 
+    @After
+    public void cleanUp() {
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+        }
+    }
+
     @Test
     @TestRail(testCaseId = {"5810"})
     @Description("Get a list of CAS customers sorted by name")
     public void getCustomersSortedByName() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -50,14 +62,14 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5645"})
     @Description("Get the Customer identified by its identity")
     public void getCustomersByIdentity() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customer.class)
             .token(token)
             .inlineVariables(customer.getIdentity())).get();
 
@@ -69,16 +81,16 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer identified by its name")
     public void getCustomerByName() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         Customer customer = response.getResponseEntity().getItems().get(0);
 
-        ResponseWrapper<Customers> responseName = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customers> responseName = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customers.class)
             .token(token)
-            .urlEncodingEnabled(false)
+            .urlEncodingEnabled(true)
             .inlineVariables("?name[CN]=" + customer.getName())).get();
 
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
@@ -100,15 +112,16 @@ public class CasCustomersTests {
     @TestRail(testCaseId = {"5643"})
     @Description("Get the Customer by not existing name")
     public void getCustomerNotExistingName() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customers.class)
             .token(token)
+            .urlEncodingEnabled(false)
             .inlineVariables("?name[CN]=" + generateStringUtil.generateCustomerName())).get();
 
         assertThat(response.getResponseEntity().getTotalItemCount(), is(0));
     }
 
     @Test
-    @Issue("MIC-1679")
+    @Issue("IDS-446")
     @TestRail(testCaseId = {"5642", "5644"})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
@@ -122,7 +135,7 @@ public class CasCustomersTests {
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        ResponseWrapper<Customers> responseName = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customers> responseName = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customers.class)
             .token(token)
             .urlEncodingEnabled(false)
             .inlineVariables("?name[CN]=" + customerName)).get();
@@ -130,16 +143,16 @@ public class CasCustomersTests {
         assertThat(responseName.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseName.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        String identity = responseName.getResponseEntity().getItems().get(0).getIdentity();
+        customerIdentity = responseName.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Customer> patchResponse = CasTestUtil.updateCustomer(identity, email);
+        ResponseWrapper<Customer> patchResponse = CasTestUtil.updateCustomer(customerIdentity, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
 
-        ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, Customer.class)
+        ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customer.class)
             .token(token)
-            .inlineVariables(identity)).get();
+            .inlineVariables(customerIdentity)).get();
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customerName)));
@@ -159,9 +172,9 @@ public class CasCustomersTests {
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        String identity = response.getResponseEntity().getIdentity();
+        customerIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<String> resettingResponse = CasTestUtil.resetMfa(identity);
+        ResponseWrapper<String> resettingResponse = CasTestUtil.resetMfa(customerIdentity);
 
         assertThat(resettingResponse.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }

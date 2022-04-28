@@ -13,6 +13,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -460,6 +461,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
         By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@id='qa-scenario-select-field']//*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
         return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
+    }
+
+    /**
+     * Check if subcomponents are in the tree view
+     *
+     * @param componentName - component name
+     * @return - boolean
+     */
+    public boolean isComponentNameDisplayedInTreeView(String componentName) {
+        By componentText = By.xpath(String.format("//div[@data-header-id='componentDisplayName']//span[text()='%s']", componentName.toUpperCase()));
+        return pageUtils.waitForElementToAppear(componentText).isDisplayed();
     }
 
     /**

@@ -51,4 +51,12 @@ public class TestDataService {
         workFlowData.setWorkflowName(UIUtils.saltString(workFlowData.getWorkflowName()));
         return workFlowData;
     }
+
+    public WorkFlowData getTestData(String dataFile) {
+        WorkFlowData workFlowData = (WorkFlowData) JsonManager.deserializeJsonFromInputStream(
+            FileResourceUtil.getResourceFileStream("workflowdata/" + dataFile), WorkFlowData.class);
+        workFlowData.setWorkflowName(UIUtils.saltString(workFlowData.getWorkflowName()));
+        return workFlowData;
+    }
+
 }

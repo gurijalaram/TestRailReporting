@@ -33,6 +33,10 @@ public class Application {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime deletedAt;
+    private String deletedBy;
     private String name;
     private String serviceName;
     private String cloudReference;

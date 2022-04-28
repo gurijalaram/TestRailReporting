@@ -5,6 +5,7 @@ import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
 import com.cic.tests.NavBarTests;
 import com.cic.tests.NotificationTests;
+import com.cic.tests.PublishResultsTests;
 import com.cic.tests.QueryDefinitionTests;
 import com.cic.tests.UsersTests;
 import com.cic.tests.WorkflowHistoryTests;
@@ -20,7 +21,8 @@ import org.junit.runners.Suite;
     QueryDefinitionTests.class,
     UsersTests.class,
     WorkflowTests.class,
-    WorkflowHistoryTests.class
+    WorkflowHistoryTests.class,
+    PublishResultsTests.class
 })
 
 public class CICTestSuite {
