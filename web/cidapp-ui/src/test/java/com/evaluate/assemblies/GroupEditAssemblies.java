@@ -93,7 +93,6 @@ public class GroupEditAssemblies extends TestBase {
     public void editButtonUnavailable() {
 
         String assemblyName = "Gym Bike";
-        final ProcessGroupEnum assemblyProcessGroup = ASSEMBLY;
         final String assemblyExtension = ".iam";
 
         List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle", "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin", "right paddle", "seat lock", "seat", "steer wheel support", "washer");
@@ -108,7 +107,7 @@ public class GroupEditAssemblies extends TestBase {
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
-            assemblyProcessGroup,
+            ASSEMBLY,
             subComponentNames,
             subComponentExtension,
             subComponentProcessGroup,
