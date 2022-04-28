@@ -251,15 +251,15 @@ public class UploadComponentTests extends TestBase {
 
         //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
-            assertThat(explorePage.getProcessingFailedState(component.getScenarioName(),
-                component.getResourceFile().getName().split("\\.")[0], currentUser), is(1)));
+            assertThat(explorePage.getProcessingFailedState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser), is("PROCESSING_FAILED")));
 
         explorePage.refresh();
 
         //UI Assertion that the explore page shows the Processing Failed Icon
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenariosWithStatus(component.getScenarioName(),
-                component.getResourceFile().getName().split("\\.")[0], ScenarioStateEnum.PROCESSING_FAILED), is(1)));
+            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(1)));
 
     }
 

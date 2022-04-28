@@ -5,7 +5,6 @@ import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
-import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.CssComponent;
@@ -311,13 +310,21 @@ public class ExplorePage extends ExploreToolbar {
         return scenarioTableController.getSortOrder(column);
     }
 
-    public ScenarioItem getProcessingFailedState(String componentName, String scenarioName, UserCredentials currentUser) {
+    /**
+     * Get the processing failed state
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @return - String
+     */
+    public String getProcessingFailedState(String componentName, String scenarioName, UserCredentials currentUser) {
         List<ScenarioItem> itemResponse = new CssComponent().getProcessingFailedCssComponent(
             componentName,
             scenarioName,
             currentUser);
 
         return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())).findFirst().get();
+            item.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())).findFirst().get().getScenarioState();
     }
 }
