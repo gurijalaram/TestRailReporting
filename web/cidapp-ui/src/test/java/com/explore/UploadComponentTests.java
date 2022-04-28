@@ -260,7 +260,6 @@ public class UploadComponentTests extends TestBase {
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(1)));
-
     }
 
     @Test

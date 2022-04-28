@@ -155,7 +155,7 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Gets the number of elements present on the page
+     * Gets the number of elements with state present on the page
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
@@ -164,7 +164,6 @@ public class ExplorePage extends ExploreToolbar {
     public int getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
         return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
     }
-
 
     /**
      * Open configure page

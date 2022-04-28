@@ -170,20 +170,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return size of the element as int
      */
     public int getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
-        String dataIcon;
+        String stateIcon;
         switch (scenarioState) {
             case PROCESSING_FAILED:
-                dataIcon = "circle-xmark";
+                stateIcon = "circle-xmark";
                 break;
             case NOT_COSTED:
-                dataIcon = "circle-minus";
+                stateIcon = "circle-minus";
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + scenarioState);
         }
-        return pageUtils.waitForElementsToAppear(byScenarioNameWithStatus(componentName, scenarioName, dataIcon)).size();
+        return pageUtils.waitForElementsToAppear(byScenarioNameWithStatus(componentName, scenarioName, stateIcon)).size();
     }
-
 
     /**
      * Gets the info in the row
@@ -268,27 +267,18 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Gets the scenario 'by' locator
+     * Get the scenario with the state status
      *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return by
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param stateIcon     - state icon
+     * @return - by
      */
-    private By byScenarioNameWithStatus(String componentName, String scenarioName, String dataIcon) {
-        //change locator to include the dataIcon thats passed
-        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']", scenarioName.trim(), componentName.toUpperCase().trim()));
-        return byScenario;
-    }
-
-    /**
-     * Gets the scenario 'by' locator
-     *
-     * @param componentName - name of the part
-     * @param scenarioName  - scenario name
-     * @return by
-     */
-    private By byScenarioNameAndProcessingFailed(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
-        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[contains(text(),'%s')]", scenarioName.trim(), componentName.toUpperCase().trim()));
+    private By byScenarioNameWithStatus(String componentName, String scenarioName, String stateIcon) {
+        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%S']/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']//*[@data-icon='%s']",
+            scenarioName.trim(),
+            componentName.toUpperCase().trim(),
+            stateIcon));
         return byScenario;
     }
 

@@ -85,11 +85,6 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         return this;
     }
 
-    public ImportCadFilePage inputComponent(File filePath) {
-            enterFilePath(filePath);
-            return this;
-    }
-
     /**
      * Input multiple component details
      *
