@@ -229,7 +229,7 @@ public class UploadComponentTests extends TestBase {
     @Test
     @TestRail(testCaseId = "11889")
     @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
-    public void testOverrideExistingScenario() {
+    public void testOverrideExistingScenarioFailure() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         List<MultiUpload> multiComponents = new ArrayList<>();
@@ -303,5 +303,38 @@ public class UploadComponentTests extends TestBase {
             .enterMultiFilePath(resourceFile);
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11888")
+    @Description("Validate override existing scenario is successful through multiple uploads when checked")
+    public void testOverrideExistingScenarioSuccess() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "piston_assembly";
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .close()
+            .importCadFile()
+            .tick("Override existing scenario")
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .close()
+            .openComponent(componentName, scenarioName, currentUser)
+            .clickExplore();
+
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(1)));
     }
 }

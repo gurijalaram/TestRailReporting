@@ -22,6 +22,5 @@ public enum ScenarioStateEnum {
         return this.state;
     }
 
-
     public static EnumSet<ScenarioStateEnum> transientGroup = EnumSet.of(PROCESSING, COSTING);
 }
