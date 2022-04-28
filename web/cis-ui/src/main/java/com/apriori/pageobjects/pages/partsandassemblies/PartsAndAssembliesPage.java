@@ -6,6 +6,8 @@ import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 
@@ -14,6 +16,8 @@ import java.util.List;
 @Slf4j
 public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssembliesPage> {
 
+    @FindBy(xpath = "//div[@data-rowindex='0']//span")
+    private WebElement componentCheckBox;
 
     public PartsAndAssembliesPage(WebDriver driver) {
 
@@ -45,5 +49,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public  List<String> getTableHeaders() {
         return partsAndAssemblyTableController.getTableHeaders();
+    }
+
+    /**
+     * Gets the checkbox status
+     *
+     * @return String
+     */
+    public String getComponentCheckBoxStatus() {
+        getPageUtils().waitForElementToAppear(componentCheckBox).click();
+        return getPageUtils().waitForElementToAppear(componentCheckBox).getAttribute("class");
     }
 }
