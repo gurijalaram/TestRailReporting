@@ -10,6 +10,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.events.EventFiringWebDriver;
@@ -65,7 +66,7 @@ public class TestBase extends TestHelper {
         TestHelper.logger.info("Current Operating System:" + os);
         TestHelper.logger.info("Window size before Maximize: " + driver.manage().window().getSize());
 
-        driver.manage().window().maximize();
+        driver.manage().window().setSize(new Dimension(1390, 998));
         driver.manage().deleteAllCookies();
         TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
 
