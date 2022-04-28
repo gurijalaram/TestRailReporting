@@ -7,6 +7,8 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import javax.annotation.Nullable;
+
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfoComponent;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
@@ -102,7 +104,7 @@ public class WorkorderAPITests {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "Casting.prt",
             processGroup,
-            null
+            false
         );
 
         getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
@@ -193,7 +195,7 @@ public class WorkorderAPITests {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "bracket_basic.prt",
             processGroup,
-            null
+            false
         );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
@@ -289,7 +291,7 @@ public class WorkorderAPITests {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "bracket_basic.prt",
             processGroup,
-            null
+            false
         );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
@@ -367,7 +369,7 @@ public class WorkorderAPITests {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "bracket_basic.prt",
             ProcessGroupEnum.SHEET_METAL.getProcessGroup(),
-            null
+            false
         );
 
         DeleteScenarioOutputs deleteScenarioOutputs = fileUploadResources.createDeleteScenarioWorkorderSuppressError(fileUploadOutputs);
@@ -419,7 +421,7 @@ public class WorkorderAPITests {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
-            null
+            false
         );
 
         GenerateAllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
@@ -444,7 +446,7 @@ public class WorkorderAPITests {
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(
             "3574727.prt",
             ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
-            null
+            false
         );
 
         GenerateSimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
@@ -487,7 +489,7 @@ public class WorkorderAPITests {
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, null);
+        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, false);
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
