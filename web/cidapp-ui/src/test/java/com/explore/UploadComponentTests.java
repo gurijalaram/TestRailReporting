@@ -266,7 +266,7 @@ public class UploadComponentTests extends TestBase {
     @Test
     @TestRail(testCaseId = "11901")
     @Description("Validate that user is blocked from adding to a list of 20 uploads")
-    public void testExceedMaximumUpload() {
+    public void testExceedingMaximumUpload() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 

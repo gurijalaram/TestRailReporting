@@ -56,7 +56,6 @@ public class ExplorePage extends ExploreToolbar {
     private WebDriver driver;
     private ScenarioTableController scenarioTableController;
     private ComponentTableActions componentTableActions;
-    private CssComponent cssComponent;
 
     public ExplorePage(WebDriver driver) {
         super(driver);
@@ -310,7 +309,7 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Get the processing failed state
+     * Gets the processing failed state
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
