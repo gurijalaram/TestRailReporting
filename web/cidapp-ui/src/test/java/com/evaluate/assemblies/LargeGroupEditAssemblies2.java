@@ -58,9 +58,9 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10883", "10884", "10885", "10894", "11140"})
-    @Description("group Edit sub Components")
-    public void editButtonUnavailable() {
+    @TestRail(testCaseId = {"10886", "10887", "10888"})
+    @Description("group Edit private sub Components disallowed")
+    public void cannotEditPrivateComponents() {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
