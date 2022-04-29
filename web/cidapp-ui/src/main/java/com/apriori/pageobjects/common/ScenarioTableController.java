@@ -169,7 +169,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return size of the element as int
      */
-    public int getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
         String stateIcon;
         switch (scenarioState) {
             case PROCESSING_FAILED:
@@ -181,7 +181,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             default:
                 throw new IllegalStateException("Unexpected value: " + scenarioState);
         }
-        return pageUtils.waitForElementsToAppear(byScenarioNameWithStatus(componentName, scenarioName, stateIcon)).size();
+        return pageUtils.isElementDisplayed(byScenarioNameWithStatus(componentName, scenarioName, stateIcon));
     }
 
     /**
@@ -275,7 +275,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return - by
      */
     private By byScenarioNameWithStatus(String componentName, String scenarioName, String stateIcon) {
-        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%S']/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']//*[@data-icon='%s']",
+        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%s']/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']//*[@data-icon='%s']",
             scenarioName.trim(),
             componentName.toUpperCase().trim(),
             stateIcon));

@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
+
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
@@ -158,9 +160,9 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @param componentName - name of the part
      * @param scenarioName  - scenario name
-     * @return size of the element as int
+     * @return boolean
      */
-    public int getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
         return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
     }
 
@@ -317,10 +319,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return - String
      */
     public String getProcessingFailedState(String componentName, String scenarioName, UserCredentials currentUser) {
-        List<ScenarioItem> itemResponse = new CssComponent().getProcessingFailedCssComponent(
-            componentName,
-            scenarioName,
-            currentUser);
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, PROCESSING_FAILED);
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())).findFirst().get().getScenarioState();

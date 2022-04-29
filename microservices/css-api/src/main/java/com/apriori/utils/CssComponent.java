@@ -46,18 +46,6 @@ public class CssComponent {
     }
 
     /**
-     * Gets the Processing failed from CSS
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - user to upload the part
-     * @return - response object
-     */
-    public List<ScenarioItem> getProcessingFailedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials, PROCESSING_FAILED);
-    }
-
-    /**
      * Gets component from CSS
      *
      * @param componentName - the component name

@@ -253,14 +253,14 @@ public class UploadComponentTests extends TestBase {
         //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
             assertThat(explorePage.getProcessingFailedState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser), is("PROCESSING_FAILED")));
+                component.getScenarioName(), currentUser), is(ScenarioStateEnum.PROCESSING_FAILED.getState())));
 
         explorePage.refresh();
 
         //UI Assertion that the explore page shows the Processing Failed Icon
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(1)));
+                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(true)));
     }
 
     @Test
@@ -311,11 +311,13 @@ public class UploadComponentTests extends TestBase {
     public void testOverrideExistingScenarioSuccess() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "piston_assembly";
+        String componentName = "Hinge assembly";
+
         List<MultiUpload> multiComponents = new ArrayList<>();
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
-        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "Hinge assembly.SLDASM"), scenarioName));
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
@@ -335,6 +337,6 @@ public class UploadComponentTests extends TestBase {
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(1)));
+                component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
 }
