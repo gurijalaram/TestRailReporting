@@ -37,9 +37,9 @@ public class VerifyIfNotFailTests {
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
-                    () -> {
-                        finalScenarioIterationRespond.getResponseEntity();
-                    });
+                () -> {
+                    finalScenarioIterationRespond.getResponseEntity();
+                });
         }
     }
 
@@ -59,9 +59,9 @@ public class VerifyIfNotFailTests {
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
-                    () -> {
-                        finalScenarioIterationRespond.getResponseEntity();
-                    });
+                () -> {
+                    finalScenarioIterationRespond.getResponseEntity();
+                });
         }
     }
 
@@ -81,9 +81,9 @@ public class VerifyIfNotFailTests {
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
-                    () -> {
-                        finalScenarioIterationRespond.getResponseEntity();
-                    });
+                () -> {
+                    finalScenarioIterationRespond.getResponseEntity();
+                });
         }
     }
 
@@ -103,9 +103,9 @@ public class VerifyIfNotFailTests {
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
-                    () -> {
-                        finalScenarioIterationRespond.getResponseEntity();
-                    });
+                () -> {
+                    finalScenarioIterationRespond.getResponseEntity();
+                });
         }
     }
 
@@ -125,9 +125,9 @@ public class VerifyIfNotFailTests {
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
-                    () -> {
-                        finalScenarioIterationRespond.getResponseEntity();
-                    });
+                () -> {
+                    finalScenarioIterationRespond.getResponseEntity();
+                });
         }
     }
 
@@ -147,9 +147,9 @@ public class VerifyIfNotFailTests {
         } finally {
             ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
             assertDoesNotThrow(
-                    () -> {
-                        finalScenarioIterationRespond.getResponseEntity();
-                    });
+                () -> {
+                    finalScenarioIterationRespond.getResponseEntity();
+                });
         }
     }
 }
