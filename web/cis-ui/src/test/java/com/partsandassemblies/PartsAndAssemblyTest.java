@@ -1,5 +1,7 @@
 package com.partsandassemblies;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 
@@ -39,6 +41,19 @@ public class PartsAndAssemblyTest extends TestBase {
         assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns(), CisColumnsEnum.SCENARIO_NAME.getColumns(),
                 CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns(), CisColumnsEnum.FULLY_BURDENED_COST.getColumns()));
+
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12064"})
+    @Description("Verify that user can check a table row")
+    public void testCheckTableRow() {
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
+        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
+        partsAndAssembliesPage.waitForTableLoad();
+
+        assertThat(partsAndAssembliesPage.getComponentCheckBoxStatus(), is(equalTo("true")));
 
     }
 
