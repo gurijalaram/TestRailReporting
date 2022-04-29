@@ -14,6 +14,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/hoops-image"),
     SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
     COMPONENT_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/cost"),
+    GROUP_COST_COMPONENTS("scenarios/cost"),
 
     //CAD FILES
     CAD_FILES("cad-files"),

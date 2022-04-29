@@ -23,6 +23,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
@@ -199,6 +200,45 @@ public class ScenariosUtil {
                                 .getIdentity())
                         .deleteTemplateAfterUse(true)
                         .build());
+
+        HTTPRequest.build(requestEntity).post();
+
+        return getScenarioRepresentation(componentInfoBuilder);
+    }
+
+    /**
+     * Post to cost a group of scenarios
+     *
+     * @param componentInfoBuilder - A number of copy component objects
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
+        List<ComponentInfoBuilder> subComponents = componentInfoBuilder.getSubComponents();
+        String groupItems = "\"groupItems\": [";
+        if (!subComponents.isEmpty()) {
+//            subComponents.forEach(
+//                subComponent -> {
+//                    groupItems += "{'componentIdentity':'" + subComponent.getComponentIdentity() + "',";
+//                    groupItems += "'scenarioIdentity':'" + subComponent.getScenarioIdentity() + "'},"; }
+//            );
+//            groupItems = groupItems.substring(0, groupItems.length() - 1);
+//            groupItems += "]";
+            for (int i = 0; i < subComponents.size(); i++) {
+                groupItems += "{\"componentIdentity\":\"" + subComponents.get(i).getComponentIdentity() + "\",";
+                groupItems += "\"scenarioIdentity\":\"" + subComponents.get(i).getScenarioIdentity() + "\"}";
+                if (i < subComponents.size() - 1) {
+                    groupItems += ",";
+                }
+            }
+            groupItems += "]}";
+        }
+
+        String customBody = "{\"costingTemplateIdentity\":\"" + getCostingTemplateId(componentInfoBuilder).getIdentity() + "\", " + groupItems;
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, Scenario.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .customBody(customBody);
 
         HTTPRequest.build(requestEntity).post();
 
