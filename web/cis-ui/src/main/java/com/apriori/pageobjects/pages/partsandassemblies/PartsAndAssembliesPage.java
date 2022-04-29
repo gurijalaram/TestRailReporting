@@ -5,6 +5,7 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -16,8 +17,11 @@ import java.util.List;
 @Slf4j
 public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssembliesPage> {
 
-    @FindBy(xpath = "//div[@data-rowindex='0']//span")
-    private WebElement componentCheckBox;
+    @FindBy(xpath = "//div[@Class='MuiDataGrid-row']")
+    private List<WebElement> tableRow;
+
+    @FindBy(xpath = "//div[@class='MuiDataGrid-row Mui-selected']")
+    private List<WebElement> selectedCheckboxes;
 
     public PartsAndAssembliesPage(WebDriver driver) {
 
@@ -52,12 +56,23 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     }
 
     /**
-     * Gets the checkbox status
+     * Method to wait until loading complete
+     */
+    public void waitForTableLoad() {
+        pageUtils.waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
+    }
+
+    /**
+     * Get the checkboxes status
      *
      * @return String
      */
     public String getComponentCheckBoxStatus() {
-        getPageUtils().waitForElementToAppear(componentCheckBox).click();
-        return getPageUtils().waitForElementToAppear(componentCheckBox).getAttribute("class");
+        if (tableRow.size() > 0) {
+            for (int i = 0;i <= tableRow.size();i++) {
+                getPageUtils().waitForElementToAppear(driver.findElement(By.xpath("//div[@data-rowindex='" + i + "']//span[starts-with(@class,'MuiCheckbox-root')]"))).click();
+            }
+        }
+        return getPageUtils().waitForElementsToAppear(selectedCheckboxes).get(tableRow.size()).getAttribute("aria-selected");
     }
 }

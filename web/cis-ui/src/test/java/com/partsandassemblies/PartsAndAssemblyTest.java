@@ -1,6 +1,6 @@
 package com.partsandassemblies;
 
-import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -51,8 +51,9 @@ public class PartsAndAssemblyTest extends TestBase {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
         partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
+        partsAndAssembliesPage.waitForTableLoad();
 
-        assertThat(partsAndAssembliesPage.getComponentCheckBoxStatus(), is(containsString("Mui-checked")));
+        assertThat(partsAndAssembliesPage.getComponentCheckBoxStatus(), is(equalTo("true")));
 
     }
 
