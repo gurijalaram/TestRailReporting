@@ -353,6 +353,7 @@ public class FileUploadResources {
                 .description("Description goes here...")
                 .scenarioIterationKey(
                     setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
+                .overwrite(true)
                 .build(),
             false
         );
