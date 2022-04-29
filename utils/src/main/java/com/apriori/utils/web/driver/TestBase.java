@@ -66,7 +66,12 @@ public class TestBase extends TestHelper {
         TestHelper.logger.info("Current Operating System:" + os);
         TestHelper.logger.info("Window size before Maximize: " + driver.manage().window().getSize());
 
-        driver.manage().window().setSize(new Dimension(1390, 998));
+        if (os.equalsIgnoreCase("Linux")) {
+            driver.manage().window().setSize(new Dimension(1390, 998));
+        } else {
+            driver.manage().window().maximize();
+        }
+
         driver.manage().deleteAllCookies();
         TestHelper.logger.debug("Browser window size: " + driver.manage().window().getSize());
 
