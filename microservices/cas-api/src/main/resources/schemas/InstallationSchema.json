@@ -29,6 +29,10 @@
         "cidApiSecret",
         "region"
       ],
+      "optional": [
+        "updatedAt",
+        "updatedBy"
+      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -91,6 +95,12 @@
           "type": "string"
         },
         "region": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        },
+        "updatedBy": {
           "type": "string"
         }
       }

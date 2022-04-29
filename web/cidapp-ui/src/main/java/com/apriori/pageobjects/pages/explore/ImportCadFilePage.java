@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,11 +48,11 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = ".form-action-buttons [type='submit']")
     private WebElement submitButton;
 
-    @FindBy(css = "h4")
+    @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
 
-    @FindBy(css = ".import-cad-file-status-message")
-    private WebElement uploadStatus;
+    @FindBy(xpath = "//div[@role='rowgroup']//div[@data-header-id='name']")
+    private List<WebElement> fileName;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -201,6 +202,15 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     }
 
     /**
+     * Gets file input error
+     *
+     * @return string
+     */
+    public String getFileInputErrorMessage() {
+        return pageUtils.waitForElementToAppear(fileInputError).getText();
+    }
+
+    /**
      * Selects the option
      *
      * @param option - the option to select. Check box is either 'Apply to all' or 'Override existing scenario'
@@ -305,5 +315,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             pageUtils.waitForElementAndClick(byComponentName);
         }
         return this;
+    }
+
+    /**
+     * components deleted in the drop zone
+     *
+     * @return
+     */
+    public List<String> getComponentsInDropZone() {
+        try {
+            pageUtils.waitForElementsToAppear(fileName);
+            return fileName.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 }
