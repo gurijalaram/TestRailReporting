@@ -1,7 +1,8 @@
 package com.apriori.css.entity.enums;
 
 public enum Direction {
-    ASC("SC"),
+    ASC("ASC"),
+    WRONG("WRONG"),
     DESC("DESC");
 
     private final String direction;

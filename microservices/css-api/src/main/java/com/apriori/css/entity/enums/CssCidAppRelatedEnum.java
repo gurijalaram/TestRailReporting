@@ -23,7 +23,6 @@ public enum CssCidAppRelatedEnum implements ExternalEndpointEnum {
 
     //PREFERENCES
     PREFERENCES("users/current/preferences"),
-    PREFERENCES_PAGE_SIZE("users/current/preferences?pageSize=100"),
 
     //SCENARIO
     COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),

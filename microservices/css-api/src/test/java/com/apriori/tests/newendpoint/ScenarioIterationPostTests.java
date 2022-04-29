@@ -1,23 +1,22 @@
 package com.apriori.tests.newendpoint;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
-import com.apriori.css.entity.enums.Direction;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.css.entity.response.CostingInput;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,19 +31,11 @@ public class ScenarioIterationPostTests {
     @Test
     @Description("Verify: componentName[EQ]=foo")
     public void getOnePartTest() {
-
-        ScenarioIterationRequest scenarioIterationRequest = ScenarioIterationRequest.builder()
-                .query(ScenarioIterationRequest.Query.builder()
-                        .filter(ScenarioIterationRequest.Query.LogicalOperator.builder()
-                                .and(Arrays.asList(ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
-                                        .equals(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
-                                                .property("componentName")
-                                                .value("bracket_basic")
-                                                .build())
-                                        .build()))
-                                .build())
-                        .build())
-                .build();
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "ScenarioIterationPostTest1Data.json"
+            ).getPath(), ScenarioIterationRequest.class);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
@@ -59,52 +50,26 @@ public class ScenarioIterationPostTests {
     @Test
     @Description("Verify that POST scenario-iterations returns exactly specified 5 items - paging , sorting Asc")
     public void getFivePartsSortedAscTest() {
-
-        ScenarioIterationRequest scenarioIterationRequest = ScenarioIterationRequest.builder()
-                .paging(ScenarioIterationRequest.Paging.builder()
-                        .pageNumber(1)
-                        .pageSize(5)
-                        .build())
-                .sorting(Arrays.asList(ScenarioIterationRequest.Sorting.builder()
-                                .property("componentName")
-                                .direction(Direction.ASC)
-                        .build()))
-                .build();
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "ScenarioIterationPostTest2Data.json"
+                ).getPath(), ScenarioIterationRequest.class);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
 
-        Assertions.assertEquals(5,scenarioIterationRespond.getResponseEntity().getItems().size());
+        assertEquals(5,scenarioIterationRespond.getResponseEntity().getItems().size());
     }
 
     @Test
     @Description("Verify that POST scenario-iterations returns parts with OR operator")
     public void getPartsWithOrOperatorTest() {
-
-        ScenarioIterationRequest scenarioIterationRequest = ScenarioIterationRequest.builder()
-                .query(ScenarioIterationRequest.Query.builder()
-                        .filter(ScenarioIterationRequest.Query.LogicalOperator.builder()
-                                .or(Arrays.asList(ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
-                                        .equals(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
-                                                .property("componentName")
-                                                .value("bracket_basic")
-                                                .build())
-                                        .build(),
-                                        ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
-                                                .equals(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
-                                                        .property("componentName")
-                                                        .value("BasicScenario_Forging")
-                                                        .build())
-                                                .build(),
-                                        ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
-                                                .equals(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
-                                                        .property("componentName")
-                                                        .value("oldham")
-                                                        .build())
-                                                .build()))
-                                .build())
-                        .build())
-                .build();
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "ScenarioIterationPostTest3Data.json"
+                ).getPath(), ScenarioIterationRequest.class);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
@@ -117,19 +82,11 @@ public class ScenarioIterationPostTests {
     @Test
     @Description("Verify that POST scenario-iterations returns parts - NOT operator")
     public void getPartsWithNotOperatorTest() {
-
-        ScenarioIterationRequest scenarioIterationRequest = ScenarioIterationRequest.builder()
-                .query(ScenarioIterationRequest.Query.builder()
-                        .filter(ScenarioIterationRequest.Query.LogicalOperator.builder()
-                                .not(ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
-                                        .equals(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
-                                                .property("componentName")
-                                                .value("bracket_basic")
-                                                .build())
-                                        .build())
-                                .build())
-                        .build())
-                .build();
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "ScenarioIterationPostTest4Data.json"
+                ).getPath(), ScenarioIterationRequest.class);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
@@ -143,18 +100,11 @@ public class ScenarioIterationPostTests {
     @Test
     @Description("Verify that POST scenario-iterations returns parts - isNull operator")
     public void getPartsWithIsNullOperatorTest() {
-
-        ScenarioIterationRequest scenarioIterationRequest = ScenarioIterationRequest.builder()
-                .query(ScenarioIterationRequest.Query.builder()
-                        .filter(ScenarioIterationRequest.Query.LogicalOperator.builder()
-                                .and(Arrays.asList(ScenarioIterationRequest.Query.LogicalOperator.Operator.builder()
-                                        .isNull(ScenarioIterationRequest.Query.LogicalOperator.Params.builder()
-                                                .property("costingInput")
-                                                .build())
-                                        .build()))
-                                .build())
-                        .build())
-                .build();
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "ScenarioIterationPostTest5Data.json"
+                ).getPath(), ScenarioIterationRequest.class);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);

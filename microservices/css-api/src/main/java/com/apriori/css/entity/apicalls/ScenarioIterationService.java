@@ -2,6 +2,7 @@ package com.apriori.css.entity.apicalls;
 
 import com.apriori.css.entity.builder.ComponentInfoBuilder;
 import com.apriori.css.entity.enums.CssAPIEnum;
+import com.apriori.css.entity.request.ErrorRequestResponse;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
@@ -10,6 +11,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -18,10 +20,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,16 +39,30 @@ public class ScenarioIterationService {
     /**
      * calls 'scenario-iterations' GET endpoint
      *
-     * @param urlParams - pass parameters to the curl
+     * @param formParams - pass parameters to the curl
      */
 
-    public ResponseWrapper getScenarioIterationWithParams(List<Map<String,?>> urlParams) {
+    public ResponseWrapper getScenarioIterationWithParams(FormParams formParams) {
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO, CssComponentResponse.class)
+                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY, CssComponentResponse.class)
                         .token(currentUser.getToken())
-                        .urlParams(urlParams);
+                    .formParams(formParams);
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * calls 'scenario-iterations' POST endpoint - for error responses
+     *
+     * @param scenarioIterationRequest - pass the body
+     */
+    public ResponseWrapper getScenarioIterationWithParamsPostForErrors(ScenarioIterationRequest scenarioIterationRequest) {
+
+        RequestEntity requestEntity =
+                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY_NEW, ErrorRequestResponse.class)
+                    .body(scenarioIterationRequest)
+                        .token(currentUser.getToken());
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -59,9 +73,9 @@ public class ScenarioIterationService {
     public ResponseWrapper getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
-                RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NEW, CssComponentResponse.class)
-                    .body(scenarioIterationRequest)
-                        .token(currentUser.getToken());
+            RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY_NEW, CssComponentResponse.class)
+                .body(scenarioIterationRequest)
+                .token(currentUser.getToken());
         return HTTPRequest.build(requestEntity).post();
     }
 
@@ -112,11 +126,12 @@ public class ScenarioIterationService {
         String[] component = entry.getKey().split("\\.", 2);
         String searchedItem = component[0];
         String property = "componentName[EQ]";
-        Map urlParams = new HashMap();
-        urlParams.put(property, searchedItem);
+
+        FormParams formParams = new FormParams();
+        formParams.use(property, searchedItem);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                getScenarioIterationWithParams(Arrays.asList(urlParams));
+                getScenarioIterationWithParams(formParams);
         if (scenarioIterationRespond.getResponseEntity().getItems().size() > 0) {
             return true;
         }

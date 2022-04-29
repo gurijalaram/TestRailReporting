@@ -1,0 +1,10 @@
+{
+  "query": {
+    "filter": {
+      "and": [
+        {"equals": {"property": "componentName", "value": "bracket_basic"}},
+        {"equals": {}}
+      ]
+    }
+  }
+}

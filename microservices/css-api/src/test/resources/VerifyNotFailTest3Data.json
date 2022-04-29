@@ -1,0 +1,9 @@
+{
+  "query": {
+    "filter": {
+      "and": [
+        {"equals": {"property": "analysisOfChildren.cycleTime", "value": "test"}}
+      ]
+    }
+  }
+}

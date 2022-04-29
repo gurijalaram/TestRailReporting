@@ -7,15 +7,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ScenarioIterationGetTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
@@ -28,26 +25,24 @@ public class ScenarioIterationGetTests {
     @Test
     @Description("Verify that GET scenario-iterations returns exactly specified 5 items - paging")
     public void getFivePartsTest() {
-
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("pageNumber","1");
-        paramsToUrl.put("pageSize","5");
+        FormParams formParams = new FormParams();
+        formParams.use("pageNumber", "1");
+        formParams.use("pageSize", "5");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-            scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+            scenarioIterationService.getScenarioIterationWithParams(formParams);
 
-        assertEquals(5,scenarioIterationRespond.getResponseEntity().getItems().size());
+        assertEquals(5, scenarioIterationRespond.getResponseEntity().getItems().size());
     }
 
     @Test
     @Description("Verify that GET scenario-iterations returns exactly one specified part - condition EQ (equals)")
     public void getOnePartTest() {
-
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("componentName[EQ]","bracket_basic");
+        FormParams formParams = new FormParams();
+        formParams.use("componentName[EQ]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+                scenarioIterationService.getScenarioIterationWithParams(formParams);
 
         ScenarioItem scenarioItem = scenarioIterationRespond.getResponseEntity().getItems().stream()
                         .findFirst().orElse(null);
@@ -59,12 +54,11 @@ public class ScenarioIterationGetTests {
     @Test
     @Description("Verify that GET scenario-iterations returns exactly one specified part - condition NE (not equals)")
     public void notGetOnePartTest() {
-
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("componentName[NE]","bracket_basic");
+        FormParams formParams = new FormParams();
+        formParams.use("componentName[NE]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+                scenarioIterationService.getScenarioIterationWithParams(formParams);
 
         assertEquals(null,scenarioIterationRespond.getResponseEntity().getItems().stream()
                 .filter(p -> p.getComponentDisplayName().equals("BRACKET_BASIC"))
@@ -75,12 +69,11 @@ public class ScenarioIterationGetTests {
     @Test
     @Description("Verify that GET scenario-iterations returns exactly specified parts in the range - condition IN")
     public void getPartsInRangeTest() {
-
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("componentType[IN]","PART|ASSEMBLY");
+        FormParams formParams = new FormParams();
+        formParams.use("componentType[IN]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+                scenarioIterationService.getScenarioIterationWithParams(formParams);
 
         assertTrue(scenarioIterationService.validateIfTrue(scenarioIterationRespond));
     }
@@ -88,12 +81,11 @@ public class ScenarioIterationGetTests {
     @Test
     @Description("Verify that GET scenario-iterations do not return exactly specified parts in the range - condition IN")
     public void notGetPartsInRangeTest() {
-
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("componentType[NI]","PART|ASSEMBLY");
+        FormParams formParams = new FormParams();
+        formParams.use("componentType[NI]", "PART|ASSEMBLY");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+                scenarioIterationService.getScenarioIterationWithParams(formParams);
 
         assertFalse(scenarioIterationService.validateIfTrue(scenarioIterationRespond));
     }
@@ -101,13 +93,12 @@ public class ScenarioIterationGetTests {
     @Test
     @Description("Verify that GET scenario-iterations return correct parts when using  AND operator")
     public void getPartsTwoParamsWithAndTest() {
-
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("componentType[EQ]","PART");
-        paramsToUrl.put("componentName[EQ]","bracket_basic");
+        FormParams formParams = new FormParams();
+        formParams.use("componentType[EQ]", "PART");
+        formParams.use("componentName[EQ]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+                scenarioIterationService.getScenarioIterationWithParams(formParams);
 
         assertTrue(scenarioIterationService.validateIfTrueWithAndOperator(scenarioIterationRespond));
     }
@@ -115,11 +106,12 @@ public class ScenarioIterationGetTests {
     @Test
     @Description("Verify that GET scenario-iterations return correct parts when using  SW(starts with / LIKE) operator")
     public void getPartsMatchTest() {
-        Map paramsToUrl = new HashMap();
-        paramsToUrl.put("componentName[SW]","br");
+        FormParams formParams = new FormParams();
+        formParams.use("componentName[SW]", "br");
+        formParams.use("componentName[EQ]", "bracket_basic");
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                scenarioIterationService.getScenarioIterationWithParams(Arrays.asList(paramsToUrl));
+                scenarioIterationService.getScenarioIterationWithParams(formParams);
 
         assertTrue(scenarioIterationService.validateIfTrueWithSwOperator(scenarioIterationRespond));
     }
