@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.entity.request.request;
+package com.apriori.cidappapi.entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
