@@ -12,6 +12,7 @@ import com.apriori.cidappapi.entity.request.GroupItems;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
+import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -24,7 +25,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -251,9 +251,9 @@ public class ScenariosUtil {
      * @param forkRequest   - the fork request
      * @return response object
      */
-    public ResponseWrapper<List<Scenario>> postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest) {
+    public ResponseWrapper<ScenarioSuccessesFailures> postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, Scenario.class)
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body(ForkRequest.builder()
                     .scenarioName(forkRequest.getScenarioName())
