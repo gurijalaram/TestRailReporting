@@ -238,8 +238,7 @@ public class ScenariosUtil {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
-                .body("scenario",
-                    ForkRequest.builder()
+                .body("scenario", ForkRequest.builder()
                     .scenarioName(forkRequest.getScenarioName())
                     .override(forkRequest.getOverride())
                     .build())
