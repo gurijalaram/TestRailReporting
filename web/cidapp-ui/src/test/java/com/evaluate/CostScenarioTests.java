@@ -52,6 +52,6 @@ public class CostScenarioTests extends TestBase {
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(false));
     }
 }
