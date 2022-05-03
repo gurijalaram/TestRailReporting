@@ -174,7 +174,6 @@ public class ScenariosTests {
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()
-                    .override(false)
                     .build())
             .getResponseEntity();
 

@@ -237,9 +237,13 @@ public class ScenariosUtil {
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
-                .body("scenario", forkRequest);
+                .body("scenario",
+                    ForkRequest.builder()
+                    .scenarioName(forkRequest.getScenarioName())
+                    .override(forkRequest.getOverride())
+                    .build())
+                .token(componentInfoBuilder.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
