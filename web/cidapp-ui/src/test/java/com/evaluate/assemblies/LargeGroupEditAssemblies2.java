@@ -67,8 +67,8 @@ public class LargeGroupEditAssemblies2 extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .openComponents()
-            .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
+                .openComponents()
+                .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
 
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
