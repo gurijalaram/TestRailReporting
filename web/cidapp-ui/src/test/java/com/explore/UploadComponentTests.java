@@ -23,6 +23,7 @@ import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -261,6 +262,13 @@ public class UploadComponentTests extends TestBase {
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(true)));
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(explorePage.getRowDetails("piston_pin", scenarioName)).contains("circle-xmark");
+        explorePage.refresh();
+        softAssertions.assertThat(explorePage.getRowDetails("piston", scenarioName)).contains("circle-xmark");
+        softAssertions.assertThat(explorePage.getRowDetails("piston_assembly", scenarioName)).contains("circle-xmark");
     }
 
     @Test
@@ -338,5 +346,12 @@ public class UploadComponentTests extends TestBase {
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(explorePage.getRowDetails("big ring", scenarioName)).contains("circle-minus");
+        softAssertions.assertThat(explorePage.getRowDetails("Pin", scenarioName)).contains("circle-minus");
+        softAssertions.assertThat(explorePage.getRowDetails("small ring", scenarioName)).contains("circle-minus");
+        softAssertions.assertThat(explorePage.getRowDetails("Hinge assembly", scenarioName)).contains("circle-minus");
     }
 }
