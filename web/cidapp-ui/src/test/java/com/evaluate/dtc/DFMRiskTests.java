@@ -416,8 +416,8 @@ public class DFMRiskTests extends TestBase {
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
+        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
 
         // TODO uncomment this section when revert is implemented
         /*
