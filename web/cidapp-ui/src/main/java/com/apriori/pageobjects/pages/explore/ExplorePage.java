@@ -316,10 +316,10 @@ public class ExplorePage extends ExploreToolbar {
      * @param currentUser   -  current user
      * @return - String
      */
-    public String getProcessingFailedState(String componentName, String scenarioName, UserCredentials currentUser) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, ScenarioStateEnum.PROCESSING_FAILED);
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, stateEnum);
 
         return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING_FAILED.getState())).findFirst().get().getScenarioState();
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 }
