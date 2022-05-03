@@ -134,9 +134,10 @@ public class WorkorderAPITests {
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        AssemblyInfo assemblyToUse = createAndReturnAssemblyInfo(scenarioName, processGroup);
-
-        initializeAndUploadAssemblyFile(assemblyToUse, false);
+        initializeAndUploadAssemblyFile(
+            createAndReturnAssemblyInfo(scenarioName, processGroup),
+            false
+        );
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
             productionInfoInputs,
