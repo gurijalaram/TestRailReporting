@@ -1,6 +1,5 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -92,6 +91,6 @@ public class IncludeAndExcludeTests extends TestBase {
 
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->
-                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), containsString("line-through")));
+                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
 }
