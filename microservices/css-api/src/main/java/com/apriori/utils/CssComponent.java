@@ -36,9 +36,9 @@ public class CssComponent {
     /**
      * Gets the uncosted component from CSS
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param userCredentials  - user to upload the part
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
      * @return response object
      */
     public List<ScenarioItem> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
