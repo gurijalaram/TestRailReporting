@@ -99,7 +99,16 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     POST_ACCESS_CONTROL_BY_CUSTOMER_USER_IDS("customers/%s/users/%s/access-controls"),
     GET_ACCESS_CONTROLS("customers/%s/users/%s/access-controls"),
     GET_ACCESS_CONTROL_BY_ID("customers/%s/users/%s/access-controls/%s"),
-    DELETE_ACCESS_CONTROL_BY_CUSTOMER_USER_CONTROL_IDS("customers/%s/users/%s/access-controls/%s");
+    DELETE_ACCESS_CONTROL_BY_CUSTOMER_USER_CONTROL_IDS("customers/%s/users/%s/access-controls/%s"),
+
+    //CUSTOM_ATTRIBUTES
+    POST_CUSTOM_ATTRIBUTE("customers/%s/users/%s/custom-attributes"),
+    GET_CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes"),
+    PUT_CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes"),
+    GET_CUSTOM_ATTRIBUTE_BY_ID("customers/%s/users/%s/custom-attributes/%s"),
+    DELETE_CUSTOM_ATTRIBUTE("customers/%s/users/%s/custom-attributes/%s"),
+    PATCH_CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes/%s");
+
 
     private final String endpoint;
 
