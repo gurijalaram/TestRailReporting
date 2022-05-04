@@ -9,6 +9,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
+import com.apriori.cidappapi.entity.request.Options;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
@@ -340,6 +341,38 @@ public class ScenariosUtil {
                     .status("New".toUpperCase())
                     .build()
                 );
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo  - the component info object
+     * @param publishRequest - the publish request
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(ComponentInfoBuilder componentInfo, PublishRequest publishRequest) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+
+                .body(PublishRequest.builder()
+                    .groupItems(componentInfo.getSubComponents()
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .options(Options.builder()
+                        .scenarioName(publishRequest.getScenarioName())
+                        .override(publishRequest.getOverride())
+                        .costMaturity(publishRequest.getCostMaturity().toUpperCase())
+                        .status(publishRequest.getStatus().toUpperCase())
+                        .build())
+                    .build())
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
