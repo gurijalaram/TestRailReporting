@@ -4,7 +4,10 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.enums.ScenarioStateEnum;
+
 import com.utils.ColumnsEnum;
+
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -159,6 +162,27 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return pageUtils.waitForElementsToAppear(byScenarioName(componentName, scenarioName)).size();
     }
 
+    /**
+     * Checks if the component is present on the page by scenario state
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        String stateIcon;
+        switch (scenarioState) {
+            case PROCESSING_FAILED:
+                stateIcon = "circle-xmark";
+                break;
+            case NOT_COSTED:
+                stateIcon = "circle-minus";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scenarioState);
+        }
+        return pageUtils.isElementDisplayed(byScenarioNameWithStatus(componentName, scenarioName, stateIcon));
+    }
 
     /**
      * Gets the info in the row
@@ -239,6 +263,22 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     private By byScenarioName(String componentName, String scenarioName) {
         By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%s']", scenarioName.trim(), componentName.toUpperCase().trim()));
+        return byScenario;
+    }
+
+    /**
+     * Get the scenario with the state status
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param stateIcon     - state icon
+     * @return - by
+     */
+    private By byScenarioNameWithStatus(String componentName, String scenarioName, String stateIcon) {
+        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%s']/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']//*[@data-icon='%s']",
+            scenarioName.trim(),
+            componentName.toUpperCase().trim(),
+            stateIcon));
         return byScenario;
     }
 
