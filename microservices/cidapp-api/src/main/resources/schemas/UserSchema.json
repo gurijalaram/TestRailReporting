@@ -96,6 +96,9 @@
         "resourcesAllowedToCreate": {
           "type": "array"
         },
+        "updatedBy": {
+          "type": "string"
+        },
         "userType": {
           "type": "string"
         }

@@ -1,10 +1,8 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -16,7 +14,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -33,7 +30,6 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @Issue("BA-2294")
     @TestRail(testCaseId = "11154")
     @Description("Include and Exclude buttons disabled by default")
     public void testIncludeAndExcludeDisabledButtons() {
@@ -49,22 +45,22 @@ public class IncludeAndExcludeTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
-                .uploadPublishAndOpenAssembly(
-                        subComponentNames,
-                        componentExtension,
-                        processGroupEnum,
-                        assemblyName,
-                        assemblyExtension,
-                        scenarioName,
-                        currentUser)
-                .openComponents();
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents();
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
     }
 
     @Test
-    @Issue("BA-2294")
     @TestRail(testCaseId = "11150")
     @Description("Exclude all sub-components from top-level assembly")
     public void testExcludeButtons() {
@@ -80,20 +76,21 @@ public class IncludeAndExcludeTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
-                .uploadPublishAndOpenAssembly(
-                        subComponentNames,
-                        componentExtension,
-                        processGroupEnum,
-                        assemblyName,
-                        assemblyExtension,
-                        scenarioName,
-                        currentUser)
-                .openComponents()
-                .selectCheckAllBox()
-                .selectButtonType(ButtonTypeEnum.EXCLUDE);
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
+            .selectCheckAllBox()
+            .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         Stream.of(subComponentNames.toArray())
-                .forEach(componentName ->
-                        assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), containsString("line-through")));
+            .forEach(componentName ->
+                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
 }
