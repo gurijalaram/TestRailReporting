@@ -13,25 +13,20 @@ import lombok.Data;
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "AccessControlSchema.json")
+@Schema(location = "CustomAttributeSchema.json")
 @JsonRootName("response")
 @Data
-public class AccessControlResponse {
+public class CustomAttribute {
     private String identity;
     private String createdBy;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime createdAt;
     private String updatedBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-    private String customerIdentity;
-    private String deploymentIdentity;
-    private String userIdentity;
-    private String installationIdentity;
-    private String applicationIdentity;
-    private String roleIdentity;
-    private Boolean outOfContext;
-    private String customerAssociationIdentity;
+    private String type;
+    private String name;
+    private String value;
 }
