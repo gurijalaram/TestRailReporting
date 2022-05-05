@@ -442,9 +442,9 @@ public class ExploreToolbar extends MainNavBar {
      * This method uploads via drop zone, wait to be in a not costed state and opens the component
      *
      * @param multiComponents - the multi components
-     * @param scenarioName - scenario name
-     * @param assemblyName - assembly name
-     * @param currentUser - current user
+     * @param scenarioName    - scenario name
+     * @param assemblyName    - assembly name
+     * @param currentUser     - current user
      * @return - new page object
      */
     public ComponentsListPage uploadAndOpenComponent(List<MultiUpload> multiComponents, String scenarioName, String assemblyName, UserCredentials currentUser) {
@@ -456,5 +456,38 @@ public class ExploreToolbar extends MainNavBar {
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents();
         return new ComponentsListPage(driver);
+    }
+
+    /**
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the sub component names
+     * @param subComponentExtension    - the sub components extension
+     * @param subComponentProcessGroup - sub components process group
+     * @param scenarioName             - the scenario name
+     * @param currentUser              - the user credential
+     * @return - new page object
+     */
+    public EvaluatePage uploadsAndOpenAssembly(String assemblyName,
+                                               String assemblyExtension,
+                                               ProcessGroupEnum assemblyProcessGroup,
+                                               List<String> subComponentNames,
+                                               String subComponentExtension,
+                                               ProcessGroupEnum subComponentProcessGroup,
+                                               String scenarioName,
+                                               UserCredentials currentUser) {
+
+        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadsAndOpenAssembly(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        return navigateToScenario(myAssembly);
     }
 }
