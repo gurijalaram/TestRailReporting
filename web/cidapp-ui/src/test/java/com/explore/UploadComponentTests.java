@@ -343,4 +343,38 @@ public class UploadComponentTests extends TestBase {
             assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
                 component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
+
+    @Test
+    @TestRail(testCaseId = "10750")
+    @Description("Validate updated workflow of importing/uploading an assembly into CID")
+    public void testUploadViaExploreAndEvaluatePage() {
+        currentUser = UserUtil.getUser();
+        String componentName = "piston_assembly";
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston_pin.prt.1"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "piston.prt.5"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "piston_assembly.asm.1"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName2)
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .close()
+            .openComponent(componentName, scenarioName, currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .close()
+            .refresh();
+
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
+    }
 }
