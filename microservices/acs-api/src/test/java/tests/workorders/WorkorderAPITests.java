@@ -476,7 +476,13 @@ public class WorkorderAPITests {
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
-        FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, false);
+        FileUploadOutputs fileUploadOutputs;
+        if (includeSubComponents) {
+            initializeAndUploadAssemblyFile(createAndReturnAssemblyInfo(scenarioName, processGroup), false);
+            fileUploadOutputs = fileUploadResources.getCurrentFileUploadOutputs();
+        } else {
+            fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, false);
+        }
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
@@ -486,9 +492,7 @@ public class WorkorderAPITests {
         );
 
         PublishResultOutputs publishResultOutputs;
-        if (fileName.equals("PATTERNTHREADHOLES")) {
-            publishResultOutputs = fileUploadResources.publishPart(costOutputs);
-        } else {
+        if (includeSubComponents) {
             List<AssemblyComponent> assemblyComponents = fileUploadResources.getCurrentAssembly().getSubComponents();
             publishResultOutputs = fileUploadResources.publishAssembly(
                 costOutputs,
@@ -497,6 +501,8 @@ public class WorkorderAPITests {
                     assemblyComponents.get(1).getScenarioIterationKey()
                 )
             );
+        } else {
+            publishResultOutputs = fileUploadResources.publishPart(costOutputs);
         }
 
         EditScenarioOutputs editScenarioOutputs = fileUploadResources.createEditScenarioWorkorderSuppressError(publishResultOutputs);
