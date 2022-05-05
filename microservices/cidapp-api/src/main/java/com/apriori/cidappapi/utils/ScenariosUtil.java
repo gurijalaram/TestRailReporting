@@ -26,6 +26,9 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -352,13 +355,25 @@ public class ScenariosUtil {
      * @param publishRequest - the publish request
      * @return response object
      */
-    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(ComponentInfoBuilder componentInfo, PublishRequest publishRequest) {
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(ComponentInfoBuilder componentInfo, PublishRequest publishRequest, String... componentScenarioName) {
+
+        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        for (String[] componentScenario : componentScenarioNames) {
+            if (componentInfo.getSubComponents().stream()
+                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+
+                subComponentInfo.add(componentInfo.getSubComponents().stream()
+                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
+                    .collect(Collectors.toList()).get(0));
+            }
+        }
+
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
-                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
-
                 .body(PublishRequest.builder()
-                    .groupItems(componentInfo.getSubComponents()
+                    .groupItems(subComponentInfo
                         .stream()
                         .map(component -> GroupItems.builder()
                             .componentIdentity(component.getComponentIdentity())
