@@ -15,8 +15,6 @@ import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionI
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoScenarioKey;
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoVpe;
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishInputs;
-import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishScenarioIterationKey;
-import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.cost.iterations.CostIteration;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioInputs;
@@ -94,6 +92,7 @@ public class FileUploadResources {
     private final ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
 
     private FileUploadOutputs currentFileUploadOutputs;
+    private Assembly currentAssembly;
 
     private String currentWorkorderId;
 
@@ -341,19 +340,83 @@ public class FileUploadResources {
     }
 
     /**
+     * Cost uploaded part or assembly
+     *
+     * @param productionInfoInputs - production info inputs
+     * @param fileUploadOutputs    - output from file upload
+     * @param processGroup         - process group
+     * @param includeSubComponents - to include sub components or not
+     * @return CostOrderStatusOutputs instance
+     */
+    public CostOrderStatusOutputs costAssemblyOrPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup, boolean includeSubComponents) {
+        int inputSetId = initializeCostScenario(
+            productionInfoInputs,
+            fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
+            processGroup
+        );
+
+        CostOrderInputs inputs = CostOrderInputs.builder()
+            .keepFreeBodies(false)
+            .freeBodiesPreserveCad(false)
+            .freeBodiesIgnoreMissingComponents(true)
+            .inputSetId(inputSetId)
+            .scenarioIterationKey(
+                setCostOrderScenarioIteration(
+                    fileUploadOutputs.getScenarioIterationKey().getScenarioKey()))
+            //.subComponents(getCurrentAssembly().getSubComponents())
+            .build();
+
+        if (includeSubComponents) {
+            inputs.setSubComponents(getCurrentAssembly().getSubComponents());
+        }
+
+        String costWorkorderId = createWorkorder(
+            WorkorderCommands.COSTING.getWorkorderCommand(),
+            inputs,
+            false
+        );
+        submitWorkorder(costWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(costWorkorderId),
+            CostOrderStatusOutputs.class
+        );
+    }
+
+    /**
      * Publish part
      *
      * @param costOutputs - outputs from cost
      * @return PublishResultOutputs - outputs from publish
      */
     public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
+        return publishPartCore(createScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()));
+    }
+
+    public PublishResultOutputs publishAssembly(CostOrderStatusOutputs costOutputs, List<ScenarioIterationKey> scenarioIterationKey) {
+        List<PublishResultOutputs> componentPublishOutputs = new ArrayList<>();
+        for (ScenarioIterationKey scenarioIterationKeyItem : scenarioIterationKey) {
+            componentPublishOutputs.add(publishPartCore(scenarioIterationKeyItem));
+        }
+
+        List<AssemblyComponent> assemblyComponents = new ArrayList<>();
+        for (PublishResultOutputs publishResultOutput : componentPublishOutputs) {
+            assemblyComponents.add(
+                AssemblyComponent.builder()
+                    .scenarioIterationKey(publishResultOutput.getScenarioIterationKey())
+                    .ignored(false)
+                    .build()
+            );
+        }
+
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
             PublishInputs.builder()
                 .comments("Comments go here...")
                 .description("Description goes here...")
                 .scenarioIterationKey(
-                    setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
+                    createScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
+                .subComponents(assemblyComponents)
                 .overwrite(true)
+                .lock(false)
                 .build(),
             false
         );
@@ -470,21 +533,6 @@ public class FileUploadResources {
     }
 
     /**
-     * Initializes file upload
-     *
-     * @param fileName     - the filename
-     * @param processGroup - the process group
-     * @return FileResponse
-     */
-    private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        return FileManagementController.uploadFile(
-            UserUtil.getUser(),
-            ProcessGroupEnum.fromString(processGroup),
-            fileName
-        );
-    }
-
-    /**
      * Gets Admin Info
      *
      * @param publishScenarioKey - Scenario Key from publish action
@@ -545,45 +593,6 @@ public class FileUploadResources {
     }
 
     /**
-     * Creates file upload workorder (with ignore HTTP 500 error capability)
-     *
-     * @param commandType    String
-     * @param inputs         Object
-     * @param ignore500Error Boolean
-     * @return String file upload workorder id
-     */
-    private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
-        setupHeaders("application/json");
-
-        RequestEntity requestEntity;
-        if (ignore500Error) {
-            requestEntity = RequestEntityUtil
-                .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
-                .headers(headers)
-                .body(new WorkorderRequest()
-                    .setCommand(new WorkorderCommand(
-                        commandType,
-                        inputs))
-                );
-            int counter = 0;
-            while (HTTPRequest.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
-                counter++;
-            }
-        }
-
-        requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
-            .headers(headers)
-            .body(new WorkorderRequest()
-                .setCommand(new WorkorderCommand(
-                    commandType,
-                    inputs))
-            );
-
-        return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
-    }
-
-    /**
      * Creates workorder (with ignore HTTP 500 error capability)
      *
      * @param commandType String
@@ -619,23 +628,6 @@ public class FileUploadResources {
             );
 
         return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
-    }
-
-    /**
-     * Checks if workorder processing has successfully completed
-     *
-     * @param workorderId - workorder id
-     * @return Object
-     */
-    private Object getWorkorderDetails(String workorderId) {
-        setupHeaders("application/json");
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.WORKORDER_DETAILS, WorkorderDetailsResponse.class)
-            .headers(headers)
-            .inlineVariables(workorderId);
-
-        return HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -694,15 +686,6 @@ public class FileUploadResources {
     }
 
     /**
-     * Sets Current FileUploadOutput as Global Variable
-     *
-     * @param fileUploadOutputs - FileUploadOutputs to set
-     */
-    public void setCurrentFileUploadOutputs(FileUploadOutputs fileUploadOutputs) {
-        this.currentFileUploadOutputs = fileUploadOutputs;
-    }
-
-    /**
      * Get Current FileUploadOutputs
      *
      * @return FileUploadOutputs instance currently set
@@ -712,15 +695,138 @@ public class FileUploadResources {
     }
 
     /**
-     * Sets Publish Scenario Iteration Key
+     * Sets Current FileUploadOutput as Global Variable
+     *
+     * @param fileUploadOutputs - FileUploadOutputs to set
+     */
+    public void setCurrentFileUploadOutputs(FileUploadOutputs fileUploadOutputs) {
+        this.currentFileUploadOutputs = fileUploadOutputs;
+    }
+
+    /**
+     * Gets current Assembly
+     *
+     * @return Assembly instance
+     */
+    public Assembly getCurrentAssembly() {
+        return currentAssembly;
+    }
+
+    /**
+     * Sets current Assembly as a global variable
+     *
+     * @param currentAssembly Assembly instance
+     */
+    public void setCurrentAssembly(Assembly currentAssembly) {
+        this.currentAssembly = currentAssembly;
+    }
+
+    /**
+     * Creates file upload workorder (with ignore HTTP 500 error capability)
+     *
+     * @param commandType    String
+     * @param inputs         Object
+     * @param ignore500Error Boolean
+     * @return String file upload workorder id
+     */
+    private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
+        setupHeaders("application/json");
+
+        RequestEntity requestEntity;
+        if (ignore500Error) {
+            requestEntity = RequestEntityUtil
+                .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
+                .headers(headers)
+                .body(new WorkorderRequest()
+                    .setCommand(new WorkorderCommand(
+                        commandType,
+                        inputs))
+                );
+            int counter = 0;
+            while (HTTPRequest.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
+                counter++;
+            }
+        }
+
+        requestEntity = RequestEntityUtil
+            .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
+            .headers(headers)
+            .body(new WorkorderRequest()
+                .setCommand(new WorkorderCommand(
+                    commandType,
+                    inputs))
+            );
+
+        return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
+    }
+
+    /**
+     * Checks if workorder processing has successfully completed
+     *
+     * @param workorderId - workorder id
+     * @return Object
+     */
+    private Object getWorkorderDetails(String workorderId) {
+        setupHeaders("application/json");
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(CidWorkorderApiEnum.WORKORDER_DETAILS, WorkorderDetailsResponse.class)
+            .headers(headers)
+            .inlineVariables(workorderId);
+
+        return HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Initializes file upload
+     *
+     * @param fileName     - the filename
+     * @param processGroup - the process group
+     * @return FileResponse
+     */
+    private FileResponse initializeFileUpload(String fileName, String processGroup) {
+        return FileManagementController.uploadFile(
+            UserUtil.getUser(),
+            ProcessGroupEnum.fromString(processGroup),
+            fileName
+        );
+    }
+
+    /**
+     * Core publish part code
+     *
+     * @param scenarioIterationKey - scenario iteration key to be used in api call
+     * @return PublishResultOutputs instance
+     */
+    private PublishResultOutputs publishPartCore(ScenarioIterationKey scenarioIterationKey) {
+        String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
+            PublishInputs.builder()
+                .comments("Comments go here...")
+                .description("Description goes here...")
+                .scenarioIterationKey(
+                    createScenarioIterationKey(scenarioIterationKey.getScenarioKey()))
+                .overwrite(true)
+                .lock(false)
+                .build(),
+            false
+        );
+        submitWorkorder(createPublishWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(createPublishWorkorderId),
+            PublishResultOutputs.class
+        );
+    }
+
+    /**
+     * Creates and Returns Scenario Iteration Key
      *
      * @param scenarioKey - scenario key
      * @return PublishScenarioIterationKey
      */
-    private PublishScenarioIterationKey setPublishScenarioIterationKey(ScenarioKey scenarioKey) {
-        return PublishScenarioIterationKey.builder()
+    private ScenarioIterationKey createScenarioIterationKey(ScenarioKey scenarioKey) {
+        return ScenarioIterationKey.builder()
             .iteration(getLatestIteration(scenarioKey))
-            .scenarioKey(PublishScenarioKey.builder()
+            .scenarioKey(ScenarioKey.builder()
                 .masterName(scenarioKey.getMasterName())
                 .stateName(scenarioKey.getStateName())
                 .typeName(scenarioKey.getTypeName())

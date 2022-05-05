@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfo;
@@ -46,6 +47,7 @@ import org.junit.experimental.categories.Category;
 import testsuites.categories.WorkorderTest;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -90,11 +92,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
-        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
-                FileResourceUtil.getResourceAsFile(
-                        "CreatePartData.json"
-                ).getPath(), NewPartRequest.class
-        );
+        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
 
         String processGroup = ProcessGroupEnum.CASTING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -107,10 +105,11 @@ public class WorkorderAPITests {
 
         getAndValidateImageInfo(fileUploadOutputs.getScenarioIterationKey());
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
                 productionInfoInputs,
                 fileUploadOutputs,
-                processGroup
+                processGroup,
+                false
         );
 
         getAndValidateImageInfo(costOutputs.getScenarioIterationKey());
@@ -125,11 +124,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = "11974")
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
-        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile(
-                "CreatePartData.json"
-            ).getPath(), NewPartRequest.class
-        );
+        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
 
         String processGroup = ProcessGroupEnum.ASSEMBLY.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -139,16 +134,40 @@ public class WorkorderAPITests {
             false
         );
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadResources.getCurrentFileUploadOutputs(),
-            processGroup
+            processGroup,
+            true
         );
 
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        List<AssemblyComponent> assemblyComponents = fileUploadResources.getCurrentAssembly().getSubComponents();
+        PublishResultOutputs publishResultOutputs = fileUploadResources.publishAssembly(
+            costOutputs,
+            Arrays.asList(
+                assemblyComponents.get(0).getScenarioIterationKey(),
+                assemblyComponents.get(1).getScenarioIterationKey()
+            )
+        );
 
-        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(equalTo("PATTERNTHREADHOLES")));
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getMasterName(), is(startsWith("PATTERNTHREADHOLES")));
         assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getTypeName(), is(equalTo("assemblyState")));
+        assertThat(publishResultOutputs.getScenarioIterationKey().getScenarioKey().getWorkspaceId(), is(equalTo(0)));
+        assertThat(publishResultOutputs.getScenarioIterationKey().getIteration(), is(not(costOutputs.getScenarioIterationKey().getIteration())));
+
+        List<AssemblyComponent> publishedComponentsList = Arrays.asList(
+            publishResultOutputs.getSubComponents().get(0),
+            publishResultOutputs.getSubComponents().get(1)
+        );
+
+        int i = 0;
+        for (AssemblyComponent component : publishedComponentsList) {
+            performUploadCostPublishAssemblyComponentAssertions(
+                component.getScenarioIterationKey(),
+                fileUploadResources.getCurrentAssembly().getSubComponents().get(i).getScenarioIterationKey().getIteration()
+            );
+            i++;
+        }
     }
 
     @Test
@@ -182,11 +201,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8681"})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
-                FileResourceUtil.getResourceAsFile(
-                        "CreatePartData.json"
-                ).getPath(), NewPartRequest.class
-        );
+        Object productionInfoInputs = setupProductionInfoInputs();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -197,10 +212,11 @@ public class WorkorderAPITests {
             false
         );
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
                 productionInfoInputs,
                 fileUploadOutputs,
-                processGroup
+                processGroup,
+                false
         );
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
@@ -278,11 +294,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
-        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
-                FileResourceUtil.getResourceAsFile(
-                        "CreatePartData.json"
-                ).getPath(), NewPartRequest.class
-        );
+        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -293,10 +305,11 @@ public class WorkorderAPITests {
             false
         );
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
                 productionInfoInputs,
                 fileUploadOutputs,
-                processGroup
+                processGroup,
+                false
         );
 
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
@@ -318,11 +331,7 @@ public class WorkorderAPITests {
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
-        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
-                FileResourceUtil.getResourceAsFile(
-                        "CreatePartData.json"
-                ).getPath(), NewPartRequest.class
-        );
+        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
 
         String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
@@ -337,10 +346,11 @@ public class WorkorderAPITests {
                 scenarioName
         );
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
                 productionInfoInputs,
                 fileUploadOutputs,
-                processGroup
+                processGroup,
+                false
         );
 
         GetImageInfoResponse getImageInfoResponse = fileUploadResources
@@ -395,7 +405,8 @@ public class WorkorderAPITests {
     public void testShallowEditPartScenario() {
         testShallowEditOfScenario(
             "Casting.prt",
-            ProcessGroupEnum.CASTING.getProcessGroup()
+            ProcessGroupEnum.CASTING.getProcessGroup(),
+            false
         );
     }
 
@@ -406,7 +417,8 @@ public class WorkorderAPITests {
     public void testShallowEditAssemblyScenario() {
         testShallowEditOfScenario(
             "PatternThreadHoles.asm",
-            ProcessGroupEnum.ASSEMBLY.getProcessGroup()
+            ProcessGroupEnum.ASSEMBLY.getProcessGroup(),
+            true
         );
     }
 
@@ -457,46 +469,35 @@ public class WorkorderAPITests {
         );
     }
 
-    @Test
-    @Category(WorkorderTest.class)
-    @TestRail(testCaseId = "12324")
-    @Description("Upload and Cost Assembly with Subcomponents")
-    public void testUploadAndCostAssemblyWithSubcomponents() {
-        // 1 - Initialise file upload for assembly parts:
-        // 2 - Do file upload workorder for each assembly part, in turn:
-        // 3 - Initialise file upload for assembly (top level)
-        // 4 - Do file upload workorder for assembly with subcomponents (ignore: false, for now - happy path)
-        FileResponse assemblyFileResponse = initializeAndUploadAssemblyFile(
-            createAndReturnAssemblyInfo(scenarioName, ProcessGroupEnum.ASSEMBLY.getProcessGroup()),
-            false
-        );
-
-        assertThat(fileUploadResources.getCurrentFileUploadOutputs(), is(notNullValue()));
-        assertThat(assemblyFileResponse, is(notNullValue()));
-
-        // 5 - Then do costing for nested assembly
-    }
-
-    private void testShallowEditOfScenario(String fileName, String processGroup) {
+    private void testShallowEditOfScenario(String fileName, String processGroup, boolean includeSubComponents) {
         AcsResources acsResources = new AcsResources();
 
-        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile(
-                "CreatePartData.json"
-            ).getPath(), NewPartRequest.class
-        );
+        NewPartRequest productionInfoInputs = setupProductionInfoInputs();
 
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileUploadOutputs fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, false);
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
-            processGroup
+            processGroup,
+            includeSubComponents
         );
 
-        PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        PublishResultOutputs publishResultOutputs;
+        if (fileName.equals("PATTERNTHREADHOLES")) {
+            publishResultOutputs = fileUploadResources.publishPart(costOutputs);
+        } else {
+            List<AssemblyComponent> assemblyComponents = fileUploadResources.getCurrentAssembly().getSubComponents();
+            publishResultOutputs = fileUploadResources.publishAssembly(
+                costOutputs,
+                Arrays.asList(
+                    assemblyComponents.get(0).getScenarioIterationKey(),
+                    assemblyComponents.get(1).getScenarioIterationKey()
+                )
+            );
+        }
 
         EditScenarioOutputs editScenarioOutputs = fileUploadResources.createEditScenarioWorkorderSuppressError(publishResultOutputs);
 
@@ -541,6 +542,7 @@ public class WorkorderAPITests {
         }
 
         return Assembly.builder()
+            .scenarioName(scenarioName)
             .fileKey(assemblyFileResponse.getIdentity())
             .fileName(assemblyFileResponse.getFilename())
             .keepFreeBodies(false)
@@ -565,6 +567,7 @@ public class WorkorderAPITests {
         );
 
         Assembly assemblyProper = createAssembly(componentFileUploadOutputs, assemblyFileResponse);
+        fileUploadResources.setCurrentAssembly(assemblyProper);
 
         fileUploadResources.setCurrentFileUploadOutputs(
             fileUploadResources.createFileUploadWorkorderAssemblySuppressError(
@@ -633,5 +636,20 @@ public class WorkorderAPITests {
         scenarioIterationKey.setIteration(Integer.parseInt(iteration));
 
         return scenarioIterationKey;
+    }
+
+    private void performUploadCostPublishAssemblyComponentAssertions(ScenarioIterationKey scenarioIterationKey, Integer notExpectedIteration) {
+        assertThat(scenarioIterationKey.getScenarioKey().getMasterName(), is(startsWith("3574")));
+        assertThat(scenarioIterationKey.getScenarioKey().getTypeName(), is(equalTo("partState")));
+        assertThat(scenarioIterationKey.getScenarioKey().getWorkspaceId(), is(equalTo(0)));
+        assertThat(scenarioIterationKey.getIteration(), is(not(notExpectedIteration)));
+    }
+
+    private NewPartRequest setupProductionInfoInputs() {
+        return JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "CreatePartData.json"
+            ).getPath(), NewPartRequest.class
+        );
     }
 }

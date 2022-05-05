@@ -50,10 +50,11 @@ public class GetSetArtifactPropertiesTests {
         FileResponse fileResponse = fileUploadResources.initializePartUpload("bracket_basic.prt", processGroup);
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, generateStringUtil.generateScenarioName());
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
-            processGroup
+            processGroup,
+            false
         );
 
         GetGcdMappingResponse getGcdMappingResponse = acsResources.getGcdMapping(costOutputs.getScenarioIterationKey());
