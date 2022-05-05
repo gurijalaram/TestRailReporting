@@ -5,6 +5,7 @@ import com.apriori.cds.tests.CdsAccessControlsTests;
 import com.apriori.cds.tests.CdsApplicationsTests;
 import com.apriori.cds.tests.CdsAssociationUserTests;
 import com.apriori.cds.tests.CdsConfigurationsTests;
+import com.apriori.cds.tests.CdsCustomAttributesTests;
 import com.apriori.cds.tests.CdsCustomerAssociationTests;
 import com.apriori.cds.tests.CdsCustomerUsersTests;
 import com.apriori.cds.tests.CdsCustomersTests;
@@ -30,6 +31,7 @@ import org.junit.runners.Suite;
     CdsApplicationsTests.class,
     CdsAssociationUserTests.class,
     CdsConfigurationsTests.class,
+    CdsCustomAttributesTests.class,
     CdsCustomerAssociationTests.class,
     CdsCustomersTests.class,
     CdsCustomerUsersTests.class,
