@@ -9,6 +9,7 @@ import com.apriori.css.entity.request.Operator;
 import com.apriori.css.entity.request.Query;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -26,6 +27,7 @@ public class VerifyIfFails {
     }
 
     @Test
+    @TestRail(testCaseId = {"12420"})
     @Description("Verify: if fails when using in query non existing operator: 'wrongOperator'")
     public void shouldFailWithNonExistingOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -43,6 +45,7 @@ public class VerifyIfFails {
     }
 
     @Test
+    @TestRail(testCaseId = {"12421"})
     @Description("Verify: if fails when using in query non invalid operator: (removed property)")
     public void shouldFailWithInvalidOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -60,6 +63,7 @@ public class VerifyIfFails {
     }
 
     @Test
+    @TestRail(testCaseId = {"12422"})
     @Description("Verify: if fails when using in query non parsable operator")
     public void shouldFailNotParsableOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest  = setWithEmptyBracketNotOperator();
@@ -73,6 +77,7 @@ public class VerifyIfFails {
     }
 
     @Test
+    @TestRail(testCaseId = {"12423"})
     @Description("Verify: if fails when using invalid value expected: double, used: string")
     public void shouldFailWithInvalidValueTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -91,6 +96,7 @@ public class VerifyIfFails {
     }
 
     @Test
+    @TestRail(testCaseId = {"12424"})
     @Description("Verify: if fails when using invalid value for Sorting Direction enum")
     public void shouldFailWithWrongSortingDirectionValueTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -109,7 +115,8 @@ public class VerifyIfFails {
     }
 
     @Test
-    @Description("Verify: if fails when using Sorting with missing property ")
+    @TestRail(testCaseId = {"12425"})
+    @Description("Verify: if fails when using Sorting with missing property")
     public void shouldFailWithMissingPropertyInDirectionTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(

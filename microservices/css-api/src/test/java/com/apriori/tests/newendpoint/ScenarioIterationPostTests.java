@@ -10,6 +10,7 @@ import com.apriori.css.entity.response.CostingInput;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -29,7 +30,8 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
-    @Description("Verify: componentName[EQ]=foo")
+    @TestRail(testCaseId = {"12415"})
+    @Description("Verify that following query: componentName[EQ]=foo, returns correct results")
     public void getOnePartTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
@@ -48,6 +50,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12416"})
     @Description("Verify that POST scenario-iterations returns exactly specified 5 items - paging , sorting Asc")
     public void getFivePartsSortedAscTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -63,6 +66,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12417"})
     @Description("Verify that POST scenario-iterations returns parts with OR operator")
     public void getPartsWithOrOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -80,6 +84,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12418"})
     @Description("Verify that POST scenario-iterations returns parts - NOT operator")
     public void getPartsWithNotOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -98,6 +103,7 @@ public class ScenarioIterationPostTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12419"})
     @Description("Verify that POST scenario-iterations returns parts - isNull operator")
     public void getPartsWithIsNullOperatorTest() {
         ScenarioIterationRequest scenarioIterationRequest  =

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -23,6 +24,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12438"})
     @Description("Verify that GET scenario-iterations returns exactly specified 5 items - paging")
     public void getFivePartsTest() {
         FormParams formParams = new FormParams();
@@ -36,6 +38,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12439"})
     @Description("Verify that GET scenario-iterations returns exactly one specified part - condition EQ (equals)")
     public void getOnePartTest() {
         FormParams formParams = new FormParams();
@@ -52,6 +55,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12440"})
     @Description("Verify that GET scenario-iterations returns exactly one specified part - condition NE (not equals)")
     public void notGetOnePartTest() {
         FormParams formParams = new FormParams();
@@ -67,6 +71,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12441"})
     @Description("Verify that GET scenario-iterations returns exactly specified parts in the range - condition IN")
     public void getPartsInRangeTest() {
         FormParams formParams = new FormParams();
@@ -79,6 +84,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12442"})
     @Description("Verify that GET scenario-iterations do not return exactly specified parts in the range - condition IN")
     public void notGetPartsInRangeTest() {
         FormParams formParams = new FormParams();
@@ -91,6 +97,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12443"})
     @Description("Verify that GET scenario-iterations return correct parts when using  AND operator")
     public void getPartsTwoParamsWithAndTest() {
         FormParams formParams = new FormParams();
@@ -104,6 +111,7 @@ public class ScenarioIterationGetTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12444"})
     @Description("Verify that GET scenario-iterations return correct parts when using  SW(starts with / LIKE) operator")
     public void getPartsMatchTest() {
         FormParams formParams = new FormParams();

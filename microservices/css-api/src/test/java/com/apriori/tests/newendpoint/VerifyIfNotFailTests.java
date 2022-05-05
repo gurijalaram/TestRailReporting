@@ -6,6 +6,7 @@ import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
@@ -22,6 +23,7 @@ public class VerifyIfNotFailTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12432"})
     @Description("Verify that POST scenario-iterations do not fail on dot notation")
     public void verifyIfNotFailOnDotNotation() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -44,6 +46,7 @@ public class VerifyIfNotFailTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12433"})
     @Description("Verify if convert string value to java enum type of thumbnail.imageType")
     public void verifyIfConvertStringIntoEnum() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -66,6 +69,7 @@ public class VerifyIfNotFailTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12434"})
     @Description("Verify items found searching by Date value")
     public void verifyIfItemsFoundByDateValue() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -88,6 +92,7 @@ public class VerifyIfNotFailTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12435"})
     @Description("verify if we have compliance check of value types for 'in' operator")
     public void verifyIfThereIsComplianceCheckForInOperator() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -110,6 +115,7 @@ public class VerifyIfNotFailTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12436"})
     @Description("verify that Null value for any predicate operator does not leads to 500 error")
     public void verifyThatNullValueForAnyOperatorDoesNotLeadToError() {
         ScenarioIterationRequest scenarioIterationRequest  =
@@ -132,6 +138,7 @@ public class VerifyIfNotFailTests {
     }
 
     @Test
+    @TestRail(testCaseId = {"12437"})
     @Description("verify that between operator with different value types should not fail")
     public void verifyBetweenOperatorWithDiffValuesTypesNotFail() {
         ScenarioIterationRequest scenarioIterationRequest  =
