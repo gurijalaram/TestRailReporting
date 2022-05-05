@@ -483,4 +483,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
         return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
     }
+
+    /**
+     * method to switch to a new scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  -the scenario name
+     * @return - current page object
+     */
+    public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
+        WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
+        pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
+        return this;
+    }
 }
