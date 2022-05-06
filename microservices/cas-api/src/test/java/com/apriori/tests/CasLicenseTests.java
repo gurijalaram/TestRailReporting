@@ -52,7 +52,7 @@ public class CasLicenseTests {
     @After
     public void cleanUp() {
         if (deleteIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS,
+            cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
                     deleteIdentityHolder.customerIdentity(),
                     deleteIdentityHolder.siteIdentity(),
                     deleteIdentityHolder.licenseIdentity(),
@@ -60,12 +60,12 @@ public class CasLicenseTests {
                     deleteIdentityHolder.userIdentity()
             );
             if (userIdentityHolder != null) {
-                cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS,
+                cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
                         userIdentityHolder.customerIdentity(),
                         userIdentityHolder.userIdentity()
                 );
                 if (customerIdentityHolder != null) {
-                    cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID,
+                    cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID,
                             customerIdentityHolder.customerIdentity()
                     );
                 }
