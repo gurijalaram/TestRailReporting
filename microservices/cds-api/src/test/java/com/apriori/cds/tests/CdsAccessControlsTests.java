@@ -47,17 +47,17 @@ public class CdsAccessControlsTests  {
     @AfterClass
     public static void cleanUp() {
         if (accessControlIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_ACCESS_CONTROL_BY_CUSTOMER_USER_CONTROL_IDS,
+            cdsTestUtil.delete(CDSAPIEnum.ACCESS_CONTROL_BY_ID,
                 accessControlIdentityHolder.customerIdentity(),
                 accessControlIdentityHolder.userIdentity(),
                 accessControlIdentityHolder.accessControlIdentity()
             );
         }
         if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -101,7 +101,7 @@ public class CdsAccessControlsTests  {
                 .accessControlIdentity(accessControlIdentity)
                 .build();
 
-        ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
+        ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
 
         assertThat(accessControls.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(accessControls.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
@@ -125,7 +125,7 @@ public class CdsAccessControlsTests  {
                 .accessControlIdentity(accessControlIdentity)
                 .build();
 
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ACCESS_CONTROL_BY_ID, AccessControlResponse.class, customerIdentity, userIdentity, accessControlIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, customerIdentity, userIdentity, accessControlIdentity);
 
         assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(accessControlResponse.getResponseEntity().getUserIdentity(), is(equalTo(userIdentity)));

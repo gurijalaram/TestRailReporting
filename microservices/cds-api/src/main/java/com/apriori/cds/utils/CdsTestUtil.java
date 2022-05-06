@@ -46,7 +46,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String salesForceId, String email) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_CUSTOMERS, Customer.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customer.class)
             .body("customer",
                 Customer.builder().name(name)
                     .description("Add new customers api test")
@@ -74,7 +74,7 @@ public class CdsTestUtil extends TestUtil {
         Map<String, Object> filters = new HashMap<>();
         filters.put("name[EQ]", "aPriori Internal");
 
-        Customer customer = findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, filters, Collections.emptyMap());
+        Customer customer = findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, filters, Collections.emptyMap());
 
         if (customer == null) {
             throw new IllegalStateException("Customer, aPriori Internal, is missing.  The data set is corrupted.");
@@ -92,7 +92,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> addUser(String customerIdentity, String userName, String domain) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_USERS, User.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_USERS, User.class)
             .inlineVariables(customerIdentity)
             .body("user",
                 User.builder().username(userName)
@@ -118,7 +118,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<User> patchUser(User user) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_USERS_BY_CUSTOMER_USER_IDS, User.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class)
             .inlineVariables(user.getCustomerIdentity(), user.getIdentity())
             .body("user",
                 User.builder()
@@ -144,7 +144,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Site> addSite(String customerIdentity, String siteName, String siteID) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_SITES_BY_CUSTOMER_ID, Site.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Site.class)
             .inlineVariables(customerIdentity)
             .body("site",
                 Site.builder().name(siteName)
@@ -165,7 +165,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<Deployment> addDeployment(String customerIdentity, String deploymentName, String siteIdentity, String deploymentType) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID, Deployment.class)
             .inlineVariables(customerIdentity)
             .body("deployment",
                 AddDeployment.builder()
@@ -190,7 +190,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<LicensedApplication> addApplicationToSite(String customerIdentity, String siteIdentity, String appIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplication.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS, LicensedApplication.class)
             .inlineVariables(customerIdentity, siteIdentity)
             .headers(new HashMap<String, String>() {
                 {
@@ -217,7 +217,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> addInstallation(String customerIdentity, String deploymentIdentity, String realmKey, String cloudReference, String siteIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity)
             .body("installation",
                 InstallationItems.builder()
@@ -252,7 +252,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<InstallationItems> patchInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS, InstallationItems.class)
             .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
             .body("installation",
                 InstallationItems.builder()
@@ -273,7 +273,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<AssociationUserItems> addAssociationUser(String apCustomerIdentity, String associationIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS, AssociationUserItems.class)
             .inlineVariables(apCustomerIdentity, associationIdentity)
             .body("userAssociation",
                 AssociationUserItems.builder()
@@ -295,7 +295,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<SubLicenseAssociationUser> addSubLicenseAssociationUser(String customerIdentity, String siteIdentity, String licenseIdentity, String subLicenseIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_SUBLICENSE_ASSOCIATIONS, SubLicenseAssociationUser.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USERS, SubLicenseAssociationUser.class)
             .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)
             .body("userAssociation",
                 AssociationUserItems.builder()
@@ -315,7 +315,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<IdentityProviderResponse> addSaml(String customerIdentity, String userIdentity, String customerName) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SAML_BY_CUSTOMER_ID, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity)
             .body("identityProvider",
                 IdentityProviderRequest.builder().contact(userIdentity)
@@ -353,7 +353,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<IdentityProviderResponse> patchIdp(String customerIdentity, String idpIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, IdentityProviderResponse.class)
             .inlineVariables(customerIdentity, idpIdentity)
             .headers(new HashMap<String, String>() {
                 {
@@ -381,7 +381,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<LicenseResponse> addLicense(String customerIdentity, String siteIdentity, String customerName, String siteId, String licenseId, String subLicenseId) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
             .inlineVariables(customerIdentity, siteIdentity)
             .body(LicenseRequest.builder()
                 .license(
@@ -405,7 +405,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<AccessControlResponse> addAccessControl(String customerIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_ACCESS_CONTROL_BY_CUSTOMER_USER_IDS, AccessControlResponse.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.ACCESS_CONTROLS, AccessControlResponse.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("accessControl",
                 AccessControlRequest.builder()

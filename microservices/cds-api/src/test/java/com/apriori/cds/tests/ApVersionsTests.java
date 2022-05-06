@@ -24,7 +24,7 @@ public class ApVersionsTests {
     @TestRail(testCaseId = {"5958"})
     @Description("Get a list of ap Versions in CDSDb")
     public void getApVersions() {
-        ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_AP_VERSION, ApVersions.class);
+        ResponseWrapper<ApVersions> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.AP_VERSION, ApVersions.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
