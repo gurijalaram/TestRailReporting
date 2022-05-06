@@ -16,6 +16,7 @@ import com.apriori.cds.tests.CdsLicenseTests;
 import com.apriori.cds.tests.CdsRolesTests;
 import com.apriori.cds.tests.CdsSitesApplicationsTests;
 import com.apriori.cds.tests.CdsSitesTests;
+import com.apriori.cds.tests.CdsUserPreferencesTests;
 import com.apriori.cds.tests.CdsUsersTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
@@ -40,6 +41,7 @@ import org.junit.runners.Suite;
     CdsLicenseTests.class,
     CdsRolesTests.class,
     CdsSitesTests.class,
+    CdsUserPreferencesTests.class,
     CdsUsersTests.class,
     CdsIdentityProvidersTests.class,
     CdsSitesApplicationsTests.class

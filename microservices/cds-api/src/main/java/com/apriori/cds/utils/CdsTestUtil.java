@@ -22,6 +22,7 @@ import com.apriori.cds.objects.response.LicensedApplication;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
+import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserProfile;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -420,6 +421,13 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * Posts custom attribute
+     *
+     * @param customerIdentity - the customer id
+     * @param userIdentity     - the user id
+     * @return - new object
+     */
     public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_CUSTOM_ATTRIBUTE, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
@@ -435,6 +443,14 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * Updates or adds custom attributes
+     *
+     * @param customerIdentity  - the customer id
+     * @param userIdentity      - user id
+     * @param updatedDepartment - updated department string
+     * @return - new object
+     */
     public ResponseWrapper<CustomAttribute> putCustomAttribute(String customerIdentity, String userIdentity, String updatedDepartment) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PUT_CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
@@ -448,6 +464,15 @@ public class CdsTestUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).put();
     }
 
+    /**
+     * Updates custom attribute
+     *
+     * @param customerIdentity  - the customer id
+     * @param userIdentity      - user id
+     * @param attributeIdentity - attribute id
+     * @param updatedDepartment -  updated department string
+     * @return - new object
+     */
     public ResponseWrapper<CustomAttribute> updateAttribute(String customerIdentity, String userIdentity, String attributeIdentity, String updatedDepartment) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
@@ -458,5 +483,67 @@ public class CdsTestUtil extends TestUtil {
                     .build());
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Adds new user preference
+     *
+     * @param customerIdentity - customer id
+     * @param userIdentity - user id
+     * @return - new object
+     */
+    public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_PREFERENCE, UserPreference.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("userPreference",
+                UserPreference.builder()
+                    .name("Test")
+                    .value("1234")
+                    .type("STRING")
+                    .createdBy("#SYSTEM00000")
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Updates existing user preference
+     *
+     * @param customerIdentity - customer Id
+     * @param userIdentity - user Id
+     * @param updatedPreference - value of updated preference
+     * @return -  new object
+     */
+    public ResponseWrapper<UserPreference> updatePreference(String customerIdentity, String userIdentity, String preferenceIdentity, String updatedPreference) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_PREFERENCE, UserPreference.class)
+            .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
+            .body("userPreference",
+                UserPreference.builder()
+                    .value(updatedPreference)
+                    .updatedBy("#SYSTEM00000")
+                    .build());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * Adds or replaces user preferences
+     *
+     * @param customerIdentity - customer id
+     * @param userIdentity - user id
+     * @param preferenceName - preference name
+     * @return new object
+     */
+    public ResponseWrapper<UserPreference> putUserPreference(String customerIdentity, String userIdentity, String preferenceName) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PUT_PREFERENCES, UserPreference.class)
+            .inlineVariables(customerIdentity, userIdentity, preferenceName)
+            .body("userPreference",
+                UserPreference.builder()
+                    .value("6548")
+                    .type("INTEGER")
+                    .createdBy("#SYSTEM00000")
+                    .build());
+
+        return HTTPRequest.build(requestEntity).put();
     }
 }
