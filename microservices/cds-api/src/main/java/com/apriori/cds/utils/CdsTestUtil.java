@@ -8,10 +8,12 @@ import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
+import com.apriori.cds.objects.request.CustomAttributeRequest;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
+import com.apriori.cds.objects.response.CustomAttribute;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.Deployment;
@@ -123,7 +125,7 @@ public class CdsTestUtil extends TestUtil {
                     .username(user.getUsername())
                     .email(user.getEmail())
                     .createdBy(user.getCreatedBy())
-                        .active(user.getActive())
+                    .active(user.getActive())
                     .userProfile(UserProfile.builder()
                         .department("Design Dept")
                         .supervisor("Moya Parker").build())
@@ -416,5 +418,45 @@ public class CdsTestUtil extends TestUtil {
                     .build());
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_CUSTOM_ATTRIBUTE, CustomAttribute.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("customAttribute",
+                CustomAttributeRequest.builder()
+                    .key("department")
+                    .name("department")
+                    .value("TestDepartment")
+                    .type("STRING")
+                    .createdBy("#SYSTEM00000")
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    public ResponseWrapper<CustomAttribute> putCustomAttribute(String customerIdentity, String userIdentity, String updatedDepartment) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PUT_CUSTOM_ATTRIBUTES, CustomAttribute.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("customAttribute",
+                CustomAttributeRequest.builder()
+                    .name("department")
+                    .value(updatedDepartment)
+                    .updatedBy("#SYSTEM00000")
+                    .build());
+
+        return HTTPRequest.build(requestEntity).put();
+    }
+
+    public ResponseWrapper<CustomAttribute> updateAttribute(String customerIdentity, String userIdentity, String attributeIdentity, String updatedDepartment) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_CUSTOM_ATTRIBUTES, CustomAttribute.class)
+            .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
+            .body("customAttribute",
+                CustomAttributeRequest.builder()
+                    .value(updatedDepartment)
+                    .updatedBy("#SYSTEM00000")
+                    .build());
+
+        return HTTPRequest.build(requestEntity).patch();
     }
 }

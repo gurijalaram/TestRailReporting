@@ -221,6 +221,10 @@
         "customerType",
         "iconUrl"
       ],
+      "optional": [
+        "deletedAt",
+        "deletedBy"
+      ],
       "properties": {
         "isSingleTenant": {
           "type": "boolean"
@@ -259,6 +263,12 @@
           "type": "string"
         },
         "iconUrl": {
+          "type": "string"
+        },
+        "deletedAt": {
+          "type": "string"
+        },
+        "deletedBy": {
           "type": "string"
         }
       }
