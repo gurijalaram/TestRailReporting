@@ -5,6 +5,6 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
-public class AssemblyComponent extends Assembly {
+public class AssemblyInfoComponent extends AssemblyInfo {
     private String componentName;
 }

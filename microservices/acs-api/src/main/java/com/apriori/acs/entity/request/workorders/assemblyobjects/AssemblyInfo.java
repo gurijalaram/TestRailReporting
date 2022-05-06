@@ -7,9 +7,9 @@ import java.util.ArrayList;
 
 @Data
 @SuperBuilder
-public class Assembly {
+public class AssemblyInfo {
     private String assemblyName;
     private String scenarioName;
     private String processGroup;
-    private ArrayList<AssemblyComponent> components;
+    private ArrayList<AssemblyInfoComponent> components;
 }
