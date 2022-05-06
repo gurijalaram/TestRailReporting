@@ -50,10 +50,11 @@ public class GetActiveDimensionsByScenarioIterationKeyTests {
 
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, testScenarioName);
 
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costPart(
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
-            processGroup
+            processGroup,
+            false
         );
 
         List<String> infoToGetDimensions = new ArrayList<>();
