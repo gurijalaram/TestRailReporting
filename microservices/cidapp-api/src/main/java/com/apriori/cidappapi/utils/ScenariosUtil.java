@@ -4,6 +4,7 @@ import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientGroup;
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
@@ -315,14 +316,64 @@ public class ScenariosUtil {
     /**
      * Upload and Publish a subcomponent/assembly
      *
-     * @param component - the copy component object
-     * @return - the Item
+     * @param componentInfoBuilder - the copy component object
+     * @return generic object
      */
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder component) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(component);
+    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfoBuilder);
 
         postPublishScenario(postComponentResponse);
 
         return postComponentResponse;
+    }
+
+    /**
+     * Calls an api with the DELETE verb.
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @param klass                - the class
+     * @param <T>                  - the generic return type
+     * @return generic object
+     */
+    public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfoBuilder, Class<T> klass) {
+        String componentId = componentInfoBuilder.getComponentIdentity();
+        String scenarioId = componentInfoBuilder.getScenarioIdentity();
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentId, scenarioId);
+
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 240;
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<ErrorMessage> deleteResponse = HTTPRequest.build(requestEntity).delete();
+
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, deleteResponse.getStatusCode()),
+                    HttpStatus.SC_NOT_FOUND, deleteResponse.getStatusCode());
+
+                final Optional<ErrorMessage> scenarioResponse = Optional.ofNullable(deleteResponse.getResponseEntity());
+
+                if (scenarioResponse.isPresent()) {
+
+                    assertEquals("The component response should be okay.", HttpStatus.SC_NOT_FOUND, deleteResponse.getStatusCode());
+                    return deleteResponse;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentId, scenarioId, WAIT_TIME)
+        );
     }
 }
