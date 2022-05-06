@@ -21,4 +21,5 @@ public class WorkFlowData {
     private List<QueryDefinitionsData> queryDefinitionsData;
     private List<CostingInputsData> costingInputsData;
     private NotificationsData notificationsData;
+    private PublishResultsData publishResultsData;
 }

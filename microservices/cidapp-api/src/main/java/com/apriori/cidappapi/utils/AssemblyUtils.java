@@ -248,4 +248,41 @@ public class AssemblyUtils {
 
         return myAssembly;
     }
+
+    /**
+     * Uploads an assembly with all subcomponents, cost and publish all
+     *
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the subComponent names
+     * @param subComponentExtension    - the subComponent extension
+     * @param subComponentProcessGroup - the subComponent process group
+     * @param scenarioName             - the scenario name
+     * @param currentUser              - the current user
+     * @return - the object of ComponentInfoBuilder
+     */
+    public ComponentInfoBuilder uploadsAndOpenAssembly(String assemblyName,
+                                                       String assemblyExtension,
+                                                       ProcessGroupEnum assemblyProcessGroup,
+                                                       List<String> subComponentNames,
+                                                       String subComponentExtension,
+                                                       ProcessGroupEnum subComponentProcessGroup,
+                                                       String scenarioName,
+                                                       UserCredentials currentUser) {
+
+        ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        return componentAssembly;
+    }
 }
