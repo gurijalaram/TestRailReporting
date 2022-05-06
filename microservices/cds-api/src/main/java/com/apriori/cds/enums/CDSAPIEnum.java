@@ -102,21 +102,12 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     DELETE_ACCESS_CONTROL_BY_CUSTOMER_USER_CONTROL_IDS("customers/%s/users/%s/access-controls/%s"),
 
     //CUSTOM_ATTRIBUTES
-    POST_CUSTOM_ATTRIBUTE("customers/%s/users/%s/custom-attributes"),
-    GET_CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes"),
-    PUT_CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes"),
-    GET_CUSTOM_ATTRIBUTE_BY_ID("customers/%s/users/%s/custom-attributes/%s"),
-    DELETE_CUSTOM_ATTRIBUTE("customers/%s/users/%s/custom-attributes/%s"),
-    PATCH_CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes/%s"),
+    CUSTOM_ATTRIBUTES("customers/%s/users/%s/custom-attributes"),
+    CUSTOM_ATTRIBUTE_BY_ID("customers/%s/users/%s/custom-attributes/%s"),
 
     //USER_PREFERENCES
-    GET_USER_PREFERENCES("customers/%s/users/%s/preferences"),
-    GET_PREFERENCE_BY_ID("customers/%s/users/%s/preferences/%s"),
-    POST_PREFERENCE("customers/%s/users/%s/preferences"),
-    PUT_PREFERENCES("customers/%s/users/%s/preferences/%s"),
-    PATCH_PREFERENCE("customers/%s/users/%s/preferences/%s"),
-    DELETE_PREFERENCE("customers/%s/users/%s/preferences/%s");
-
+    USER_PREFERENCES("customers/%s/users/%s/preferences"),
+    PREFERENCE_BY_ID("customers/%s/users/%s/preferences/%s");
 
     private final String endpoint;
 

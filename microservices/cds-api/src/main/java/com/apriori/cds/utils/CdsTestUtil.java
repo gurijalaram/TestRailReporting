@@ -429,7 +429,7 @@ public class CdsTestUtil extends TestUtil {
      * @return - new object
      */
     public ResponseWrapper<CustomAttribute> addCustomAttribute(String customerIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_CUSTOM_ATTRIBUTE, CustomAttribute.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("customAttribute",
                 CustomAttributeRequest.builder()
@@ -452,7 +452,7 @@ public class CdsTestUtil extends TestUtil {
      * @return - new object
      */
     public ResponseWrapper<CustomAttribute> putCustomAttribute(String customerIdentity, String userIdentity, String updatedDepartment) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PUT_CUSTOM_ATTRIBUTES, CustomAttribute.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("customAttribute",
                 CustomAttributeRequest.builder()
@@ -474,7 +474,7 @@ public class CdsTestUtil extends TestUtil {
      * @return - new object
      */
     public ResponseWrapper<CustomAttribute> updateAttribute(String customerIdentity, String userIdentity, String attributeIdentity, String updatedDepartment) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_CUSTOM_ATTRIBUTES, CustomAttribute.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class)
             .inlineVariables(customerIdentity, userIdentity, attributeIdentity)
             .body("customAttribute",
                 CustomAttributeRequest.builder()
@@ -493,7 +493,7 @@ public class CdsTestUtil extends TestUtil {
      * @return - new object
      */
     public ResponseWrapper<UserPreference> addUserPreference(String customerIdentity, String userIdentity) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.POST_PREFERENCE, UserPreference.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_PREFERENCES, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity)
             .body("userPreference",
                 UserPreference.builder()
@@ -515,7 +515,7 @@ public class CdsTestUtil extends TestUtil {
      * @return -  new object
      */
     public ResponseWrapper<UserPreference> updatePreference(String customerIdentity, String userIdentity, String preferenceIdentity, String updatedPreference) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_PREFERENCE, UserPreference.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity, preferenceIdentity)
             .body("userPreference",
                 UserPreference.builder()
@@ -535,7 +535,7 @@ public class CdsTestUtil extends TestUtil {
      * @return new object
      */
     public ResponseWrapper<UserPreference> putUserPreference(String customerIdentity, String userIdentity, String preferenceName) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PUT_PREFERENCES, UserPreference.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class)
             .inlineVariables(customerIdentity, userIdentity, preferenceName)
             .body("userPreference",
                 UserPreference.builder()

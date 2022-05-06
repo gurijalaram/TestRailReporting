@@ -55,7 +55,7 @@ public class CdsUserPreferencesTests {
     @After
     public void deletePreferences() {
         if (userPreferenceIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_PREFERENCE,
+            cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID,
                 userPreferenceIdentityHolder.customerIdentity(),
                 userPreferenceIdentityHolder.userIdentity(),
                 userPreferenceIdentityHolder.userPreferenceIdentity()
@@ -77,7 +77,7 @@ public class CdsUserPreferencesTests {
     @TestRail(testCaseId = {"12397"})
     @Description("Returns a paged set of UserPreferences for a specific user.")
     public void getUserPreferences() {
-        ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_PREFERENCES, UserPreferences.class, customerIdentity, userIdentity);
+        ResponseWrapper<UserPreferences> userPreferences = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_PREFERENCES, UserPreferences.class, customerIdentity, userIdentity);
 
         assertThat(userPreferences.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(userPreferences.getResponseEntity().getTotalItemCount(), greaterThanOrEqualTo(1));
@@ -92,7 +92,7 @@ public class CdsUserPreferencesTests {
         assertThat(newPreference.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String preferenceIdentity = newPreference.getResponseEntity().getIdentity();
 
-        ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_PREFERENCE_BY_ID, UserPreference.class, customerIdentity, userIdentity, preferenceIdentity);
+        ResponseWrapper<UserPreference> preferenceResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.PREFERENCE_BY_ID, UserPreference.class, customerIdentity, userIdentity, preferenceIdentity);
 
         assertThat(preferenceResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(preferenceResponse.getResponseEntity().getIdentity(), is(equalTo(preferenceIdentity)));
@@ -136,7 +136,7 @@ public class CdsUserPreferencesTests {
         assertThat(preferenceResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         String preferenceIdentity = preferenceResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<String> deletePreference = cdsTestUtil.delete(CDSAPIEnum.DELETE_PREFERENCE, customerIdentity, userIdentity, preferenceIdentity);
+        ResponseWrapper<String> deletePreference = cdsTestUtil.delete(CDSAPIEnum.PREFERENCE_BY_ID, customerIdentity, userIdentity, preferenceIdentity);
 
         assertThat(deletePreference.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
