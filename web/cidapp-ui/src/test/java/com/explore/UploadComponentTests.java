@@ -403,10 +403,8 @@ public class UploadComponentTests extends TestBase {
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
 
-        evaluatePage.logout();
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(UserUtil.getUser());
+        explorePage = evaluatePage.logout()
+            .login(UserUtil.getUser());
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(0)));
     }
