@@ -13,7 +13,6 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -426,10 +425,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return - string
      */
-    public String isTextDecorationStruckOut(String componentName) {
+    public boolean isTextDecorationStruckOut(String componentName) {
         By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             componentName.toUpperCase().trim()));
-        return driver.findElement(byComponentName).getCssValue("text-decoration");
+        return driver.findElement(byComponentName).getCssValue("text-decoration").contains("line-through");
     }
 
     /**
@@ -483,5 +482,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public String getSubcomponentScenarioName(String componentName) {
         By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
         return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
+    }
+
+    /**
+     * method to switch to a new scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  -the scenario name
+     * @return - current page object
+     */
+    public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
+        WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
+        pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
+        return this;
     }
 }

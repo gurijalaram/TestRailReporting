@@ -1,18 +1,18 @@
 package com.apriori.acs.entity.response.workorders.upload;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
 @Data
-@Builder
-public class FileUploadInputs {
+@SuperBuilder
+public class Assembly {
     private String scenarioName;
     private String fileKey;
     private String fileName;
-    private boolean keepFreeBodies;
-    private boolean freeBodiesPreserveCad;
-    private boolean freeBodiesIgnoreMissingComponents;
+    private Boolean keepFreeBodies;
+    private Boolean freeBodiesPreserveCad;
+    private Boolean freeBodiesIgnoreMissingComponent;
     private List<AssemblyComponent> subComponents;
 }
