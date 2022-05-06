@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -44,6 +45,7 @@ public class UploadComponentTests extends TestBase {
     private CadFileStatusPage cadFileStatusPage;
     private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
+    private ComponentInfoBuilder cidComponentItem;
 
     @Test
     @Category(SanityTests.class)
@@ -384,24 +386,28 @@ public class UploadComponentTests extends TestBase {
     @Test
     @TestRail(testCaseId = "6037")
     @Description("Create a New Component.Scenario - user does not have a pre existing private Component.Scenario of that name")
-    public void testUploadScenarioPrivate() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+    public void testUploadThenCheckAvailabilityWithNewUser() {
+        currentUser = UserUtil.getUser();
 
         final String componentName = "Locker_bottom_panel";
         final String extension = ".prt";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(UserUtil.getUser())
-            .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile)
-            .submit()
-            .close()
-            .clickSearch(componentName)
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, scenarioName);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
+
+        evaluatePage.logout();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(UserUtil.getUser());
+
+        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(0)));
     }
 }
