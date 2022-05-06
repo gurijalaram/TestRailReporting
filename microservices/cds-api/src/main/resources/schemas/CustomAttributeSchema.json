@@ -8,42 +8,40 @@
       "type": "object",
       "required": [
         "identity",
-        "createdAt",
         "createdBy",
-        "customerIdentity",
-        "userIdentity",
-        "applicationIdentity",
-        "deploymentIdentity",
-        "installationIdentity",
-        "outOfContext"
+        "createdAt",
+        "type",
+        "name",
+        "value"
+      ],
+      "optional": [
+        "updatedBy",
+        "updatedAt"
       ],
       "properties": {
         "identity": {
           "type": "string"
         },
-        "createdAt": {
-          "type": "string"
-        },
         "createdBy": {
           "type": "string"
         },
-        "customerIdentity": {
+        "updatedBy": {
           "type": "string"
         },
-        "userIdentity": {
+        "createdAt": {
           "type": "string"
         },
-        "applicationIdentity": {
+        "updatedAt": {
           "type": "string"
         },
-        "deploymentIdentity": {
+        "type": {
           "type": "string"
         },
-        "installationIdentity": {
+        "name": {
           "type": "string"
         },
-        "outOfContext": {
-          "type": "boolean"
+        "value": {
+          "type": "string"
         }
       }
     }

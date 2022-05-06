@@ -10,9 +10,9 @@ import lombok.Data;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "AccessControlsSchema.json")
+@Schema(location = "CustomAttributesSchema.json")
 @JsonRootName("response")
 @Data
-public class AccessControls extends Pagination {
-    private List<AccessControlResponse> items;
+public class CustomAttributesResponse extends Pagination {
+    private List<CustomAttribute> items;
 }

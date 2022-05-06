@@ -3,18 +3,22 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -84,6 +88,8 @@ public class ExploreToolbar extends MainNavBar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
+    private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private CssComponent cssComponent = new CssComponent();
 
     public ExploreToolbar(WebDriver driver) {
         super(driver);
@@ -121,6 +127,24 @@ public class ExploreToolbar extends MainNavBar {
                 .user(userCredentials)
                 .build());
         return navigateToScenario(component);
+    }
+
+    /**
+     * Opens the uploaded component when it is in a ready state
+     *
+     * @param componentName -the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   - the current user
+     * @return - new page object
+     */
+    public EvaluatePage openComponent(String componentName, String scenarioName, UserCredentials currentUser) {
+        List<ScenarioItem> itemResponses = cssComponent.getUnCostedCssComponent(
+            componentName,
+            scenarioName,
+            currentUser);
+
+        ScenarioItem assemblyComponent = itemResponses.stream().filter(item -> item.getComponentName().equalsIgnoreCase(componentName)).findFirst().get();
+        return navigateToScenario(assemblyComponent);
     }
 
     /**
@@ -412,5 +436,58 @@ public class ExploreToolbar extends MainNavBar {
     public ExplorePage refresh() {
         pageUtils.waitForElementAndClick(refreshButton);
         return new ExplorePage(driver);
+    }
+
+    /**
+     * This method uploads via drop zone, wait to be in a not costed state and opens the component
+     *
+     * @param multiComponents - the multi components
+     * @param scenarioName    - scenario name
+     * @param assemblyName    - assembly name
+     * @param currentUser     - current user
+     * @return - new page object
+     */
+    public ComponentsListPage uploadAndOpenComponent(List<MultiUpload> multiComponents, String scenarioName, String assemblyName, UserCredentials currentUser) {
+        importCadFile()
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .close()
+            .openComponent(assemblyName, scenarioName, currentUser)
+            .openComponents();
+        return new ComponentsListPage(driver);
+    }
+
+    /**
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the sub component names
+     * @param subComponentExtension    - the sub components extension
+     * @param subComponentProcessGroup - sub components process group
+     * @param scenarioName             - the scenario name
+     * @param currentUser              - the user credential
+     * @return - new page object
+     */
+    public EvaluatePage uploadsAndOpenAssembly(String assemblyName,
+                                               String assemblyExtension,
+                                               ProcessGroupEnum assemblyProcessGroup,
+                                               List<String> subComponentNames,
+                                               String subComponentExtension,
+                                               ProcessGroupEnum subComponentProcessGroup,
+                                               String scenarioName,
+                                               UserCredentials currentUser) {
+
+        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadsAndOpenAssembly(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        return navigateToScenario(myAssembly);
     }
 }
