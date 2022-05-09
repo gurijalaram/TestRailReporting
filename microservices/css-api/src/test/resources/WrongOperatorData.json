@@ -2,7 +2,7 @@
   "query": {
     "filter": {
       "wrongOperator": [
-        {"equals": { "value": "bracket_basic"}}
+        {"equals": {}}
       ]
     }
   }

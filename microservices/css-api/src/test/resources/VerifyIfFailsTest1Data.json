@@ -1,9 +1,0 @@
-{
-  "query": {
-    "filter": {
-      "wrongOperator": [
-        {"equals": {"property": "componentName", "value": "bracket_basic"}}
-      ]
-    }
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "query": {
-    "filter": {
-      "and": [
-        {"equals": {"property": "scenarioIterationKey.workspaceId", "value": "0"}}
-      ]
-    }
-  }
-}

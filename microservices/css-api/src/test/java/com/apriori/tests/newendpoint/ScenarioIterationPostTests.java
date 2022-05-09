@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
 
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
+import com.apriori.css.entity.enums.Direction;
+import com.apriori.css.entity.request.Params;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.css.entity.response.CostingInput;
 import com.apriori.css.entity.response.CssComponentResponse;
@@ -36,8 +38,13 @@ public class ScenarioIterationPostTests {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
-                "ScenarioIterationPostTest1Data.json"
+                "AndOperatorData.json"
             ).getPath(), ScenarioIterationRequest.class);
+
+        Params params = new Params();
+        params.setValue("bracket_basic");
+        params.setProperty("componentName");
+        scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
@@ -56,8 +63,11 @@ public class ScenarioIterationPostTests {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "ScenarioIterationPostTest2Data.json"
+                    "PagingAndSortingData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        scenarioIterationRequest.getSorting().get(0).setProperty("componentName");
+        scenarioIterationRequest.getSorting().get(0).setDirection(Direction.ASC);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
@@ -72,7 +82,7 @@ public class ScenarioIterationPostTests {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "ScenarioIterationPostTest3Data.json"
+                    "OrOperatorWithThreeEquals.json"
                 ).getPath(), ScenarioIterationRequest.class);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
@@ -90,8 +100,14 @@ public class ScenarioIterationPostTests {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "ScenarioIterationPostTest4Data.json"
+                    "NotOperatorData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        Params params = new Params();
+        params.setValue("bracket_basic");
+        params.setProperty("componentName");
+        scenarioIterationRequest.getQuery().getFilter().getNot().setEquals(params);
+
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
@@ -109,8 +125,12 @@ public class ScenarioIterationPostTests {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "ScenarioIterationPostTest5Data.json"
+                    "IsNullOperatorData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        Params params = new Params();
+        params.setProperty("componentName");
+        scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setIsNull(params);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
                 scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);

@@ -4,6 +4,6 @@
     "pageSize": 5
   },
   "sorting": [
-    {"property": "componentName", "direction": "ASC"}
+    {}
   ]
 }

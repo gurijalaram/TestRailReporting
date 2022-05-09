@@ -1,9 +1,0 @@
-{
-  "query": {
-    "filter": {
-      "and": [
-        {"in": {"property": "iteration", "values": ["1","2","3"]}}
-      ]
-    }
-  }
-}

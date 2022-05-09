@@ -3,9 +3,11 @@ package com.apriori.tests.newendpoint;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
+import com.apriori.css.entity.enums.Direction;
 import com.apriori.css.entity.request.ErrorRequestResponse;
 import com.apriori.css.entity.request.LogicalOperator;
 import com.apriori.css.entity.request.Operator;
+import com.apriori.css.entity.request.Params;
 import com.apriori.css.entity.request.Query;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.utils.FileResourceUtil;
@@ -17,7 +19,7 @@ import io.qameta.allure.Description;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class VerifyIfFails {
+public class VerifyIfFailsTest {
 
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 
@@ -33,8 +35,13 @@ public class VerifyIfFails {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "VerifyIfFailsTest1Data.json"
+                    "WrongOperatorData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        Params params = new Params();
+        params.setProperty("componentName");
+        params.setValue("bracket_basic");
+        scenarioIterationRequest.getQuery().getFilter().getWrongOperator().get(0).setEquals(params);
 
         ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
@@ -51,15 +58,19 @@ public class VerifyIfFails {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "VerifyIfFailsTest2Data.json"
+                    "AndOperatorData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        Params params = new Params();
+        params.setValue("bracket_basic");
+        scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
         ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
 
         assertEquals("400",scenarioIterationRespond.getResponseEntity().getStatus());
         assertEquals("Bad Request",scenarioIterationRespond.getResponseEntity().getError());
-        assertEquals("Unknown operator wrongOperator",scenarioIterationRespond.getResponseEntity().getMessage());
+        assertEquals("Invalid value was provided for operator equals. Please, refer to the Swagger documentation for an example",scenarioIterationRespond.getResponseEntity().getMessage());
     }
 
     @Test
@@ -83,8 +94,17 @@ public class VerifyIfFails {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "VerifyIfFailsTest3Data.json"
+                    "AndOperatorData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        Params params = new Params();
+        params.setValue("bracket_basic");
+        params.setProperty("componentName");
+        Operator operatorSecond = new Operator();
+        operatorSecond.setEquals(new Params());
+
+        scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
+        scenarioIterationRequest.getQuery().getFilter().getAnd().add(operatorSecond);
 
         ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
@@ -102,8 +122,11 @@ public class VerifyIfFails {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "VerifyIfFailsTest4Data.json"
+                    "PagingAndSortingData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        scenarioIterationRequest.getSorting().get(0).setProperty("componentName");
+        scenarioIterationRequest.getSorting().get(0).setDirection(Direction.WRONG);
 
         ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
@@ -121,8 +144,10 @@ public class VerifyIfFails {
         ScenarioIterationRequest scenarioIterationRequest  =
             (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
                 FileResourceUtil.getResourceAsFile(
-                    "VerifyIfFailsTest5Data.json"
+                    "PagingAndSortingData.json"
                 ).getPath(), ScenarioIterationRequest.class);
+
+        scenarioIterationRequest.getSorting().get(0).setDirection(Direction.ASC);
 
         ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
             scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
