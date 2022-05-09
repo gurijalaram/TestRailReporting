@@ -1,8 +1,10 @@
 package com.evaluate.assemblies;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -24,6 +26,7 @@ public class EditAssembliesTest extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private InfoPage infoPage;
 
     public EditAssembliesTest() {
         super();
@@ -61,7 +64,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10799", "10768"})
+    @TestRail(testCaseId = {"10799", "10768", "1081"})
     @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
     public void testUploadCostPublishAssemblyAndEdit() {
         final String assemblyName = "Hinge assembly";
@@ -92,10 +95,22 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
 
-            evaluatePage.editScenario()
+        evaluatePage.info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .inputDescription("QA Test Description")
+            .inputNotes("Testing QA notes")
+            .submit(EvaluatePage.class);
+
+        evaluatePage.editScenario()
             .close(EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
+
+        infoPage = evaluatePage.info();
+        assertThat(infoPage.getStatus(), is(equalTo("New")));
+        assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
+        assertThat(infoPage.getDescription(), is(equalTo("QA Test Description")));
+        assertThat(infoPage.getNotes(), is(equalTo("Testing QA notes")));
     }
 }
