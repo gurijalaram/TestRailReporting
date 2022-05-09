@@ -100,7 +100,6 @@ public class ScenariosTests {
         assemblyUtils.publishSubComponents(componentAssembly)
             .publishAssembly(componentAssembly);
 
-        //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()
@@ -180,7 +179,6 @@ public class ScenariosTests {
 
         assemblyUtils.publishAssembly(componentAssembly);
 
-        //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()
