@@ -95,6 +95,9 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
 
+        evaluatePage.editScenario()
+            .close(EvaluatePage.class);
+
         evaluatePage.info()
             .selectStatus("New")
             .inputCostMaturity("Low")
