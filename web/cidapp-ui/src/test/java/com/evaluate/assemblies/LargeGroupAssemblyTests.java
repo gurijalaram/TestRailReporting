@@ -22,7 +22,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-public class GroupPublishAvailabilityTests extends TestBase {
+public class LargeGroupAssemblyTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -31,7 +31,7 @@ public class GroupPublishAvailabilityTests extends TestBase {
     private static UserCredentials currentUser;
     private static String scenarioName;
 
-    public GroupPublishAvailabilityTests() {
+    public LargeGroupAssemblyTests() {
         super();
     }
 
@@ -41,7 +41,7 @@ public class GroupPublishAvailabilityTests extends TestBase {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
 
-        List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle",
+        final List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle",
             "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin",
             "right paddle", "seat lock", "seat", "steer wheel support", "washer");
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -68,24 +68,37 @@ public class GroupPublishAvailabilityTests extends TestBase {
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void testPublishButtonAvailability() {
 
+        final String component1 = "centre bolt, ";
+        final String component2 = "centre washer, ";
+        final String component3 = "display, ";
+        final String component4 = "gasket, ";
+        final String component5 = "Handle, ";
+        final String component6 = "left paddle, ";
+        final String component7 = "steer wheel support, ";
+        final String component8 = "seat lock, ";
+        final String component9 = "mechanism body, ";
+        final String component10 = "paddle bar, ";
+        final String component11 = "pin, ";
+
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents("centre bolt, " + scenarioName + "",
-                "centre washer, " + scenarioName + "",
-                "display, " + scenarioName + "",
-                "gasket, " + scenarioName + "",
-                "Handle, " + scenarioName + "",
-                "left paddle, " + scenarioName + "",
-                "steer wheel support, " + scenarioName + "",
-                "seat lock, " + scenarioName + "",
-                "mechanism body, " + scenarioName + "",
-                "paddle bar, " + scenarioName + "");
+            .multiSelectSubcomponents(
+                component1 + scenarioName + "",
+                component2 + scenarioName + "",
+                component3 + scenarioName + "",
+                component4 + scenarioName + "",
+                component5 + scenarioName + "",
+                component6 + scenarioName + "",
+                component7 + scenarioName + "",
+                component8 + scenarioName + "",
+                component9 + scenarioName + "",
+                component10 + scenarioName + "");
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(true));
 
-        componentsListPage.multiSelectSubcomponents("pin, " + scenarioName + "");
+        componentsListPage.multiSelectSubcomponents(component11 + scenarioName + "");
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(false));
     }
