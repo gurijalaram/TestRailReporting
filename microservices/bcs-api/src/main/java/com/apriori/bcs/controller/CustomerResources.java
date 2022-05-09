@@ -24,7 +24,7 @@ public class CustomerResources {
      */
     public static ResponseWrapper<CostingPreferences> patchCostingPreferences() {
         PatchCostingPreferenceRequest request =
-            (PatchCostingPreferenceRequest) JsonManager.deserializeJsonFromInputStream(
+            JsonManager.deserializeJsonFromInputStream(
                 FileResourceUtil.getResourceFileStream("schemas/requests/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
         request.setCadToleranceReplacement(100.00);
         request.setMinCadToleranceThreshold(new Random().nextDouble());

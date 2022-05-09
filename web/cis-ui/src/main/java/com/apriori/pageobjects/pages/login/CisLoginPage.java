@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.login;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.login.AprioriLoginPage;
@@ -46,5 +47,15 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      */
     public ExplorePage login(UserCredentials userCredentials) {
         return aprioriLoginPage.login(userCredentials, ExplorePage.class);
+    }
+
+    /**
+     * Login to CIS New Application
+     *
+     * @param userCredentials - object with users credentials and access level
+     * @return new page object
+     */
+    public LeftHandNavigationBar cisLogin(UserCredentials userCredentials) {
+        return aprioriLoginPage.login(userCredentials, LeftHandNavigationBar.class);
     }
 }

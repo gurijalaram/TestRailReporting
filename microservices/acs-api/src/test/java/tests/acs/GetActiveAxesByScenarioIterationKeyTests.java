@@ -39,7 +39,7 @@ public class GetActiveAxesByScenarioIterationKeyTests {
         AcsResources acsResources = new AcsResources();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
-        Object productionInfoInputs = JsonManager.deserializeJsonFromFile(
+        NewPartRequest productionInfoInputs = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"
             ).getPath(), NewPartRequest.class
