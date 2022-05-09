@@ -8,7 +8,8 @@ import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.web.driver.TestBase;
-import jdk.jfr.Description;
+
+import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
