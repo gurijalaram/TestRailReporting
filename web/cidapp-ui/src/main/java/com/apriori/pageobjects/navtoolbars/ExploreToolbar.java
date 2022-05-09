@@ -194,18 +194,21 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser              - the current user
      * @return - a new page object
      */
-    public EvaluatePage uploadCostPublishAndOpenAssembly(String assemblyName,
-                                                         String assemblyExtension,
-                                                         ProcessGroupEnum assemblyProcessGroup,
-                                                         List<String> subComponentNames,
-                                                         String subComponentExtension,
-                                                         ProcessGroupEnum subComponentProcessGroup,
-                                                         String scenarioName,
-                                                         String mode,
-                                                         String material,
-                                                         UserCredentials currentUser) {
+    public EvaluatePage uploadCostPublishAndOpenAssemblySubcomponents(String assemblyName,
+                                                                      String assemblyExtension,
+                                                                      ProcessGroupEnum assemblyProcessGroup,
+                                                                      List<String> subComponentNames,
+                                                                      String subComponentExtension,
+                                                                      ProcessGroupEnum subComponentProcessGroup,
+                                                                      String scenarioName,
+                                                                      String mode,
+                                                                      String material,
+                                                                      UserCredentials currentUser) {
 
-        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
+
+        final AssemblyUtils assemblyUtils = new AssemblyUtils();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
@@ -215,7 +218,15 @@ public class ExploreToolbar extends MainNavBar {
             scenarioName,
             currentUser);
 
-        return navigateToScenario(myAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        assemblyUtils.publishAssembly(componentAssembly);
+
+        return navigateToScenario(componentAssembly);
     }
 
     /**

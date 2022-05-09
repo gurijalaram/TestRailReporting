@@ -78,7 +78,7 @@ public class EditAssembliesTest extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         loginPage.login(currentUser)
-            .uploadCostPublishAndOpenAssembly(
+            .uploadCostPublishAndOpenAssemblySubcomponents(
                 assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -91,5 +91,8 @@ public class EditAssembliesTest extends TestBase {
                 currentUser)
             .editScenario()
             .close(EvaluatePage.class);
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }
 }
