@@ -37,7 +37,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10799", "10768", "1081", "10810"})
+    @TestRail(testCaseId = {"10799", "10768", "1081", "1082", "10810"})
     @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
     public void testUploadCostPublishAssemblyAndEdit() {
         final String assemblyName = "Hinge assembly";
@@ -76,7 +76,8 @@ public class EditAssembliesTest extends TestBase {
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION), is(true));
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
 
-        evaluatePage.info()
+        evaluatePage.lock(EvaluatePage.class)
+            .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
