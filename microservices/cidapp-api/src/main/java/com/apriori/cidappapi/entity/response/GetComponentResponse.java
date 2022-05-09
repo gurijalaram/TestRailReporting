@@ -19,8 +19,4 @@ import java.util.List;
 @JsonRootName("response")
 public class GetComponentResponse extends Pagination {
     private List<GetComponentItems> items;
-
-    public List<GetComponentItems> getItems() {
-        return items;
-    }
 }

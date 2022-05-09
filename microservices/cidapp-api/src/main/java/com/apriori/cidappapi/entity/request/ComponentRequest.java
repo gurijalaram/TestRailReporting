@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.entity.request.request;
+package com.apriori.cidappapi.entity.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -11,9 +11,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PublishRequest {
-    private String assignedTo;
-    private String costMaturity;
+public class ComponentRequest {
+    private String filename;
     private Boolean override;
-    private String status;
+    private String resourceName;
+    private String scenarioName;
 }
