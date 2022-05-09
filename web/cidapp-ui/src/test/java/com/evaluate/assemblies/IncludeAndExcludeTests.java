@@ -93,4 +93,38 @@ public class IncludeAndExcludeTests extends TestBase {
             .forEach(componentName ->
                 assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
+
+    @Test
+    @TestRail(testCaseId = "11979")
+    @Description("Verify Include and Exclude buttons disabled for a component that is part both of the top level assembly and sub-assembly")
+    public void testIncludeAndExcludeDisabledForAssembly() {
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String assembly1 = "sub-sub-asm";
+        List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
+
+        String assembly2 = "sub-assembly";
+        List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
+
+        String assemblyName = "top-level";
+        List<String> subComponentNames = Arrays.asList("3575135", "3574255", "3575134", "3575132", "3538968", "3575133");
+
+        final String componentExtension = ".prt.1";
+        final String assemblyExtension = ".asm.1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(assembly1, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .uploadsAndOpenAssembly(assembly2, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subAssemblyComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .uploadsAndOpenAssembly(assemblyName, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .openComponents()
+            .expandSubAssembly(assembly2)
+            .multiSelectSubcomponents("3571050, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+    }
 }

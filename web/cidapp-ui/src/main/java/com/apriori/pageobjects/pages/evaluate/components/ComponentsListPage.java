@@ -274,6 +274,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Expands the sub assembly
+     *
+     * @param componentName - the component name
+     * @return - the current page object
+     */
+    public ComponentsListPage expandSubAssembly(String componentName) {
+        By byExpand = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class]/descendant::div/following-sibling::div//div/child::div//*[@data-icon='circle-chevron-down']", componentName.toUpperCase().trim()));
+        pageUtils.waitForElementAndClick(byExpand);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
