@@ -4,6 +4,8 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -28,6 +30,8 @@ public class EditAssembliesTest extends TestBase {
     private EvaluatePage evaluatePage;
     private InfoPage infoPage;
 
+    final AssemblyUtils assemblyUtils = new AssemblyUtils();
+
     public EditAssembliesTest() {
         super();
     }
@@ -36,10 +40,10 @@ public class EditAssembliesTest extends TestBase {
     @TestRail(testCaseId = "10810")
     @Description("Shallow Edit an assembly with scenarios uncosted")
     public void testUploadPublishAssemblyAndEdit() {
-        String assemblyName = "Hinge assembly";
+        final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
 
@@ -72,31 +76,32 @@ public class EditAssembliesTest extends TestBase {
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         final String subComponentExtension = ".SLDPRT";
-        final String mode = "Manual";
-        final String material = "Steel, Cold Worked, AISI 1010";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadCostPublishAndOpenAssemblySubcomponents(
-                assemblyName,
-                assemblyExtension,
-                assemblyProcessGroup,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                mode,
-                material,
-                currentUser);
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+        assemblyUtils.publishAssembly(componentAssembly);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
 
         evaluatePage.editScenario()
             .close(EvaluatePage.class);
+
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
 
         evaluatePage.info()
             .selectStatus("New")
@@ -105,10 +110,8 @@ public class EditAssembliesTest extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(EvaluatePage.class);
 
-        evaluatePage.editScenario()
-            .close(EvaluatePage.class);
-
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
+        evaluatePage.publishScenario()
+            .publish(componentAssembly, currentUser, EvaluatePage.class);
 
         infoPage = evaluatePage.info();
         assertThat(infoPage.getStatus(), is(equalTo("New")));
