@@ -47,8 +47,8 @@ public class EditAssembliesTest extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -78,8 +78,8 @@ public class EditAssembliesTest extends TestBase {
         final String subComponentExtension = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -96,11 +96,15 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
         assemblyUtils.publishAssembly(componentAssembly);
 
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly);
+
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
 
         evaluatePage.editScenario()
             .close(EvaluatePage.class);
 
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION), is(true));
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
 
         evaluatePage.info()
