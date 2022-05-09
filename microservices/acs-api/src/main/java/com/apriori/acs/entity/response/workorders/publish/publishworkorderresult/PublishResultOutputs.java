@@ -1,6 +1,7 @@
 package com.apriori.acs.entity.response.workorders.publish.publishworkorderresult;
 
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
+import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,5 +14,5 @@ public class PublishResultOutputs {
     private ScenarioIterationKey scenarioIterationKey;
     private String comments;
     private String description;
-    private List<SubComponent> subComponents;
+    private List<AssemblyComponent> subComponents;
 }
