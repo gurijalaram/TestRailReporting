@@ -37,38 +37,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10810")
-    @Description("Shallow Edit an assembly with scenarios uncosted")
-    public void testUploadPublishAssemblyAndEdit() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadPublishAndOpenAssembly(
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                assemblyName,
-                assemblyExtension,
-                scenarioName,
-                currentUser)
-            .editScenario()
-            .close(EvaluatePage.class);
-
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION), is(true));
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
-    }
-
-    @Test
-    @TestRail(testCaseId = {"10799", "10768", "1081"})
+    @TestRail(testCaseId = {"10799", "10768", "1081", "10810"})
     @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
     public void testUploadCostPublishAssemblyAndEdit() {
         final String assemblyName = "Hinge assembly";
