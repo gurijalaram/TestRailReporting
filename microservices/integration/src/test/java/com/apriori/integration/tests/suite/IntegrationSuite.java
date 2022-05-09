@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 @ProjectRunID("859")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        BcsSdsIntegrationTests.class
+    BcsSdsIntegrationTests.class
 })
 public class IntegrationSuite {
 }

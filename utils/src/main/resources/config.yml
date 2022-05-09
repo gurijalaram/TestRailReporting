@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: local
 
 # Define the global properties not related to environment
 global:
@@ -316,6 +316,7 @@ migration-preview:
 ######################################################## LOCAL ########################################################
 local:
   name: local
+  #secret_key: DogCatMonkey
   secret_key: 65J1ID2B6LDG
   base_url: http://localhost
   ap_user_context:
@@ -325,8 +326,12 @@ local:
 
   ats:
     api_url: ${local.base_url}:8805/
-    token_username: qa-automation-01
-    token_email: qa-automation-01@apriori.com
+    token_username: 3P-kderezinski
+    token_email: 3P-kderezinski@apriori.com
+
+  css:
+    ui_url: ${local.base_url}:8802
+    api_url: ${local.base_url}:8802/
 
   cidapp:
     ui_url: ${local.base_url}:3003

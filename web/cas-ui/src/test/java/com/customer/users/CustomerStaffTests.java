@@ -19,7 +19,6 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.UserCreation;
 import com.apriori.utils.reader.file.user.UserUtil;
-
 import com.apriori.utils.web.components.CardsViewComponent;
 import com.apriori.utils.web.components.PaginatorComponent;
 import com.apriori.utils.web.components.SourceListComponent;

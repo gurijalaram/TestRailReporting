@@ -15,8 +15,7 @@
         "deploymentType",
         "installationName",
         "applicationName",
-        "maxCadFileSize",
-        "salesforceId"
+        "maxCadFileSize"
       ],
       "properties": {
         "cloudContext": {

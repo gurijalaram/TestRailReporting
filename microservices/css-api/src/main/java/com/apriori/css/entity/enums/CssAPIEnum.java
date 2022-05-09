@@ -6,6 +6,8 @@ import com.apriori.utils.properties.PropertiesContext;
 public enum CssAPIEnum implements ExternalEndpointEnum {
     //COMPONENT
     COMPONENT_SCENARIO_NAME("scenario-iterations?componentName[EQ]=%s&scenarioName[EQ]=%s"),
+    COMPONENT_SCENARIO_QUERY("scenario-iterations"),
+    COMPONENT_SCENARIO_QUERY_NEW("scenario-iterations/query"),
     COMPONENT_ID("scenario-iterations?identity[EQ]=%s");
 
     private final String endpoint;
