@@ -30,6 +30,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
     EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/fork"),
     EDIT_SCENARIOS("scenarios/fork"),
+    DELETE_SCENARIO("components/%s/scenarios/%s"),
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
