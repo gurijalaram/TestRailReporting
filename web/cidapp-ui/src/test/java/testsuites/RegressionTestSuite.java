@@ -16,8 +16,8 @@ import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
-import com.evaluate.assemblies.LargeGroupAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
+import com.evaluate.assemblies.LargeGroupAssemblyTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -49,41 +49,41 @@ import testsuites.suiteinterface.SmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
-        EditAssembliesTest.class,
-        CostAllCadTests.class,
-        CostScenarioTests.class,
-        NewScenarioNameTests.class,
-        ProcessGroupsTests.class,
-        SecondaryProcessTests.class,
-        ChangeMaterialSelectionTests.class,
-        MaterialStockTests.class,
-        UploadComponentTests.class,
-        UploadTests.class,
-        HelpTests.class,
-        DecimalPlaceTests.class,
-        UploadAssembliesTests.class,
-        PublishExistingCostedTests.class,
-        PreviewPanelTests.class,
-        DFMRiskTests.class,
-        DeleteTests.class,
-        PublishTests.class,
-        SheetMetalDTCTests.class,
-        DTCPlasticMouldingTests.class,
-        ActionsTests.class,
-        TableHeadersTests.class,
-        DTCMachiningTests.class,
-        DTCCastingTests.class,
-        TwoModelMachiningTests.class,
-        MaterialPMITests.class,
-        SettingsTests.class,
-        ToleranceTests.class,
-        ComparisonTests.class,
-        ThreadTests.class,
-        PartNestingTests.class,
-        PsoEditTests.class,
-        IncludeAndExcludeTests.class,
-        GroupEditAssemblies.class,
-        LargeGroupAssemblyTests.class
+    EditAssembliesTest.class,
+    CostAllCadTests.class,
+    CostScenarioTests.class,
+    NewScenarioNameTests.class,
+    ProcessGroupsTests.class,
+    SecondaryProcessTests.class,
+    ChangeMaterialSelectionTests.class,
+    MaterialStockTests.class,
+    UploadComponentTests.class,
+    UploadTests.class,
+    HelpTests.class,
+    DecimalPlaceTests.class,
+    UploadAssembliesTests.class,
+    PublishExistingCostedTests.class,
+    PreviewPanelTests.class,
+    DFMRiskTests.class,
+    DeleteTests.class,
+    PublishTests.class,
+    SheetMetalDTCTests.class,
+    DTCPlasticMouldingTests.class,
+    ActionsTests.class,
+    TableHeadersTests.class,
+    DTCMachiningTests.class,
+    DTCCastingTests.class,
+    TwoModelMachiningTests.class,
+    MaterialPMITests.class,
+    SettingsTests.class,
+    ToleranceTests.class,
+    ComparisonTests.class,
+    ThreadTests.class,
+    PartNestingTests.class,
+    PsoEditTests.class,
+    IncludeAndExcludeTests.class,
+    GroupEditAssemblies.class,
+    LargeGroupAssemblyTests.class
 })
 public class RegressionTestSuite {
 }
