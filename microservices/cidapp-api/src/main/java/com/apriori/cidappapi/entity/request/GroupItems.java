@@ -1,4 +1,4 @@
-package com.apriori.cidappapi.entity.request.request;
+package com.apriori.cidappapi.entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class ScenarioRequest {
-    private String scenarioName;
+public class GroupItems {
+    private String componentIdentity;
+    private String scenarioIdentity;
 }
