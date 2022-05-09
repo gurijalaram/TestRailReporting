@@ -338,20 +338,14 @@ public class ScenariosUtil {
 
         String componentId = componentInfoBuilder.getComponentIdentity();
         String scenarioId = componentInfoBuilder.getScenarioIdentity();
-        final int SOCKET_TIMEOUT = 240000;
 
         final RequestEntity deleteRequest =
-            RequestEntityUtil.init(CidAppAPIEnum.DELETE_SCENARIO, null)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentId, scenarioId);
+            genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.DELETE_SCENARIO, null, componentId, scenarioId);
 
         HTTPRequest.build(deleteRequest).delete();
 
         RequestEntity scenarioRequest =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
-                .token(componentInfoBuilder.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
+            genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentId, scenarioId);
 
         final int POLL_TIME = 2;
         final int WAIT_TIME = 240;
@@ -361,27 +355,33 @@ public class ScenariosUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(scenarioRequest).get();
+                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
 
-                if (scenarioRepresentation.getStatusCode() != HttpStatus.SC_OK) {
+                if (!scenarioResponse.getBody().contains("response")) {
 
-                    throw new AssertionError();
+                    RequestEntity requestEntity =
+                        genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentId, scenarioId);
+
+                    return HTTPRequest.build(requestEntity).get();
                 }
             } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
 
-        } catch (AssertionError | InterruptedException a) {
-
-            RequestEntity deletedRequest =
-                RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ErrorMessage.class)
-                    .inlineVariables(componentId, scenarioId)
-                    .token(componentInfoBuilder.getUser().getToken())
-                    .socketTimeout(SOCKET_TIMEOUT);
-
-            return HTTPRequest.build(deletedRequest).get();
+        } catch (InterruptedException ie) {
+            log.error(ie.getMessage());
+            Thread.currentThread().interrupt();
         }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
                 componentId, scenarioId, WAIT_TIME)
         );
+    }
+
+    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfoBuilder, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+        final int SOCKET_TIMEOUT = 240000;
+
+        return RequestEntityUtil.init(endPoint, klass)
+            .token(componentInfoBuilder.getUser().getToken())
+            .inlineVariables(componentId, scenarioId)
+            .socketTimeout(SOCKET_TIMEOUT);
     }
 }
