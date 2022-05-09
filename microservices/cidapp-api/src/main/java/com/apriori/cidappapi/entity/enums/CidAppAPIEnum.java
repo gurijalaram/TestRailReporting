@@ -37,6 +37,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //PUBLISH
     PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),
+    PUBLISH_SCENARIOS("scenarios/publish"),
 
     //USER
     CURRENT_USER("users/current"),

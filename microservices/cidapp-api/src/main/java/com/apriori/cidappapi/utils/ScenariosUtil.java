@@ -10,6 +10,7 @@ import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
+import com.apriori.cidappapi.entity.request.Options;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
@@ -357,6 +358,50 @@ public class ScenariosUtil {
                     .status("New".toUpperCase())
                     .build()
                 );
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo  - the component info object
+     * @param publishRequest - the publish request
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(ComponentInfoBuilder componentInfo, PublishRequest publishRequest, String... componentScenarioName) {
+
+        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        for (String[] componentScenario : componentScenarioNames) {
+            if (componentInfo.getSubComponents().stream()
+                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+
+                subComponentInfo.add(componentInfo.getSubComponents().stream()
+                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
+                    .collect(Collectors.toList()).get(0));
+            }
+        }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+                .body(PublishRequest.builder()
+                    .groupItems(subComponentInfo
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .options(Options.builder()
+                        .scenarioName(publishRequest.getScenarioName())
+                        .override(publishRequest.getOverride())
+                        .costMaturity(publishRequest.getCostMaturity().toUpperCase())
+                        .status(publishRequest.getStatus().toUpperCase())
+                        .build())
+                    .build())
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
