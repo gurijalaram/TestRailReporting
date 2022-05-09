@@ -1,17 +1,19 @@
-package com.apriori.cidappapi.entity.request.request;
+package com.apriori.cidappapi.entity.request;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class ForkRequest {
-    private Boolean override;
+    @Builder.Default
+    private Boolean override = false;
     private String scenarioName;
+    private List<GroupItems> groupItems;
 }
