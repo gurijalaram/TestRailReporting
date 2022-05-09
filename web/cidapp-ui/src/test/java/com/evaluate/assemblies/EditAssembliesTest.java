@@ -77,7 +77,7 @@ public class EditAssembliesTest extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadCostPublishAndOpenAssemblySubcomponents(
                 assemblyName,
                 assemblyExtension,
@@ -88,11 +88,14 @@ public class EditAssembliesTest extends TestBase {
                 scenarioName,
                 mode,
                 material,
-                currentUser)
-            .editScenario()
+                currentUser);
+
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+
+            evaluatePage.editScenario()
             .close(EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
     }
 }
