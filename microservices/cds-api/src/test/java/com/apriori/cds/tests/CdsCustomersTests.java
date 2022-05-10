@@ -37,7 +37,7 @@ public class CdsCustomersTests {
     @After
     public void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -45,7 +45,7 @@ public class CdsCustomersTests {
     @TestRail(testCaseId = {"3252"})
     @Description("API returns a list of all the available customers in the CDS DB")
     public void getCustomers() {
-        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS, Customers.class);
+        ResponseWrapper<Customers> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS, Customers.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

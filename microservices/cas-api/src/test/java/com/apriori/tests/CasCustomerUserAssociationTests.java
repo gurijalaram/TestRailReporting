@@ -71,8 +71,8 @@ public class CasCustomerUserAssociationTests {
         );
 
         // Note:  The CAS api does not support customer or user deletes, so we have to use CDS to do this.
-        usersToAssociate.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
-        cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, targetCustomer.getIdentity());
+        usersToAssociate.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
     @Test

@@ -73,7 +73,7 @@ public class EditCustomerTests extends TestBase {
 
     @After
     public void teardown() {
-        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, identity));
+        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
     }
 
     @FunctionalInterface

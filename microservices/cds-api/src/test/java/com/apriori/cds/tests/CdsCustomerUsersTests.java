@@ -52,10 +52,10 @@ public class CdsCustomerUsersTests {
     @AfterClass
     public static void cleanUp() {
         if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -83,7 +83,7 @@ public class CdsCustomerUsersTests {
 
         userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID, Users.class, customerIdentity);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, customerIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -100,7 +100,7 @@ public class CdsCustomerUsersTests {
 
         userIdentity = user.getResponseEntity().getIdentity();
 
-        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS_BY_CUSTOMER_USER_IDS, User.class, customerIdentity, userIdentity);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, User.class, customerIdentity, userIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
@@ -132,7 +132,7 @@ public class CdsCustomerUsersTests {
 
         userIdentity = user.getResponseEntity().getIdentity();
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DELETE_USER_BY_CUSTOMER_ID, ErrorMessage.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.DELETE_USER_WRONG_ID, ErrorMessage.class)
             .inlineVariables(customerIdentity);
 
         ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
