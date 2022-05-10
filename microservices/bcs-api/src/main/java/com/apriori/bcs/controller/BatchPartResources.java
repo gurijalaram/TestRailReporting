@@ -206,7 +206,7 @@ public class BatchPartResources {
      * @param klass          - Response class
      * @return RequestEntity - Batch Part complete RequestEntity
      */
-    public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class klass) {
+    public static <T> RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(batchIdentity);
         return setPartRequestFormParams(newPartRequest);
     }
@@ -276,7 +276,6 @@ public class BatchPartResources {
 
         return (part.getState().equals(bcsExpectedState.toString())) ? true : false;
     }
-
 
 
     /**
