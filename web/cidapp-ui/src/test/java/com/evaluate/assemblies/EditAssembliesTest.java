@@ -15,6 +15,7 @@ import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.CostingLabelEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -23,6 +24,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -37,13 +39,14 @@ public class EditAssembliesTest extends TestBase {
     private ExplorePage explorePage;
 
     final AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions;
 
     public EditAssembliesTest() {
         super();
     }
 
     @Test
-    @TestRail(testCaseId = {"10799", "10768", "10801", "10802", "10803", "10804", "10810"})
+    @TestRail(testCaseId = {"10799", "10768", "10801", "10802", "10803", "10804"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyAndEditAddNotes() {
         final String assemblyName = "Hinge assembly";
@@ -227,5 +230,49 @@ public class EditAssembliesTest extends TestBase {
             .openComponents();
 
         allSubComponents.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10810"})
+    @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
+    public void testUploadUncostedAssemblySubcomponent() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly);
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
+
+        evaluatePage.openComponents();
+
+        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
+        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
+
+        softAssertions.assertAll();
     }
 }
