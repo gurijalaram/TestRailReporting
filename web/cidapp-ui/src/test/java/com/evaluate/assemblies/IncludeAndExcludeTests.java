@@ -3,6 +3,8 @@ package com.evaluate.assemblies;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -24,6 +26,8 @@ public class IncludeAndExcludeTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ComponentsListPage componentsListPage;
+    private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     public IncludeAndExcludeTests() {
         super();
@@ -212,18 +216,15 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = "11157")
-    @Description("")
+    @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledSubAssembly() {
-
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         String assembly1 = "sub-sub-asm";
         List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
-
         String assembly2 = "sub-assembly";
         List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
-
         String assemblyName = "top-level";
         List<String> subComponentNames = Arrays.asList("3575135", "3574255", "3575134", "3575132", "3538968", "3575133");
 
@@ -238,9 +239,45 @@ public class IncludeAndExcludeTests extends TestBase {
             .uploadsAndOpenAssembly(assemblyName, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
             .openComponents()
             .expandSubAssembly(assembly2)
-            .multiSelectSubcomponents("0200613, " + scenarioName + "")
-            .selectButtonType(ButtonTypeEnum.EXCLUDE);
+            .selectSubAssemblySubComponent(assembly2.toUpperCase(), 5)
+            .selectButtonType(ButtonTypeEnum.EXCLUDE)
+            .selectSubAssemblySubComponent(assembly2.toUpperCase(), 5);
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11156")
+    @Description("Verify Exclude button is available when an included sub-component is selected")
+    public void testExcludeButtonAvailableWithCostedComponents() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser).navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents("PIN, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(true));
     }
 }

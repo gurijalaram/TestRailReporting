@@ -250,6 +250,19 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * gets the sub component in a sub assembly
+     *
+     * @param subAssemblyName      - the sub assembly name
+     * @param componentIndexNumber -  count from the sub assembly to the sub component
+     * @return - current page object
+     */
+    public ComponentsListPage selectSubAssemblySubComponent(String subAssemblyName, int componentIndexNumber) {
+        By bySubComponent = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']/following-sibling::div[%s]//div[@class]/child::div[@class='checkbox-icon']", subAssemblyName, componentIndexNumber));
+        pageUtils.waitForElementAndClick(bySubComponent);
+        return this;
+    }
+
+    /**
      * Highlights the scenario in the table using the keyboard control key
      *
      * @param componentName - component name
