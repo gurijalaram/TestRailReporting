@@ -35,18 +35,35 @@ public class LargeGroupAssemblyTests extends TestBase {
         super();
     }
 
+    final static String CENTRE_BOLT = "centre bolt";
+    final static String CENTRE_WASHER = "centre washer";
+    final static String DISPLAY = "display";
+    final static String GASKET = "gasket";
+    final static String HANDLE = "Handle";
+    final static String LEFT_PADDLE = "left paddle";
+    final static String STEER_WHEEL_SUPPORT = "steer wheel support";
+    final static String SEAT_LOCK = "seat lock";
+    final static String MECHANISM_BODY = "mechanism body";
+    final static String PADDLE_BAR = "paddle bar";
+    final static String LEG_COVER = "leg cover";
+    final static String LEG = "leg";
+    final static String RIGHT_PADDLE = "right paddle";
+    final static String WASHER = "washer";
+    final static String SEAT = "seat";
+    final static String PIN = "pin";
+
     @BeforeClass
     public static void assemblySetup() {
-
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
 
-        List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle",
-            "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin",
-            "right paddle", "seat lock", "seat", "steer wheel support", "washer");
+        List<String> subComponentNames = Arrays.asList(CENTRE_BOLT, CENTRE_WASHER, DISPLAY, GASKET, HANDLE,
+            LEFT_PADDLE, LEG_COVER, LEG, MECHANISM_BODY, PADDLE_BAR, PIN,
+            RIGHT_PADDLE, SEAT_LOCK, SEAT, STEER_WHEEL_SUPPORT, WASHER);
+        final String subComponentExtension = ".ipt";
+
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String subComponentExtension = ".ipt";
 
         currentUser = UserUtil.getUser();
         scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -67,19 +84,6 @@ public class LargeGroupAssemblyTests extends TestBase {
     @TestRail(testCaseId = {"11807", "11804"})
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void testPublishButtonAvailability() {
-
-        final String CENTRE_BOLT = "centre bolt";
-        final String CENTRE_WASHER = "centre washer";
-        final String DISPLAY = "display";
-        final String GASKET = "gasket";
-        final String HANDLE = "Handle";
-        final String LEFT_PADDLE = "left paddle";
-        final String STEER_WHEEL_SUPPORT = "steer wheel support";
-        final String SEAT_LOCK = "seat lock";
-        final String MECHANISM_BODY = "mechanism body";
-        final String PADDLE_BODY = "paddle bar";
-        final String PIN = "pin";
-
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
@@ -94,7 +98,7 @@ public class LargeGroupAssemblyTests extends TestBase {
                 STEER_WHEEL_SUPPORT + ", " + scenarioName + "",
                 SEAT_LOCK + ", " + scenarioName + "",
                 MECHANISM_BODY + ", " + scenarioName + "",
-                PADDLE_BODY + ", " + scenarioName + "");
+                PADDLE_BAR + ", " + scenarioName + "");
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(true));
 
