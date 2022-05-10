@@ -10,6 +10,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -32,6 +33,7 @@ public class EditAssembliesTest extends TestBase {
     private EvaluatePage evaluatePage;
     private InfoPage infoPage;
     private ComponentsListPage componentsListPage;
+    private ExplorePage explorePage;
 
     final AssemblyUtils assemblyUtils = new AssemblyUtils();
 
@@ -40,9 +42,9 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10799", "10768", "1081", "1082", "10810"})
-    @Description("Shallow Edit assembly and scenarios that was cost in CI Design")
-    public void testUploadCostPublishAssemblyAndEdit() {
+    @TestRail(testCaseId = {"10799", "10768", "10801", "10802", "10803", "10804","10810"})
+    @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
+    public void testUploadCostPublishAssemblyAndEditAddNotes() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -102,5 +104,11 @@ public class EditAssembliesTest extends TestBase {
             .openComponents();
 
         subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+
+        explorePage = componentsListPage.closePanel()
+            .clickExplore()
+            .selectFilter("Recent");
+
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(equalTo(2)));
     }
 }
