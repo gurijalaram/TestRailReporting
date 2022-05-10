@@ -56,7 +56,6 @@ public class LargeGroupAssemblyTests extends TestBase {
     public static void assemblySetup() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
-
         List<String> subComponentNames = Arrays.asList(CENTRE_BOLT, CENTRE_WASHER, DISPLAY, GASKET, HANDLE,
             LEFT_PADDLE, LEG_COVER, LEG, MECHANISM_BODY, PADDLE_BAR, PIN,
             RIGHT_PADDLE, SEAT_LOCK, SEAT, STEER_WHEEL_SUPPORT, WASHER);
