@@ -1,5 +1,6 @@
 package com.evaluate.assemblies;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
@@ -9,6 +10,7 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -37,9 +39,10 @@ public class EditAssembliesTest extends TestBase {
     private InfoPage infoPage;
     private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
+    private PublishPage publishPage;
+    private SoftAssertions softAssertions;
 
     final AssemblyUtils assemblyUtils = new AssemblyUtils();
-    private SoftAssertions softAssertions;
 
     public EditAssembliesTest() {
         super();
@@ -187,7 +190,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10836"})
+    @TestRail(testCaseId = {"10836", "10811"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyLargeSubcomponentSet() {
         final String assemblyName = "FUSELAGE_SUBASSEMBLY";
@@ -233,16 +236,16 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10810"})
+    @TestRail(testCaseId = {"10810", "10813"})
     @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
     public void testUploadUncostedAssemblySubcomponent() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
-        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final String bigRing = "big ring";
+        final String pin = "Pin";
+        final String smallRing = "small ring";
+        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
         final String subComponentExtension = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
@@ -267,12 +270,31 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
 
-        evaluatePage.openComponents();
+        componentsListPage = evaluatePage.openComponents();
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
-        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
-        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
+        softAssertions.assertThat(componentsListPage.getRowDetails(pin, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
+        softAssertions.assertThat(componentsListPage.getRowDetails(bigRing, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
+        softAssertions.assertThat(componentsListPage.getRowDetails(smallRing, scenarioName)).contains(CostingLabelEnum.UNCOSTED_CHANGES.getCostingText());
 
         softAssertions.assertAll();
+
+        publishPage = componentsListPage.closePanel()
+            .publishScenario()
+            .publish(componentAssembly, currentUser, EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Public")
+            .openScenario(assemblyName, scenarioName)
+            .editScenario()
+            .close(EvaluatePage.class)
+            .lock(EvaluatePage.class)
+            .publishScenario()
+            .publish(componentAssembly, currentUser, EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Private")
+            .openScenario(assemblyName, scenarioName)
+            .publishScenario();
+
+        assertThat(publishPage.getConflictMessage(), containsString("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
+            "please supply a different scenario name or cancel the operation"));
     }
 }
