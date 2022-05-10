@@ -43,7 +43,7 @@ public class CasCustomersTests {
     @After
     public void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 

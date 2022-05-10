@@ -55,7 +55,7 @@ public class CdsCustomAttributesTests {
     @After
     public void deleteAttributes() {
         if (customAttributesIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOM_ATTRIBUTE,
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID,
                     customAttributesIdentityHolder.customerIdentity(),
                     customAttributesIdentityHolder.userIdentity(),
                     customAttributesIdentityHolder.customAttributeIdentity()
@@ -66,10 +66,10 @@ public class CdsCustomAttributesTests {
     @AfterClass
     public static void cleanUp() {
         if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -82,7 +82,7 @@ public class CdsCustomAttributesTests {
 
         assertThat(customAttributeAdded.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, customerIdentity, userIdentity);
+        ResponseWrapper<CustomAttributesResponse> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTES, CustomAttributesResponse.class, customerIdentity, userIdentity);
 
         assertThat(customAttributes.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customAttributes.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -108,7 +108,7 @@ public class CdsCustomAttributesTests {
         ResponseWrapper<CustomAttribute> customAttributeAdded = cdsTestUtil.addCustomAttribute(customerIdentity, userIdentity);
 
         String attributeIdentity = customAttributeAdded.getResponseEntity().getIdentity();
-        ResponseWrapper<CustomAttribute> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class, customerIdentity, userIdentity, attributeIdentity);
+        ResponseWrapper<CustomAttribute> customAttributes = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOM_ATTRIBUTE_BY_ID, CustomAttribute.class, customerIdentity, userIdentity, attributeIdentity);
 
         assertThat(customAttributes.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(customAttributes.getResponseEntity().getIdentity(), is(equalTo(attributeIdentity)));
