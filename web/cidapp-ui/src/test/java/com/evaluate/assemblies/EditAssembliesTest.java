@@ -236,9 +236,9 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10810", "10813"})
+    @TestRail(testCaseId = {"10810", "10813", "10814", "10815"})
     @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
-    public void testUploadUncostedAssemblySubcomponent() {
+    public void testUploadUncostedAssemblySubcomponentOverrideRename() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -251,6 +251,7 @@ public class EditAssembliesTest extends TestBase {
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -296,5 +297,18 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(publishPage.getConflictMessage(), containsString("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
             "please supply a different scenario name or cancel the operation"));
+
+        evaluatePage = publishPage.override()
+            .clickContinue(EvaluatePage.class);
+
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+
+        evaluatePage.editScenario()
+            .close(EvaluatePage.class)
+            .publishScenario()
+            .changeName(newScenarioName)
+            .clickContinue(EvaluatePage.class);
+
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
     }
 }
