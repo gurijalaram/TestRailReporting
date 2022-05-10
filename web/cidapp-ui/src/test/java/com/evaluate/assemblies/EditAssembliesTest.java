@@ -1,6 +1,7 @@
 package com.evaluate.assemblies;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -8,6 +9,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -29,6 +31,7 @@ public class EditAssembliesTest extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private InfoPage infoPage;
+    private ComponentsListPage componentsListPage;
 
     final AssemblyUtils assemblyUtils = new AssemblyUtils();
 
@@ -65,8 +68,10 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
         assemblyUtils.publishAssembly(componentAssembly);
 
-        evaluatePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly);
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
 
@@ -92,5 +97,10 @@ public class EditAssembliesTest extends TestBase {
         assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
         assertThat(infoPage.getDescription(), is(equalTo("QA Test Description")));
         assertThat(infoPage.getNotes(), is(equalTo("Testing QA notes")));
+
+        componentsListPage = infoPage.cancel(EvaluatePage.class)
+            .openComponents();
+
+        subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 }
