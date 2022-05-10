@@ -127,4 +127,120 @@ public class IncludeAndExcludeTests extends TestBase {
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
     }
+
+    @Test
+    @TestRail(testCaseId = {"11874", "11843", "11842"})
+    @Description("Verify Include and Exclude buttons disabled if mixture selected")
+    public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
+            .multiSelectSubcomponents("PIN, " + scenarioName + "")
+            .selectButtonType(ButtonTypeEnum.EXCLUDE)
+            .multiSelectSubcomponents("SMALL RING, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(true));
+
+        componentsListPage.multiSelectSubcomponents("pin, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+
+        componentsListPage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+
+        componentsListPage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11158")
+    @Description("Verify Exclude button disabled when selecting included sub-component from sub-assembly")
+    public void testExcludeButtonDisabledSubAssembly() {
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String assembly1 = "sub-sub-asm";
+        List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
+
+        String assembly2 = "sub-assembly";
+        List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
+
+        String assemblyName = "top-level";
+        List<String> subComponentNames = Arrays.asList("3575135", "3574255", "3575134", "3575132", "3538968", "3575133");
+
+        final String componentExtension = ".prt.1";
+        final String assemblyExtension = ".asm.1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(assembly1, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .uploadsAndOpenAssembly(assembly2, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subAssemblyComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .uploadsAndOpenAssembly(assemblyName, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .openComponents()
+            .expandSubAssembly(assembly2)
+            .multiSelectSubcomponents("0200613, " + scenarioName + "");
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11157")
+    @Description("")
+    public void testIncludeButtonDisabledSubAssembly() {
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String assembly1 = "sub-sub-asm";
+        List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
+
+        String assembly2 = "sub-assembly";
+        List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
+
+        String assemblyName = "top-level";
+        List<String> subComponentNames = Arrays.asList("3575135", "3574255", "3575134", "3575132", "3538968", "3575133");
+
+        final String componentExtension = ".prt.1";
+        final String assemblyExtension = ".asm.1";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(assembly1, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subSubComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .uploadsAndOpenAssembly(assembly2, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subAssemblyComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .uploadsAndOpenAssembly(assemblyName, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
+            .openComponents()
+            .expandSubAssembly(assembly2)
+            .multiSelectSubcomponents("0200613, " + scenarioName + "")
+            .selectButtonType(ButtonTypeEnum.EXCLUDE);
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+    }
 }
