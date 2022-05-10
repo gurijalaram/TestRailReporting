@@ -51,6 +51,15 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
     }
 
     /**
+     * Gets text in conflicts form
+     *
+     * @return string
+     */
+    public String getConflictForm() {
+        return pageUtils.waitForElementToAppear(conflictsForm).getAttribute("textContent");
+    }
+
+    /**
      * Selects override scenario button
      *
      * @return current page object

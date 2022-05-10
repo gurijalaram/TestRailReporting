@@ -13,6 +13,7 @@ import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -40,6 +41,8 @@ public class EditAssembliesTest extends TestBase {
     private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
     private PublishPage publishPage;
+    private EditComponentsPage editComponentsPage;
+
     private SoftAssertions softAssertions;
 
     final AssemblyUtils assemblyUtils = new AssemblyUtils();
@@ -279,7 +282,7 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertAll();
 
-        publishPage = componentsListPage.closePanel()
+        editComponentsPage = componentsListPage.closePanel()
             .publishScenario()
             .publish(componentAssembly, currentUser, EvaluatePage.class)
             .clickExplore()
@@ -293,19 +296,19 @@ public class EditAssembliesTest extends TestBase {
             .clickExplore()
             .selectFilter("Private")
             .openScenario(assemblyName, scenarioName)
-            .publishScenario();
+            .publishScenario(EditComponentsPage.class);
 
-        assertThat(publishPage.getConflictMessage(), containsString("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
+        assertThat(editComponentsPage.getConflictForm(), containsString("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
             "please supply a different scenario name or cancel the operation"));
 
-        evaluatePage = publishPage.override()
+        evaluatePage = editComponentsPage.overrideScenarios()
             .clickContinue(EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
 
         evaluatePage.editScenario()
             .close(EvaluatePage.class)
-            .publishScenario()
+            .publishScenario(EditComponentsPage.class)
             .changeName(newScenarioName)
             .clickContinue(EvaluatePage.class);
 
