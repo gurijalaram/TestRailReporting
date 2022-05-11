@@ -71,7 +71,7 @@ public class AccessControlsApplicationTests extends TestBase {
 
         cdsTestUtil = new CdsTestUtil();
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
+        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
                 ? cdsTestUtil.addCustomer(APP_CONTROLS_CUSTOMER, now, salesforce, email).getResponseEntity()
                 : targetCustomer;
@@ -117,16 +117,16 @@ public class AccessControlsApplicationTests extends TestBase {
 
     @After
     public void teardown() {
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
-        cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_LICENSED_APPLICATIONS_BY_CUSTOMER_SITE_LICENSED_IDS,
+        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
                 licensedAppIdentityHolder.customerIdentity(),
                 licensedAppIdentityHolder.siteIdentity(),
                 licensedAppIdentityHolder.licenseIdentity());
-        cdsTestUtil.delete(CDSAPIEnum.DELETE_INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
+        cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
                 installationIdentityHolder.customerIdentity(),
                 installationIdentityHolder.deploymentIdentity(),
                 installationIdentityHolder.installationIdentity());
-        cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, targetCustomer.getIdentity());
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
     private long checkEveryOtherItem(List<TableRowComponent> rows, long pageSize) {

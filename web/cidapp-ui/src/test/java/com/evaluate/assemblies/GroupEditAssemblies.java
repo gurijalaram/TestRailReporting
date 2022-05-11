@@ -42,10 +42,13 @@ public class GroupEditAssemblies extends TestBase {
     @Description("Group edit subcomponents")
     public void editButtonAvailable() {
 
-        String assemblyName = "Hinge assembly";
+        final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final String subComponentExtension = ".SLDPRT";
 
@@ -70,7 +73,7 @@ public class GroupEditAssemblies extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents("big ring, " + scenarioName + "", "pin, " + scenarioName + "");
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", PIN + "," + scenarioName + "");
 
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(true);
 
@@ -78,11 +81,11 @@ public class GroupEditAssemblies extends TestBase {
             .overrideScenarios()
             .clickContinue(EditScenarioStatusPage.class)
             .close(ComponentsListPage.class)
-            .checkSubcomponentState(componentAssembly, "big ring, pin");
+            .checkSubcomponentState(componentAssembly, BIG_RING + "," + PIN);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails("pin", scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("big ring", scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("small ring", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -92,10 +95,13 @@ public class GroupEditAssemblies extends TestBase {
     @Description("Group edit subcomponents")
     public void overridePrivateSubComponent() {
 
-        String assemblyName = "Hinge assembly";
+        final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final String subComponentExtension = ".SLDPRT";
 
@@ -120,17 +126,17 @@ public class GroupEditAssemblies extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents("big ring, " + scenarioName + "")
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "")
             .editSubcomponent(EditScenarioStatusPage.class);
 
         softAssertions.assertThat(editScenarioStatusPage.getEditScenarioMessage()).contains("Scenario was successfully edited, click here to open in the evaluate view.");
 
         componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class)
-            .checkSubcomponentState(componentAssembly, "big ring");
+            .checkSubcomponentState(componentAssembly, BIG_RING);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails("pin", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("big ring", scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("small ring", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
@@ -140,10 +146,13 @@ public class GroupEditAssemblies extends TestBase {
     @Description("Group edit subcomponents")
     public void privateAndPublicSubComponents() {
 
-        String assemblyName = "flange c";
+        final String assemblyName = "flange c";
         final String assemblyExtension = ".CATProduct";
+        final String BOLT = "bolt";
+        final String FLANGE = "flange";
+        final String NUT = "nut";
 
-        List<String> subComponentNames = Arrays.asList("bolt", "flange", "nut");
+        final List<String> subComponentNames = Arrays.asList(BOLT, FLANGE, NUT);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
         final String subComponentExtension = ".CATPart";
 
@@ -168,16 +177,16 @@ public class GroupEditAssemblies extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents("bolt, " + scenarioName + "")
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "")
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsListPage.class)
-            .checkSubcomponentState(componentAssembly, "bolt")
-            .multiSelectSubcomponents("bolt, " + scenarioName + "", "flange, " + scenarioName + "");
+            .checkSubcomponentState(componentAssembly, BOLT)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", FLANGE + "," + scenarioName + "");
 
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
-        softAssertions.assertThat(componentsListPage.getRowDetails("flange", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("nut", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("bolt", scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(FLANGE, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(NUT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }

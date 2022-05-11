@@ -26,7 +26,7 @@ public class CdsUsersTests {
     @TestRail(testCaseId = {"3697"})
     @Description("API returns a list of all the available users in the CDS DB")
     public void getUsers() {
-        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
+        ResponseWrapper<Users> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -38,11 +38,11 @@ public class CdsUsersTests {
     @TestRail(testCaseId = {"3698"})
     @Description("API returns a user's information based on the supplied identity")
     public void getUserById() {
-        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
+        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class);
 
         String userIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_BY_ID, User.class, userIdentity);
+        ResponseWrapper<User> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_BY_ID, User.class, userIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getCustomerIdentity(), is(not(emptyString())));
@@ -53,11 +53,11 @@ public class CdsUsersTests {
     @TestRail(testCaseId = {"5971"})
     @Description("API returns a user's credentials based on the supplied identity")
     public void getUsersCredentials() {
-        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS, Users.class);
+        ResponseWrapper<Users> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS, Users.class);
 
         String userIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USER_CREDENTIALS_BY_ID, CredentialsItems.class, userIdentity);
+        ResponseWrapper<CredentialsItems> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_CREDENTIALS_BY_ID, CredentialsItems.class, userIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getPasswordHash(), is(not(emptyString())));
