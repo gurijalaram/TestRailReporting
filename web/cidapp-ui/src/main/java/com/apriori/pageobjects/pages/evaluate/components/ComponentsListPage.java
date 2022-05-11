@@ -252,12 +252,11 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     /**
      * gets the sub component in a sub assembly
      *
-     * @param subAssemblyName      - the sub assembly name
-     * @param componentIndexNumber -  count from the sub assembly to the sub component
+     * @param componentName - the component name
      * @return - current page object
      */
-    public ComponentsListPage selectSubAssemblySubComponent(String subAssemblyName, int componentIndexNumber) {
-        By bySubComponent = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']/following-sibling::div[%s]//div[@class]/child::div[@class='checkbox-icon']", subAssemblyName, componentIndexNumber));
+    public ComponentsListPage selectSubAssemblySubComponent(String componentName) {
+        By bySubComponent = By.xpath(String.format("(//span[text()='%s'])[2]/ancestor::div[@role='cell']/preceding-sibling::div//div[@class='checkbox-icon']", componentName));
         pageUtils.waitForElementAndClick(bySubComponent);
         return this;
     }
@@ -289,11 +288,11 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     /**
      * Expands the sub assembly
      *
-     * @param componentName - the component name
+     * @param subAssemblyName - the sub assembly name
      * @return - the current page object
      */
-    public ComponentsListPage expandSubAssembly(String componentName) {
-        By byExpand = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class]/descendant::div/following-sibling::div//div/child::div//*[@data-icon='circle-chevron-down']", componentName.toUpperCase().trim()));
+    public ComponentsListPage expandSubAssembly(String subAssemblyName) {
+        By byExpand = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='cell-text']/preceding-sibling::div//*[@data-icon='circle-chevron-down']", subAssemblyName.toUpperCase().trim()));
         pageUtils.waitForElementAndClick(byExpand);
         return this;
     }

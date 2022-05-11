@@ -16,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -28,6 +29,7 @@ public class IncludeAndExcludeTests extends TestBase {
     private ComponentsListPage componentsListPage;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    SoftAssertions softAssertions = new SoftAssertions();
 
     public IncludeAndExcludeTests() {
         super();
@@ -60,8 +62,10 @@ public class IncludeAndExcludeTests extends TestBase {
                 currentUser)
             .openComponents();
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -125,14 +129,16 @@ public class IncludeAndExcludeTests extends TestBase {
             .uploadsAndOpenAssembly(assemblyName, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
             .openComponents()
             .expandSubAssembly(assembly2)
-            .multiSelectSubcomponents("3571050, " + scenarioName + "");
+            .selectSubAssemblySubComponent("3571050");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"11874", "11843", "11842"})
+    @TestRail(testCaseId = {"11874", "11843", "11842", "11155"})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
         String assemblyName = "Hinge assembly";
@@ -161,23 +167,25 @@ public class IncludeAndExcludeTests extends TestBase {
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .multiSelectSubcomponents("SMALL RING, " + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(true));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
 
         componentsListPage.multiSelectSubcomponents("pin, " + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("small ring, " + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("small ring, " + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -235,42 +243,10 @@ public class IncludeAndExcludeTests extends TestBase {
             .uploadsAndOpenAssembly(assemblyName, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames, componentExtension, processGroupEnum, scenarioName, currentUser)
             .openComponents()
             .expandSubAssembly(assembly2)
-            .selectSubAssemblySubComponent(assembly2.toUpperCase(), 5)
+            .selectSubAssemblySubComponent("3571050")
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
-            .selectSubAssemblySubComponent(assembly2.toUpperCase(), 5);
-
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
-    }
-
-    @Test
-    @TestRail(testCaseId = "11155")
-    @Description("Verify Include button is available when a previously excluded sub-component is selected")
-    public void testIncludeButtonEnabledWithExcludedSubcomponent() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
-            .uploadsAndOpenAssembly(
-                assemblyName,
-                assemblyExtension,
-                ProcessGroupEnum.ASSEMBLY,
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                scenarioName,
-                currentUser)
-            .openComponents()
-            .multiSelectSubcomponents("PIN, " + scenarioName + "")
-            .selectButtonType(ButtonTypeEnum.EXCLUDE)
-            .multiSelectSubcomponents("PIN, " + scenarioName + "");
+            .expandSubAssembly(assembly2)
+            .selectSubAssemblySubComponent("3571050");
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
     }
