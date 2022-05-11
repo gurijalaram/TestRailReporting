@@ -3,9 +3,9 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -235,7 +235,7 @@ public class TwoModelMachiningTests extends TestBase {
         cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
@@ -248,7 +248,7 @@ public class TwoModelMachiningTests extends TestBase {
             .highlightScenario(sourcePartName, sourceScenarioName)
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .openSourceScenario(sourceScenarioName);
 

@@ -77,7 +77,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
@@ -88,7 +88,7 @@ public class PublishExistingCostedTests extends TestBase {
             .close(EvaluatePage.class)
             .selectDigitalFactory(APRIORI_CHINA)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
@@ -126,18 +126,18 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .editScenario()
             .close(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .lock(EvaluatePage.class)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
@@ -169,7 +169,7 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore();
 
@@ -180,7 +180,7 @@ public class PublishExistingCostedTests extends TestBase {
             .openScenario(componentName, scenarioName)
             .selectProcessGroup(FORGING)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
             .publish(cidComponentItemB, currentUser, EvaluatePage.class);
@@ -213,13 +213,13 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, ExplorePage.class)
             .lock(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .selectProcessGroup(FORGING)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .changeName(scenarioName2)
             .publish(cidComponentItem, currentUser, EvaluatePage.class);
 

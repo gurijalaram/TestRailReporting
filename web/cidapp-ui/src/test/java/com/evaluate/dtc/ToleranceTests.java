@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -670,7 +671,7 @@ public class ToleranceTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
-        evaluatePage.publishScenario()
+        evaluatePage.publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .logout()
             .login(testUser2)

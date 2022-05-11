@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
@@ -551,7 +552,7 @@ public class SecondaryProcessTests extends TestBase {
 
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
 
-        evaluatePage.publishScenario()
+        evaluatePage.publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .filter()

@@ -13,6 +13,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.compare.ModifyComparisonPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -160,7 +161,7 @@ public class ComparisonTests extends TestBase {
 
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemC, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
@@ -168,7 +169,7 @@ public class ComparisonTests extends TestBase {
             .openScenario(componentName2, scenarioName2)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
@@ -249,7 +250,7 @@ public class ComparisonTests extends TestBase {
         new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore();
 
@@ -258,7 +259,7 @@ public class ComparisonTests extends TestBase {
         comparePage = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
@@ -325,7 +326,7 @@ public class ComparisonTests extends TestBase {
             .navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
@@ -581,14 +582,14 @@ public class ComparisonTests extends TestBase {
         cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, currentUser, EvaluatePage.class)
             .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
@@ -645,7 +646,7 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, currentUser, ExplorePage.class)
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
@@ -660,7 +661,7 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemC, currentUser, ExplorePage.class)
             .clickCompare()
             .openBasisScenario();
