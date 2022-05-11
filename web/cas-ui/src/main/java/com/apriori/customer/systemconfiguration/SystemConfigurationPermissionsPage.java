@@ -84,21 +84,21 @@ public final class SystemConfigurationPermissionsPage extends EagerPageComponent
     }
 
     /**
-     * Gets the label for the given name.
-     *
-     * @return The label for the given name.
-     */
-    public WebElement getLabel(String name) {
-        return pageUtils.findElementByText("label", name, permissionContent);
-    }
-
-    /**
      * Gets the value for the given name.
      *
      * @return The value for the given name.
      */
     public String getValue(String name) {
         return getValue(name, permissionContent, (v) -> v);
+    }
+
+    /**
+     * Gets the label for the given name.
+     *
+     * @return The label for the given name.
+     */
+    public WebElement getLabel(String name) {
+        return pageUtils.findElementByText("label", name, permissionContent);
     }
 
     /**

@@ -100,6 +100,18 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     }
 
     /**
+     * Selects the issue type
+     *
+     * @param issueType - the issue type
+     * @return current page object
+     */
+    private GuidanceIssuesPage selectIssueType(String issueType) {
+        By byIssueType = designGuidanceController.getBy(issueType);
+        pageUtils.waitForElementAndClick(byIssueType);
+        return this;
+    }
+
+    /**
      * Selects issue
      *
      * @param issueDropdown - the issue dropdown
@@ -110,18 +122,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         Arrays.stream(issues).map(issue -> pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@role='cell'][.='%s']", issue.trim())))
                 .findElement(By.cssSelector("[data-icon='circle-chevron-down']")))
             .forEach(dropdown -> pageUtils.scrollWithJavaScript(dropdown, true).click());
-    }
-
-    /**
-     * Selects the issue type
-     *
-     * @param issueType - the issue type
-     * @return current page object
-     */
-    private GuidanceIssuesPage selectIssueType(String issueType) {
-        By byIssueType = designGuidanceController.getBy(issueType);
-        pageUtils.waitForElementAndClick(byIssueType);
-        return this;
     }
 
     /**

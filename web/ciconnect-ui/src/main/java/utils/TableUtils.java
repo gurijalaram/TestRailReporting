@@ -33,29 +33,6 @@ public class TableUtils {
     }
 
     /**
-     * Find an item in a table by name
-     *
-     * @param table The table to search
-     * @param name  The name to search for
-     * @return The webelement if found
-     */
-    public WebElement findTableItemByName(WebElement table, String name) {
-        pageUtils.waitForElementToBeClickable(table);
-        List<WebElement> rows =
-            table.findElements(By.tagName("tr"))
-                .stream()
-                .skip(1)
-                .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
-                .collect(Collectors.toList());
-        if (rows.size() > 0) {
-            return rows.get(0);
-        } else {
-            return null;
-        }
-    }
-
-
-    /**
      * Find an item in a table by connector
      *
      * @param table The table to search
@@ -249,6 +226,28 @@ public class TableUtils {
             return rows.get(0);
         }
         return null;
+    }
+
+    /**
+     * Find an item in a table by name
+     *
+     * @param table The table to search
+     * @param name  The name to search for
+     * @return The webelement if found
+     */
+    public WebElement findTableItemByName(WebElement table, String name) {
+        pageUtils.waitForElementToBeClickable(table);
+        List<WebElement> rows =
+            table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+        if (rows.size() > 0) {
+            return rows.get(0);
+        } else {
+            return null;
+        }
     }
 
     /**

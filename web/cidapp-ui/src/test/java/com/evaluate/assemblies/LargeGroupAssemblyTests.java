@@ -35,22 +35,22 @@ public class LargeGroupAssemblyTests extends TestBase {
         super();
     }
 
-    final static String CENTRE_BOLT = "centre bolt";
-    final static String CENTRE_WASHER = "centre washer";
-    final static String DISPLAY = "display";
-    final static String GASKET = "gasket";
-    final static String HANDLE = "Handle";
-    final static String LEFT_PADDLE = "left paddle";
-    final static String STEER_WHEEL_SUPPORT = "steer wheel support";
-    final static String SEAT_LOCK = "seat lock";
-    final static String MECHANISM_BODY = "mechanism body";
-    final static String PADDLE_BAR = "paddle bar";
-    final static String LEG_COVER = "leg cover";
-    final static String LEG = "leg";
-    final static String RIGHT_PADDLE = "right paddle";
-    final static String WASHER = "washer";
-    final static String SEAT = "seat";
-    final static String PIN = "pin";
+    private static final String CENTRE_BOLT = "centre bolt";
+    private static final String CENTRE_WASHER = "centre washer";
+    private static final String DISPLAY = "display";
+    private static final String GASKET = "gasket";
+    private static final String HANDLE = "Handle";
+    private static final String LEFT_PADDLE = "left paddle";
+    private static final String STEER_WHEEL_SUPPORT = "steer wheel support";
+    private static final String SEAT_LOCK = "seat lock";
+    private static final String MECHANISM_BODY = "mechanism body";
+    private static final String PADDLE_BAR = "paddle bar";
+    private static final String LEG_COVER = "leg cover";
+    private static final String LEG = "leg";
+    private static final String RIGHT_PADDLE = "right paddle";
+    private static final String WASHER = "washer";
+    private static final String SEAT = "seat";
+    private static final String PIN = "pin";
 
     @BeforeClass
     public static void assemblySetup() {
