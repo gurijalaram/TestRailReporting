@@ -27,7 +27,7 @@ public class CdsCustomerAssociationTests {
     @TestRail(testCaseId = {"5387"})
     @Description("Get customer association for apriori Internal")
     public void getCustomerAssociations() {
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_ASSOCIATIONS_BY_CUSTOMER_ID,
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
             Constants.getAPrioriInternalCustomerIdentity()
         );
@@ -41,14 +41,14 @@ public class CdsCustomerAssociationTests {
     @TestRail(testCaseId = {"5825"})
     @Description("Get customer association by association Identity")
     public void getCustomerAssociationByIdentity() {
-        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_ASSOCIATIONS_BY_CUSTOMER_ID,
+        ResponseWrapper<CustomerAssociationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS,
             CustomerAssociationResponse.class,
             Constants.getAPrioriInternalCustomerIdentity()
         );
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String associationIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
-        ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SPECIFIC_CUSTOMERS_ASSOCIATION_BY_CUSTOMER_ASSOCIATION_ID,
+        ResponseWrapper<CustomerAssociationItems> association = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_CUSTOMERS_ASSOCIATION_BY_CUSTOMER_ASSOCIATION_ID,
             CustomerAssociationItems.class,
             Constants.getAPrioriInternalCustomerIdentity(),
             associationIdentity

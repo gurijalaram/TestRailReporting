@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,4 +19,6 @@ public class CustomAttributes {
     private String department;
     private String function;
     private int workspaceId;
+    private String defaultRole;
+    private List<String> roles;
 }

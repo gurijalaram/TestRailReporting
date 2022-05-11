@@ -37,21 +37,21 @@ public class CdsInstallationsTests {
     @After
     public void cleanUp() {
         if (installationIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
+            cdsTestUtil.delete(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
                 installationIdentityHolder.customerIdentity(),
                 installationIdentityHolder.deploymentIdentity(),
                 installationIdentityHolder.installationIdentity()
             );
         }
         if (licensedAppIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_LICENSED_APPLICATIONS_BY_CUSTOMER_SITE_LICENSED_IDS,
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
                 licensedAppIdentityHolder.customerIdentity(),
                 licensedAppIdentityHolder.siteIdentity(),
                 licensedAppIdentityHolder.licenseIdentity()
             );
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -59,7 +59,7 @@ public class CdsInstallationsTests {
     @TestRail(testCaseId = {"5823"})
     @Description("API returns a list of all the installations in the CDS DB")
     public void getInstallations() {
-        ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_INSTALLATIONS, InstallationResponse.class);
+        ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATIONS, InstallationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -158,7 +158,7 @@ public class CdsInstallationsTests {
             .installationIdentity(installationIdentity)
             .build();
 
-        ResponseWrapper<InstallationItems> identity = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_INSTALLATIONS_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
+        ResponseWrapper<InstallationItems> identity = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATION_BY_CUSTOMER_DEPLOYMENT_INSTALLATION_IDS,
             InstallationItems.class,
             customerIdentity,
             deploymentIdentity,
