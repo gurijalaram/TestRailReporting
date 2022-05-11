@@ -1,5 +1,9 @@
 package com.apriori.pageobjects.pages.create;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 
@@ -50,6 +54,39 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
     @FindBy(xpath = "//span[contains(text(), 'Apply and Close')]")
     private WebElement applyAndCloseVisualizationButton;
+
+    @FindBy(xpath = "(//div[@id='fields']//input)[1]")
+    private WebElement fieldsInput;
+
+    @FindBy(xpath = "(//div[@id='fields']//input)[2]")
+    private WebElement measuresInput;
+
+    @FindBy(id = "dataSizeSelector")
+    private WebElement dataScopeSelector;
+
+    @FindBy(xpath = "(//ul[@id='dimensionsTree']//li)[1]")
+    private WebElement firstFieldsField;
+
+    @FindBy(xpath = "(//ul[@id='dimensionsTree']//li)[3]")
+    private WebElement secondFieldsField;
+
+    @FindBy(xpath = "//ul[@id='menuList']/li[1]")
+    private WebElement addAsColumnMenuOption;
+
+    @FindBy(xpath = "//ul[@id='menuList']/li[3]")
+    private WebElement createFilterMenuOption;
+
+    @FindBy(xpath = "(//ul[@id='measuresTree']//li)[1]")
+    private WebElement measuresSearchResultList;
+
+    @FindBy(xpath = "(//ul[@id='measuresTree']//li)[2]")
+    private WebElement measuresFirstSearchResultOption;
+
+    @FindBy(xpath = "//div[@id='filters']//a")
+    private WebElement filterDropdown;
+
+    @FindBy(xpath = "//div[@id='filters']//a/following-sibling::div/input")
+    private WebElement createFilterInput;
 
     @FindBy(xpath = "(//li[@class='folders node closed'])[1]")
     private WebElement firstDataField;
@@ -161,7 +198,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      */
     public CreateAdHocViewPage clickGoToDesignerOkButton() {
         pageUtils.waitForElementAndClick(goToDesignerOkButton);
-        isCreateAdHocViewPageDisplayedAndEnabled();
+        assertThat(isCreateAdHocViewPageDisplayedAndEnabled(), is(equalTo(true)));
         return this;
     }
 
@@ -175,6 +212,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         pageUtils.waitForElementAndClick(changeVisualizationButton);
         pageUtils.waitForElementAndClick(visualizationTableOptionButton);
         pageUtils.waitForElementAndClick(applyAndCloseVisualizationButton);
+        pageUtils.waitForElementToAppear(By.xpath("//tr[@id='rows']/td[contains(@class, 'title')]"));
         return this;
     }
 
@@ -184,8 +222,9 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      * @return CreateAdHocViewPage instance
      */
     public CreateAdHocViewPage changeDataScopeToFull() {
-        Select dataScope = new Select(driver.findElement(By.id("dataSizeSelector")));
+        Select dataScope = new Select(dataScopeSelector);
         dataScope.selectByValue("full");
+        assertThat(dataScopeSelector.getAttribute("value"), is(equalTo("full")));
         return this;
     }
 
@@ -193,86 +232,100 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         Actions actions = new Actions(driver);
 
         // add Scenario Part Number
-        pageUtils.waitForElementAndClick(By.xpath("(//div[@id='fields']//input)[1]"));
+        pageUtils.waitForElementAndClick(fieldsInput);
 
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).clear();
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).sendKeys("Scenario Part Number");
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).sendKeys(Keys.ENTER);
+        pageUtils.setValueOfElement(
+            fieldsInput,
+            "Scenario Part Number",
+            Keys.ENTER
+        );
 
-        pageUtils.waitForElementToAppear(By.xpath("(//ul[@id='dimensionsTree']//li)[1]"));
+        pageUtils.waitForElementToAppear(firstFieldsField);
 
-        actions.contextClick(
-                driver.findElement(
-                    By.xpath("(//ul[@id='dimensionsTree']//li)[1]")))
-            .build()
-            .perform();
-        pageUtils.waitForElementAndClick(By.xpath("//ul[@id='menuList']/li[1]"));
+        actions.contextClick(firstFieldsField).build().perform();
+        pageUtils.waitForElementAndClick(addAsColumnMenuOption);
 
         // add Scenario Name
-        pageUtils.waitForElementAndClick(By.xpath("(//div[@id='fields']//input)[1]"));
+        pageUtils.waitForElementAndClick(fieldsInput);
 
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).clear();
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).sendKeys("Scenario Name");
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).sendKeys(Keys.ENTER);
+        pageUtils.setValueOfElement(
+            fieldsInput,
+            "Scenario Name",
+            Keys.ENTER
+        );
 
-        pageUtils.waitForElementToAppear(By.xpath("(//ul[@id='dimensionsTree']//li)[3]"));
+        pageUtils.waitForElementToAppear(secondFieldsField);
 
-        actions.contextClick(
-                driver.findElement(
-                    By.xpath("(//ul[@id='dimensionsTree']//li)[3]")))
-            .build()
-            .perform();
-        pageUtils.waitForElementAndClick(By.xpath("//ul[@id='menuList']/li[1]"));
+        actions.contextClick(secondFieldsField).build().perform();
+        pageUtils.waitForElementAndClick(addAsColumnMenuOption);
 
         // add scenario fbc to table
-        pageUtils.waitForElementAndClick(By.xpath("(//div[@id='fields']//input)[2]"));
+        pageUtils.waitForElementAndClick(measuresInput);
 
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[2]")).clear();
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[2]"))
-            .sendKeys("Scenario Fully Burdened Cost");
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[2]")).sendKeys(Keys.ENTER);
+        pageUtils.setValueOfElement(measuresInput, "Scenario Fully Burdened Cost", Keys.ENTER);
 
-        pageUtils.waitForElementToAppear(By.xpath("(//ul[@id='measuresTree']//li)[1]"));
+        pageUtils.waitForElementToAppear(measuresSearchResultList);
 
-        actions.contextClick(
-                driver.findElement(
-                    By.xpath("(//ul[@id='measuresTree']//li)[2]")))
-            .build()
-            .perform();
-        pageUtils.waitForElementAndClick(By.xpath("//ul[@id='menuList']/li[1]"));
+        actions.contextClick(measuresFirstSearchResultOption).build().perform();
+        pageUtils.waitForElementAndClick(addAsColumnMenuOption);
 
         return this;
     }
 
+    /**
+     * Add filter to table
+     *
+     * @return CreateAdHocViewPage instance
+     */
     public CreateAdHocViewPage addFilterToTable() {
         Actions actions = new Actions(driver);
-        pageUtils.waitForElementAndClick(By.xpath("(//div[@id='fields']//input)[1]"));
+        pageUtils.waitForElementAndClick(fieldsInput);
 
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).clear();
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).sendKeys("Latest Export Set Name");
-        driver.findElement(By.xpath("(//div[@id='fields']//input)[1]")).sendKeys(Keys.ENTER);
+        pageUtils.setValueOfElement(
+            fieldsInput,
+            "Latest Export Set Name",
+            Keys.ENTER
+        );
 
-        pageUtils.waitForElementToAppear(By.xpath("(//ul[@id='dimensionsTree']//li)[1]"));
+        pageUtils.waitForElementToAppear(firstFieldsField);
 
-        actions.contextClick(
-                driver.findElement(
-                    By.xpath("(//ul[@id='dimensionsTree']//li)[1]")))
+        actions.contextClick(firstFieldsField)
             .build()
             .perform();
-        pageUtils.waitForElementAndClick(By.xpath("//ul[@id='menuList']/li[3]"));
+        pageUtils.waitForElementAndClick(createFilterMenuOption);
 
         pageUtils.waitForElementAndClick(By.xpath("//div[@id='filters']//a"));
-        pageUtils.waitForElementAndClick(By.xpath("//div[@id='filters']//a/following-sibling::div/input"));
-        driver.findElement(By.xpath("//div[@id='filters']//a/following-sibling::div/input")).clear();
-        driver.findElement(By.xpath("//div[@id='filters']//a/following-sibling::div/input")).sendKeys("top-level");
 
-        pageUtils.waitForElementAndClick(By.xpath("//li[@title='---01-top-level']"));
-        pageUtils.waitForElementToAppear(By.xpath("//a[@title='---01-top-level']"));
+        By createFilterInputLocator = By.xpath("//div[@id='filters']//a/following-sibling::div/input");
+        pageUtils.waitForElementAndClick(createFilterInputLocator);
+        driver.findElement(createFilterInputLocator).clear();
+        driver.findElement(createFilterInputLocator).sendKeys("top-level");
+
+        String dropdownSelectionGenericLocator = "//%s[@title='---01-top-level']";
+        pageUtils.waitForElementAndClick(By.xpath(String.format(dropdownSelectionGenericLocator, "li")));
+        pageUtils.waitForElementToAppear(By.xpath(String.format(dropdownSelectionGenericLocator, "a")));
 
         pageUtils.waitForElementAndClick(By.xpath("//fieldset[@id='applyFilter']/button"));
 
         pageUtils.waitForElementToAppear(By.xpath("//tbody[@id='tableDetails']/tr[1]/td[1]/span[contains(text(), '3538968')]"));
 
         return this;
+    }
+
+    /**
+     * Gets specified table cell value
+     *
+     * @param columnIndex - String
+     * @param rowIndex - String
+     * @return String of value retrieved
+     */
+    public String getTableCellValue(String columnIndex, String rowIndex) {
+        return driver.findElement(
+            By.xpath(
+                String.format(
+                    "//tbody[@id='tableDetails']/tr[%s]/td[%s]/span",
+                    columnIndex,
+                    rowIndex)))
+            .getText();
     }
 }
