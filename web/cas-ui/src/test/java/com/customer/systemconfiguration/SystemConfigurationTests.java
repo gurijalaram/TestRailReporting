@@ -40,7 +40,7 @@ public class SystemConfigurationTests extends TestBase {
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
         String customerIdentity = aprioriInternal.getIdentity();
-        ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITE_BY_CUSTOMER_ID, Sites.class, customerIdentity);
+        ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, customerIdentity);
         String internalSiteName = aprioriInternalSites.getResponseEntity().getItems().get(0).getName();
         String siteName2 = aprioriInternalSites.getResponseEntity().getItems().get(1).getName();
 

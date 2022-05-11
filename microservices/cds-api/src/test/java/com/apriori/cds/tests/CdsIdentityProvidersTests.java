@@ -54,13 +54,13 @@ public class CdsIdentityProvidersTests {
     @AfterClass
     public static void cleanUp() {
         if (idpIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_SAML_BY_CUSTOMER_PROVIDER_IDS, customerIdentity, idpIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, customerIdentity, idpIdentity);
         }
         if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -100,7 +100,7 @@ public class CdsIdentityProvidersTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         idpIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SAML_BY_CUSTOMER_PROVIDER_IDS,
+        ResponseWrapper<IdentityProviderResponse> idp = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
             IdentityProviderResponse.class,
             customerIdentity,
             idpIdentity
@@ -120,7 +120,7 @@ public class CdsIdentityProvidersTests {
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         idpIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SAML_BY_CUSTOMER_ID,
+        ResponseWrapper<IdentityProviderPagination> idpPagination = cdsTestUtil.getCommonRequest(CDSAPIEnum.SAML_BY_CUSTOMER_ID,
             IdentityProviderPagination.class,
             customerIdentity
         );
@@ -138,7 +138,7 @@ public class CdsIdentityProvidersTests {
         ResponseWrapper<IdentityProviderResponse> identityProviderResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, userName);
         String identityProviderIdentity = identityProviderResponse.getResponseEntity().getIdentity();
 
-        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(CDSAPIEnum.DELETE_SAML_BY_CUSTOMER_PROVIDER_IDS,
+        ResponseWrapper<String> deleteResponse = cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS,
             customerIdentity,
             identityProviderIdentity
         );

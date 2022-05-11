@@ -43,7 +43,7 @@ public class CasCustomersTests {
     @After
     public void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -121,7 +121,6 @@ public class CasCustomersTests {
     }
 
     @Test
-    @Issue("IDS-446")
     @TestRail(testCaseId = {"5642", "5644"})
     @Description("Add a new customer, get it by name, update the customer and get it by identity")
     public void createUpdateCustomer() {
@@ -148,7 +147,7 @@ public class CasCustomersTests {
         ResponseWrapper<Customer> patchResponse = CasTestUtil.updateCustomer(customerIdentity, email);
 
         assertThat(patchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+        assertThat(patchResponse.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + ".com", email + ".co.uk"))));
 
         ResponseWrapper<Customer> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, Customer.class)
             .token(token)
@@ -156,7 +155,7 @@ public class CasCustomersTests {
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseIdentity.getResponseEntity().getName(), is(equalTo(customerName)));
-        assertThat(responseIdentity.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + "com", email + ".co.uk"))));
+        assertThat(responseIdentity.getResponseEntity().getEmailDomains(), is(equalTo(Arrays.asList(email + ".com", email + ".co.uk"))));
     }
 
     @Test

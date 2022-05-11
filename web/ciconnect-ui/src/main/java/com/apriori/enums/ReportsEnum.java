@@ -5,6 +5,7 @@ public enum ReportsEnum {
     PART_COST("Part Cost [SSR]"),
     DTC_COMPONENT_SUMMARY("DTC Component Summary [CIR]"),
     DTC_MULTIPLE_COMPONENT_SUMMARY("DFM Multiple Components Summary [CIR]");
+
     private String reportName;
 
     ReportsEnum(String name) {

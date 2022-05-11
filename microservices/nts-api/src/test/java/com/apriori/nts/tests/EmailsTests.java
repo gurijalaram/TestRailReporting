@@ -2,7 +2,7 @@ package com.apriori.nts.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.nts.apicalls.EmailService;
+import com.apriori.nts.email.EmailService;
 import com.apriori.nts.entity.response.Email;
 import com.apriori.nts.entity.response.EmailsItems;
 import com.apriori.nts.entity.response.SendEmail;
@@ -40,6 +40,7 @@ public class EmailsTests extends TestHelper {
         //Get Single Email
         ResponseWrapper<Email> getEmailResponse = emailService.getEmail(sendEmail.getIdentity());
         soft.assertThat(getEmailResponse.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
+
 
         //Get All Emails, but filter by single identity
         ResponseWrapper<EmailsItems> getEmailsItemsResponse = emailService.getEmailsByIdentity(sendEmail.getIdentity());
