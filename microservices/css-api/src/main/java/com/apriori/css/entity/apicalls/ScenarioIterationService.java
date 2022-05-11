@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
 public class ScenarioIterationService {
 
     private UserCredentials currentUser;
-    final private ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final  ComponentsUtil componentsUtil = new ComponentsUtil();
 
     public ScenarioIterationService() {
         currentUser = UserUtil.getUser();
