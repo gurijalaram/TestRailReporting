@@ -425,10 +425,9 @@ public class ScenariosUtil {
      * Calls an api with the DELETE verb.
      *
      * @param componentInfoBuilder - the component info builder object
-     * @param <T>                  - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfoBuilder) {
 
         String componentId = componentInfoBuilder.getComponentIdentity();
         String scenarioId = componentInfoBuilder.getScenarioIdentity();
