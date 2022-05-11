@@ -28,6 +28,8 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.SmokeTests;
 
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +52,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
+    @Category(SmokeTests.class)
     @TestRail(testCaseId = {"10799", "10768", "10801", "10802", "10803", "10804"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyAndEditAddNotes() {

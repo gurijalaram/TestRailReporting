@@ -14,6 +14,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
+import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.PublishAssembliesTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
@@ -45,39 +46,40 @@ import testsuites.suiteinterface.SmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
-@Suite.SuiteClasses({
-        CostAllCadTests.class,
-        CostScenarioTests.class,
-        NewScenarioNameTests.class,
-        ProcessGroupsTests.class,
-        SecondaryProcessTests.class,
-        ChangeMaterialSelectionTests.class,
-        MaterialStockTests.class,
-        UploadComponentTests.class,
-        UploadTests.class,
-        HelpTests.class,
-        DecimalPlaceTests.class,
-        UploadAssembliesTests.class,
-        PublishExistingCostedTests.class,
-        PreviewPanelTests.class,
-        DFMRiskTests.class,
-        DeleteTests.class,
-        PublishTests.class,
-        SheetMetalDTCTests.class,
-        DTCPlasticMouldingTests.class,
-        ActionsTests.class,
-        TableHeadersTests.class,
-        DTCMachiningTests.class,
-        DTCCastingTests.class,
-        TwoModelMachiningTests.class,
-        SettingsTests.class,
-        ToleranceTests.class,
-        ComparisonTests.class,
-        ThreadTests.class,
-        PartNestingTests.class,
-        PsoEditTests.class,
-        PublishAssembliesTests.class,
-        GroupEditAssemblies.class
+@Suite.SuiteClasses( {
+    CostAllCadTests.class,
+    CostScenarioTests.class,
+    NewScenarioNameTests.class,
+    ProcessGroupsTests.class,
+    SecondaryProcessTests.class,
+    ChangeMaterialSelectionTests.class,
+    MaterialStockTests.class,
+    UploadComponentTests.class,
+    UploadTests.class,
+    HelpTests.class,
+    DecimalPlaceTests.class,
+    UploadAssembliesTests.class,
+    PublishExistingCostedTests.class,
+    PreviewPanelTests.class,
+    DFMRiskTests.class,
+    DeleteTests.class,
+    PublishTests.class,
+    SheetMetalDTCTests.class,
+    DTCPlasticMouldingTests.class,
+    ActionsTests.class,
+    TableHeadersTests.class,
+    DTCMachiningTests.class,
+    DTCCastingTests.class,
+    TwoModelMachiningTests.class,
+    SettingsTests.class,
+    ToleranceTests.class,
+    ComparisonTests.class,
+    ThreadTests.class,
+    PartNestingTests.class,
+    PsoEditTests.class,
+    PublishAssembliesTests.class,
+    GroupEditAssemblies.class,
+    EditAssembliesTest.class
 })
 public class CIDSmokeTestSuite {
 }
