@@ -1,9 +1,9 @@
 package testsuites;
 
-import com.adhocview.AdHocViewTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.adhocview.AdHocViewTests;
 import com.navigation.ReportsNavigationTests;
 import com.ootbreports.assemblycost.AssemblyCostReportTests;
 import com.ootbreports.componentcost.ComponentCostReportTests;
