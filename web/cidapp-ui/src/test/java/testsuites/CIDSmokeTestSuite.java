@@ -46,7 +46,7 @@ import testsuites.suiteinterface.SmokeTests;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(SmokeTests.class)
 @Categories.ExcludeCategory(IgnoreTests.class)
-@Suite.SuiteClasses( {
+@Suite.SuiteClasses({
     CostAllCadTests.class,
     CostScenarioTests.class,
     NewScenarioNameTests.class,

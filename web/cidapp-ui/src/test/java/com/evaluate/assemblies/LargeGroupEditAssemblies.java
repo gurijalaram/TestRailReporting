@@ -39,7 +39,8 @@ public class LargeGroupEditAssemblies extends TestBase {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
 
-        List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle", "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin", "right paddle", "seat lock", "seat", "steer wheel support", "washer");
+        List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle", "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin",
+            "right paddle", "seat lock", "seat", "steer wheel support", "washer");
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
         final String subComponentExtension = ".ipt";
 
@@ -71,7 +72,9 @@ public class LargeGroupEditAssemblies extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-                .multiSelectSubcomponents("centre bolt, " + scenarioName + "", "centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "", "left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "leg, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "", "pin, " + scenarioName + "");
+                .multiSelectSubcomponents("centre bolt, " + scenarioName + "", "centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " +
+                    scenarioName + "", "left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "leg, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " +
+                    scenarioName + "", "pin, " + scenarioName + "");
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")

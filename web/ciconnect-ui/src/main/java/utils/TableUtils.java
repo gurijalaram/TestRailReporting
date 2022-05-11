@@ -162,6 +162,16 @@ public class TableUtils {
     }
 
     /**
+     * Select a row by item name
+     *
+     * @param table The table to search
+     * @param name  The item name to search for
+     */
+    public void selectRowByName(WebElement table, String name, int columnIndex) {
+        findTableItemByName(table, name, columnIndex).click();
+    }
+
+    /**
      * Select a row by item connector name
      *
      * @param table The table to search
@@ -219,16 +229,6 @@ public class TableUtils {
         }
 
         return column;
-    }
-
-    /**
-     * Select a row by item name
-     *
-     * @param table The table to search
-     * @param name  The item name to search for
-     */
-    public void selectRowByName(WebElement table, String name, int columnIndex) {
-        findTableItemByName(table, name, columnIndex).click();
     }
 
     /**
