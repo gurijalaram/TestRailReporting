@@ -51,10 +51,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return new page object
      */
     public EvaluatePage costScenario() {
-        pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
-        waitForCostLabel(2);
-        return new EvaluatePage(driver);
+        return costScenario(2);
     }
 
     /**
