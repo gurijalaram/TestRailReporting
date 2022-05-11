@@ -121,7 +121,7 @@ public class ScenariosUtil {
 
                 ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentInfo.getComponentName(), componentInfo.getScenarioName(), scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
