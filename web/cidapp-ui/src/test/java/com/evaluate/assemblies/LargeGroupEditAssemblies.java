@@ -34,13 +34,30 @@ public class LargeGroupEditAssemblies extends TestBase {
     private static UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
 
+    private static final String CENTRE_BOLT = "centre bolt";
+    private static final String CENTRE_WASHER = "centre washer";
+    private static final String DISPLAY = "display";
+    private static final String GASKET = "gasket";
+    private static final String HANDLE = "Handle";
+    private static final String LEFT_PADDLE = "left paddle";
+    private static final String STEER_WHEEL_SUPPORT = "steer wheel support";
+    private static final String SEAT_LOCK = "seat lock";
+    private static final String MECHANISM_BODY = "mechanism body";
+    private static final String PADDLE_BAR = "paddle bar";
+    private static final String LEG_COVER = "leg cover";
+    private static final String LEG = "leg";
+    private static final String RIGHT_PADDLE = "right paddle";
+    private static final String WASHER = "washer";
+    private static final String SEAT = "seat";
+    private static final String PIN = "pin";
+
     @BeforeClass
     public static void setupAssembly() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
 
-        List<String> subComponentNames = Arrays.asList("centre bolt", "centre washer", "display", "gasket", "Handle", "left paddle", "leg cover", "leg", "mechanism body", "paddle bar", "pin",
-            "right paddle", "seat lock", "seat", "steer wheel support", "washer");
+        List<String> subComponentNames = Arrays.asList(CENTRE_BOLT, CENTRE_WASHER, DISPLAY, GASKET, HANDLE, LEFT_PADDLE, LEG_COVER, LEG, MECHANISM_BODY, PADDLE_BAR, PIN, RIGHT_PADDLE, SEAT_LOCK,
+            SEAT, STEER_WHEEL_SUPPORT, WASHER);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
         final String subComponentExtension = ".ipt";
 
@@ -72,33 +89,43 @@ public class LargeGroupEditAssemblies extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-                .multiSelectSubcomponents("centre bolt, " + scenarioName + "", "centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " +
-                    scenarioName + "", "left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "leg, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " +
-                    scenarioName + "", "pin, " + scenarioName + "");
+            .multiSelectSubcomponents(
+                CENTRE_BOLT + ", " + scenarioName + "",
+                CENTRE_WASHER + ", " + scenarioName + "",
+                DISPLAY + ", " + scenarioName + "",
+                GASKET + ", " + scenarioName + "",
+                HANDLE + ", " + scenarioName + "",
+                LEFT_PADDLE + ", " + scenarioName + "",
+                LEG_COVER + "," + scenarioName + "",
+                LEG + "," + scenarioName + "",
+                MECHANISM_BODY + "," + scenarioName + "",
+                PADDLE_BAR + "," + scenarioName + "",
+                PIN + "," + scenarioName + "");
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")
-                .editSubcomponent(EditComponentsPage.class)
-                .renameScenarios()
-                .enterScenarioName(scenarioName2)
-                .clickContinue(EditScenarioStatusPage.class)
-                .close(ComponentsListPage.class)
-                .checkSubcomponentState(componentAssembly, "centre washer, display, gasket, Handle, left paddle, leg cover, leg, mechanism body, paddle bar, pin");
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(scenarioName2)
+            .clickContinue(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, CENTRE_WASHER + "," + DISPLAY + "," + GASKET + "," + HANDLE + "," + LEFT_PADDLE + "," + LEG_COVER + "," + LEG +
+                "," + MECHANISM_BODY + "," + PADDLE_BAR + "," + PIN);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails("centre washer", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("display", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("gasket", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("Handle", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("left paddle", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("leg cover", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("leg", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("mechanism body", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("paddle bar", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("pin", scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("centre bolt", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("seat", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("steer wheel support", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
-        softAssertions.assertThat(componentsListPage.getRowDetails("washer", scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(CENTRE_WASHER, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(DISPLAY, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(GASKET, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(HANDLE, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(LEFT_PADDLE, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(LEG_COVER, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(LEG, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(MECHANISM_BODY, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(PADDLE_BAR, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, scenarioName2)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(CENTRE_BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SEAT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(STEER_WHEEL_SUPPORT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(WASHER, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
