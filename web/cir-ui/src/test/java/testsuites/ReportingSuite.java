@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.adhocview.AdHocViewTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
@@ -38,6 +39,7 @@ import testsuites.suiteinterface.ReportsTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(ReportsTest.class)
 @Suite.SuiteClasses({
+    AdHocViewTests.class,
     AssemblyDetailsReportTests.class,
     AssemblyCostReportTests.class,
     CastingDtcReportTests.class,
