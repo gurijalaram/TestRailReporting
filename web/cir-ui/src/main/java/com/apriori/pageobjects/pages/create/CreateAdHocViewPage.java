@@ -228,38 +228,17 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         return this;
     }
 
+    /**
+     * Adds required data to table
+     *
+     * @return CreateAdHocViewPage instance
+     */
     public CreateAdHocViewPage addDataToTable() {
+        addFieldsDataItemToTable("Scenario Part Number");
+        addFieldsDataItemToTable("Scenario Name");
+
         Actions actions = new Actions(driver);
 
-        // add Scenario Part Number
-        pageUtils.waitForElementAndClick(fieldsInput);
-
-        pageUtils.setValueOfElement(
-            fieldsInput,
-            "Scenario Part Number",
-            Keys.ENTER
-        );
-
-        pageUtils.waitForElementToAppear(firstFieldsField);
-
-        actions.contextClick(firstFieldsField).build().perform();
-        pageUtils.waitForElementAndClick(addAsColumnMenuOption);
-
-        // add Scenario Name
-        pageUtils.waitForElementAndClick(fieldsInput);
-
-        pageUtils.setValueOfElement(
-            fieldsInput,
-            "Scenario Name",
-            Keys.ENTER
-        );
-
-        pageUtils.waitForElementToAppear(secondFieldsField);
-
-        actions.contextClick(secondFieldsField).build().perform();
-        pageUtils.waitForElementAndClick(addAsColumnMenuOption);
-
-        // add scenario fbc to table
         pageUtils.waitForElementAndClick(measuresInput);
 
         pageUtils.setValueOfElement(measuresInput, "Scenario Fully Burdened Cost", Keys.ENTER);
@@ -327,5 +306,27 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
                     columnIndex,
                     rowIndex)))
             .getText();
+    }
+
+    /**
+     * Add fields data item to table
+     *
+     * @param fieldsTextToInput - String
+     */
+    private void addFieldsDataItemToTable(String fieldsTextToInput) {
+        Actions actions = new Actions(driver);
+
+        pageUtils.waitForElementAndClick(fieldsInput);
+
+        pageUtils.setValueOfElement(
+            fieldsInput,
+            fieldsTextToInput,
+            Keys.ENTER
+        );
+
+        pageUtils.waitForElementToAppear(firstFieldsField);
+
+        actions.contextClick(firstFieldsField).build().perform();
+        pageUtils.waitForElementAndClick(addAsColumnMenuOption);
     }
 }
