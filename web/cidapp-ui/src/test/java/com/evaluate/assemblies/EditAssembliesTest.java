@@ -40,7 +40,6 @@ public class EditAssembliesTest extends TestBase {
     private InfoPage infoPage;
     private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
-    private PublishPage publishPage;
     private EditComponentsPage editComponentsPage;
 
     private SoftAssertions softAssertions;
@@ -101,7 +100,7 @@ public class EditAssembliesTest extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(EvaluatePage.class);
 
-        evaluatePage.publishScenario()
+        evaluatePage.publishScenario(PublishPage.class)
             .publish(componentAssembly, currentUser, EvaluatePage.class);
 
         infoPage = evaluatePage.info();
@@ -154,7 +153,7 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(EvaluatePage.class);
 
@@ -283,7 +282,7 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
 
         editComponentsPage = componentsListPage.closePanel()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(componentAssembly, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
@@ -291,7 +290,7 @@ public class EditAssembliesTest extends TestBase {
             .editScenario()
             .close(EvaluatePage.class)
             .lock(EvaluatePage.class)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(componentAssembly, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Private")
@@ -309,7 +308,8 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage.editScenario()
             .close(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class)
-            .changeName(newScenarioName)
+            .renameScenarios()
+            .enterScenarioName(newScenarioName)
             .clickContinue(EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));

@@ -324,11 +324,11 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Opens the scenario
      *
-     * @return new page object
+     * @return generic page object
      */
-    public PublishPage publishScenario() {
+    public <T> T publishScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
-        return new PublishPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
