@@ -19,6 +19,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ButtonTypeEnum;
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -67,8 +68,12 @@ public class IncludeAndExclude2Tests extends TestBase {
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .tableView();
 
-        assertThat(componentsListPage.getCellColour("pin", scenarioName), is(ColourEnum.YELLOW_LIGHT.getColour()));
-        assertThat(componentsListPage.getCellColour("small ring", scenarioName), is(ColourEnum.YELLOW_LIGHT.getColour()));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(componentsListPage.getCellColour("pin", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
+        softAssertions.assertThat(componentsListPage.getCellColour("small ring", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -114,6 +119,51 @@ public class IncludeAndExclude2Tests extends TestBase {
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->
                 assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(false)));
+
+        evaluatePage = componentsListPage.closePanel()
+            .costScenario();
+
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11918", "11917", "11916"})
+    @Description("Exclude all sub-components from top-level assembly")
+    public void testExcludeSubcomponentsAndCost() {
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .selectCheckAllBox()
+            .selectButtonType(ButtonTypeEnum.EXCLUDE);
+
+        Stream.of(subComponentNames.toArray())
+            .forEach(componentName ->
+                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
 
         evaluatePage = componentsListPage.closePanel()
             .costScenario();
