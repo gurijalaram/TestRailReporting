@@ -158,6 +158,45 @@ public class VerifyIfFailsTest {
             scenarioIterationRespond.getResponseEntity().getMessage());
     }
 
+    @Test
+    @TestRail(testCaseId = {"12482"})
+    @Description("Verify: query fail when five operators are aggregated with one logical operator")
+    public void shouldFailWithFiveOperatorsTest() {
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "FiveOperatorsOverLimitQueryData.json"
+                ).getPath(), ScenarioIterationRequest.class);
+
+        ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
+            scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
+
+        assertEquals("400",scenarioIterationRespond.getResponseEntity().getStatus());
+        assertEquals("Bad Request",scenarioIterationRespond.getResponseEntity().getError());
+        assertEquals("Logical operator cannot contain more than 5 operators",
+            scenarioIterationRespond.getResponseEntity().getMessage());
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12483"})
+    @Description("Verify: query fail when query depth is used")
+    public void shouldFailWithFourthQueryDepthTest() {
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "FourthDepthQueryData.json"
+                ).getPath(), ScenarioIterationRequest.class);
+
+
+        ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
+            scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
+
+        assertEquals("400",scenarioIterationRespond.getResponseEntity().getStatus());
+        assertEquals("Bad Request",scenarioIterationRespond.getResponseEntity().getError());
+        assertEquals("The depth of operators cannot be more than 3",
+            scenarioIterationRespond.getResponseEntity().getMessage());
+    }
+
     private ScenarioIterationRequest setWithEmptyBracketNotOperator() {
         Query query = new Query();
         Operator not = new Operator();
