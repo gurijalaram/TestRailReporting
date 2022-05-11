@@ -42,12 +42,12 @@ public class CasCustomersUsersTests {
     @After
     public void cleanUp() {
         if (userIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS,
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
                     userIdentityHolder.customerIdentity(),
                     userIdentityHolder.userIdentity()
             );
             if (customerIdentityHolder != null) {
-                cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID,
+                cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID,
                         customerIdentityHolder.customerIdentity()
                 );
             }

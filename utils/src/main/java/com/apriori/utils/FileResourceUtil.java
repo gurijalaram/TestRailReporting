@@ -11,8 +11,6 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
-import software.amazon.awssdk.services.s3.model.S3Object;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -20,8 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.List;
 
 public class FileResourceUtil {
 
@@ -175,7 +171,7 @@ public class FileResourceUtil {
 
     }
 
-    private static File createTempDir(String path) {
+    public static File createTempDir(String path) {
 
         File baseDir = new File(System.getProperty("java.io.tmpdir"));
         String baseName = System.currentTimeMillis() + "-";

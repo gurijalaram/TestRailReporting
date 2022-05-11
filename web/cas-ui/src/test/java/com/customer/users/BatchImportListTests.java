@@ -72,7 +72,7 @@ public class BatchImportListTests extends TestBase {
 
         cdsTestUtil = new CdsTestUtil();
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
+        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
                 ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, now, salesforce, email).getResponseEntity()
                 : targetCustomer;
@@ -87,7 +87,7 @@ public class BatchImportListTests extends TestBase {
 
     @After
     public void teardown() {
-        cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, targetCustomer.getIdentity());
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
     private long checkEveryOtherItem(List<TableRowComponent> rows, long pageSize) {
@@ -154,7 +154,7 @@ public class BatchImportListTests extends TestBase {
         cdsTestUtil = new CdsTestUtil();
         List<User> sourceUsers = new ArrayList<>();
         for (int i = 0; i < 10; ++i) {
-            User added = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID, Users.class, customerIdentity).getResponseEntity().getItems().get(i);
+            User added = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_USERS, Users.class, customerIdentity).getResponseEntity().getItems().get(i);
             sourceUsers.add(added);
         }
         return sourceUsers;
@@ -205,7 +205,7 @@ public class BatchImportListTests extends TestBase {
         assertThat(importPage.getCardFieldValue("Success/Failed"), is(equalTo(pageSize + "/0")));
 
         sourceUsers = collectUsers(customerIdentity);
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
+        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
     }
 
     @Test

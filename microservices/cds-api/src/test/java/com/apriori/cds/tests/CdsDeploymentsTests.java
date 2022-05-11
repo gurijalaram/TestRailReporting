@@ -55,7 +55,7 @@ public class CdsDeploymentsTests {
     @AfterClass
     public static void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -76,7 +76,7 @@ public class CdsDeploymentsTests {
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
 
-        ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_DEPLOYMENTS_BY_CUSTOMER_ID,
+        ResponseWrapper<Deployments> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENTS_BY_CUSTOMER_ID,
             Deployments.class,
             customerIdentity
         );
@@ -94,7 +94,7 @@ public class CdsDeploymentsTests {
 
         String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
 
-        ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS,
+        ResponseWrapper<Deployment> deployment = cdsTestUtil.getCommonRequest(CDSAPIEnum.DEPLOYMENT_BY_CUSTOMER_DEPLOYMENT_IDS,
             Deployment.class,
             customerIdentity,
             deploymentIdentity
