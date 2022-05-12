@@ -198,8 +198,8 @@ public class IncludeAndExcludeTests extends TestBase {
         String totalCostValue2 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
         String componentsCostValue2 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
 
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue2)).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue2)).isTrue();
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue2)).isNotSameAs(componentsCostValue1);
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue2)).isNotSameAs(componentsCostValue1);
 
         softAssertions.assertAll();
     }
@@ -256,8 +256,8 @@ public class IncludeAndExcludeTests extends TestBase {
         String totalCostValue2 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
         String componentsCostValue2 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
 
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue2)).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue2)).isTrue();
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue2)).isNotSameAs(componentsCostValue1);
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue2)).isNotSameAs(componentsCostValue1);
 
         softAssertions.assertAll();
     }
