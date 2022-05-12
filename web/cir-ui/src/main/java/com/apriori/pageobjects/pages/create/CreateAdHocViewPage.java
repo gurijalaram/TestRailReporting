@@ -22,23 +22,20 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
     private static final Logger logger = LoggerFactory.getLogger(CreateAdHocViewPage.class);
 
-    @FindBy(xpath = "//div[@id='display']/div[2]/div/div[1]/div")
+    @FindBy(css = "div.primary div.title")
     private WebElement adHocViewPageTitle;
 
-    @FindBy(xpath = "//div[@class='pageHeader-title-text']")
+    @FindBy(css = "div.pageHeader-title-text")
     private WebElement adHocViewCreationPageTitle;
 
-    @FindBy(xpath = "//div[contains(@class, 'sourceDialogNew ')]")
+    @FindBy(css = "div.jr-uWidth-400px")
     private WebElement adHocViewDialog;
 
-    @FindBy(xpath = "(//li[@class='leaf domain view11'])[1]")
+    @FindBy(xpath = "//p[contains(@data-tooltip, 'aPriori Ad Hoc')]/..")
     private WebElement adHocViewDataSourceOne;
 
-    @FindBy(xpath = "//span[contains(text(), 'Choose Data...')]")
+    @FindBy(xpath = "//span[contains(text(), 'Data')]")
     private WebElement chooseDataButton;
-
-    @FindBy(xpath = "(//p[@class='wrap button draggable'])[3]")
-    private WebElement chooseDataFirstOption;
 
     @FindBy(id = "toRight")
     private WebElement moveDataToRightButton;
@@ -52,23 +49,17 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @FindBy(xpath = "//li[@data-chart-type='Table']")
     private WebElement visualizationTableOptionButton;
 
-    @FindBy(xpath = "//span[contains(text(), 'Apply and Close')]")
+    @FindBy(xpath = "//button[@class='jr-mButton jr-mButtonText jr-mButtonPrimary jr']")
     private WebElement applyAndCloseVisualizationButton;
 
-    @FindBy(xpath = "(//div[@id='fields']//input)[1]")
+    @FindBy(xpath = "//div[@id='fields']//div[contains(@class, 'primary')]//input")
     private WebElement fieldsInput;
 
-    @FindBy(xpath = "(//div[@id='fields']//input)[2]")
+    @FindBy(xpath = "//div[@id='fields']//div[contains(@class, 'secondary')]//input")
     private WebElement measuresInput;
 
     @FindBy(id = "dataSizeSelector")
     private WebElement dataScopeSelector;
-
-    @FindBy(xpath = "(//ul[@id='dimensionsTree']//li)[1]")
-    private WebElement firstFieldsField;
-
-    @FindBy(xpath = "(//ul[@id='dimensionsTree']//li)[3]")
-    private WebElement secondFieldsField;
 
     @FindBy(xpath = "//ul[@id='menuList']/li[1]")
     private WebElement addAsColumnMenuOption;
@@ -76,20 +67,23 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
     @FindBy(xpath = "//ul[@id='menuList']/li[3]")
     private WebElement createFilterMenuOption;
 
-    @FindBy(xpath = "(//ul[@id='measuresTree']//li)[1]")
+    @FindBy(xpath = "//ul[@id='measuresTree']//ul")
     private WebElement measuresSearchResultList;
 
-    @FindBy(xpath = "(//ul[@id='measuresTree']//li)[2]")
+    @FindBy(xpath = "//p[contains(@title, 'Scenario Fully Burdened Cost (R')]/..")
     private WebElement measuresFirstSearchResultOption;
 
-    @FindBy(xpath = "//div[@id='filters']//a")
-    private WebElement filterDropdown;
-
-    @FindBy(xpath = "//div[@id='filters']//a/following-sibling::div/input")
+    @FindBy(xpath = "//span[contains(text(), 'C')]/ancestor::div[contains(@class, 'jr')]//input")
     private WebElement createFilterInput;
 
-    @FindBy(xpath = "(//li[@class='folders node closed'])[1]")
-    private WebElement firstDataField;
+    @FindBy(xpath = "//p[contains(@title, 'Combines')]/..")
+    private WebElement firstDataPreSearchField;
+
+    @FindBy(xpath = "//ul[@id='dimensionsTree']//ul/li[1]")
+    private WebElement firstDataPostSearchField;
+
+    @FindBy(xpath = "//ul[@id='dimensionsTree']//ul/li[2]")
+    private WebElement secondDataPostSearchField;
 
     private final PageUtils pageUtils;
     private final WebDriver driver;
@@ -177,7 +171,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      * @return CreateAdHocViewPage instance
      */
     public CreateAdHocViewPage waitForChooseDataDialogToAppear() {
-        pageUtils.waitForElementToAppear(chooseDataFirstOption);
+        pageUtils.waitForElementToAppear(firstDataPreSearchField);
         return this;
     }
 
@@ -208,7 +202,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      * @return CreateAdHocViewPage instance
      */
     public CreateAdHocViewPage changeVisualizationToTable() {
-        pageUtils.waitForElementToAppear(firstDataField);
+        pageUtils.waitForElementToAppear(firstDataPreSearchField);
         pageUtils.waitForElementAndClick(changeVisualizationButton);
         pageUtils.waitForElementAndClick(visualizationTableOptionButton);
         pageUtils.waitForElementAndClick(applyAndCloseVisualizationButton);
@@ -258,7 +252,6 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
      */
     public CreateAdHocViewPage addFilterToTable() {
         Actions actions = new Actions(driver);
-        pageUtils.waitForElementAndClick(fieldsInput);
 
         pageUtils.setValueOfElement(
             fieldsInput,
@@ -266,9 +259,9 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
             Keys.ENTER
         );
 
-        pageUtils.waitForElementToAppear(firstFieldsField);
+        pageUtils.waitForElementToAppear(firstDataPostSearchField);
 
-        actions.contextClick(firstFieldsField)
+        actions.contextClick(firstDataPostSearchField)
             .build()
             .perform();
         pageUtils.waitForElementAndClick(createFilterMenuOption);
@@ -318,15 +311,12 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
         pageUtils.waitForElementAndClick(fieldsInput);
 
-        pageUtils.setValueOfElement(
-            fieldsInput,
-            fieldsTextToInput,
-            Keys.ENTER
-        );
+        pageUtils.setValueOfElement(fieldsInput, fieldsTextToInput, Keys.ENTER);
 
-        pageUtils.waitForElementToAppear(firstFieldsField);
+        pageUtils.waitForElementToAppear(firstDataPostSearchField);
 
-        actions.contextClick(firstFieldsField).build().perform();
+        WebElement buttonToClick = fieldsTextToInput.equals("Scenario Name") ? secondDataPostSearchField : firstDataPostSearchField;
+        actions.contextClick(buttonToClick).build().perform();
         pageUtils.waitForElementAndClick(addAsColumnMenuOption);
     }
 }
