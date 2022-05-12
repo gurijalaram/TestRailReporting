@@ -308,8 +308,6 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
-
         evaluatePage.editScenario()
             .close(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class)
