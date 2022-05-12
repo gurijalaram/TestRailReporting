@@ -254,8 +254,10 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
 
         editComponentsPage = componentsListPage.closePanel()
+            .costScenario()
+            .publishScenario(EvaluatePage.class)
             .clickExplore()
-            .selectFilter("Private")
+            .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(assemblyName, scenarioName)
             .editScenario()
