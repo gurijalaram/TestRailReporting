@@ -171,7 +171,7 @@ public class EditAssembliesTest extends TestBase {
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyLargeSubcomponentSet() {
         final String assemblyName = "FUSELAGE_SUBASSEMBLY";
-        final String assemblyExtension = ".CATPart";
+        final String assemblyExtension = ".CATProduct";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final String subcomponent1 = "505-04426-001 1 1 ---";
         final String subcomponent2 = "550-05628-401 PRIMARY 1 ---";
