@@ -720,4 +720,15 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.windowHandler(0);
         return new EvaluatePage(driver);
     }
+
+    /**
+     * Gets the type of cost results value
+     *
+     * @param label - type of cost result
+     * @return - String
+     */
+    public String getTypeOfCostResultsValue(String label) {
+        By costResultValue = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
+        return pageUtils.waitForElementToAppear(costResultValue).getText();
+    }
 }
