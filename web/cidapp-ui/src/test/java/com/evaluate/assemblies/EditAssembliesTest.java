@@ -82,9 +82,8 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents();
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
 
@@ -127,6 +126,8 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
+            .editScenario()
+            .close(EvaluatePage.class)
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(EvaluatePage.class);
