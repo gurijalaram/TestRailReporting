@@ -198,14 +198,10 @@ public class EditAssembliesTest extends TestBase {
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
-            .close(EvaluatePage.class)
             .openComponents();
 
         allSubComponents.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
