@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
 import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -255,9 +256,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return - current page object
      */
-    public ComponentsListPage selectSubAssemblySubComponent(String componentName) {
-        By bySubComponent = By.xpath(String.format("(//span[text()='%s'])[2]/ancestor::div[@role='cell']/preceding-sibling::div//div[@class='checkbox-icon']", componentName));
-        pageUtils.waitForElementAndClick(bySubComponent);
+    public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
+        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[@class='checkbox-icon']", componentName.trim())))
+            .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
+        pageUtils.waitForElementAndClick(scenario);
         return this;
     }
 
