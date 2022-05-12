@@ -25,6 +25,8 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
@@ -236,7 +238,6 @@ public class EditAssembliesTest extends TestBase {
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -254,7 +255,8 @@ public class EditAssembliesTest extends TestBase {
 
         editComponentsPage = componentsListPage.closePanel()
             .clickExplore()
-            .selectFilter("Public")
+            .selectFilter("Private")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(assemblyName, scenarioName)
             .editScenario()
             .close(EvaluatePage.class)
@@ -265,7 +267,8 @@ public class EditAssembliesTest extends TestBase {
             "please supply a different scenario name or cancel the operation"));
 
         evaluatePage = editComponentsPage.overrideScenarios()
-            .clickContinue(EvaluatePage.class);
+            .clickContinue(PublishPage.class)
+            .publish(EvaluatePage.class);
 
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
     }
