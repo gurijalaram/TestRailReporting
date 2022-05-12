@@ -5,7 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.cidappapi.entity.response.GroupCostResponse;
+import com.apriori.cidappapi.entity.response.GroupErrorResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -30,22 +31,50 @@ public class GroupCostingTests {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private UserCredentials currentUser;
 
+    private final List<String> subComponentNames = Arrays.asList(
+        "50mmArc", "50mmCube", "50mmEllipse", "50mmOctagon", "75mmCube", "75mmHexagon",
+        "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder", "500mmBlob");
+    private String subComponentExtension = ".SLDPRT";
+    private String assemblyName = "RandomShapeAsm";
+    private String assemblyExtension = ".SLDASM";
+
     @Test
     @TestRail(testCaseId = "10620")
-    @Description("Copy a scenario")
-    public void testGroupCost() {
+    @Description("Group Cost 10 components")
+    public void testGroupCostTenParts() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<String> subComponentNamesSubset = subComponentNames.subList(0,10);
+        currentUser = UserUtil.getUser();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            processGroupEnum,
+            subComponentNamesSubset,
+            subComponentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly);
+
+        assertThat(groupCostResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(groupCostResponse.getResponseEntity().getSuccesses().size(), is(equalTo(subComponentNamesSubset.size())));
+        assertThat(groupCostResponse.getResponseEntity().getFailures().size(), is(equalTo(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10620")
+    @Description("Attempt to Group Cost 11 components")
+    public void testGroupCostElevenParts() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
-
-        final List<String> subComponentNames = Arrays.asList(
-            "50mmArc", "50mmCube", "50mmEllipse", "50mmOctagon", "75mmCube", "75mmHexagon",
-            "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder");
-        //, "500mmBlob"
-        String subComponentExtension = ".SLDPRT";
-        String assemblyName = "RandomShapeAsm";
-        String assemblyExtension = ".SLDASM";
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -59,8 +88,8 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<ScenarioResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly);
+        ResponseWrapper<GroupErrorResponse> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
-        assertThat(groupCostResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        assertThat(groupErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
     }
 }

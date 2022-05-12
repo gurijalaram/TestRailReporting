@@ -10,6 +10,8 @@ import com.apriori.cidappapi.entity.request.CostRequest;
 import com.apriori.cidappapi.entity.request.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
+import com.apriori.cidappapi.entity.response.GroupCostResponse;
+import com.apriori.cidappapi.entity.response.GroupErrorResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
@@ -212,17 +214,42 @@ public class ScenariosUtil {
      * @param componentInfoBuilder - A number of copy component objects
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
+        String customBody = getGroupRequestString(componentInfoBuilder);
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .customBody(customBody);
+
+        ResponseWrapper<GroupCostResponse> groupCost = HTTPRequest.build(requestEntity).post();
+
+        return groupCost;
+    }
+
+    /**
+     * Post to cost a group of scenarios and expect error
+     *
+     * @param componentInfoBuilder - A number of copy component objects
+     * @return response object
+     */
+    public ResponseWrapper<GroupErrorResponse> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
+        String customBody = getGroupRequestString(componentInfoBuilder);
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupErrorResponse.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .customBody(customBody);
+
+        ResponseWrapper<GroupErrorResponse> groupCost = HTTPRequest.build(requestEntity).post();
+
+        return groupCost;
+    }
+
+    private String getGroupRequestString(ComponentInfoBuilder componentInfoBuilder) {
         List<ComponentInfoBuilder> subComponents = componentInfoBuilder.getSubComponents();
         String groupItems = "\"groupItems\": [";
         if (!subComponents.isEmpty()) {
-//            subComponents.forEach(
-//                subComponent -> {
-//                    groupItems += "{'componentIdentity':'" + subComponent.getComponentIdentity() + "',";
-//                    groupItems += "'scenarioIdentity':'" + subComponent.getScenarioIdentity() + "'},"; }
-//            );
-//            groupItems = groupItems.substring(0, groupItems.length() - 1);
-//            groupItems += "]";
             for (int i = 0; i < subComponents.size(); i++) {
                 groupItems += "{\"componentIdentity\":\"" + subComponents.get(i).getComponentIdentity() + "\",";
                 groupItems += "\"scenarioIdentity\":\"" + subComponents.get(i).getScenarioIdentity() + "\"}";
@@ -234,15 +261,7 @@ public class ScenariosUtil {
         }
 
         String customBody = "{\"costingTemplateIdentity\":\"" + getCostingTemplateId(componentInfoBuilder).getIdentity() + "\", " + groupItems;
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .customBody(customBody);
-
-        HTTPRequest.build(requestEntity).post();
-
-        return getScenarioRepresentation(componentInfoBuilder);
+        return customBody;
     }
 
     /**
