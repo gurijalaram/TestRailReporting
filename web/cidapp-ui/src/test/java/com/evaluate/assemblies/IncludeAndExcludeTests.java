@@ -8,6 +8,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -21,6 +22,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
@@ -33,6 +35,8 @@ public class IncludeAndExcludeTests extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     SoftAssertions softAssertions = new SoftAssertions();
+    private File assemblyResourceFile;
+    private File componentResourceFile;
 
     public IncludeAndExcludeTests() {
         super();
@@ -264,5 +268,53 @@ public class IncludeAndExcludeTests extends TestBase {
         softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", latestTotalCost)).isEqualTo(true);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "12135")
+    @Description("Missing sub-component automatically included on update")
+    public void testMissingSubcomponentIncludedOnUpdate() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        final ProcessGroupEnum cadUpdateProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        assemblyResourceFile = FileResourceUtil.getCloudCadFile(cadUpdateProcessGroupEnum, assemblyName + assemblyExtension);
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        String componentName = "box";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+        componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .updateCadFile(assemblyResourceFile)
+            .openComponents();
+
+        softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(assemblyName)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(assemblyName)).isEqualTo(true);
+
+        componentsListPage = componentsListPage.multiSelectSubcomponents(assemblyName + "," + scenarioName + "")
+            .updateCadFile()
+            .enterFilePath(componentResourceFile)
+            .submit(ComponentsListPage.class);
+
+        assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false));
     }
 }
