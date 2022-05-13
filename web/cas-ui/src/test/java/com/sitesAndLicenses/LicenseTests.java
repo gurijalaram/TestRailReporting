@@ -43,7 +43,7 @@ public class LicenseTests extends TestBase {
         aprioriInternal = cdsTestUtil.getAprioriInternal();
         String customerIdentity = aprioriInternal.getIdentity();
         customerName = aprioriInternal.getName();
-        ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITE_BY_CUSTOMER_ID, Sites.class, customerIdentity);
+        ResponseWrapper<Sites> aprioriInternalSites = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, customerIdentity);
         siteId = aprioriInternalSites.getResponseEntity().getItems().get(0).getSiteId();
         subLicenseId = UUID.randomUUID().toString();
     }

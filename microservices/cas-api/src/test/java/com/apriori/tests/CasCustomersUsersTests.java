@@ -8,6 +8,9 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.entity.IdentityHolder;
 import com.apriori.entity.response.CustomerUser;
 import com.apriori.entity.response.CustomerUsers;
 import com.apriori.entity.response.UpdateUser;
@@ -20,16 +23,35 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasCustomersUsersTests {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private IdentityHolder userIdentityHolder;
+    private IdentityHolder customerIdentityHolder;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void getToken() {
         token = new AuthorizationUtil().getTokenAsString();
+    }
+
+    @After
+    public void cleanUp() {
+        if (userIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS,
+                    userIdentityHolder.customerIdentity(),
+                    userIdentityHolder.userIdentity()
+            );
+            if (customerIdentityHolder != null) {
+                cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID,
+                        customerIdentityHolder.customerIdentity()
+                );
+            }
+        }
     }
 
     @Test
@@ -44,6 +66,9 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentityHolder = IdentityHolder.builder()
+                .customerIdentity(customerIdentity)
+                .build();
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
@@ -58,8 +83,12 @@ public class CasCustomersUsersTests {
         assertThat(customerUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String userIdentity = customerUsers.getResponseEntity().getItems().get(0).getIdentity();
+        userIdentityHolder = IdentityHolder.builder()
+                .customerIdentity(customerIdentity)
+                .userIdentity(userIdentity)
+                .build();
 
-        ResponseWrapper<CustomerUser> singleUser = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_USERS, CustomerUser.class)
+        ResponseWrapper<CustomerUser> singleUser = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.USER, CustomerUser.class)
             .token(token)
             .inlineVariables(customerIdentity, userIdentity)).get();
 
@@ -78,15 +107,22 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentityHolder = IdentityHolder.builder()
+                .customerIdentity(customerIdentity)
+                .build();
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
-        String identity = user.getResponseEntity().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
+        userIdentityHolder = IdentityHolder.builder()
+                .customerIdentity(customerIdentity)
+                .userIdentity(userIdentity)
+                .build();
         String profileIdentity = user.getResponseEntity().getUserProfile().getIdentity();
 
-        ResponseWrapper<UpdateUser> updatedUser = CasTestUtil.updateUser(userName, customerName, identity, customerIdentity, profileIdentity);
+        ResponseWrapper<UpdateUser> updatedUser = CasTestUtil.updateUser(userName, customerName, userIdentity, customerIdentity, profileIdentity);
 
         assertThat(updatedUser.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("QA")));
@@ -104,14 +140,21 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
         String customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentityHolder = IdentityHolder.builder()
+                .customerIdentity(customerIdentity)
+                .build();
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
         assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
 
-        String identity = user.getResponseEntity().getIdentity();
+        String userIdentity = user.getResponseEntity().getIdentity();
+        userIdentityHolder = IdentityHolder.builder()
+                .customerIdentity(customerIdentity)
+                .userIdentity(userIdentity)
+                .build();
 
-        ResponseWrapper<String> resetMfa = CasTestUtil.resetMfa(customerIdentity, identity);
+        ResponseWrapper<String> resetMfa = CasTestUtil.resetMfa(customerIdentity, userIdentity);
 
         assertThat(resetMfa.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
     }

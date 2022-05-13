@@ -6,6 +6,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cds.objects.response.Customer;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.Deployment;
 import com.apriori.entity.response.Deployments;
 import com.apriori.utils.TestRail;
@@ -21,10 +23,15 @@ import org.junit.Test;
 
 public class CasDeploymentsTests {
     private String token;
+    private Customer aprioriInternal;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String customerIdentity;
 
     @Before
     public void getToken() {
         token = new AuthorizationUtil().getTokenAsString();
+        aprioriInternal = cdsTestUtil.getAprioriInternal();
+        customerIdentity = aprioriInternal.getIdentity();
     }
 
     @Test
@@ -32,9 +39,9 @@ public class CasDeploymentsTests {
     @Description("Returns a list of deployments for the customer.")
     public void getCustomersDeployments() {
 
-        ResponseWrapper<Deployments> responseDeployment = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Deployments.class)
+        ResponseWrapper<Deployments> responseDeployment = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_DEPLOYMENTS, Deployments.class)
             .token(token)
-            .inlineVariables("deployments/")).get();
+            .inlineVariables(customerIdentity)).get();
 
         assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployment.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -45,8 +52,9 @@ public class CasDeploymentsTests {
     @Description("Get the deployment identified by its identity.")
     public void getDeploymentByIdentity() {
 
-        ResponseWrapper<Deployments> responseDeployments = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Deployments.class)
-            .token(token)).get();
+        ResponseWrapper<Deployments> responseDeployments = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_DEPLOYMENTS, Deployments.class)
+            .token(token)
+            .inlineVariables(customerIdentity)).get();
 
         assertThat(responseDeployments.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseDeployments.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -55,7 +63,7 @@ public class CasDeploymentsTests {
 
         ResponseWrapper<Deployment> deploymentByID = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_DEPLOYMENT, Deployment.class)
             .token(token)
-            .inlineVariables(deploymentIdentity)).get();
+            .inlineVariables(customerIdentity, deploymentIdentity)).get();
 
         assertThat(deploymentByID.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(deploymentByID.getResponseEntity().getIdentity(), is(equalTo(deploymentIdentity)));

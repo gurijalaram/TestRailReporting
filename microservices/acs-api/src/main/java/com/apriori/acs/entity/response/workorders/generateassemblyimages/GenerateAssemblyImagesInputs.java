@@ -11,6 +11,6 @@ public class GenerateAssemblyImagesInputs {
     private String componentIdentity;
     private String scenarioIdentity;
     private String cadMetadataIdentity;
+    private List<GenerateAssemblyImagesSubComponent> subComponents;
     private String requestedBy;
-    private List<GenerateAssemblyImagesInputs> subComponents;
 }

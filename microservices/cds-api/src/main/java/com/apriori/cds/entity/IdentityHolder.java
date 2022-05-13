@@ -20,4 +20,6 @@ public class IdentityHolder {
     private String installationIdentity;
     private String subLicenseIdentity;
     private String userIdentity;
+    private String customAttributeIdentity;
+    private String userPreferenceIdentity;
 }

@@ -425,10 +425,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return - string
      */
-    public String isTextDecorationStruckOut(String componentName) {
+    public boolean isTextDecorationStruckOut(String componentName) {
         By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             componentName.toUpperCase().trim()));
-        return driver.findElement(byComponentName).getCssValue("text-decoration");
+        return driver.findElement(byComponentName).getCssValue("text-decoration").contains("line-through");
     }
 
     /**
@@ -463,6 +463,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Check if subcomponents are in the tree view
+     *
+     * @param componentName - component name
+     * @return - boolean
+     */
+    public boolean isComponentNameDisplayedInTreeView(String componentName) {
+        By componentText = By.xpath(String.format("//div[@data-header-id='componentDisplayName']//span[text()='%s']", componentName.toUpperCase()));
+        return pageUtils.waitForElementToAppear(componentText).isDisplayed();
+    }
+
+    /**
      * Gets subcomponent scenario name
      *
      * @param componentName - the component name
@@ -471,5 +482,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public String getSubcomponentScenarioName(String componentName) {
         By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
         return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
+    }
+
+    /**
+     * method to switch to a new scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  -the scenario name
+     * @return - current page object
+     */
+    public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
+        WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
+        pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
+        return this;
     }
 }

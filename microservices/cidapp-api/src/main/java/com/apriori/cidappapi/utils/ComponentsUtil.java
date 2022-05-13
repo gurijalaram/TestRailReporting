@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.request.request.ComponentRequest;
+import com.apriori.cidappapi.entity.request.ComponentRequest;
 import com.apriori.cidappapi.entity.response.CadFile;
 import com.apriori.cidappapi.entity.response.CadFilesResponse;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
@@ -14,7 +14,6 @@ import com.apriori.cidappapi.entity.response.componentiteration.ComponentIterati
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
-import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
