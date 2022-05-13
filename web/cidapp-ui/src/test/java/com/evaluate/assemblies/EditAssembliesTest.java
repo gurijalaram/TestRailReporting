@@ -55,7 +55,53 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799", "10768", "10801", "10802", "10803", "10804"})
+    @TestRail(testCaseId = {"10768"})
+    @Description("Shallow Publish assembly and scenarios costed in CI Design")
+    public void testUploadPublishCostedAssemblyComponents() {
+        final String hinge_assembly = "Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".SLDASM";
+        final String big_ring = "big ring";
+        final String pin = "Pin";
+        final String small_ring = "small ring";
+        final String subComponentExtension = ".SLDPRT";
+        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            hinge_assembly,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(big_ring + "," + scenarioName, pin + "," + scenarioName, small_ring + "," + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
+            .closePanel()
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+    }
+
+    @Test
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"10799", "10802", "10803", "10804"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyAndEditAddNotes() {
         final String assemblyName = "Hinge assembly";
@@ -97,7 +143,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10806", "10807", "10809", "10835"})
+    @TestRail(testCaseId = {"10801", "10806", "10807", "10809", "10835"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyAndOverrideLockNotes() {
         final String assemblyName = "Hinge assembly";
