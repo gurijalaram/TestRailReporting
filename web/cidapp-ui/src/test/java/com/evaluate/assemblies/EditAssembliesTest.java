@@ -391,9 +391,8 @@ public class EditAssembliesTest extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly);
-
-        evaluatePage.editScenario()
+            .navigateToScenario(componentAssembly)
+            .editScenario()
             .close(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class)
             .renameScenarios()
