@@ -101,7 +101,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799", "10802", "10803", "10804"})
+    @TestRail(testCaseId = {"10799"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyAndEditAddNotes() {
         final String assemblyName = "Hinge assembly";
@@ -143,7 +143,42 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10801", "10806", "10807", "10809", "10835"})
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"10804"})
+    @Description("Shallow Edit keeps original assembly intact on Public Workspace")
+    public void testUploadEditAssemblyDuplicate() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssembly(ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(assemblyProcessGroup)
+            .user(currentUser)
+            .build());
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario()
+            .close(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent");
+
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(equalTo(2)));
+
+        explorePage.selectFilter("Public");
+
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(equalTo(2)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10801", "10802", "10803", "10806", "10807", "10809", "10835"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testUploadCostPublishAssemblyAndOverrideLockNotes() {
         final String assemblyName = "Hinge assembly";
