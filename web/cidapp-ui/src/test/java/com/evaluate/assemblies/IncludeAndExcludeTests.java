@@ -197,9 +197,11 @@ public class IncludeAndExcludeTests extends TestBase {
 
         String totalCostValue2 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
         String componentsCostValue2 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
+        String latestTotalCost = totalCostValue1.equals(totalCostValue2) ? totalCostValue1 : totalCostValue2;
+        String latestComponentCost = componentsCostValue1.equals(componentsCostValue2) ? componentsCostValue1 : componentsCostValue2;
 
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue2)).isNotSameAs(componentsCostValue1);
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue2)).isNotSameAs(componentsCostValue1);
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", latestComponentCost)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", latestTotalCost)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
@@ -255,9 +257,11 @@ public class IncludeAndExcludeTests extends TestBase {
 
         String totalCostValue2 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
         String componentsCostValue2 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
+        String latestTotalCost = totalCostValue1.equals(totalCostValue2) ? totalCostValue1 : totalCostValue2;
+        String latestComponentCost = componentsCostValue1.equals(componentsCostValue2) ? componentsCostValue1 : componentsCostValue2;
 
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue2)).isNotSameAs(componentsCostValue1);
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue2)).isNotSameAs(componentsCostValue1);
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", latestComponentCost)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", latestTotalCost)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
