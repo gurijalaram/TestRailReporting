@@ -93,21 +93,4 @@ public class IncludeAndExcludeTests extends TestBase {
             .forEach(componentName ->
                 assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
     }
-
-
-    @Test
-    @Issue("BA-2294")
-    @TestRail(testCaseId = "11150")
-    @Description("Exclude all sub-components from top-level assembly")
-    public void testExcludeButtons2() {
-
-        UserCredentials currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
-            .navigateToScenario("https://ci-design.na-1-v22-1.qa-cid-perf.apriori.net/components/LE0H3GEHG9CD/scenarios/977N57MAD6NI")
-            .openComponents();
-
-        assertThat(componentsListPage.getSubcomponentScenarioName("PIN"), is(equalTo("MoyaScenarios210429")));
-    }
 }
