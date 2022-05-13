@@ -227,6 +227,9 @@ public class EditAssembliesTest extends TestBase {
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK), is(true));
 
+        evaluatePage.unlock(EvaluatePage.class);
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+
         evaluatePage.clickExplore()
             .selectFilter("Private")
             .openScenario(assemblyName, scenarioName)
