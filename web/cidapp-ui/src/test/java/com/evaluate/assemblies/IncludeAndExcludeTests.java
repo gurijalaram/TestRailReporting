@@ -32,6 +32,7 @@ public class IncludeAndExcludeTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ComponentsListPage componentsListPage;
     private EvaluatePage evaluatePage;
+    private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     SoftAssertions softAssertions = new SoftAssertions();
@@ -118,7 +119,7 @@ public class IncludeAndExcludeTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
         final String componentExtension = ".SLDPRT";
 
-        UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -137,8 +138,6 @@ public class IncludeAndExcludeTests extends TestBase {
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
             .tableView();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(componentsListPage.getCellColour("pin", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
         softAssertions.assertThat(componentsListPage.getCellColour("small ring", scenarioName)).isEqualTo(ColourEnum.YELLOW_LIGHT.getColour());
 
@@ -149,14 +148,14 @@ public class IncludeAndExcludeTests extends TestBase {
     @TestRail(testCaseId = {"11921", "11920", "11919"})
     @Description("Include all sub-components from top-level assembly")
     public void testIncludeSubcomponentsAndCost() {
-        String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
 
-        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-        final String componentExtension = ".SLDPRT";
+        List<String> subComponentNames = Arrays.asList("flange", "nut", "bolt");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
 
-        UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -182,30 +181,24 @@ public class IncludeAndExcludeTests extends TestBase {
             .closePanel()
             .costScenario();
 
-        String totalCostValue1 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
-        String componentsCostValue1 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
-
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue1)).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue1)).isTrue();
+        double initialTotalCost = evaluatePage.getCostResults("Total Cost");
+        double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
         componentsListPage = evaluatePage.openComponents()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.INCLUDE);
 
-        Stream.of(subComponentNames.toArray())
-            .forEach(componentName ->
-                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(false)));
+        subComponentNames.forEach(componentName ->
+            assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false)));
 
         evaluatePage = componentsListPage.closePanel()
             .costScenario();
 
-        String totalCostValue2 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
-        String componentsCostValue2 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
-        String latestTotalCost = totalCostValue1.equals(totalCostValue2) ? totalCostValue1 : totalCostValue2;
-        String latestComponentCost = componentsCostValue1.equals(componentsCostValue2) ? componentsCostValue1 : componentsCostValue2;
+        double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
+        double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", latestComponentCost)).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", latestTotalCost)).isEqualTo(true);
+        softAssertions.assertThat(modifiedTotalCost).isGreaterThan(initialTotalCost);
+        softAssertions.assertThat(modifiedComponentsCost).isGreaterThan(initialComponentsCost);
 
         softAssertions.assertAll();
     }
@@ -221,7 +214,7 @@ public class IncludeAndExcludeTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".CATPart";
 
-        UserCredentials currentUser = UserUtil.getUser();
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -242,30 +235,24 @@ public class IncludeAndExcludeTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly);
 
-        String totalCostValue1 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
-        String componentsCostValue1 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
-
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", componentsCostValue1)).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", totalCostValue1)).isTrue();
+        double initialTotalCost = evaluatePage.getCostResults("Total Cost");
+        double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
         componentsListPage = evaluatePage.openComponents()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
 
-        Stream.of(subComponentNames.toArray())
-            .forEach(componentName ->
-                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+        subComponentNames.forEach(componentName ->
+            assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(true)));
 
         evaluatePage = componentsListPage.closePanel()
             .costScenario();
 
-        String totalCostValue2 = evaluatePage.getTypeOfCostResultsValue("Total Cost");
-        String componentsCostValue2 = evaluatePage.getTypeOfCostResultsValue("Components Cost");
-        String latestTotalCost = totalCostValue1.equals(totalCostValue2) ? totalCostValue1 : totalCostValue2;
-        String latestComponentCost = componentsCostValue1.equals(componentsCostValue2) ? componentsCostValue1 : componentsCostValue2;
+        double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
+        double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Components Cost", latestComponentCost)).isEqualTo(true);
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Cost", latestTotalCost)).isEqualTo(true);
+        softAssertions.assertThat(initialTotalCost).isGreaterThan(modifiedTotalCost);
+        softAssertions.assertThat(initialComponentsCost).isGreaterThan(modifiedComponentsCost);
 
         softAssertions.assertAll();
     }
