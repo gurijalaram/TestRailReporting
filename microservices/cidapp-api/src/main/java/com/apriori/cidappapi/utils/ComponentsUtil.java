@@ -1,7 +1,5 @@
 package com.apriori.cidappapi.utils;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -25,7 +23,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.hamcrest.Matchers;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -82,8 +79,6 @@ public class ComponentsUtil {
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
         List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
-
-        assertThat(componentSuccesses, Matchers.not(empty()));
 
         componentSuccesses.forEach(componentSuccess -> {
             List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
