@@ -271,14 +271,14 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "12135")
-    @Description("Missing sub-component automatically included on update")
+    @TestRail(testCaseId = {"12135", "12052"})
+    @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
         String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
 
-        final ProcessGroupEnum cadUpdateProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
-        assemblyResourceFile = FileResourceUtil.getCloudCadFile(cadUpdateProcessGroupEnum, assemblyName + assemblyExtension);
+        final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        assemblyResourceFile = FileResourceUtil.getCloudCadFile(assemblyProcessGroupEnum, assemblyName + assemblyExtension);
 
         List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
         String componentName = "box";
@@ -292,7 +292,7 @@ public class IncludeAndExcludeTests extends TestBase {
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
+            assemblyProcessGroupEnum,
             subComponentNames,
             componentExtension,
             processGroupEnum,
@@ -305,12 +305,58 @@ public class IncludeAndExcludeTests extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .updateCadFile(assemblyResourceFile)
+            .generateMissingImages("Yes")
             .openComponents();
 
-        softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(assemblyName)).isEqualTo(true);
-        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(assemblyName)).isEqualTo(true);
 
-        componentsListPage = componentsListPage.multiSelectSubcomponents(assemblyName + "," + scenarioName + "")
+        softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
+
+        componentsListPage = componentsListPage.selectScenario(componentName)
+            .updateCadFile()
+            .enterFilePath(componentResourceFile)
+            .submit(ComponentsListPage.class);
+
+        assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false));
+    }
+
+    @Test
+    @TestRail(testCaseId = "12138")
+    @Description("Missing sub-component automatically included on update (CID)")
+    public void testMissingComponentAutomaticallyIncludedOnUpdate() {
+        String assemblyName = "Assembly01";
+        final String assemblyExtension = ".iam";
+        final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        List<String> subComponentNames = Arrays.asList("Part0001", "Part0002", "Part0003");
+        String componentName = "Part0004";
+        final String componentExtension = ".ipt";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+        componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroupEnum,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents();
+
+        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
+
+        componentsListPage.selectScenario(componentName)
             .updateCadFile()
             .enterFilePath(componentResourceFile)
             .submit(ComponentsListPage.class);
