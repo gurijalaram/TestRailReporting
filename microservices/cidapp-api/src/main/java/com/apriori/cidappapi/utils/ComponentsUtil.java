@@ -1,5 +1,8 @@
 package com.apriori.cidappapi.utils;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -10,6 +13,7 @@ import com.apriori.cidappapi.entity.response.CadFilesResponse;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.GetComponentResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
+import com.apriori.cidappapi.entity.response.Successes;
 import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
@@ -77,10 +81,9 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = postComponent(componentBuilder);
+        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
 
-        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
-            HttpStatus.SC_OK, responseWrapper.getStatusCode());
+        assertThat(componentSuccesses, hasSize(greaterThan(0)));
 
         List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
 
