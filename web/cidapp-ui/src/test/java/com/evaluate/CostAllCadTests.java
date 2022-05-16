@@ -56,46 +56,6 @@ public class CostAllCadTests extends TestBase {
             .highlightScenario("3571050", "AutoScenario69-603227063487422");
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     @Test
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"5421", "565", "567"})
