@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -37,23 +36,9 @@ public class CostAllCadTests extends TestBase {
     private File resourceFile;
     private CostDetailsPage costDetailsPage;
     private ImportCadFilePage importCadFilePage;
-    ComponentsListPage componentsListPage;
 
     public CostAllCadTests() {
         super();
-    }
-
-
-    @Test
-    public void testDuplicate() {
-
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
-            .navigateToScenario("https://ci-design.na-1-v22-1.qa-cid-perf.apriori.net/components/2NNHMFJ95F6N/scenarios/2J5MBEC5E35M")
-            .openComponents()
-            .highlightScenario("3571050", "AutoScenario69-603227063487422");
     }
 
     @Test
