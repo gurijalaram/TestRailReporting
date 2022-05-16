@@ -565,7 +565,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
     }
 
-    @Category( {SmokeTests.class, IgnoreTests.class})
+    @Category({SmokeTests.class, IgnoreTests.class})
     @Test
     @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5117"})

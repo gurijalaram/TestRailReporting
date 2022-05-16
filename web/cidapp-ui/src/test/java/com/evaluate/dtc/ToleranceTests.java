@@ -251,7 +251,7 @@ public class ToleranceTests extends TestBase {
         assertThat(toleranceEditPage.getTolerance(ToleranceEnum.FLATNESS.getToleranceName()), containsString("0.44"));
     }*/
 
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6455"})
     @Description("Ensure the Tolerance Tab displays all applied tolerance types & tolerance counts")
