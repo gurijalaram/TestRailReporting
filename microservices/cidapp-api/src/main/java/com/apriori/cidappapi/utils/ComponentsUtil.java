@@ -85,11 +85,13 @@ public class ComponentsUtil {
 
         assertThat(componentSuccesses, Matchers.not(empty()));
 
-        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
-
-        componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
-        componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
-        componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+        componentSuccesses.forEach(componentSuccess -> {
+            List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
+                componentBuilder.getUser());
+            componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
+            componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+            componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+        });
 
         return componentBuilder;
     }
