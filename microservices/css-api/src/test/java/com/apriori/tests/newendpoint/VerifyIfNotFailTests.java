@@ -1,8 +1,10 @@
 package com.apriori.tests.newendpoint;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
+import com.apriori.css.entity.request.ErrorRequestResponse;
 import com.apriori.css.entity.request.Params;
 import com.apriori.css.entity.request.ScenarioIterationRequest;
 import com.apriori.css.entity.response.CssComponentResponse;
@@ -37,7 +39,7 @@ public class VerifyIfNotFailTests {
 
         Params params = new Params();
         params.setValue("0");
-        params.setProperty("scenarioIterationKey.workspaceId");
+        params.setProperty("costingInput.identity");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
@@ -152,17 +154,14 @@ public class VerifyIfNotFailTests {
         params.setProperty("componentName");
         scenarioIterationRequest.getQuery().getFilter().getAnd().get(0).setEquals(params);
 
-        ResponseWrapper<CssComponentResponse> scenarioIterationRespond = null;
-        try {
-            scenarioIterationRespond =
-                    scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
-        } finally {
-            ResponseWrapper<CssComponentResponse> finalScenarioIterationRespond = scenarioIterationRespond;
-            assertDoesNotThrow(
-                () -> {
-                    finalScenarioIterationRespond.getResponseEntity();
-                });
-        }
+
+        ResponseWrapper<ErrorRequestResponse> scenarioIterationRespond =
+            scenarioIterationService.getScenarioIterationWithParamsPostForErrors(scenarioIterationRequest);
+
+        assertEquals("400",scenarioIterationRespond.getResponseEntity().getStatus());
+        assertEquals("Bad Request",scenarioIterationRespond.getResponseEntity().getError());
+        assertEquals("Invalid value was provided for operator equals. Please, refer to the Swagger documentation for an example",
+            scenarioIterationRespond.getResponseEntity().getMessage());
     }
 
     @Test
