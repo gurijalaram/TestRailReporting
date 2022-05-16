@@ -70,13 +70,48 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST new component
+     * POST new component and query CSS
      *
      * @param componentBuilder - the component object
-     * @return Item
+     * @return object
      */
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
+        ResponseWrapper<PostComponentResponse> responseWrapper = postComponent(componentBuilder);
+
+        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
+            HttpStatus.SC_OK, responseWrapper.getStatusCode());
+
+        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
+
+        componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
+        componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+        componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+
+        return componentBuilder;
+    }
+
+    /**
+     * Upload a component
+     *
+     * @param componentBuilder - the component
+     * @return - scenario object
+     */
+    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
+
+        componentBuilder.setResourceFile(resourceFile);
+
+        return postComponentQueryCSS(componentBuilder);
+    }
+
+    /**
+     * POST new component
+     *
+     * @param componentBuilder - the component object
+     * @return object
+     */
+    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder) {
         String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
@@ -91,18 +126,7 @@ public class ComponentsUtil {
                         .build()))
                 .token(componentBuilder.getUser().getToken());
 
-        ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
-
-        assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentBuilder.getComponentName(), componentBuilder.getScenarioName()),
-            HttpStatus.SC_OK, responseWrapper.getStatusCode());
-
-        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentBuilder.getComponentName(), componentBuilder.getScenarioName(), componentBuilder.getUser());
-
-        componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
-        componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
-        componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
-
-        return componentBuilder;
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -145,8 +169,8 @@ public class ComponentsUtil {
         scenarioItemList.forEach(scenario -> {
             componentInfoBuilder.setComponentIdentity(scenario.getComponentIdentity());
             componentInfoBuilder.setScenarioIdentity(scenario.getScenarioIdentity());
-
         });
+
         componentInfoBuilder.setScenarioItems(scenarioItemList);
 
         return componentInfoBuilder;
@@ -217,19 +241,5 @@ public class ComponentsUtil {
         } while ((axesEntries == 0) && ((System.currentTimeMillis() / 1000) - START_TIME) < MAX_WAIT_TIME);
 
         return axesEntriesResponse;
-    }
-
-    /**
-     * Upload a component
-     *
-     * @param componentBuilder - the component
-     * @return - scenario object
-     */
-    public ComponentInfoBuilder postComponent(ComponentInfoBuilder componentBuilder) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
-
-        componentBuilder.setResourceFile(resourceFile);
-
-        return postComponentQueryCSS(componentBuilder);
     }
 }
