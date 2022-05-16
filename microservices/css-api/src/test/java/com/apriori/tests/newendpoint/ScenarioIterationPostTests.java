@@ -3,6 +3,7 @@ package com.apriori.tests.newendpoint;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.css.entity.apicalls.ScenarioIterationService;
 import com.apriori.css.entity.enums.Direction;
@@ -17,12 +18,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class ScenarioIterationPostTests {
     private static ScenarioIterationService scenarioIterationService = new ScenarioIterationService();
 
@@ -139,5 +142,53 @@ public class ScenarioIterationPostTests {
 
         costingInput.stream()
                 .forEach(t -> assertNull(t));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12895"})
+    @Description("Verify following query: (componentName[CN]=foo AND createdBy[IN]=currentUser|anotherUser) OR (assignedTo[EQ]=currentUser AND isPublic[EQ]=true)")
+    public void getDataWithMoreComplexQueryTest() {
+        ScenarioIterationRequest scenarioIterationRequest  =
+            (ScenarioIterationRequest) JsonManager.deserializeJsonFromFile(
+                FileResourceUtil.getResourceAsFile(
+                    "MoreComplexQueryData.json"
+                ).getPath(), ScenarioIterationRequest.class);
+
+        ResponseWrapper<CssComponentResponse> scenarioIterationRespondComponentNames =
+            scenarioIterationService.getScenarioIterationWithParamsPost(scenarioIterationRequest);
+        List<ScenarioItem> items = scenarioIterationRespondComponentNames.getResponseEntity().getItems();
+
+        assertTrue(verifyIfCorrect(items));
+    }
+
+    private boolean verifyIfCorrect(List<ScenarioItem> items) {
+        List<String> lastAction = items.stream().map(ScenarioItem::getLastAction).collect(Collectors.toList());
+        List<String> scenarioState = items.stream().map(ScenarioItem::getScenarioState).collect(Collectors.toList());
+        List<String> componentType = items.stream().map(ScenarioItem::getComponentName).collect(Collectors.toList());
+        List<String> scenarioType = items.stream().map(ScenarioItem::getScenarioType).collect(Collectors.toList());
+
+        if (ifNotReturnsDifferentValue(lastAction,"CREATE") && ifNotReturnsDifferentValues(scenarioState,"PROCESSING_FAILED","NOT_COSTED")) {
+            return true;
+        }
+
+        if (ifNotReturnsDifferentValue(componentType,"UNKNOWN") && ifNotReturnsDifferentValue(scenarioType,"VERIFIED")) {
+            return true;
+        }
+        log.error("Compared values does not match expected results");
+        return false;
+    }
+
+    private boolean ifNotReturnsDifferentValue(List<String> values,String value) {
+        if (values.stream().allMatch(i -> i.equals(value))) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean ifNotReturnsDifferentValues(List<String> values, String valueOne,String valueTwo) {
+        if (values.stream().allMatch(i -> (i.equals(valueOne) || i.equals(valueTwo)))) {
+            return true;
+        }
+        return false;
     }
 }
