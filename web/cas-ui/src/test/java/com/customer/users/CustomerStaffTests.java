@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
@@ -58,12 +59,13 @@ public class CustomerStaffTests extends TestBase {
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
                 : targetCustomer;
 
         customerIdentity = targetCustomer.getIdentity();
@@ -153,7 +155,7 @@ public class CustomerStaffTests extends TestBase {
 
         CardsViewComponent usersGrid = Obligation.mandatory(users::getCardGrid, "The customer staff grid is missing");
 
-        long cards = usersGrid.getCards().count();
+        long cards = usersGrid.getCards("user-card").count();
         assertThat(cards, is(equalTo(10L)));
         utils.waitForCondition(usersGrid::isStable, PageUtils.DURATION_LOADING);
 
@@ -174,7 +176,7 @@ public class CustomerStaffTests extends TestBase {
 
         SourceListComponent searchResult = goToCardView.getUserListCardView();
         CardsViewComponent cardFound = Obligation.mandatory(searchResult::getCardGrid, "The user was not found");
-        long count = cardFound.getCards().count();
+        long count = cardFound.getCards("user-card").count();
 
         assertThat(count, is(equalTo(1L)));
         assertThat(goToCardView.isIconColour(customerIdentity, userIdentity, "red"), is(true));
