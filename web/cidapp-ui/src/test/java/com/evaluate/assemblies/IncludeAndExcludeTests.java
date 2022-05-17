@@ -70,8 +70,10 @@ public class IncludeAndExcludeTests extends TestBase {
                 currentUser)
             .openComponents();
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(false));
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -102,6 +104,145 @@ public class IncludeAndExcludeTests extends TestBase {
             .openComponents()
             .selectCheckAllBox()
             .selectButtonType(ButtonTypeEnum.EXCLUDE);
+
+        Stream.of(subComponentNames.toArray())
+            .forEach(componentName ->
+                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11874", "11843", "11842", "11155"})
+    @Description("Verify Include and Exclude buttons disabled if mixture selected")
+    public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
+            .multiSelectSubcomponents("PIN, " + scenarioName + "")
+            .selectButtonType(ButtonTypeEnum.EXCLUDE)
+            .multiSelectSubcomponents("SMALL RING, " + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
+
+        componentsListPage.multiSelectSubcomponents("pin, " + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("small ring, " + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11153", "11152", "11151"})
+    @Description("Include all sub-components from top-level assembly")
+    public void testIncludeButtonEnabledWithCostedComponents() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .selectCheckAllBox()
+            .selectButtonType(ButtonTypeEnum.EXCLUDE)
+            .selectCheckAllBox();
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
+
+        componentsListPage.selectButtonType(ButtonTypeEnum.INCLUDE);
+
+        Stream.of(subComponentNames.toArray())
+            .forEach(componentName ->
+                assertThat(componentsListPage.isTextDecorationStruckOut(componentName.toString()), is(false)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11150", "11149", "11156"})
+    @Description("Include all sub-components from top-level assembly")
+    public void testExcludeButtonEnabledWithCostedComponents() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .selectCheckAllBox();
+
+        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(true));
+
+        componentsListPage.selectButtonType(ButtonTypeEnum.EXCLUDE);
 
         Stream.of(subComponentNames.toArray())
             .forEach(componentName ->
