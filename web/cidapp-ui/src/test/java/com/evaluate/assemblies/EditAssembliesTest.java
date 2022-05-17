@@ -207,11 +207,25 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .inputDescription("QA Test Description")
+            .inputNotes("Testing QA notes")
+            .submit(EvaluatePage.class)
             .editScenario()
             .close(EvaluatePage.class)
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(EvaluatePage.class);
+
+        infoPage = evaluatePage.info();
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
+
+        evaluatePage = infoPage.cancel(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
@@ -231,23 +245,63 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage.clickExplore()
             .selectFilter("Private")
             .openScenario(assemblyName, scenarioName)
+            .openComponents();
+
+        subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10802"})
+    @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
+    public void testUploadCostPublishAssemblyAndModifyNotes() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+        assemblyUtils.publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
+            .submit(EvaluatePage.class)
+            .editScenario()
+            .close(EvaluatePage.class)
+            .info()
+            .selectStatus("Analysis")
+            .inputCostMaturity("Medium")
+            .inputDescription("QA Modified Test Description")
+            .inputNotes("Testing Modified QA notes")
             .submit(EvaluatePage.class);
 
         infoPage = evaluatePage.info();
-        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
-        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
-        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
-        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
-
-        componentsListPage = infoPage.cancel(EvaluatePage.class)
-            .openComponents();
-
-        subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Analysis");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Modified Test Description");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing Modified QA notes");
     }
 
     @Test
