@@ -12,6 +12,7 @@ import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.UsersPage;
@@ -69,12 +70,13 @@ public class BatchImportListTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
         resourceInvalidHeaders = FileResourceUtil.getResourceAsFile(invalidHeadersFileName);
         resourceInvalidData = FileResourceUtil.getResourceAsFile(invalidDataFile);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
                 : targetCustomer;
 
         customerIdentity = targetCustomer.getIdentity();

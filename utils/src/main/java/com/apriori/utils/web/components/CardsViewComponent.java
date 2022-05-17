@@ -10,8 +10,6 @@ import java.util.stream.Stream;
 
 public class CardsViewComponent extends CommonComponent implements ComponentWithSpinner {
 
-    private static final By BY_CARDS = By.cssSelector(".apriori-source-list-card-grid .user-card");
-
     public CardsViewComponent(WebDriver driver, WebElement root) {
         super(driver, root);
     }
@@ -26,9 +24,9 @@ public class CardsViewComponent extends CommonComponent implements ComponentWith
      *
      * @return The cards stream.
      */
-    public Stream<CardComponent> getCards() {
+    public Stream<CardComponent> getCards(String cardType) {
         getPageUtils().waitForCondition(this::isStable, PageUtils.DURATION_LOADING);
-        return getRoot().findElements(BY_CARDS).stream()
+        return getRoot().findElements(By.cssSelector(String.format(".apriori-source-list-card-grid .%s", cardType))).stream()
                 .map((card) -> new CardComponent(this, card));
     }
 }
