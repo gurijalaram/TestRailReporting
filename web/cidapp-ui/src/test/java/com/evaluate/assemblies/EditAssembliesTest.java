@@ -372,7 +372,6 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -386,8 +385,12 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails(bigRing, scenarioName)).contains("circle-minus");
         softAssertions.assertThat(componentsListPage.getRowDetails(smallRing, scenarioName)).contains("circle-minus");
 
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
         editComponentsPage = componentsListPage.closePanel()
-            .publishScenario(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(componentAssembly, currentUser, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -397,8 +400,7 @@ public class EditAssembliesTest extends TestBase {
             .lock(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class);
 
-        softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
-            "please supply a different scenario name or cancel the operation");
+        softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("A public scenario with this name already exists. Cancel this operation, or select an option below and continue.");
 
         evaluatePage = editComponentsPage.overrideScenarios()
             .clickContinue(PublishPage.class)
