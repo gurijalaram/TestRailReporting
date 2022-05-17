@@ -9,6 +9,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -44,8 +45,9 @@ public class CdsGetCustomerTests {
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
         updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 

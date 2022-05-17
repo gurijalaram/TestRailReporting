@@ -1,22 +1,23 @@
 package com.apriori.customer.users.profile;
 
+import com.apriori.common.ModalUserList;
 import com.apriori.utils.PageUtils;
 
+import com.apriori.utils.web.components.EagerPageComponent;
+import com.apriori.utils.web.components.SourceListComponent;
+
+import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
-public class UserProfilePage extends LoadableComponent<UserProfilePage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(NewUserPage.class);
+@Slf4j
+public final class UserProfilePage extends EagerPageComponent<UserProfilePage> {
 
     @FindBy(xpath = "//button[.='Edit']")
     private WebElement editButton;
@@ -36,25 +37,43 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
     @FindBy(css = "input[name='userProfile.givenName']")
     private WebElement givenNameInput;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
+    @FindBy(css = ".user-granted-access-controls")
+    private WebElement grantedAccessControlsContainerRoot;
+    private SourceListComponent grantedAccessControlsContainer;
+
+    @FindBy(xpath = "//button[.='Add']")
+    private WebElement addApplicationButton;
+
+    @FindBy(xpath = "//button[.='Remove']")
+    private WebElement removeApplicationButton;
+
+    @FindBy(css = ".site-drop-down")
+    private WebElement siteDropDown;
+
+    @FindBy(css = ".deployment-drop-down")
+    private WebElement deploymentDropDown;
+
+    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    private WebElement confirmRemoveOkButton;
+
+    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    private WebElement confirmRemoveCancelButton;
+
+    @FindBy(css = ".access-control-card")
+    private WebElement aprioriCard;
+
+    private ModalUserList modalUserList;
 
     public UserProfilePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        super(driver, log);
+        grantedAccessControlsContainer = new SourceListComponent(driver, grantedAccessControlsContainerRoot);
+        modalUserList = new ModalUserList(driver);
         PageFactory.initElements(driver, this);
-        this.get();
-    }
-
-    @Override
-    protected void load() {
-        //Empty due to missed loading process
     }
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementAppear(editButton);
+        getPageUtils().waitForElementAppear(editButton);
     }
 
     /**
@@ -63,7 +82,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return new page object
      */
     public UserProfilePage edit() {
-        pageUtils.waitForElementAndClick(editButton);
+        getPageUtils().waitForElementAndClick(editButton);
         return this;
     }
 
@@ -73,7 +92,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return new page object
      */
     public UserProfilePage cancel() {
-        pageUtils.waitForElementAndClick(cancelButton);
+        getPageUtils().waitForElementAndClick(cancelButton);
         return this;
     }
 
@@ -83,7 +102,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return new page object
      */
     public UserProfilePage save() {
-        pageUtils.waitForElementAndClick(saveButton);
+        getPageUtils().waitForElementAndClick(saveButton);
         return this;
     }
 
@@ -93,8 +112,8 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return new page object
      */
     public <T> T backToUsersListPage(Class<T> klass) {
-        pageUtils.waitForElementAndClick(backToUsersListPage);
-        return PageFactory.initElements(driver, klass);
+        getPageUtils().waitForElementAndClick(backToUsersListPage);
+        return PageFactory.initElements(getDriver(), klass);
     }
 
     /**
@@ -103,7 +122,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return this object
      */
     public UserProfilePage changeStatus() {
-        pageUtils.waitForElementAndClick(statusCheckbox);
+        getPageUtils().waitForElementAndClick(statusCheckbox);
         return this;
     }
 
@@ -113,7 +132,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return string
      */
     public String getUserIdentity() {
-        return driver.findElement(By.xpath("//div[@class='text-overflow read-field read-field-identity']")).getAttribute("textContent");
+        return getDriver().findElement(By.xpath("//div[@class='text-overflow read-field read-field-identity']")).getAttribute("textContent");
     }
 
     /**
@@ -122,7 +141,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return true or false
      */
     public boolean isStatusCheckboxEditable() {
-        return pageUtils.isElementEnabled(statusCheckbox);
+        return getPageUtils().isElementEnabled(statusCheckbox);
     }
 
     /**
@@ -132,7 +151,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return The label for the given name.
      */
     public WebElement getReadOnlyLabel(String name) {
-        return pageUtils.waitForElementToAppear(By.cssSelector((String.format(".read-field-%s", name))));
+        return getPageUtils().waitForElementToAppear(By.cssSelector((String.format(".read-field-%s", name))));
     }
 
     /**
@@ -143,9 +162,9 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      */
     private WebElement getInput(String name) {
         if (name.equals("country-code") || name.equals("timezone")) {
-            return pageUtils.waitForElementToAppear(By.cssSelector(String.format(".select-field-user-profile-%s", name)));
+            return getPageUtils().waitForElementToAppear(By.cssSelector(String.format(".select-field-user-profile-%s", name)));
         } else {
-            return pageUtils.waitForElementToAppear(By.xpath(String.format("//input[@name='%s']", name)));
+            return getPageUtils().waitForElementToAppear(By.xpath(String.format("//input[@name='%s']", name)));
         }
     }
 
@@ -189,7 +208,7 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return - current page object
      */
     public UserProfilePage assertButtonAvailable(SoftAssertions soft, String label) {
-        List<WebElement> elements = driver.findElements(By.xpath(String.format("//button[.='%s']", label)));
+        List<WebElement> elements = getDriver().findElements(By.xpath(String.format("//button[.='%s']", label)));
         soft.assertThat(elements.size())
                 .overridingErrorMessage(String.format("Could not find the %s button", label))
                 .isGreaterThan(0);
@@ -222,7 +241,185 @@ public class UserProfilePage extends LoadableComponent<UserProfilePage> {
      * @return current page object
      */
     public UserProfilePage editGivenName(String givenName) {
-        pageUtils.setValueOfElement(givenNameInput, givenName);
+        getPageUtils().setValueOfElement(givenNameInput, givenName);
         return this;
+    }
+
+    /**
+     * Gets the underlying access controls source list
+     *
+     * @return access controls source list
+     */
+    public SourceListComponent getGrantedAccessControlsContainer() {
+        getPageUtils().waitForCondition(grantedAccessControlsContainer::isStable, PageUtils.DURATION_LOADING);
+        return grantedAccessControlsContainer;
+    }
+
+    /**
+     * Clicks on Add Application button
+     *
+     * @return this object
+     */
+    public UserProfilePage clickAddButton() {
+        getPageUtils().waitForElementAndClick(addApplicationButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Remove button
+     *
+     * @return this object
+     */
+    public UserProfilePage clickRemoveButton() {
+        getPageUtils().waitForElementAndClick(removeApplicationButton);
+        return this;
+    }
+
+    /**
+     * Can click the remove button.
+     *
+     * @return Boolean representing can click remove button
+     */
+    public boolean canRemove() {
+        return isButtonEnabled(removeApplicationButton);
+    }
+
+    /**
+     * Validates that container has pagination and refresh button
+     *
+     * @param soft - soft assertions
+     * @param container - type of container
+     * @return this object
+     */
+    public UserProfilePage validateContainerIsPageableAndRefreshable(SoftAssertions soft, SourceListComponent container) {
+        soft.assertThat(container.getPaginator())
+            .overridingErrorMessage("The container is missing pagination.")
+            .isNotNull();
+        soft.assertThat(container.canRefresh())
+            .overridingErrorMessage("The container is missing refresh button")
+            .isTrue();
+
+        return this;
+    }
+
+    /**
+     * Clicks on Cancel button of candidates modal list
+     *
+     * @return this object
+     */
+    public UserProfilePage clickCancelModalButton() {
+        return modalUserList.clickCandidatesCancelButton(UserProfilePage.class);
+    }
+
+    /**
+     * Clicks on Close button of candidates modal list
+     *
+     * @return this object
+     */
+    public UserProfilePage clickCloseModalButton() {
+        return modalUserList.clickCandidatesCloseButton(UserProfilePage.class);
+    }
+
+    /**
+     * Clicks on Add button of candidates modal list
+     *
+     * @return this object
+     */
+    public UserProfilePage clickApplicationAddButton() {
+        return modalUserList.clickCandidatesAddButton(UserProfilePage.class);
+    }
+
+    /**
+     * Clicks on Cancel button of confirmation popup
+     *
+     * @return this object
+     */
+    public UserProfilePage clickModalConfirmationCancelButton() {
+        return modalUserList.clickCandidatesConfirmCancelButton(UserProfilePage.class);
+    }
+
+    /**
+     * Clicks on Close button of confirmation popup
+     *
+     * @return this object
+     */
+    public UserProfilePage clickModalConfirmationCloseButton() {
+        return modalUserList.clickCandidatesConfirmCloseButton(UserProfilePage.class);
+    }
+
+    /**
+     * Clicks on Ok button of confirmation popup
+     *
+     * @return this object
+     */
+    public UserProfilePage clickModalConfirmOkButton() {
+        modalUserList.clickCandidatesConfirmOkButton(UserProfilePage.class);
+        return this;
+    }
+
+    /**
+     * Gets name of selected site in dropdown
+     *
+     * @return string name of selected site
+     */
+    public String getSiteInDropDown() {
+        return siteDropDown.getAttribute("textContent");
+    }
+
+    /**
+     * Gets name of selected deployment in dropdown
+     *
+     * @return string name of selected deployment
+     */
+    public String getDeploymentInDropDown() {
+        return deploymentDropDown.getAttribute("textContent");
+    }
+
+    /**
+     * Gets the underlying application candidates source list
+     *
+     * @return The application candidates source list
+     */
+    public SourceListComponent getApplicationCandidates() {
+        return modalUserList.getCandidates();
+    }
+
+    /**
+     * Clicks on Ok button of confirmation remove action
+     *
+     * @return this object
+     */
+    public UserProfilePage clickOkConfirmRemove() {
+        getPageUtils().waitForElementAndClick(confirmRemoveOkButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Cancel button of confirmation remove action
+     *
+     * @return this object
+     */
+    public UserProfilePage clickCancelConfirmRemove() {
+        getPageUtils().waitForElementAndClick(confirmRemoveCancelButton);
+        return this;
+    }
+
+    /**
+     * Waits for card appearing after adding from modal
+     *
+     * @return this object
+     */
+    public UserProfilePage waitForCardIsDisplayed() {
+        getPageUtils().waitForElementToAppear(aprioriCard);
+        return this;
+    }
+
+    /**
+     * Checks if access control card is displayed
+     *
+     * @return true or false
+     */
+    public boolean isCardDisplayed() {
+        return getPageUtils().isElementDisplayed(aprioriCard);
     }
 }
