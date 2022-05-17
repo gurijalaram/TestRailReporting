@@ -68,12 +68,13 @@ public class AccessControlsApplicationTests extends TestBase {
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "\\S+@".concat(APP_CONTROLS_CUSTOMER);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(APP_CONTROLS_CUSTOMER, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCustomer(APP_CONTROLS_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
                 : targetCustomer;
 
         customerIdentity = targetCustomer.getIdentity();

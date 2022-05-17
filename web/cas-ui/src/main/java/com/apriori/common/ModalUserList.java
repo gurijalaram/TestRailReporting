@@ -12,13 +12,13 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class ModalUserList {
 
-    @FindBy(css = ".user-candidate-modal .modal-body .apriori-source-list")
+    @FindBy(css = ".modal-body .apriori-source-list")
     private WebElement candidatesSourceListRoot;
 
-    @FindBy(css = ".user-candidate-modal .modal-footer .btn-primary")
+    @FindBy(css = ".modal-footer .btn-primary")
     private WebElement candidatesAddButton;
 
-    @FindBy(css = ".user-candidate-modal  .modal-footer .btn-secondary")
+    @FindBy(css = ".modal-footer .btn-secondary")
     private WebElement candidatesCancelButton;
 
     @FindBy(css = ".close-modal")
