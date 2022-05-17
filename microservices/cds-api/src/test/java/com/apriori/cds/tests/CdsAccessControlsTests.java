@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -30,17 +31,19 @@ public class CdsAccessControlsTests  {
     private static String cloudRef;
     private static String salesForceId;
     private static String emailPattern;
+    private static String customerType;
     private static String customerIdentity;
     private static String userIdentity;
 
     @BeforeClass
     public static void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
+        customerType = Constants.CLOUD_CUSTOMER;
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 

@@ -12,6 +12,7 @@ import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
 
+import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
@@ -59,6 +60,7 @@ public class UsersStaffAssociationTests extends TestBase {
         String cloudRef = new GenerateStringUtil().generateCloudReference();
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "test.com";
+        String customerType = Constants.CLOUD_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
@@ -72,7 +74,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, cloudRef, salesforce, email).getResponseEntity()
+            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, cloudRef, salesforce, email).getResponseEntity()
             : targetCustomer;
 
         staffPage = new CasLoginPage(driver)

@@ -45,12 +45,12 @@ public class CdsTestUtil extends TestUtil {
      * @param email          - the email pattern
      * @return new object
      */
-    public ResponseWrapper<Customer> addCustomer(String name, String cloudReference, String salesForceId, String email) {
+    public ResponseWrapper<Customer> addCustomer(String name, String customerType, String cloudReference, String salesForceId, String email) {
         RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMERS, Customer.class)
             .body("customer",
                 Customer.builder().name(name)
                     .description("Add new customers api test")
-                    .customerType("CLOUD_ONLY")
+                    .customerType(customerType)
                     .createdBy("#SYSTEM00000")
                     .cloudReference(cloudReference)
                     .salesforceId(salesForceId)
