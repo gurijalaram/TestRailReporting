@@ -30,7 +30,7 @@ public class TestDataService {
     public TestDataService() {
     }
 
-    public void createInputDataMap(Map<String, Object> inputValues) {
+    public void setInputData(Map<String, Object> inputValues) {
         //Create the input values
         this.testDataMap = inputValues;
     }
@@ -40,23 +40,27 @@ public class TestDataService {
      *
      * @return Map
      */
-    public Map getInputValuesCollection() {
+    public Map getInputData() {
         return this.testDataMap;
     }
 
     public WorkFlowData getTestData() {
 
         WorkFlowData workFlowData = (WorkFlowData) JsonManager.deserializeJsonFromInputStream(
-            FileResourceUtil.getResourceFileStream("workflowdata/WorkFlowTestData1.json"), WorkFlowData.class);
+            FileResourceUtil.getResourceFileStream("testdata/WorkFlowTestData.json"), WorkFlowData.class);
         workFlowData.setWorkflowName(UIUtils.saltString(workFlowData.getWorkflowName()));
         return workFlowData;
+    }
+
+    public Map deserializeDataToMap(String inputJsonFile) {
+        return JsonManager.deserializeJsonFromInputStream(
+            FileResourceUtil.getResourceFileStream("testdata/" + inputJsonFile), HashMap.class);
     }
 
     public WorkFlowData getTestData(String dataFile) {
         WorkFlowData workFlowData = (WorkFlowData) JsonManager.deserializeJsonFromInputStream(
-            FileResourceUtil.getResourceFileStream("workflowdata/" + dataFile), WorkFlowData.class);
+            FileResourceUtil.getResourceFileStream("testdata/" + dataFile), WorkFlowData.class);
         workFlowData.setWorkflowName(UIUtils.saltString(workFlowData.getWorkflowName()));
         return workFlowData;
     }
-
 }
