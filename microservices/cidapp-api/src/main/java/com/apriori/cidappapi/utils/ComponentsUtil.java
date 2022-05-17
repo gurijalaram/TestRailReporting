@@ -74,7 +74,7 @@ public class ComponentsUtil {
      * POST new component and query CSS
      *
      * @param componentBuilder - the component object
-     * @return object
+     * @return response object
      */
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
@@ -95,7 +95,7 @@ public class ComponentsUtil {
      * Upload a component
      *
      * @param componentBuilder - the component
-     * @return - scenario object
+     * @return response object
      */
     public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
         File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
@@ -109,7 +109,7 @@ public class ComponentsUtil {
      * POST new component
      *
      * @param componentBuilder - the component object
-     * @return object
+     * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
     public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder) {
         String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
@@ -133,7 +133,7 @@ public class ComponentsUtil {
      * POST new multicomponent
      *
      * @param componentInfoBuilder - the component object
-     * @return
+     * @return response object
      */
     public ComponentInfoBuilder postMultiComponentsQueryCss(ComponentInfoBuilder componentInfoBuilder) {
         List<CadFile> resources = new ArrayList<>(postCadFiles(componentInfoBuilder).getResponseEntity().getCadFiles());
