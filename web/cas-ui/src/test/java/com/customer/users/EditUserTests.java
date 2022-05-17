@@ -8,6 +8,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
@@ -52,12 +53,13 @@ public class EditUserTests extends TestBase {
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
                 : targetCustomer;
         customerIdentity = targetCustomer.getIdentity();
         customerName = targetCustomer.getName();
