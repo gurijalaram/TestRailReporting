@@ -335,7 +335,6 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
@@ -388,7 +387,6 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails(smallRing, scenarioName)).contains("circle-minus");
 
         editComponentsPage = componentsListPage.closePanel()
-            .costScenario()
             .publishScenario(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
@@ -437,15 +435,12 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
         assemblyUtils.publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
-            .close(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(newScenarioName)
