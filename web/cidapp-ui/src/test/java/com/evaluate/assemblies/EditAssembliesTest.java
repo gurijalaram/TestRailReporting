@@ -1,11 +1,9 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -48,10 +46,6 @@ public class EditAssembliesTest extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     final AssemblyUtils assemblyUtils = new AssemblyUtils();
-
-    public EditAssembliesTest() {
-        super();
-    }
 
     @Test
     @Category(SmokeTests.class)
@@ -133,13 +127,15 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
         evaluatePage.editScenario()
             .close(EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION), is(true));
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION)).isTrue();
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -170,11 +166,13 @@ public class EditAssembliesTest extends TestBase {
             .clickExplore()
             .selectFilter("Recent");
 
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(equalTo(2)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
 
         explorePage.selectFilter("Public");
 
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(equalTo(2)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -215,20 +213,20 @@ public class EditAssembliesTest extends TestBase {
             .override()
             .clickContinue(EvaluatePage.class);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
         explorePage = evaluatePage.clickExplore()
             .selectFilter("Public");
 
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(greaterThanOrEqualTo(1)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isGreaterThanOrEqualTo(1);
 
         evaluatePage = explorePage.navigateToScenario(componentAssembly)
             .lock(EvaluatePage.class);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
 
         evaluatePage.unlock(EvaluatePage.class);
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isTrue();
 
         evaluatePage.clickExplore()
             .selectFilter("Private")
@@ -241,10 +239,10 @@ public class EditAssembliesTest extends TestBase {
             .submit(EvaluatePage.class);
 
         infoPage = evaluatePage.info();
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
-        assertThat(infoPage.getDescription(), is(equalTo("QA Test Description")));
-        assertThat(infoPage.getNotes(), is(equalTo("Testing QA notes")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
 
         componentsListPage = infoPage.cancel(EvaluatePage.class)
             .openComponents();
@@ -335,8 +333,6 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails(bigRing, scenarioName)).contains("circle-minus");
         softAssertions.assertThat(componentsListPage.getRowDetails(smallRing, scenarioName)).contains("circle-minus");
 
-        softAssertions.assertAll();
-
         editComponentsPage = componentsListPage.closePanel()
             .costScenario()
             .publishScenario(EvaluatePage.class)
@@ -349,14 +345,16 @@ public class EditAssembliesTest extends TestBase {
             .lock(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class);
 
-        assertThat(editComponentsPage.getConflictForm(), containsString("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
-            "please supply a different scenario name or cancel the operation"));
+        softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
+            "please supply a different scenario name or cancel the operation");
 
         evaluatePage = editComponentsPage.overrideScenarios()
             .clickContinue(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
