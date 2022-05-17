@@ -391,7 +391,6 @@ public final class UserProfilePage extends EagerPageComponent<UserProfilePage> {
      */
     public UserProfilePage clickOkConfirmRemove() {
         getPageUtils().waitForElementAndClick(confirmRemoveOkButton);
-        getPageUtils().waitFor(1000);
         return this;
     }
 
@@ -421,11 +420,6 @@ public final class UserProfilePage extends EagerPageComponent<UserProfilePage> {
      * @return true or false
      */
     public boolean isCardDisplayed() {
-        try {
-            aprioriCard.isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
+        return getPageUtils().isElementDisplayed(aprioriCard);
     }
 }

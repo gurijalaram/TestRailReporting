@@ -197,6 +197,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
 
         userProfilePage.clickRemoveButton()
             .clickOkConfirmRemove();
+        utils.waitForCondition(accessControls::isStable, PageUtils.DURATION_LOADING);
 
         soft.assertThat(userProfilePage.isCardDisplayed())
             .overridingErrorMessage("Expected access control card is removed.")
