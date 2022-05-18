@@ -244,6 +244,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
+            .getAttribute("data-icon");
+    }
+
+    /**
      * Gets the scenario 'webelement' locator
      *
      * @param componentName - name of the part

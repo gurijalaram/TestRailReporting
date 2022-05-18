@@ -89,7 +89,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11097", "11090", "11092"})
+    @TestRail(testCaseId = {"11097", "11090", "11092", "11097"})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {
         final String retainText = "Retain Existing Input";
@@ -124,8 +124,8 @@ public class GroupCostingTests extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         subComponentNames.forEach(subComponentName->{
-            List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
-            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("circle-minus");
+            softAssertions.assertThat(
+                componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("circle-minus");
         });
 
         subComponentNames.forEach(subComponentName->componentsListPage.selectScenario(subComponentName.toUpperCase(), scenarioName));
@@ -143,8 +143,8 @@ public class GroupCostingTests extends TestBase {
             .clickCloseBtn();
 
         subComponentNames.forEach(subComponentName->{
-            List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
-            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon").isEqualTo("gear");
+            softAssertions.assertThat(
+                componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("gear");
         });
 
         componentsListPage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
@@ -152,8 +152,8 @@ public class GroupCostingTests extends TestBase {
         componentsListPage = evaluatePage.openComponents();
 
         subComponentNames.forEach(subComponentName->{
-            List<String> rowDetails = componentsListPage.getRowDetails(subComponentName.toUpperCase(), scenarioName);
-            softAssertions.assertThat(rowDetails.get(rowDetails.size() - 1)).as("Costing Icon - " + subComponentName).isEqualTo("check");
+            softAssertions.assertThat(
+                componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon - " + subComponentName).isEqualTo("check");
         });
 
         softAssertions.assertAll();

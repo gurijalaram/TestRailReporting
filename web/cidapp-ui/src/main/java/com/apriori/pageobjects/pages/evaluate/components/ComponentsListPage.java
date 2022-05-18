@@ -297,6 +297,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Gets the data-icon value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
      * Gets the number of elements present on the page
      *
      * @param componentName - name of the part
