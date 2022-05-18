@@ -10,24 +10,22 @@ rootProject.name = 'build'
 include(':utils')
 include(':apibase')
 include(':database')
-include(':integration')
 
 project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 project(':database').projectDir = file('../db')
-project(':integration').projectDir = file('../integration')
-
 
 final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api"]
 final String[] webModules = ["auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
+final String[] intModules = ["integration"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
         put("microservices", microservicesModules)
         put("web", webModules)
+        put("integrate", intModules)
     }
 }
-
 final String configuration = System.getProperty("conf");
 
 if (configuration != null) {
@@ -91,6 +89,10 @@ if (configuration != null) {
     project(':web:cas-ui').projectDir = file('../web/cas-ui')
     project(':web:edc-ui').projectDir = file('../web/edc-ui')
     project(':web:cis-ui').projectDir = file('../web/cis-ui')
+
+    //integration
+    include ':integrate:integration'
+    project(':integrate:integration').projectDir = file('../integrate/integration')
 }
 
 void includeProject(final String includePath, final String filePath) {
