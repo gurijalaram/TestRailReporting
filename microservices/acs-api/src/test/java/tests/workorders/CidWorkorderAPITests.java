@@ -40,12 +40,12 @@ public class CidWorkorderAPITests extends TestUtil {
         );
         FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(fileResponse, scenarioName);
 
-        CostOrderStatusOutputs costOutputs =
-            fileUploadResources.costPart(
-                    productionInfoInputs,
-                    fileUploadOutputs,
-                    processGroup
-                );
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
 
         fileUploadResources.publishPart(costOutputs);
     }

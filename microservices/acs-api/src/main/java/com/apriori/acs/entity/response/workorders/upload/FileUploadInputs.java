@@ -3,6 +3,8 @@ package com.apriori.acs.entity.response.workorders.upload;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Builder
 public class FileUploadInputs {
@@ -12,4 +14,5 @@ public class FileUploadInputs {
     private boolean keepFreeBodies;
     private boolean freeBodiesPreserveCad;
     private boolean freeBodiesIgnoreMissingComponents;
+    private List<AssemblyComponent> subComponents;
 }

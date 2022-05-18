@@ -4,15 +4,17 @@ import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientGroup;
 import static org.junit.Assert.assertEquals;
 
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
-import com.apriori.cidappapi.entity.request.request.ForkRequest;
-import com.apriori.cidappapi.entity.request.request.PublishRequest;
-import com.apriori.cidappapi.entity.request.request.ScenarioRequest;
-import com.apriori.cidappapi.entity.response.GroupCostResponse;
-import com.apriori.cidappapi.entity.response.GroupErrorResponse;
+import com.apriori.cidappapi.entity.request.ForkRequest;
+import com.apriori.cidappapi.entity.request.GroupItems;
+import com.apriori.cidappapi.entity.request.Options;
+import com.apriori.cidappapi.entity.request.PublishRequest;
+import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
+import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -25,9 +27,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class ScenariosUtil {
@@ -209,62 +214,6 @@ public class ScenariosUtil {
     }
 
     /**
-     * Post to cost a group of scenarios
-     *
-     * @param componentInfoBuilder - A number of copy component objects
-     * @return response object
-     */
-    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
-        String customBody = getGroupRequestString(componentInfoBuilder);
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .customBody(customBody);
-
-        ResponseWrapper<GroupCostResponse> groupCost = HTTPRequest.build(requestEntity).post();
-
-        return groupCost;
-    }
-
-    /**
-     * Post to cost a group of scenarios and expect error
-     *
-     * @param componentInfoBuilder - A number of copy component objects
-     * @return response object
-     */
-    public ResponseWrapper<GroupErrorResponse> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
-        String customBody = getGroupRequestString(componentInfoBuilder);
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupErrorResponse.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .customBody(customBody);
-
-        ResponseWrapper<GroupErrorResponse> groupCost = HTTPRequest.build(requestEntity).post();
-
-        return groupCost;
-    }
-
-    private String getGroupRequestString(ComponentInfoBuilder componentInfoBuilder) {
-        List<ComponentInfoBuilder> subComponents = componentInfoBuilder.getSubComponents();
-        String groupItems = "\"groupItems\": [";
-        if (!subComponents.isEmpty()) {
-            for (int i = 0; i < subComponents.size(); i++) {
-                groupItems += "{\"componentIdentity\":\"" + subComponents.get(i).getComponentIdentity() + "\",";
-                groupItems += "\"scenarioIdentity\":\"" + subComponents.get(i).getScenarioIdentity() + "\"}";
-                if (i < subComponents.size() - 1) {
-                    groupItems += ",";
-                }
-            }
-            groupItems += "]}";
-        }
-
-        String customBody = "{\"costingTemplateIdentity\":\"" + getCostingTemplateId(componentInfoBuilder).getIdentity() + "\", " + groupItems;
-        return customBody;
-    }
-
-    /**
      * Post to Copy a Scenario
      *
      * @param componentInfoBuilder - the copy component object
@@ -293,9 +242,52 @@ public class ScenariosUtil {
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
-                .body("scenario", forkRequest);
+                .body("scenario", ForkRequest.builder()
+                    .scenarioName(forkRequest.getScenarioName())
+                    .override(forkRequest.getOverride())
+                    .build())
+                .token(componentInfoBuilder.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo - the component info object
+     * @param forkRequest   - the fork request
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioSuccessesFailures> postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentScenarioName) {
+
+        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        for (String[] componentScenario : componentScenarioNames) {
+            if (componentInfo.getSubComponents().stream()
+                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+
+                subComponentInfo.add(componentInfo.getSubComponents().stream()
+                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
+                    .collect(Collectors.toList()).get(0));
+            }
+        }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIOS, ScenarioSuccessesFailures.class)
+                .body(ForkRequest.builder()
+                    .scenarioName(forkRequest.getScenarioName())
+                    .override(forkRequest.getOverride())
+                    .groupItems(subComponentInfo
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -370,18 +362,120 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * Post to edit group of scenarios
+     *
+     * @param componentInfo  - the component info object
+     * @param publishRequest - the publish request
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(ComponentInfoBuilder componentInfo, PublishRequest publishRequest, String... componentScenarioName) {
+
+        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        for (String[] componentScenario : componentScenarioNames) {
+            if (componentInfo.getSubComponents().stream()
+                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+
+                subComponentInfo.add(componentInfo.getSubComponents().stream()
+                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
+                    .collect(Collectors.toList()).get(0));
+            }
+        }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+                .body(PublishRequest.builder()
+                    .groupItems(subComponentInfo
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .options(Options.builder()
+                        .scenarioName(publishRequest.getScenarioName())
+                        .override(publishRequest.getOverride())
+                        .costMaturity(publishRequest.getCostMaturity().toUpperCase())
+                        .status(publishRequest.getStatus().toUpperCase())
+                        .build())
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
 
     /**
      * Upload and Publish a subcomponent/assembly
      *
-     * @param component - the copy component object
-     * @return - the Item
+     * @param componentInfoBuilder - the copy component object
+     * @return generic object
      */
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder component) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(component);
+    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfoBuilder);
 
         postPublishScenario(postComponentResponse);
 
         return postComponentResponse;
+    }
+
+    /**
+     * Calls an api with the DELETE verb.
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @param <T>                  - the generic return type
+     * @return generic object
+     */
+    public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfoBuilder) {
+
+        String componentId = componentInfoBuilder.getComponentIdentity();
+        String scenarioId = componentInfoBuilder.getScenarioIdentity();
+
+        final RequestEntity deleteRequest =
+            genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.DELETE_SCENARIO, null, componentId, scenarioId);
+
+        HTTPRequest.build(deleteRequest).delete();
+
+        RequestEntity scenarioRequest =
+            genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentId, scenarioId);
+
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 240;
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
+
+                if (!scenarioResponse.getBody().contains("response")) {
+
+                    RequestEntity requestEntity =
+                        genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentId, scenarioId);
+
+                    return HTTPRequest.build(requestEntity).get();
+                }
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException ie) {
+            log.error(ie.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentId, scenarioId, WAIT_TIME)
+        );
+    }
+
+    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfoBuilder, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+        final int SOCKET_TIMEOUT = 240000;
+
+        return RequestEntityUtil.init(endPoint, klass)
+            .token(componentInfoBuilder.getUser().getToken())
+            .inlineVariables(componentId, scenarioId)
+            .socketTimeout(SOCKET_TIMEOUT);
     }
 }

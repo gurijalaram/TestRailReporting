@@ -34,7 +34,7 @@ public class CasIdentityProvidersTests extends TestUtil {
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
 
-        ResponseWrapper<IdentityProviders> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_ID, IdentityProviders.class)
+        ResponseWrapper<IdentityProviders> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProviders.class)
             .token(token)
             .inlineVariables("L2H992828N8M/deployments")).get();
 

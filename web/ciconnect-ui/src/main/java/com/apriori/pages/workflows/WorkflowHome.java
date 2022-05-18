@@ -5,6 +5,8 @@ import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.history.HistoryPage;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.ElementNotInteractableException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -102,11 +104,14 @@ public class WorkflowHome extends CICBasePage {
     }
 
     public String getWorkFlowStatusMessage() {
-        pageUtils.waitForElementToAppear(statusMessagePopUpElement);
-        String message = statusMessageLbl.getText();
-        pageUtils.waitForElementToAppear(statusMessageCloseBtn);
-        pageUtils.waitForElementAndClick(statusMessageCloseBtn);
-        pageUtils.waitForJavascriptLoadComplete();
+        String message = StringUtils.EMPTY;
+        try {
+            pageUtils.waitForElementToAppear(statusMessagePopUpElement);
+            message = statusMessageLbl.getText();
+            pageUtils.waitForJavascriptLoadComplete();
+        } catch (ElementNotInteractableException elementNotInteractableException) {
+            logger.debug(elementNotInteractableException.getMessage());
+        }
         return message;
     }
 

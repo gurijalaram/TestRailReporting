@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
 import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -262,6 +263,19 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * gets the sub component in a sub assembly
+     *
+     * @param componentName - the component name
+     * @return - current page object
+     */
+    public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
+        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[@class='checkbox-icon']", componentName.trim())))
+            .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
+        pageUtils.waitForElementAndClick(scenario);
+        return this;
+    }
+
+    /**
      * Highlights the scenario in the table using the keyboard control key
      *
      * @param componentName - component name
@@ -282,6 +296,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public ComponentsListPage expandAssembly(String componentName, String scenarioName) {
         scenarioTableController.expandAssembly(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Expands the sub assembly
+     *
+     * @param subAssemblyName - the sub assembly name
+     * @return - the current page object
+     */
+    public ComponentsListPage expandSubAssembly(String subAssemblyName) {
+        By byExpand = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='cell-text']/preceding-sibling::div//*[@data-icon='circle-chevron-down']", subAssemblyName.toUpperCase().trim()));
+        pageUtils.waitForElementAndClick(byExpand);
         return this;
     }
 
@@ -505,5 +531,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public String getSubcomponentScenarioName(String componentName) {
         By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
         return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
+    }
+
+    /**
+     * method to switch to a new scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  -the scenario name
+     * @return - current page object
+     */
+    public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
+        WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
+        pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
+        return this;
     }
 }

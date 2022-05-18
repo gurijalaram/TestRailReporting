@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.AccessControls;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -30,34 +31,36 @@ public class CdsAccessControlsTests  {
     private static String cloudRef;
     private static String salesForceId;
     private static String emailPattern;
+    private static String customerType;
     private static String customerIdentity;
     private static String userIdentity;
 
     @BeforeClass
     public static void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
+        customerType = Constants.CLOUD_CUSTOMER;
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
     @AfterClass
     public static void cleanUp() {
         if (accessControlIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_ACCESS_CONTROL_BY_CUSTOMER_USER_CONTROL_IDS,
+            cdsTestUtil.delete(CDSAPIEnum.ACCESS_CONTROL_BY_ID,
                 accessControlIdentityHolder.customerIdentity(),
                 accessControlIdentityHolder.userIdentity(),
                 accessControlIdentityHolder.accessControlIdentity()
             );
         }
         if (customerIdentity != null && userIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -101,7 +104,7 @@ public class CdsAccessControlsTests  {
                 .accessControlIdentity(accessControlIdentity)
                 .build();
 
-        ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
+        ResponseWrapper<AccessControls> accessControls = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROLS, AccessControls.class, customerIdentity, userIdentity);
 
         assertThat(accessControls.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(accessControls.getResponseEntity().getTotalItemCount(), is(equalTo(1)));
@@ -125,7 +128,7 @@ public class CdsAccessControlsTests  {
                 .accessControlIdentity(accessControlIdentity)
                 .build();
 
-        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ACCESS_CONTROL_BY_ID, AccessControlResponse.class, customerIdentity, userIdentity, accessControlIdentity);
+        ResponseWrapper<AccessControlResponse> accessControlResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_CONTROL_BY_ID, AccessControlResponse.class, customerIdentity, userIdentity, accessControlIdentity);
 
         assertThat(accessControlResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(accessControlResponse.getResponseEntity().getUserIdentity(), is(equalTo(userIdentity)));

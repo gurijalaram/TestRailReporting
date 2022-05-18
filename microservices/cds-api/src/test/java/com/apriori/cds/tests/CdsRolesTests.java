@@ -25,7 +25,7 @@ public class CdsRolesTests {
     @TestRail(testCaseId = {"3243"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getRoles() {
-        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Roles.class);
+        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(2));
@@ -36,11 +36,11 @@ public class CdsRolesTests {
     @TestRail(testCaseId = {"3699"})
     @Description("API returns a role's information based on the supplied identity")
     public void getRoleById() {
-        ResponseWrapper<Roles> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Roles.class);
+        ResponseWrapper<Roles> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class);
 
         String roleIdentity = responseWrapper.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_ROLES, Roles.class, roleIdentity);
+        ResponseWrapper<Roles> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.ROLES, Roles.class, roleIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getItems().get(0).getName(), is("ADMIN"));
