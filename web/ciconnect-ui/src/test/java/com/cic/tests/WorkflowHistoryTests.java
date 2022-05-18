@@ -34,7 +34,7 @@ public class WorkflowHistoryTests extends TestBase {
     @Description("Test creating, editing and deletion of a worflow")
     public void testStartAndTrackJob() {
         workFlowData = new TestDataService().getTestData();
-        workFlowData.setWorkflowName("0 0 Auto Workflow01");
+        workFlowData.setWorkflowName("- - - 0 0 Auto_WF_DoNotDelete");
         workflowHome = new LoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()

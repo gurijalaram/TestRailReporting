@@ -16,18 +16,16 @@ import com.apriori.pageobjects.pages.view.ViewSchedulesPage;
 import com.apriori.pageobjects.pages.view.ViewSearchResultsPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class PageHeader extends LoadableComponent<PageHeader> {
-
-    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
+@Slf4j
+public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
     @FindBy(css = "button[aria-label='Create Dashboards']")
     protected WebElement createDashboardsButton;
@@ -122,10 +120,10 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     private final WebDriver driver;
     private final PageUtils pageUtils;
 
-    public PageHeader(WebDriver driver) {
+    public ReportsHeader(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
