@@ -8,17 +8,15 @@ import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class PageHeader extends LoadableComponent<PageHeader> {
-
-    private static final Logger logger = LoggerFactory.getLogger(PageHeader.class);
+@Slf4j
+public class AdminPageHeader extends LoadableComponent<AdminPageHeader> {
 
     @FindBy(css = "div[id='display'] > div > div > div:nth-child(1) > div")
     private WebElement homePageTitle;
@@ -59,10 +57,10 @@ public class PageHeader extends LoadableComponent<PageHeader> {
     private WebDriver driver;
     private PageUtils pageUtils;
 
-    public PageHeader(WebDriver driver) {
+    public AdminPageHeader(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
