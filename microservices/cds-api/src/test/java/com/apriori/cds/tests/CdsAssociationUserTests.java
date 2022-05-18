@@ -39,7 +39,6 @@ public class CdsAssociationUserTests {
     private static String url;
     private static String customerIdentityEndpoint;
     private static String aPCustomerIdentity;
-    private static String associationsEndpoint;
     private static String associationIdentity;
     private static ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
 
@@ -71,7 +70,7 @@ public class CdsAssociationUserTests {
                 aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
         }
         if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
