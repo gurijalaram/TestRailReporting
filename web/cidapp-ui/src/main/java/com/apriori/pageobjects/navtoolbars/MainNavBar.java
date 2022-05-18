@@ -8,7 +8,6 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.utils.PageUtils;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -72,7 +71,6 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(settingsButton);
         pageUtils.waitForElementToAppear(helpDropdown);
-        pageUtils.waitForElementsToNotAppear(By.cssSelector("[role='status']"));
     }
 
     /**

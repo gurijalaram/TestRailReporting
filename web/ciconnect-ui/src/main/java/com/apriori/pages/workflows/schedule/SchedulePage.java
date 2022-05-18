@@ -80,7 +80,6 @@ public class SchedulePage extends CICBasePage {
 
     @Override
     protected void isLoaded() {
-        pageUtils.waitForElementToAppear(newWorkflowBtn);
         pageUtils.waitForElementToAppear(scheduleTab);
     }
 
@@ -325,6 +324,26 @@ public class SchedulePage extends CICBasePage {
     public String getDeleteConfirmationText() {
         pageUtils.waitForElementToAppear(confirmDeletionText);
         return confirmDeletionText.getText();
+    }
+
+    /**
+     * Delete workflow
+     *
+     * @return String - boolean
+     */
+    public boolean deleteWorkFlow(String workflowName) {
+        boolean isWorkflowDeleted = false;
+        if (isWorkflowExists(workflowName)) {
+            this.selectWorkflow(workflowName).clickDeleteButton().clickConfirmAlertBoxDelete();
+            isWorkflowDeleted = true;
+        } else {
+            this.isWorkflowListIsSorted(WorkflowListColumns.Name, SortedOrderType.ASCENDING, workFlowData.getWorkflowName());
+            if (isWorkflowExists(workflowName)) {
+                this.selectWorkflow(workflowName).clickDeleteButton().clickConfirmAlertBoxDelete();
+                isWorkflowDeleted = true;
+            }
+        }
+        return isWorkflowDeleted;
     }
 
     /**
