@@ -16,6 +16,7 @@ import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -477,5 +478,34 @@ public class ScenariosUtil {
             .token(componentInfoBuilder.getUser().getToken())
             .inlineVariables(componentId, scenarioId)
             .socketTimeout(SOCKET_TIMEOUT);
+    }
+
+    /**
+     * GET the manifest for scenario
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @return - response object
+     */
+    public ResponseWrapper<ScenarioManifest> getManifestForScenario(ComponentInfoBuilder componentInfoBuilder) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioManifest.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity());
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    public ResponseWrapper<ScenarioSuccessesFailures> patchSubcomponent(ComponentInfoBuilder componentInfoBuilder) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.UPDATE_GROUP_OF_SCENARIO_ASSOCIATIONS, ScenarioResponse.class)
+                .token(componentInfoBuilder.getUser().getToken())
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .body(GroupItems.builder()
+                    .scenarioAssociationIdentity(componentInfoBuilder.getComponentIdentity())
+                    .childScenarioIdentity(componentInfoBuilder.getScenarioIdentity()).excluded(false)
+                    .occurrences(1)
+                    .build());
+
+        return HTTPRequest.build(requestEntity).patch();
     }
 }
