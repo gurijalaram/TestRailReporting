@@ -125,7 +125,7 @@ public final class SourceListComponent extends CommonComponent implements Compon
      * @return The card grid component. Returns null if this list is using a table list layout.
      */
     public CardsViewComponent getCardGrid() {
-        WebElement cardGridRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_CARD_GRID, PageUtils.DURATION_SLOW, getRoot()));
+        WebElement cardGridRoot = Obligation.optional(() -> getPageUtils().waitForElementToAppear(BY_CARD_GRID, PageUtils.DURATION_LOADING, getRoot()));
         if (cardGridRoot != null) {
             return new CardsViewComponent(getDriver(), cardGridRoot);
         }

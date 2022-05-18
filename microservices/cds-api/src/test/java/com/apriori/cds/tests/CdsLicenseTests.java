@@ -76,8 +76,9 @@ public class CdsLicenseTests {
         String siteId = generateStringUtil.generateSiteID();
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -103,8 +104,9 @@ public class CdsLicenseTests {
         String siteId = generateStringUtil.generateSiteID();
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -137,8 +139,9 @@ public class CdsLicenseTests {
         String siteId = generateStringUtil.generateSiteID();
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -177,8 +180,9 @@ public class CdsLicenseTests {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -222,8 +226,9 @@ public class CdsLicenseTests {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -269,8 +274,9 @@ public class CdsLicenseTests {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -328,8 +334,9 @@ public class CdsLicenseTests {
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
         String serviceUrl = Constants.getServiceUrl();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
@@ -394,8 +401,9 @@ public class CdsLicenseTests {
         String licenseId = UUID.randomUUID().toString();
         String subLicenseId = UUID.randomUUID().toString();
         String userName = generateStringUtil.generateUserName();
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        ResponseWrapper<Customer> customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         String customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
