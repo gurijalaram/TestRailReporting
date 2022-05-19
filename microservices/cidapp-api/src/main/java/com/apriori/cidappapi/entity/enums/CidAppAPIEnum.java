@@ -50,7 +50,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     CUSTOMIZATIONS("customizations"),
 
     //SCENARIO ASSOCIATION GROUP OPERATIONS
-    UPDATE_GROUP_OF_SCENARIO_ASSOCIATIONS("components/%s/scenarios/%s/associations"),
+    SCENARIO_ASSOCIATIONS("components/%s/scenarios/%s/associations"),
 
     //APPLICATION METADATA
     APPLICATION_METADATA("application-metadata");

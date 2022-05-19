@@ -497,7 +497,7 @@ public class ScenariosUtil {
 
     public ResponseWrapper<ScenarioSuccessesFailures> patchSubcomponent(ComponentInfoBuilder componentInfoBuilder) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.UPDATE_GROUP_OF_SCENARIO_ASSOCIATIONS, ScenarioResponse.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, ScenarioResponse.class)
                 .token(componentInfoBuilder.getUser().getToken())
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body(GroupItems.builder()
