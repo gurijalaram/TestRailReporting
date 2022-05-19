@@ -414,7 +414,7 @@ public class ScenariosUtil {
      * @return generic object
      */
     public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfoBuilder);
+        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfoBuilder);
 
         postPublishScenario(postComponentResponse);
 
