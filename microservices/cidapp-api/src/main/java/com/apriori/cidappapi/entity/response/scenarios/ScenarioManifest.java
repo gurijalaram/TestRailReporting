@@ -12,7 +12,6 @@ import java.util.List;
 @Data
 @JsonRootName("response")
 public class ScenarioManifest {
-
     private String componentIdentity;
     private String componentName;
     private String componentType;
@@ -25,10 +24,10 @@ public class ScenarioManifest {
     private Boolean scenarioPublished;
     private Integer depth;
     private Boolean excluded;
+    private Boolean included;
     private Integer occurrences;
     private Integer totalComponents;
     private Integer totalSubComponents;
-
     @JsonProperty("subComponents")
     private List<ScenarioManifestSubcomponents> subcomponents;
 }
