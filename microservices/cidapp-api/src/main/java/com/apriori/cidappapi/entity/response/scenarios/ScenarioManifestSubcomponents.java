@@ -1,6 +1,9 @@
 package com.apriori.cidappapi.entity.response.scenarios;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class ScenarioManifestSubcomponents {
@@ -21,4 +24,6 @@ public class ScenarioManifestSubcomponents {
     private Integer occurrences;
     private Integer totalComponents;
     private Integer totalSubComponents;
+    @JsonProperty("subComponents")
+    private List<ScenarioManifestSubcomponents> subcomponents;
 }
