@@ -12,10 +12,12 @@ import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
 import com.apriori.cidappapi.entity.request.Options;
 import com.apriori.cidappapi.entity.request.PublishRequest;
+import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioAssociations;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -30,6 +32,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -495,7 +498,7 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public ResponseWrapper<ScenarioSuccessesFailures> patchSubcomponent(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioAssociations> patchAssociations(ComponentInfoBuilder componentInfoBuilder, String subcomponentScenarioAssociationId, String subcomponentScenarioId) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, ScenarioResponse.class)
                 .token(componentInfoBuilder.getUser().getToken())
