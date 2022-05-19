@@ -8,7 +8,7 @@ import lombok.Data;
 
 import java.util.List;
 
-@Schema(location = "ScenarioManifestResponse.json")
+@Schema(location = "ScenarioManifest.json")
 @Data
 @JsonRootName("response")
 public class ScenarioManifest {

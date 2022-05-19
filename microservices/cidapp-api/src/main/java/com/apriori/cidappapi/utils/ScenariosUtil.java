@@ -412,7 +412,7 @@ public class ScenariosUtil {
      * Upload and Publish a subcomponent/assembly
      *
      * @param componentInfoBuilder - the copy component object
-     * @return generic object
+     * @return response object
      */
     public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
         ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfoBuilder);
@@ -486,7 +486,7 @@ public class ScenariosUtil {
      * @param componentInfoBuilder - the component info builder object
      * @return - response object
      */
-    public ResponseWrapper<ScenarioManifest> getManifestForScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioManifest> getScenarioManifest(ComponentInfoBuilder componentInfoBuilder) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioManifest.class)
                 .token(componentInfoBuilder.getUser().getToken())

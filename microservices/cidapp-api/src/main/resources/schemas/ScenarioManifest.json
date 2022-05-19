@@ -9,6 +9,7 @@
     "configurationName",
     "depth",
     "excluded",
+    "included",
     "occurrences",
     "scenarioAssociationIdentity",
     "scenarioIdentity",
@@ -45,6 +46,9 @@
     "excluded": {
       "type": "boolean"
     },
+    "included": {
+      "type": "boolean"
+    },
     "occurrences": {
       "type": "number"
     },
@@ -68,82 +72,86 @@
     },
     "subComponents": {
       "type": "array",
-        "required": [
-          "componentIdentity",
-          "componentName",
-          "componentType",
-          "configurationName",
-          "cadMetadataIdentity",
-          "scenarioIdentity",
-          "scenarioName",
-          "scenarioType",
-          "scenarioState",
-          "scenarioPublished",
-          "scenarioAssociationIdentity",
-          "depth",
-          "excluded",
-          "occurrences",
-          "totalComponents",
-          "totalSubComponents",
-          "subComponents"
-        ],
-        "optional": [
-          "configurationName"
-        ],
-        "properties": {
-          "componentIdentity": {
-            "type": "string"
-          },
-          "componentName": {
-            "type": "string"
-          },
-          "componentType": {
-            "type": "string"
-          },
-          "configurationName": {
-            "type": "string"
-          },
-          "cadMetadataIdentity": {
-            "type": "string"
-          },
-          "scenarioIdentity": {
-            "type": "string"
-          },
-          "scenarioName": {
-            "type": "string"
-          },
-          "scenarioType": {
-            "type": "string"
-          },
-          "scenarioState": {
-            "type": "string"
-          },
-          "scenarioPublished": {
-            "type": "boolean"
-          },
-          "scenarioAssociationIdentity": {
-            "type": "string"
-          },
-          "depth": {
-            "type": "number"
-          },
-          "excluded": {
-            "type": "boolean"
-          },
-          "occurrences": {
-            "type": "number"
-          },
-          "totalComponents": {
-            "type": "number"
-          },
-          "totalSubComponents": {
-            "type": "number"
-          },
-          "subComponents": {
-            "type": "array",
-            "items": {}
-          }
+      "required": [
+        "componentIdentity",
+        "componentName",
+        "componentType",
+        "configurationName",
+        "cadMetadataIdentity",
+        "scenarioIdentity",
+        "scenarioName",
+        "scenarioType",
+        "scenarioState",
+        "scenarioPublished",
+        "scenarioAssociationIdentity",
+        "depth",
+        "occurrences",
+        "totalComponents",
+        "totalSubComponents",
+        "subComponents"
+      ],
+      "optional": [
+        "configurationName",
+        "excluded",
+        "included"
+      ],
+      "properties": {
+        "componentIdentity": {
+          "type": "string"
+        },
+        "componentName": {
+          "type": "string"
+        },
+        "componentType": {
+          "type": "string"
+        },
+        "configurationName": {
+          "type": "string"
+        },
+        "cadMetadataIdentity": {
+          "type": "string"
+        },
+        "scenarioIdentity": {
+          "type": "string"
+        },
+        "scenarioName": {
+          "type": "string"
+        },
+        "scenarioType": {
+          "type": "string"
+        },
+        "scenarioState": {
+          "type": "string"
+        },
+        "scenarioPublished": {
+          "type": "boolean"
+        },
+        "scenarioAssociationIdentity": {
+          "type": "string"
+        },
+        "depth": {
+          "type": "number"
+        },
+        "excluded": {
+          "type": "boolean"
+        },
+        "included": {
+          "type": "boolean"
+        },
+        "occurrences": {
+          "type": "number"
+        },
+        "totalComponents": {
+          "type": "number"
+        },
+        "totalSubComponents": {
+          "type": "number"
+        },
+        "subComponents": {
+          "type": "array",
+          "items": {}
         }
+      }
     },
     "totalComponents": {
       "type": "number"
