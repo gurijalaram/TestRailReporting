@@ -158,13 +158,13 @@ public class ScenariosUtil {
     /**
      * POST to cost a component
      *
-     * @param componentInfoBuilder - the component object
+     * @param componentInfo - the component object
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> postCostComponent(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioResponse> postCostComponent(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder().annualVolume(5500)
                         .batchSize(458)
@@ -196,41 +196,41 @@ public class ScenariosUtil {
     /**
      * POST to cost a scenario
      *
-     * @param componentInfoBuilder - the cost component object
+     * @param componentInfo - the cost component object
      * @return list of scenario items
      */
-    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioResponse> postCostScenario(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("costingInputs",
                     CostRequest.builder()
                         .costingTemplateIdentity(
-                            getCostingTemplateId(componentInfoBuilder)
+                            getCostingTemplateId(componentInfo)
                                 .getIdentity())
                         .deleteTemplateAfterUse(true)
                         .build());
 
         HTTPRequest.build(requestEntity).post();
 
-        return getScenarioRepresentation(componentInfoBuilder);
+        return getScenarioRepresentation(componentInfo);
     }
 
     /**
      * Post to Copy a Scenario
      *
-     * @param componentInfoBuilder - the copy component object
+     * @param componentInfo - the copy component object
      * @return response object
      */
-    public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<Scenario> postCopyScenario(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("scenario",
                     ScenarioRequest.builder()
-                        .scenarioName(componentInfoBuilder.getScenarioName())
+                        .scenarioName(componentInfo.getScenarioName())
                         .build());
 
         return HTTPRequest.build(requestEntity).post();
@@ -239,19 +239,19 @@ public class ScenariosUtil {
     /**
      * Post to Edit a scenario/assembly (with a scenario name that already exists)
      *
-     * @param componentInfoBuilder - the copy component object
+     * @param componentInfo - the copy component object
      * @param forkRequest          - the request object
      * @return response object
      */
-    public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfoBuilder, ForkRequest forkRequest) {
+    public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfo, ForkRequest forkRequest) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("scenario", ForkRequest.builder()
                     .scenarioName(forkRequest.getScenarioName())
                     .override(forkRequest.getOverride())
                     .build())
-                .token(componentInfoBuilder.getUser().getToken());
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -301,8 +301,8 @@ public class ScenariosUtil {
      *
      * @return scenario object
      */
-    private Scenario getCostingTemplateId(ComponentInfoBuilder componentInfoBuilder) {
-        return postCostingTemplate(componentInfoBuilder);
+    private Scenario getCostingTemplateId(ComponentInfoBuilder componentInfo) {
+        return postCostingTemplate(componentInfo);
     }
 
     /**
@@ -310,15 +310,15 @@ public class ScenariosUtil {
      *
      * @return scenario object
      */
-    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
+    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
+                .token(componentInfo.getUser().getToken())
                 .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
-                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
-                    .materialName(componentInfoBuilder.getMaterial())
+                    .processGroupName(componentInfo.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfo.getDigitalFactory().getDigitalFactory())
+                    .materialMode(componentInfo.getMode().toUpperCase())
+                    .materialName(componentInfo.getMaterial())
                     .annualVolume(5500)
                     .productionLife(5.0)
                     .batchSize(458)
@@ -333,30 +333,30 @@ public class ScenariosUtil {
     /**
      * POST to publish scenario
      *
-     * @param componentInfoBuilder - the component info builder object
+     * @param componentInfo - the component info builder object
      * @return - scenarioResponse object
      */
-    public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfoBuilder) {
-        publishScenario(componentInfoBuilder, ScenarioResponse.class);
+    public ResponseWrapper<ScenarioResponse> postPublishScenario(ComponentInfoBuilder componentInfo) {
+        publishScenario(componentInfo, ScenarioResponse.class);
 
-        return getPublishedScenarioRepresentation(componentInfoBuilder, "PUBLISH", true);
+        return getPublishedScenarioRepresentation(componentInfo, "PUBLISH", true);
     }
 
     /**
      * POST to publish scenario
      *
-     * @param componentInfoBuilder - the component info builder object
+     * @param componentInfo - the component info builder object
      * @param klass                - the  class
      * @param <T>                  - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfoBuilder, Class<T> klass) {
+    public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIO, klass)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body("scenario", PublishRequest.builder()
-                    .assignedTo(new PeopleUtil().getCurrentUser(componentInfoBuilder.getUser()).getIdentity())
+                    .assignedTo(new PeopleUtil().getCurrentUser(componentInfo.getUser()).getIdentity())
                     .costMaturity("Initial".toUpperCase())
                     .override(false)
                     .status("New".toUpperCase())
@@ -414,11 +414,11 @@ public class ScenariosUtil {
     /**
      * Upload and Publish a subcomponent/assembly
      *
-     * @param componentInfoBuilder - the copy component object
+     * @param componentInfo - the copy component object
      * @return response object
      */
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfoBuilder);
+    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
+        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfo);
 
         postPublishScenario(postComponentResponse);
 
@@ -428,22 +428,22 @@ public class ScenariosUtil {
     /**
      * Calls an api with the DELETE verb.
      *
-     * @param componentInfoBuilder - the component info builder object
+     * @param componentInfo - the component info builder object
      * @param <T>                  - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfoBuilder) {
+    public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfo) {
 
-        String componentId = componentInfoBuilder.getComponentIdentity();
-        String scenarioId = componentInfoBuilder.getScenarioIdentity();
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
 
         final RequestEntity deleteRequest =
-            genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.DELETE_SCENARIO, null, componentId, scenarioId);
+            genericDeleteRequest(componentInfo, CidAppAPIEnum.DELETE_SCENARIO, null, componentId, scenarioId);
 
         HTTPRequest.build(deleteRequest).delete();
 
         RequestEntity scenarioRequest =
-            genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentId, scenarioId);
+            genericDeleteRequest(componentInfo, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentId, scenarioId);
 
         final int POLL_TIME = 2;
         final int WAIT_TIME = 240;
@@ -458,7 +458,7 @@ public class ScenariosUtil {
                 if (!scenarioResponse.getBody().contains("response")) {
 
                     RequestEntity requestEntity =
-                        genericDeleteRequest(componentInfoBuilder, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentId, scenarioId);
+                        genericDeleteRequest(componentInfo, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentId, scenarioId);
 
                     return HTTPRequest.build(requestEntity).get();
                 }
@@ -474,11 +474,11 @@ public class ScenariosUtil {
         );
     }
 
-    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfoBuilder, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfo, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
         final int SOCKET_TIMEOUT = 240000;
 
         return RequestEntityUtil.init(endPoint, klass)
-            .token(componentInfoBuilder.getUser().getToken())
+            .token(componentInfo.getUser().getToken())
             .inlineVariables(componentId, scenarioId)
             .socketTimeout(SOCKET_TIMEOUT);
     }
@@ -486,14 +486,14 @@ public class ScenariosUtil {
     /**
      * GET the manifest for scenario
      *
-     * @param componentInfoBuilder - the component info builder object
+     * @param componentInfo - the component info builder object
      * @return - response object
      */
-    public ResponseWrapper<ScenarioManifest> getScenarioManifest(ComponentInfoBuilder componentInfoBuilder) {
+    public ResponseWrapper<ScenarioManifest> getScenarioManifest(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioManifest.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity());
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity());
 
         return HTTPRequest.build(requestEntity).get();
     }
