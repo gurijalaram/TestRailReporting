@@ -20,7 +20,6 @@ public class ScenarioManifestSubcomponents {
     private String scenarioAssociationIdentity;
     private Integer depth;
     private Boolean excluded;
-    private Boolean included;
     private Integer occurrences;
     private Integer totalComponents;
     private Integer totalSubComponents;
