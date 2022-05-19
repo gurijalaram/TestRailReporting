@@ -125,7 +125,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-process-group-select-field']")
     private WebElement processGroupList;
 
-    @FindBy(css = ".sub-components-summary-card button")
+    @FindBy(css = ".sub-components-summary")
     private WebElement componentsDetailsButton;
 
     @FindBy(css = "div[id='qa-source-model-modal-select-field'] button")
