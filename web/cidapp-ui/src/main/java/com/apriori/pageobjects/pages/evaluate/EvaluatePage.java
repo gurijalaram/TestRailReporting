@@ -725,23 +725,12 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Gets the type of cost results value
-     *
-     * @param label - type of cost result
-     * @return - String
-     */
-    public String getTypeOfCostResultsValue(String label) {
-        By costResultValue = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
-        return pageUtils.waitForElementToAppear(costResultValue).getText();
-    }
-
-    /**
      * Generates missing scenario by clicking Yes or No
      *
      * @param label - Yes or No
      * @return - new page object
      */
-    public EvaluatePage generateMissingImages(String label) {
+    public EvaluatePage generateMissingScenario(String label) {
         By byImages = By.xpath(String.format("//button[contains(text(), '%s')]", label));
         pageUtils.waitForElementAndClick(byImages);
         return this;
