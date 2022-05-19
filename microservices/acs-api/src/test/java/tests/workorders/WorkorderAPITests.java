@@ -468,7 +468,8 @@ public class WorkorderAPITests {
     private void testShallowEditOfScenario(String fileName, boolean includeSubComponents) {
         NewPartRequest productionInfoInputs = setupProductionInfoInputs();
 
-        fileUploadResources.checkValidProcessGroup(castingProcessGroup);
+        String processGroup = fileName.contains("asm") ? assemblyProcessGroup : castingProcessGroup;
+        fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileUploadOutputs fileUploadOutputs;
         if (includeSubComponents) {
@@ -478,13 +479,13 @@ public class WorkorderAPITests {
             );
             fileUploadOutputs = fileUploadResources.getCurrentFileUploadOutputs();
         } else {
-            fileUploadOutputs = initializeAndUploadPartFile(fileName, castingProcessGroup, false);
+            fileUploadOutputs = initializeAndUploadPartFile(fileName, processGroup, false);
         }
 
         CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
             productionInfoInputs,
             fileUploadOutputs,
-            castingProcessGroup,
+            processGroup,
             includeSubComponents
         );
 
@@ -572,7 +573,8 @@ public class WorkorderAPITests {
         fileUploadResources.setCurrentFileUploadOutputs(
             fileUploadResources.createFileUploadWorkorderAssemblySuppressError(
                 assemblyProper
-            ));
+            )
+        );
 
         return assemblyFileResponse;
     }

@@ -39,7 +39,6 @@ public class CdsAssociationUserTests {
     private static String url;
     private static String customerIdentityEndpoint;
     private static String aPCustomerIdentity;
-    private static String associationsEndpoint;
     private static String associationIdentity;
     private static ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
 
@@ -51,8 +50,9 @@ public class CdsAssociationUserTests {
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
@@ -70,7 +70,7 @@ public class CdsAssociationUserTests {
                 aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
         }
         if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
