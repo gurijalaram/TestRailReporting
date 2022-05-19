@@ -29,6 +29,9 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     @FindBy(css = ".paginator .left")
     private WebElement paginatorDropdown;
 
+    @FindBy(css = "svg[data-icon='angles-left']")
+    private WebElement openPreviewButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -47,7 +50,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(searchInput);
+        pageUtils.waitForElementToAppear(openPreviewButton);
     }
 
     /**

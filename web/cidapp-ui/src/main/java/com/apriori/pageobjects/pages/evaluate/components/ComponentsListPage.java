@@ -79,6 +79,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
     private WebElement publishButton;
 
+    @FindBy(css = "div[data-testid='loader']")
+    private WebElement loadingSpinner;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -105,6 +108,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(tableButton);
         pageUtils.waitForElementToAppear(previewButton);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
 
