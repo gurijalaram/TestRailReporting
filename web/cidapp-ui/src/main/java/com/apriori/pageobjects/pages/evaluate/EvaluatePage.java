@@ -739,10 +739,10 @@ public class EvaluatePage extends EvaluateToolbar {
     /**
      * Clicks on the Refresh button
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EvaluatePage clickRefresh() {
+    public <T> T clickRefresh(Class<T> className) {
         pageUtils.waitForElementAndClick(refreshButton);
-        return this;
+        return PageFactory.initElements(driver, className);
     }
 }

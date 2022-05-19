@@ -444,12 +444,12 @@ public class IncludeAndExcludeTests extends TestBase {
         softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
 
-        componentsListPage = componentsListPage.selectScenario(componentName)
+        componentsListPage = componentsListPage.multiSelectSubcomponents(componentName + ", " + scenarioName)
             .updateCadFile()
             .enterFilePath(componentResourceFile)
             .submit(ComponentsListPage.class)
             .closePanel()
-            .clickRefresh()
+            .clickRefresh(EvaluatePage.class)
             .openComponents();
 
         assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false));
