@@ -432,10 +432,14 @@ public class IncludeAndExcludeTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .updateCadFile(assemblyResourceFile)
-            .generateMissingImages("Yes")
             .openComponents();
 
+        subComponentNames.forEach(component ->
+            assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component), is(true)));
+
+        componentsListPage = componentsListPage.closePanel()
+            .updateCadFile(assemblyResourceFile)
+            .openComponents();
 
         softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
@@ -443,52 +447,12 @@ public class IncludeAndExcludeTests extends TestBase {
         componentsListPage = componentsListPage.selectScenario(componentName)
             .updateCadFile()
             .enterFilePath(componentResourceFile)
-            .submit(ComponentsListPage.class);
-
-        assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false));
-    }
-
-    @Test
-    @TestRail(testCaseId = "12138")
-    @Description("Missing sub-component automatically included on update (CID)")
-    public void testMissingComponentAutomaticallyIncludedOnUpdate() {
-        String assemblyName = "Assembly01";
-        final String assemblyExtension = ".iam";
-        final ProcessGroupEnum assemblyProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
-
-        List<String> subComponentNames = Arrays.asList("Part0001", "Part0002", "Part0003");
-        String componentName = "Part0004";
-        final String componentExtension = ".ipt";
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-        componentResourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + componentExtension);
-
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroupEnum,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
+            .submit(ComponentsListPage.class)
+            .closePanel()
+            .clickRefresh()
             .openComponents();
-
-        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
-
-        componentsListPage.selectScenario(componentName)
-            .updateCadFile()
-            .enterFilePath(componentResourceFile)
-            .submit(ComponentsListPage.class);
 
         assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false));
     }
 }
+

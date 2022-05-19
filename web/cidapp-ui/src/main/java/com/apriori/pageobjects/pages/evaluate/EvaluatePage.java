@@ -147,6 +147,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
     private WebElement customAttributesTab;
 
+    @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
+    private WebElement refreshButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -741,6 +744,16 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage generateMissingImages(String label) {
         By byImages = By.xpath(String.format("//button[contains(text(), '%s')]", label));
         pageUtils.waitForElementAndClick(byImages);
+        return this;
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return new page object
+     */
+    public EvaluatePage clickRefresh() {
+        pageUtils.waitForElementAndClick(refreshButton);
         return this;
     }
 }
