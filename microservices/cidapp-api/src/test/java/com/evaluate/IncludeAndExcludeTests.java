@@ -1,10 +1,12 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestItems;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioAssociations;
 import com.apriori.cidappapi.utils.AssemblyUtils;
-import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -21,7 +23,6 @@ import java.util.List;
 
 public class IncludeAndExcludeTests {
 
-    private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
@@ -54,6 +55,8 @@ public class IncludeAndExcludeTests {
         assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
-        ScenarioManifest response = scenariosUtil.getManifestForScenario(componentAssembly).getResponseEntity();
+        ResponseWrapper<ScenarioAssociations> patchResponse = scenariosUtil.patchAssociations(componentAssembly, "Part0001",  scenarioName, true);
+
+        assertThat(patchResponse.getResponseEntity().getSuccesses(), is(equalTo(1)));
     }
 }
