@@ -64,7 +64,7 @@ public class PublishTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
@@ -100,7 +100,7 @@ public class PublishTests extends TestBase {
             .selectStatus("Analysis")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

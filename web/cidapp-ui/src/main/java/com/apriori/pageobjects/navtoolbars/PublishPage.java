@@ -172,11 +172,10 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * Select the publish button
      *
      * @param cidComponentItem - the cid representation item
-     * @param currentUser      - the current user
      * @param <T>              - the object type
      * @return generic page object
      */
-    public <T> T publish(ComponentInfoBuilder cidComponentItem, UserCredentials currentUser, Class<T> klass) {
+    public <T> T publish(ComponentInfoBuilder cidComponentItem, Class<T> klass) {
         modalDialogController.publish(klass);
         new ScenariosUtil().getPublishedScenarioRepresentation(cidComponentItem, "PUBLISH", true);
         return PageFactory.initElements(driver, klass);
@@ -198,7 +197,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      *
      * @return generic page object
      */
-    public <T> T continues(Class<T> klass) {
+    public <T> T clickContinue(Class<T> klass) {
         return modalDialogController.clickContinue(klass);
     }
 

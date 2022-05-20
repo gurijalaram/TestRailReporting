@@ -3,17 +3,14 @@ package com.apriori.pageobjects.pages.manage;
 import com.apriori.pageobjects.header.AdminHeader;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import pageobjects.pages.manage.NewExportSet;
 
+@Slf4j
 public class ScenarioExport extends AdminHeader {
-
-    private static final Logger logger = LoggerFactory.getLogger(ScenarioExport.class);
 
     @FindBy(css = "h1")
     private WebElement manageScenarioExportTitle;
@@ -28,7 +25,7 @@ public class ScenarioExport extends AdminHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

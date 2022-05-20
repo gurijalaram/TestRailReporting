@@ -1,19 +1,17 @@
 package com.apriori.pageobjects.pages.homepage;
 
-import com.apriori.pageobjects.header.PageHeader;
+import com.apriori.pageobjects.header.AdminPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class AdminHomePage extends PageHeader {
-
-    private static final Logger logger = LoggerFactory.getLogger(AdminHomePage.class);
+@Slf4j
+public class AdminHomePage extends AdminPageHeader {
 
     @FindBy(css = "div[class='devices']")
     private WebElement reportsWelcomeText;
@@ -28,7 +26,7 @@ public class AdminHomePage extends PageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
