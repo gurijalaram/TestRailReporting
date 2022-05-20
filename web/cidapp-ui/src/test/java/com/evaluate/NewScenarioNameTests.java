@@ -100,7 +100,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -139,7 +139,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
         cidComponentItemD = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
@@ -150,7 +150,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItemC, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemC, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
         explorePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
@@ -160,7 +160,7 @@ public class NewScenarioNameTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItemD, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemD, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
