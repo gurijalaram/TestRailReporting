@@ -1,7 +1,7 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -57,6 +57,6 @@ public class IncludeAndExcludeTests {
 
         ResponseWrapper<ScenarioAssociations> patchResponse = scenariosUtil.patchAssociations(componentAssembly, "Part0001",  scenarioName, true);
 
-        assertThat(patchResponse.getResponseEntity().getSuccesses(), is(equalTo(1)));
+        assertThat(patchResponse.getResponseEntity().getSuccesses().size(), is(greaterThanOrEqualTo(1)));
     }
 }
