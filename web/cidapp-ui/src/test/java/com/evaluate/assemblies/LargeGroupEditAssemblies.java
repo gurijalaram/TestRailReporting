@@ -71,7 +71,9 @@ public class LargeGroupEditAssemblies extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-                .multiSelectSubcomponents("centre bolt, " + scenarioName + "", "centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName + "", "Handle, " + scenarioName + "", "left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "leg, " + scenarioName + "", "mechanism body, " + scenarioName + "", "paddle bar, " + scenarioName + "", "pin, " + scenarioName + "");
+                .multiSelectSubcomponents("centre bolt, " + scenarioName + "", "centre washer, " + scenarioName + "", "display, " + scenarioName + "", "gasket, " + scenarioName +
+                    "", "Handle, " + scenarioName + "", "left paddle, " + scenarioName + "", "leg cover, " + scenarioName + "", "leg, " + scenarioName + "", "mechanism body, " + scenarioName +
+                    "", "paddle bar, " + scenarioName + "", "pin, " + scenarioName + "");
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")

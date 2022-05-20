@@ -3,7 +3,6 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -236,7 +235,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
@@ -249,7 +248,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario()
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
