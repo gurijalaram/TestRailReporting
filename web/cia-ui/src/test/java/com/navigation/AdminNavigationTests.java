@@ -3,6 +3,7 @@ package com.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
@@ -69,10 +70,9 @@ public class AdminNavigationTests extends TestBase {
         cirUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToHelpReportsGuide()
-            .switchTab()
-            .switchToIFrameUserGuide("page_iframe");
+            .switchTab();
 
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
+        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), startsWith("Cost Insight Report"));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
         assertThat(cirUserGuide.getTabCount(), is(2));
     }
@@ -86,9 +86,10 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
         assertThat(ciaUserGuide.getTabCount(), is(2));
+        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
+        assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false),
+            containsString(Constants.CIA_USER_GUIDE_TITLE));
     }
 
     @Test
@@ -102,9 +103,10 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
+        assertThat(currentUrl, containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE));
+        assertThat(currentUrl, containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO));
+        assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true),
+            startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE));
     }
 
     @Test
