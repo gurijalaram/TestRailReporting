@@ -219,17 +219,16 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     }
 
     /**
-     * Close the import modal dialog
+     * Close
      *
-     * @return new page object
+     * @return generic page object
      */
-    public ComponentsListPage close() {
-        pageUtils.waitForElementAndClick(closeButton);
-        return new ComponentsListPage(driver);
+    public <T> T close(Class<T> klass) {
+        return modalDialogController.close(klass);
     }
 
     /**
-     * Get conflict error message
+     * Get publishing message
      *
      * @return string
      */

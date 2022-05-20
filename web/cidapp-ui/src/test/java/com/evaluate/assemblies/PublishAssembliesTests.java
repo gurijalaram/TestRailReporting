@@ -47,6 +47,7 @@ public class PublishAssembliesTests extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private PublishPage publishPage;
     private ComponentsListPage componentsListPage;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     public PublishAssembliesTests() {
         super();
@@ -113,7 +114,7 @@ public class PublishAssembliesTests extends TestBase {
 
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String message = "Public scenarios will be created for each scenario in your selection." +
+        String publishModalMessage = "Public scenarios will be created for each scenario in your selection." +
             " If you wish to retain existing public scenarios, change the scenario name, otherwise they will be overridden.";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
@@ -139,7 +140,7 @@ public class PublishAssembliesTests extends TestBase {
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
             .publishSubcomponent();
 
-        assertThat(publishPage.getConflictMessage(), is(equalTo(message)));
+        assertThat(publishPage.getConflictMessage(), is(equalTo(publishModalMessage)));
     }
 
     @Test
@@ -181,11 +182,13 @@ public class PublishAssembliesTests extends TestBase {
             .checkSubcomponentState(componentAssembly, FLANGE)
             .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(true));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
         componentsListPage = componentsListPage.multiSelectSubcomponents(FLANGE + ", " + scenarioName);
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -245,11 +248,11 @@ public class PublishAssembliesTests extends TestBase {
             .changeName(preExistingScenarioName)
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
-            .close();
-
-        SoftAssertions softAssertions = new SoftAssertions();
+            .close(ComponentsListPage.class);
         softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -269,7 +272,7 @@ public class PublishAssembliesTests extends TestBase {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".CATPart";
 
-        String message = "All scenarios are publishing..Close";
+        String publishingMessage = "All scenarios are publishing..Close";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -297,6 +300,7 @@ public class PublishAssembliesTests extends TestBase {
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class);
 
-        assertThat(publishPage.getPublishingMessage(), is(equalTo(message)));
+        assertThat(publishPage.getPublishingMessage(), is(equalTo(publishingMessage)));
     }
 }
+
