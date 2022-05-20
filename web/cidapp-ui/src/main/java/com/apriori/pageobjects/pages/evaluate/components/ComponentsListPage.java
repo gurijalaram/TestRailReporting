@@ -522,4 +522,19 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
         return this;
     }
+
+    /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @return current page object
+     */
+    public ComponentsListPage selectScenario(String componentName) {
+        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
+            componentName.toUpperCase().trim()));
+        pageUtils.waitForElementToAppear(scenario);
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementAndClick(scenario);
+        return this;
+    }
 }
