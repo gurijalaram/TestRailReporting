@@ -49,11 +49,11 @@ public class IncludeAndExcludeTests {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-
-        assemblyUtils.costSubComponents(componentAssembly)
-            .costAssembly(componentAssembly);
+//        assemblyUtils.uploadSubComponents(componentAssembly)
+//            .uploadAssembly(componentAssembly);
+//
+//        assemblyUtils.costSubComponents(componentAssembly)
+//            .costAssembly(componentAssembly);
 
         ResponseWrapper<ScenarioAssociations> patchResponse = scenariosUtil.patchAssociations(componentAssembly, "Part0001",  scenarioName, true);
 

@@ -28,6 +28,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
@@ -38,6 +39,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Slf4j
 public class ScenariosUtil {
@@ -510,23 +512,21 @@ public class ScenariosUtil {
     public ResponseWrapper<ScenarioAssociations> patchAssociations(ComponentInfoBuilder componentInfo, String subcomponentName, String scenarioName, boolean excluded) {
         ResponseWrapper<ScenarioManifest> scenarioManifestResponse = getScenarioManifest(componentInfo);
 
-        final String subcomponentScenarioAssociationId = scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
-            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+        final String subcomponentScenarioAssociationId = getScenarioManifestSubcomponentsStream(subcomponentName, scenarioName, scenarioManifestResponse)
             .map(ScenarioManifestSubcomponents::getScenarioAssociationIdentity)
             .collect(Collectors.toList())
             .get(0);
 
-        final String subcomponentScenarioId = scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
-            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
-            .map(ScenarioManifestSubcomponents::getScenarioIdentity)
-            .collect(Collectors.toList())
-            .get(0);
-
-        final int subcomponentOccurrences = scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
-            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+        final int subcomponentOccurrences = getScenarioManifestSubcomponentsStream(subcomponentName, scenarioName, scenarioManifestResponse)
             .map(ScenarioManifestSubcomponents::getOccurrences)
             .collect(Collectors.toList())
             .get(0);
+
+        final String subcomponentScenarioId = componentInfo.getSubComponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName))
+            .map(ComponentInfoBuilder::getScenarioName)
+            .collect(Collectors.joining());
+
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, ScenarioAssociations.class)
@@ -540,5 +540,11 @@ public class ScenariosUtil {
                     .build()));
 
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    @NonNull
+    private Stream<ScenarioManifestSubcomponents> getScenarioManifestSubcomponentsStream(String subcomponentName, String scenarioName, ResponseWrapper<ScenarioManifest> scenarioManifestResponse) {
+        return scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName));
     }
 }
