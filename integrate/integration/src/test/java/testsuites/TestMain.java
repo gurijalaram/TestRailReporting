@@ -1,7 +1,5 @@
 package testsuites;
 
-import com.apriori.integration.tests.suite.IntegrationSuite;
-
 import io.qameta.allure.junit4.AllureJunit4;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
@@ -22,7 +20,7 @@ import java.util.List;
 
 
 public class TestMain {
-    public static Class defaultTest = IntegrationSuite.class;
+    public static Class defaultTest = GoNoGoTestSuite.class;
 
     public static void main(String[] args) {
 
