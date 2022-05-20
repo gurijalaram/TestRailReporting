@@ -468,7 +468,7 @@ public class ScenariosUtil {
         ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfoBuilder);
         postPublishScenario(postComponentResponse);
 
-      return postComponentResponse;
+        return postComponentResponse;
     }
 
     /**
