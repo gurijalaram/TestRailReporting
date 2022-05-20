@@ -464,12 +464,11 @@ public class ScenariosUtil {
      * @param componentInfo - the copy component object
      * @return generic object
      */
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfo);
-
+    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
+        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfoBuilder);
         postPublishScenario(postComponentResponse);
 
-        return postComponentResponse;
+      return postComponentResponse;
     }
 
     /**

@@ -26,8 +26,6 @@ import io.qameta.allure.Description;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 public class UploadTests extends TestBase {
     private CidAppLoginPage loginPage;
@@ -50,9 +48,9 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(UserUtil.getUser())
-                .importCadFile()
-                .inputComponentDetails(testScenarioName, resourceFile)
-                .getAlertWarning();
+            .importCadFile()
+            .inputComponentDetails(testScenarioName, resourceFile)
+            .getAlertWarning();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
@@ -72,10 +70,10 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .createScenario()
-                .enterScenarioName(newScenarioName)
-                .submit(EvaluatePage.class);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .createScenario()
+            .enterScenarioName(newScenarioName)
+            .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
@@ -93,8 +91,8 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-                .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
-                .clickSearch(componentName);
+            .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
+            .clickSearch(componentName);
 
         assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(equalTo(0)));
     }
@@ -112,23 +110,23 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1010")
-                .selectMaterial("Steel, Hot Worked, AISI 1010")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .publishScenario()
-                .publish(cidComponentItem, currentUser, EvaluatePage.class)
-                .logout()
-                .login(UserUtil.getUser())
-                .selectFilter("Public")
-                .clickSearch(componentName)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-                .openScenario(componentName, scenarioName);
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario()
+            .publish(cidComponentItem, EvaluatePage.class)
+            .logout()
+            .login(UserUtil.getUser())
+            .selectFilter("Public")
+            .clickSearch(componentName)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }
