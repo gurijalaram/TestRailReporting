@@ -411,7 +411,6 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-
     /**
      * Upload and Publish a subcomponent/assembly
      *
@@ -419,9 +418,7 @@ public class ScenariosUtil {
      * @return response object
      */
     public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.postComponent(componentInfo);
-    public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfoBuilder) {
-        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfoBuilder);
+        ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfo);
 
         postPublishScenario(postComponentResponse);
 
