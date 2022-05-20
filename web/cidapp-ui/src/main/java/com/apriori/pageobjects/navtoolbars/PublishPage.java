@@ -5,6 +5,7 @@ import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
@@ -35,7 +36,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(xpath = "//label[.='Override existing public scenario']")
     private WebElement overrideButton;
 
-    @FindBy(xpath = "//label[.='Change Name']")
+    @FindBy(css = ".radio-button-group-field [value='changeName']")
     private WebElement changeNameButton;
 
     @FindBy(css = "input[name='scenarioName']")
@@ -58,6 +59,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     @FindBy(css = "[id='qa-publish-form-assigned-to-select'] input")
     private WebElement assigneeInput;
+
+    @FindBy(xpath = "//button[.='Close']")
+    private WebElement closeButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -210,5 +214,15 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public PublishPage back() {
         modalDialogController.back();
         return this;
+    }
+
+    /**
+     * Close the import modal dialog
+     *
+     * @return new page object
+     */
+    public ComponentsListPage close() {
+        pageUtils.waitForElementAndClick(closeButton);
+        return new ComponentsListPage(driver);
     }
 }
