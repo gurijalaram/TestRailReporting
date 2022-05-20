@@ -19,6 +19,7 @@ import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioAssociations;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -240,7 +241,7 @@ public class ScenariosUtil {
      * Post to Edit a scenario/assembly (with a scenario name that already exists)
      *
      * @param componentInfo - the copy component object
-     * @param forkRequest          - the request object
+     * @param forkRequest   - the request object
      * @return response object
      */
     public ResponseWrapper<Scenario> postEditScenario(ComponentInfoBuilder componentInfo, ForkRequest forkRequest) {
@@ -346,8 +347,8 @@ public class ScenariosUtil {
      * POST to publish scenario
      *
      * @param componentInfo - the component info builder object
-     * @param klass                - the  class
-     * @param <T>                  - the generic return type
+     * @param klass         - the  class
+     * @param <T>           - the generic return type
      * @return generic object
      */
     public <T> ResponseWrapper<ScenarioResponse> publishScenario(ComponentInfoBuilder componentInfo, Class<T> klass) {
@@ -429,7 +430,7 @@ public class ScenariosUtil {
      * Calls an api with the DELETE verb.
      *
      * @param componentInfo - the component info builder object
-     * @param <T>                  - the generic return type
+     * @param <T>           - the generic return type
      * @return generic object
      */
     public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfo) {
@@ -498,16 +499,46 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).get();
     }
 
-    public ResponseWrapper<ScenarioAssociations> patchAssociations(ComponentInfoBuilder componentInfoBuilder, String subcomponentScenarioAssociationId, String subcomponentScenarioId) {
+    /**
+     * PATCH scenario associations
+     *
+     * @param componentInfo    - the component info builder object
+     * @param subcomponentName - the subcomponent name
+     * @param scenarioName     - the scenario name
+     * @param excluded         - boolean
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioAssociations> patchAssociations(ComponentInfoBuilder componentInfo, String subcomponentName, String scenarioName, boolean excluded) {
+        ResponseWrapper<ScenarioManifest> scenarioManifestResponse = getScenarioManifest(componentInfo);
+
+        final String subcomponentScenarioAssociationId = scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+            .map(ScenarioManifestSubcomponents::getScenarioAssociationIdentity)
+            .collect(Collectors.toList())
+            .get(0);
+
+        final String subcomponentScenarioId = scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+            .map(ScenarioManifestSubcomponents::getScenarioIdentity)
+            .collect(Collectors.toList())
+            .get(0);
+
+        final int subcomponentOccurrences = scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(subcomponentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+            .map(ScenarioManifestSubcomponents::getOccurrences)
+            .collect(Collectors.toList())
+            .get(0);
+
         RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, ScenarioResponse.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
-                .body(GroupItems.builder()
-                    .scenarioAssociationIdentity(componentInfoBuilder.getComponentIdentity())
-                    .childScenarioIdentity(componentInfoBuilder.getScenarioIdentity()).excluded(false)
-                    .occurrences(1)
-                    .build());
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, ScenarioAssociations.class)
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .body("groupItems", Collections.singletonList(ScenarioAssociationsRequest.builder()
+                    .scenarioAssociationIdentity(subcomponentScenarioAssociationId)
+                    .childScenarioIdentity(subcomponentScenarioId)
+                    .excluded(excluded)
+                    .occurrences(subcomponentOccurrences)
+                    .build()));
 
         return HTTPRequest.build(requestEntity).patch();
     }
