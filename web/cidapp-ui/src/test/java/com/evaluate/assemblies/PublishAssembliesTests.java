@@ -1,6 +1,5 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -8,7 +7,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
-import com.apriori.pageobjects.navtoolbars.PublishScenarioPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -26,7 +24,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -92,7 +89,7 @@ public class PublishAssembliesTests extends TestBase {
             .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
-            .selectProcessGroup(ASSEMBLY)
+            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
             .costScenario()
             .publishScenario()
             .publish(cidComponentItemC, EvaluatePage.class);
@@ -246,12 +243,60 @@ public class PublishAssembliesTests extends TestBase {
             .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", SMALL_RING + "," + scenarioName + "")
             .publishSubcomponent()
             .changeName(preExistingScenarioName)
-            .continues(PublishPage.class)
+            .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
             .close();
 
         SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
+    }
+
+    @Test
+    @TestRail(testCaseId = "11828")
+    @Description("Validate a public iteration of the sub component is created")
+    public void testCreatingPublicIterationOfSubcomponent() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        String message = "All scenarios are publishing..Close";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        publishPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, FLANGE)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
+            .publishSubcomponent()
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class);
+
+        assertThat(publishPage.getPublishingMessage(), is(equalTo(message)));
     }
 }

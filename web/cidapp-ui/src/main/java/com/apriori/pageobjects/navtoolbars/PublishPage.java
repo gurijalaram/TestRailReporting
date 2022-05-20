@@ -33,7 +33,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='alert-messaging']")
     private WebElement conflictMessage;
 
-    @FindBy(xpath = "//label[.='Override existing public scenario']")
+    @FindBy(xpath = "//label[.='Override existing public scenarios']")
     private WebElement overrideButton;
 
     @FindBy(css = ".radio-button-group-field [value='changeName']")
@@ -62,6 +62,9 @@ public class PublishPage extends LoadableComponent<PublishPage> {
 
     @FindBy(xpath = "//button[.='Close']")
     private WebElement closeButton;
+
+    @FindBy(css = ".scenario-group-operations-success-message")
+    private WebElement publishingMessage;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -223,5 +226,14 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public ComponentsListPage close() {
         pageUtils.waitForElementAndClick(closeButton);
         return new ComponentsListPage(driver);
+    }
+
+    /**
+     * Get conflict error message
+     *
+     * @return string
+     */
+    public String getPublishingMessage() {
+        return pageUtils.waitForElementToAppear(publishingMessage).getAttribute("textContent");
     }
 }
