@@ -119,6 +119,7 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
         assemblyUtils.publishAssembly(componentAssembly);
 
@@ -160,6 +161,9 @@ public class EditAssembliesTest extends TestBase {
             .build());
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+        assemblyUtils.publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
