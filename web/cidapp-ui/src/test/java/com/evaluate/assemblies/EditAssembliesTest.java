@@ -119,13 +119,14 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
         assemblyUtils.publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly);
+            .selectFilter("Public")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(assemblyName, scenarioName);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
