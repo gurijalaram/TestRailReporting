@@ -48,6 +48,7 @@ public class PublishAssembliesTests extends TestBase {
     private PublishPage publishPage;
     private ComponentsListPage componentsListPage;
     SoftAssertions softAssertions = new SoftAssertions();
+    private ExplorePage explorePage;
 
     public PublishAssembliesTests() {
         super();
@@ -209,8 +210,6 @@ public class PublishAssembliesTests extends TestBase {
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final String subComponentExtension = ".SLDPRT";
 
-        String message = "A public scenario with this name already exists. Cancel this operation, or select an option below and continue.";
-
         ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
@@ -256,7 +255,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11828")
+    @TestRail(testCaseId = "11829")
     @Description("Validate a public iteration of the sub component is created")
     public void testCreatingPublicIterationOfSubcomponent() {
         currentUser = UserUtil.getUser();
@@ -301,6 +300,71 @@ public class PublishAssembliesTests extends TestBase {
             .publish(PublishPage.class);
 
         assertThat(publishPage.getPublishingMessage(), is(equalTo(publishingMessage)));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11813", "11814", "11808"})
+    @Description("Validate public scenarios are overridden from publish modal")
+    public void testOverridePublicScenarios() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(PIN + "," + scenarioName);
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+
+        componentsListPage = componentsListPage.publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", SMALL_RING + "," + scenarioName + "")
+            .publishSubcomponent()
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class)
+            .close(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        explorePage = componentsListPage.closePanel()
+            .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(assemblyName);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 }
 

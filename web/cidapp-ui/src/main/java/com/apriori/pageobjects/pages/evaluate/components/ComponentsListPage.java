@@ -371,6 +371,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
                 return pageUtils.isElementEnabled(excludeButton);
             case PUBLISH:
                 return pageUtils.isElementEnabled(publishButton);
+            case EDIT:
+                return pageUtils.isElementEnabled(editButton);
             default:
                 return false;
         }
