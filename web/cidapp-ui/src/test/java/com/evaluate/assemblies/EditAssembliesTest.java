@@ -159,6 +159,8 @@ public class EditAssembliesTest extends TestBase {
             .user(currentUser)
             .build());
 
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
@@ -171,7 +173,7 @@ public class EditAssembliesTest extends TestBase {
 
         explorePage.selectFilter("Public");
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -201,7 +203,6 @@ public class EditAssembliesTest extends TestBase {
             currentUser);
 
         assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
         assemblyUtils.publishAssembly(componentAssembly);
 
