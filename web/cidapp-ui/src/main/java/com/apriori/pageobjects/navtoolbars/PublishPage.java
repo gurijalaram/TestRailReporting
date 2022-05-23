@@ -32,7 +32,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='conflict-message']")
     private WebElement conflictMessage;
 
-    @FindBy(xpath = "//label[.='Override existing public scenario']")
+    @FindBy(xpath = "//label[.='Override existing public scenarios']")
     private WebElement overrideButton;
 
     @FindBy(xpath = "//label[.='Change Name']")
@@ -209,5 +209,14 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public PublishPage back() {
         modalDialogController.back();
         return this;
+    }
+
+    /**
+     * Close
+     *
+     * @return generic page object
+     */
+    public <T> T close(Class<T> klass) {
+        return modalDialogController.close(klass);
     }
 }
