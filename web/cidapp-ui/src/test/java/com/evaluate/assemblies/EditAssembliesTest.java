@@ -3,7 +3,12 @@ package com.evaluate.assemblies;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -15,6 +20,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -24,6 +30,10 @@ public class EditAssembliesTest extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private UserCredentials currentUser;
+    private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ComponentsListPage componentsListPage;
 
     public EditAssembliesTest() {
         super();
@@ -91,5 +101,54 @@ public class EditAssembliesTest extends TestBase {
                 currentUser)
             .editScenario()
             .close(EvaluatePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = "12037")
+    @Description("Validate I can switch between public sub components")
+    public void testSwitchBetweenPublicSubcomponents() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(PIN + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, PIN, SMALL_RING, BIG_RING)
+            .multiSelectSubcomponents(PIN + "," + scenarioName)
+            .setInputs()
+            .selectProcessGroup(ProcessGroupEnum.CASTING)
+            .applyAndCost(SetInputStatusPage.class)
+            .close(ComponentsListPage.class);
+
+        assertThat(componentsListPage.isIconDisplayed(StatusIconEnum.PRIVATE, PIN), is(true));
     }
 }
