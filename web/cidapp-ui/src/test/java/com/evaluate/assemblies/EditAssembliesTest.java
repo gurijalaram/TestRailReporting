@@ -390,7 +390,7 @@ public class EditAssembliesTest extends TestBase {
 
         editComponentsPage = componentsListPage.closePanel()
             .publishScenario(PublishPage.class)
-            .publish(componentAssembly, currentUser, EvaluatePage.class)
+            .publish(componentAssembly, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)

@@ -162,7 +162,7 @@ public class ComparisonTests extends TestBase {
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemC, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -170,7 +170,7 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -251,7 +251,7 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore();
 
         cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
@@ -260,7 +260,7 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -327,7 +327,7 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -583,14 +583,14 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -647,7 +647,7 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, ExplorePage.class)
+            .publish(cidComponentItemB, ExplorePage.class)
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
@@ -662,7 +662,7 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, currentUser, ExplorePage.class)
+            .publish(cidComponentItemC, ExplorePage.class)
             .clickCompare()
             .openBasisScenario();
 

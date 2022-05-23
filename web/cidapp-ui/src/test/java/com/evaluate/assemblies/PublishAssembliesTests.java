@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -77,7 +76,7 @@ public class PublishAssembliesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .uploadComponent(subComponentBName, scenarioName, subComponentB, currentUser);
 
@@ -85,7 +84,7 @@ public class PublishAssembliesTests extends TestBase {
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
             .costScenario(3)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()
             .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
 
@@ -93,7 +92,7 @@ public class PublishAssembliesTests extends TestBase {
             .selectProcessGroup(ASSEMBLY)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemC, currentUser, EvaluatePage.class);
+            .publish(cidComponentItemC, EvaluatePage.class);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }

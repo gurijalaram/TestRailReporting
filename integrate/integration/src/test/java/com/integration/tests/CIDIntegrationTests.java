@@ -82,7 +82,7 @@ public class CIDIntegrationTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario(3)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
