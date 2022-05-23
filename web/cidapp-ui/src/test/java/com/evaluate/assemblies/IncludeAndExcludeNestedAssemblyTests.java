@@ -115,4 +115,22 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = {"11827", "11826"})
+    @Description("Validate  the publish button will only be enabled in the tree view and now the list view")
+    public void testPublishButtonEnabledInTreeView() {
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly3)
+            .openComponents()
+            .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+
+        componentsListPage.tableView()
+            .multiSelectSubcomponents("3575135, " + scenarioName + "", "3574255, " + scenarioName + "", "3575134, " + scenarioName + "", "3575132, " + scenarioName + "", "3538968, " + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+    }
 }
