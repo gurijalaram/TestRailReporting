@@ -236,7 +236,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
@@ -249,7 +249,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publish(cidComponentItemB,  EvaluatePage.class)
             .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));

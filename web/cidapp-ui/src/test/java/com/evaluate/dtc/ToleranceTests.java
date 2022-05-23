@@ -672,7 +672,7 @@ public class ToleranceTests extends TestBase {
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         evaluatePage.publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .logout()
             .login(testUser2)
             .selectFilter("Public")

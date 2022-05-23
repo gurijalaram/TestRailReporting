@@ -49,9 +49,9 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(UserUtil.getUser())
-                .importCadFile()
-                .inputComponentDetails(testScenarioName, resourceFile)
-                .getAlertWarning();
+            .importCadFile()
+            .inputComponentDetails(testScenarioName, resourceFile)
+            .getAlertWarning();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
@@ -71,10 +71,10 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .createScenario()
-                .enterScenarioName(newScenarioName)
-                .submit(EvaluatePage.class);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .createScenario()
+            .enterScenarioName(newScenarioName)
+            .submit(EvaluatePage.class);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
         assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
@@ -92,8 +92,8 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-                .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
-                .clickSearch(componentName);
+            .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
+            .clickSearch(componentName);
 
         assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(equalTo(0)));
     }
@@ -111,7 +111,7 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
                 .selectProcessGroup(processGroupEnum)
@@ -121,7 +121,7 @@ public class UploadTests extends TestBase {
                 .submit(EvaluatePage.class)
                 .costScenario()
                 .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, currentUser, EvaluatePage.class)
+                .publish(cidComponentItem,  EvaluatePage.class)
                 .logout()
                 .login(UserUtil.getUser())
                 .selectFilter("Public")

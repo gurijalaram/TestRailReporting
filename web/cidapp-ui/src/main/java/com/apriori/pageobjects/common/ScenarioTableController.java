@@ -176,6 +176,9 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             case NOT_COSTED:
                 stateIcon = "circle-minus";
                 break;
+            case COST_UP_TO_DATE:
+                stateIcon = "check";
+                break;
             default:
                 throw new IllegalStateException("Unexpected value: " + scenarioState);
         }

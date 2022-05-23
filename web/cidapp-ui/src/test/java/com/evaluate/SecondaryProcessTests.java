@@ -553,7 +553,7 @@ public class SecondaryProcessTests extends TestBase {
         assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
 
         evaluatePage.publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()

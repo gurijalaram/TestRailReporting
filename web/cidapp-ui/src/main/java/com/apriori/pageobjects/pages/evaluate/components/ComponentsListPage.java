@@ -16,6 +16,7 @@ import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 
 import com.utils.ButtonTypeEnum;
@@ -373,6 +374,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
                 return pageUtils.isElementEnabled(excludeButton);
             case PUBLISH:
                 return pageUtils.isElementEnabled(publishButton);
+            case EDIT:
+                return pageUtils.isElementEnabled(editButton);
             default:
                 return false;
         }
@@ -535,5 +538,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         return pageUtils.waitForElementsToAppear(subcomponentNames).stream()
             .map(x -> x.getAttribute("textContent"))
             .map(String::trim).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets the number of elements with state present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return boolean
+     */
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
     }
 }

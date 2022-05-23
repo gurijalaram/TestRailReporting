@@ -88,7 +88,7 @@ public class AssemblyUtils {
     public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
-            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.postComponent(subComponent);
+            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.setFilePostComponentQueryCSS(subComponent);
             subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
             subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
         });
@@ -101,7 +101,7 @@ public class AssemblyUtils {
      * @return component info builder object
      */
     public ComponentInfoBuilder uploadAssembly(ComponentInfoBuilder componentAssembly) {
-        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.postComponent(componentAssembly);
+        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.setFilePostComponentQueryCSS(componentAssembly);
         componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
         componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
 

@@ -193,7 +193,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
