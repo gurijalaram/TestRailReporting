@@ -4,6 +4,7 @@ public enum ButtonTypeEnum {
 
     INCLUDE("include"),
     EXCLUDE("exclude"),
+    EDIT("edit"),
     PUBLISH("publish");
 
     private final String buttonType;
