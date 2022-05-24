@@ -242,4 +242,18 @@ public class AssemblyUtils {
 
         return componentAssembly;
     }
+
+    /**
+     * Shallow publishes an assembly
+     *
+     * @param componentAssembly - the component assembly
+     * @return current object
+     */
+    public AssemblyUtils shallowPublishAssembly(ComponentInfoBuilder componentAssembly) {
+        uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        costAssembly(componentAssembly);
+        publishSubComponents(componentAssembly);
+        publishAssembly(componentAssembly);
+        return this;
+    }
 }
