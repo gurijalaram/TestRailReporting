@@ -495,7 +495,6 @@ public class EditAssembliesTest extends TestBase {
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
-        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
