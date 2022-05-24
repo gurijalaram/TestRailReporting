@@ -185,7 +185,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10802", "10803"})
+    @TestRail(testCaseId = {"10802", "10803", "10835"})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
     public void testShallowEditModifyStatusCheckAssociation() {
         final String assemblyName = "Hinge assembly";
@@ -325,7 +325,8 @@ public class EditAssembliesTest extends TestBase {
             .inputCostMaturity("Medium")
             .inputDescription("QA Modified Test Description")
             .inputNotes("Testing Modified QA notes")
-            .submit(EvaluatePage.class);
+            .submit(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_EDIT_ACTION, 2);
 
         infoPage = evaluatePage.info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Analysis");
