@@ -32,7 +32,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='conflict-message']")
     private WebElement conflictMessage;
 
-    @FindBy(xpath = "//label[.='Override existing public scenario']")
+    @FindBy(xpath = "//label[.='Override existing public scenarios']")
     private WebElement overrideButton;
 
     @FindBy(xpath = "//label[.='Change Name']")
@@ -172,11 +172,10 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * Select the publish button
      *
      * @param cidComponentItem - the cid representation item
-     * @param currentUser      - the current user
      * @param <T>              - the object type
      * @return generic page object
      */
-    public <T> T publish(ComponentInfoBuilder cidComponentItem, UserCredentials currentUser, Class<T> klass) {
+    public <T> T publish(ComponentInfoBuilder cidComponentItem, Class<T> klass) {
         modalDialogController.publish(klass);
         new ScenariosUtil().getPublishedScenarioRepresentation(cidComponentItem, "PUBLISH", true);
         return PageFactory.initElements(driver, klass);
@@ -198,7 +197,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      *
      * @return generic page object
      */
-    public <T> T continues(Class<T> klass) {
+    public <T> T clickContinue(Class<T> klass) {
         return modalDialogController.clickContinue(klass);
     }
 
@@ -210,5 +209,14 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     public PublishPage back() {
         modalDialogController.back();
         return this;
+    }
+
+    /**
+     * Close
+     *
+     * @return generic page object
+     */
+    public <T> T close(Class<T> klass) {
+        return modalDialogController.close(klass);
     }
 }
