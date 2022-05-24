@@ -326,7 +326,7 @@ public class EditAssembliesTest extends TestBase {
             .inputDescription("QA Modified Test Description")
             .inputNotes("Testing Modified QA notes")
             .submit(EvaluatePage.class)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_EDIT_ACTION, 2);
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_ACTION, 2);
 
         infoPage = evaluatePage.info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Analysis");
