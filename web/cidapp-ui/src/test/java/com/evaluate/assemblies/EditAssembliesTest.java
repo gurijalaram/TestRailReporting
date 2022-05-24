@@ -277,9 +277,9 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10806", "10807"})
-    @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace")
-    public void testShallowEditPublishPublicWorkspace() {
+    @TestRail(testCaseId = {"10806", "10807", "10809"})
+    @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
+    public void testShallowEditPublishPublicWorkspaceLockNotes() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -307,16 +307,17 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .editScenario()
             .close(EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .publish(EditComponentsPage.class)
+            .publishScenario(EditComponentsPage.class)
             .overrideScenarios()
             .clickContinue(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
         evaluatePage.lock(EvaluatePage.class);
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isTrue();
 
+        evaluatePage.unlock(EvaluatePage.class);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
 
         evaluatePage.info()
