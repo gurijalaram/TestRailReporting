@@ -85,6 +85,7 @@ public class EditAssembliesTest extends TestBase {
             .openComponents()
             .multiSelectSubcomponents(big_ring + "," + scenarioName, pin + "," + scenarioName, small_ring + "," + scenarioName)
             .publishSubcomponent()
+            .clickContinue(PublishPage.class)
             .publish(ComponentsListPage.class)
             .checkSubcomponentState(componentAssembly, big_ring + "," + pin + "," + small_ring)
             .closePanel()
@@ -227,7 +228,7 @@ public class EditAssembliesTest extends TestBase {
             .lock(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isTrue();
 
         infoPage = evaluatePage.info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
@@ -235,8 +236,8 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
 
-        evaluatePage = infoPage.cancel(EvaluatePage.class);
-        evaluatePage.openComponents();
+        componentsListPage = infoPage.cancel(EvaluatePage.class)
+            .openComponents();
 
         subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
@@ -249,17 +250,22 @@ public class EditAssembliesTest extends TestBase {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssembly(ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(assemblyProcessGroup)
-            .user(currentUser)
-            .build());
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
 
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
@@ -370,7 +376,8 @@ public class EditAssembliesTest extends TestBase {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
@@ -468,13 +475,13 @@ public class EditAssembliesTest extends TestBase {
             .openScenario(assemblyName, scenarioName)
             .editScenario(EditComponentsPage.class);
 
-        softAssertions.assertThat(editComponentsPage.getConflictForm()).isEqualToIgnoringCase("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
+        softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
             "please supply a different scenario name or cancel the operation.");
 
         evaluatePage = editComponentsPage.enterScenarioName(newScenarioName)
             .clickContinue(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(newScenarioName);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(newScenarioName)).isTrue();
 
         softAssertions.assertAll();
     }

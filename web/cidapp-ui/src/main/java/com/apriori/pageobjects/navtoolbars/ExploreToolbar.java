@@ -3,7 +3,6 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -87,7 +86,6 @@ public class ExploreToolbar extends MainNavBar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private CssComponent cssComponent = new CssComponent();
 
     public ExploreToolbar(WebDriver driver) {
