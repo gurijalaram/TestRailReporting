@@ -138,44 +138,6 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10804"})
-    @Description("Shallow Edit keeps original assembly intact on Public Workspace")
-    public void testShallowEditCheckDuplicate() {
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-
-        final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssembly(ComponentInfoBuilder.builder()
-            .componentName(assemblyName)
-            .extension(assemblyExtension)
-            .scenarioName(scenarioName)
-            .processGroup(assemblyProcessGroup)
-            .user(currentUser)
-            .build());
-
-        assemblyUtils.shallowPublishAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .editScenario()
-            .close(EvaluatePage.class)
-            .clickExplore()
-            .selectFilter("Recent");
-
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
-
-        explorePage.selectFilter("Public");
-
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
-        softAssertions.assertAll();
-    }
-
-    @Test
     @TestRail(testCaseId = {"10801"})
     @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
     public void testShallowEditRetainStatus() {
@@ -277,9 +239,47 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10802"})
-    @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
-    public void testUploadCostPublishAssemblyAndModifyNotes() {
+    @Category(SmokeTests.class)
+    @TestRail(testCaseId = {"10804"})
+    @Description("Shallow Edit keeps original assembly intact on Public Workspace")
+    public void testShallowEditCheckDuplicate() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadAssembly(ComponentInfoBuilder.builder()
+            .componentName(assemblyName)
+            .extension(assemblyExtension)
+            .scenarioName(scenarioName)
+            .processGroup(assemblyProcessGroup)
+            .user(currentUser)
+            .build());
+
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario()
+            .close(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent");
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(2);
+
+        explorePage.selectFilter("Public");
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10806", "10807"})
+    @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace")
+    public void testShallowEditPublishPublicWorkspace() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -300,23 +300,26 @@ public class EditAssembliesTest extends TestBase {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .info()
-            .selectStatus("New")
-            .inputCostMaturity("Low")
-            .inputDescription("QA Test Description")
-            .inputNotes("Testing QA notes")
-            .submit(EvaluatePage.class)
             .editScenario()
             .close(EvaluatePage.class)
-            .info()
+            .publishScenario(PublishPage.class)
+            .publish(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(PublishPage.class)
+            .publish(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
+
+        evaluatePage.lock(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
+
+        evaluatePage.info()
             .selectStatus("Analysis")
             .inputCostMaturity("Medium")
             .inputDescription("QA Modified Test Description")
