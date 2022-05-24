@@ -42,7 +42,7 @@ public class EditAssembliesTest extends TestBase {
     private InfoPage infoPage;
     private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
-    private EditScenarioStatusPage editScenarioStatusPage;
+    private EditComponentsPage editComponentsPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -129,7 +129,7 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
-        evaluatePage.editScenario()
+        evaluatePage.editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.PROCESSING_EDIT_ACTION)).isTrue();
@@ -173,7 +173,7 @@ public class EditAssembliesTest extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(EvaluatePage.class)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
@@ -216,7 +216,7 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .info()
             .selectStatus("New")
@@ -266,7 +266,7 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent");
@@ -309,7 +309,7 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .publishScenario(EditComponentsPage.class)
             .overrideScenarios()
@@ -375,7 +375,7 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .openComponents();
 
@@ -442,6 +442,7 @@ public class EditAssembliesTest extends TestBase {
 
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -456,19 +457,24 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.shallowPublishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        editScenarioStatusPage = loginPage.login(currentUser)
+        editComponentsPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .lock(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(assemblyName, scenarioName)
-            .editScenario();
+            .editScenario(EditComponentsPage.class);
 
-        softAssertions.assertThat(editScenarioStatusPage.getEditScenarioMessage()).isEqualToIgnoringCase("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
+        softAssertions.assertThat(editComponentsPage.getConflictForm()).isEqualToIgnoringCase("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
             "please supply a different scenario name or cancel the operation.");
+
+        evaluatePage = editComponentsPage.enterScenarioName(newScenarioName)
+                .clickContinue(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(newScenarioName);
 
         softAssertions.assertAll();
     }

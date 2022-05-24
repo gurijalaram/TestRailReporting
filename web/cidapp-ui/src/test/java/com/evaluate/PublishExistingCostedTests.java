@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -84,7 +85,7 @@ public class PublishExistingCostedTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .selectDigitalFactory(APRIORI_CHINA)
             .costScenario()
@@ -128,7 +129,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem,  EvaluatePage.class)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)

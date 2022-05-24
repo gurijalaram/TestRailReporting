@@ -9,7 +9,6 @@ import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
-import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.CssComponent;
@@ -342,13 +341,13 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Edit the scenario
+     * Click edit button to edit the scenario
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EditScenarioStatusPage editScenario() {
+    public <T> T editScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return new EditScenarioStatusPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
