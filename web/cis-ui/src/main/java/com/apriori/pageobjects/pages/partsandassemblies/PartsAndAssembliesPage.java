@@ -23,6 +23,14 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[@class='MuiDataGrid-row Mui-selected']")
     private List<WebElement> selectedCheckboxes;
 
+    @FindBy(xpath = "//p[@data-testid ='toolbar-Show/Hide Fields']")
+    private WebElement showHideFieldsOption;
+
+    @FindBy(id = "show-button")
+    private WebElement hideAllButton;
+
+
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -75,4 +83,25 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         }
         return getPageUtils().waitForElementsToAppear(selectedCheckboxes).get(tableRow.size()).getAttribute("aria-selected");
     }
+
+    /**
+     * Click on Show/hide fields option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickOnShowHideOption() {
+        getPageUtils().waitForElementAndClick(showHideFieldsOption);
+        return this;
+    }
+
+    /**
+     * Click on HideAll option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickOnHideAllButton() {
+        getPageUtils().waitForElementAndClick(hideAllButton);
+        return this;
+    }
+
 }

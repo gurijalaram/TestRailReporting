@@ -57,6 +57,21 @@ public class PartsAndAssemblyTest extends TestBase {
 
     }
 
+    @Test
+    @TestRail(testCaseId = {"12188"})
+    @Description("Verify that user can hide all the fields by selecting 'HIDE ALL' option")
+    public void testHideAllFieldsOption() {
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
+        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
+        partsAndAssembliesPage.waitForTableLoad();
+        partsAndAssembliesPage.clickOnShowHideOption();
+        partsAndAssembliesPage.clickOnHideAllButton();
+
+        assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns()));
+
+    }
+
 }
 
 
