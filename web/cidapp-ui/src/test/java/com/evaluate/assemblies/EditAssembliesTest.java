@@ -12,6 +12,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -41,7 +42,7 @@ public class EditAssembliesTest extends TestBase {
     private InfoPage infoPage;
     private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
-    private EditComponentsPage editComponentsPage;
+    private EditScenarioStatusPage editScenarioStatusPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -182,12 +183,14 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"10802", "10803", "10835"})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
-    public void testShallowEditModifyStatusCheckAssociation() {
+    public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -273,6 +276,7 @@ public class EditAssembliesTest extends TestBase {
         explorePage.selectFilter("Public");
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
         softAssertions.assertAll();
     }
 
@@ -325,20 +329,21 @@ public class EditAssembliesTest extends TestBase {
             .inputCostMaturity("Medium")
             .inputDescription("QA Modified Test Description")
             .inputNotes("Testing Modified QA notes")
-            .submit(EvaluatePage.class)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_ACTION, 2);
+            .submit(EvaluatePage.class);
 
         infoPage = evaluatePage.info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Analysis");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Modified Test Description");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing Modified QA notes");
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"10836", "10811"})
-    @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
-    public void testUploadCostPublishAssemblyLargeSubcomponentSet() {
+    @Description("Shallow Edit an assembly with larger set of sub-components ")
+    public void testUploadCostPublishAssemblyLargeSetSubcomponents() {
         final String assemblyName = "FUSELAGE_SUBASSEMBLY";
         final String assemblyExtension = ".CATProduct";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -370,13 +375,15 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
+            .editScenario()
+            .close(EvaluatePage.class)
             .openComponents();
 
         allSubComponents.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
 
     @Test
-    @TestRail(testCaseId = {"10810", "10813", "10814"})
+    @TestRail(testCaseId = {"10810"})
     @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
     public void testUploadUncostedAssemblySubcomponentOverride() {
         final String assemblyName = "Hinge assembly";
@@ -416,28 +423,52 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails(bigRing, scenarioName)).contains("circle-minus");
         softAssertions.assertThat(componentsListPage.getRowDetails(smallRing, scenarioName)).contains("circle-minus");
 
-        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
+        softAssertions.assertAll();
+    }
 
-        editComponentsPage = componentsListPage.closePanel()
-            .publishScenario(PublishPage.class)
-            .publish(componentAssembly, EvaluatePage.class)
+    @Test
+    @TestRail(testCaseId = {"10813", "10814"})
+    @Description("Attempt to Shallow Edit over existing Private locked scenarios")
+    public void testShallowEditPrivateLocked() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String bigRing = "big ring";
+        final String pin = "Pin";
+        final String smallRing = "small ring";
+        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario()
+            .close(EvaluatePage.class)
+            .lock(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(assemblyName, scenarioName)
-            .editScenario()
-            .close(EvaluatePage.class)
-            .lock(EvaluatePage.class)
-            .publishScenario(EditComponentsPage.class);
+            .editScenario();
 
-        softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("A public scenario with this name already exists. Cancel this operation, or select an option below and continue.");
-
-        evaluatePage = editComponentsPage.overrideScenarios()
-            .clickContinue(PublishPage.class)
-            .publish(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(scenarioName);
+        softAssertions.assertThat(editScenarioStatusPage.getEditScenarioMessage()).isEqualToIgnoringCase("A private scenario with this name already exists. The private scenario is locked and cannot be overridden, " +
+            "please supply a different scenario name or cancel the operation.");
 
         softAssertions.assertAll();
     }
