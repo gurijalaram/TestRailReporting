@@ -27,6 +27,7 @@ import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -346,6 +347,7 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Ignore("A unique assembly is needed to do this and then some post steps to delete this unique assembly and subcomponents")
     @Test
     @TestRail(testCaseId = {"10836", "10811"})
     @Description("Shallow Edit an assembly with larger set of sub-components ")
@@ -376,8 +378,10 @@ public class EditAssembliesTest extends TestBase {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+        assemblyUtils.uploadAssembly(componentAssembly);
+        assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
@@ -479,7 +483,8 @@ public class EditAssembliesTest extends TestBase {
             "please supply a different scenario name or cancel the operation.");
 
         evaluatePage = editComponentsPage.enterScenarioName(newScenarioName)
-            .clickContinue(EvaluatePage.class);
+            .clickContinue(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(newScenarioName)).isTrue();
 
