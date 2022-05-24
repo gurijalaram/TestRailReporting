@@ -1,6 +1,5 @@
 package com.evaluate.assemblies;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -43,6 +42,7 @@ public class EditAssembliesTest extends TestBase {
     private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
+    private EditScenarioStatusPage editStatusPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -427,9 +427,9 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10813", "10814"})
-    @Description("Attempt to Shallow Edit over existing Private locked scenarios")
-    public void testShallowEditPrivateLocked() {
+    @TestRail(testCaseId = {"10813", "10815"})
+    @Description("Attempt to Shallow Edit over existing Private locked scenarios and renaming")
+    public void testShallowEditPrivateLockedRename() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -472,7 +472,7 @@ public class EditAssembliesTest extends TestBase {
             "please supply a different scenario name or cancel the operation.");
 
         evaluatePage = editComponentsPage.enterScenarioName(newScenarioName)
-                .clickContinue(EvaluatePage.class);
+            .clickContinue(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(newScenarioName);
 
@@ -480,13 +480,16 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10815"})
-    @Description("Shallow Edit assembly and scenarios that was uncosted in CI Design")
-    public void testUploadUncostedAssemblySubcomponentRename() {
+    @TestRail(testCaseId = {"10814"})
+    @Description("Shallow Edit over existing Private scenarios with override")
+    public void testShallowEditPrivateOverride() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String bigRing = "big ring";
+        final String pin = "Pin";
+        final String smallRing = "small ring";
+        final List<String> subComponentNames = Arrays.asList(bigRing, pin, smallRing);
         final String subComponentExtension = ".SLDPRT";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
 
@@ -504,19 +507,25 @@ public class EditAssembliesTest extends TestBase {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
+        editComponentsPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-            .publishScenario(EditComponentsPage.class)
-            .renameScenarios()
-            .enterScenarioName(newScenarioName)
-            .clickContinue(PublishPage.class)
-            .publish(EvaluatePage.class);
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Public")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(assemblyName, scenarioName)
+            .editScenario(EditComponentsPage.class)
+            .overrideScenarios();
 
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
+        softAssertions.assertThat(editComponentsPage.getConflictForm()).contains("A private scenario with this name already exists. Cancel this operation, or select an option below and continue.");
+
+        editStatusPage = editComponentsPage.clickContinue(EditScenarioStatusPage.class);
+        softAssertions.assertThat(editStatusPage.getEditScenarioMessage()).contains("Scenario was successfully edited, click here to open in the evaluate view.");
+
+        softAssertions.assertAll();
     }
 }
