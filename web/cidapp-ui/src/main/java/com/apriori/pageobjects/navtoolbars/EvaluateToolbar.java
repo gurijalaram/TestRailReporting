@@ -103,4 +103,16 @@ public class EvaluateToolbar extends ExploreToolbar {
     public String getCostColour() {
         return Color.fromString(pageUtils.waitForElementToAppear(costLabel).getCssValue("background-color")).asHex();
     }
+
+    /**
+     * Confirms to go ahead with costing with a Yes or No
+     *
+     * @param buttonLabel - "Yes" or "No"
+     * @return - new page object
+     */
+    public EvaluatePage costScenarioConfirmation(String buttonLabel) {
+        By byButton = By.xpath(String.format("//button[contains(text(), '%s')]", buttonLabel));
+        pageUtils.waitForElementAndClick(byButton);
+        return new EvaluatePage(driver);
+    }
 }

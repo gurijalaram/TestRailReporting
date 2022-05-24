@@ -35,7 +35,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(xpath = "//label[.='Override existing public scenarios']")
     private WebElement overrideButton;
 
-    @FindBy(xpath = "//label[.='Change Name']")
+    @FindBy(css = ".radio-button-group-field [value='changeName']")
     private WebElement changeNameButton;
 
     @FindBy(css = "input[name='scenarioName']")

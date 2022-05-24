@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
@@ -33,6 +34,7 @@ public class EditAssembliesTest extends TestBase {
     private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    SoftAssertions softAssertions = new SoftAssertions();
     private ComponentsListPage componentsListPage;
 
     public EditAssembliesTest() {
@@ -108,6 +110,7 @@ public class EditAssembliesTest extends TestBase {
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String editedComponentScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         final String assemblyName = "Hinge assembly";
@@ -136,19 +139,39 @@ public class EditAssembliesTest extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        componentsListPage = loginPage.login(currentUser)
-            .navigateToScenario(componentAssembly)
-            .openComponents()
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly);
+
+        double initialTotalCost = evaluatePage.getCostResults("Total Cost");
+        double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
+
+        evaluatePage.openComponents()
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsListPage.class)
-            .checkSubcomponentState(componentAssembly, PIN, SMALL_RING, BIG_RING)
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
-            .close(ComponentsListPage.class);
+            .close(ComponentsListPage.class)
+            .multiSelectSubcomponents(PIN + "," + scenarioName)
+            .publishSubcomponent()
+            .changeName(editedComponentScenarioName)
+            .clickContinue(PublishPage.class)
+            .publish(ComponentsListPage.class);
 
-        assertThat(componentsListPage.isIconDisplayed(StatusIconEnum.PRIVATE, PIN), is(true));
+        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+
+        evaluatePage = componentsListPage.closePanel()
+            .costScenario()
+            .costScenarioConfirmation("Yes");
+
+        double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
+        double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
+
+        softAssertions.assertThat(initialTotalCost).isGreaterThan(modifiedTotalCost);
+        softAssertions.assertThat(initialComponentsCost).isGreaterThan(modifiedComponentsCost);
+
+        softAssertions.assertAll();
     }
 }
