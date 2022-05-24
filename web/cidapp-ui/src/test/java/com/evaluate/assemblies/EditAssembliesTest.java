@@ -51,7 +51,7 @@ public class EditAssembliesTest extends TestBase {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"10768"})
     @Description("Shallow Publish assembly and scenarios costed in CI Design")
-    public void testUploadPublishCostedAssemblyComponents() {
+    public void testShallowPublishCostedCID() {
         final String hinge_assembly = "Hinge assembly";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final String assemblyExtension = ".SLDASM";
@@ -97,7 +97,7 @@ public class EditAssembliesTest extends TestBase {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"10799"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
-    public void testUploadCostPublishAssemblyAndEditAddNotes() {
+    public void testShallowEditCostedCID() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -118,10 +118,7 @@ public class EditAssembliesTest extends TestBase {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -144,7 +141,7 @@ public class EditAssembliesTest extends TestBase {
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"10804"})
     @Description("Shallow Edit keeps original assembly intact on Public Workspace")
-    public void testUploadEditAssemblyDuplicate() {
+    public void testShallowEditCheckDuplicate() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -160,10 +157,7 @@ public class EditAssembliesTest extends TestBase {
             .user(currentUser)
             .build());
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
@@ -178,14 +172,13 @@ public class EditAssembliesTest extends TestBase {
         explorePage.selectFilter("Public");
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
-
         softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"10801", "10802", "10803", "10806", "10807", "10809", "10835"})
-    @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
-    public void testUploadCostPublishAssemblyAndOverrideLockNotes() {
+    @TestRail(testCaseId = {"10801"})
+    @Description("Retain the Status/Cost Maturity/Assignee/Lock during a Shallow Edit")
+    public void testShallowEditRetainStatus() {
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
@@ -206,9 +199,7 @@ public class EditAssembliesTest extends TestBase {
             scenarioName,
             currentUser);
 
-        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-        assemblyUtils.publishAssembly(componentAssembly);
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
@@ -220,10 +211,58 @@ public class EditAssembliesTest extends TestBase {
             .inputNotes("Testing QA notes")
             .submit(EvaluatePage.class)
             .editScenario()
+            .close(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
+
+        infoPage = evaluatePage.info();
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10802", "10803"})
+    @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
+    public void testShallowEditModifyStatusCheckAssociation() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.shallowPublishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .editScenario()
             .close(EvaluatePage.class)
-            .publishScenario(PublishPage.class)
-            .override()
-            .clickContinue(EvaluatePage.class);
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .inputDescription("QA Test Description")
+            .inputNotes("Testing QA notes")
+            .submit(EvaluatePage.class)
+            .lock(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
 
         infoPage = evaluatePage.info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
@@ -232,26 +271,7 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
 
         evaluatePage = infoPage.cancel(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
-
-        explorePage = evaluatePage.clickExplore()
-            .selectFilter("Public");
-
-        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isGreaterThanOrEqualTo(1);
-
-        evaluatePage = explorePage.navigateToScenario(componentAssembly)
-            .lock(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
-
-        evaluatePage.unlock(EvaluatePage.class);
-        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isTrue();
-
-        evaluatePage.clickExplore()
-            .selectFilter("Private")
-            .openScenario(assemblyName, scenarioName)
-            .openComponents();
+        evaluatePage.openComponents();
 
         subComponentNames.forEach(subcomponent -> assertThat(componentsListPage.getListOfSubcomponents(), hasItem(subcomponent.toUpperCase())));
     }
