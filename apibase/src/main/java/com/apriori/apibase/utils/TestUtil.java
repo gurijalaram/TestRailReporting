@@ -7,6 +7,7 @@ import com.apriori.utils.TestHelper;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.EndpointEnum;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -166,6 +167,22 @@ public class TestUtil extends TestHelper {
      */
     public final <E extends EndpointEnum, T> ResponseWrapper<T> getCommonRequest(E apiEnum, Class<T> klass, String... inlineVariables) {
         RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables);
+        return HTTPRequest.build(request).get();
+    }
+
+    // This is temporary solution for CdsAssociationUserTests
+    /**
+     * Calls an api with the GET verb.
+     *
+     * @param apiEnum The api enum that specifies the endpoint.
+     * @param klass The returning class object.
+     * @param inlineVariables Options variables used to help build the endpoint string.
+     * @param <E> The api enum type
+     * @param <T> The data type expected to be returned.
+     * @return The response wrapper that contains the response data.
+     */
+    public final <E extends EndpointEnum, T> ResponseWrapper<T> getSpecialRequest(E apiEnum, Class<T> klass, String... inlineVariables) {
+        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).formParams(new FormParams().use("sortBy[DESC]", "createdAt"));
         return HTTPRequest.build(request).get();
     }
 

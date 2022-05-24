@@ -95,6 +95,6 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.cds.api_url") + String.format(getEndpointString(), variables) + "?pageSize=1000&key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.cds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
     }
 }
