@@ -55,7 +55,7 @@ public class QueryDefinitionTests extends TestBase {
 
         Assert.assertEquals("Verify Rule Name drop down", true, queryDefinitions.getQueryDefinitionRuleNameDdl(0).isDisplayed());
         queryDefinitions.selectRuleNameFromDdl(workFlowData.getQueryDefinitionsData().get(0).getFieldName());
-        Assert.assertTrue("Verify Operator Value drop down displayed", queryDefinitions.getQueryDefinitionRuleOperatorDdl(0).isDisplayed());
+        Assert.assertTrue("Verify Operator Name drop down displayed", queryDefinitions.getQueryDefinitionRuleOperatorDdl(0).isDisplayed());
         Assert.assertTrue("Verify Operator Value drop down displayed", queryDefinitions.getQueryDefinitionRuleValueTxt(0).isDisplayed());
     }
 
@@ -81,7 +81,7 @@ public class QueryDefinitionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4306"})
+    @TestRail(testCaseId = {"4306","3958"})
     @Description("Verify query widget is correct for each possible PLM System selection")
     public void testRulesListFunctionality() {
         queryDefinitions = (QueryDefinitions) new LoginPage(driver)
