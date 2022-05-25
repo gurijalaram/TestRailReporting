@@ -967,7 +967,7 @@ public class PageUtils {
     }
 
     /**
-     * Waits for the element to become disabled
+     * Waits for the element to become invisible
      *
      * @param locator - the locator of the element
      * @return

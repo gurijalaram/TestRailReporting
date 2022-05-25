@@ -43,17 +43,18 @@ public class GroupCostingTests {
     @Description("Group Cost 10 components")
     public void testGroupCostTenParts() {
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         List<String> subComponentNamesSubset = subComponentNames.subList(0,10);
         currentUser = UserUtil.getUser();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
-            processGroupEnum,
+            asmProcessGroupEnum,
             subComponentNamesSubset,
             subComponentExtension,
-            processGroupEnum,
+            prtProcessGroupEnum,
             scenarioName,
             currentUser);
 
@@ -91,5 +92,6 @@ public class GroupCostingTests {
         ResponseWrapper<GroupErrorResponse> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         assertThat(groupErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
+        assertThat(groupErrorResponse.getResponseEntity().getMessage(), is(equalTo( "'groupItems' should be less than or equal to 10.")));
     }
 }

@@ -297,16 +297,24 @@ public class ScenariosUtil {
     /**
      * Post to cost a group of scenarios
      *
-     * @param componentInfoBuilder - A number of copy component objects
+     * @param componentInfo - A number of copy component objects
      * @return response object
      */
-    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
-        String customBody = getGroupRequestString(componentInfoBuilder);
+    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentScenarioName) {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .customBody(customBody);
+                .body(GroupCostRequest.builder()
+                    .costingTemplateIdentity(getCostingTemplateId(componentInfo.getSubComponents().get(0)).getIdentity())
+                    .groupItems(componentInfo.getSubComponents()
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
 
         ResponseWrapper<GroupCostResponse> groupCost = HTTPRequest.build(requestEntity).post();
 
@@ -316,38 +324,27 @@ public class ScenariosUtil {
     /**
      * Post to cost a group of scenarios and expect error
      *
-     * @param componentInfoBuilder - A number of copy component objects
+     * @param componentInfo - A number of copy component objects
      * @return response object
      */
-    public ResponseWrapper<GroupErrorResponse> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfoBuilder) {
-        String customBody = getGroupRequestString(componentInfoBuilder);
-
+    public ResponseWrapper<GroupErrorResponse> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupErrorResponse.class)
-                .token(componentInfoBuilder.getUser().getToken())
-                .customBody(customBody);
+                .body(GroupCostRequest.builder()
+                    .costingTemplateIdentity(getCostingTemplateId(componentInfo).getIdentity())
+                    .groupItems(componentInfo.getSubComponents()
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
 
         ResponseWrapper<GroupErrorResponse> groupCost = HTTPRequest.build(requestEntity).post();
 
         return groupCost;
-    }
-
-    private String getGroupRequestString(ComponentInfoBuilder componentInfoBuilder) {
-        List<ComponentInfoBuilder> subComponents = componentInfoBuilder.getSubComponents();
-        String groupItems = "\"groupItems\": [";
-        if (!subComponents.isEmpty()) {
-            for (int i = 0; i < subComponents.size(); i++) {
-                groupItems += "{\"componentIdentity\":\"" + subComponents.get(i).getComponentIdentity() + "\",";
-                groupItems += "\"scenarioIdentity\":\"" + subComponents.get(i).getScenarioIdentity() + "\"}";
-                if (i < subComponents.size() - 1) {
-                    groupItems += ",";
-                }
-            }
-            groupItems += "]}";
-        }
-
-        String customBody = "{\"costingTemplateIdentity\":\"" + getCostingTemplateId(componentInfoBuilder).getIdentity() + "\", " + groupItems;
-        return customBody;
     }
 
     /**
