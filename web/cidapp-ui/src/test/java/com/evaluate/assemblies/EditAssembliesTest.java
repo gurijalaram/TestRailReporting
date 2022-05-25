@@ -106,7 +106,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "12037")
+    @TestRail(testCaseId = {"12037", "12039"})
     @Description("Validate I can switch between public sub components")
     public void testSwitchBetweenPublicSubcomponents() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -165,6 +165,71 @@ public class EditAssembliesTest extends TestBase {
         evaluatePage = componentsListPage.closePanel()
             .costScenario()
             .costScenarioConfirmation("Yes");
+
+        double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
+        double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
+
+        softAssertions.assertThat(initialTotalCost).isGreaterThan(modifiedTotalCost);
+        softAssertions.assertThat(initialComponentsCost).isGreaterThan(modifiedComponentsCost);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "12038")
+    @Description("Validate I can switch between private sub components")
+    public void testSwitchingBetweenPrivateSubcomponents() {
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioNameChange = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .selectFilter("Recent")
+            .clickSearch(BOLT)
+            .multiSelectScenarios("" + BOLT + ", " + scenarioName + "")
+            .createScenario()
+            .enterScenarioName(scenarioNameChange)
+            .submit(EvaluatePage.class)
+            .navigateToScenario(componentAssembly);
+
+        double initialTotalCost = evaluatePage.getCostResults("Total Cost");
+        double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
+
+        evaluatePage.openComponents()
+            .switchScenarioName(BOLT, scenarioNameChange)
+            .multiSelectSubcomponents(BOLT + "," + scenarioNameChange)
+            .setInputs()
+            .selectProcessGroup(ProcessGroupEnum.CASTING)
+            .applyAndCost(SetInputStatusPage.class)
+            .close(ComponentsListPage.class)
+            .switchScenarioName(BOLT, scenarioNameChange)
+            .closePanel()
+            .costScenario();
 
         double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
         double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
