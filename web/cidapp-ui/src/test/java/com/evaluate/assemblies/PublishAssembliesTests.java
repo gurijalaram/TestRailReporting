@@ -1,6 +1,6 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -45,7 +45,9 @@ public class PublishAssembliesTests extends TestBase {
     private File assembly;
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private PublishPage publishPage;
     private ComponentsListPage componentsListPage;
+    SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
 
     public PublishAssembliesTests() {
@@ -89,12 +91,215 @@ public class PublishAssembliesTests extends TestBase {
             .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
-            .selectProcessGroup(ASSEMBLY)
+            .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
             .costScenario()
             .publishScenario()
             .publish(cidComponentItemC, EvaluatePage.class);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11812"})
+    @Description("Verify publish scenario modal appears when publish button is clicked")
+    public void testIncludeSubcomponentsAndCost() {
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String publishModalMessage = "Public scenarios will be created for each scenario in your selection." +
+            " If you wish to retain existing public scenarios, change the scenario name, otherwise they will be overridden.";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        publishPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, FLANGE)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
+            .publishSubcomponent();
+
+        assertThat(publishPage.getConflictMessage(), is(equalTo(publishModalMessage)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "11811")
+    @Description("Publish button becomes unavailable when public sub-component selected alongside private sub-component(s)")
+    public void testPublishButtonAvailability() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, FLANGE)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+
+        componentsListPage = componentsListPage.multiSelectSubcomponents(FLANGE + ", " + scenarioName);
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11828")
+    @Description("Validate an error message appears if any issues occur")
+    public void testPublishWithExistingScenarioName() {
+        String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            preExistingScenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
+            .uploadAssembly(preExistingComponentAssembly);
+        assemblyUtils.costSubComponents(preExistingComponentAssembly)
+            .costAssembly(preExistingComponentAssembly);
+        assemblyUtils.publishSubComponents(preExistingComponentAssembly)
+            .publishAssembly(preExistingComponentAssembly);
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName + "", SMALL_RING + "," + scenarioName + "")
+            .publishSubcomponent()
+            .changeName(preExistingScenarioName)
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class)
+            .close(ComponentsListPage.class);
+        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11829")
+    @Description("Validate a public iteration of the sub component is created")
+    public void testCreatingPublicIterationOfSubcomponent() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        String publishingMessage = "All scenarios are publishing..Close";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        publishPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + ", " + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .checkSubcomponentState(componentAssembly, FLANGE)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
+            .publishSubcomponent()
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class);
+
+        assertThat(publishPage.getPublishingMessage(), is(equalTo(publishingMessage)));
     }
 
     @Test
@@ -162,3 +367,4 @@ public class PublishAssembliesTests extends TestBase {
         softAssertions.assertAll();
     }
 }
+
