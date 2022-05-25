@@ -170,22 +170,6 @@ public class TestUtil extends TestHelper {
         return HTTPRequest.build(request).get();
     }
 
-    // This is temporary solution for CdsAssociationUserTests
-    /**
-     * Calls an api with the GET verb.
-     *
-     * @param apiEnum The api enum that specifies the endpoint.
-     * @param klass The returning class object.
-     * @param inlineVariables Options variables used to help build the endpoint string.
-     * @param <E> The api enum type
-     * @param <T> The data type expected to be returned.
-     * @return The response wrapper that contains the response data.
-     */
-    public final <E extends EndpointEnum, T> ResponseWrapper<T> getSpecialRequest(E apiEnum, Class<T> klass, String... inlineVariables) {
-        RequestEntity request = RequestEntityUtil.init(apiEnum, klass).inlineVariables(inlineVariables).formParams(new FormParams().use("sortBy[DESC]", "createdAt"));
-        return HTTPRequest.build(request).get();
-    }
-
     /**
      * Calls an api with the DELETE verb.
      *

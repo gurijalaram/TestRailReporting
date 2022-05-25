@@ -39,7 +39,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     LICENSE_BY_CUSTOMER_SITE_IDS("customers/%s/sites/%s/licenses"),
 
     // CUSTOMER ASSOCIATIONS
-    CUSTOMERS_ASSOCIATIONS("customers/%s/customer-associations"),
+    CUSTOMERS_ASSOCIATIONS("customers/%s/customer-associations?sortBy[DESC]=createdAt"),
     SPECIFIC_CUSTOMERS_ASSOCIATION_BY_CUSTOMER_ASSOCIATION_ID("customers/%s/customer-associations/%s"),
     CUSTOMER_ASSOCIATION_USER_BY_ID("customers/%s/customer-associations/%s/customer-association-users/%s"),
     ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS("customers/%s/customer-associations/%s/customer-association-users"),
@@ -95,6 +95,16 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return PropertiesContext.get("${env}.cds.api_url") + String.format(getEndpointString(), variables) + "?key=" + PropertiesContext.get("${env}.secret_key");
+        return PropertiesContext.get("${env}.cds.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
+    }
+
+    private String addQuery(String endpointString) {
+        String querySymbol = "?";
+
+        if (endpointString.contains("?")) {
+            querySymbol = "&";
+        }
+
+        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
     }
 }
