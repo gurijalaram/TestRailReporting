@@ -32,7 +32,7 @@ public class SetInputStatusPage extends EagerPageComponent<SetInputStatusPage> {
     }
 
     /**
-     * This get the message after upload is completed
+     * This get the message after costing is completed
      *
      * @return - string
      */
