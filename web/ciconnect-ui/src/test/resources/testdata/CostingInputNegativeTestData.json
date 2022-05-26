@@ -25,26 +25,20 @@
   ],
   "costingInputsData": [
     {
-      "fieldName": "Process Group",
-      "fieldValue": "Sheet Metal"
-    },
-    {
-      "fieldName": "Material",
-      "fieldValue": "Steel, Cold Worked, AISI 1020"
-    },
-    {
-      "fieldName": "Digital Factory",
-      "fieldValue": "aPriori Brazil"
+      "fieldName": "Description",
+      "operatorName": "Constant",
+      "fieldValue": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuv"
     },
     {
       "fieldName": "Scenario Name",
+      "operatorName": "Constant",
       "fieldValue": "Auto_SN "
     }
   ],
   "publishResultsData":{
     "writeFieldsData": [{"fieldName1": "fieldValue1"},{"fieldName2": "fieldValue2"}],
-    "reportName": "Part Cost [SSR]",
-    "reportCurrencyCode": "",
-    "reportCostRounding": ""
+    "reportName": "DTC Component Summary [CIR]",
+    "reportCurrencyCode": "USD",
+    "reportCostRounding": "No"
   }
 }
