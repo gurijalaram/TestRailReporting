@@ -44,8 +44,6 @@ public class WorkflowHistoryTests extends TestBase {
 
         Assert.assertEquals("The job was successfully started!", workflowHome.getWorkFlowStatusMessage());
 
-        workflowHome.selectViewHistoryTab().searchAndTrackWorkFlowStatus(workFlowData.getWorkflowName());
-
-
+        Assert.assertTrue("Verify Workflow job is finished",workflowHome.selectViewHistoryTab().searchAndTrackWorkFlowStatus(workFlowData.getWorkflowName()));
     }
 }

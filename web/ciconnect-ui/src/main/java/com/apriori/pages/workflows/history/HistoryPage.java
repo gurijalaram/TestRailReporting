@@ -1,6 +1,5 @@
 package com.apriori.pages.workflows.history;
 
-import com.apriori.enums.WorkflowJobState;
 import com.apriori.pages.CICBasePage;
 
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import utils.Constants;
 
+import java.time.LocalTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -62,6 +64,7 @@ public class HistoryPage extends CICBasePage {
 
     /**
      * Search work flow in History page and track the job status
+     *
      * @param workflowName
      * @return
      */
@@ -84,30 +87,31 @@ public class HistoryPage extends CICBasePage {
 
     /**
      * Track the job status by workflow
+     *
      * @param workflowName
      * @return boolean - true or false (true - Job is in finished state)
      */
     private Boolean trackJobStatus(String workflowName) {
-        long initialTime = System.currentTimeMillis() / 1000;
-        String jobStatus = StringUtils.EMPTY;
-        do {
-            WebElement tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, 1);
-            jobStatus = tableUtils.getItemNameFromTable(tableRow, 6).getText();
-            logger.info(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, jobStatus));
+        LocalTime expectedFileArrivalTime = LocalTime.now().plusMinutes(15);
+        List<String> jobStatusList = Arrays.asList(new String[] {"Finished", "Batch Costing Failed", "Errored", "Cancelled"});
+        String finalJobStatus = StringUtils.EMPTY;
+        WebElement tableRow;
+        tableRow = tableUtils.findTableItemByName(historyJobListTable, workflowName, 1);
+        finalJobStatus = tableUtils.getItemNameFromTable(tableRow, 6).getText();
+        while (!jobStatusList.contains(finalJobStatus)) {
+            if (LocalTime.now().isAfter(expectedFileArrivalTime)) {
+                return false;
+            }
             try {
                 pageUtils.waitForElementAndClick(refreshButton);
-                TimeUnit.SECONDS.sleep(15);
+                TimeUnit.SECONDS.sleep(30);
+                finalJobStatus = tableUtils.getItemNameFromTable(tableUtils.findTableItemByName(historyJobListTable, workflowName, 1), 6).getText();
+                logger.info(String.format("WorkFlowName  >>%s<< ::: Job Status  >>%s<<", workflowName, finalJobStatus));
             } catch (InterruptedException e) {
                 logger.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
-        } while (!jobStatus.equals(WorkflowJobState.FINISHED.getJobState())
-            || jobStatus.equals(WorkflowJobState.BATCH_COSTING_FAILED.getJobState())
-            || jobStatus.equals(WorkflowJobState.CANCELLED.getJobState())
-            || jobStatus.equals(WorkflowJobState.ERRORED.getJobState())
-            || jobStatus.equals(WorkflowJobState.QUERY_IN_PROGRESS.getJobState())
-            && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
-
-        return (jobStatus.equals(WorkflowJobState.FINISHED.getJobState())) ? true : false;
+        }
+        return true;
     }
 }
