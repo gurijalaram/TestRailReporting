@@ -10,11 +10,13 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -236,6 +238,72 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(initialTotalCost).isGreaterThan(modifiedTotalCost);
         softAssertions.assertThat(initialComponentsCost).isGreaterThan(modifiedComponentsCost);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "12040")
+    @Description("Validate I can switch between public sub components when private iteration is deleted")
+    public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(BOLT + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .clickRefresh(ComponentsListPage.class)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName)
+            .setInputs()
+            .selectProcessGroup(ProcessGroupEnum.CASTING)
+            .applyAndCost(SetInputStatusPage.class)
+            .close(EvaluatePage.class)
+            .clickRefresh(ComponentsListPage.class);
+
+        subComponentNames.forEach(componentName ->
+            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+                is(ScenarioStateEnum.COST_COMPLETE.getState())));
+
+        componentsListPage.closePanel()
+            .clickExplore()
+            .selectFilter("Recent")
+            .clickSearch(BOLT)
+            .multiSelectScenarios("" + BOLT + ", " + scenarioName + "")
+            .delete()
+            .submit(ExplorePage.class)
+            .navigateToScenario(componentAssembly)
+            .clickRefresh(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
