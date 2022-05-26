@@ -4,6 +4,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
+import static org.hamcrest.Matchers.not;
 
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
@@ -15,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
+import org.hamcrest.CoreMatchers;
 import org.junit.Test;
 
 
@@ -71,6 +73,27 @@ public class PartsAndAssemblyTest extends TestBase {
         assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns()));
 
     }
+
+    @Test
+    @TestRail(testCaseId = {"12178","12185"})
+    @Description("Verify that user can search a field by its name and hide the field")
+    public void testSearchAFieldToShowHide() {
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
+        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
+        partsAndAssembliesPage.waitForTableLoad();
+        partsAndAssembliesPage.clickOnShowHideOption();
+        partsAndAssembliesPage.EnterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
+
+        assertThat(partsAndAssembliesPage.GetFieldName(),is(equalTo(CisColumnsEnum.COMPONENT_NAME.getColumns())));
+
+        partsAndAssembliesPage.clickOnToggleButton();
+
+        assertThat(partsAndAssembliesPage.getTableHeaders(), not(hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns())));
+
+    }
+
+
 
 }
 
