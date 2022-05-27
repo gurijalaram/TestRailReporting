@@ -17,6 +17,9 @@ public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAnd
     @FindBy(css = "div.MuiDataGrid-columnHeaders.css-qw65j7")
     private WebElement tableHeaders;
 
+    @FindBy(css = "div.MuiDataGrid-pinnedColumnHeaders")
+    private WebElement pinnedTableHeaders;
+
     public PartsAndAssemblyTableController(WebDriver driver) {
         super(driver, log);
     }
@@ -34,5 +37,14 @@ public class PartsAndAssemblyTableController extends EagerPageComponent<PartsAnd
      */
     public List<String> getTableHeaders() {
         return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets pinned table headers
+     *
+     * @return list of string
+     */
+    public List<String> getPinnedTableHeaders() {
+        return Stream.of(pinnedTableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 }
