@@ -73,12 +73,12 @@ public class GroupCostingTests extends TestBase {
 
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-        for (int i=0; i<subComponentNames.size()-1; i++){
+        for (int i = 0; i < subComponentNames.size() - 1; i++) {
             componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
             softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
         }
 
-        componentsListPage.selectScenario(subComponentNames.get(subComponentNames.size()-1).toUpperCase(), scenarioName);
+        componentsListPage.selectScenario(subComponentNames.get(subComponentNames.size() - 1).toUpperCase(), scenarioName);
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
@@ -123,12 +123,12 @@ public class GroupCostingTests extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        subComponentNames.forEach(subComponentName->{
+        subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("circle-minus");
         });
 
-        subComponentNames.forEach(subComponentName->componentsListPage.selectScenario(subComponentName.toUpperCase(), scenarioName));
+        subComponentNames.forEach(subComponentName -> componentsListPage.selectScenario(subComponentName.toUpperCase(), scenarioName));
 
         componentPrimaryPage = componentsListPage.setInputs();
 
@@ -142,7 +142,7 @@ public class GroupCostingTests extends TestBase {
             .clickApplyAndCost()
             .clickCloseBtn();
 
-        subComponentNames.forEach(subComponentName->{
+        subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("gear");
         });
@@ -151,7 +151,7 @@ public class GroupCostingTests extends TestBase {
         evaluatePage.refresh();
         componentsListPage = evaluatePage.openComponents();
 
-        subComponentNames.forEach(subComponentName->{
+        subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon - " + subComponentName).isEqualTo("check");
         });

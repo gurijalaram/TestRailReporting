@@ -92,6 +92,6 @@ public class GroupCostingTests {
         ResponseWrapper<GroupErrorResponse> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         assertThat(groupErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(groupErrorResponse.getResponseEntity().getMessage(), is(equalTo( "'groupItems' should be less than or equal to 10.")));
+        assertThat(groupErrorResponse.getResponseEntity().getMessage(), is(equalTo("'groupItems' should be less than or equal to 10.")));
     }
 }
