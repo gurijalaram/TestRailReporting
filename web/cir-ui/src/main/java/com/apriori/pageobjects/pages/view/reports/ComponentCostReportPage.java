@@ -210,7 +210,7 @@ public class ComponentCostReportPage extends GenericReportPage {
      * @return ComponentCostReportPage instance
      */
     public ComponentCostReportPage waitForComponentFilter() {
-        By locator = By.xpath("//a[@title='3538968 (Initial)  [part]']");
+        By locator = By.xpath("//a[@title='0200613 (Initial)  [part]']");
         pageUtils.waitForElementToAppear(locator);
         return new ComponentCostReportPage(driver);
     }
