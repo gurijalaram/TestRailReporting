@@ -29,6 +29,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(id = "show-button")
     private WebElement hideAllButton;
 
+    @FindBy(id = "show-hide-field-input")
+    private WebElement showHideSearchField;
+
+    @FindBy(css = "div.MuiListItemText-root.css-1tsvksn")
+    private WebElement fieldNameResult;
+
+    @FindBy(xpath = "//span[@data-testid='switch']")
+    private WebElement toggleButton;
+
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -104,4 +113,33 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         return this;
     }
 
+    /**
+     * Input a field name to find a field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage EnterFieldName(String fieldName) {
+        getPageUtils().waitForElementToAppear(showHideSearchField).sendKeys(fieldName);
+        return this;
+    }
+
+    /**
+     * Get searched field name
+     *
+     * @return current page object
+     */
+    public String GetFieldName() {
+        return getPageUtils().waitForElementToAppear(fieldNameResult).getText();
+
+    }
+
+    /**
+     * Click on toggle button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickOnToggleButton() {
+        getPageUtils().waitForElementAndClick(toggleButton);
+        return this;
+    }
 }
