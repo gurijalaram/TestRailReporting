@@ -64,6 +64,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         this.pageUtils = new PageUtils(driver);
         this.partsAndAssemblyTableController = new PartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
+        this.waitForTableLoad();
 
     }
 

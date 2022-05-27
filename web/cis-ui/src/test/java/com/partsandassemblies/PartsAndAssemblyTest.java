@@ -100,14 +100,12 @@ public class PartsAndAssemblyTest extends TestBase {
     public void testPintoLeftOption() {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
-        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
-        partsAndAssembliesPage.waitForTableLoad();
 
-        partsAndAssembliesPage.clickKebabMenuOnTableHeader();
+        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies()
+                .clickKebabMenuOnTableHeader()
+                .clickPinToLeft();
 
         assertThat(partsAndAssembliesPage.isPinToLeftOptionDisplayed(), is(true));
-
-        partsAndAssembliesPage.clickPinToLeft();
 
         assertThat(partsAndAssembliesPage.getPinnedTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
 
