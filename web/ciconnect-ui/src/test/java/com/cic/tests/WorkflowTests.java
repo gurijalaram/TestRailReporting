@@ -38,7 +38,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"4109", "3586", "3588", "3587", "3591"})
+    @TestRail(testCaseId = {"4109", "3586", "3588", "3587", "3591","3961"})
     @Description("Test creating, editing and deletion of a workflow")
     public void testCreateEditAndDeleteWorkflow() {
         softAssertions = new SoftAssertions();
@@ -52,14 +52,16 @@ public class WorkflowTests extends TestBase {
             .clickNewWorkflowBtn();
         workflowHome = workFlowFeatures.createWorkflow();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition created");
+        workflowHome.closeMessageAlertBox();
 
         // EDIT WORK FLOW
         workflowHome.selectScheduleTab()
             .selectWorkflow(workFlowData.getWorkflowName())
             .clickEditButton();
-        workFlowData.setWorkflowName(UIUtils.saltString("0 0 Auto_Upd"));
+        workFlowData.setWorkflowName(UIUtils.saltString("- - - 0 0 Auto_Upd"));
         workflowHome = workFlowFeatures.editWorkflow();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
+        workflowHome.closeMessageAlertBox();
         workFlowData.setWorkflowName(workFlowData.getWorkflowName());
         softAssertions.assertThat(workflowHome.selectScheduleTab().getItemFromWorkflowList(workFlowData.getWorkflowName(), WorkflowListColumns.Last_Modified_By).getText()).isEqualTo(currentUser.getEmail());
         //DELETE WORKFLOW
@@ -115,7 +117,7 @@ public class WorkflowTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"3809", "143018"})
+    @TestRail(testCaseId = {"3809", "3944"})
     @Description("Test default sorting, ascending and descending of workflows by name in the schedule table")
     public void testSortedByName() {
         softAssertions = new SoftAssertions();
