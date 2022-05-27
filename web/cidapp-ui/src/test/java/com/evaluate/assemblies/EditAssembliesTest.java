@@ -162,7 +162,7 @@ public class EditAssembliesTest extends TestBase {
             .clickContinue(PublishPage.class)
             .publish(ComponentsListPage.class);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName), is(StatusIconEnum.PUBLIC.getStatusIcon()));
 
         evaluatePage = componentsListPage.closePanel()
             .costScenario()
@@ -301,7 +301,7 @@ public class EditAssembliesTest extends TestBase {
             .delete()
             .submit(ExplorePage.class)
             .navigateToScenario(componentAssembly)
-            .clickRefresh(ComponentsListPage.class);
+            .openComponents();
 
         softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
