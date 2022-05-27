@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -20,6 +21,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -33,6 +35,8 @@ public class EditAssembliesTest extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private EditScenarioStatusPage editScenarioStatusPage;
+    private ComponentsListPage componentsListPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public EditAssembliesTest() {
         super();
@@ -103,7 +107,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10895")
+    @TestRail(testCaseId = {"10895", "10897"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndOverridePrivateSubcomponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -144,5 +148,65 @@ public class EditAssembliesTest extends TestBase {
             .clickContinue(EditScenarioStatusPage.class);
 
         assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+        
+        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10896", "10898"})
+    @Description("Edit public sub-component with Private counterpart (Override)")
+    public void testEditPublicAndRenamePrivateSubcomponent() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(newScenarioName)
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 }
