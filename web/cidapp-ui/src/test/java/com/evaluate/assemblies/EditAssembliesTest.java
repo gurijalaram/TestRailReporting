@@ -426,24 +426,23 @@ public class EditAssembliesTest extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final String assemblyName = "v6 piston assembly_asm1";
-        final String assemblyExtension = ".prt";
-        final String PISTON_ROD_MODEL1 = "piston rod_model1";
-        final String PISTON_MODEL1 = "piston_model1";
-        final String PISTON_COVER_MODEL1 = "piston cover_model1";
-        final String PISTON_PIN_MODEL1 = "piston pin_model1";
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
 
-        final List<String> subComponentNames = Arrays.asList(PISTON_ROD_MODEL1, PISTON_MODEL1, PISTON_COVER_MODEL1, PISTON_PIN_MODEL1);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final String subComponentExtension = ".prt";
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             ProcessGroupEnum.ASSEMBLY,
             subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
+            componentExtension,
+            processGroupEnum,
             scenarioName,
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
@@ -456,12 +455,10 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents(PISTON_COVER_MODEL1 + "," + scenarioName, PISTON_PIN_MODEL1 + "," + scenarioName)
-            .editSubcomponent(EditComponentsPage.class)
-            .overrideScenarios()
-            .clickContinue(EditScenarioStatusPage.class)
+            .multiSelectSubcomponents(FLANGE + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsListPage.class)
-            .multiSelectSubcomponents(PISTON_ROD_MODEL1 + "," + scenarioName, PISTON_MODEL1 + "," + scenarioName)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .overrideScenarios()
             .clickContinue(EditScenarioStatusPage.class);
@@ -474,8 +471,8 @@ public class EditAssembliesTest extends TestBase {
             assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_ROD_MODEL1, scenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_MODEL1, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -488,24 +485,23 @@ public class EditAssembliesTest extends TestBase {
         String newScenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final String assemblyName = "v6 piston assembly_asm1";
-        final String assemblyExtension = ".prt";
-        final String PISTON_ROD_MODEL1 = "piston rod_model1";
-        final String PISTON_MODEL1 = "piston_model1";
-        final String PISTON_COVER_MODEL1 = "piston cover_model1";
-        final String PISTON_PIN_MODEL1 = "piston pin_model1";
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
 
-        final List<String> subComponentNames = Arrays.asList(PISTON_ROD_MODEL1, PISTON_MODEL1, PISTON_COVER_MODEL1, PISTON_PIN_MODEL1);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final String subComponentExtension = ".prt";
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             ProcessGroupEnum.ASSEMBLY,
             subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
+            componentExtension,
+            processGroupEnum,
             scenarioName,
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
@@ -518,12 +514,10 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents(PISTON_COVER_MODEL1 + "," + scenarioName, PISTON_PIN_MODEL1 + "," + scenarioName)
-            .editSubcomponent(EditComponentsPage.class)
-            .overrideScenarios()
-            .clickContinue(EditScenarioStatusPage.class)
+            .multiSelectSubcomponents(FLANGE + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsListPage.class)
-            .multiSelectSubcomponents(PISTON_ROD_MODEL1 + "," + scenarioName, PISTON_MODEL1 + "," + scenarioName)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(newScenarioName)
@@ -533,8 +527,8 @@ public class EditAssembliesTest extends TestBase {
 
         componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
 
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_ROD_MODEL1, newScenarioName)).isEqualTo(1);
-        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_MODEL1, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -547,24 +541,23 @@ public class EditAssembliesTest extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final String assemblyName = "v6 piston assembly_asm1";
-        final String assemblyExtension = ".prt";
-        final String PISTON_ROD_MODEL1 = "piston rod_model1";
-        final String PISTON_MODEL1 = "piston_model1";
-        final String PISTON_COVER_MODEL1 = "piston cover_model1";
-        final String PISTON_PIN_MODEL1 = "piston pin_model1";
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
 
-        final List<String> subComponentNames = Arrays.asList(PISTON_ROD_MODEL1, PISTON_MODEL1, PISTON_COVER_MODEL1, PISTON_PIN_MODEL1);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final String subComponentExtension = ".prt";
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
 
         ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             ProcessGroupEnum.ASSEMBLY,
             subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
+            componentExtension,
+            processGroupEnum,
             preExistingScenarioName,
             currentUser);
         assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
@@ -577,8 +570,8 @@ public class EditAssembliesTest extends TestBase {
             assemblyExtension,
             ProcessGroupEnum.ASSEMBLY,
             subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
+            componentExtension,
+            processGroupEnum,
             scenarioName,
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
@@ -591,7 +584,7 @@ public class EditAssembliesTest extends TestBase {
         editScenarioStatusPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
             .openComponents()
-            .multiSelectSubcomponents(PISTON_ROD_MODEL1 + "," + scenarioName + "", PISTON_MODEL1 + "," + scenarioName + "", PISTON_COVER_MODEL1 + "," + scenarioName + "")
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
             .editSubcomponent(EditComponentsPage.class)
             .renameScenarios()
             .enterScenarioName(preExistingScenarioName)
