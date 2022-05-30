@@ -80,7 +80,6 @@ public class UserCredentials {
         if (ChronoUnit.MINUTES.between(LocalTime.now(),
             Instant.ofEpochMilli(new JWT().decodeJwt(token).getExpiresAt().getTime())
                 .atZone(ZoneId.systemDefault()).toLocalTime()) <= TOKEN_MIN_TIME_IN_MINUTES || token == null) {
-
             generateToken();
         }
         return token;
