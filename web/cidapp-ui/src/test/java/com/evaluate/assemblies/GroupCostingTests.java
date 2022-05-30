@@ -73,7 +73,7 @@ public class GroupCostingTests extends TestBase {
 
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-        for (int i = 0; i < subComponentNames.size() - 1; i++) {
+        for (int i = 0; i < 10; i++) {
             componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
             softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
         }
@@ -140,7 +140,7 @@ public class GroupCostingTests extends TestBase {
 
         componentsListPage = componentPrimaryPage.selectProcessGroup(prtProcessGroupEnum)
             .clickApplyAndCost()
-            .clickCloseBtn();
+            .clickCloseButton();
 
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(

@@ -4,9 +4,9 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
-import com.apriori.cidappapi.entity.response.GroupErrorResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -46,13 +46,13 @@ public class GroupCostingTests {
         final ProcessGroupEnum asmProcessGroupEnum = ProcessGroupEnum.ASSEMBLY;
         final ProcessGroupEnum prtProcessGroupEnum = ProcessGroupEnum.SHEET_METAL;
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        List<String> subComponentNamesSubset = subComponentNames.subList(0,10);
+
         currentUser = UserUtil.getUser();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             asmProcessGroupEnum,
-            subComponentNamesSubset,
+            subComponentNames,
             subComponentExtension,
             prtProcessGroupEnum,
             scenarioName,
@@ -61,10 +61,12 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly);
+        String[] subComponentsToCost = subComponentNames.subList(0,10).toArray(new String[10]);
+
+        ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentsToCost);
 
         assertThat(groupCostResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(groupCostResponse.getResponseEntity().getSuccesses().size(), is(equalTo(subComponentNamesSubset.size())));
+        assertThat(groupCostResponse.getResponseEntity().getSuccesses().size(), is(equalTo(subComponentsToCost.length)));
         assertThat(groupCostResponse.getResponseEntity().getFailures().size(), is(equalTo(0)));
     }
 
@@ -89,7 +91,7 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<GroupErrorResponse> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
+        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         assertThat(groupErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
         assertThat(groupErrorResponse.getResponseEntity().getMessage(), is(equalTo("'groupItems' should be less than or equal to 10.")));

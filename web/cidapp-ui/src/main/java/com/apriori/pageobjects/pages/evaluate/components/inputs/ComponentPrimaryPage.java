@@ -284,7 +284,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return generic page object
      */
-    public ComponentsListPage clickCloseBtn() {
+    public ComponentsListPage clickCloseButton() {
         pageUtils.waitForElementAndClick(closeBtn);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         return new ComponentsListPage(driver);
