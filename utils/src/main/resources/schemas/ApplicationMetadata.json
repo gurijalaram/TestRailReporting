@@ -1,5 +1,5 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
   "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
@@ -9,42 +9,14 @@
     "response": {
       "type": "object",
       "required": [
-        "cloudContext",
-        "customerName",
         "deploymentName",
         "deploymentType",
         "installationName",
+        "applicationIdentity",
         "applicationName",
-        "maxCadFileSize",
-        "salesforceId"
+        "customerMetadata"
       ],
       "properties": {
-        "cloudContext": {
-          "type": "object",
-          "required": [
-            "customerIdentity",
-            "deploymentIdentity",
-            "installationIdentity",
-            "applicationIdentity"
-          ],
-          "properties": {
-            "customerIdentity": {
-              "type": "string"
-            },
-            "deploymentIdentity": {
-              "type": "string"
-            },
-            "installationIdentity": {
-              "type": "string"
-            },
-            "applicationIdentity": {
-              "type": "string"
-            }
-          }
-        },
-        "customerName": {
-          "type": "string"
-        },
         "deploymentName": {
           "type": "string"
         },
@@ -54,14 +26,30 @@
         "installationName": {
           "type": "string"
         },
+        "applicationIdentity": {
+          "type": "string"
+        },
         "applicationName": {
           "type": "string"
         },
-        "maxCadFileSize": {
-          "type": "integer"
-        },
-        "salesforceId": {
-          "type": "string"
+        "customerMetadata": {
+          "type": "object",
+          "required": [
+            "customerName",
+            "maxCadFileSize",
+            "salesforceId"
+          ],
+          "properties": {
+            "customerName": {
+              "type": "string"
+            },
+            "maxCadFileSize": {
+              "type": "integer"
+            },
+            "salesforceId": {
+              "type": "string"
+            }
+          }
         }
       }
     }
