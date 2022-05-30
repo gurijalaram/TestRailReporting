@@ -23,6 +23,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcompon
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -53,15 +54,8 @@ public class ScenariosUtil {
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo) {
-        final int SOCKET_TIMEOUT = 240000;
-        String componentId = componentInfo.getComponentIdentity();
-        String scenarioId = componentInfo.getScenarioIdentity();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
-                .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
+        final String componentName = componentInfo.getComponentName();
+        final String scenarioName = componentInfo.getScenarioName();
 
         final int POLL_TIME = 2;
         final int WAIT_TIME = 240;
@@ -71,16 +65,16 @@ public class ScenariosUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
                 scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
                     .ifPresent(y -> {
-                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentId, scenarioId));
+                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity()));
                     });
 
                 if (scenarioResponse.isPresent() && transientGroup.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
@@ -97,7 +91,57 @@ public class ScenariosUtil {
         }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentId, scenarioId, WAIT_TIME)
+                componentName, scenarioName, WAIT_TIME)
+        );
+    }
+
+    /**
+     * GET scenario representation of a part
+     *
+     * @param componentInfo - the component info builder object
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        final String componentName = componentInfo.getComponentName();
+        final String scenarioName = componentInfo.getScenarioName();
+
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 240;
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
+
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
+                    HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+
+                final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
+
+                if (scenarioState != PROCESSING_FAILED) {
+                    scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
+                        .ifPresent(y -> {
+                            throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity()));
+                        });
+                }
+
+                if (scenarioResponse.isPresent() && scenarioResponse.get().getScenarioState().equalsIgnoreCase(scenarioState.getState())) {
+
+                    assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
+                    return scenarioRepresentation;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
+                componentName, scenarioName, WAIT_TIME)
         );
     }
 
@@ -108,15 +152,8 @@ public class ScenariosUtil {
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getPublishedScenarioRepresentation(ComponentInfoBuilder componentInfo, String lastAction, boolean published) {
-        final int SOCKET_TIMEOUT = 240000;
-        String componentId = componentInfo.getComponentIdentity();
-        String scenarioId = componentInfo.getScenarioIdentity();
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(componentId, scenarioId)
-                .token(componentInfo.getUser().getToken())
-                .socketTimeout(SOCKET_TIMEOUT);
+        final String componentName = componentInfo.getComponentName();
+        final String scenarioName = componentInfo.getScenarioName();
 
         final int POLL_TIME = 2;
         final int WAIT_TIME = 240;
@@ -126,16 +163,16 @@ public class ScenariosUtil {
             do {
                 TimeUnit.MILLISECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<ScenarioResponse> scenarioRepresentation = HTTPRequest.build(requestEntity).get();
+                ResponseWrapper<ScenarioResponse> scenarioRepresentation = scenarioRequestEntity(componentInfo);
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentId, scenarioId, scenarioRepresentation.getStatusCode()),
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, scenarioRepresentation.getStatusCode()),
                     HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
 
                 final Optional<ScenarioResponse> scenarioResponse = Optional.ofNullable(scenarioRepresentation.getResponseEntity());
 
                 scenarioResponse.filter(x -> x.getScenarioState().equals(PROCESSING_FAILED.getState()))
                     .ifPresent(y -> {
-                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentId, scenarioId));
+                        throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity()));
                     });
 
                 if (scenarioResponse.isPresent() &&
@@ -154,8 +191,22 @@ public class ScenariosUtil {
         }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentId, scenarioId, WAIT_TIME)
+                componentName, scenarioName, WAIT_TIME)
         );
+    }
+
+    private ResponseWrapper<ScenarioResponse> scenarioRequestEntity(ComponentInfoBuilder componentInfo) {
+        final int SOCKET_TIMEOUT = 240000;
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
+                .inlineVariables(componentId, scenarioId)
+                .token(componentInfo.getUser().getToken())
+                .socketTimeout(SOCKET_TIMEOUT);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 
     /**
@@ -472,7 +523,7 @@ public class ScenariosUtil {
         }
         throw new IllegalArgumentException(
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentId, scenarioId, WAIT_TIME)
+                componentInfo.getComponentName(), componentInfo.getScenarioName(), WAIT_TIME)
         );
     }
 

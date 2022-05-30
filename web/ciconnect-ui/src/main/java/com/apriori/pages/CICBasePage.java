@@ -15,7 +15,7 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
 
     protected static final String OPTIONS_CONTENT_OPEN_DROPDOWN_CSS = "div[class^='ss-content ss-'][class$='ss-open'] div[class='ss-list']";
     protected static final String PARENT_ELEMENT_CSS = "div[id^='root_pagemashupcontainer-1_navigation-']";
-    protected static final long WAIT_TIME = 900;
+    protected static final long WAIT_TIME = 120;
     protected static WorkFlowData workFlowData;
 
     protected WebDriver driver;
