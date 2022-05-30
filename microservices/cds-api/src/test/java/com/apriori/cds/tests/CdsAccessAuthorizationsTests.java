@@ -70,7 +70,7 @@ public class CdsAccessAuthorizationsTests {
     @After
     public void deleteAccessAuthorization() {
         if (accessAuthorizationIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_By_ID,
+            cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID,
                 accessAuthorizationIdentityHolder.customerIdentity(),
                 accessAuthorizationIdentityHolder.accessAuthorizationIdentity()
             );
@@ -134,12 +134,12 @@ public class CdsAccessAuthorizationsTests {
         ResponseWrapper<AccessAuthorization> accessAuthorization = cdsTestUtil.addAccessAuthorization(customerIdentity, aPStaffIdentity, "service-account.1");
         String authorizationIdentity = accessAuthorization.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AccessAuthorization> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_By_ID, AccessAuthorization.class, customerIdentity, authorizationIdentity);
+        ResponseWrapper<AccessAuthorization> authorizationsResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, AccessAuthorization.class, customerIdentity, authorizationIdentity);
 
         assertThat(authorizationsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(authorizationsResponse.getResponseEntity().getIdentity(), is(equalTo(authorizationIdentity)));
 
-        ResponseWrapper<String> deleteAuthorizationAccess = cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_By_ID, customerIdentity, authorizationIdentity);
+        ResponseWrapper<String> deleteAuthorizationAccess = cdsTestUtil.delete(CDSAPIEnum.ACCESS_AUTHORIZATION_BY_ID, customerIdentity, authorizationIdentity);
 
         assertThat(deleteAuthorizationAccess.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
     }
