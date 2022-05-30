@@ -9,6 +9,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
@@ -42,18 +43,14 @@ public class EditAssembliesTest extends TestBase {
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
-    SoftAssertions softAssertions = new SoftAssertions();
     private ComponentsListPage componentsListPage;
     private InfoPage infoPage;
-    private ComponentsListPage componentsListPage;
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
     private EditScenarioStatusPage editStatusPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
-
-    final AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private final AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     @Test
     @Category(SmokeTests.class)
