@@ -58,7 +58,7 @@ public class CdsAssociationUserTests {
 
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class, aPCustomerIdentity);
+        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class,aPCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
 
     }

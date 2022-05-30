@@ -116,6 +116,18 @@ public class WorkflowHome extends CICBasePage {
     }
 
     /**
+     * click close button on status message alert box
+     *
+     * @return workflowhome
+     */
+    public WorkflowHome closeMessageAlertBox() {
+        if (pageUtils.waitForElementToAppear(statusMessageCloseBtn) != null) {
+            pageUtils.waitForElementAndClick(statusMessageCloseBtn);
+        }
+        return this;
+    }
+
+    /**
      * Get workflow page label text
      *
      * @return String

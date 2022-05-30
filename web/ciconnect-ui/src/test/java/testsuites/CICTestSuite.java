@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.cic.tests.CostingInputTabTests;
 import com.cic.tests.NavBarTests;
 import com.cic.tests.NotificationTests;
 import com.cic.tests.PublishResultsTests;
@@ -22,7 +23,8 @@ import org.junit.runners.Suite;
     UsersTests.class,
     WorkflowTests.class,
     WorkflowHistoryTests.class,
-    PublishResultsTests.class
+    PublishResultsTests.class,
+    CostingInputTabTests.class
 })
 
 public class CICTestSuite {
