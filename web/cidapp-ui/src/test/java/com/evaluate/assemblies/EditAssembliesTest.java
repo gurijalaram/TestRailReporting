@@ -356,6 +356,10 @@ public class EditAssembliesTest extends TestBase {
 
         componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
 
+        subComponentNames.forEach(componentName ->
+            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+                is(ScenarioStateEnum.COST_COMPLETE.getState())));
+
         softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
         softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
@@ -413,5 +417,186 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10899")
+    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
+    public void testEditPublicSubcomponentsMixedWithPrivateThenOverride() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "v6 piston assembly_asm1";
+        final String assemblyExtension = ".prt";
+        final String PISTON_ROD_MODEL1 = "piston rod_model1";
+        final String PISTON_MODEL1 = "piston_model1";
+        final String PISTON_COVER_MODEL1 = "piston cover_model1";
+        final String PISTON_PIN_MODEL1 = "piston pin_model1";
+
+        final List<String> subComponentNames = Arrays.asList(PISTON_ROD_MODEL1, PISTON_MODEL1, PISTON_COVER_MODEL1, PISTON_PIN_MODEL1);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".prt";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(PISTON_COVER_MODEL1 + "," + scenarioName, PISTON_PIN_MODEL1 + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class)
+            .multiSelectSubcomponents(PISTON_ROD_MODEL1 + "," + scenarioName, PISTON_MODEL1 + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        subComponentNames.forEach(componentName ->
+            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+                is(ScenarioStateEnum.COST_COMPLETE.getState())));
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_ROD_MODEL1, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_MODEL1, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10900")
+    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
+    public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "v6 piston assembly_asm1";
+        final String assemblyExtension = ".prt";
+        final String PISTON_ROD_MODEL1 = "piston rod_model1";
+        final String PISTON_MODEL1 = "piston_model1";
+        final String PISTON_COVER_MODEL1 = "piston cover_model1";
+        final String PISTON_PIN_MODEL1 = "piston pin_model1";
+
+        final List<String> subComponentNames = Arrays.asList(PISTON_ROD_MODEL1, PISTON_MODEL1, PISTON_COVER_MODEL1, PISTON_PIN_MODEL1);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".prt";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(PISTON_COVER_MODEL1 + "," + scenarioName, PISTON_PIN_MODEL1 + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class)
+            .multiSelectSubcomponents(PISTON_ROD_MODEL1 + "," + scenarioName, PISTON_MODEL1 + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(newScenarioName)
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_ROD_MODEL1, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(PISTON_MODEL1, newScenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11142")
+    @Description("Validate an error message appears if any issues occur")
+    public void testEditWithExistingPrivateScenarioName() {
+        String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "v6 piston assembly_asm1";
+        final String assemblyExtension = ".prt";
+        final String PISTON_ROD_MODEL1 = "piston rod_model1";
+        final String PISTON_MODEL1 = "piston_model1";
+        final String PISTON_COVER_MODEL1 = "piston cover_model1";
+        final String PISTON_PIN_MODEL1 = "piston pin_model1";
+
+        final List<String> subComponentNames = Arrays.asList(PISTON_ROD_MODEL1, PISTON_MODEL1, PISTON_COVER_MODEL1, PISTON_PIN_MODEL1);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".prt";
+
+        ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            preExistingScenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
+            .uploadAssembly(preExistingComponentAssembly);
+        assemblyUtils.costSubComponents(preExistingComponentAssembly)
+            .costAssembly(preExistingComponentAssembly);
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(PISTON_ROD_MODEL1 + "," + scenarioName + "", PISTON_MODEL1 + "," + scenarioName + "", PISTON_COVER_MODEL1 + "," + scenarioName + "")
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(preExistingScenarioName)
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioErrorMessage(), containsString("failed while attempting to create private scenario(s)."));
     }
 }

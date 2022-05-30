@@ -17,6 +17,9 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
     @FindBy(css = ".scenario-group-operations-success-message")
     private WebElement editScenarioMessage;
 
+    @FindBy(css = ".alert-messaging")
+    private WebElement editScenarioErrorMessage;
+
     @FindBy(xpath = "//button[.='Close']")
     private WebElement closeButton;
 
@@ -34,7 +37,7 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(editScenarioMessage);
+        getPageUtils().waitForElementToAppear(closeButton);
     }
 
     /**
@@ -44,6 +47,15 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
      */
     public String getEditScenarioMessage() {
         return getPageUtils().waitForElementToAppear(editScenarioMessage).getText();
+    }
+
+    /**
+     * This get the error message after editing fails
+     *
+     * @return - string
+     */
+    public String getEditScenarioErrorMessage() {
+        return getPageUtils().waitForElementToAppear(editScenarioErrorMessage).getText();
     }
 
     /**
