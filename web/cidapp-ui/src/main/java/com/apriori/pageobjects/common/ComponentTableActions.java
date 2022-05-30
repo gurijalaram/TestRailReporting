@@ -3,6 +3,7 @@ package com.apriori.pageobjects.common;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
@@ -10,12 +11,9 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class ComponentTableActions extends LoadableComponent<ComponentTableActions> {
-
-    private static final Logger logger = LoggerFactory.getLogger(ComponentTableActions.class);
 
     @FindBy(css = "input[name='search']")
     private WebElement searchInput;
@@ -35,7 +33,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
     public ComponentTableActions(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -47,7 +45,7 @@ public class ComponentTableActions extends LoadableComponent<ComponentTableActio
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(searchInput);
+        //Don't really need to do anything here
     }
 
     /**
