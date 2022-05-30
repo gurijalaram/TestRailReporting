@@ -80,7 +80,12 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
 
     //USER_PREFERENCES
     USER_PREFERENCES("customers/%s/users/%s/preferences"),
-    PREFERENCE_BY_ID("customers/%s/users/%s/preferences/%s");
+    PREFERENCE_BY_ID("customers/%s/users/%s/preferences/%s"),
+
+    //ACCESS_AUTHORIZATIONS
+    ACCESS_AUTHORIZATIONS("customers/%s/access-authorizations"),
+    ACCESS_AUTHORIZATION_By_ID("customers/%s/access-authorizations/%s"),
+    ACCESS_AUTHORIZATION_STATUS("customers/%s/access-authorizations/status");
 
     private final String endpoint;
 
