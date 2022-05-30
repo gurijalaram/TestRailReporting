@@ -29,7 +29,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "a.navbar-help")
     private WebElement helpButton;
 
-    @FindBy(css = ".DocumentationCoverPageTitle")
+    @FindBy(css = ".topic-hero h2")
     private WebElement userGuideTitle;
 
     private WebDriver driver;
