@@ -50,7 +50,7 @@ public class EditScenarioStatusPage extends EagerPageComponent<EditScenarioStatu
     }
 
     /**
-     * This get the error message after editing fails
+     * This gets the error message after editing fails
      *
      * @return - string
      */

@@ -356,8 +356,8 @@ public class EditAssembliesTest extends TestBase {
 
         componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
 
-        subComponentNames.forEach(componentName ->
-            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+        subComponentNames.forEach(subcomponentName ->
+            assertThat(componentsListPage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
                 is(ScenarioStateEnum.COST_COMPLETE.getState())));
 
         softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
