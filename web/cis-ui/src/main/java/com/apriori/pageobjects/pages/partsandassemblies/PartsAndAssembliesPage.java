@@ -38,6 +38,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[@data-testid='switch']")
     private WebElement toggleButton;
 
+    @FindBy(xpath = "//*[@data-field='scenarioName']")
+    private WebElement scenarioNameField;
+
+    @FindBy(xpath = "//*[@data-field='scenarioName']//button[@title='Menu']")
+    private WebElement tripleDotIcon;
+
+    @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
+    private WebElement btnPintoLeft;
+
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -55,6 +64,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         this.pageUtils = new PageUtils(driver);
         this.partsAndAssemblyTableController = new PartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
+        this.waitForTableLoad();
 
     }
 
@@ -141,5 +151,44 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage clickOnToggleButton() {
         getPageUtils().waitForElementAndClick(toggleButton);
         return this;
+    }
+
+    /**
+     * Click on dot icon on table header
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickKebabMenuOnTableHeader() {
+        getPageUtils().mouseMove(scenarioNameField);
+        getPageUtils().waitForElementToAppear(tripleDotIcon).click();
+        return this;
+    }
+
+    /**
+     * Checks if pin to left option displayed
+     *
+     * @return true/false
+     */
+    public boolean isPinToLeftOptionDisplayed() {
+        return pageUtils.isElementDisplayed(btnPintoLeft);
+    }
+
+    /**
+     * Click on pin to left option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickPinToLeft() {
+        getPageUtils().waitForElementToAppear(btnPintoLeft).click();
+        return this;
+    }
+
+    /**
+     * Gets pinned table headers
+     *
+     * @return list of string
+     */
+    public  List<String> getPinnedTableHeaders() {
+        return partsAndAssemblyTableController.getPinnedTableHeaders();
     }
 }

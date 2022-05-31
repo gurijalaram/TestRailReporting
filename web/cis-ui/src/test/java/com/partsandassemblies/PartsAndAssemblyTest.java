@@ -17,6 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 
@@ -93,8 +94,22 @@ public class PartsAndAssemblyTest extends TestBase {
 
     }
 
+    @Test
+    @TestRail(testCaseId = {"12239","12241"})
+    @Description("Verify the availability and functionality of the 'pin to left' option")
+    public void testPintoLeftOption() {
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickKebabMenuOnTableHeader();
 
+        assertThat(partsAndAssembliesPage.isPinToLeftOptionDisplayed(), is(true));
 
+        partsAndAssembliesPage.clickPinToLeft();
+
+        assertThat(partsAndAssembliesPage.getPinnedTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
+
+    }
 }
 
 
