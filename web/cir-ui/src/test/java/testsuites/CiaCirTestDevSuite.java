@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.adhocview.AdHocViewTests;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.ootbreports.general.assemblydetails.AssemblyDetailsReportTests;
@@ -11,7 +12,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-        AssemblyDetailsReportTests.class
+        AdHocViewTests.class
 })
 
 public class CiaCirTestDevSuite {

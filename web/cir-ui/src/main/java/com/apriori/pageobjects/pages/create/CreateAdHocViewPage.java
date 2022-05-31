@@ -273,7 +273,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         driver.findElement(createFilterInputLocator).clear();
         driver.findElement(createFilterInputLocator).sendKeys("top-level");
 
-        String dropdownSelectionGenericLocator = "//%s[@title='---01-top-level']";
+        String dropdownSelectionGenericLocator = "//%s[@title='- - - 0 0 0-top-level']";
         pageUtils.waitForElementAndClick(By.xpath(String.format(dropdownSelectionGenericLocator, "li")));
         pageUtils.waitForElementToAppear(By.xpath(String.format(dropdownSelectionGenericLocator, "a")));
 
