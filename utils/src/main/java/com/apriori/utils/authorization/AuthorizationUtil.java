@@ -78,12 +78,14 @@ public class AuthorizationUtil {
      * @return string
      */
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
+        /*CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
         String customerIdentity = cloudContextResponse.getCustomerIdentity();
         String deploymentIdentity = cloudContextResponse.getDeploymentIdentity();
         String installationIdentity = cloudContextResponse.getInstallationIdentity();
         String applicationIdentity = cloudContextResponse.getApplicationIdentity();
 
-        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;
+        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;*/
+        // TODO: 30/05/2022 cn - need to speak to John about this
+        return "Currently unimplemented";
     }
 }

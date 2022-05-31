@@ -22,4 +22,5 @@ public class IdentityHolder {
     private String userIdentity;
     private String customAttributeIdentity;
     private String userPreferenceIdentity;
+    private String accessAuthorizationIdentity;
 }
