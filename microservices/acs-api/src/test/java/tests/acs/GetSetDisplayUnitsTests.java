@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.acs.GenericResourceCreatedResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.GetDisplayUnitsResponse;
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.UnitVariantSettingsInfoInputs;

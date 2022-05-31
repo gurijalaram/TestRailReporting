@@ -9,6 +9,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Applications;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -44,15 +45,16 @@ public class CdsGetCustomerTests {
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
         updatedEmailPattern = "\\S+@".concat(generateStringUtil.generateCustomerName());
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
     @AfterClass
     public static void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -60,7 +62,7 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"3278"})
     @Description("Get customer by Identity")
     public void getCustomerByIdentity() {
-        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_BY_ID, Customer.class, customerIdentity);
+        ResponseWrapper<Customer> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class, customerIdentity);
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
         assertThat(response.getResponseEntity().getEmailRegexPatterns(), is(Arrays.asList(emailPattern + ".com", emailPattern + ".co.uk")));
     }
@@ -69,7 +71,7 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5957"})
     @Description("Get customer applications")
     public void getCustomersApplications() {
-        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_APPLICATION_BY_CUSTOMER_ID,
+        ResponseWrapper<Applications> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_APPLICATION_BY_CUSTOMER_ID,
             Applications.class,
             customerIdentity
         );
@@ -81,7 +83,7 @@ public class CdsGetCustomerTests {
     @TestRail(testCaseId = {"5305"})
     @Description("Update customer info by id")
     public void updateCustomerInfoId() {
-        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.PATCH_CUSTOMERS_BY_ID, Customer.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.CUSTOMER_BY_ID, Customer.class)
             .inlineVariables(customerIdentity)
             .headers(new HashMap<String, String>() {{
                     put("Content-Type", "application/json");

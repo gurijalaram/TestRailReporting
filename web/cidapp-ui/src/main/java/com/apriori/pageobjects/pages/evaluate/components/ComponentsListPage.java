@@ -1,9 +1,11 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
 import static org.junit.Assert.assertTrue;
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
@@ -14,8 +16,11 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ButtonTypeEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -239,13 +244,26 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Multi-select scenario
+     * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name
      * @return current page object
      */
-    public ComponentsListPage multiSelectScenarios(String... componentScenarioName) {
+    public ComponentsListPage multiSelectSubcomponents(String... componentScenarioName) {
         scenarioTableController.multiSelectScenario(componentScenarioName);
+        return this;
+    }
+
+    /**
+     * gets the sub component in a sub assembly
+     *
+     * @param componentName - the component name
+     * @return - current page object
+     */
+    public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
+        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[@class='checkbox-icon']", componentName.trim())))
+            .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
+        pageUtils.waitForElementAndClick(scenario);
         return this;
     }
 
@@ -270,6 +288,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public ComponentsListPage expandAssembly(String componentName, String scenarioName) {
         scenarioTableController.expandAssembly(componentName, scenarioName);
+        return this;
+    }
+
+    /**
+     * Expands the sub assembly
+     *
+     * @param subAssemblyName - the sub assembly name
+     * @return - the current page object
+     */
+    public ComponentsListPage expandSubAssembly(String subAssemblyName) {
+        By byExpand = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='cell-text']/preceding-sibling::div//*[@data-icon='circle-chevron-down']", subAssemblyName.toUpperCase().trim()));
+        pageUtils.waitForElementAndClick(byExpand);
         return this;
     }
 
@@ -344,6 +374,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
                 return pageUtils.isElementEnabled(excludeButton);
             case PUBLISH:
                 return pageUtils.isElementEnabled(publishButton);
+            case EDIT:
+                return pageUtils.isElementEnabled(editButton);
             default:
                 return false;
         }
@@ -364,9 +396,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - the current page object
      */
-    public ComponentsListPage editSubcomponent() {
+    public <T> T editSubcomponent(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return this;
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Checks is edit button disabled
+     *
+     * @return boolean
+     */
+    public boolean isEditButtonEnabled() {
+        return !pageUtils.waitForElementToAppear(editButton).getAttribute("class").contains("disabled");
     }
 
     /**
@@ -394,7 +435,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
         componentNames.forEach(componentName -> new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
             .stream()
-            .filter(x -> x.getComponentName().equals(componentName))
+            .filter(x -> x.getComponentName().equalsIgnoreCase(componentName))
             .collect(Collectors.toList()).get(0)));
         return this;
     }
@@ -416,10 +457,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - the component name
      * @return - string
      */
-    public String isTextDecorationStruckOut(String componentName) {
+    public boolean isTextDecorationStruckOut(String componentName) {
         By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             componentName.toUpperCase().trim()));
-        return driver.findElement(byComponentName).getCssValue("text-decoration");
+        return driver.findElement(byComponentName).getCssValue("text-decoration").contains("line-through");
     }
 
     /**
@@ -445,11 +486,88 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * Checks icon is displayed
      *
      * @param icon          - the icon
-     * @param componentName
+     * @param componentName - the component name
      * @return - boolean
      */
     public boolean isIconDisplayed(StatusIconEnum icon, String componentName) {
         By iconLogo = By.xpath(String.format("//span[text()='%s']/following::div[@id='qa-scenario-select-field']//*[name()='svg'='data-icon=%s']", componentName, icon.getStatusIcon()));
         return pageUtils.waitForElementToAppear(iconLogo).isDisplayed();
+    }
+
+    /**
+     * Check if subcomponents are in the tree view
+     *
+     * @param componentName - component name
+     * @return - boolean
+     */
+    public boolean isComponentNameDisplayedInTreeView(String componentName) {
+        By componentText = By.xpath(String.format("//div[@data-header-id='componentDisplayName']//span[text()='%s']", componentName.toUpperCase()));
+        return pageUtils.waitForElementToAppear(componentText).isDisplayed();
+    }
+
+    /**
+     * Gets subcomponent scenario name
+     *
+     * @param componentName - the component name
+     * @return string
+     */
+    public String getSubcomponentScenarioName(String componentName) {
+        By byComponentName = By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@class='scenario-selector']", componentName.toUpperCase().trim()));
+        return pageUtils.waitForElementToAppear(byComponentName).getAttribute("textContent");
+    }
+
+    /**
+     * method to switch to a new scenario name
+     *
+     * @param componentName - the component name
+     * @param scenarioName  -the scenario name
+     * @return - current page object
+     */
+    public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
+        WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
+        pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
+        return this;
+    }
+
+    /**
+     * Gets the number of elements with state present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return boolean
+     */
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
+    }
+
+    /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @return current page object
+     */
+    public ComponentsListPage selectScenario(String componentName) {
+        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
+            componentName.toUpperCase().trim()));
+        pageUtils.waitForElementToAppear(scenario);
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementAndClick(scenario);
+        return this;
+    }
+
+    /**
+     * Gets the scenario state of the component
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @param stateEnum     -  scenario state enum
+     * @return - string
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, stateEnum);
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 }

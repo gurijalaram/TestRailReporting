@@ -12,6 +12,7 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.Sites;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -38,15 +39,16 @@ public class CdsSitesTests {
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
     @AfterClass
     public static void cleanUp() {
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -54,7 +56,7 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"5969"})
     @Description("Get a list of Sites in CDS Db")
     public void getSites() {
-        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITES, Sites.class);
+        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES, Sites.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -65,10 +67,10 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"5309"})
     @Description("Get details of a site by its Identity")
     public void getSiteByIdentity() {
-        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITES, Sites.class);
+        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES, Sites.class);
         String siteIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITE_BY_ID, Site.class, siteIdentity);
+        ResponseWrapper<Site> responseWrapper = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITE_BY_ID, Site.class, siteIdentity);
 
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseWrapper.getResponseEntity().getIdentity(), is(equalTo(siteIdentity)));
@@ -91,7 +93,7 @@ public class CdsSitesTests {
     @TestRail(testCaseId = {"3279"})
     @Description("Get Sites for a customer")
     public void getCustomerSites() {
-        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITE_BY_CUSTOMER_ID, Sites.class, customerIdentity);
+        ResponseWrapper<Sites> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITES_BY_CUSTOMER_ID, Sites.class, customerIdentity);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(0)));
@@ -107,7 +109,7 @@ public class CdsSitesTests {
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
         String siteIdentity = site.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_SITE_BY_CUSTOMER_SITE_ID, Site.class, customerIdentity, siteIdentity);
+        ResponseWrapper<Site> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.SITE_BY_CUSTOMER_SITE_ID, Site.class, customerIdentity, siteIdentity);
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(site.getResponseEntity().getName(), is(equalTo(siteName)));
         assertThat(site.getResponseEntity().getCustomerIdentity(), is(equalTo(customerIdentity)));

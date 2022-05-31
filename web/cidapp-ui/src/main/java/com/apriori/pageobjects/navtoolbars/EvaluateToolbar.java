@@ -51,10 +51,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return new page object
      */
     public EvaluatePage costScenario() {
-        pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
-        waitForCostLabel(2);
-        return new EvaluatePage(driver);
+        return costScenario(2);
     }
 
     /**
@@ -82,6 +79,13 @@ public class EvaluateToolbar extends ExploreToolbar {
     }
 
     /**
+     * Method to check cost label is in correct state
+     */
+    public void waitForCostLabelNotContain(NewCostingLabelEnum costLabel, int timeoutInMinutes) {
+        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", costLabel.getCostingText())), timeoutInMinutes);
+    }
+
+    /**
      * Gets cost label
      *
      * @return boolean
@@ -98,5 +102,17 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public String getCostColour() {
         return Color.fromString(pageUtils.waitForElementToAppear(costLabel).getCssValue("background-color")).asHex();
+    }
+
+    /**
+     * Confirms to go ahead with costing with a Yes or No
+     *
+     * @param buttonLabel - "Yes" or "No"
+     * @return - new page object
+     */
+    public EvaluatePage costScenarioConfirmation(String buttonLabel) {
+        By byButton = By.xpath(String.format("//button[contains(text(), '%s')]", buttonLabel));
+        pageUtils.waitForElementAndClick(byButton);
+        return new EvaluatePage(driver);
     }
 }

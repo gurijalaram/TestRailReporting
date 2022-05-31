@@ -147,6 +147,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
     private WebElement customAttributesTab;
 
+    @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
+    private WebElement refreshButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -444,7 +447,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public double getCostResults(String label) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
-        return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+        return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("-", "0").replaceAll("[^0-9?!\\.]", ""));
     }
 
     /**
@@ -456,8 +459,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isCostResultDisplayed(String label, String value) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(costResult);
-        return driver.findElement(costResult).isDisplayed();
+        return pageUtils.waitForElementToAppear(costResult).isDisplayed();
     }
 
     /**
@@ -720,5 +722,27 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.windowHandler(1).close();
         pageUtils.windowHandler(0);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Generates missing scenario by clicking Yes or No
+     *
+     * @param label - Yes or No
+     * @return - new page object
+     */
+    public EvaluatePage generateMissingScenario(String label) {
+        By byImages = By.xpath(String.format("//button[contains(text(), '%s')]", label));
+        pageUtils.waitForElementAndClick(byImages);
+        return this;
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return generic page object
+     */
+    public <T> T clickRefresh(Class<T> className) {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return PageFactory.initElements(driver, className);
     }
 }

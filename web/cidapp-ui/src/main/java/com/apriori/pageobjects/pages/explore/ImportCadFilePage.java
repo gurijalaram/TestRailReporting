@@ -19,6 +19,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -47,11 +48,11 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = ".form-action-buttons [type='submit']")
     private WebElement submitButton;
 
-    @FindBy(css = "h4")
+    @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
 
-    @FindBy(css = ".import-cad-file-status-message")
-    private WebElement uploadStatus;
+    @FindBy(xpath = "//div[@role='rowgroup']//div[@data-header-id='name']")
+    private List<WebElement> fileName;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -99,6 +100,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             String file = multiUpload.getResourceFile().getName();
 
             enterMultiFilePath(multiUpload.getResourceFile())
+                .waitForUploadToBeDone(file)
                 .inputMultiScenarioName(multiUpload.getScenarioName(), file);
         });
         return this;
@@ -149,8 +151,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
-        String[] component = file.split("\\.");
-        By byMultiFileInput = By.cssSelector(String.format("input[name='scenarioNames.%s%s']", component[0], component[component.length - 1]));
+        By byMultiFileInput = By.xpath(String.format("//input[contains(@name,'%s')]", file));
         pageUtils.waitForElementToAppear(byMultiFileInput);
         pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
         return this;
@@ -205,7 +206,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      *
      * @return string
      */
-    public String getFileInputError() {
+    public String getFileInputErrorMessage() {
         return pageUtils.waitForElementToAppear(fileInputError).getText();
     }
 
@@ -314,5 +315,19 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             pageUtils.waitForElementAndClick(byComponentName);
         }
         return this;
+    }
+
+    /**
+     * components deleted in the drop zone
+     *
+     * @return
+     */
+    public List<String> getComponentsInDropZone() {
+        try {
+            pageUtils.waitForElementsToAppear(fileName);
+            return fileName.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
     }
 }

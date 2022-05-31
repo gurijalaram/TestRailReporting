@@ -15,16 +15,17 @@ project(':utils').projectDir = file('../utils')
 project(':apibase').projectDir = file('../apibase')
 project(':database').projectDir = file('../db')
 
-final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api", "integration"]
+final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api"]
 final String[] webModules = ["auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
+final String[] intModules = ["integration"]
 
 Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
     {
         put("microservices", microservicesModules)
         put("web", webModules)
+        put("integrate", intModules)
     }
 }
-
 final String configuration = System.getProperty("conf");
 
 if (configuration != null) {
@@ -53,7 +54,6 @@ if (configuration != null) {
     include(':microservices:nts-api')
     include(':microservices:vds-api')
     include(':microservices:sds-api')
-    include(':microservices:integration')
     include(':microservices:cis-api')
 
     project(':microservices:acs-api').projectDir = file('../microservices/acs-api')
@@ -69,7 +69,6 @@ if (configuration != null) {
     project(':microservices:nts-api').projectDir = file('../microservices/nts-api')
     project(':microservices:vds-api').projectDir = file('../microservices/vds-api')
     project(':microservices:sds-api').projectDir = file('../microservices/sds-api')
-    project(':microservices:integration').projectDir = file('../microservices/integration')
     project(':microservices:cis-api').projectDir = file('../microservices/cis-api')
 
     //Web
@@ -90,6 +89,10 @@ if (configuration != null) {
     project(':web:cas-ui').projectDir = file('../web/cas-ui')
     project(':web:edc-ui').projectDir = file('../web/edc-ui')
     project(':web:cis-ui').projectDir = file('../web/cis-ui')
+
+    //integration
+    include ':integrate:integration'
+    project(':integrate:integration').projectDir = file('../integrate/integration')
 }
 
 void includeProject(final String includePath, final String filePath) {

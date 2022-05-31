@@ -10,5 +10,6 @@
   "productionLife": 3.45,
   "scenarioName": "Unique",
   "vpeName": "aPriori USA",
-  "generateWatchPointReport": "true"
+  "generateWatchPointReport": "true",
+  "fileData": ""
 }

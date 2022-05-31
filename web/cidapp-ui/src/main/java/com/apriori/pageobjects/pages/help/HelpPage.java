@@ -29,6 +29,9 @@ public class HelpPage extends LoadableComponent<HelpPage> {
     @FindBy(css = "a.navbar-help")
     private WebElement helpButton;
 
+    @FindBy(css = ".topic-hero h2")
+    private WebElement userGuideTitle;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -54,7 +57,7 @@ public class HelpPage extends LoadableComponent<HelpPage> {
      * Closes the Help menu
      *
      * @param klass - the class the method should return
-     * @param <T>       - the return type
+     * @param <T>   - the return type
      * @return new page object
      */
     public <T> T closeHelpMenu(Class<T> klass) {
@@ -72,7 +75,13 @@ public class HelpPage extends LoadableComponent<HelpPage> {
         return this;
     }
 
+    /**
+     * Gets child page title
+     *
+     * @return string
+     */
     public String getChildPageTitle() {
-        return pageUtils.windowHandler(1).getTitle();
+        pageUtils.windowHandler(1);
+        return pageUtils.waitForElementToAppear(userGuideTitle).getText();
     }
 }
