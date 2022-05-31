@@ -1,6 +1,7 @@
 package testsuites;
 
 import com.apriori.cds.tests.ApVersionsTests;
+import com.apriori.cds.tests.CdsAccessAuthorizationsTests;
 import com.apriori.cds.tests.CdsAccessControlsTests;
 import com.apriori.cds.tests.CdsApplicationsTests;
 import com.apriori.cds.tests.CdsAssociationUserTests;
@@ -28,6 +29,7 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     ApVersionsTests.class,
+    CdsAccessAuthorizationsTests.class,
     CdsAccessControlsTests.class,
     CdsApplicationsTests.class,
     CdsAssociationUserTests.class,
