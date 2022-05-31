@@ -5,21 +5,18 @@ import com.apriori.cidappapi.entity.response.PersonResponse;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class PublishPage extends LoadableComponent<PublishPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(PublishPage.class);
 
     @FindBy(xpath = "//h5[.='Publish Scenario']")
     private WebElement headerDialog;
@@ -33,7 +30,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
     @FindBy(css = "div[class='alert-messaging']")
     private WebElement conflictMessage;
 
-    @FindBy(xpath = "//label[.='Override existing public scenarios']")
+    @FindBy(css = "input[value='override']")
     private WebElement overrideButton;
 
     @FindBy(css = ".radio-button-group-field [value='changeName']")
@@ -76,7 +73,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
