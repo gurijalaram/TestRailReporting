@@ -403,9 +403,7 @@ public class ScenariosUtil {
                     .build())
                 .token(componentInfo.getUser().getToken());
 
-        ResponseWrapper<ErrorMessage> groupCost = HTTPRequest.build(requestEntity).post();
-
-        return groupCost;
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
