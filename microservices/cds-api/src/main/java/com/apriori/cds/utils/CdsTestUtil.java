@@ -101,6 +101,7 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS, Customer.class)
             .token(token)
             .body("customer",
+                // TODO: 01/06/2022 cn - we generally don't allow this. needs fixed
                 com.apriori.apibase.services.cas.Customer.builder().name(name)
                     .cloudReference(cloudReference)
                     .description("Add new customers api test")
