@@ -279,7 +279,7 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
 
         pageUtils.waitForElementAndClick(By.xpath("//fieldset[@id='applyFilter']/button"));
 
-        pageUtils.waitForElementToAppear(By.xpath("//tbody[@id='tableDetails']/tr[1]/td[1]/span[contains(text(), '3538968')]"));
+        pageUtils.waitForElementToAppear(By.xpath("//tbody[@id='tableDetails']/tr[1]/td[1]/span[contains(text(), '0200613')]"));
 
         return this;
     }
