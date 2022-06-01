@@ -183,7 +183,7 @@ public class UploadComponentTests extends TestBase {
         importCadFilePage = loginPage.login(currentUser)
             .importCadFile()
             .inputMultiComponents(multiComponents)
-            .cadFilesToDelete(componentsToDelete);
+            .deleteCadFiles(componentsToDelete);
 
         importCadFilePage.getComponentsInDropZone().forEach(component ->
             assertThat(componentsToDelete.contains(component), is(false)));
