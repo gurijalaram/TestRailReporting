@@ -30,6 +30,7 @@ import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -50,6 +51,7 @@ public class ActionsTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public ActionsTests() {
         super();
@@ -96,8 +98,10 @@ public class ActionsTests extends TestBase {
             .openScenario(componentName, scenarioName)
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -184,15 +188,17 @@ public class ActionsTests extends TestBase {
             .highlightScenario(componentName, scenarioName)
             .openPreviewPanel();
 
-        assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
         evaluatePage = previewPage.openScenario();
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
         evaluatePage.unlock(EvaluatePage.class);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -222,10 +228,12 @@ public class ActionsTests extends TestBase {
             .costScenario(1)
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("Complete")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Medium")));
-        assertThat(infoPage.getDescription(), is(equalTo("Qa Auto Test")));
-        assertThat(infoPage.getNotes(), is(equalTo("Uploaded and costed via automation")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Complete");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("Qa Auto Test");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Uploaded and costed via automation");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -252,10 +260,12 @@ public class ActionsTests extends TestBase {
             .costScenario()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("High")));
-        assertThat(infoPage.getDescription(), is("infoNotesPanel"));
-        assertThat(infoPage.getNotes(), is("Panel Test"));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("High");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("infoNotesPanel");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Panel Test");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -595,7 +605,7 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName)).isEqualTo(1);
 
         explorePage.filter()
             .newFilter()
@@ -604,7 +614,9 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 
     @Test

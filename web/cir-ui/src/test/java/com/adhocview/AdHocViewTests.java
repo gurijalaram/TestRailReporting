@@ -35,13 +35,13 @@ public class AdHocViewTests extends TestBase {
             .addFilterToTable();
 
         assertThat(createAdHocViewPage.getTableCellValue("1", "1"),
-            is(equalTo("3538968"))
+            is(equalTo("0200613"))
         );
         assertThat(createAdHocViewPage.getTableCellValue("1", "2"),
             is(equalTo("Initial"))
         );
         assertThat(createAdHocViewPage.getTableCellValue("1", "3"),
-            is(equalTo("5.68"))
+            is(equalTo("4.35"))
         );
 
         assertThat(createAdHocViewPage.getTableCellValue("14", "1"),
@@ -51,7 +51,7 @@ public class AdHocViewTests extends TestBase {
             is(equalTo("Initial"))
         );
         assertThat(createAdHocViewPage.getTableCellValue("14", "3"),
-            is(equalTo("27.17"))
+            is(equalTo("27.28"))
         );
     }
 }
