@@ -2,9 +2,6 @@ package com.evaluate.materialutilization;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
@@ -19,6 +16,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -32,6 +30,7 @@ public class MaterialStockTests extends TestBase {
     private StockPage stockPage;
     private MaterialUtilizationPage materialUtilizationPage;
     private File resourceFile;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public MaterialStockTests() {
         super();
@@ -61,8 +60,8 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .openMaterialUtilizationTab();
 
-        assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("F-0005")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("1.1")));
+        softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Name")).isEqualTo("F-0005");
+        softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code")).isEqualTo("1.1");
 
         materialUtilizationPage.closePanel()
             .openMaterialSelectorTable()
@@ -72,8 +71,10 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .openMaterialUtilizationTab();
 
-        assertThat(materialUtilizationPage.getUtilizationInfo("Name"), is(equalTo("FN-0205")));
-        assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code"), is(equalTo("2.1")));
+        softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Name")).isEqualTo("FN-0205");
+        softAssertions.assertThat(materialUtilizationPage.getUtilizationInfo("Cut Code")).isEqualTo("2.1");
+
+        softAssertions.assertAll();
     }
 
     /*@Test
@@ -146,8 +147,8 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .openStockTab();
 
-        assertThat(stockPage.getStockInfo("Stock Form"), is(equalTo("ROUND_BAR")));
-        assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("Yes")));
+        softAssertions.assertThat(stockPage.getStockInfo("Stock Form")).isEqualTo("ROUND_BAR");
+        softAssertions.assertThat(stockPage.getStockInfo("Virtual Stock")).isEqualTo("Yes");
 
         stockPage.closePanel()
             .selectProcessGroup(FORGING)
@@ -159,7 +160,9 @@ public class MaterialStockTests extends TestBase {
             .openMaterialProcess()
             .openStockTab();
 
-        assertThat(stockPage.getStockInfo("Selected Stock"), is(equalTo("Round Bar:  3 in  OD.  20 ft lengths")));
-        assertThat(stockPage.getStockInfo("Virtual Stock"), is(equalTo("No")));
+        softAssertions.assertThat(stockPage.getStockInfo("Selected Stock")).isEqualTo("Round Bar:  3 in  OD.  20 ft lengths");
+        softAssertions.assertThat(stockPage.getStockInfo("Virtual Stock")).isEqualTo("No");
+
+        softAssertions.assertAll();
     }
 }
