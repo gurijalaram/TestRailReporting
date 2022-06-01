@@ -62,6 +62,9 @@ public class GroupCostingTests {
             .uploadAssembly(componentAssembly);
 
         String[] subComponentsToCost = subComponentNames.subList(0,10).toArray(new String[10]);
+        for (int i = 0; i < subComponentsToCost.length; i++) {
+            subComponentsToCost[i] += "," + scenarioName;
+        }
 
         ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentsToCost);
 
