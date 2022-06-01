@@ -5,6 +5,8 @@ import lombok.Data;
 
 @Data
 public class CurrencyRateVersionItem {
+    @JsonProperty("AUD")
+    public double aud;
     @JsonProperty("BRL")
     public double brl;
     @JsonProperty("CAD")
@@ -15,6 +17,8 @@ public class CurrencyRateVersionItem {
     public double eur;
     @JsonProperty("GBP")
     public double gbp;
+    @JsonProperty("SEK")
+    public double sek;
     @JsonProperty("HKD")
     public double hkd;
     @JsonProperty("INR")
@@ -27,6 +31,8 @@ public class CurrencyRateVersionItem {
     public double mxn;
     @JsonProperty("TWD")
     public double twd;
+    @JsonProperty("UAH")
+    public double uah;
     @JsonProperty("USD")
     public double usd;
     @JsonProperty("ZAR")
