@@ -26,6 +26,7 @@ import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -46,6 +47,7 @@ public class UploadComponentTests extends TestBase {
     private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @Category(SanityTests.class)
@@ -183,7 +185,7 @@ public class UploadComponentTests extends TestBase {
         importCadFilePage = loginPage.login(currentUser)
             .importCadFile()
             .inputMultiComponents(multiComponents)
-            .cadFilesToDelete(componentsToDelete);
+            .deleteCadFiles(componentsToDelete);
 
         importCadFilePage.getComponentsInDropZone().forEach(component ->
             assertThat(componentsToDelete.contains(component), is(false)));
@@ -401,11 +403,13 @@ public class UploadComponentTests extends TestBase {
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
 
         explorePage = evaluatePage.logout()
             .login(UserUtil.getUser());
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(0)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+
+        softAssertions.assertAll();
     }
 }

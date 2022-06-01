@@ -1,5 +1,6 @@
 package com.evaluate.assemblies;
 
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -41,7 +42,10 @@ public class EditAssembliesTest extends TestBase {
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private EditScenarioStatusPage editScenarioStatusPage;
     private ComponentsListPage componentsListPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
     private InfoPage infoPage;
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
@@ -540,5 +544,287 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(editStatusPage.getEditScenarioMessage()).contains("Scenario was successfully edited, click here to open in the evaluate view.");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10895", "10897"})
+    @Description("Edit public sub-component with Private counterpart (Override)")
+    public void testEditPublicAndOverridePrivateSubcomponent() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        subComponentNames.forEach(subcomponentName ->
+            assertThat(componentsListPage.getScenarioState(subcomponentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+                is(ScenarioStateEnum.COST_COMPLETE.getState())));
+
+        softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10896", "10898"})
+    @Description("Edit public sub-component with Private counterpart (Override)")
+    public void testEditPublicAndRenamePrivateSubcomponent() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(BIG_RING + "," + scenarioName, SMALL_RING + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(newScenarioName)
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(BIG_RING, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(SMALL_RING, newScenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10899")
+    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Override)")
+    public void testEditPublicSubcomponentsMixedWithPrivateThenOverride() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .overrideScenarios()
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        subComponentNames.forEach(componentName ->
+            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
+                is(ScenarioStateEnum.COST_COMPLETE.getState())));
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(BOLT, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(NUT, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10900")
+    @Description("Edit multiple public sub-components with mixture of Public & Private counterparts (Rename)")
+    public void testEditPublicSubcomponentsMixedWithPrivateThenRename() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + "," + scenarioName)
+            .editSubcomponent(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class)
+            .multiSelectSubcomponents(BOLT + "," + scenarioName, NUT + "," + scenarioName)
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(newScenarioName)
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioMessage(), containsString("All private scenarios created."));
+
+        componentsListPage = editScenarioStatusPage.close(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(BOLT, newScenarioName)).isEqualTo(1);
+        softAssertions.assertThat(componentsListPage.getListOfScenarios(NUT, newScenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "11142")
+    @Description("Validate an error message appears if any issues occur")
+    public void testEditWithExistingPrivateScenarioName() {
+        String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            preExistingScenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
+            .uploadAssembly(preExistingComponentAssembly);
+        assemblyUtils.costSubComponents(preExistingComponentAssembly)
+            .costAssembly(preExistingComponentAssembly);
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        editScenarioStatusPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(BOLT + "," + scenarioName + "", NUT + "," + scenarioName + "")
+            .editSubcomponent(EditComponentsPage.class)
+            .renameScenarios()
+            .enterScenarioName(preExistingScenarioName)
+            .clickContinue(EditScenarioStatusPage.class);
+
+        assertThat(editScenarioStatusPage.getEditScenarioErrorMessage(), containsString("failed while attempting to create private scenario(s)."));
     }
 }

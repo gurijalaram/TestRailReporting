@@ -22,6 +22,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -36,6 +37,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private File resourceFile;
     private MaterialUtilizationPage materialUtilizationPage;
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public ChangeMaterialSelectionTests() {
         super();
@@ -61,7 +63,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("270")
@@ -69,7 +71,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -92,7 +96,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("C28000")
@@ -100,7 +104,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, Cast, UNS C28000"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, Cast, UNS C28000")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -122,7 +128,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("ABS"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("ABS")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("PET")
@@ -130,7 +136,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("PET 30% Glass"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("PET 30% Glass")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -153,7 +161,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("625")
@@ -161,7 +169,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Inconel 625"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Inconel 625")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
 
@@ -186,7 +196,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Polyetheretherketone (PEEK)")
@@ -200,7 +210,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName);
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test

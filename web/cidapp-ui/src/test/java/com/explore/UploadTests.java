@@ -8,7 +8,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -24,6 +23,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
@@ -32,7 +32,7 @@ public class UploadTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -42,7 +42,6 @@ public class UploadTests extends TestBase {
     @TestRail(testCaseId = {"5422"})
     @Description("Failed upload of any other types of files")
     public void invalidFile() {
-
         resourceFile = FileResourceUtil.getResourceAsFile("InvalidFileType.txt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String fileError;
@@ -76,8 +75,10 @@ public class UploadTests extends TestBase {
             .enterScenarioName(newScenarioName)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(newScenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
