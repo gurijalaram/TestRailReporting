@@ -19,6 +19,7 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -41,18 +42,16 @@ public class EditAssembliesTest extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
-    private static ComponentInfoBuilder componentAssembly;
-    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private EditScenarioStatusPage editScenarioStatusPage;
     private ComponentsListPage componentsListPage;
-    private SoftAssertions softAssertions = new SoftAssertions();
     private InfoPage infoPage;
     private ExplorePage explorePage;
     private EditComponentsPage editComponentsPage;
     private EditScenarioStatusPage editStatusPage;
 
     private SoftAssertions softAssertions = new SoftAssertions();
-    private final AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     @Test
     @Category(SmokeTests.class)
