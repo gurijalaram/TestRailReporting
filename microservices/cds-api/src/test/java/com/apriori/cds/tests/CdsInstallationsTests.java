@@ -62,8 +62,8 @@ public class CdsInstallationsTests {
         ResponseWrapper<InstallationResponse> response = cdsTestUtil.getCommonRequest(CDSAPIEnum.INSTALLATIONS, InstallationResponse.class);
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(response.getResponseEntity().getResponse().getItems().get(0).getRegion(), is(not(nullValue())));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getItems().get(0).getRegion(), is(not(nullValue())));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Production Deployment", siteIdentity, "PRODUCTION");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
 
@@ -138,7 +138,7 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Preview Deployment", siteIdentity, "PREVIEW");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
@@ -193,7 +193,7 @@ public class CdsInstallationsTests {
 
         ResponseWrapper<Deployment> response = cdsTestUtil.addDeployment(customerIdentity, "Sandbox Deployment", siteIdentity, "SANDBOX");
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        String deploymentIdentity = response.getResponseEntity().getResponse().getIdentity();
+        String deploymentIdentity = response.getResponseEntity().getIdentity();
 
         String appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> licensedApp = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);

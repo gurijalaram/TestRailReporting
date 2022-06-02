@@ -14,6 +14,8 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     CUSTOMER_APPLICATION_BY_ID("applications/%s/customers"),
     CUSTOMER_LICENSED_APPLICATIONS_BY_IDS("customers/%s/sites/%s/licensed-applications/%s"),
     APPLICATION_SITES_BY_CUSTOMER_SITE_IDS("customers/%s/sites/%s/licensed-applications"),
+    APPLICATION_INSTALLATION("customers/%s/deployments/%s/installations/%s/applications"),
+    APPLICATION_INSTALLATION_BY_ID("customers/%s/deployments/%s/installations/%s/applications/%s"),
 
     // SITES
     SITES("sites"),
