@@ -1,11 +1,7 @@
 package com.explore;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.hasItem;
 import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.Matchers.not;
 
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -18,6 +14,7 @@ import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -28,6 +25,7 @@ public class TableHeadersTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private ConfigurePage configurePage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public TableHeadersTests() {
         super();
@@ -76,7 +74,7 @@ public class TableHeadersTests extends TestBase {
             .submit(ExplorePage.class)
             .configure();
 
-        assertThat(configurePage.getChosenList(), not(hasItem(ColumnsEnum.THUMBNAIL.getColumns())));
+        softAssertions.assertThat(configurePage.getChosenList()).doesNotContain(ColumnsEnum.THUMBNAIL.getColumns());
 
         configurePage.selectColumn(ColumnsEnum.THUMBNAIL)
             .moveColumn(DirectionEnum.RIGHT)
@@ -84,7 +82,9 @@ public class TableHeadersTests extends TestBase {
             .submit(ExplorePage.class)
             .configure();
 
-        assertThat(configurePage.getChosenList(), hasItem(ColumnsEnum.THUMBNAIL.getColumns()));
+        softAssertions.assertThat(configurePage.getChosenList()).contains(ColumnsEnum.THUMBNAIL.getColumns());
+
+        softAssertions.assertAll();
     }
 
     @Category(SmokeTests.class)
@@ -96,15 +96,20 @@ public class TableHeadersTests extends TestBase {
         explorePage = loginPage.login(UserUtil.getUser())
             .sortColumn(ColumnsEnum.SCENARIO_NAME, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getSortOrder(ColumnsEnum.SCENARIO_NAME), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));
+        softAssertions.assertThat(explorePage.getSortOrder(ColumnsEnum.SCENARIO_NAME)).isEqualTo(SortOrderEnum.DESCENDING.getOrder());
 
         explorePage.sortColumn(ColumnsEnum.PROCESS_GROUP, SortOrderEnum.ASCENDING);
-        assertThat(explorePage.getSortOrder(ColumnsEnum.PROCESS_GROUP), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
+
+        softAssertions.assertThat(explorePage.getSortOrder(ColumnsEnum.PROCESS_GROUP)).isEqualTo(SortOrderEnum.ASCENDING.getOrder());
 
         explorePage.sortColumn(ColumnsEnum.DIGITAL_FACTORY, SortOrderEnum.ASCENDING);
-        assertThat(explorePage.getSortOrder(ColumnsEnum.DIGITAL_FACTORY), is(equalTo(SortOrderEnum.ASCENDING.getOrder())));
+
+        softAssertions.assertThat(explorePage.getSortOrder(ColumnsEnum.DIGITAL_FACTORY)).isEqualTo(SortOrderEnum.ASCENDING.getOrder());
 
         explorePage.sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
-        assertThat(explorePage.getSortOrder(ColumnsEnum.CREATED_AT), is(equalTo(SortOrderEnum.DESCENDING.getOrder())));
+
+        softAssertions.assertThat(explorePage.getSortOrder(ColumnsEnum.CREATED_AT)).isEqualTo(SortOrderEnum.DESCENDING.getOrder());
+
+        softAssertions.assertAll();
     }
 }
