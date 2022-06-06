@@ -39,10 +39,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement addButton;
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
-    @FindBy(css = "qa-searchCriterion[0].delete")
+    @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
     @FindBy(css = ".filter-manager [type='submit']")
     private WebElement submitButton;
+    @FindBy(xpath = "//div[contains(@class,'delete-btn-column pl-0 col-1')]")
+    private WebElement deleteCriteriaBtn;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -95,6 +97,16 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage saveAs() {
         pageUtils.waitForElementAndClick(saveAsButton);
+        return this;
+    }
+
+    /**
+     * Delete Criteria
+     *
+     * @return current page object
+     */
+    public FilterPage deleteCriteria() {
+        pageUtils.waitForElementAndClick(deleteButton);
         return this;
     }
 
