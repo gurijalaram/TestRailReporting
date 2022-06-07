@@ -44,7 +44,7 @@ public class CdsApplicationsTests {
         );
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getName(), is(equalTo("aPriori Professional")));
+        assertThat(response.getResponseEntity().getName(), is(equalTo("aPriori Professional")));
     }
 
     @Test
