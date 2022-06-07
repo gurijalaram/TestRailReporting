@@ -6,14 +6,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ScenarioAssociationsRequest {
-    private String scenarioAssociationIdentity;
-    private String childScenarioIdentity;
-    private Boolean excluded;
-    private Integer occurrences;
+    private List<ScenarioAssociationGroupItems> groupItems;
 }

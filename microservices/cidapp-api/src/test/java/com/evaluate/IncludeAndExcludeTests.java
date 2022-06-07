@@ -5,8 +5,9 @@ import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioAssociations;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.AssociationSuccessesFailures;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -33,7 +34,11 @@ public class IncludeAndExcludeTests {
         final String assemblyName = "Assembly01";
         final String assemblyExtension = ".iam";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
-        final List<String> subComponentNames = Arrays.asList("Part0001", "Part0002", "Part0003", "Part0004");
+        final String PART_0001 = "Part0001";
+        final String PART_0002 = "Part0002";
+        final String PART_0003 = "Part0003";
+        final String PART_0004 = "Part0004";
+        final List<String> subComponentNames = Arrays.asList(PART_0001, PART_0002, PART_0003, PART_0004);
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
@@ -52,11 +57,14 @@ public class IncludeAndExcludeTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        assemblyUtils.costSubComponents(componentAssembly)
+        ResponseWrapper<ScenarioResponse> costResponse = assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
-        ResponseWrapper<ScenarioAssociations> patchResponse = scenariosUtil.patchAssociations(componentAssembly, "Part0001",  scenarioName, true);
+        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, true, PART_0001 + ", " + scenarioName +
+            "", PART_0002 + ", " + scenarioName, PART_0003 + ", " + scenarioName, PART_0004 + ", " + scenarioName);
 
-        assertThat(patchResponse.getResponseEntity().getSuccesses().size(), is(greaterThanOrEqualTo(1)));
+        assertThat(patchResponse.getResponseEntity().getSuccesses().size(), is(greaterThanOrEqualTo(4)));
+
+        ResponseWrapper<ScenarioResponse> costResponsePatch = assemblyUtils.costAssembly(componentAssembly);
     }
 }
