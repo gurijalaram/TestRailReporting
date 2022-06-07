@@ -34,6 +34,7 @@ public class SheetMetalDTCTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     private UserCredentials currentUser;
     private File resourceFile;
@@ -79,8 +80,6 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Hole - Min Diameter", "Simple Hole", "SimpleHole:2");
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole can not be made by a Plasma Cutting operation on the Plasma Cut process as the kerf width is too small.");
 
         guidanceIssuesPage.closePanel()
@@ -110,7 +109,6 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"6497", "6498"})
     @Description("Verify Proximity Issues Are Highlighted")
     public void sheetMetalProximity() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
         String componentName = "SheetMetalTray";
@@ -130,8 +128,6 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Proximity Warning, Hole - Hole Proximity", "Complex Hole", "ComplexHole:14");
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("The thin strip of material between the holes is at risk of damage from forces during manufacture or service.");
 
         guidanceIssuesPage.closePanel()
@@ -146,7 +142,6 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"6495", "6501"})
     @Description("Verify Bend Issues Are Highlighted")
     public void sheetMetalBends() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
         String componentName = "extremebends";
@@ -166,8 +161,6 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Bend Issue, Bend - Intersects Form", "Straight Bend", "StraightBend:4");
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("The intersection between the bend and form cannot be accessed by the tool when using Bending");
 
         guidanceIssuesPage.closePanel()
@@ -186,7 +179,6 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"6486"})
     @Description("Verify the Design Guidance tile presents the correct counts for number of GCDs, warnings, guidance issues, & tolerances for a part")
     public void tileDTC() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
         String componentName = "extremebends";
@@ -208,9 +200,11 @@ public class SheetMetalDTCTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getGuidanceResult("Design Warnings"), is("18"));
-        assertThat(evaluatePage.getGuidanceResult("Design Failures"), is("4"));
-        assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances"), is("22"));
+        softAssertions.assertThat(evaluatePage.getGuidanceResult("Design Warnings")).isEqualTo("18");
+        softAssertions.assertThat(evaluatePage.getGuidanceResult("Design Failures")).isEqualTo("4");
+        softAssertions.assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances")).isEqualTo("22");
+
+        softAssertions.assertAll();
     }
 
     /*@Test
@@ -263,7 +257,6 @@ public class SheetMetalDTCTests extends TestBase {
     @TestRail(testCaseId = {"6502", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
         String componentName = "bracket_basic_matPMI";
@@ -289,7 +282,9 @@ public class SheetMetalDTCTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("GCDs With Special Finishing", "Reaming", "SimpleHole:2");
 
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.02)));
-        assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2"), is(equalTo(0.06)));
+        softAssertions.assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2")).isEqualTo(0.02);
+        softAssertions.assertThat(guidanceIssuesPage.getGcdCurrent("SimpleHole:2")).isEqualTo(0.06);
+
+        softAssertions.assertAll();
     }
 }
