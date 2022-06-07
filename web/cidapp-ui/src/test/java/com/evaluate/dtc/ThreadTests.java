@@ -21,6 +21,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -36,6 +37,7 @@ public class ThreadTests extends TestBase {
     private ThreadsPage threadingPage;
     private GuidanceIssuesPage designGuidancePage;
     private UserCredentials currentUser;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
 
@@ -110,27 +112,29 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario(7)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario(7)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreaded("SimpleHole:1"), containsString("check"));
+        softAssertions.assertThat(threadingPage.getThreaded("SimpleHole:1")).contains("check");
 
         threadingPage.closePanel()
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("11000")
-                .selectMaterial("Copper, Stock, UNS C11000")
-                .submit(EvaluatePage.class)
-                .costScenario(7)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("11000")
+            .selectMaterial("Copper, Stock, UNS C11000")
+            .submit(EvaluatePage.class)
+            .costScenario(7)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getThreaded("SimpleHole:1"), containsString("check"));
+        softAssertions.assertThat(threadingPage.getThreaded("SimpleHole:1")).contains("check");
+
+        softAssertions.assertAll();
     }
 
     // TODO: 11/08/2021 cn - test commented as edit functionality hasn't been implemented
@@ -367,27 +371,29 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario(7)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario(7)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
-                .openMaterialSelectorTable()
-                .search("1095")
-                .selectMaterial("Steel, Hot Worked, AISI 1095")
-                .submit(EvaluatePage.class)
-                .costScenario(7)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+            .openMaterialSelectorTable()
+            .search("1095")
+            .selectMaterial("Steel, Hot Worked, AISI 1095")
+            .submit(EvaluatePage.class)
+            .costScenario(7)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -402,27 +408,28 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
-                .openSettings()
-                .selectUnits(UnitsEnum.CUSTOM)
-                .setSystem("Imperial")
-                .selectLength(LengthEnum.INCHES)
-                .submit(EvaluatePage.class)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .setSystem("Imperial")
+            .selectLength(LengthEnum.INCHES)
+            .submit(EvaluatePage.class)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("0.79in"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("0.79in");
 
+        softAssertions.assertAll();
     }
 
     @Test
@@ -437,26 +444,28 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
-                .openSettings()
-                .selectUnits(UnitsEnum.CUSTOM)
-                .setSystem("Metric")
-                .selectLength(LengthEnum.CENTIMETER)
-                .submit(EvaluatePage.class)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .openSettings()
+            .selectUnits(UnitsEnum.CUSTOM)
+            .setSystem("Metric")
+            .selectLength(LengthEnum.CENTIMETER)
+            .submit(EvaluatePage.class)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("2.00cm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("2.00cm");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -471,28 +480,30 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.STOCK_MACHINING)
-                .costScenario()
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.STOCK_MACHINING)
+            .costScenario()
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
 
         threadingPage.closePanel()
-                .selectProcessGroup(processGroupEnum.CASTING_DIE)
-                .goToSecondaryTab()
-                .openSecondaryProcesses()
-                .goToOtherSecProcessesTab()
-                .selectSecondaryProcess("Packaging")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+            .goToSecondaryTab()
+            .openSecondaryProcesses()
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
-        assertThat(threadingPage.getLength("SimpleHole:1"), is("20.00mm"));
+        softAssertions.assertThat(threadingPage.getLength("SimpleHole:1")).isEqualTo("20.00mm");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -507,12 +518,12 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:1");
 
         assertThat(threadingPage.getLength("SimpleHole:1"), is("10.00mm"));
     }
@@ -529,12 +540,12 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
-                .costScenario(5)
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:15");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+            .costScenario(5)
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:15");
 
         assertThat(threadingPage.getLength("SimpleHole:1"), is("15.00mm"));
     }
@@ -552,12 +563,12 @@ public class ThreadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         threadingPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.SHEET_METAL)
-                .costScenario()
-                .openDesignGuidance()
-                .openThreadsTab()
-                .selectIssueTypeGcd("Simple Holes", "SimpleHole:13");
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.SHEET_METAL)
+            .costScenario()
+            .openDesignGuidance()
+            .openThreadsTab()
+            .selectIssueTypeGcd("Simple Holes", "SimpleHole:13");
 
         assertThat(threadingPage.getLength("SimpleHole:13"), is("4.06mm"));
     }

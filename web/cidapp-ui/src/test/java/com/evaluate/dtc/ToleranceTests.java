@@ -43,6 +43,7 @@ public class ToleranceTests extends TestBase {
     private UserCredentials currentUser;
     private TolerancesPage tolerancesPage;
     private ToleranceDefaultsPage toleranceDefaultsPage;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
     private ComponentInfoBuilder cidComponentItem;
@@ -274,22 +275,24 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         tolerancesPage = evaluatePage.openDesignGuidance()
             .openTolerancesTab();
 
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CIRCULARITY), is(1));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY), is(1));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY), is(1));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.FLATNESS), is(2));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM), is(1));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY), is(1));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE), is(2));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA), is(1));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRZ), is(2));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT), is(1));
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CIRCULARITY)).isEqualTo(1);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY)).isEqualTo(1);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY)).isEqualTo(1);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.FLATNESS)).isEqualTo(2);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM)).isEqualTo(1);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY)).isEqualTo(1);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE)).isEqualTo(2);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA)).isEqualTo(1);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRZ)).isEqualTo(2);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 
     /*@Test
@@ -477,7 +480,6 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"6965"})
     @Description(" All tolerances types can be selected & edited")
     public void specificTolerances() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         String componentName = "PMI_AllTolTypesCatia";
@@ -515,20 +517,22 @@ public class ToleranceTests extends TestBase {
             .openDesignGuidance()
             .openTolerancesTab();
 
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CIRCULARITY), is(12));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY), is(12));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY), is(12));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.DIAMTOLERANCE), is(16));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM), is(26));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY), is(26));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE), is(27));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA), is(30));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRZ), is(30));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT), is(30));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.STRAIGHTNESS), is(26));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.SYMMETRY), is(30));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TOTALRUNOUT), is(12));
-        assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TRUEPOSITION), is(30));
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CIRCULARITY)).isEqualTo(12);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CONCENTRICITY)).isEqualTo(12);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.CYLINDRICITY)).isEqualTo(12);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.DIAMTOLERANCE)).isEqualTo(16);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PARALLELISM)).isEqualTo(26);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PERPENDICULARITY)).isEqualTo(26);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE)).isEqualTo(27);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA)).isEqualTo(30);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRZ)).isEqualTo(30);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.RUNOUT)).isEqualTo(30);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.STRAIGHTNESS)).isEqualTo(26);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.SYMMETRY)).isEqualTo(30);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TOTALRUNOUT)).isEqualTo(12);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.TRUEPOSITION)).isEqualTo(30);
+
+        softAssertions.assertAll();
     }
 
     /*@Test
@@ -665,8 +669,6 @@ public class ToleranceTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(3);
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(evaluatePage.getGuidanceResult("GCDs with Tolerances")).isEqualTo("13");
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
@@ -714,7 +716,6 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"6979"})
     @Description("Ensure tolerance preferences are maintained for the user")
     public void tolerancesMaintained() {
-
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
@@ -737,7 +738,6 @@ public class ToleranceTests extends TestBase {
     @TestRail(testCaseId = {"6977"})
     @Description("Ensure tolerance policy is for single user.  User 1 preferences should not impact User 2 preferences")
     public void tolerancesSingleUser() {
-
         UserCredentials testUser1 = UserUtil.getUser();
         UserCredentials testUser2 = UserUtil.getUser();
         currentUser = testUser1;
