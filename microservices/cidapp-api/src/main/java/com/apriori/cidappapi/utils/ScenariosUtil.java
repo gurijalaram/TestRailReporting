@@ -578,7 +578,6 @@ public class ScenariosUtil {
             .map(ComponentInfoBuilder::getScenarioName)
             .collect(Collectors.joining());
 
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, ScenarioAssociations.class)
                 .token(componentInfo.getUser().getToken())
