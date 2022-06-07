@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -99,7 +100,7 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
@@ -138,7 +139,7 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
@@ -149,7 +150,7 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemC, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
@@ -159,7 +160,7 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemD, EvaluatePage.class)
             .clickExplore()
             .filter()
