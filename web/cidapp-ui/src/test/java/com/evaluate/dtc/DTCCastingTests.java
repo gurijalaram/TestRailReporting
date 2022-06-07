@@ -33,6 +33,7 @@ public class DTCCastingTests extends TestBase {
     private GuidanceIssuesPage guidanceIssuesPage;
     private EvaluatePage evaluatePage;
     private UserCredentials currentUser;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
     private InvestigationPage investigationsPage;
@@ -131,7 +132,6 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"6375", "6379", "6384", "6386", "6388", "6390"})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String componentName = "DTCCastingIssues";
@@ -147,32 +147,34 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface has a draft angle less than the recommended draft angle for this material."));
-        assertThat(guidanceIssuesPage.getGcdCount("Curved Wall"), equalTo(87));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Part of this surface has a draft angle less than the recommended draft angle for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdCount("Curved Wall")).isEqualTo(87);
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Minimum wall thickness is less than the recommended thickness for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Maximum wall thickness is greater than the recommended thickness for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Radius Issue, Minimum Internal Edge Radius", "Sharp Edge", "SharpEdge:39");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal edge radius is less than the recommended internal edge radius for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Minimum Hole Diameter", "Simple Hole", "SimpleHole:13");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Hole diameter is less than the recommended minimum diameter for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole diameter is less than the recommended minimum diameter for this material.");
+
+        softAssertions.assertAll();
     }
 
     /*@Test
@@ -254,7 +256,6 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"6385", "6393", "6394", "8333"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
         String componentName = "SandCastIssues";
@@ -275,17 +276,18 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
+
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
 
         softAssertions.assertAll();
