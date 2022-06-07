@@ -10,6 +10,7 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.request.AccessAuthorizationRequest;
 import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
+import com.apriori.cds.objects.request.ApplicationInstallationRequest;
 import com.apriori.cds.objects.request.CustomAttributeRequest;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
@@ -269,7 +270,6 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .cidGlobalKey("donotusethiskey")
                     .siteIdentity(siteIdentity)
-                    .applications(Collections.singletonList(Constants.getApProApplicationIdentity()))
                     .cloudReference(cloudReference)
                     .apVersion("2020 R1")
                     .build());
@@ -594,6 +594,26 @@ public class CdsTestUtil extends TestUtil {
                 AccessAuthorizationRequest.builder()
                     .userIdentity(userIdentity)
                     .serviceAccount(serviceAccount)
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * @param customerIdentity customer id
+     * @param deploymentIdentity deployment id
+     * @param installationIdentity installation id
+     * @param appIdentity application id
+     * @param siteIdentity site id
+     * @return new object
+     */
+    public ResponseWrapper<InstallationItems> addApplicationInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String siteIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_INSTALLATION, InstallationItems.class)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .body("installation",
+                ApplicationInstallationRequest.builder()
+                    .applicationIdentity(appIdentity)
+                    .siteIdentity(siteIdentity)
                     .build());
 
         return HTTPRequest.build(requestEntity).post();

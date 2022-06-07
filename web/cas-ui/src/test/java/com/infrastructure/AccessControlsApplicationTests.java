@@ -61,10 +61,15 @@ public class AccessControlsApplicationTests extends TestBase {
     private String customerIdentity;
     private String customerName;
     private UserCreation userCreation;
+    private String siteIdentity;
+    private String deploymentIdentity;
+    private String installationIdentity;
+    private String appIdentity;
 
     @Before
     public void setup() {
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", APP_CONTROLS_CUSTOMER);
+        String cloudRef = generateStringUtil.generateCloudReference();
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "\\S+@".concat(APP_CONTROLS_CUSTOMER);
@@ -74,7 +79,7 @@ public class AccessControlsApplicationTests extends TestBase {
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(APP_CONTROLS_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCustomer(APP_CONTROLS_CUSTOMER, customerType, cloudRef, salesforce, email).getResponseEntity()
                 : targetCustomer;
 
         customerIdentity = targetCustomer.getIdentity();
@@ -84,13 +89,12 @@ public class AccessControlsApplicationTests extends TestBase {
         String siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        String siteIdentity = site.getResponseEntity().getIdentity();
+        siteIdentity = site.getResponseEntity().getIdentity();
         String deploymentName = generateStringUtil.generateDeploymentName();
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
-        String deploymentIdentity = deployment.getResponseEntity().getResponse().getIdentity();
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
-        String cloudRef = generateStringUtil.generateCloudReference();
-        String appIdentity = Constants.getApProApplicationIdentity();
+        appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
@@ -102,12 +106,14 @@ public class AccessControlsApplicationTests extends TestBase {
 
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
 
-        String installationIdentity = installation.getResponseEntity().getIdentity();
+        installationIdentity = installation.getResponseEntity().getIdentity();
         installationIdentityHolder = IdentityHolder.builder()
                 .customerIdentity(customerIdentity)
                 .deploymentIdentity(deploymentIdentity)
                 .installationIdentity(installationIdentity)
                 .build();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         infrastructurePage = new CasLoginPage(driver)
                 .login(UserUtil.getUser())
@@ -118,6 +124,7 @@ public class AccessControlsApplicationTests extends TestBase {
 
     @After
     public void teardown() {
+        cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
         sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
                 licensedAppIdentityHolder.customerIdentity(),
