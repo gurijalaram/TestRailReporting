@@ -1,38 +1,28 @@
 package com.evaluate.assemblies.filters;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.List;
-
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
-import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-import com.utils.ButtonTypeEnum;
+
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.SmokeTests;
+import org.openqa.selenium.By;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Filters extends TestBase {
 
@@ -41,17 +31,15 @@ public class Filters extends TestBase {
     private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    String filterName = generateStringUtil.generateFilterName();
     String filterName2 = generateStringUtil.generateFilterName();
-
-    private File resourceFile;
     private FilterPage filterPage;
     private UserCredentials currentUser;
-    private ComponentInfoBuilder cidComponentItem;
 
     @Test
-    @TestRail(testCaseId = "12089")
-    @Description("Verify Excluded scenarios are not highlighted in flattened view")
-    public void testExcludedScenarioInFlattenedView() {
+    @TestRail(testCaseId = "10538")
+    @Description("Verify that filter criteria can be deleted")
+    public void filterCriteriaCanBeDeletedTest() {
         String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
 
@@ -74,16 +62,119 @@ public class Filters extends TestBase {
                 scenarioName,
                 currentUser)
             .openComponents()
-            //.multiSelectSubcomponents("PIN, " + scenarioName + "", "SMALL RING, " + scenarioName + "")
-            //.selectButtonType(ButtonTypeEnum.EXCLUDE)
+            .tableView()
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
+            .deleteCriteria();
+
+        assertTrue(filterPage.verifyIfElementIsDisplayed("No queries applied", "message"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10537")
+    @Description("Verify that newly created filter is displayed in filters dropdown in my filter section")
+    public void newlyCreatedFilterIsDisplayedInFiltersTest() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        FilterPage filterPage = new FilterPage(driver);
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
             .tableView()
             .filter()
             .newFilter()
             .inputName(filterName2)
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
-            .deleteCriteria();
-            //.submit(ExplorePage.class)
+            .submit(ExplorePage.class);
 
-        System.out.println("dddd");
+        assertTrue(filterPage.verifyIfElementIsDisplayed(filterName2, "text-overflow"));
     }
+
+    @Test
+    @TestRail(testCaseId = "10535")
+    @Description("Verify Cancel button closes the Scenario filter table")
+    public void cancelBtnCloseFilterTableTest() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
+            .tableView()
+            .filter()
+            .clickCancelButton(ExplorePage.class);
+
+        assertFalse(explorePage.ifElementIsPresent(By.xpath("//h5[contains(.,'Scenario Filter')][@class = 'modal-title']")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10534")
+    @Description("User can clear added criteria simultaneously by Clear button")
+    public void canClearAddedCriteriaTest() {
+        String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+
+        List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+        final String componentExtension = ".SLDPRT";
+
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        filterPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
+            .tableView()
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
+            .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Low")
+            .deleteAllCriteria();
+
+        assertTrue(filterPage.verifyIfElementIsDisplayed("No queries applied", "message"));
+    }
+
 }

@@ -20,7 +20,6 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Severity;
 import io.qameta.allure.SeverityLevel;
-
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
