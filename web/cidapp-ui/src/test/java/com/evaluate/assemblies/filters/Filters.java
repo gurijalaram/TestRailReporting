@@ -135,7 +135,8 @@ public class Filters extends TestBase {
             .openComponents()
             .tableView()
             .filter()
-            .clickCancelButton(ExplorePage.class);
+            .cancel(ExplorePage.class);
+            //.clickCancelButton(ExplorePage.class);
 
         assertFalse(explorePage.ifElementIsPresent(By.xpath("//h5[contains(.,'Scenario Filter')][@class = 'modal-title']")));
     }
