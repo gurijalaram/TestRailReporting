@@ -1,11 +1,6 @@
 package com.evaluate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.AssociationSuccessesFailures;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -17,6 +12,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -26,6 +22,7 @@ public class IncludeAndExcludeTests {
 
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @TestRail(testCaseId = "11925")
@@ -57,14 +54,20 @@ public class IncludeAndExcludeTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<ScenarioResponse> costResponse = assemblyUtils.costSubComponents(componentAssembly)
+       assemblyUtils.costSubComponents(componentAssembly)
             .costAssembly(componentAssembly);
 
-        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, true, PART_0001 + ", " + scenarioName +
-            "", PART_0002 + ", " + scenarioName, PART_0003 + ", " + scenarioName, PART_0004 + ", " + scenarioName);
 
-        assertThat(patchResponse.getResponseEntity().getSuccesses().size(), is(greaterThanOrEqualTo(4)));
+       ResponseWrapper<AssociationSuccessesFailures> patchResponse =  scenariosUtil.patchAssociations(componentAssembly, true, PART_0001 + ", " + scenarioName +
+            "", PART_0002 + ", " + scenarioName);
 
-        ResponseWrapper<ScenarioResponse> costResponsePatch = assemblyUtils.costAssembly(componentAssembly);
+        softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isGreaterThanOrEqualTo(2);
+
+        scenariosUtil.postCostScenario(componentAssembly);
+
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isTrue();
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isTrue();
+
+        softAssertions.assertAll();
     }
 }

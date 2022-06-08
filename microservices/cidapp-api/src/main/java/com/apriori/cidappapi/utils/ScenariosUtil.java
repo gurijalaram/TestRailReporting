@@ -573,7 +573,7 @@ public class ScenariosUtil {
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, AssociationSuccessesFailures.class)
-                .inlineVariables(assembly.getComponentIdentity(), assembly.getScenarioIdentity())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body(ScenarioAssociationsRequest.builder()
                     .groupItems(scenarioAssociationsRequests
                         .stream()
@@ -593,12 +593,12 @@ public class ScenariosUtil {
     /**
      * PATCH scenario association and POST to cost scenario
      *
-     * @param componentInfo          - the component info builder object
-     * @param excluded               - boolean
-     * @param componentScenarioName- component and scenario name
+     * @param componentInfo         - the component info builder object
+     * @param excluded              - boolean
+     * @param componentScenarioName - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<ScenarioResponse> patchAssociationsCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+    public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
         patchAssociations(componentInfo, excluded, componentScenarioName);
         return postCostScenario(componentInfo);
     }
