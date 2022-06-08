@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.header.ReportsHeader;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.create.CreateAdHocViewPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -80,7 +81,7 @@ public class CIDIntegrationTests extends TestBase {
             .selectMaterial(testDataService.getInputData().get("materialName").toString())
             .submit(EvaluatePage.class)
             .costScenario(3)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")

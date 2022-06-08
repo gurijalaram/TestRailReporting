@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -114,20 +115,20 @@ public class UploadTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
-            .logout()
-            .login(UserUtil.getUser())
-            .selectFilter("Public")
-            .clickSearch(componentName)
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario(componentName, scenarioName);
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .publishScenario(PublishPage.class)
+                .publish(cidComponentItem,  EvaluatePage.class)
+                .logout()
+                .login(UserUtil.getUser())
+                .selectFilter("Public")
+                .clickSearch(componentName)
+                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+                .openScenario(componentName, scenarioName);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }
