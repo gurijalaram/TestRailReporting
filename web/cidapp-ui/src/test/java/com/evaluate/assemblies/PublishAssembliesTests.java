@@ -77,7 +77,7 @@ public class PublishAssembliesTests extends TestBase {
         cidComponentItemB = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .uploadComponent(subComponentBName, scenarioName, subComponentB, currentUser);
@@ -85,7 +85,7 @@ public class PublishAssembliesTests extends TestBase {
         cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
             .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
             .costScenario(3)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()
             .uploadComponent(assemblyName, scenarioName, assembly, currentUser);
@@ -93,7 +93,7 @@ public class PublishAssembliesTests extends TestBase {
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItemC)
             .selectProcessGroup(ProcessGroupEnum.ASSEMBLY)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItemC, EvaluatePage.class);
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));

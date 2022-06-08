@@ -44,11 +44,15 @@ public class UsersGrantApplicationAccessTests extends TestBase {
     private String customerIdentity;
     private String customerName;
     private String siteName;
+    private String siteIdentity;
     private String deploymentName;
+    private String deploymentIdentity;
     private ResponseWrapper<User> user;
     private String userIdentity;
     private String userName;
     private UserProfilePage userProfilePage;
+    private String installationIdentity;
+    private String appIdentity;
 
     @Before
     public void setup() {
@@ -67,12 +71,12 @@ public class UsersGrantApplicationAccessTests extends TestBase {
         siteName = generateStringUtil.generateSiteName();
         String siteID = generateStringUtil.generateSiteID();
         ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteID);
-        String siteIdentity = site.getResponseEntity().getIdentity();
+        siteIdentity = site.getResponseEntity().getIdentity();
         deploymentName = generateStringUtil.generateDeploymentName();
         ResponseWrapper<Deployment> deployment = cdsTestUtil.addDeployment(customerIdentity, deploymentName, siteIdentity, "PRODUCTION");
-        String deploymentIdentity = deployment.getResponseEntity().getResponse().getIdentity();
+        deploymentIdentity = deployment.getResponseEntity().getIdentity();
         String realmKey = generateStringUtil.generateRealmKey();
-        String appIdentity = Constants.getApProApplicationIdentity();
+        appIdentity = Constants.getApProApplicationIdentity();
         ResponseWrapper<LicensedApplication> newApplication = cdsTestUtil.addApplicationToSite(customerIdentity, siteIdentity, appIdentity);
         String licensedApplicationIdentity = newApplication.getResponseEntity().getIdentity();
 
@@ -83,12 +87,14 @@ public class UsersGrantApplicationAccessTests extends TestBase {
             .build();
         ResponseWrapper<InstallationItems> installation = cdsTestUtil.addInstallation(customerIdentity, deploymentIdentity, realmKey, cloudRef, siteIdentity);
 
-        String installationIdentity = installation.getResponseEntity().getIdentity();
+        installationIdentity = installation.getResponseEntity().getIdentity();
         installationIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .deploymentIdentity(deploymentIdentity)
             .installationIdentity(installationIdentity)
             .build();
+
+        cdsTestUtil.addApplicationInstallation(customerIdentity, deploymentIdentity, installationIdentity, appIdentity, siteIdentity);
 
         userProfilePage = new CasLoginPage(driver)
             .login(UserUtil.getUser())
@@ -100,7 +106,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
 
     @After
     public void teardown() {
-
+        cdsTestUtil.delete(CDSAPIEnum.APPLICATION_INSTALLATION_BY_ID, customerIdentity, deploymentIdentity, installationIdentity, appIdentity);
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             licensedAppIdentityHolder.customerIdentity(),
             licensedAppIdentityHolder.siteIdentity(),

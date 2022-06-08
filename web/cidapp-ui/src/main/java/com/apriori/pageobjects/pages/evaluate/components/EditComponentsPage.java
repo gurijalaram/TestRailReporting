@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
 
-    @FindBy(css = ".scenario-conflicts-form")
+    @FindBy(css = ".scenario-conflict-form")
     private WebElement conflictsForm;
 
     @FindBy(css = "input[value='override']")
@@ -48,6 +48,15 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
     @Override
     protected void isLoaded() throws Error {
         assertTrue("Edit Scenarios dialog is not displayed", pageUtils.waitForElementToAppear(conflictsForm).isDisplayed());
+    }
+
+    /**
+     * Gets text in conflicts form
+     *
+     * @return string
+     */
+    public String getConflictForm() {
+        return pageUtils.waitForElementToAppear(conflictsForm).getAttribute("textContent");
     }
 
     /**
