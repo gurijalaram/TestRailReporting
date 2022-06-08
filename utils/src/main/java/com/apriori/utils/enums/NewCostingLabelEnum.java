@@ -12,6 +12,7 @@ public enum NewCostingLabelEnum {
     UNCOSTED_CHANGES("Uncosted Changes"),
     PROCESSING_EDIT_ACTION("Processing Edit Action"),
     PROCESSING_PUBLISH_ACTION("Processing Publish Action"),
+    PROCESSING_UPDATE_ACTION("Processing Update Action"),
     PROCESSING_UPDATE_CAD("Processing Update Cad File Action"),
     COSTING_FAILED("Costing Failed");
 

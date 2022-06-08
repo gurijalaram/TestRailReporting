@@ -100,7 +100,6 @@ public class ScenariosTests {
         assemblyUtils.publishSubComponents(componentAssembly)
             .publishAssembly(componentAssembly);
 
-        //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()
@@ -160,7 +159,9 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadCostPublishScenario(
+
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
@@ -170,7 +171,14 @@ public class ScenariosTests {
             scenarioName,
             currentUser);
 
-        //Edit Assembly
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        assemblyUtils.publishAssembly(componentAssembly);
+
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()

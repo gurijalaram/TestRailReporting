@@ -11,6 +11,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -77,21 +78,21 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
-            .editScenario()
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .selectDigitalFactory(APRIORI_CHINA)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -126,19 +127,19 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
-            .editScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
+            .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
             .selectDigitalFactory(APRIORI_USA)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .lock(EvaluatePage.class)
-            .publishScenario()
-            .publish(cidComponentItem, ExplorePage.class);
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
     }
@@ -169,8 +170,8 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore();
 
         cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
@@ -180,10 +181,10 @@ public class PublishExistingCostedTests extends TestBase {
             .openScenario(componentName, scenarioName)
             .selectProcessGroup(FORGING)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class);
+            .publish(cidComponentItemB,  EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
@@ -213,13 +214,13 @@ public class PublishExistingCostedTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, ExplorePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  ExplorePage.class)
             .lock(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .selectProcessGroup(FORGING)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .changeName(scenarioName2)
             .publish(cidComponentItem, EvaluatePage.class);
 
