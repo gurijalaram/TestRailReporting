@@ -553,13 +553,13 @@ public class ScenariosUtil {
     /**
      * PATCH scenario associations
      *
-     * @param assembly         - the component info builder object
+     * @param componentInfo         - the component info builder object
      * @param excluded              - boolean
      * @param componentScenarioName - component and scenario name
      * @return response object
      */
-    public ResponseWrapper<AssociationSuccessesFailures> patchAssociations(ComponentInfoBuilder assembly, boolean excluded, String... componentScenarioName) {
-        ResponseWrapper<ScenarioManifest> scenarioManifestResponse = getScenarioManifest(assembly);
+    public ResponseWrapper<AssociationSuccessesFailures> patchAssociations(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+        ResponseWrapper<ScenarioManifest> scenarioManifestResponse = getScenarioManifest(componentInfo);
         List<ScenarioManifestSubcomponents> scenarioAssociationsRequests = new ArrayList<>();
 
         final List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
@@ -585,13 +585,35 @@ public class ScenariosUtil {
                             .build())
                         .collect(Collectors.toList()))
                     .build())
-                .token(assembly.getUser().getToken());
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).patch();
     }
 
-    public ResponseWrapper<ScenarioResponse> patchAssociationsCost(ComponentInfoBuilder assembly, boolean excluded, String... componentScenarioName) {
-        patchAssociations(assembly, excluded, componentScenarioName);
-        return postCostScenario(assembly);
+    /**
+     * PATCH scenario association and POST to cost scenario
+     *
+     * @param componentInfo          - the component info builder object
+     * @param excluded               - boolean
+     * @param componentScenarioName- component and scenario name
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> patchAssociationsCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+        patchAssociations(componentInfo, excluded, componentScenarioName);
+        return postCostScenario(componentInfo);
+    }
+
+    /**
+     * Checks if the subcomponent is excluded
+     *
+     * @param componentInfo - the component info builder object
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return boolean
+     */
+    public boolean isScenarioExcluded(ComponentInfoBuilder componentInfo, String componentName, String scenarioName) {
+        return getScenarioManifest(componentInfo).getResponseEntity().getSubcomponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(componentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+            .map(ScenarioManifestSubcomponents::getExcluded).findFirst().isPresent();
     }
 }
