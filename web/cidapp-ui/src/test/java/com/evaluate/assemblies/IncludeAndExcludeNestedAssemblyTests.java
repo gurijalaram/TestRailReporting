@@ -39,9 +39,9 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         super();
     }
 
-    final static String SUB_SUB_ASSEMBLY = "sub-sub-asm";
-    final static String SUB_ASSEMBLY = "sub-assembly";
-    final static String TOP_LEVEL = "top-level";
+    private static final String SUB_SUB_ASSEMBLY = "sub-sub-asm";
+    private static final String SUB_ASSEMBLY = "sub-assembly";
+    private static final String TOP_LEVEL = "top-level";
 
     @BeforeClass
     public static void assemblySetup() {
