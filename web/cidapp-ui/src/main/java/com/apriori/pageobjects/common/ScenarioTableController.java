@@ -3,7 +3,6 @@ package com.apriori.pageobjects.common;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.enums.ScenarioStateEnum;
 
 import com.utils.ColumnsEnum;

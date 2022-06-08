@@ -45,6 +45,10 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement submitButton;
     @FindBy(xpath = "//div[contains(@class,'delete-btn-column pl-0 col-1')]")
     private WebElement deleteCriteriaBtn;
+    @FindBy(xpath = "//button[contains(.,'Cancel')]")
+    private WebElement cancelBtn;
+    @FindBy(xpath = "//button[contains(.,'Clear')]")
+    private WebElement clearAllCriteriaBtn;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -109,6 +113,32 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         pageUtils.waitForElementAndClick(deleteButton);
         return this;
     }
+
+    /**
+     * Delete All Criteria By Clicking Clear Button
+     *
+     * @return current page object
+     */
+    public FilterPage deleteAllCriteria() {
+        pageUtils.waitForElementAndClick(clearAllCriteriaBtn);
+        return this;
+    }
+
+    /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean verifyIfElementIsDisplayed(String searchedText, String className) {
+
+        //@FindBy(xpath = "//div[contains(.,'No queries applied')][@class = 'message']")
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = driver.findElement(By.xpath(xpath));
+        return pageUtils.waitForWebElement(element);
+    }
+
+
+
 
     /**
      * Rename filter
@@ -340,6 +370,16 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public <T> T submit(Class<T> klass) {
         pageUtils.waitForElementAndClick(submitButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Click the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T clickCancelButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(cancelBtn);
         return PageFactory.initElements(driver, klass);
     }
 

@@ -14,6 +14,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -106,6 +107,15 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage selectAllScenarios() {
         scenarioTableController.selectAllScenarios();
         return this;
+    }
+
+    /**
+     * check if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean ifElementIsPresent(By by) {
+        return pageUtils.isElementPresent(by);
     }
 
     /**
