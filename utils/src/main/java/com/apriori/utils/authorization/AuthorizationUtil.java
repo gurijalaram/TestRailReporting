@@ -64,6 +64,7 @@ public class AuthorizationUtil {
      * @param userCredentials - the user credentials
      * @return application metadata object
      */
+    // TODO: 30/05/2022 cn - will be properly implemented in a future update
     public ResponseWrapper<ApplicationMetadata> getApplicationMetadata(UserCredentials userCredentials) {
         final RequestEntity requestEntity = RequestEntityUtil.init(ApplicationMetadataEnum.GET_APPLICATION_METADATA, ApplicationMetadata.class)
             .token(userCredentials.getToken());
@@ -77,13 +78,15 @@ public class AuthorizationUtil {
      * @param userCredentials - user credentials
      * @return string
      */
+    // TODO: 30/05/2022 cn - will be properly implemented in a future update
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
+        /*CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
         String customerIdentity = cloudContextResponse.getCustomerIdentity();
         String deploymentIdentity = cloudContextResponse.getDeploymentIdentity();
         String installationIdentity = cloudContextResponse.getInstallationIdentity();
         String applicationIdentity = cloudContextResponse.getApplicationIdentity();
 
-        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;
+        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;*/
+        return PropertiesContext.get("global.auth_cloud_context");
     }
 }
