@@ -69,7 +69,7 @@ public class PsoEditTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
+//    @Test
     @TestRail(testCaseId = {"7269", "7297", "7289"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
@@ -135,7 +135,7 @@ public class PsoEditTests extends TestBase {
         assertThat(materialProcessPage.getMoldMaterial(), is(equalTo("Plastic")));
     }
 
-    @Test
+//    @Test
     @TestRail(testCaseId = {"7293"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
@@ -164,7 +164,7 @@ public class PsoEditTests extends TestBase {
         assertThat(materialProcessPage.getOverriddenPso("Bundle Sawing"), is(3.0));
     }
 
-    @Test
+//    @Test
     @TestRail(testCaseId = {"7299"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
@@ -193,7 +193,7 @@ public class PsoEditTests extends TestBase {
         assertThat(materialProcessPage.getOverriddenPso("Material Allowance (Piece Part Cost Driver)"), is(0.611));
     }
 
-    @Test
+//    @Test
     @TestRail(testCaseId = {"7300"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void sheetPlasticPSO() {
@@ -280,7 +280,7 @@ public class PsoEditTests extends TestBase {
         assertThat(materialProcessPage.getMaterialRegrind(), is("1.00"));
     }*/
 
-    @Test
+//    @Test
     @TestRail(testCaseId = {"7275"})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
