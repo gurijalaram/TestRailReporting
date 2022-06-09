@@ -17,6 +17,9 @@ import java.util.List;
 @Slf4j
 public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssembliesPage> {
 
+    @FindBy(xpath = "//span[@role='progressbar']")
+    private WebElement progressBar;
+
     @FindBy(xpath = "//div[@Class='MuiDataGrid-row']")
     private List<WebElement> tableRow;
 
@@ -46,6 +49,20 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
     private WebElement btnPintoLeft;
+
+    @FindBy(xpath = "//p[@data-testid ='toolbar-Search']")
+    private WebElement btnSearch;
+
+    @FindBy(xpath = "//div[@data-testid ='search-control-input']")
+    private WebElement fieldSearch;
+
+    @FindBy(xpath = "//input[@class='MuiOutlinedInput-input MuiInputBase-input MuiInputBase-inputAdornedEnd css-1uvydh2']")
+    private WebElement searchInputField;
+
+    @FindBy(xpath = "//div[starts-with(@Class,'MuiOutlinedInput-root MuiInputBase-root')]//button//*[@data-icon='times-circle']")
+    private WebElement btnClear;
+
+
 
 
 
@@ -86,6 +103,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * Method to wait until loading complete
      */
     public void waitForTableLoad() {
+        pageUtils.waitForElementToAppear(progressBar);
         pageUtils.waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
     }
 
@@ -128,7 +146,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return current page object
      */
-    public PartsAndAssembliesPage EnterFieldName(String fieldName) {
+    public PartsAndAssembliesPage enterFieldName(String fieldName) {
         getPageUtils().waitForElementToAppear(showHideSearchField).sendKeys(fieldName);
         return this;
     }
@@ -138,7 +156,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return current page object
      */
-    public String GetFieldName() {
+    public String getFieldName() {
         return getPageUtils().waitForElementToAppear(fieldNameResult).getText();
 
     }
@@ -191,4 +209,94 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public  List<String> getPinnedTableHeaders() {
         return partsAndAssemblyTableController.getPinnedTableHeaders();
     }
+
+    /**
+     * Checks if search option displayed
+     *
+     * @return true/false
+     */
+    public boolean isSearchOptionDisplayed() {
+        return pageUtils.isElementDisplayed(btnSearch);
+    }
+
+    /**
+     * Click on search
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickSearchOption() {
+        getPageUtils().waitForElementToAppear(btnSearch).click();
+        return this;
+    }
+
+    /**
+     * Checks if search field displayed
+     *
+     * @return true/false
+     */
+    public boolean isSearchFieldDisplayed() {
+        return pageUtils.isElementDisplayed(fieldSearch);
+    }
+
+    /**
+     * Click on search box
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickOnSearchField() {
+        getPageUtils().waitForElementAndClick(fieldSearch);
+        return this;
+    }
+
+    /**
+     * Enter component name on search field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage enterAComponentName(String componentName) {
+        getPageUtils().waitForElementToAppear(searchInputField).sendKeys(componentName);
+        return this;
+    }
+
+    /**
+     * Get the added component Name
+     *
+     * @return a String
+     */
+    public String getAddedComponentName() {
+        return getPageUtils().waitForElementToAppear(searchInputField).getAttribute("value");
+    }
+
+
+    /**
+     * Gets the number of elements present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public int getListOfScenarios(String componentName, String scenarioName) {
+        return partsAndAssemblyTableController.getListOfScenarios(componentName, scenarioName);
+    }
+
+    /**
+     * Click on clear icon on search field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickClearOption() {
+        getPageUtils().waitForElementToAppear(btnClear).click();
+        return this;
+    }
+
+    /**
+     * Gets the number of elements present on the page after clear search
+     *
+     * @return size of the element as int
+     */
+    public int getListOfComponents() {
+        return tableRow.size();
+    }
+
+
 }
