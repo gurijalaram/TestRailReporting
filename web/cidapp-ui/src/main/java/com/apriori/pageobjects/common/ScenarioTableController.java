@@ -3,11 +3,9 @@ package com.apriori.pageobjects.common;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.enums.ScenarioStateEnum;
 
 import com.utils.ColumnsEnum;
-
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -306,7 +304,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement getByParentLocator(String componentName, String scenarioName) {
-        return driver.findElement(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim())));
+        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim()))));
     }
 
     /**

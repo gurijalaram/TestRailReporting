@@ -8,31 +8,29 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Schema(location = "AccessAuthorizationSchema.json")
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@Schema(location = "ApplicationSchema.json")
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 @JsonRootName("response")
-public class Application {
-    private Boolean isCloudHomeApp;
-    private Boolean isSingleTenant;
-    private Boolean isPublic;
+public class AccessAuthorization {
     private String identity;
     private String createdBy;
     private String updatedBy;
-    private String name;
-    private String cloudReference;
-    private String serviceName;
-    private String version;
-    private String description;
-    private String iconUrl;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String type;
+    private String userIdentity;
+    private String serviceAccountIdentity;
 }

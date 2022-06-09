@@ -86,6 +86,10 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "div[data-testid='loader']")
     private WebElement loadingSpinner;
 
+    @FindBy(css = ".sub-component-tree .component-name")
+    private List<WebElement> subcomponentNames;
+
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -544,16 +548,27 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * method to switch to a new scenario name
+     * Method to switch to a new scenario name
      *
      * @param componentName - the component name
      * @param scenarioName  -the scenario name
-     * @return - current page object
+     * @return current page object
      */
     public ComponentsListPage switchScenarioName(String componentName, String scenarioName) {
         WebElement scenarioSwitch = driver.findElement(By.xpath(String.format("//span[text()='%s']/ancestor::div[@role='row']//div[@id='qa-scenario-select-field']", componentName.toUpperCase().trim())));
         pageUtils.typeAheadSelect(scenarioSwitch, scenarioName);
         return this;
+    }
+
+    /**
+     * Gets list of subcomponent names
+     *
+     * @return string
+     */
+    public List<String> getListOfSubcomponents() {
+        return pageUtils.waitForElementsToAppear(subcomponentNames).stream()
+            .map(x -> x.getAttribute("textContent"))
+            .map(String::trim).collect(Collectors.toList());
     }
 
     /**

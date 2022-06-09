@@ -5,12 +5,16 @@ import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
 import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cds.entity.response.LicenseResponse;
+import com.apriori.cds.enums.CASCustomerEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.objects.request.AccessAuthorizationRequest;
 import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
+import com.apriori.cds.objects.request.ApplicationInstallationRequest;
 import com.apriori.cds.objects.request.CustomAttributeRequest;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.cds.objects.response.AccessAuthorization;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
 import com.apriori.cds.objects.response.CustomAttribute;
@@ -24,6 +28,8 @@ import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserProfile;
+import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -81,6 +87,35 @@ public class CdsTestUtil extends TestUtil {
         }
 
         return customer;
+    }
+
+    /**
+     * Creates customer via CAS API with service acconts
+     *
+     * @param name           - the customer name
+     * @param cloudReference - the cloud reference name
+     * @param email          - the email pattern
+     * @return new object
+     */
+    public ResponseWrapper<Customer> addCASCustomer(String name, String cloudReference, String email) {
+        String token = new AuthorizationUtil().getTokenAsString();
+        RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS, Customer.class)
+            .token(token)
+            .body("customer",
+                com.apriori.apibase.services.cas.Customer.builder().name(name)
+                    .cloudReference(cloudReference)
+                    .description("Add new customers api test")
+                    .salesforceId(new GenerateStringUtil().generateSalesForceId())
+                    .customerType("CLOUD_ONLY")
+                    .active(true)
+                    .mfaRequired(true)
+                    .useExternalIdentityProvider(false)
+                    .maxCadFileRetentionDays(584)
+                    .maxCadFileSize(51)
+                    .emailDomains(Arrays.asList(email + ".com", email + ".co.uk"))
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
@@ -235,7 +270,6 @@ public class CdsTestUtil extends TestUtil {
                     .createdBy("#SYSTEM00000")
                     .cidGlobalKey("donotusethiskey")
                     .siteIdentity(siteIdentity)
-                    .applications(Collections.singletonList(Constants.getApProApplicationIdentity()))
                     .cloudReference(cloudReference)
                     .apVersion("2020 R1")
                     .build());
@@ -545,5 +579,43 @@ public class CdsTestUtil extends TestUtil {
                     .build());
 
         return HTTPRequest.build(requestEntity).put();
+    }
+
+    /**
+     * @param customerIdentity customer id
+     * @param userIdentity user id
+     * @param serviceAccount service account
+     * @return new object
+     */
+    public ResponseWrapper<AccessAuthorization> addAccessAuthorization(String customerIdentity, String userIdentity, String serviceAccount) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.ACCESS_AUTHORIZATIONS, AccessAuthorization.class)
+            .inlineVariables(customerIdentity)
+            .body("accessAuthorization",
+                AccessAuthorizationRequest.builder()
+                    .userIdentity(userIdentity)
+                    .serviceAccount(serviceAccount)
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * @param customerIdentity customer id
+     * @param deploymentIdentity deployment id
+     * @param installationIdentity installation id
+     * @param appIdentity application id
+     * @param siteIdentity site id
+     * @return new object
+     */
+    public ResponseWrapper<InstallationItems> addApplicationInstallation(String customerIdentity, String deploymentIdentity, String installationIdentity, String appIdentity, String siteIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.APPLICATION_INSTALLATION, InstallationItems.class)
+            .inlineVariables(customerIdentity, deploymentIdentity, installationIdentity)
+            .body("installation",
+                ApplicationInstallationRequest.builder()
+                    .applicationIdentity(appIdentity)
+                    .siteIdentity(siteIdentity)
+                    .build());
+
+        return HTTPRequest.build(requestEntity).post();
     }
 }

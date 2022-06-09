@@ -14,6 +14,8 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     CUSTOMER_APPLICATION_BY_ID("applications/%s/customers"),
     CUSTOMER_LICENSED_APPLICATIONS_BY_IDS("customers/%s/sites/%s/licensed-applications/%s"),
     APPLICATION_SITES_BY_CUSTOMER_SITE_IDS("customers/%s/sites/%s/licensed-applications"),
+    APPLICATION_INSTALLATION("customers/%s/deployments/%s/installations/%s/applications"),
+    APPLICATION_INSTALLATION_BY_ID("customers/%s/deployments/%s/installations/%s/applications/%s"),
 
     // SITES
     SITES("sites"),
@@ -80,7 +82,12 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
 
     //USER_PREFERENCES
     USER_PREFERENCES("customers/%s/users/%s/preferences"),
-    PREFERENCE_BY_ID("customers/%s/users/%s/preferences/%s");
+    PREFERENCE_BY_ID("customers/%s/users/%s/preferences/%s"),
+
+    //ACCESS_AUTHORIZATIONS
+    ACCESS_AUTHORIZATIONS("customers/%s/access-authorizations"),
+    ACCESS_AUTHORIZATION_BY_ID("customers/%s/access-authorizations/%s"),
+    ACCESS_AUTHORIZATION_STATUS("customers/%s/access-authorizations/status");
 
     private final String endpoint;
 
