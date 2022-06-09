@@ -6,7 +6,7 @@ global:
   schema_base_path: schemas/
   console_log_level: "OFF"
   users_csv_file: onprem-users.csv
-  different_users: true
+  different_users: false
   different_parts: true
   auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
 
@@ -273,7 +273,7 @@ qa-cig-perf:
 ######################################################## On Prem ########################################################
 onprem:
   name: onprem
-  base_url: https://conqbaci01/
+  base_url: https://conqbaci02/
 
   admin:
     ui_url: ${onprem.base_url}apriori/login
