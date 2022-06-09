@@ -59,14 +59,16 @@ public class IncludeAndExcludeTests {
 
 
         ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, true, PART_0001 + ", " + scenarioName +
-            "", PART_0002 + ", " + scenarioName);
+            "", PART_0002 + ", " + scenarioName, PART_0003 + ", " + scenarioName, PART_0004 + ", " + scenarioName);
 
-        softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isGreaterThanOrEqualTo(2);
+        softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(4);
 
         scenariosUtil.postCostScenario(componentAssembly);
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isTrue();
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isTrue();
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0003, scenarioName)).isTrue();
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0004, scenarioName)).isTrue();
 
         softAssertions.assertAll();
     }
