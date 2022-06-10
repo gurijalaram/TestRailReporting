@@ -161,7 +161,7 @@ public class CIDIntegrationTests extends TestBase {
             .navigateToLibraryPage()
             .navigateToReport(ReportNamesEnum.COMPONENT_COST.getReportName(), ComponentCostReportPage.class)
             .waitForInputControlsLoad()
-            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName())
+            .selectExportSetDtcTests(ExportSetEnum.TOP_LEVEL.getExportSetName(), ComponentCostReportPage.class)
             .waitForComponentFilter();
 
         componentCostReportPage.waitForCorrectAvailableSelectedCount(
