@@ -2,7 +2,6 @@ package com.apriori.sds.tests.suite;
 
 import com.apriori.sds.tests.ApFilesTest;
 import com.apriori.sds.tests.ComponentsTest;
-import com.apriori.sds.tests.ConnectionsTest;
 import com.apriori.sds.tests.CostingTemplatesTest;
 import com.apriori.sds.tests.IterationsTest;
 import com.apriori.sds.tests.ScenarioAssociationsTest;
