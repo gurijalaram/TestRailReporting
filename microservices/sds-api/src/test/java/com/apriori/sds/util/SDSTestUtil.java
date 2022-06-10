@@ -203,9 +203,9 @@ public abstract class SDSTestUtil extends TestUtil {
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
         Map<String, String> contextHeaders = new HashMap<String, String>() {{
-            put("ap-application-context", getApApplicationContext());
-            put("ap-cloud-context", testingUser.getCloudContext());
-        }};
+                put("ap-application-context", getApApplicationContext());
+                put("ap-cloud-context", testingUser.getCloudContext());
+            }};
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
@@ -228,7 +228,7 @@ public abstract class SDSTestUtil extends TestUtil {
     // TODO z: can be migrated to AuthorizationUtil if make this decision based on usage this functionality outside sds
     private static String getApApplicationContext() {
 
-        if(appApplicationContext != null) {
+        if (appApplicationContext != null) {
             return appApplicationContext;
         }
         return appApplicationContext = initApApplicationContext();
