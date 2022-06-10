@@ -15,6 +15,7 @@ import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.EditAssembliesTest;
+import com.evaluate.assemblies.FiltersTests;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
@@ -85,7 +86,8 @@ import testsuites.suiteinterface.SmokeTests;
     IncludeAndExcludeTests.class,
     GroupEditAssemblies.class,
     LargeGroupAssemblyTests.class,
-    IncludeAndExcludeNestedAssemblyTests.class
+    IncludeAndExcludeNestedAssemblyTests.class,
+    FiltersTests.class
 })
 public class RegressionTestSuite {
 }

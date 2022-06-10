@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 @ProjectRunID("373")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        FileManagementControllerTest.class
+    FileManagementControllerTest.class
 })
 public class APISuite {
 }
