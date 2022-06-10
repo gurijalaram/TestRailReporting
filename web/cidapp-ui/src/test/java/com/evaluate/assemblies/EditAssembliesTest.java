@@ -175,6 +175,7 @@ public class EditAssembliesTest extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -186,7 +187,8 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
 
-        infoPage = evaluatePage.info();
+        infoPage = evaluatePage.clickActions()
+            .info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
@@ -226,18 +228,21 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(EvaluatePage.class)
+            .clickActions()
             .lock(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isTrue();
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isTrue();
 
-        infoPage = evaluatePage.info();
+        infoPage = evaluatePage.clickActions()
+            .info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
@@ -331,20 +336,24 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC)).isTrue();
 
-        evaluatePage.lock(EvaluatePage.class);
+        evaluatePage.clickActions()
+            .lock(EvaluatePage.class);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isTrue();
 
-        evaluatePage.unlock(EvaluatePage.class);
+        evaluatePage.clickActions()
+            .unlock(EvaluatePage.class);
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isTrue();
 
-        evaluatePage.info()
+        evaluatePage.clickActions()
+            .info()
             .selectStatus("Analysis")
             .inputCostMaturity("Medium")
             .inputDescription("QA Modified Test Description")
             .inputNotes("Testing Modified QA notes")
             .submit(EvaluatePage.class);
 
-        infoPage = evaluatePage.info();
+        infoPage = evaluatePage.clickActions()
+            .info();
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Analysis");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Modified Test Description");
@@ -478,6 +487,7 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
+            .clickActions()
             .lock(EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
