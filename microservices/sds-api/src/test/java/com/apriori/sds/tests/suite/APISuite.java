@@ -25,7 +25,8 @@ import org.junit.runners.Suite;
     IterationsTest.class,
     ScenarioAssociationsTest.class,
     ScenarioIterationsTest.class,
-    ScenariosTest.class
+    ScenariosTest.class,
+    SecondaryProcessesTest.class
 })
 public class APISuite {
 }
