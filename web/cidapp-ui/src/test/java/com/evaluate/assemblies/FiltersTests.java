@@ -1,4 +1,4 @@
-package com.evaluate.assemblies.filters;
+package com.evaluate.assemblies;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -19,12 +19,11 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.openqa.selenium.By;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Filters extends TestBase {
+public class FiltersTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
@@ -69,7 +68,7 @@ public class Filters extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .deleteCriteria();
 
-        assertTrue(filterPage.verifyIfElementIsDisplayed("No queries applied", "message"));
+        assertTrue(filterPage.isElementDisplayed("No queries applied", "message"));
     }
 
     @Test
@@ -105,7 +104,7 @@ public class Filters extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .submit(ExplorePage.class);
 
-        assertTrue(filterPage.verifyIfElementIsDisplayed(filterName2, "text-overflow"));
+        assertTrue(filterPage.isElementDisplayed(filterName2, "text-overflow"));
     }
 
     @Test
@@ -136,9 +135,8 @@ public class Filters extends TestBase {
             .tableView()
             .filter()
             .cancel(ExplorePage.class);
-            //.clickCancelButton(ExplorePage.class);
 
-        assertFalse(explorePage.ifElementIsPresent(By.xpath("//h5[contains(.,'Scenario Filter')][@class = 'modal-title']")));
+        assertFalse(explorePage.isFilterTablePresent());
     }
 
     @Test
@@ -175,7 +173,7 @@ public class Filters extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Low")
             .deleteAllCriteria();
 
-        assertTrue(filterPage.verifyIfElementIsDisplayed("No queries applied", "message"));
+        assertTrue(filterPage.isElementDisplayed("No queries applied", "message"));
     }
 
 }

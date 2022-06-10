@@ -114,8 +114,8 @@ public class ExplorePage extends ExploreToolbar {
      *
      * @return boolean
      */
-    public boolean ifElementIsPresent(By by) {
-        return pageUtils.isElementPresent(by);
+    public boolean isFilterTablePresent() {
+        return pageUtils.isElementPresent(By.xpath("//h5[contains(.,'Scenario Filter')][@class = 'modal-title']"));
     }
 
     /**

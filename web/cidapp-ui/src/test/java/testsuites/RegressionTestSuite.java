@@ -20,7 +20,7 @@ import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
 import com.evaluate.assemblies.LargeGroupAssemblyTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
-import com.evaluate.assemblies.filters.Filters;
+import com.evaluate.assemblies.FiltersTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
 import com.evaluate.dtc.DTCMachiningTests;
@@ -87,7 +87,7 @@ import testsuites.suiteinterface.SmokeTests;
     GroupEditAssemblies.class,
     LargeGroupAssemblyTests.class,
     IncludeAndExcludeNestedAssemblyTests.class,
-    Filters.class
+    FiltersTests.class
 })
 public class RegressionTestSuite {
 }

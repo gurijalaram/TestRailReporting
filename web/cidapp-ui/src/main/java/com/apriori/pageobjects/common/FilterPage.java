@@ -45,8 +45,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement submitButton;
     @FindBy(xpath = "//div[contains(@class,'delete-btn-column pl-0 col-1')]")
     private WebElement deleteCriteriaBtn;
-    @FindBy(xpath = "//button[contains(.,'Cancel')]")
-    private WebElement cancelBtn;
     @FindBy(xpath = "//button[contains(.,'Clear')]")
     private WebElement clearAllCriteriaBtn;
 
@@ -129,15 +127,12 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      *
      * @return boolean
      */
-    public boolean verifyIfElementIsDisplayed(String searchedText, String className) {
+    public boolean isElementDisplayed(String searchedText, String className) {
 
-        //@FindBy(xpath = "//div[contains(.,'No queries applied')][@class = 'message']")
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
         WebElement element = driver.findElement(By.xpath(xpath));
         return pageUtils.waitForWebElement(element);
     }
-
-
 
 
     /**
@@ -213,8 +208,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage addCriteria(final PropertyEnum propertyEnum, final boolean value) {
         index = getIndex();
 
-        add().selectProperty(index, propertyEnum)
-            .toggle(index, propertyEnum, value);
+        add().selectProperty(index, propertyEnum).toggle(index, propertyEnum, value);
         return this;
     }
 
@@ -229,9 +223,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
         index = getIndex();
 
-        add().selectProperty(index, propertyEnum)
-            .selectOperation(index, operationEnum)
-            .inputValue(index, propertyEnum, value);
+        add().selectProperty(index, propertyEnum).selectOperation(index, operationEnum).inputValue(index, propertyEnum, value);
         return this;
     }
 
@@ -246,9 +238,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final LocalDateTime dateTime) {
         index = getIndex();
 
-        add().selectProperty(index, propertyEnum)
-            .selectOperation(index, operationEnum)
-            .inputDate(index, propertyEnum, dateTime);
+        add().selectProperty(index, propertyEnum).selectOperation(index, operationEnum).inputDate(index, propertyEnum, dateTime);
         return this;
     }
 
@@ -373,15 +363,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         return PageFactory.initElements(driver, klass);
     }
 
-    /**
-     * Click the cancel button
-     *
-     * @return generic page object
-     */
-    public <T> T clickCancelButton(Class<T> klass) {
-        pageUtils.waitForElementAndClick(cancelBtn);
-        return PageFactory.initElements(driver, klass);
-    }
 
     /**
      * Select the cancel button
