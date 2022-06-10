@@ -28,7 +28,7 @@ public class DigitalFactoriesTest extends VDSTestUtil {
     @TestRail(testCaseId = {"8030"})
     @Description("Get a list of Digital Factories for a specific customer.")
     public void getDigitalFactories() {
-        this.getDigitalFactoriesResponse();
+        getDigitalFactoriesResponse();
     }
 
     @Test
