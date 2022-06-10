@@ -158,7 +158,6 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public String getFieldName() {
         return getPageUtils().waitForElementToAppear(fieldNameResult).getText();
-
     }
 
     /**
@@ -225,7 +224,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickSearchOption() {
-        getPageUtils().waitForElementToAppear(btnSearch).click();
+        getPageUtils().waitForElementAndClick(btnSearch);
         return this;
     }
 
@@ -285,7 +284,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickClearOption() {
-        getPageUtils().waitForElementToAppear(btnClear).click();
+        getPageUtils().waitForElementAndClick(btnClear);
         return this;
     }
 

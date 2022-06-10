@@ -16,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -131,16 +132,17 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.enterAComponentName(componentName);
 
-        assertThat(partsAndAssembliesPage.getAddedComponentName(),is(equalTo(componentName)));
-        assertThat(partsAndAssembliesPage.getListOfScenarios(componentName,scenarioName),is(equalTo(1)));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getAddedComponentName()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName,scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
 
         partsAndAssembliesPage.clickClearOption()
                 .waitForTableLoad();
 
         assertThat(partsAndAssembliesPage.getListOfComponents(),is(not(equalTo(1))));
-
-
-
 
 
     }
