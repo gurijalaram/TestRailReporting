@@ -47,7 +47,7 @@ public class PublishAssembliesTests extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private PublishPage publishPage;
     private ComponentsListPage componentsListPage;
-    SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
 
     public PublishAssembliesTests() {
