@@ -387,6 +387,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage selectDefinedValue(String value) {
         pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities  (Piece Part & Tooling Cost Driver)", "user"));
+        pageUtils.scrollWithJavaScript(psoController.dropdownLocator("User defined value"), true);
         pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), root, value);
         return this;
     }
