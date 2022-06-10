@@ -47,6 +47,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement deleteCriteriaBtn;
     @FindBy(xpath = "//button[contains(.,'Clear')]")
     private WebElement clearAllCriteriaBtn;
+    @FindBy(xpath = "//button[contains(.,'Cancel')]")
+    private WebElement cancelBtn;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -103,39 +105,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
-     * Delete Criteria
-     *
-     * @return current page object
-     */
-    public FilterPage deleteCriteria() {
-        pageUtils.waitForElementAndClick(deleteButton);
-        return this;
-    }
-
-    /**
-     * Delete All Criteria By Clicking Clear Button
-     *
-     * @return current page object
-     */
-    public FilterPage deleteAllCriteria() {
-        pageUtils.waitForElementAndClick(clearAllCriteriaBtn);
-        return this;
-    }
-
-    /**
-     * assert if element exists in the DOM
-     *
-     * @return boolean
-     */
-    public boolean isElementDisplayed(String searchedText, String className) {
-
-        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
-        WebElement element = driver.findElement(By.xpath(xpath));
-        return pageUtils.waitForWebElement(element);
-    }
-
-
-    /**
      * Rename filter
      *
      * @return current page object
@@ -156,12 +125,35 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        //@FindBy(xpath = "//div[contains(.,'No queries applied')][@class = 'message']")
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = driver.findElement(By.xpath(xpath));
+        return pageUtils.waitForWebElement(element);
+    }
+
+    /**
      * Cancel filter input
      *
      * @return current page object
      */
     public FilterPage cancelInput() {
         pageUtils.waitForElementAndClick(cancelButton);
+        return this;
+    }
+
+    /**
+     * Delete All Criteria By Clicking Clear Button
+     *
+     * @return current page object
+     */
+    public FilterPage deleteAllCriteria() {
+        pageUtils.waitForElementAndClick(clearAllCriteriaBtn);
         return this;
     }
 
@@ -208,7 +200,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage addCriteria(final PropertyEnum propertyEnum, final boolean value) {
         index = getIndex();
 
-        add().selectProperty(index, propertyEnum).toggle(index, propertyEnum, value);
+        add().selectProperty(index, propertyEnum)
+            .toggle(index, propertyEnum, value);
         return this;
     }
 
@@ -223,7 +216,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final String value) {
         index = getIndex();
 
-        add().selectProperty(index, propertyEnum).selectOperation(index, operationEnum).inputValue(index, propertyEnum, value);
+        add().selectProperty(index, propertyEnum)
+            .selectOperation(index, operationEnum)
+            .inputValue(index, propertyEnum, value);
         return this;
     }
 
@@ -238,7 +233,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     public FilterPage addCriteria(final PropertyEnum propertyEnum, final OperationEnum operationEnum, final LocalDateTime dateTime) {
         index = getIndex();
 
-        add().selectProperty(index, propertyEnum).selectOperation(index, operationEnum).inputDate(index, propertyEnum, dateTime);
+        add().selectProperty(index, propertyEnum)
+            .selectOperation(index, operationEnum)
+            .inputDate(index, propertyEnum, dateTime);
         return this;
     }
 

@@ -27,8 +27,6 @@ public class FiltersTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     String filterName = generateStringUtil.generateFilterName();
     String filterName2 = generateStringUtil.generateFilterName();
@@ -66,7 +64,7 @@ public class FiltersTests extends TestBase {
             .newFilter()
             .inputName(filterName)
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
-            .deleteCriteria();
+            .clear();
 
         assertTrue(filterPage.isElementDisplayed("No queries applied", "message"));
     }
