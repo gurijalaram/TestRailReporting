@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
 
-    @FindBy(css = ".scenario-conflict-form")
+    @FindBy(css = ".scenario-conflicts-form")
     private WebElement conflictsForm;
 
     @FindBy(css = "input[value='override']")

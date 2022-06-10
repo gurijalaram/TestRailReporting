@@ -10,7 +10,7 @@ import tests.AtsAuthorization;
 @ProjectRunID("375")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        AtsAuthorization.class
+    AtsAuthorization.class
 })
 public class AtsAPISuite {
 

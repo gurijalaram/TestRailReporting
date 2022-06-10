@@ -39,10 +39,16 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement addButton;
     @FindBy(css = "button [data-icon='clear']")
     private WebElement clearButton;
-    @FindBy(css = "qa-searchCriterion[0].delete")
+    @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
     @FindBy(css = ".filter-manager [type='submit']")
     private WebElement submitButton;
+    @FindBy(xpath = "//div[contains(@class,'delete-btn-column pl-0 col-1')]")
+    private WebElement deleteCriteriaBtn;
+    @FindBy(xpath = "//button[contains(.,'Clear')]")
+    private WebElement clearAllCriteriaBtn;
+    @FindBy(xpath = "//button[contains(.,'Cancel')]")
+    private WebElement cancelBtn;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -119,12 +125,35 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        //@FindBy(xpath = "//div[contains(.,'No queries applied')][@class = 'message']")
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = driver.findElement(By.xpath(xpath));
+        return pageUtils.waitForWebElement(element);
+    }
+
+    /**
      * Cancel filter input
      *
      * @return current page object
      */
     public FilterPage cancelInput() {
         pageUtils.waitForElementAndClick(cancelButton);
+        return this;
+    }
+
+    /**
+     * Delete All Criteria By Clicking Clear Button
+     *
+     * @return current page object
+     */
+    public FilterPage deleteAllCriteria() {
+        pageUtils.waitForElementAndClick(clearAllCriteriaBtn);
         return this;
     }
 
@@ -330,6 +359,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         pageUtils.waitForElementAndClick(submitButton);
         return PageFactory.initElements(driver, klass);
     }
+
 
     /**
      * Select the cancel button

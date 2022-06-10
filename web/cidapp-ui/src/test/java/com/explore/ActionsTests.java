@@ -87,6 +87,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -97,6 +98,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
@@ -134,6 +136,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("Medium")
@@ -185,6 +188,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .lock(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .openPreviewPanel();
@@ -195,7 +199,8 @@ public class ActionsTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
-        evaluatePage.unlock(EvaluatePage.class);
+        evaluatePage.clickActions()
+            .unlock(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isEqualTo(true);
 
@@ -220,6 +225,7 @@ public class ActionsTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info()
             .selectStatus("Complete")
             .inputCostMaturity("Medium")
@@ -227,6 +233,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("Uploaded and costed via automation")
             .submit(EvaluatePage.class)
             .costScenario(1)
+            .clickActions()
             .info();
 
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Complete");
@@ -252,6 +259,7 @@ public class ActionsTests extends TestBase {
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("High")
@@ -259,6 +267,7 @@ public class ActionsTests extends TestBase {
             .inputNotes("Panel Test")
             .submit(EvaluatePage.class)
             .costScenario()
+            .clickActions()
             .info();
 
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
@@ -299,10 +308,12 @@ public class ActionsTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         assertThat(infoPage.isScenarioInfo("Assignee", scenarioCreatedByName), is(true));
@@ -337,6 +348,7 @@ public class ActionsTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
+            .clickActions()
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(EvaluatePage.class)
@@ -413,6 +425,7 @@ public class ActionsTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario("BasicScenario_Forging", scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -422,9 +435,12 @@ public class ActionsTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("BasicScenario_Forging", scenarioName)
+            .clickActions()
+            .clickActions()
             .info()
             .editNotes("Testing QA notes validating the ability to edit notes")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes validating the ability to edit notes"));
@@ -459,6 +475,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -469,9 +486,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editNotes("Validating the ability to edit notes")
             .cancel(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -505,6 +524,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -515,9 +535,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editNotes("")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is(""));
@@ -553,6 +575,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -565,6 +588,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -648,6 +672,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -658,9 +683,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editDescription("")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getDescription(), is(""));
@@ -697,6 +724,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")

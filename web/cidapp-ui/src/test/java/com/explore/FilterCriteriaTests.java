@@ -170,6 +170,7 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .clickActions()
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("High")
@@ -234,6 +235,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
             .info()
             .selectStatus("Complete")
             .inputCostMaturity("High")
@@ -283,6 +285,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .lock(ExplorePage.class)
             .filter()
             .newFilter()

@@ -12,8 +12,7 @@ import testsuites.suiteinterface.CiaCirTestDevTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(CiaCirTestDevTest.class)
 @Suite.SuiteClasses({
-    CostOutlierIdentificationReportTests.class,
-    CostOutlierIdentificationDetailsReportTests.class
+    AssemblyDetailsReportTests.class
 })
 
 public class CiaCirTestDevSuite {
