@@ -273,13 +273,13 @@ public class CreateAdHocViewPage extends ReportsPageHeader {
         driver.findElement(createFilterInputLocator).clear();
         driver.findElement(createFilterInputLocator).sendKeys("top-level");
 
-        String dropdownSelectionGenericLocator = "//%s[@title='---01-top-level']";
+        String dropdownSelectionGenericLocator = "//%s[@title='- - - 0 0 0-top-level']";
         pageUtils.waitForElementAndClick(By.xpath(String.format(dropdownSelectionGenericLocator, "li")));
         pageUtils.waitForElementToAppear(By.xpath(String.format(dropdownSelectionGenericLocator, "a")));
 
         pageUtils.waitForElementAndClick(By.xpath("//fieldset[@id='applyFilter']/button"));
 
-        pageUtils.waitForElementToAppear(By.xpath("//tbody[@id='tableDetails']/tr[1]/td[1]/span[contains(text(), '3538968')]"));
+        pageUtils.waitForElementToAppear(By.xpath("//tbody[@id='tableDetails']/tr[1]/td[1]/span[contains(text(), '0200613')]"));
 
         return this;
     }

@@ -2,7 +2,6 @@ package com.explore;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -41,6 +40,7 @@ public class PreviewPanelTests extends TestBase {
     private File resourceFile3;
     private File resourceFile4;
     UserCredentials currentUser;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public PreviewPanelTests() {
         super();
@@ -105,8 +105,6 @@ public class PreviewPanelTests extends TestBase {
             .highlightScenario(componentName, testScenarioName)
             .openPreviewPanel();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(previewPage.isImageDisplayed()).isEqualTo(true);
         softAssertions.assertThat(previewPage.getMaterialResult("Piece Part Cost")).isCloseTo(Double.valueOf(0.48), Offset.offset(3.0));
         softAssertions.assertThat(previewPage.getMaterialResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(0.86), Offset.offset(3.0));
@@ -143,39 +141,45 @@ public class PreviewPanelTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .info()
-                .inputNotes(notes)
-                .submit(EvaluatePage.class)
-                .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
-                .info()
-                .inputNotes(notes)
-                .submit(EvaluatePage.class)
-                .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
-                .info()
-                .inputNotes(notes)
-                .submit(EvaluatePage.class)
-                .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
-                .info()
-                .inputNotes(notes)
-                .submit(EvaluatePage.class)
-                .clickExplore()
-                .selectFilter("Recent")
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-                .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-                .openPreviewPanel();
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
+            .info()
+            .inputNotes(notes)
+            .submit(EvaluatePage.class)
+            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .clickActions()
+            .info()
+            .inputNotes(notes)
+            .submit(EvaluatePage.class)
+            .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
+            .clickActions()
+            .info()
+            .inputNotes(notes)
+            .submit(EvaluatePage.class)
+            .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
+            .clickActions()
+            .info()
+            .inputNotes(notes)
+            .submit(EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .openPreviewPanel();
 
-        assertThat(previewPage.getSelectionTitle(), is(equalTo("2 Scenarios Selected")));
+        softAssertions.assertThat(previewPage.getSelectionTitle()).isEqualTo("2 Scenarios Selected");
 
         previewPage.closePreviewPanel()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.NOTES, OperationEnum.CONTAINS, notes)
-                .submit(ExplorePage.class)
-                .selectAllScenarios()
-                .openPreviewPanel();
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.NOTES, OperationEnum.CONTAINS, notes)
+            .submit(ExplorePage.class)
+            .selectAllScenarios()
+            .openPreviewPanel();
 
-        assertThat(previewPage.getSelectionTitle(), is(equalTo("4 Scenarios Selected")));
+        softAssertions.assertThat(previewPage.getSelectionTitle()).isEqualTo("4 Scenarios Selected");
+
+        softAssertions.assertAll();
     }
 }

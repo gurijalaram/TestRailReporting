@@ -2,7 +2,6 @@ package com.apriori.customer.users.profile;
 
 import com.apriori.common.ModalUserList;
 import com.apriori.utils.PageUtils;
-
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 

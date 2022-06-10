@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -63,8 +64,8 @@ public class PublishTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
@@ -96,7 +97,7 @@ public class PublishTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .selectStatus("Analysis")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)

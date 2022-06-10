@@ -9,7 +9,6 @@ import com.customer.users.EditUserTests;
 import com.customer.users.NewUserTests;
 import com.customer.users.UsersGrantApplicationAccessTests;
 import com.customer.users.UsersStaffAssociationTests;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

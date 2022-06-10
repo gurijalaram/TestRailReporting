@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -26,6 +27,7 @@ import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SanityTests;
@@ -46,6 +48,9 @@ public class UploadComponentTests extends TestBase {
     private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
     private ComponentInfoBuilder cidComponentItem;
+    private static ComponentInfoBuilder componentAssembly;
+    private static AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @Category(SanityTests.class)
@@ -316,7 +321,28 @@ public class UploadComponentTests extends TestBase {
     public void testOverrideExistingScenarioSuccess() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "Hinge assembly";
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
@@ -326,11 +352,6 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .close()
             .importCadFile()
             .tick("Override existing scenario")
             .inputScenarioName(scenarioName)
@@ -401,11 +422,13 @@ public class UploadComponentTests extends TestBase {
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
 
         explorePage = evaluatePage.logout()
             .login(UserUtil.getUser());
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(0)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+
+        softAssertions.assertAll();
     }
 }

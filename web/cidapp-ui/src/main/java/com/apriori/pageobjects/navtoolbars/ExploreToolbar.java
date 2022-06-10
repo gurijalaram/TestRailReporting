@@ -3,13 +3,11 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
-import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.CssComponent;
@@ -88,7 +86,6 @@ public class ExploreToolbar extends MainNavBar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
-    private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private CssComponent cssComponent = new CssComponent();
 
     public ExploreToolbar(WebDriver driver) {
@@ -194,18 +191,21 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser              - the current user
      * @return - a new page object
      */
-    public EvaluatePage uploadCostPublishAndOpenAssembly(String assemblyName,
-                                                         String assemblyExtension,
-                                                         ProcessGroupEnum assemblyProcessGroup,
-                                                         List<String> subComponentNames,
-                                                         String subComponentExtension,
-                                                         ProcessGroupEnum subComponentProcessGroup,
-                                                         String scenarioName,
-                                                         String mode,
-                                                         String material,
-                                                         UserCredentials currentUser) {
+    public EvaluatePage uploadCostPublishAndOpenAssemblySubcomponents(String assemblyName,
+                                                                      String assemblyExtension,
+                                                                      ProcessGroupEnum assemblyProcessGroup,
+                                                                      List<String> subComponentNames,
+                                                                      String subComponentExtension,
+                                                                      ProcessGroupEnum subComponentProcessGroup,
+                                                                      String scenarioName,
+                                                                      String mode,
+                                                                      String material,
+                                                                      UserCredentials currentUser) {
 
-        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
+
+        final AssemblyUtils assemblyUtils = new AssemblyUtils();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
@@ -215,7 +215,15 @@ public class ExploreToolbar extends MainNavBar {
             scenarioName,
             currentUser);
 
-        return navigateToScenario(myAssembly);
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        assemblyUtils.publishAssembly(componentAssembly);
+
+        return navigateToScenario(componentAssembly);
     }
 
     /**
@@ -313,11 +321,11 @@ public class ExploreToolbar extends MainNavBar {
     /**
      * Opens the scenario
      *
-     * @return new page object
+     * @return generic page object
      */
-    public PublishPage publishScenario() {
+    public <T> T publishScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
-        return new PublishPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -331,13 +339,13 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Edit the scenario
+     * Click edit button to edit the scenario
      *
-     * @return new page object
+     * @return generic page object
      */
-    public EditScenarioStatusPage editScenario() {
+    public <T> T editScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return new EditScenarioStatusPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -352,12 +360,22 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * Clicks the actions button
+     * @return current page object
+     */
+    public ExploreToolbar clickActions() {
+        do {
+            pageUtils.waitForElementAndClick(actionsButton);
+        } while (!pageUtils.isElementDisplayed(infoButton) && !pageUtils.isElementDisplayed(lockButton));
+        return this;
+    }
+
+    /**
      * Opens scenario info page
      *
      * @return new page object
      */
     public InfoPage info() {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(infoButton);
         return new InfoPage(driver);
     }
@@ -368,7 +386,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return generic page object
      */
     public <T> T lock(Class<T> klass) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(lockButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -379,7 +396,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return generic page object
      */
     public <T> T unlock(Class<T> klass) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(unlockButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -400,7 +416,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public AssignPage assign() {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(assignButton);
         return new AssignPage(driver);
     }
@@ -423,7 +438,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage updateCadFile(File filePath) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
         return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
     }

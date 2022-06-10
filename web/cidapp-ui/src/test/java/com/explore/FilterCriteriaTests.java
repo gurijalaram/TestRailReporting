@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -169,14 +170,15 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .clickActions()
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("High")
             .inputDescription("Test Description")
             .inputNotes("Test Notes")
             .submit(EvaluatePage.class)
-            .publishScenario()
-            .publish(cidComponentItem, ExplorePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  ExplorePage.class)
             .filter()
             .saveAs()
             .inputName(filterName)
@@ -203,8 +205,8 @@ public class FilterCriteriaTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -233,6 +235,7 @@ public class FilterCriteriaTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
             .info()
             .selectStatus("Complete")
             .inputCostMaturity("High")
@@ -269,7 +272,7 @@ public class FilterCriteriaTests extends TestBase {
         String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .selectStatus("Analysis")
             .selectCostMaturity("Initial")
             .selectAssignee(currentUser)
@@ -282,6 +285,7 @@ public class FilterCriteriaTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .lock(ExplorePage.class)
             .filter()
             .newFilter()

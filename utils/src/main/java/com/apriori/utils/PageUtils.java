@@ -243,6 +243,11 @@ public class PageUtils {
         executor.executeScript("window.open()");
     }
 
+    public void javaScriptDelete(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].remove();", element);
+    }
+
     /**
      * Use javascript to get the parent node of the element
      *
@@ -1164,7 +1169,7 @@ public class PageUtils {
     public void typeAheadSelect(WebElement dropdownSelector, String root, String locatorValue) {
         if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@id]", root))).getAttribute("textContent").equals(locatorValue)) {
             waitForElementAndClick(dropdownSelector);
-            javaScriptClick(waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue))));
+            waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
         }
     }
 

@@ -28,6 +28,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -48,6 +49,7 @@ public class SettingsTests extends TestBase {
     private ComponentInfoBuilder cidComponentItem;
     private SecondaryPage secondaryPage;
     private MaterialSelectorPage materialSelectorPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @After
     public void resetAllSettings() {
@@ -82,11 +84,13 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getScenarioName(), is("MP Auto Test"));
-        assertThat(productionDefaultPage.getProcessGroup(), is(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()));
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterial(), is("ABS, Plating"));
+        softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("MP Auto Test");
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -160,8 +164,10 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getAnnualVolume(), is("9524"));
-        assertThat(evaluatePage.getProductionLife(), is("7"));
+        softAssertions.assertThat(evaluatePage.getAnnualVolume()).isEqualTo("9524");
+        softAssertions.assertThat(evaluatePage.getProductionLife()).isEqualTo("7");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -207,8 +213,10 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory()));
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -250,10 +258,12 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getProcessGroup(), is(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()));
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterial(), is("HIPS Extrusion"));
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("HIPS Extrusion");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -278,10 +288,12 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterial(), is("F-0005 Sponge"));
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.POWDER_METAL.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("F-0005 Sponge");
+
+        softAssertions.assertAll();
     }
 
     @Ignore("feature has not yet been added for 21.1")
@@ -365,13 +377,17 @@ public class SettingsTests extends TestBase {
             .submit(ExplorePage.class)
             .openSettings();
 
-        assertThat(displayPreferencesPage.isSystemChecked("Imperial"), is(true));
+        softAssertions.assertThat(displayPreferencesPage.isSystemChecked("Imperial")).isEqualTo(true);
 
         productionDefaultPage = displayPreferencesPage.goToProductionTab();
-        assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
+
+        softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("Save all tabs test");
 
         selectionPage = productionDefaultPage.goToSelectionTab();
-        assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
+
+        softAssertions.assertThat(selectionPage.isColour(ColourEnum.AMBER)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test

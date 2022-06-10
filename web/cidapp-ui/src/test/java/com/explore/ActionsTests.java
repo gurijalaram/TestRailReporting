@@ -10,6 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
@@ -30,6 +31,7 @@ import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -50,6 +52,7 @@ public class ActionsTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public ActionsTests() {
         super();
@@ -77,13 +80,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -94,10 +98,13 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -122,13 +129,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("Medium")
@@ -173,26 +181,30 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .lock(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .openPreviewPanel();
 
-        assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
         evaluatePage = previewPage.openScenario();
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
-        evaluatePage.unlock(EvaluatePage.class);
+        evaluatePage.clickActions()
+            .unlock(EvaluatePage.class);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -213,6 +225,7 @@ public class ActionsTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info()
             .selectStatus("Complete")
             .inputCostMaturity("Medium")
@@ -220,12 +233,15 @@ public class ActionsTests extends TestBase {
             .inputNotes("Uploaded and costed via automation")
             .submit(EvaluatePage.class)
             .costScenario(1)
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("Complete")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Medium")));
-        assertThat(infoPage.getDescription(), is(equalTo("Qa Auto Test")));
-        assertThat(infoPage.getNotes(), is(equalTo("Uploaded and costed via automation")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Complete");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("Qa Auto Test");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Uploaded and costed via automation");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -243,6 +259,7 @@ public class ActionsTests extends TestBase {
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("High")
@@ -250,12 +267,15 @@ public class ActionsTests extends TestBase {
             .inputNotes("Panel Test")
             .submit(EvaluatePage.class)
             .costScenario()
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("High")));
-        assertThat(infoPage.getDescription(), is("infoNotesPanel"));
-        assertThat(infoPage.getNotes(), is("Panel Test"));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("High");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("infoNotesPanel");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Panel Test");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -282,16 +302,18 @@ public class ActionsTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         assertThat(infoPage.isScenarioInfo("Assignee", scenarioCreatedByName), is(true));
@@ -320,12 +342,13 @@ public class ActionsTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
+            .clickActions()
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(EvaluatePage.class)
@@ -359,7 +382,7 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .selectStatus("New")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)
@@ -396,12 +419,13 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario("BasicScenario_Forging", scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -411,9 +435,12 @@ public class ActionsTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("BasicScenario_Forging", scenarioName)
+            .clickActions()
+            .clickActions()
             .info()
             .editNotes("Testing QA notes validating the ability to edit notes")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes validating the ability to edit notes"));
@@ -441,13 +468,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -458,9 +486,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editNotes("Validating the ability to edit notes")
             .cancel(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -487,13 +517,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -504,9 +535,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editNotes("")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is(""));
@@ -535,13 +568,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -554,6 +588,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -582,7 +617,7 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Default")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
             .selectAssignee(currentUser)
@@ -595,7 +630,7 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName)).isEqualTo(1);
 
         explorePage.filter()
             .newFilter()
@@ -604,7 +639,9 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -628,13 +665,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -645,9 +683,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editDescription("")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getDescription(), is(""));
@@ -677,13 +717,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")

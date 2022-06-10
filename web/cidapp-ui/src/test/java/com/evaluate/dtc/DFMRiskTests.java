@@ -34,6 +34,7 @@ public class DFMRiskTests extends TestBase {
     private UserCredentials currentUser;
     private File resourceFile;
     private File cadResourceFile;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public DFMRiskTests() {
         super();
@@ -51,16 +52,18 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1010")
-                .selectMaterial("Steel, Hot Worked, AISI 1010")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -76,16 +79,18 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1010")
-                .selectMaterial("Steel, Hot Worked, AISI 1010")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -100,16 +105,18 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1020")
-                .selectMaterial("Steel, Cold Worked, AISI 1020")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.CRITICAL.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Critical"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.CRITICAL.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -125,13 +132,13 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1020")
-                .selectMaterial("Steel, Cold Worked, AISI 1020")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
     }
@@ -148,15 +155,17 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("ABS")
-                .submit(EvaluatePage.class)
-                .costScenario(3);
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit(EvaluatePage.class)
+            .costScenario(3);
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -172,21 +181,23 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1020")
-                .selectMaterial("Steel, Cold Worked, AISI 1020")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         evaluatePage.selectProcessGroup(SHEET_METAL_TRANSFER_DIE)
-                .costScenario();
+            .costScenario();
 
-        assertThat(evaluatePage.getDfmRisk(), is("-"));
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("-");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -194,7 +205,6 @@ public class DFMRiskTests extends TestBase {
     @TestRail(testCaseId = {"6472", "6824", "6473"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedStockMachining() {
-
         final String fileName = "1379344.stp";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -205,23 +215,26 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1010")
-                .selectMaterial("Steel, Hot Worked, AISI 1010")
-                .submit(EvaluatePage.class)
-                .costScenario(5);
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario(5);
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
-        evaluatePage.updateCadFile(cadResourceFile)
-                .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
+
+        softAssertions.assertAll();
 
         // TODO uncomment this section when revert is implemented
         /*
@@ -237,7 +250,6 @@ public class DFMRiskTests extends TestBase {
     @TestRail(testCaseId = {"6480", "6481"})
     @Description("Validate DFM Risk can be REDUCED for STOCK MACHINING")
     public void dfmReducedPlasticMoulding() {
-
         final String file = "DTCPlasticIssues.SLDPRT";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
@@ -248,22 +260,23 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("ABS")
-                .submit(EvaluatePage.class)
-                .costScenario(3);
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit(EvaluatePage.class)
+            .costScenario(3);
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.HIGH.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("High"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.HIGH.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
-        evaluatePage.updateCadFile(cadResourceFile)
-                .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         // TODO uncomment this section when revert is implemented
         /*
@@ -273,6 +286,7 @@ public class DFMRiskTests extends TestBase {
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
 
+        softAssertions.assertAll();
     }
 
     @Test
@@ -280,9 +294,6 @@ public class DFMRiskTests extends TestBase {
     @TestRail(testCaseId = {"6474", "6475"})
     @Description("Validate DFM Risk can be REDUCED for SHEET METAL")
     public void dfmReducedSheetMetal() {
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
         final String file = "bracketdfm.SLDPRT";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
@@ -293,25 +304,24 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("AISI 1020")
-                .selectMaterial("Steel, Cold Worked, AISI 1020")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
-        evaluatePage.updateCadFile(cadResourceFile)
-                .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
+
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
-
-        softAssertions.assertAll();
-
 
         // TODO uncomment this section when revert is implemented
         /*
@@ -319,13 +329,14 @@ public class DFMRiskTests extends TestBase {
             .revertScenario();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));*/
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"6476", "5439", "6477"})
     @Description("Validate DFM Risk can be REDUCED for DIE CAST")
     public void dfmReducedDieCast() {
-
         final String file = "manifold.prt.1";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
@@ -336,42 +347,38 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("ANSI AL380")
-                .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-                .submit(EvaluatePage.class)
-                .costScenario();
-
-        SoftAssertions softAssertions = new SoftAssertions();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
-        evaluatePage.updateCadFile(cadResourceFile)
-                .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
-
-        softAssertions.assertAll();
 
         // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
             .revertScenario();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-medium-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("Medium"), is(true));*/
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"6478", "6479", "6471"})
     @Description("Validate DFM Risk can be REDUCED for SAND CAST")
     public void dfmReducedSandCast() {
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
         final String file = "SandCastBox.SLDPRT";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
@@ -382,25 +389,24 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .search("ANSI AL380")
-                .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("ANSI AL380")
+            .selectMaterial("Aluminum, Cast, ANSI AL380.0")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
-        evaluatePage.updateCadFile(cadResourceFile)
-                .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
-
-        softAssertions.assertAll();
 
         // TODO uncomment this section when revert is implemented
         /*
@@ -408,13 +414,14 @@ public class DFMRiskTests extends TestBase {
             .revertScenario();
         assertThat(evaluatePage.isDFMRiskIcon("dtc-high-risk-icon"), is(true));
         assertThat(evaluatePage.isDfmRisk("High")), is(true));*/
+
+        softAssertions.assertAll();
     }
 
     @Test
     @TestRail(testCaseId = {"6830"})
     @Description("CAD file association can be updated & subsequently reverted")
     public void revertCADUpdate() {
-
         final String file = "1379344.stp";
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
@@ -425,16 +432,15 @@ public class DFMRiskTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario(5);
-
-        SoftAssertions softAssertions = new SoftAssertions();
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario(5);
 
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(639), Offset.offset(10.0));
 
-        evaluatePage.updateCadFile(cadResourceFile)
-                .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(372), Offset.offset(1.0));
@@ -444,5 +450,7 @@ public class DFMRiskTests extends TestBase {
             .revertScenario();
 
         assertThat(evaluatePage.getBurdenedCost(), is(closeTo(744, 1)));*/
+
+        softAssertions.assertAll();
     }
 }
