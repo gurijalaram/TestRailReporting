@@ -47,7 +47,7 @@ public class PublishAssembliesTests extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private PublishPage publishPage;
     private ComponentsListPage componentsListPage;
-    SoftAssertions softAssertions = new SoftAssertions();
+    private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
 
     public PublishAssembliesTests() {
@@ -83,8 +83,8 @@ public class PublishAssembliesTests extends TestBase {
             .uploadComponent(subComponentBName, scenarioName, subComponentB, currentUser);
 
         cidComponentItemC = new ExplorePage(driver).navigateToScenario(cidComponentItemB)
-            .selectProcessGroup(ProcessGroupEnum.STOCK_MACHINING)
-            .costScenario(3)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .costScenario(4)
             .publishScenario(PublishPage.class)
             .publish(cidComponentItemB, EvaluatePage.class)
             .clickExplore()

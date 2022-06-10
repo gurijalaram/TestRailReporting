@@ -476,6 +476,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         return new UpdateCadFilePage(driver);
     }
 
+
     /**
      * Checks if the cad button is enabled
      *

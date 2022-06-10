@@ -19,6 +19,7 @@ public class PropertyValueMap {
     private Double thickness;
     private Double blankBoxLength;
     private String engineType;
+    private String weight;
     private String cadVersion;
     private Double numSurfaces;
     private String cadConfiguration;

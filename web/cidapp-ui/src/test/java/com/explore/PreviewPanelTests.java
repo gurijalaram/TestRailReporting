@@ -2,7 +2,6 @@ package com.explore;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -143,18 +142,22 @@ public class PreviewPanelTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         previewPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)
             .uploadComponentAndOpen(componentName3, scenarioName3, resourceFile3, currentUser)
+            .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
+            .clickActions()
             .info()
             .inputNotes(notes)
             .submit(EvaluatePage.class)

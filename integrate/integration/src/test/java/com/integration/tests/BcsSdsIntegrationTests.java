@@ -11,9 +11,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -27,7 +25,7 @@ public class BcsSdsIntegrationTests {
 
     @BeforeClass
     public static void testSetup() {
-        batch = (Batch)BatchResources.createBatch().getResponseEntity();
+        batch = (Batch) BatchResources.createBatch().getResponseEntity();
     }
 
     @AfterClass
@@ -45,12 +43,12 @@ public class BcsSdsIntegrationTests {
         BcsUtils.waitForCostingState(batch.getIdentity(), part.getIdentity());
 
         Part newPart = (Part) BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-                part.getIdentity()).getResponseEntity();
+            part.getIdentity()).getResponseEntity();
 
         identities = BcsUtils.getScenarioAndComponent(newPart.getUrl());
         materialMode = IterationController.getMaterialMode(
-                identities.get("scenario"),
-                identities.get("component"));
+            identities.get("scenario"),
+            identities.get("component"));
         Assert.assertEquals(materialMode.toLowerCase(), "manual");
     }
 
@@ -68,12 +66,12 @@ public class BcsSdsIntegrationTests {
         BcsUtils.waitForCostingState(batch.getIdentity(), part.getIdentity());
 
         part = (Part) BatchPartResources.getBatchPartRepresentation(batch.getIdentity(),
-                part.getIdentity()).getResponseEntity();
+            part.getIdentity()).getResponseEntity();
 
         identities = BcsUtils.getScenarioAndComponent(part.getUrl());
         materialMode = IterationController.getMaterialMode(
-                identities.get("scenario"),
-                identities.get("component"));
+            identities.get("scenario"),
+            identities.get("component"));
         Assert.assertEquals(materialMode.toLowerCase(), "cad");
     }
 }
