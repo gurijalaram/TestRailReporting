@@ -10,7 +10,7 @@ import org.junit.runners.Suite;
 @ProjectRunID("848")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        MultiPartCostingTest.class
+    MultiPartCostingTest.class
 })
 public class MultiPartSuite {
 }
