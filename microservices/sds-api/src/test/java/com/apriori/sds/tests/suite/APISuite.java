@@ -23,10 +23,8 @@ import org.junit.runners.Suite;
     ConnectionsTest.class,
     CostingTemplatesTest.class,
     IterationsTest.class,
-    ScenarioAssociationsTest.class,
     ScenarioIterationsTest.class,
-    ScenariosTest.class,
-    SecondaryProcessesTest.class
+    ScenariosTest.class
 })
 public class APISuite {
 }

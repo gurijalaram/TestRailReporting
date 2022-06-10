@@ -57,7 +57,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
     @BeforeClass
     public static void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
+        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
         RequestEntityUtil.useTokenForRequests(testingUser.getToken());
     }
 
@@ -270,7 +270,7 @@ public abstract class SDSTestUtil extends TestUtil {
                 .token(userCredentials.getToken());
 
         long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5L;
+        final long POLLING_INTERVAL = 10L;
         final long MAX_WAIT_TIME = 180L;
         String scenarioState;
         ResponseWrapper<Scenario> scenarioRepresentation;

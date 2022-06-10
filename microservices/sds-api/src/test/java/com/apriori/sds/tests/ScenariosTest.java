@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
@@ -229,6 +228,7 @@ public class ScenariosTest extends SDSTestUtil {
         getScenarioRepresentation(ScenarioItem.builder()
                 .componentIdentity(scenarioWithCreatedWatchpoint.getComponentIdentity())
                 .scenarioIdentity(scenarioWithCreatedWatchpoint.getScenarioIdentity())
+                .scenarioState(ScenarioStateEnum.NOT_COSTED.getState())
                 .build(),
             testingUser);
 
