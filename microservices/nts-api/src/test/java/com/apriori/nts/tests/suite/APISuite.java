@@ -11,8 +11,8 @@ import org.junit.runners.Suite;
 @ProjectRunID("369")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        EmailsTests.class,
-        NotificationsTests.class
+    EmailsTests.class,
+    NotificationsTests.class
 })
 public class APISuite {
 }
