@@ -169,7 +169,6 @@ public abstract class SDSTestUtil extends TestUtil {
             .get(0)
             .getResourceName();
 
-
         String fileMetadataIdentity = FileManagementController
             .uploadFileWithResourceName(testingUser, processGroup, componentName, uploadedComponentResourceName)
             .getIdentity();
