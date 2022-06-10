@@ -137,6 +137,7 @@ public class PublishExistingCostedTests extends TestBase {
             .override()
             .clickContinue(PublishPage.class)
             .publish(cidComponentItem,  EvaluatePage.class)
+            .clickActions()
             .lock(EvaluatePage.class)
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem,  ExplorePage.class);
@@ -216,6 +217,7 @@ public class PublishExistingCostedTests extends TestBase {
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem,  ExplorePage.class)
+            .clickActions()
             .lock(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .selectProcessGroup(FORGING)

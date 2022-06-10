@@ -96,4 +96,5 @@ public class AnalysisOfScenario {
     private Double stockPropertyInsideDia;
     private Double stockPropertyOutsideDia;
     private Double stockPropertyWallThickness;
+    private Double materialOverheadPercent;
 }

@@ -11,7 +11,6 @@ import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
-
 import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;

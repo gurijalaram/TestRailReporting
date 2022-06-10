@@ -11,7 +11,6 @@ import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
-
 import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.login.CasLoginPage;

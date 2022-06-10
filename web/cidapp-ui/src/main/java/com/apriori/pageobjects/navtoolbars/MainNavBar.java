@@ -51,6 +51,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     @FindBy(xpath = "//button[.='Logout']")
     private WebElement logoutButton;
 
+    @FindBy(css = ".apt-recommendation-bubble-frame")
+    private WebElement gainsightHelp;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -60,6 +63,9 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
+        if (pageUtils.isElementDisplayed(gainsightHelp)) {
+            pageUtils.javaScriptDelete(gainsightHelp);
+        }
     }
 
     @Override
