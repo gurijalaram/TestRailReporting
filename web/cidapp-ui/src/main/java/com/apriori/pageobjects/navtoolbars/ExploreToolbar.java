@@ -359,6 +359,10 @@ public class ExploreToolbar extends MainNavBar {
         return new ScenarioPage(driver);
     }
 
+    /**
+     * Clicks the actions button
+     * @return current page object
+     */
     public ExploreToolbar clickActions() {
         do {
             pageUtils.waitForElementAndClick(actionsButton);
