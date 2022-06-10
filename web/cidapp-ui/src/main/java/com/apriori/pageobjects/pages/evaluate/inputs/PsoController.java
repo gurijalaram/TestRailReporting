@@ -8,6 +8,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.Objects;
+
 
 @Slf4j
 public class PsoController {
@@ -45,7 +47,8 @@ public class PsoController {
      */
     public WebElement inputLocator(String locatorValue) {
         By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@type='number']", locatorValue));
-        return pageUtils.waitForElementToAppear(byLocator);
+        pageUtils.waitForElementToAppear(byLocator);
+        return pageUtils.scrollWithJavaScript(driver.findElement(byLocator), true);
     }
 
     /**
@@ -78,7 +81,11 @@ public class PsoController {
      * @return double
      */
     public double getOverriddenPso(String pso) {
+        int attempts = 0;
+
+        while (Objects.equals(inputLocator(pso).getAttribute("value"), "") && attempts < 11) {
+            attempts++;
+        }
         return Double.parseDouble(inputLocator(pso).getAttribute("value"));
     }
-
 }
