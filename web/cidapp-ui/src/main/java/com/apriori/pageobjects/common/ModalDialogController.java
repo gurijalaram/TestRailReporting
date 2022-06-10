@@ -80,6 +80,7 @@ public class ModalDialogController {
      */
     public <T> T submit(WebElement button, Class<T> klass) {
         pageUtils.waitForElementAndClick(button);
+        pageUtils.waitForElementsToNotAppear(By.xpath("//h5[.='Preferences']"));
         return PageFactory.initElements(driver, klass);
     }
 
