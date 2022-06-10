@@ -360,12 +360,22 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * Clicks the actions button
+     * @return current page object
+     */
+    public ExploreToolbar clickActions() {
+        do {
+            pageUtils.waitForElementAndClick(actionsButton);
+        } while (!pageUtils.isElementDisplayed(infoButton) && !pageUtils.isElementDisplayed(lockButton));
+        return this;
+    }
+
+    /**
      * Opens scenario info page
      *
      * @return new page object
      */
     public InfoPage info() {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(infoButton);
         return new InfoPage(driver);
     }
@@ -376,7 +386,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return generic page object
      */
     public <T> T lock(Class<T> klass) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(lockButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -387,7 +396,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return generic page object
      */
     public <T> T unlock(Class<T> klass) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(unlockButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -408,7 +416,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public AssignPage assign() {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(assignButton);
         return new AssignPage(driver);
     }
@@ -431,7 +438,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage updateCadFile(File filePath) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
         return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
     }
