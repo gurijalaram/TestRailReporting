@@ -212,7 +212,7 @@ qa-cid-perf:
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
-    on_prem_vm_url: https://CONQBACI02/jasperserver-pro/
+    on_prem_vm_url: https://CONQBACI03/jasperserver-pro/
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
@@ -273,7 +273,7 @@ qa-cig-perf:
 ######################################################## On Prem ########################################################
 onprem:
   name: onprem
-  base_url: https://CONQBACI02/
+  base_url: https://CONQBACI03/
 
   admin:
     ui_url: ${onprem.base_url}apriori/login
