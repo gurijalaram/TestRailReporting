@@ -15,8 +15,11 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
 
-    @FindBy(css = ".scenario-conflicts-form")
+    @FindBy(css = "[class='modal-content']")
     private WebElement conflictsForm;
+
+    @FindBy(css = "[class='modal-content'] .alert-messaging")
+    private WebElement conflictsFormMessage;
 
     @FindBy(css = "input[value='override']")
     private WebElement overrideButton;
@@ -56,7 +59,7 @@ public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
      * @return string
      */
     public String getConflictForm() {
-        return pageUtils.waitForElementToAppear(conflictsForm).getAttribute("textContent");
+        return pageUtils.waitForElementToAppear(conflictsFormMessage).getAttribute("textContent");
     }
 
     /**
