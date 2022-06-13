@@ -16,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
@@ -84,9 +85,9 @@ public class PartsAndAssemblyTest extends TestBase {
         partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
         partsAndAssembliesPage.waitForTableLoad();
         partsAndAssembliesPage.clickOnShowHideOption();
-        partsAndAssembliesPage.EnterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
+        partsAndAssembliesPage.enterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
-        assertThat(partsAndAssembliesPage.GetFieldName(),is(equalTo(CisColumnsEnum.COMPONENT_NAME.getColumns())));
+        assertThat(partsAndAssembliesPage.getFieldName(),is(equalTo(CisColumnsEnum.COMPONENT_NAME.getColumns())));
 
         partsAndAssembliesPage.clickOnToggleButton();
 
@@ -108,6 +109,41 @@ public class PartsAndAssemblyTest extends TestBase {
         partsAndAssembliesPage.clickPinToLeft();
 
         assertThat(partsAndAssembliesPage.getPinnedTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
+
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12110","12111","12112","12113","12115"})
+    @Description("Verify that Parts and Assemblies can search by Component Name")
+    public void testSearchByComponentName() {
+        String componentName = "Y_shape";
+        String scenarioName = "YShape_AutomationSearch";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies();
+
+        assertThat(partsAndAssembliesPage.isSearchOptionDisplayed(), is(true));
+
+        partsAndAssembliesPage.clickSearchOption();
+
+        assertThat(partsAndAssembliesPage.isSearchFieldDisplayed(),is(true));
+
+        partsAndAssembliesPage.clickOnSearchField();
+
+        partsAndAssembliesPage.enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getAddedComponentName()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName,scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+
+        partsAndAssembliesPage.clickClearOption()
+                .waitForTableLoad();
+
+        assertThat(partsAndAssembliesPage.getListOfComponents(),is(not(equalTo(1))));
+
 
     }
 }
