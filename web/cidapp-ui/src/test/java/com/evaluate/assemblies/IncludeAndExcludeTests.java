@@ -438,6 +438,7 @@ public class IncludeAndExcludeTests extends TestBase {
             assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component), is(true)));
 
         componentsListPage = componentsListPage.closePanel()
+            .clickActions()
             .updateCadFile(assemblyResourceFile)
             .openComponents();
 

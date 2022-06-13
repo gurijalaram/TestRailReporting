@@ -12,11 +12,15 @@ import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupItems;
 import com.apriori.cidappapi.entity.request.Options;
 import com.apriori.cidappapi.entity.request.PublishRequest;
+import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
+import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -307,8 +311,9 @@ public class ScenariosUtil {
     /**
      * Post to edit group of scenarios
      *
-     * @param componentInfo - the component info object
-     * @param forkRequest   - the fork request
+     * @param componentInfo         - the component info object
+     * @param forkRequest           - the fork request
+     * @param componentScenarioName - component and scenario name
      * @return response object
      */
     public ResponseWrapper<ScenarioSuccessesFailures> postEditGroupScenarios(ComponentInfoBuilder componentInfo, ForkRequest forkRequest, String... componentScenarioName) {
@@ -420,15 +425,15 @@ public class ScenariosUtil {
      *
      * @return scenario object
      */
-    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfoBuilder) {
+    private Scenario postCostingTemplate(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COSTING_TEMPLATES, Scenario.class)
-                .token(componentInfoBuilder.getUser().getToken())
+                .token(componentInfo.getUser().getToken())
                 .body("costingTemplate", CostRequest.builder()
-                    .processGroupName(componentInfoBuilder.getProcessGroup().getProcessGroup())
-                    .digitalFactory(componentInfoBuilder.getDigitalFactory().getDigitalFactory())
-                    .materialMode(componentInfoBuilder.getMode().toUpperCase())
-                    .materialName(componentInfoBuilder.getMaterial())
+                    .processGroupName(componentInfo.getProcessGroup().getProcessGroup())
+                    .digitalFactory(componentInfo.getDigitalFactory().getDigitalFactory())
+                    .materialMode(componentInfo.getMode().toUpperCase())
+                    .materialName(componentInfo.getMaterial())
                     .annualVolume(5500)
                     .productionLife(5.0)
                     .batchSize(458)
@@ -479,8 +484,9 @@ public class ScenariosUtil {
     /**
      * Post to edit group of scenarios
      *
-     * @param componentInfo  - the component info object
-     * @param publishRequest - the publish request
+     * @param componentInfo         - the component info object
+     * @param publishRequest        - the publish request
+     * @param componentScenarioName - component and scenario name
      * @return response object
      */
     public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(ComponentInfoBuilder componentInfo, PublishRequest publishRequest, String... componentScenarioName) {
@@ -520,15 +526,15 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
-
     /**
      * Upload and Publish a subcomponent/assembly
      *
      * @param componentInfo - the copy component object
-     * @return generic object
+     * @return response object
      */
     public ComponentInfoBuilder postAndPublishComponent(ComponentInfoBuilder componentInfo) {
         ComponentInfoBuilder postComponentResponse = componentsUtil.setFilePostComponentQueryCSS(componentInfo);
+
         postPublishScenario(postComponentResponse);
 
         return postComponentResponse;
@@ -583,12 +589,94 @@ public class ScenariosUtil {
         );
     }
 
-    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfoBuilder, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfo, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
         final int SOCKET_TIMEOUT = 240000;
 
         return RequestEntityUtil.init(endPoint, klass)
-            .token(componentInfoBuilder.getUser().getToken())
+            .token(componentInfo.getUser().getToken())
             .inlineVariables(componentId, scenarioId)
             .socketTimeout(SOCKET_TIMEOUT);
+    }
+
+    /**
+     * GET the manifest for scenario
+     *
+     * @param componentInfo - the component info builder object
+     * @return - response object
+     */
+    public ResponseWrapper<ScenarioManifest> getScenarioManifest(ComponentInfoBuilder componentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs, ScenarioManifest.class)
+                .token(componentInfo.getUser().getToken())
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity());
+
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * PATCH scenario associations
+     *
+     * @param componentInfo         - the component info builder object
+     * @param excluded              - boolean
+     * @param componentScenarioName - component and scenario name
+     * @return response object
+     */
+    public ResponseWrapper<AssociationSuccessesFailures> patchAssociations(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+        ResponseWrapper<ScenarioManifest> scenarioManifestResponse = getScenarioManifest(componentInfo);
+        List<ScenarioManifestSubcomponents> scenarioAssociationsRequests = new ArrayList<>();
+
+        final List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+
+        for (String[] componentScenario : componentScenarioNames) {
+
+            scenarioAssociationsRequests.add(scenarioManifestResponse.getResponseEntity().getSubcomponents().stream()
+                .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
+                .collect(Collectors.toList()).get(0));
+        }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, AssociationSuccessesFailures.class)
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .body(ScenarioAssociationsRequest.builder()
+                    .groupItems(scenarioAssociationsRequests
+                        .stream()
+                        .map(component -> ScenarioAssociationGroupItems.builder()
+                            .scenarioAssociationIdentity(component.getScenarioAssociationIdentity())
+                            .childScenarioIdentity(component.getScenarioIdentity())
+                            .occurrences(component.getOccurrences())
+                            .excluded(excluded)
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * PATCH scenario association and POST to cost scenario
+     *
+     * @param componentInfo         - the component info builder object
+     * @param excluded              - boolean
+     * @param componentScenarioName - component and scenario name
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioResponse> patchAssociationsAndCost(ComponentInfoBuilder componentInfo, boolean excluded, String... componentScenarioName) {
+        patchAssociations(componentInfo, excluded, componentScenarioName);
+        return postCostScenario(componentInfo);
+    }
+
+    /**
+     * Checks if the subcomponent is excluded
+     *
+     * @param componentInfo - the component info builder object
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return boolean
+     */
+    public boolean isSubcomponentExcluded(ComponentInfoBuilder componentInfo, String componentName, String scenarioName) {
+        return getScenarioManifest(componentInfo).getResponseEntity().getSubcomponents().stream()
+            .filter(x -> x.getComponentName().equalsIgnoreCase(componentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
+            .map(ScenarioManifestSubcomponents::getExcluded).findFirst().isPresent();
     }
 }
