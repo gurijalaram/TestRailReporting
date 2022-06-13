@@ -19,6 +19,7 @@ public class PropertyInfoMap {
     private Thickness thickness;
     private BlankBoxLength blankBoxLength;
     private EngineType engineType;
+    private Weight weight;
     private CadVersion cadVersion;
     private Descriptor descriptor;
     private CadConfiguration cadConfiguration;
@@ -35,6 +36,7 @@ public class PropertyInfoMap {
     private DistanceUnits distanceUnits;
     private Width width;
     private PartModelName partModelName;
+    private PartNumber partNumber;
     private TemperatureUnitName temperatureUnitName;
     private FileFormat fileFormat;
     private NumSurfaces numSurfaces;

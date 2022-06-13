@@ -243,6 +243,11 @@ public class PageUtils {
         executor.executeScript("window.open()");
     }
 
+    public void javaScriptDelete(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].remove();", element);
+    }
+
     /**
      * Use javascript to get the parent node of the element
      *
