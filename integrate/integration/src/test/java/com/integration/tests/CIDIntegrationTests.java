@@ -173,7 +173,7 @@ public class CIDIntegrationTests extends TestBase {
         assertThat(componentCostReportPage.getComponentListCount(), CoreMatchers.is(equalTo("14")));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("part"), CoreMatchers.is(equalTo(11)));
         assertThat(componentCostReportPage.getCountOfComponentTypeElements("assembly"), CoreMatchers.is(equalTo(3)));
-        componentCostReportPage = componentCostReportPage.clickOk(true, ComponentCostReportPage.class);
+        componentCostReportPage = componentCostReportPage.clickOk(ComponentCostReportPage.class);
         assertThat(componentCostReportPage.getPartNumber(), CoreMatchers.is(equalTo("0200613")));
     }
 
