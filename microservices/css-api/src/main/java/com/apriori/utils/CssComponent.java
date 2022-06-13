@@ -57,7 +57,8 @@ public class CssComponent {
     }
 
     public List<ScenarioItem> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, ScenarioStateEnum scenarioState, boolean allowUnknownParts) {
-        final int SOCKET_TIMEOUT = 270000;
+        // TODO: 13/06/2022 cn - increasing on request. previous value was 270000
+        final int SOCKET_TIMEOUT = 630000;
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
@@ -65,7 +66,8 @@ public class CssComponent {
             .socketTimeout(SOCKET_TIMEOUT);
 
         final int POLL_TIME = 2;
-        final int WAIT_TIME = 240;
+        // TODO: 13/06/2022 cn - increasing on request. previous value was 240
+        final int WAIT_TIME = 600;
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
