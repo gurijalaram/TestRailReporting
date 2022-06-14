@@ -65,13 +65,13 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-            .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile)
-            .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
-            .submit()
-            .close()
-            .clickSearch(componentName)
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+                .importCadFile()
+                .inputComponentDetails(scenarioName, resourceFile)
+                .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
+                .submit()
+                .close()
+                .clickSearch(componentName)
+                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
@@ -90,9 +90,9 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents);
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .inputMultiComponents(multiComponents);
 
         cadFileStatusPage = importCadFilePage.submit();
 
@@ -114,15 +114,15 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .unTick("Apply to all")
-            .inputMultiComponentDetails(multiComponents)
-            .submit()
-            .close();
+                .importCadFile()
+                .unTick("Apply to all")
+                .inputMultiComponentDetails(multiComponents)
+                .submit()
+                .close();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+                assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -139,15 +139,15 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close();
+                .importCadFile()
+                .inputMultiComponents(multiComponents)
+                .inputScenarioName(scenarioName)
+                .submit()
+                .close();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+                assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -158,13 +158,13 @@ public class UploadComponentTests extends TestBase {
         resourceFile = FileResourceUtil.getResourceAsFile("auto_api_upload.csv");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String message = "The file type of the selected file is not supported." +
-            " Supported file types are: .asat, .asm, .asm.#, .catpart, .catproduct, .iam, .ipt," +
-            " .jt, .model, .par, .prt, .prt.#, .psm, .sab, .sat, .sldasm, .sldprt, .step, .stp, .x_b, .x_t, .xas, .xpr";
+                " Supported file types are: .asat, .asm, .asm.#, .catpart, .catproduct, .iam, .ipt," +
+                " .jt, .model, .par, .prt, .prt.#, .psm, .sab, .sat, .sldasm, .sldprt, .step, .stp, .x_b, .x_t, .xas, .xpr";
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputComponentDetails(scenarioName, resourceFile);
+                .importCadFile()
+                .inputComponentDetails(scenarioName, resourceFile);
 
         assertThat(importCadFilePage.getFileInputErrorMessage(), is(message));
     }
@@ -186,12 +186,12 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .deleteCadFiles(componentsToDelete);
+                .importCadFile()
+                .inputMultiComponents(multiComponents)
+                .deleteCadFiles(componentsToDelete);
 
         importCadFilePage.getComponentsInDropZone().forEach(component ->
-            assertThat(componentsToDelete.contains(component), is(false)));
+                assertThat(componentsToDelete.contains(component), is(false)));
     }
 
     @Test
@@ -224,16 +224,17 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputMultiComponents(multiComponents)
-            .inputScenarioName(scenarioName)
-            .submit()
-            .close()
-            .setPagination();
+                .importCadFile()
+                .inputMultiComponents(multiComponents)
+                .inputScenarioName(scenarioName)
+                .submit()
+                .close()
+                .setPagination()
+                .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName()), is(equalTo(1))));
+                assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName()), is(equalTo(1))));
     }
 
     @Test
@@ -249,28 +250,28 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .close()
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .close();
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .inputMultiComponents(multiComponents)
+                .submit()
+                .close()
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .inputMultiComponents(multiComponents)
+                .submit()
+                .close();
 
         //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.PROCESSING_FAILED), is(ScenarioStateEnum.PROCESSING_FAILED.getState())));
+                assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName(), currentUser, ScenarioStateEnum.PROCESSING_FAILED), is(ScenarioStateEnum.PROCESSING_FAILED.getState())));
 
         explorePage.refresh();
 
         //UI Assertion that the explore page shows the Processing Failed Icon
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(true)));
+                assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(true)));
     }
 
     @Test
@@ -307,10 +308,10 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         importCadFilePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .enterMultiFilePath(resourceFile);
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .inputMultiComponents(multiComponents)
+                .enterMultiFilePath(resourceFile);
 
         assertThat(importCadFilePage.getAlertWarning(), containsString("Exceeds maximum file count. Add up to 20 files for import at a time"));
     }
@@ -333,16 +334,16 @@ public class UploadComponentTests extends TestBase {
         final String subComponentExtension = ".SLDPRT";
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+                .uploadAssembly(componentAssembly);
 
         List<MultiUpload> multiComponents = new ArrayList<>();
         multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
@@ -352,22 +353,22 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .tick("Override existing scenario")
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .close();
+                .importCadFile()
+                .tick("Override existing scenario")
+                .inputScenarioName(scenarioName)
+                .inputMultiComponents(multiComponents)
+                .submit()
+                .close();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+                assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
 
         explorePage.refresh();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
+                assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
 
     @Test
@@ -386,22 +387,22 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName2)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .close()
-            .openComponent(componentName, scenarioName, currentUser)
-            .importCadFile()
-            .inputScenarioName(scenarioName)
-            .inputMultiComponents(multiComponents)
-            .submit()
-            .close()
-            .refresh();
+                .importCadFile()
+                .inputScenarioName(scenarioName2)
+                .inputMultiComponents(multiComponents)
+                .submit()
+                .close()
+                .openComponent(componentName, scenarioName, currentUser)
+                .importCadFile()
+                .inputScenarioName(scenarioName)
+                .inputMultiComponents(multiComponents)
+                .submit()
+                .close()
+                .refresh();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
+                assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                        component.getScenarioName(), ScenarioStateEnum.NOT_COSTED), is(true)));
     }
 
     @Test
@@ -418,14 +419,14 @@ public class UploadComponentTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
         softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PRIVATE)).isEqualTo(true);
 
         explorePage = evaluatePage.logout()
-            .login(UserUtil.getUser());
+                .login(UserUtil.getUser());
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
 
