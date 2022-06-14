@@ -346,6 +346,17 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Gets the cost value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioFullyBurdenedCost(componentName, scenarioName);
+    }
+
+    /**
      * Gets the number of elements present on the page
      *
      * @param componentName - name of the part

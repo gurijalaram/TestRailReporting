@@ -15,11 +15,13 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Percentage;
 import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
@@ -45,12 +47,23 @@ public class GroupCostingTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final List<String> subComponentNames = Arrays.asList(
-            "50mmArc", "50mmCube", "50mmEllipse", "50mmOctagon", "75mmCube", "75mmHexagon",
-            "100mmCube", "100mmSlot", "150mmCuboid", "200mmCylinder", "500mmBlob");
-        String subComponentExtension = ".SLDPRT";
         String assemblyName = "RandomShapeAsm";
         String assemblyExtension = ".SLDASM";
+        String subComponentExtension = ".SLDPRT";
+        String arc = "50mmArc";
+        String cube50 = "50mmCube";
+        String ellipse = "50mmEllipse";
+        String octagon = "50mmOctagon";
+        String cube75 = "75mmCube";
+        String hexagon = "75mmHexagon";
+        String cube100 = "100mmCube";
+        String slot = "100mmSlot";
+        String cuboid = "150mmCuboid";
+        String cylinder = "200mmCylinder";
+        String blob = "500mmBlob";
+
+        final List<String> subComponentNames = Arrays.asList(
+            arc, cube50, ellipse, octagon, cube75, hexagon, cube100, slot, cuboid, cylinder, blob);
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -73,12 +86,16 @@ public class GroupCostingTests extends TestBase {
 
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-        for (int i = 0; i < 10; i++) {
-            componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
-            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
-        }
+//        for (int i = 0; i < 10; i++) {
+//            componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
+//            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
+//        }
+        componentsListPage.multiSelectSubcomponents(arc + scenarioName, cube50 + scenarioName, ellipse + scenarioName, octagon + scenarioName, cube75 + scenarioName,
+            hexagon + scenarioName, cube100 + scenarioName, slot + scenarioName, cuboid + scenarioName, cylinder + scenarioName);
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
-        componentsListPage.selectScenario(subComponentNames.get(subComponentNames.size() - 1).toUpperCase(), scenarioName);
+
+        componentsListPage.multiSelectSubcomponents(blob + scenarioName);
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
@@ -98,10 +115,18 @@ public class GroupCostingTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final List<String> subComponentNames = Arrays.asList("big ring", "small ring", "Pin");
+        String bigRing = "big ring";
+        String smallRing = "small ring";
+        String pin = "Pin";
         String subComponentExtension = ".SLDPRT";
         String assemblyName = "Hinge assembly";
         String assemblyExtension = ".SLDASM";
+
+        final List<String> subComponentNames = Arrays.asList(bigRing, smallRing, pin);
+        final HashMap<String, Double> fullyBurdenedCosts = new HashMap<String, Double>();
+        fullyBurdenedCosts.put(bigRing, 7.34);
+        fullyBurdenedCosts.put(smallRing, 3.97);
+        fullyBurdenedCosts.put(pin, 3.31);
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
@@ -154,6 +179,10 @@ public class GroupCostingTests extends TestBase {
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon - " + subComponentName).isEqualTo("check");
+            softAssertions.assertThat(
+                componentsListPage.getScenarioFullyBurdenedCost(subComponentName.toUpperCase(), scenarioName)
+                ).as("Fully Burdened Cost - " + subComponentName
+                    ).isCloseTo(fullyBurdenedCosts.get(subComponentName), Percentage.withPercentage(10));
         });
 
         softAssertions.assertAll();
