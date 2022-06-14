@@ -80,9 +80,16 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     /**
      * Method to check cost label is in correct state
+     *
+     * @param costLabel    - the cost label type
+     * @param timeoutInMinutes - time out in minutes
+     * @return - new page object
      */
-    public void waitForCostLabelNotContain(NewCostingLabelEnum costLabel, int timeoutInMinutes) {
-        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", costLabel.getCostingText())), timeoutInMinutes);
+    public EvaluatePage waitForCostLabelNotContain(NewCostingLabelEnum costLabel, int timeoutInMinutes) {
+        By byCostLabel = By.xpath(String.format("//div[.='%s']", costLabel.getCostingText()));
+        pageUtils.waitForElementToAppear(byCostLabel);
+        pageUtils.waitForElementsToNotAppear(byCostLabel, timeoutInMinutes);
+        return new EvaluatePage(driver);
     }
 
     /**
