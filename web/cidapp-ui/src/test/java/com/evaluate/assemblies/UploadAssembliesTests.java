@@ -1,7 +1,6 @@
 package com.evaluate.assemblies;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -19,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -38,6 +38,7 @@ public class UploadAssembliesTests extends TestBase {
     private File subComponentC;
     private File assembly;
     private UserCredentials currentUser = UserUtil.getUser();
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public UploadAssembliesTests() {
         super();
@@ -67,26 +68,32 @@ public class UploadAssembliesTests extends TestBase {
             .uploadComponentAndOpen(subComponentAName, scenarioName, subComponentA, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
 
         evaluatePage.uploadComponentAndOpen(subComponentBName, scenarioName, subComponentB, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
 
         evaluatePage.uploadComponentAndOpen(subComponentCName, scenarioName, subComponentC, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
 
         evaluatePage.uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
             .selectProcessGroup(ASSEMBLY)
             .costScenario();
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
 
-        assertThat(evaluatePage.getComponentResults("Total"), is(equalTo(3.0)));
-        assertThat(evaluatePage.getComponentResults("Unique"), is(equalTo(3.0)));
-        assertThat(evaluatePage.getComponentResults("Uncosted Unique"), is(equalTo(0.0)));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+
+        softAssertions.assertThat(evaluatePage.getComponentResults("Total")).isEqualTo(3.0);
+        softAssertions.assertThat(evaluatePage.getComponentResults("Unique")).isEqualTo(3.0);
+        softAssertions.assertThat(evaluatePage.getComponentResults("Uncosted Unique")).isEqualTo(0.0);
+
+        softAssertions.assertAll();
 
         //TODO uncomment when BA-2155 is complete
         /*componentsListPage = evaluatePage.openComponents();
