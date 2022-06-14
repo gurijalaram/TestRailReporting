@@ -37,7 +37,7 @@ public class CostingScenarioTest extends TestUtil {
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(batchObject.getIdentity());
         Part part = partResponse.getResponseEntity();
         assertThat(batchResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(part.getState(), is(equalTo(BCSState.LOADING.toString())));
+        assertThat(part.getState(), is(equalTo(BCSState.CREATED.toString())));
 
         //start batchObject costing
         BatchResources.startBatchCosting(batchObject);

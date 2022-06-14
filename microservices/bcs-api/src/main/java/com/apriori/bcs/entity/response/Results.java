@@ -1,21 +1,15 @@
 package com.apriori.bcs.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZZZZ;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 @Data
 @JsonRootName("response")
 @Schema(location = "ResultsSchema.json")
 public class Results {
-    private String partIdentity;
+    private String identity;
     private Double additionalAmortizedInvestment;
     private Double additionalDirectCosts;
     private Double amortizedInvestment;
@@ -27,11 +21,10 @@ public class Results {
     private Double cadSerLength;
     private Double cadSerWidth;
     private Double capitalInvestment;
-    private String costingStatus;
-    private String currencyCode;
     private Double cycleTime;
     private String dfmRisk;
     private Double dfmScore;
+    private String digitalFactoryDefaultMaterialName;
     private Double directOverheadCost;
     private Integer dtcMessagesCount;
     private Double elapsedTime;
@@ -51,36 +44,36 @@ public class Results {
     private Double laborCost;
     private Double laborTime;
 
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZZZZ.class)
-    private LocalDateTime lastCosted;
+
+    private String lastCosted;
 
     private Double length;
     private Double lifetimeCost;
     private Double logisticsCost;
+    private String manualMaterialName;
     private Double margin;
     private Double marginPercent;
     private Double materialCost;
+    private String materialMode;
     private String materialName;
     private Double materialOverheadCost;
     private String materialStockFormName;
     private String materialStockName;
     private Double materialUnitCost;
+    private String materialUtilizationMode;
     private Integer notSupportedGcdsCount;
     private Double numberOfParts;
-    private Double numOperators;
     private Double numPartsPerSheet;
     private Double numScrapParts;
     private Double partsPerHour;
     private Double periodOverhead;
     private Double pieceAndPeriod;
     private Double pieceCost;
-    private String processGroupName;
+    private String processRoutingName;
     private Double productionLife;
     private Double programmingCost;
     private Double programmingCostPerPart;
     private Double roughMass;
-    private String scenarioName;
     private Double scrapMass;
     private Double setupCostPerPart;
     private Double sgaCost;
@@ -92,10 +85,14 @@ public class Results {
     private Double totalCost;
     private Double totalProductionVolume;
     private Double otherDirectCosts;
-    private String url;
     private Double utilization;
     private Double utilizationWithAddendum;
     private Double utilizationWithoutAddendum;
-    private String vpeName;
     private Double width;
+    private String costingStatus;
+    private String currencyCode;
+    private String processGroupName;
+    private String scenarioName;
+    private UserDefinedAttributes userDefinedAttributes;
+    private String vpeName;
 }

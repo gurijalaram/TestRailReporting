@@ -58,7 +58,7 @@ public class ReportResourcesTest extends TestUtil {
     }
 
     @Test
-    @TestRail(testCaseId = {"4182"})
+    @TestRail(testCaseId = {"4182","7958"})
     @Description("API returns a representation of a single report in the CIS DB")
     public void getReport() {
         ResponseWrapper<Report> reportResponse = ReportResources.getReportRepresentation(report.getIdentity());
