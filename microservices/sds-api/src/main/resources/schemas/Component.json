@@ -8,7 +8,9 @@
     "updatedAt",
     "customerIdentity",
     "componentName",
-    "componentType"
+    "componentType",
+    "isJtComponent",
+    "isStepComponent"
   ],
   "properties": {
     "identity": {
@@ -37,6 +39,12 @@
     },
     "configurationName": {
       "type": "string"
+    },
+    "isJtComponent": {
+      "type": "boolean"
+    },
+    "isStepComponent": {
+      "type": "boolean"
     }
   }
 }
