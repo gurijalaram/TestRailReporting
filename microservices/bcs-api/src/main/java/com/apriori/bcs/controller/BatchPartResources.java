@@ -18,6 +18,7 @@ import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -63,6 +64,30 @@ public class BatchPartResources {
     }
 
     /**
+     * This overloaded method is to create Batch Part request entity for Batch ID.
+     *
+     * @param batchIdentity  - Batch ID
+     * @param klass          - Response class
+     * @return RequestEntity - Batch Part complete RequestEntity
+     */
+    public static <T> RequestEntity getBatchPartRequestEntity(BCSAPIEnum endPoint, String batchIdentity, String partIdentity, Class<T> klass) {
+        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, partIdentity);
+    }
+
+    /**
+     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
+     *
+     * @param newPartRequest - Deserialized NewPartRequest Object
+     * @param batchIdentity  - batch Identity
+     * @Param return class name
+     * @return Response of type part object
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
+        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
      * Creates a new batch part for specific batch ID by passing uda field.
      *
      * @param batchIdentity - batch id
@@ -93,7 +118,7 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Parts> getBatchPartById(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
-            .inlineVariables(batchIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -106,7 +131,7 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Part> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
-            .inlineVariables(batchIdentity, partIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, partIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -121,7 +146,7 @@ public class BatchPartResources {
         if (BatchPartResources.waitUntilPartStateIsCompleted(batchIdentity, partIdentity)) {
             log.info("Batch Part State is => " + BCSState.COMPLETED);
             RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
-                .inlineVariables(batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, partIdentity);
             return HTTPRequest.build(requestEntity).get();
         }
         return null;
@@ -157,7 +182,7 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Results> getBatchPartResults(String batchIdentity, String partIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, Results.class)
-            .inlineVariables(batchIdentity, partIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, partIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -194,7 +219,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Part.class).inlineVariables(batchIdentity);
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Part.class).inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity);
         return setPartRequestFormParams(newPartRequest);
     }
 
@@ -207,7 +232,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static <T> RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(batchIdentity);
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity);
         return setPartRequestFormParams(newPartRequest);
     }
 
@@ -236,7 +261,7 @@ public class BatchPartResources {
         Part part;
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
-                .inlineVariables(batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, partIdentity);
             part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);
@@ -263,7 +288,7 @@ public class BatchPartResources {
         Part part;
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
-                .inlineVariables(batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, partIdentity);
             part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);
