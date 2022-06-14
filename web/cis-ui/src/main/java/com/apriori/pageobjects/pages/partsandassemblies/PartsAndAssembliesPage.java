@@ -62,7 +62,11 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[starts-with(@Class,'MuiOutlinedInput-root MuiInputBase-root')]//button//*[@data-icon='times-circle']")
     private WebElement btnClear;
 
+    @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
+    private WebElement btnUnpin;
 
+    @FindBy(xpath = "//span[.='Unpin']")
+    private WebElement btnPUnpin;
 
 
 
@@ -297,5 +301,22 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         return tableRow.size();
     }
 
+    /**
+     * Click on unpin option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickOnUnpinOption() {
+        getPageUtils().waitForElementToAppear(btnPintoLeft).click();
+        return this;
+    }
 
+    /**
+     * Checks if unpin option displayed
+     *
+     * @return true/false
+     */
+    public boolean isUnPinOptionDisplayed() {
+        return pageUtils.isElementDisplayed(btnPintoLeft);
+    }
 }

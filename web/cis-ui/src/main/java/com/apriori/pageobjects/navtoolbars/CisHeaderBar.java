@@ -11,7 +11,7 @@ import org.slf4j.Logger;
 @Slf4j
 public class CisHeaderBar extends EagerPageComponent<CisHeaderBar> {
 
-    @FindBy(css = "div.MuiTypography-root")
+    @FindBy(xpath = "//*[@data-testid='title']")
     private WebElement headerText;
 
     public CisHeaderBar(WebDriver driver) {

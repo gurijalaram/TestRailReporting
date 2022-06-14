@@ -96,7 +96,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12239","12241"})
+    @TestRail(testCaseId = {"12239","12241","12242","12243"})
     @Description("Verify the availability and functionality of the 'pin to left' option")
     public void testPintoLeftOption() {
         loginPage = new CisLoginPage(driver);
@@ -109,6 +109,15 @@ public class PartsAndAssemblyTest extends TestBase {
         partsAndAssembliesPage.clickPinToLeft();
 
         assertThat(partsAndAssembliesPage.getPinnedTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
+
+        partsAndAssembliesPage.clickKebabMenuOnTableHeader();
+
+        assertThat(partsAndAssembliesPage.isUnPinOptionDisplayed(), is(true));
+
+        partsAndAssembliesPage.clickOnUnpinOption();
+
+        assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
+
 
     }
 
