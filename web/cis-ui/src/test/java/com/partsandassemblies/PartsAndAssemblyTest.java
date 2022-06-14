@@ -18,6 +18,7 @@ import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
@@ -32,6 +33,7 @@ public class PartsAndAssemblyTest extends TestBase {
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
     private PartsAndAssembliesPage partsAndAssembliesPage;
+    private SoftAssertions softAssertions;
 
     @Test
     @TestRail(testCaseId = {"12058"})
@@ -108,17 +110,19 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickPinToLeft();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         assertThat(partsAndAssembliesPage.getPinnedTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
 
         partsAndAssembliesPage.clickKebabMenuOnTableHeader();
 
-        assertThat(partsAndAssembliesPage.isUnPinOptionDisplayed(), is(true));
+        softAssertions.assertThat(partsAndAssembliesPage.isUnPinOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesPage.clickOnUnpinOption();
 
         assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
 
-
+        softAssertions.assertAll();
     }
 
     @Test

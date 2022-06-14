@@ -307,7 +307,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickOnUnpinOption() {
-        getPageUtils().waitForElementToAppear(btnPintoLeft).click();
+        getPageUtils().waitForElementAndClick(btnPintoLeft);
         return this;
     }
 

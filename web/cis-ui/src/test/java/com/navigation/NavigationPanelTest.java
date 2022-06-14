@@ -60,11 +60,10 @@ public class NavigationPanelTest extends TestBase {
         softAssertions.assertThat(myUserPage.isSupportOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(myUserPage.isLogoutOptionDisplayed()).isEqualTo(true);
 
-        softAssertions.assertAll();
-
         myUserPage.clickLogOut();
 
-        assertThat(loginPage.isLogoDisplayed(),is(equalTo(true)));
+        softAssertions.assertThat(loginPage.isLogoDisplayed()).isEqualTo(true);
 
+        softAssertions.assertAll();
     }
 }
