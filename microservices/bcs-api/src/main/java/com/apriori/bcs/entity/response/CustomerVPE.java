@@ -35,6 +35,7 @@ public class CustomerVPE extends Pagination {
     private Number batchesPerYear;
     private String description;
     private String location;
+    private String materialCatalogVpeIdentity;
     private String name;
     private String ownerType;
     private Number productionLife;

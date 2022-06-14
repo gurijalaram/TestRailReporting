@@ -1,14 +1,14 @@
 package com.apriori.bcs.entity.request;
 
-import com.apriori.bcs.entity.response.CostingPreferences;
+import com.apriori.bcs.entity.response.UserPreference;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonRootName("response")
-@Schema(location = "CostingPreferencesSchema.json")
+@Schema(location = "UserPreferenceSchema.json")
 public class PatchCostingPreferenceRequest {
-    private CostingPreferences costingPreferences;
+    private UserPreference costingPreferences;
     private Double cadToleranceReplacement;
     private Double minCadToleranceThreshold;
     private String processGroup;
@@ -18,12 +18,12 @@ public class PatchCostingPreferenceRequest {
     private Boolean useVpeForAllProcesses;
     private String vpeName;
 
-    public CostingPreferences getCostingPreferences() {
+    public UserPreference getCostingPreferences() {
         return costingPreferences;
     }
 
-    public PatchCostingPreferenceRequest setCostingPreferences(CostingPreferences costingPreferences) {
-        this.costingPreferences = costingPreferences;
+    public PatchCostingPreferenceRequest setCostingPreferences(UserPreference userPreferences) {
+        this.costingPreferences = userPreferences;
         return this;
     }
 

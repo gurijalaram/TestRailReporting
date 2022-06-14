@@ -16,6 +16,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,6 +41,7 @@ public class ReportResources {
         reportRequestTestData.setReportTemplateIdentity(getPartReportTemplateId());
 
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Report.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .body(reportRequestTestData);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -52,6 +54,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<Report> createReport(ReportRequest reportRequestData) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Report.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .body(reportRequestData);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -64,6 +67,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<ReportError> createReportWithInvalidData(ReportRequest reportRequestData) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, ReportError.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .body(reportRequestData);
         return HTTPRequest.build(requestEntity).post();
     }
@@ -74,7 +78,8 @@ public class ReportResources {
      * @return - response - ResponseWrapper object of Reports POJO
      */
     public static ResponseWrapper<Reports> getReports() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Reports.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORTS, Reports.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"));
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -86,7 +91,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<Report> getReportRepresentation(String reportIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
-            .inlineVariables(reportIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -99,7 +104,7 @@ public class ReportResources {
      */
     public static ResponseWrapper<ReportExport> exportReport(String reportIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_EXPORT_BY_ID, ReportExport.class)
-            .inlineVariables(reportIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -110,7 +115,8 @@ public class ReportResources {
      * @return - response  object of ResponseWrapper.
      */
     public static ResponseWrapper<ReportTemplates> getReportTemplates() {
-        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_TEMPLATES, ReportTemplates.class);
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_TEMPLATES, ReportTemplates.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"));
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -164,7 +170,7 @@ public class ReportResources {
         RequestEntity requestEntity;
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.REPORT_BY_ID, Report.class)
-                .inlineVariables(reportIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), reportIdentity);
             report = (Report) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);
