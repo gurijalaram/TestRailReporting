@@ -49,6 +49,7 @@ public class LargeGroupEditAssemblies extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeClass
     public static void setupAssembly() {
@@ -82,9 +83,6 @@ public class LargeGroupEditAssemblies extends TestBase {
     @TestRail(testCaseId = {"10883", "10884", "10885", "10894", "11140"})
     @Description("group Edit sub Components")
     public void editButtonUnavailable() {
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
@@ -101,6 +99,7 @@ public class LargeGroupEditAssemblies extends TestBase {
                 MECHANISM_BODY.getPartName() + "," + scenarioName + "",
                 PADDLE_BAR.getPartName() + "," + scenarioName + "",
                 PIN.getPartName() + "," + scenarioName + "");
+
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 
         componentsListPage.multiSelectSubcomponents("centre bolt, " + scenarioName + "")
