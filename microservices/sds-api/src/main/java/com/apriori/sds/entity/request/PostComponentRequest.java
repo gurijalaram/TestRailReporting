@@ -12,16 +12,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PostComponentRequest {
-    private String filename;
     private String scenarioName;
-    private CustomAttributesRequest customAttributesRequest;
-    private String name;
-    private Boolean override;
-    private String fileContents;
-    private String componentType;
     private String componentName;
+    private String componentType;
+    private String notes;
+    private String description;
     private String updatedBy;
     private String createdBy;
-    private String description;
-    private String notes;
+    private Boolean override;
+    private String fileMetadataIdentity;
 }
