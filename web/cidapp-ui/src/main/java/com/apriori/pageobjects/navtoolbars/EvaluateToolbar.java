@@ -118,7 +118,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return - new page object
      */
     public EvaluatePage costScenarioConfirmation(String buttonLabel) {
-        By byButton = By.xpath(String.format("//button[contains(text(), '%s')]", buttonLabel));
+        By byButton = By.xpath(String.format("//button[contains(text(),'%s')]", buttonLabel));
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
     }
