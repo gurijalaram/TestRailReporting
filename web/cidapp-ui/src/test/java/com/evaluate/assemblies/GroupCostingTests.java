@@ -86,10 +86,6 @@ public class GroupCostingTests extends TestBase {
 
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-//        for (int i = 0; i < 10; i++) {
-//            componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
-//            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
-//        }
         componentsListPage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," +  scenarioName, ellipse + "," + scenarioName, octagon + "," +  scenarioName,
             cube75 + "," +  scenarioName, hexagon + "," +  scenarioName, cube100 + "," +  scenarioName, slot + "," +  scenarioName, cuboid + "," +  scenarioName,
             cylinder + "," +  scenarioName);
