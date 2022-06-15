@@ -972,7 +972,7 @@ public class EditAssembliesTest extends TestBase {
         final String PIN = "Pin";
         final String SMALL_RING = "small ring";
 
-        final List<String> subComponentNames = Arrays.asList(PIN);
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final String subComponentExtension = ".SLDPRT";
 
