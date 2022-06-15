@@ -90,12 +90,13 @@ public class GroupCostingTests extends TestBase {
 //            componentsListPage.selectScenario(subComponentNames.get(i).toUpperCase(), scenarioName);
 //            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 //        }
-        componentsListPage.multiSelectSubcomponents(arc + scenarioName, cube50 + scenarioName, ellipse + scenarioName, octagon + scenarioName, cube75 + scenarioName,
-            hexagon + scenarioName, cube100 + scenarioName, slot + scenarioName, cuboid + scenarioName, cylinder + scenarioName);
+        componentsListPage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," +  scenarioName, ellipse + "," + scenarioName, octagon + "," +  scenarioName,
+            cube75 + "," +  scenarioName, hexagon + "," +  scenarioName, cube100 + "," +  scenarioName, slot + "," +  scenarioName, cuboid + "," +  scenarioName,
+            cylinder + "," +  scenarioName);
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
 
-        componentsListPage.multiSelectSubcomponents(blob + scenarioName);
+        componentsListPage.multiSelectSubcomponents(blob + "," + scenarioName);
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
