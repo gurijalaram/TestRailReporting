@@ -29,6 +29,7 @@ public class PsoEditTests extends TestBase {
 
     private File resourceFile;
     private UserCredentials currentUser;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
     @TestRail(testCaseId = {"7286", "7287", "7288", "7289"})
@@ -58,8 +59,6 @@ public class PsoEditTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
             .selectOptionsTab();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(8);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.40);
@@ -100,6 +99,12 @@ public class PsoEditTests extends TestBase {
         assertThat(materialProcessPage.isOptimizeMinCostSelected(), is(true));
         assertThat(materialProcessPage.getMoldMaterial(), is(equalTo("AISI P20")));
         assertThat(materialProcessPage.getPartTolerance(), is(equalTo("Low Tolerance +/-0.254 (+/-0.010\")")));
+
+        softAssertions.assertThat(materialProcessPage.isOptimizeMinCostSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("AISI P20");
+        softAssertions.assertThat(materialProcessPage.getPartTolerance()).isEqualTo("Low Tolerance +/-0.254 (+/-0.010\")");
+
+        softAssertions.assertAll();
     }
 
     @Ignore("Ignoring this test only as we need to find a way to count bar horizontally")
@@ -133,6 +138,11 @@ public class PsoEditTests extends TestBase {
 
         assertThat(materialProcessPage.isOptimizeMinCostSelected(), is(true));
         assertThat(materialProcessPage.getMoldMaterial(), is(equalTo("Plastic")));
+
+        softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("Plastic");
+
+        softAssertions.assertAll();
     }
 
     @Test
