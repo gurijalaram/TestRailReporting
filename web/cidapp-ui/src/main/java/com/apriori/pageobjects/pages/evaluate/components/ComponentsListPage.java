@@ -470,6 +470,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         }
         new ExploreToolbar(driver).refresh();
 
+        if (pageUtils.isElementDisplayed(By.cssSelector(".sub-component-tree [data-icon='gear']"))) {
+            checkManifestComplete(componentInfo, componentName);
+        }
         return this;
     }
 

@@ -1019,8 +1019,9 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         evaluatePage = componentsListPage.closePanel()
-            .costScenario()
-            .costScenarioConfirmation("Yes");
+            .clickCost()
+            .confirmCost("Yes")
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2);
 
         double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
         double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");
