@@ -89,6 +89,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = ".sub-component-tree .component-name")
     private List<WebElement> subcomponentNames;
 
+    @FindBy(css = ".sub-component-tree .table-body")
+    private WebElement componentTable;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -115,6 +118,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(tableButton);
         pageUtils.waitForElementToAppear(previewButton);
+        pageUtils.waitForElementToAppear(componentTable);
         assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
 
@@ -460,19 +464,28 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * Checks scenario manifest is in a complete state
      *
      * @param componentInfo - the component info
-     * @param componentName - the subcomponent names
+     * @param subcomponentNames - the subcomponent names
      * @return current page object
      */
-    public ComponentsListPage checkManifestComplete(ComponentInfoBuilder componentInfo, String componentName) {
+    public ComponentsListPage checkManifestComplete(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
 
-        while (!getScenarioManifestState(componentInfo, componentName).contains("COMPLETE")) {
-            getScenarioManifestState(componentInfo, componentName);
-        }
-        new ExploreToolbar(driver).refresh();
+        List<String> componentNames = Arrays.stream(subcomponentNames)
+            .flatMap(x -> Arrays.stream(x.split(","))
+                .map(String::trim))
+            .collect(Collectors.toList());
 
-        if (pageUtils.isElementDisplayed(By.cssSelector(".sub-component-tree [data-icon='gear']"))) {
-            checkManifestComplete(componentInfo, componentName);
-        }
+        componentNames.forEach(componentName -> {
+            while (!getScenarioManifestState(componentInfo, componentName).contains("COMPLETE")) {
+                getScenarioManifestState(componentInfo, componentName);
+            }
+            new ExploreToolbar(driver).refresh();
+
+            isLoaded();
+
+            if (pageUtils.isElementDisplayed(By.cssSelector(".sub-component-tree [data-icon='gear']"))) {
+                checkManifestComplete(componentInfo, componentName);
+            }
+        });
         return this;
     }
 
