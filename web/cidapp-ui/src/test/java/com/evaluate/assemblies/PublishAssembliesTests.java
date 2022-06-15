@@ -248,6 +248,7 @@ public class PublishAssembliesTests extends TestBase {
             .clickContinue(PublishPage.class)
             .publish(PublishPage.class)
             .close(ComponentsListPage.class);
+
         softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.PROCESSING_FAILED)).isEqualTo(true);
 
@@ -318,8 +319,6 @@ public class PublishAssembliesTests extends TestBase {
         final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
         final String subComponentExtension = ".SLDPRT";
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,

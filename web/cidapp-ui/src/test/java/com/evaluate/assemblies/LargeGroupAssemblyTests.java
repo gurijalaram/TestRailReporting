@@ -16,8 +16,6 @@ import static com.utils.PartNamesEnum.SEAT;
 import static com.utils.PartNamesEnum.SEAT_LOCK;
 import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 import static com.utils.PartNamesEnum.WASHER;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -32,6 +30,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -46,6 +45,7 @@ public class LargeGroupAssemblyTests extends TestBase {
     private ComponentsListPage componentsListPage;
     private static UserCredentials currentUser;
     private static String scenarioName;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public LargeGroupAssemblyTests() {
         super();
@@ -98,10 +98,12 @@ public class LargeGroupAssemblyTests extends TestBase {
                 MECHANISM_BODY.getPartName() + ", " + scenarioName + "",
                 PADDLE_BAR.getPartName() + ", " + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(true));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
         componentsListPage.multiSelectSubcomponents(PIN.getPartName() + ", " + scenarioName + "");
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH), is(false));
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 }
