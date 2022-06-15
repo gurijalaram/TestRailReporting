@@ -35,9 +35,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement cancelButton;
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
-    @FindBy(css = "button [data-icon='plus']")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='plus']")
     private WebElement addButton;
-    @FindBy(css = "button [data-icon='clear']")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='xmark']")
     private WebElement clearButton;
     @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
