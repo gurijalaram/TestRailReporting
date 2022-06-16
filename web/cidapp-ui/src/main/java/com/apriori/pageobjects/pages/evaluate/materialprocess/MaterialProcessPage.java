@@ -233,6 +233,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
+        pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(".highcharts-data-labels")));
         int position = IntStream.range(0, pageUtils.waitForElementsToAppear(xAxisLabel).size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         chart.forEach(x -> pageUtils.actionClick(chart.get(position)));
         return this;
@@ -399,6 +400,9 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectMoldMaterial(String value) {
+        By byLocator = By.xpath("//h6[text()='Mold Material']");
+        pageUtils.waitForElementToAppear(byLocator);
+        pageUtils.scrollWithJavaScript(driver.findElement(byLocator), true);
         pageUtils.typeAheadSelect(psoController.dropdownLocator("Mold Material"), root, value);
         return this;
     }

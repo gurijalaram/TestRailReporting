@@ -96,10 +96,6 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("High Pressure Die Casting")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.isOptimizeMinCostSelected(), is(true));
-        assertThat(materialProcessPage.getMoldMaterial(), is(equalTo("AISI P20")));
-        assertThat(materialProcessPage.getPartTolerance(), is(equalTo("Low Tolerance +/-0.254 (+/-0.010\")")));
-
         softAssertions.assertThat(materialProcessPage.isOptimizeMinCostSelected()).isEqualTo(true);
         softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("AISI P20");
         softAssertions.assertThat(materialProcessPage.getPartTolerance()).isEqualTo("Low Tolerance +/-0.254 (+/-0.010\")");
@@ -135,9 +131,6 @@ public class PsoEditTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Vertical Automatic")
             .selectOptionsTab();
-
-        assertThat(materialProcessPage.isOptimizeMinCostSelected(), is(true));
-        assertThat(materialProcessPage.getMoldMaterial(), is(equalTo("Plastic")));
 
         softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
         softAssertions.assertThat(materialProcessPage.getMoldMaterial()).isEqualTo("Plastic");
