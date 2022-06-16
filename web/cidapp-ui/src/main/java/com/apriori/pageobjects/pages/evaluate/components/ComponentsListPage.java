@@ -533,7 +533,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public boolean isTextDecorationStruckOut(String componentName) {
         By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             componentName.toUpperCase().trim()));
-        return driver.findElement(byComponentName).getCssValue("text-decoration").contains("line-through");
+        return pageUtils.waitForElementToAppear(byComponentName).getCssValue("text-decoration").contains("line-through");
     }
 
     /**

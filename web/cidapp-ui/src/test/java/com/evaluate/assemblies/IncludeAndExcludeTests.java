@@ -7,6 +7,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -452,7 +453,19 @@ public class IncludeAndExcludeTests extends TestBase {
             .closePanel()
             .clickRefresh(ComponentsListPage.class);
 
-        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isFalse();
+        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isTrue();
+
+        softAssertions.assertAll();
+
+        componentsListPage.closePanel()
+            .clickExplore()
+            .selectFilter("Recent")
+            .highlightScenario(assemblyName, scenarioName)
+            .delete()
+            .submit(ExplorePage.class)
+            .highlightScenario(componentName, scenarioName)
+            .delete()
+            .submit(ExplorePage.class);
     }
 }
 
