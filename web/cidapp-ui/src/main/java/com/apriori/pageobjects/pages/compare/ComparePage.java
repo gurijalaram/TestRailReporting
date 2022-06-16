@@ -124,17 +124,6 @@ public class ComparePage extends CompareToolbar {
     }
 
     /**
-     * checks if the section is collapsed
-     *
-     * @param section - name of the section
-     * @return - boolean
-     */
-    public boolean isSectionCollapsed(String section) {
-        By bySection = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .arrow-down", section));
-        return pageUtils.isElementDisplayed(bySection);
-    }
-
-    /**
      * Performs expand/collapse on section
      *
      * @param section - the section
