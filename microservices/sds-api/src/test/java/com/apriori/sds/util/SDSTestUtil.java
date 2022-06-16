@@ -221,9 +221,9 @@ public abstract class SDSTestUtil extends TestUtil {
 
     public static Map<String, String> getContextHeaders() {
         return new HashMap<String, String>() {{
-            put("ap-application-context", getApApplicationContext());
-            put("ap-cloud-context", testingUser.getCloudContext());
-        }};
+                put("ap-application-context", getApApplicationContext());
+                put("ap-cloud-context", testingUser.getCloudContext());
+            }};
     }
 
     // TODO z: can be migrated to AuthorizationUtil if make this decision based on usage this functionality outside sds
