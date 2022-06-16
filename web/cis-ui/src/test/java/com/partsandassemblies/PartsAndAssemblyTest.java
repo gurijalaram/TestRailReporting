@@ -106,11 +106,11 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickPartsAndAssemblies()
                 .clickKebabMenuOnTableHeader();
 
-        assertThat(partsAndAssembliesPage.isPinToLeftOptionDisplayed(), is(true));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isPinToLeftOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesPage.clickPinToLeft();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.SCENARIO_NAME.getColumns());
 
