@@ -18,6 +18,7 @@ public class ScenarioAssociation {
     private String createdBy;
     private String deletedBy;
     private String identity;
+    private Boolean excluded;
     private Integer occurrences;
     private String scenarioIdentity;
     private String updatedBy;

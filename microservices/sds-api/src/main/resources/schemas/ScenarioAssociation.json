@@ -4,6 +4,7 @@
     "identity",
     "createdBy",
     "occurrences",
+    "excluded",
     "scenarioIdentity"
   ],
   "properties": {
@@ -18,6 +19,8 @@
     },
     "occurrences": {
       "type": "number"
+    },"excluded": {
+      "type": "boolean"
     },
     "scenarioIdentity": {
       "type": "string"
