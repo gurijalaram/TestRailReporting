@@ -452,7 +452,7 @@ public class IncludeAndExcludeTests extends TestBase {
             .closePanel()
             .clickRefresh(ComponentsListPage.class);
 
-        assertThat(componentsListPage.isTextDecorationStruckOut(componentName), is(false));
+        softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isFalse();
     }
 }
 
