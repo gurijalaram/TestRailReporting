@@ -1,9 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
@@ -19,6 +15,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -68,9 +65,11 @@ public class GroupCostingTests {
 
         ResponseWrapper<GroupCostResponse> groupCostResponse = scenariosUtil.postGroupCostScenarios(componentAssembly, subComponentsToCost);
 
-        assertThat(groupCostResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(groupCostResponse.getResponseEntity().getSuccesses().size(), is(equalTo(subComponentsToCost.length)));
-        assertThat(groupCostResponse.getResponseEntity().getFailures().size(), is(equalTo(0)));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(groupCostResponse.getStatusCode()).as("Group Cost Response Code").isEqualTo(HttpStatus.SC_OK);
+        softAssertions.assertThat(groupCostResponse.getResponseEntity().getSuccesses().size()).as("Group Cost Successes").isEqualTo(subComponentsToCost.length);
+        softAssertions.assertThat(groupCostResponse.getResponseEntity().getFailures().size()).as("Group Cost Failures").isEqualTo(0);
     }
 
     @Test
@@ -96,7 +95,10 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
-        assertThat(groupErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_BAD_REQUEST)));
-        assertThat(groupErrorResponse.getResponseEntity().getMessage(), is(equalTo("'groupItems' should be less than or equal to 10.")));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(groupErrorResponse.getStatusCode()).as("Group Cost Bad Request Code").isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(
+            groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'groupItems' should be less than or equal to 10.");
     }
 }
