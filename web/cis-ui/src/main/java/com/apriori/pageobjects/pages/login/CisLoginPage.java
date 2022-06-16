@@ -10,11 +10,16 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
 public class CisLoginPage extends LoadableComponent<CisLoginPage> {
+
+    @FindBy(css = ".auth0-lock-header-logo")
+    private WebElement aprioriLogo;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -57,5 +62,14 @@ public class CisLoginPage extends LoadableComponent<CisLoginPage> {
      */
     public LeftHandNavigationBar cisLogin(UserCredentials userCredentials) {
         return aprioriLoginPage.login(userCredentials, LeftHandNavigationBar.class);
+    }
+
+    /**
+     * Checks if apriori logo displayed
+     *
+     * @return true/false
+     */
+    public boolean isLogoDisplayed() {
+        return pageUtils.waitForElementToAppear(aprioriLogo).isDisplayed();
     }
 }

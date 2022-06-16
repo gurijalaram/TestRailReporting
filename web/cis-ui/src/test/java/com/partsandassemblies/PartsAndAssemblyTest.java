@@ -18,6 +18,7 @@ import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.CoreMatchers;
+import org.hamcrest.Matchers;
 import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
@@ -32,6 +33,7 @@ public class PartsAndAssemblyTest extends TestBase {
     private CisLoginPage loginPage;
     private LeftHandNavigationBar leftHandNavigationBar;
     private PartsAndAssembliesPage partsAndAssembliesPage;
+    private SoftAssertions softAssertions;
 
     @Test
     @TestRail(testCaseId = {"12058"})
@@ -96,7 +98,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12239","12241"})
+    @TestRail(testCaseId = {"12239","12241","12242","12243"})
     @Description("Verify the availability and functionality of the 'pin to left' option")
     public void testPintoLeftOption() {
         loginPage = new CisLoginPage(driver);
@@ -104,12 +106,24 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickPartsAndAssemblies()
                 .clickKebabMenuOnTableHeader();
 
-        assertThat(partsAndAssembliesPage.isPinToLeftOptionDisplayed(), is(true));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isPinToLeftOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesPage.clickPinToLeft();
 
-        assertThat(partsAndAssembliesPage.getPinnedTableHeaders(), hasItems(CisColumnsEnum.SCENARIO_NAME.getColumns()));
+        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.SCENARIO_NAME.getColumns());
 
+        partsAndAssembliesPage.clickKebabMenuOnTableHeader();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isUnPinOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesPage.clickOnUnpinOption();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.SCENARIO_NAME.getColumns());
+
+
+        softAssertions.assertAll();
     }
 
     @Test
