@@ -15,6 +15,7 @@ import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
 import com.apriori.cidappapi.entity.request.ScenarioAssociationsRequest;
 import com.apriori.cidappapi.entity.request.ScenarioRequest;
+import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
@@ -336,6 +337,68 @@ public class ScenariosUtil {
                     .scenarioName(forkRequest.getScenarioName())
                     .override(forkRequest.getOverride())
                     .groupItems(subComponentInfo
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to cost a group of scenarios
+     *
+     * @param componentInfo - A number of copy component objects
+     * @return response object
+     */
+    public ResponseWrapper<GroupCostResponse> postGroupCostScenarios(ComponentInfoBuilder componentInfo, String... componentScenarioName) {
+
+        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        for (String[] componentScenario : componentScenarioNames) {
+            if (componentInfo.getSubComponents().stream()
+                .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
+
+                subComponentInfo.add(componentInfo.getSubComponents().stream()
+                    .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
+                    .collect(Collectors.toList()).get(0));
+            }
+        }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, GroupCostResponse.class)
+                .body(GroupCostRequest.builder()
+                    .costingTemplateIdentity(getCostingTemplateId(componentInfo.getSubComponents().get(0)).getIdentity())
+                    .groupItems(subComponentInfo
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to cost a group of scenarios and expect error
+     *
+     * @param componentInfo - A number of copy component objects
+     * @return response object
+     */
+    public ResponseWrapper<ErrorMessage> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfo) {
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
+                .body(GroupCostRequest.builder()
+                    .costingTemplateIdentity(getCostingTemplateId(componentInfo).getIdentity())
+                    .groupItems(componentInfo.getSubComponents()
                         .stream()
                         .map(component -> GroupItems.builder()
                             .componentIdentity(component.getComponentIdentity())
