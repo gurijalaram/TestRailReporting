@@ -1,9 +1,6 @@
 package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -32,6 +29,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -42,7 +40,6 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class SecondaryProcessTests extends TestBase {
-
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private SecondaryPage secondaryPage;
@@ -52,6 +49,7 @@ public class SecondaryProcessTests extends TestBase {
     private UserCredentials currentUser;
     private SecondaryProcessesPage secondaryProcessPage;
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public SecondaryProcessTests() {
         super();
@@ -90,13 +88,15 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Hydrostatic Leak Testing"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Hydrostatic Leak Testing");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Hydrostatic Leak Testing")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getAverageWallThickness(), is(0.21));
+        softAssertions.assertThat(materialProcessPage.getAverageWallThickness()).isEqualTo(0.21);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -121,7 +121,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .goToSecondaryTab();
 
-        assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
+        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).isEmpty();
 
         evaluatePage = secondaryPage.openSecondaryProcesses()
             .goToOtherSecProcessesTab()
@@ -130,11 +130,13 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluateToolbar.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Xray Inspection"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Xray Inspection");
 
         secondaryPage = evaluatePage.goToSecondaryTab();
 
-        assertThat(secondaryPage.getSecondaryProcesses(), hasItems("Xray", " Packaging"));
+        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("Xray", " Packaging");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -163,7 +165,7 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Carburize"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Carburize");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Carburize")
@@ -176,8 +178,10 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Carburize")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("Case Depth Selection"), is(equalTo(0.46)));
-        assertThat(materialProcessPage.getOverriddenPso("Masking"), is(equalTo(1.0)));
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Case Depth Selection")).isEqualTo(0.46);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Masking")).isEqualTo(1.0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -243,13 +247,15 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Standard Anneal"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Standard Anneal");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Standard Anneal")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("Masking"), is(1.0));
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Masking")).isEqualTo(1.0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -405,13 +411,14 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Powder Coat Cart"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Powder Coat Cart");
 
         materialProcessPage = evaluatePage.openMaterialProcess()
             .selectBarChart("Powder Coat Cart");
 
+        softAssertions.assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart")).contains("289.91s (96.29%)");
 
-        assertThat(materialProcessPage.getProcessPercentage("Powder Coat Cart"), hasItem("289.91s (96.29%)"));
+        softAssertions.assertAll();
     }
 
     @Test
@@ -448,10 +455,12 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(0.30));
-        assertThat(materialProcessPage.isNoMaskingSelected(), is(true));
-        assertThat(materialProcessPage.getComponentsPaintCart(), is(414.0));
-        assertThat(materialProcessPage.getPaintedBatchSize(), is(2.0));
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.30);
+        softAssertions.assertThat(materialProcessPage.isNoMaskingSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getComponentsPaintCart()).isEqualTo(414.0);
+        softAssertions.assertThat(materialProcessPage.getPaintedBatchSize()).isEqualTo(2.0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -485,10 +494,12 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Wet Coat Line")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(0.40));
-        assertThat(materialProcessPage.getOverriddenPso("Number of Masked Features"), is(1.0));
-        assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?"), is(.4));
-        assertThat(materialProcessPage.getOverriddenPso("Number of Components Per Load Bar"), is(1.0));
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.40);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Masked Features")).isEqualTo(1.0);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.40);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Number of Components Per Load Bar")).isEqualTo(1.0);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -550,10 +561,10 @@ public class SecondaryProcessTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation / Carton Forming / Pack & Load"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Passivation / Carton Forming / Pack & Load");
 
         evaluatePage.publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -563,7 +574,9 @@ public class SecondaryProcessTests extends TestBase {
             .openScenario("SheetMetal", scenarioName)
             .goToSecondaryTab();
 
-        assertThat(evaluatePage.isSecondaryProcessButtonEnabled(), is(false));
+        softAssertions.assertThat(evaluatePage.isSecondaryProcessButtonEnabled()).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 
     @Category({SmokeTests.class, IgnoreTests.class})
@@ -989,7 +1002,7 @@ public class SecondaryProcessTests extends TestBase {
             .costScenario()
             .goToSecondaryTab();
 
-        assertThat(secondaryPage.getSecondaryProcesses(), hasItems("No Processes Selected..."));
+        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("No Processes Selected...");
 
         evaluatePage = secondaryPage.openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
@@ -1000,6 +1013,8 @@ public class SecondaryProcessTests extends TestBase {
             .deselectAll()
             .cancel();
 
-        assertThat(evaluatePage.getListOfSecondaryProcesses(), hasItem("No Processes Selected..."));
+        softAssertions.assertThat(evaluatePage.getListOfSecondaryProcesses()).contains("No Processes Selected...");
+
+        softAssertions.assertAll();
     }
 }
