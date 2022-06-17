@@ -64,17 +64,37 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12188"})
-    @Description("Verify that user can hide all the fields by selecting 'HIDE ALL' option")
-    public void testHideAllFieldsOption() {
+    @TestRail(testCaseId = {"12188","12174","12175","12189"})
+    @Description("Verify that user can hide all and Show all the fields by selecting 'HIDE ALL' and 'SHOW ALL' options")
+    public void testShowHideFieldsOption() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
-        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
-        partsAndAssembliesPage.waitForTableLoad();
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies();
+
+        leftHandNavigationBar = new LeftHandNavigationBar(driver);
+
+        leftHandNavigationBar.collapseNavigationPanel();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isShowHideOptionDisplayed()).isEqualTo(true);
+
         partsAndAssembliesPage.clickOnShowHideOption();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isShowHideModalDisplayed()).isEqualTo(true);
+
         partsAndAssembliesPage.clickOnHideAllButton();
 
-        assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns()));
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns());
+
+        partsAndAssembliesPage.clickOnShowAllOption();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
+                CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
+                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns(),
+                CisColumnsEnum.FULLY_BURDENED_COST.getColumns());
+
+        softAssertions.assertAll();
 
     }
 

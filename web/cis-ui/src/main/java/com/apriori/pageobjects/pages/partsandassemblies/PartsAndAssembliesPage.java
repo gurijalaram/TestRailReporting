@@ -68,6 +68,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[.='Unpin']")
     private WebElement btnPUnpin;
 
+    @FindBy(id = "simple-popper")
+    private WebElement showHideModal;
+
+    @FindBy(id = "hide-button")
+    private WebElement btnShowAll;
+
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -318,5 +324,33 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public boolean isUnPinOptionDisplayed() {
         return pageUtils.isElementDisplayed(btnPintoLeft);
+    }
+
+    /**
+     * Checks if show/hide fields option displayed
+     *
+     * @return true/false
+     */
+    public boolean isShowHideOptionDisplayed() {
+        return pageUtils.isElementDisplayed(showHideFieldsOption);
+    }
+
+    /**
+     * Checks if show/hide fields modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isShowHideModalDisplayed() {
+        return pageUtils.isElementDisplayed(showHideModal);
+    }
+
+    /**
+     * Click on show All option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickOnShowAllOption() {
+        getPageUtils().waitForElementAndClick(btnShowAll);
+        return this;
     }
 }
