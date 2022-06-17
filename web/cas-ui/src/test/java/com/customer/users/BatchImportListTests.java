@@ -17,7 +17,6 @@ import com.apriori.customer.users.ImportPage;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
@@ -36,7 +35,6 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,11 +52,7 @@ public class BatchImportListTests extends TestBase {
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
-    private File resourceFile;
-    private File resourceInvalidHeaders;
-    private File resourceInvalidData;
     private String fileName = "testUsersBatch.csv";
-    private String invalidHeadersFileName = "invalidHeaders.csv";
     private String invalidDataFile = "invalidUsersData.csv";
 
     @Before
@@ -67,24 +61,21 @@ public class BatchImportListTests extends TestBase {
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String salesforce = StringUtils.leftPad(now, 15, "0");
         String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
-        resourceFile = FileResourceUtil.getResourceAsFile(fileName);
-        resourceInvalidHeaders = FileResourceUtil.getResourceAsFile(invalidHeadersFileName);
-        resourceInvalidData = FileResourceUtil.getResourceAsFile(invalidDataFile);
-        String customerType = Constants.CLOUD_CUSTOMER;
+        String customerType = Constants.ON_PREM_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
-                : targetCustomer;
+            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, null, salesforce, email).getResponseEntity()
+            : targetCustomer;
 
         customerIdentity = targetCustomer.getIdentity();
         importPage = new CasLoginPage(driver)
-                .login(UserUtil.getUser())
-                .openCustomer(customerIdentity)
-                .goToUsersPage()
-                .goToImport();
+            .login(UserUtil.getUser())
+            .openCustomer(customerIdentity)
+            .goToUsersPage()
+            .goToImport();
     }
 
     @After
@@ -103,22 +94,21 @@ public class BatchImportListTests extends TestBase {
 
     @Test
     @Description("New CSV file with users can be uploaded in CAS")
-    @TestRail(testCaseId = {"4344", "4361", "4354", "4357"})
+    @TestRail(testCaseId = {"4344", "4361", "4354", "4357", "4352", "13234"})
     public void testUploadCsvNewUsers() {
         SoftAssertions soft = new SoftAssertions();
-        ImportPage uploadUsers = importPage.importFile(resourceFile)
-                .selectCard(fileName)
-                .validateImportTableArePageableAndRefreshable(soft)
-                .validateImportUsersTableHasCorrectColumns("User Name", "userName", soft)
-                .validateImportUsersTableHasCorrectColumns("Status", "cdsStatus", soft)
-                .validateImportUsersTableHasCorrectColumns("Identity", "userIdentity", soft)
-                .validateImportUsersTableHasCorrectColumns("Email", "email", soft)
-                .validateImportUsersTableHasCorrectColumns("Given Name", "givenName", soft)
-                .validateImportUsersTableHasCorrectColumns("Family Name", "familyName", soft)
-                .validateImportUsersTableHasCorrectColumns("Job Title", "jobTitle", soft)
-                .validateImportUsersTableHasCorrectColumns("Department", "department", soft)
-                .validateImportUsersTableHasCorrectColumns("Created At", "createdAt", soft)
-                .validateImportUsersTableHasCorrectColumns("Created By", "createdByName", soft);
+        cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
+        ImportPage uploadUsers = importPage.refreshBatchFilesList()
+            .validateImportUsersTableHasCorrectColumns("User Name", "userName", soft)
+            .validateImportUsersTableHasCorrectColumns("Status", "cdsStatus", soft)
+            .validateImportUsersTableHasCorrectColumns("Identity", "userIdentity", soft)
+            .validateImportUsersTableHasCorrectColumns("Email", "email", soft)
+            .validateImportUsersTableHasCorrectColumns("Given Name", "givenName", soft)
+            .validateImportUsersTableHasCorrectColumns("Family Name", "familyName", soft)
+            .validateImportUsersTableHasCorrectColumns("Job Title", "jobTitle", soft)
+            .validateImportUsersTableHasCorrectColumns("Department", "department", soft)
+            .validateImportUsersTableHasCorrectColumns("Created At", "createdAt", soft)
+            .validateImportUsersTableHasCorrectColumns("Created By", "createdByName", soft);
         soft.assertAll();
 
         PageUtils utils = new PageUtils(getDriver());
@@ -147,9 +137,12 @@ public class BatchImportListTests extends TestBase {
         assertThat("The selection is not holding across pages.", expected, is(equalTo(selected)));
         assertThat(importPage.canLoad(), is(true));
 
-        importPage.deleteCsvFile(fileName);
+        importPage.clickRemoveButton()
+            .clickCancelConfirmRemove()
+            .clickRemoveButton()
+            .clickOkConfirmRemove(fileName);
 
-        assertThat(importPage.isCardDisplayed(fileName), is(equalTo(false)));
+        assertThat(importPage.isBatchFileDisplayed(fileName), is(equalTo(false)));
     }
 
     private List<User> collectUsers(String customerIdentity) {
@@ -166,10 +159,10 @@ public class BatchImportListTests extends TestBase {
     @Description("Users can be loaded from CSV by Load button")
     @TestRail(testCaseId = {"5598", "5599", "4360", "4353", "4358", "4359"})
     public void testLoadUsersFromFile() {
-        ImportPage uploadUsers = importPage.importFile(resourceFile)
-                .selectCard(fileName);
+        cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
+        ImportPage uploadUsers = importPage.refreshBatchFilesList();
 
-        assertThat(uploadUsers.getFieldName(), containsInRelativeOrder("Users in Total", "Success/Failed", "Created At", "Created By"));
+        assertThat(uploadUsers.getFieldName(), containsInRelativeOrder("Users in Total:", "Succesfully Loaded:", "Failed Loaded:", "Created By:", "Created At:"));
 
         PageUtils utils = new PageUtils(getDriver());
         long pageSize = 10;
@@ -185,10 +178,10 @@ public class BatchImportListTests extends TestBase {
         assertThat("The selection is not holding across pages.", expected, is(equalTo(pageSize)));
 
         importPage.loadUsers()
-                .refreshList();
+            .refreshUsersList();
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
-        importPage.refreshList();
+        importPage.refreshUsersList();
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
         long loaded = usersTable.getRows().filter((row) -> row.getCell("cdsStatus").hasValue("loaded")).count();
@@ -203,29 +196,23 @@ public class BatchImportListTests extends TestBase {
         assertThat(addedUsers, is(equalTo(pageSize)));
 
         importPage = new UsersPage(driver).goToImport()
-                .selectCard(fileName);
-        assertThat(importPage.getCardFieldValue("Success/Failed"), is(equalTo(pageSize + "/0")));
+            .refreshBatchFilesList();
+
+        assertThat(importPage.getCardFieldValue("successUsers"), is(equalTo("10")));
+
+        importPage.clickRemoveButton()
+            .clickOkConfirmRemove(fileName);
 
         sourceUsers = collectUsers(customerIdentity);
         sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
     }
 
     @Test
-    @Description("Upload user csv with invalid headers")
-    @TestRail(testCaseId = {"4347"})
-    public void testCsvInvalidHeaders() {
-        importPage.importFile(resourceInvalidHeaders);
-
-        assertThat(importPage.getTextErrorMessage(), is(equalTo("The file could not be read. Please check the file and make sure \n" +
-                "  that it is formatted as a CSV and matches the required set of columns in the template.")));
-    }
-
-    @Test
-    @Description("Upload user csv with invalid headers")
+    @Description("Upload user csv with invalid users data")
     @TestRail(testCaseId = {"4348"})
     public void testCsvInvalidUsersData() {
-        importPage.importFile(resourceInvalidData)
-                .selectCard(invalidDataFile);
+        cdsTestUtil.addCASBatchFile(customerIdentity, invalidDataFile);
+        importPage.refreshBatchFilesList();
 
         PageUtils utils = new PageUtils(getDriver());
 
@@ -237,11 +224,14 @@ public class BatchImportListTests extends TestBase {
         checkHeader.check(true);
 
         importPage.loadUsers()
-                .refreshList();
+            .refreshUsersList();
 
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
         long loaded = usersTable.getRows().filter((row) -> row.getCell("cdsStatus").hasValue("failed")).count();
         assertThat("The new batch import users were not loaded", loaded, is(greaterThan(1L)));
+
+        importPage.clickRemoveButton()
+            .clickOkConfirmRemove(fileName);
     }
 }

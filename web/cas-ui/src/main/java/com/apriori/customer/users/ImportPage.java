@@ -1,7 +1,6 @@
 package com.apriori.customer.users;
 
 import com.apriori.common.UsersTableController;
-import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.FileImport;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
@@ -25,20 +24,20 @@ public class ImportPage extends LoadableComponent<ImportPage> {
 
     private static final Logger logger = LoggerFactory.getLogger(ImportPage.class);
 
-    @FindBy(id = "batch-upload")
-    private WebElement uploadCard;
+    @FindBy(css = ".batch-upload-button.btn.btn-light")
+    private WebElement importListButton;
 
-    @FindBy(css = "input[type='file']")
-    private WebElement fileInput;
+    @FindBy(css = ".left-tree-refresh-button")
+    private WebElement refreshBatchItemsButton;
 
     @FindBy(xpath = "//button[.='Load']")
     private WebElement loadButton;
 
+    @FindBy(css = ".batch-list-remove-button span")
+    private WebElement removeButton;
+
     @FindBy(css = "button.apriori-source-list-refresh-button")
     private WebElement refreshButton;
-
-    @FindBy(css = "div[class='pl-2'] [aria-label='Search']")
-    private WebElement userNameSearch;
 
     @FindBy(css = ".apriori-source-list-layout-table")
     private WebElement usersTable;
@@ -49,17 +48,19 @@ public class ImportPage extends LoadableComponent<ImportPage> {
     @FindBy(css = ".modal-body")
     private WebElement modalError;
 
+    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    private WebElement confirmRemoveCancelButton;
+
+    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    private WebElement confirmRemoveOkButton;
+
     private WebDriver driver;
     private PageUtils pageUtils;
-    private NavToolbar navToolbar;
-    private FileImport fileImport;
     private UsersTableController usersTableController;
 
     public ImportPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.navToolbar = new NavToolbar(driver);
-        this.fileImport = new FileImport(driver);
         this.usersTableController = new UsersTableController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
@@ -73,51 +74,17 @@ public class ImportPage extends LoadableComponent<ImportPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(uploadCard);
-        pageUtils.waitForElementAppear(loadButton);
+        pageUtils.waitForElementToAppear(importListButton);
     }
 
     /**
-     * Import File
+     * Validates if batch file is displayed
      *
-     * @param filePath - the file path
-     * @return current page object
-     */
-    public ImportPage importFile(File filePath) {
-        fileImport.importFile(filePath);
-        return this;
-    }
-
-    /**
-     * Select card
-     *
-     * @param fileName - file name
-     * @return current page object
-     */
-    public ImportPage selectCard(String fileName) {
-        fileImport.selectCard(fileName);
-        return this;
-    }
-
-    /**
-     * Validates if license card is displayed
-     *
-     * @param fileName - the license name
+     * @param fileName - the file name
      * @return - true or false
      */
-    public boolean isCardDisplayed(String fileName) {
-        return fileImport.isCardDisplayed(fileName);
-    }
-
-    /**
-     * Search for user
-     *
-     * @param userName - user details
-     * @return current page object
-     */
-    public ImportPage searchForUser(String userName) {
-        pageUtils.waitForElementToAppear(userNameSearch).sendKeys(userName);
-        return this;
+    public boolean isBatchFileDisplayed(String fileName) {
+        return pageUtils.isElementDisplayed(By.xpath(String.format("//div[@class='line-item-body']//div[.='%s']", fileName)));
     }
 
     /**
@@ -135,21 +102,19 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      *
      * @return - current page object
      */
-    public ImportPage refreshList() {
+    public ImportPage refreshUsersList() {
         pageUtils.waitForElementAndClick(refreshButton);
         return this;
     }
 
     /**
-     * Deletes csv file from import page
+     * Refreshes batch file list
      *
-     * @param fileName - name of csv file
      * @return - current page object
      */
-    public ImportPage deleteCsvFile(String fileName) {
-        By deleteCsvButton = By.xpath(String.format("//div[.='%s']//button[@title='Delete the csv file']", fileName));
-        pageUtils.waitForElementAndClick(deleteCsvButton);
-        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[@class='card-header']//div[.='%s']", fileName)));
+    public ImportPage refreshBatchFilesList() {
+        pageUtils.waitForElementAndClick(refreshBatchItemsButton);
+        pageUtils.waitForElementToAppear(importTableHeader);
         return this;
     }
 
@@ -164,16 +129,6 @@ public class ImportPage extends LoadableComponent<ImportPage> {
         String url = PropertiesContext.get("${env}.cas.ui_url") + "customers/%s/users/import";
         driver.navigate().to(String.format(url, customer));
         return new ImportPage(driver);
-    }
-
-    /**
-     * Validates that table is pageable and refreshable
-     *
-     * @param soft soft assertions
-     * @return current page object
-     */
-    public ImportPage validateImportTableArePageableAndRefreshable(SoftAssertions soft) {
-        return usersTableController.validateUsersTableArePageableAndRefreshable(soft, ImportPage.class);
     }
 
     /**
@@ -222,7 +177,7 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      * @return list of fields names
      */
     public List<String> getFieldName() {
-        List<WebElement> fieldName = driver.findElements(By.xpath("//div[@class='card-body']//span[@class='display-field-label']"));
+        List<WebElement> fieldName = driver.findElements(By.xpath("//div[@class='batch-item-details']//label"));
         return fieldName.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 
@@ -231,8 +186,8 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      *
      * @return string
      */
-    public String getCardFieldValue(String fieldName) {
-        WebElement field = driver.findElement(By.xpath(String.format("//span[.='%s']/following-sibling::span[@class='display-field-value']", fieldName)));
+    public String getCardFieldValue(String fieldId) {
+        WebElement field = driver.findElement(By.xpath(String.format("//label/following-sibling::div[@class='text-overflow read-field read-field-%s']", fieldId)));
         return field.getAttribute("textContent");
     }
 
@@ -243,5 +198,36 @@ public class ImportPage extends LoadableComponent<ImportPage> {
      */
     public String getTextErrorMessage() {
         return pageUtils.waitForElementToAppear(modalError).getAttribute(("textContent"));
+    }
+
+    /**
+     * Clicks on Remove button
+     *
+     * @return current page object
+     */
+    public ImportPage clickRemoveButton() {
+        pageUtils.waitForElementAndClick(removeButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Ok button of confirmation remove action
+     *
+     * @return this object
+     */
+    public ImportPage clickOkConfirmRemove(String fileName) {
+        pageUtils.waitForElementAndClick(confirmRemoveOkButton);
+        pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[@class='line-item-body']//div[.='%s']", fileName)));
+        return this;
+    }
+
+    /**
+     * Clicks on Cancel button of confirmation remove action
+     *
+     * @return this object
+     */
+    public ImportPage clickCancelConfirmRemove() {
+        pageUtils.waitForElementAndClick(confirmRemoveCancelButton);
+        return this;
     }
 }
