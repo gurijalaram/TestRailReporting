@@ -5,12 +5,9 @@ import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.SCENARIO_NAME;
 import static com.utils.ColumnsEnum.STATUS;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -63,6 +60,7 @@ public class ComparisonTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemC;
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public ComparisonTests() {
         super();
@@ -93,8 +91,10 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.getBasis(), is(equalTo(componentName.toUpperCase() + "  / " + scenarioName)));
-        assertThat(comparePage.getScenariosInComparison(), hasItem(componentName2.toUpperCase() + "  / " + scenarioName2));
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName2.toUpperCase() + "  / " + scenarioName2);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -122,11 +122,13 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .clickExplore();
 
-        assertThat(explorePage.getTableHeaders(), hasItems(COMPONENT_NAME.getColumns(), SCENARIO_NAME.getColumns()));
+        softAssertions.assertThat(explorePage.getTableHeaders()).contains(COMPONENT_NAME.getColumns(), SCENARIO_NAME.getColumns());
 
         comparePage = explorePage.clickCompare();
 
-        assertThat(comparePage.getBasis(), is(equalTo(componentName.toUpperCase() + "  / " + scenarioName)));
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -157,7 +159,7 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .openBasisScenario();
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario()
@@ -178,7 +180,9 @@ public class ComparisonTests extends TestBase {
             .createComparison()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -210,11 +214,11 @@ public class ComparisonTests extends TestBase {
             .collapse("Process")
             .collapse("Cost Result");
 
-        assertThat(comparePage.isComparisonInfoDisplayed("Description"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(false));
-        assertThat(comparePage.isComparisonInfoDisplayed("Investment"), is(false));
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Routing")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Investment")).isEqualTo(false);
 
         comparePage.expand("Info & Inputs")
             .expand("Material & Utilization")
@@ -222,11 +226,13 @@ public class ComparisonTests extends TestBase {
             .expand("Process")
             .expand("Cost Result");
 
-        assertThat(comparePage.isComparisonInfoDisplayed("Description"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("Routing"), is(true));
-        assertThat(comparePage.isComparisonInfoDisplayed("Investment"), is(true));
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Routing")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Investment")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -272,13 +278,11 @@ public class ComparisonTests extends TestBase {
             .collapse("Process")
             .collapse("Cost Result");
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(false);
-        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(false);
-        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk")).isEqualTo(false);
-        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Routing")).isEqualTo(false);
-        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Investment")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Info & Inputs")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Material & Utilization")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Design Guidance")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Process")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Cost Result")).isEqualTo(false);
 
         comparePage.expand("Info & Inputs")
             .expand("Material & Utilization")
@@ -339,7 +343,7 @@ public class ComparisonTests extends TestBase {
             .selectScenario(componentName3, scenarioName3)
             .submit(ComparePage.class);
 
-        assertThat(comparePage.getScenariosInComparison(), hasItem(componentName3.toUpperCase() + "  / " + scenarioName3));
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName3.toUpperCase() + "  / " + scenarioName3);
 
         comparePage.modify()
             .selectFilter("Recent")
@@ -347,7 +351,9 @@ public class ComparisonTests extends TestBase {
             .selectScenario(componentName4, scenarioName4)
             .submit(ComparePage.class);
 
-        assertThat(comparePage.getScenariosInComparison(), hasItem(componentName4.toUpperCase() + "  / " + scenarioName4));
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName4.toUpperCase() + "  / " + scenarioName4);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -447,11 +453,13 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.getBasis(), is(equalTo(componentName.toUpperCase() + "  / " + scenarioName)));
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
         comparePage.dragDropToBasis(componentName2, scenarioName2);
 
-        assertThat(comparePage.getBasis(), is(equalTo(componentName2.toUpperCase() + "  / " + scenarioName2)));
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName2.toUpperCase() + "  / " + scenarioName2);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -478,11 +486,13 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.getCardHeader(), containsInRelativeOrder("Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Result"));
+        softAssertions.assertThat(comparePage.getCardHeader()).containsExactly("Info & Inputs", "Material & Utilization", "Design Guidance", "Process", "Cost Result");
 
         comparePage.dragDropCard("Material & Utilization", "Info & Inputs");
 
-        assertThat(comparePage.getCardHeader(), containsInRelativeOrder("Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Result"));
+        softAssertions.assertThat(comparePage.getCardHeader()).containsExactly("Material & Utilization", "Info & Inputs", "Design Guidance", "Process", "Cost Result");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -506,8 +516,8 @@ public class ComparisonTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.LOW.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Low"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
         comparePage = evaluatePage.clickExplore()
             .selectFilter("Recent")
@@ -515,7 +525,9 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.getOutput(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK), is("Low"));
+        softAssertions.assertThat(comparePage.getOutput(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -552,11 +564,13 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.getNotFoundMessage(), is(notFoundMessage));
+        softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
 
         comparePage = evaluatePage.backFromError(ComparePage.class);
 
-        assertThat(comparePage.getScenariosInComparison(), is(not(hasItem(componentName2.toUpperCase() + "  / " + scenarioName2))));
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).doesNotContain(componentName2.toUpperCase() + "  / " + scenarioName2);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -604,11 +618,13 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openScenario(componentName, scenarioName);
 
-        assertThat(evaluatePage.getNotFoundMessage(), is(notFoundMessage));
+        softAssertions.assertThat(evaluatePage.getNotFoundMessage()).isEqualTo(notFoundMessage);
 
         comparePage = evaluatePage.backFromError(ComparePage.class);
 
-        assertThat(comparePage.getScenariosInComparison(), is(not(hasItem(componentName.toUpperCase() + "  / " + scenarioName))));
+        softAssertions.assertThat(comparePage.getScenariosInComparison()).doesNotContain(componentName.toUpperCase() + "  / " + scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -651,11 +667,11 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
 
         comparePage = evaluatePage.clickCompare();
 
-        assertThat(comparePage.isIconDisplayed(componentName2, scenarioName2, StatusIconEnum.PUBLIC), is(true));
+        softAssertions.assertThat(comparePage.isIconDisplayed(componentName2, scenarioName2, StatusIconEnum.PUBLIC)).isEqualTo(true);
 
         evaluatePage = comparePage.clickExplore()
             .selectFilter("Recent")
@@ -666,11 +682,13 @@ public class ComparisonTests extends TestBase {
             .clickCompare()
             .openBasisScenario();
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
 
         comparePage = evaluatePage.clickCompare();
 
-        assertThat(comparePage.isIconDisplayed(componentName, scenarioName, StatusIconEnum.PUBLIC), is(true));
+        softAssertions.assertThat(comparePage.isIconDisplayed(componentName, scenarioName, StatusIconEnum.PUBLIC)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -701,14 +719,16 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.GREEN), is(true));
-        assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.ARROW_DOWN), is(true));
-        assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.GREEN), is(true));
-        assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.ARROW_DOWN), is(true));
-        assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.RED), is(true));
-        assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.ARROW_UP), is(true));
-        assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.GREEN), is(true));
-        assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.ARROW_DOWN), is(true));
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.RED)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -738,8 +758,6 @@ public class ComparisonTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("31.97%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS)).isEqualTo("75.00%");

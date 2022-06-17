@@ -74,7 +74,7 @@ public class ComparePage extends CompareToolbar {
      */
     public boolean isIconDisplayed(String componentName, String scenarioName, StatusIconEnum icon) {
         By iconStatus = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-status-icons']//*[@data-icon='%s']",
-                componentName.toUpperCase().trim(), scenarioName.trim(), icon.getStatusIcon()));
+            componentName.toUpperCase().trim(), scenarioName.trim(), icon.getStatusIcon()));
         return driver.findElement(iconStatus).isDisplayed();
     }
 
@@ -110,6 +110,17 @@ public class ComparePage extends CompareToolbar {
     public ComparePage collapse(String section) {
         expandCollapseSection(section, "arrow-up");
         return this;
+    }
+
+    /**
+     * checks if the section is expanded
+     *
+     * @param section - name of the section
+     * @return - boolean
+     */
+    public boolean isSectionExpanded(String section) {
+        By bySection = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .arrow-up", section));
+        return pageUtils.isElementDisplayed(bySection);
     }
 
     /**
