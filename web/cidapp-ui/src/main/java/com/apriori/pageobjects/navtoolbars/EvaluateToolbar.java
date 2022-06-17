@@ -67,6 +67,12 @@ public class EvaluateToolbar extends ExploreToolbar {
         return new EvaluatePage(driver);
     }
 
+    public EvaluateToolbar clickCost() {
+        pageUtils.waitForElementToAppear(costLabel);
+        pageUtils.waitForElementAndClick(costButton);
+        return this;
+    }
+
     /**
      * Method to check cost label is in correct state
      */
@@ -117,8 +123,8 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @param buttonLabel - "Yes" or "No"
      * @return - new page object
      */
-    public EvaluatePage costScenarioConfirmation(String buttonLabel) {
-        By byButton = By.xpath(String.format("//button[contains(text(), '%s')]", buttonLabel));
+    public EvaluatePage confirmCost(String buttonLabel) {
+        By byButton = By.xpath(String.format("//button[contains(text(),'%s')]", buttonLabel));
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
     }

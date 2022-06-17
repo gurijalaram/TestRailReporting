@@ -4,6 +4,7 @@ import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
@@ -11,6 +12,7 @@ import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.PanelController;
 import com.apriori.pageobjects.common.ScenarioTableController;
+import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
@@ -33,6 +35,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -89,6 +92,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = ".sub-component-tree .component-name")
     private List<WebElement> subcomponentNames;
 
+    @FindBy(css = ".sub-component-tree .table-body")
+    private WebElement componentTable;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -117,6 +122,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         pageUtils.waitForElementToAppear(tableButton);
         pageUtils.waitForElementToAppear(previewButton);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
+        pageUtils.waitForElementToAppear(componentTable);
         assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
 
@@ -127,6 +133,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public ComponentsListPage tableView() {
         pageUtils.waitForElementAndClick(tableButton);
+        return this;
+    }
+
+    /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ComponentsListPage setPagination() {
+        componentTableActions.setPagination();
         return this;
     }
 
@@ -475,11 +491,74 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
                 .map(String::trim))
             .collect(Collectors.toList());
 
-        componentNames.forEach(componentName -> new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
-            .stream()
-            .filter(x -> x.getComponentName().equalsIgnoreCase(componentName))
-            .collect(Collectors.toList()).get(0)));
+        componentNames.forEach(componentName -> {
+            ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream()
+                .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+                .findFirst()
+                .get();
+
+            new ScenariosUtil().getScenarioRepresentation(componentInfo.getSubComponents()
+                .stream()
+                .filter(x -> x.getComponentName().equalsIgnoreCase(componentName)
+                    && x.getComponentIdentity().equalsIgnoreCase(componentDetails.getComponentIdentity())
+                    && x.getScenarioIdentity().equalsIgnoreCase(componentDetails.getScenarioIdentity()))
+                .collect(Collectors.toList())
+                .get(0));
+        });
         return this;
+    }
+
+    /**
+     * Checks scenario manifest is in a complete state
+     *
+     * @param componentInfo - the component info
+     * @param subcomponentNames - the subcomponent names
+     * @return current page object
+     */
+    public ComponentsListPage checkManifestComplete(ComponentInfoBuilder componentInfo, String... subcomponentNames) {
+
+        List<String> componentNames = Arrays.stream(subcomponentNames)
+            .flatMap(x -> Arrays.stream(x.split(","))
+                .map(String::trim))
+            .collect(Collectors.toList());
+
+        componentNames.forEach(componentName -> {
+            while (!getScenarioManifestState(componentInfo, componentName).contains("COMPLETE")) {
+                getScenarioManifestState(componentInfo, componentName);
+            }
+            new ExploreToolbar(driver).refresh();
+
+            isLoaded();
+
+            if (pageUtils.isElementDisplayed(By.cssSelector(".sub-component-tree [data-icon='gear']"))) {
+                checkManifestComplete(componentInfo, componentName);
+            }
+        });
+        return this;
+    }
+
+    /**
+     * Gets state of scenario manifest
+     *
+     * @param componentInfo -the component info
+     * @param componentName - the subcomponent names
+     * @return string
+     */
+    private String getScenarioManifestState(ComponentInfoBuilder componentInfo, String componentName) {
+
+        ComponentInfoBuilder componentDetails = componentInfo.getSubComponents().stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+            .findFirst()
+            .get();
+
+        return new ScenariosUtil().getScenarioManifest(componentInfo).getResponseEntity()
+            .getSubcomponents()
+            .stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName)
+                && Objects.equals(o.getComponentIdentity(), componentDetails.getComponentIdentity()))
+            .map(ScenarioManifestSubcomponents::getScenarioState)
+            .collect(Collectors.toList())
+            .stream().findFirst().get();
     }
 
     /**
@@ -502,7 +581,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     public boolean isTextDecorationStruckOut(String componentName) {
         By byComponentName = By.xpath(String.format("//ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             componentName.toUpperCase().trim()));
-        return driver.findElement(byComponentName).getCssValue("text-decoration").contains("line-through");
+        return pageUtils.waitForElementToAppear(byComponentName).getCssValue("text-decoration").contains("line-through");
     }
 
     /**
