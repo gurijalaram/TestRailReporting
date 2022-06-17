@@ -14,6 +14,7 @@ import com.apriori.cds.objects.request.ApplicationInstallationRequest;
 import com.apriori.cds.objects.request.CustomAttributeRequest;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
+import com.apriori.cds.objects.request.PostBatch;
 import com.apriori.cds.objects.response.AccessAuthorization;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
@@ -28,14 +29,17 @@ import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserProfile;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -616,6 +620,25 @@ public class CdsTestUtil extends TestUtil {
                     .applicationIdentity(appIdentity)
                     .siteIdentity(siteIdentity)
                     .build());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Uploads batch users file via CAS API
+     *
+     * @param customerIdentity - customerIdentity
+     * @param fileName - name of file
+     * @return new object
+     */
+    public ResponseWrapper<PostBatch> addCASBatchFile(String customerIdentity, String fileName) {
+        String token = new AuthorizationUtil().getTokenAsString();
+        final File batchFile = FileResourceUtil.getResourceAsFile(fileName);
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS_BATCH, PostBatch.class)
+            .token(token)
+            .multiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile))
+            .inlineVariables(customerIdentity);
 
         return HTTPRequest.build(requestEntity).post();
     }
