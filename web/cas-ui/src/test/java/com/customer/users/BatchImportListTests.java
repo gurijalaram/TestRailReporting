@@ -204,7 +204,7 @@ public class BatchImportListTests extends TestBase {
             .clickOkConfirmRemove(fileName);
 
         sourceUsers = collectUsers(customerIdentity);
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
+        sourceUsers.forEach(user -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
     }
 
     @Test
