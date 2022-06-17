@@ -201,14 +201,9 @@ public abstract class SDSTestUtil extends TestUtil {
     }
 
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
-        Map<String, String> contextHeaders = new HashMap<String, String>() {{
-                put("ap-application-context", getApApplicationContext());
-                put("ap-cloud-context", testingUser.getCloudContext());
-            }};
-
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
-                .headers(contextHeaders)
+                .headers(getContextHeaders())
                 .token(testingUser.getToken())
                 .body("component", postComponentRequest);
 
@@ -222,6 +217,13 @@ public abstract class SDSTestUtil extends TestUtil {
 
         scenariosToDelete.add(scenarioItemResponse.get(0));
         return scenarioItemResponse.get(0);
+    }
+
+    public static Map<String, String> getContextHeaders() {
+        return new HashMap<String, String>() {{
+                put("ap-application-context", getApApplicationContext());
+                put("ap-cloud-context", testingUser.getCloudContext());
+            }};
     }
 
     // TODO z: can be migrated to AuthorizationUtil if make this decision based on usage this functionality outside sds
