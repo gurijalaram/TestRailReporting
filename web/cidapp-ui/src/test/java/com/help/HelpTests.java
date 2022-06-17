@@ -109,7 +109,7 @@ public class HelpTests extends TestBase {
             .openDesignGuidance()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Examine the Design Guidance Results"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
     }
 
     @Test
