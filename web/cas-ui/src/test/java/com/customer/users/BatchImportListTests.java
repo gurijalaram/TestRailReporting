@@ -162,7 +162,7 @@ public class BatchImportListTests extends TestBase {
         cdsTestUtil.addCASBatchFile(customerIdentity, fileName);
         ImportPage uploadUsers = importPage.refreshBatchFilesList();
 
-        assertThat(uploadUsers.getFieldName(), containsInRelativeOrder("Users in Total:", "Succesfully Loaded:", "Failed Loaded:", "Created By:", "Created At:"));
+        assertThat(uploadUsers.getFieldName(), containsInRelativeOrder("Users in Total:", "Successfully Loaded:", "Failed Loaded:", "Created By:", "Created At:"));
 
         PageUtils utils = new PageUtils(getDriver());
         long pageSize = 10;
