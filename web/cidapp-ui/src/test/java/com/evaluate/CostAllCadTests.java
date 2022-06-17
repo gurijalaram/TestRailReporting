@@ -3,7 +3,6 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -19,6 +18,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -36,6 +37,7 @@ public class CostAllCadTests extends TestBase {
     private File resourceFile;
     private CostDetailsPage costDetailsPage;
     private ImportCadFilePage importCadFilePage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public CostAllCadTests() {
         super();
@@ -64,9 +66,11 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContributionValue("Material Cost"), (closeTo(27.44, 15)));
-        assertThat(costDetailsPage.getCostContributionValue("Labor"), (closeTo(6.30, 5)));
-        assertThat(costDetailsPage.getCostContributionValue("Direct Overhead"), (closeTo(1.69, 5)));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Material Cost")).isCloseTo(27.44, Offset.offset(15.00));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Labor")).isCloseTo(6.30, Offset.offset(5.00));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Direct Overhead")).isCloseTo(1.69, Offset.offset(5.00));
+
+        softAssertions.assertAll();
     }
 
     // TODO: 23/10/2020 uncomment when functionality is implemented in app

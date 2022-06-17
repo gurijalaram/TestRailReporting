@@ -83,8 +83,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-publish-button'] button")
     private WebElement publishButton;
 
+    @FindBy(css = "div[data-testid='loader']")
+    private WebElement loadingSpinner;
+
     @FindBy(css = ".sub-component-tree .component-name")
     private List<WebElement> subcomponentNames;
+
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -112,6 +116,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     protected void isLoaded() throws Error {
         pageUtils.waitForElementToAppear(tableButton);
         pageUtils.waitForElementToAppear(previewButton);
+        pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
 
@@ -247,6 +252,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ComponentsListPage selectScenario(String componentName, String scenarioName) {
+        scenarioTableController.selectScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name
@@ -315,6 +332,28 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public List<String> getRowDetails(String componentName, String scenarioName) {
         return scenarioTableController.getRowDetails(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the data-icon value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the cost value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioFullyBurdenedCost(componentName, scenarioName);
     }
 
     /**
