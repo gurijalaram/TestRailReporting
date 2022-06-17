@@ -972,6 +972,18 @@ public class PageUtils {
     }
 
     /**
+     * Waits for the element to become invisible
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public void waitForElementNotVisible(WebElement locator, int timeoutInMinutes) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOf(locator));
+    }
+
+    /**
      * Checks for string to be present in element text and returns true/false
      *
      * @param locator - the locator of the element

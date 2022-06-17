@@ -245,6 +245,33 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
+            .getAttribute("data-icon");
+    }
+
+    /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
+        String cost =  getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("div[data-header-id='analysisOfScenario.fullyBurdenedCost'] span"))
+            .getText();
+        return Double.parseDouble(cost.replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
      * Gets the scenario 'webelement' locator
      *
      * @param componentName - name of the part

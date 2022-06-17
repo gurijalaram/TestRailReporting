@@ -110,7 +110,6 @@
     }
   },
   "required": [
-    "timestamp",
     "status",
     "error",
     "message",
