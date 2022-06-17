@@ -137,6 +137,16 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Sets pagination to by default
+     *
+     * @return current page object
+     */
+    public ComponentsListPage setPagination() {
+        componentTableActions.setPagination();
+        return this;
+    }
+
+    /**
      * Changes the view to tree view
      *
      * @return current page object
