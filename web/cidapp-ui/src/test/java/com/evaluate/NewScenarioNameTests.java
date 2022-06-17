@@ -2,7 +2,6 @@ package com.evaluate;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -25,6 +24,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -45,6 +45,7 @@ public class NewScenarioNameTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItemC;
     private ComponentInfoBuilder cidComponentItemD;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public NewScenarioNameTests() {
         super();
@@ -93,7 +94,7 @@ public class NewScenarioNameTests extends TestBase {
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
@@ -111,7 +112,9 @@ public class NewScenarioNameTests extends TestBase {
             .enterScenarioName(testNewScenarioName)
             .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -171,8 +174,10 @@ public class NewScenarioNameTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA), equalTo(1));
-        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB), equalTo(1));
-        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 }
