@@ -233,7 +233,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectBarChart(String axisLabel) {
-        pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(".highcharts-data-labels")));
+        pageUtils.waitForElementToAppear(By.cssSelector(".highcharts-data-labels"));
         int position = IntStream.range(0, pageUtils.waitForElementsToAppear(xAxisLabel).size()).filter(x -> xAxisLabel.get(x).getText().equals(axisLabel)).findFirst().getAsInt();
         chart.forEach(x -> pageUtils.actionClick(chart.get(position)));
         return this;
