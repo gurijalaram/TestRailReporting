@@ -44,7 +44,7 @@ public class HelpTests extends TestBase {
             .goToHelp()
             .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
+        assertThat(helpPage.getChildPageTitle(), is(equalTo("Cost Insight Design\nUser Guide")));
     }
 
     @Test
