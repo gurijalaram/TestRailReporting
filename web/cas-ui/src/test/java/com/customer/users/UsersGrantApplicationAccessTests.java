@@ -64,7 +64,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
         String customerType = Constants.ON_PREM_CUSTOMER;
 
         cdsTestUtil = new CdsTestUtil();
-        targetCustomer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesforce, email).getResponseEntity();
+        targetCustomer = cdsTestUtil.addCustomer(customerName, customerType, null, salesforce, email).getResponseEntity();
         customerIdentity = targetCustomer.getIdentity();
         user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
         userIdentity = user.getResponseEntity().getIdentity();

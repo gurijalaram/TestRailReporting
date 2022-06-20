@@ -245,6 +245,33 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
+            .getAttribute("data-icon");
+    }
+
+    /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
+        String cost =  getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("div[data-header-id='analysisOfScenario.fullyBurdenedCost'] span"))
+            .getText();
+        return Double.parseDouble(cost.replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
      * Gets the scenario 'webelement' locator
      *
      * @param componentName - name of the part
@@ -291,7 +318,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement getByParentLocator(String componentName, String scenarioName) {
-        return pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim()))));
+        return pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim())));
     }
 
     /**
@@ -411,7 +438,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return string
      */
     public String getCellColour(String componentName, String scenarioName) {
-        return Color.fromString(driver.findElement(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
+        return Color.fromString(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             scenarioName.trim(), componentName.toUpperCase().trim()))).getCssValue("background-color")).asHex();
     }
 }

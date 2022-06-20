@@ -32,6 +32,7 @@ public class TableUtils {
         return expectedList.stream().allMatch(actualList::contains);
     }
 
+
     /**
      * Find an item in a table by connector
      *
@@ -153,7 +154,7 @@ public class TableUtils {
      *
      * @param table The table to search
      */
-    public WebElement selectRowByConnector(WebElement table) {
+    public WebElement selectRowByConnector(WebElement table, String connectorName) {
         return findTableItemByConnector(table);
     }
 

@@ -229,7 +229,8 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .submit()
             .close()
-            .setPagination();
+            .setPagination()
+            .selectFilter("Recent");
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
@@ -387,13 +388,13 @@ public class UploadComponentTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
             .importCadFile()
-            .inputScenarioName(scenarioName2)
+            .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
             .close()
-            .openComponent(componentName, scenarioName, currentUser)
+            .openComponent(componentName.toUpperCase(), scenarioName, currentUser)
             .importCadFile()
-            .inputScenarioName(scenarioName)
+            .inputScenarioName(scenarioName2)
             .inputMultiComponents(multiComponents)
             .submit()
             .close()

@@ -36,7 +36,7 @@ public class FileManagementController {
      * Gets a particular file
      *
      * @param userCredentials - user to authenticate with
-     * @param fileIdentity - file to retrieve
+     * @param fileIdentity    - file to retrieve
      * @return ResponseWrapper of type FilesResponse instance (api response)
      */
     public static ResponseWrapper<FileResponse> getFileByIdentity(UserCredentials userCredentials, String fileIdentity) {
@@ -51,15 +51,32 @@ public class FileManagementController {
      * Upload a file
      *
      * @param userCredentials - user to authenticate with
-     * @param processGroup - process group to use to find the part on S3
-     * @param fileName - name of the file to find it on S3
+     * @param processGroup    - process group to use to find the part on S3
+     * @param fileName        - name of the file to find it on S3
      * @return FileResponse instance
      */
     public static FileResponse uploadFile(UserCredentials userCredentials, ProcessGroupEnum processGroup, String fileName) {
+        return uploadFileWithResourceName(userCredentials, processGroup, fileName, null);
+    }
+
+    /**
+     * Upload a file
+     *
+     * @param userCredentials - user to authenticate with
+     * @param processGroup    - process group to use to find the part on S3
+     * @param fileName        - name of the file to find it on S3
+     * @return FileResponse instance
+     */
+    public static FileResponse uploadFileWithResourceName(UserCredentials userCredentials, ProcessGroupEnum processGroup, String fileName, String resourceName) {
+        FormParams requestFormParams = new FormParams().use("filename", fileName);
+        if (requestFormParams != null) {
+            requestFormParams.use("resourceName", resourceName);
+        }
+
         RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FileResponse.class)
             .headers(initHeaders(userCredentials, true))
             .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(processGroup, fileName)))
-            .formParams(new FormParams().use("filename", fileName));
+            .formParams(requestFormParams);
 
         return (FileResponse) HTTPRequest.build(requestEntity).postMultipart().getResponseEntity();
     }
@@ -67,7 +84,7 @@ public class FileManagementController {
     /**
      * Initializes headers (for both file upload and get file(s))
      *
-     * @param userCredentials - user to authenticate with
+     * @param userCredentials  - user to authenticate with
      * @param addMultiPartFile - boolean flag to determine if content type needs set
      * @return Map of String, String, to set as headers in api request
      */

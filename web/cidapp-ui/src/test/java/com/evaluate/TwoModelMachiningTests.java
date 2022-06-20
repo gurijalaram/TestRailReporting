@@ -33,7 +33,6 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class TwoModelMachiningTests extends TestBase {
-
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
 
@@ -44,6 +43,7 @@ public class TwoModelMachiningTests extends TestBase {
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
     private GuidanceIssuesPage guidanceIssuesPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public TwoModelMachiningTests() {
         super();
@@ -84,8 +84,10 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getSourceModelMaterial(), is("Aluminum, Cast, ANSI AL380.0"));
-        assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName), is(true));
+        softAssertions.assertThat(evaluatePage.getSourceModelMaterial()).isEqualTo("Aluminum, Cast, ANSI AL380.0");
+        softAssertions.assertThat(evaluatePage.isSourcePartDetailsDisplayed(testScenarioName)).isEqualTo(true);
+
+        softAssertions.assertAll();
 
         /*processSetupOptionsPage = evaluatePage.openProcessDetails()
             .selectProcessChart("Source Component")
@@ -126,8 +128,8 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.getDfmRiskIcon(), is(EvaluateDfmIconEnum.MEDIUM.getIcon()));
-        assertThat(evaluatePage.getDfmRisk(), is("Medium"));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         evaluatePage.clickExplore()
             .uploadComponentAndOpen(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser)
@@ -141,7 +143,9 @@ public class TwoModelMachiningTests extends TestBase {
             .costScenario(5)
             .openSourceScenario(sourceScenarioName);
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -172,8 +176,6 @@ public class TwoModelMachiningTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(evaluatePage.getProcessesResult("Utilization")).isCloseTo(Double.valueOf(96.34), Offset.offset(5.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(18.88), Offset.offset(5.0));
@@ -236,7 +238,7 @@ public class TwoModelMachiningTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .uploadComponent(twoModelPartName, twoModelScenarioName, twoModelFile, currentUser);
 
         evaluatePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemB)
@@ -249,7 +251,7 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItemB,  EvaluatePage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .openSourceScenario(sourceScenarioName);
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(sourceScenarioName), is(true));
@@ -283,8 +285,6 @@ public class TwoModelMachiningTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
@@ -361,12 +361,14 @@ public class TwoModelMachiningTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
             .selectIssueTypeGcd("Costing Failed", "Units of the model of the stock differ from the units of the finished model.", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Units of the model of the stock differ from the units of the finished model."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Units of the model of the stock differ from the units of the finished model.");
+
+        softAssertions.assertAll();
     }
 
 

@@ -30,6 +30,7 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private static UserCredentials currentUser;
     private static ComponentInfoBuilder componentAssembly;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @BeforeClass
     public static void setupAssembly() {
@@ -61,14 +62,11 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     @TestRail(testCaseId = {"10886", "10887", "10888"})
     @Description("group Edit private sub Components disallowed")
     public void cannotEditPrivateComponents() {
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly)
-                .openComponents()
-                .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
+            .openComponents()
+            .multiSelectSubcomponents("centre bolt, " + scenarioName + "");
 
         softAssertions.assertThat(componentsListPage.isEditButtonEnabled()).isEqualTo(false);
 

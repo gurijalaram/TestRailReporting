@@ -31,6 +31,7 @@ public class GroupEditAssemblies extends TestBase {
     private ComponentsListPage componentsListPage;
     private EditScenarioStatusPage editScenarioStatusPage;
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public GroupEditAssemblies() {
         super();
@@ -41,7 +42,6 @@ public class GroupEditAssemblies extends TestBase {
     @TestRail(testCaseId = {"10882", "10890", "10893"})
     @Description("Group edit subcomponents")
     public void editButtonAvailable() {
-
         final String assemblyName = "Hinge assembly";
         final String assemblyExtension = ".SLDASM";
         final String BIG_RING = "big ring";
@@ -54,8 +54,6 @@ public class GroupEditAssemblies extends TestBase {
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -108,8 +106,6 @@ public class GroupEditAssemblies extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
             ASSEMBLY,
@@ -158,8 +154,6 @@ public class GroupEditAssemblies extends TestBase {
 
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        SoftAssertions softAssertions = new SoftAssertions();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
