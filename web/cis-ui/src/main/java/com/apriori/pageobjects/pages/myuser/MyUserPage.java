@@ -130,4 +130,14 @@ public class MyUserPage extends EagerPageComponent<MyUserPage> {
         getPageUtils().waitForElementAndClick(logOutButton);
         return new MyUserPage(getDriver());
     }
+
+    /**
+     * Click Terms Of Use
+     *
+     * @return current page object
+     */
+    public TermsOfUsePage clickTermsOfUse() {
+        getPageUtils().waitForElementAndClick(termsOfUseButtonButton);
+        return new TermsOfUsePage(getDriver());
+    }
 }

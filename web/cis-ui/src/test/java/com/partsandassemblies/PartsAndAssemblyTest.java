@@ -36,17 +36,29 @@ public class PartsAndAssemblyTest extends TestBase {
     private SoftAssertions softAssertions;
 
     @Test
-    @TestRail(testCaseId = {"12058"})
-    @Description("Verify the fields included in the table")
+    @TestRail(testCaseId = {"12058","12056","12057"})
+    @Description("Verify the fields included in the table and page title")
     public void testPartsAndAssemblyTableHeader() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
-        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies();
+
+        leftHandNavigationBar = new LeftHandNavigationBar(driver);
+
         leftHandNavigationBar.collapseNavigationPanel();
 
-        assertThat(partsAndAssembliesPage.getTableHeaders(), hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns(), CisColumnsEnum.SCENARIO_NAME.getColumns(),
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getHeaderText()).isEqualTo("Parts & Assemblies");
+
+        softAssertions.assertThat(partsAndAssembliesPage.isPartAndAssembliesTableDisplayed()).isEqualTo(true);
+
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
                 CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
-               CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns(), CisColumnsEnum.FULLY_BURDENED_COST.getColumns()));
+                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns(),
+                CisColumnsEnum.FULLY_BURDENED_COST.getColumns());
+
+        softAssertions.assertAll();
 
     }
 
@@ -57,7 +69,6 @@ public class PartsAndAssemblyTest extends TestBase {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
         partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
-        partsAndAssembliesPage.waitForTableLoad();
 
         assertThat(partsAndAssembliesPage.getComponentCheckBoxStatus(), is(equalTo("true")));
 

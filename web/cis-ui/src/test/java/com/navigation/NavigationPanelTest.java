@@ -8,6 +8,7 @@ import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
+import com.apriori.pageobjects.pages.myuser.TermsOfUsePage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -27,6 +28,7 @@ public class NavigationPanelTest extends TestBase {
     private LeftHandNavigationBar leftHandNavigationBar;
     private CisHeaderBar cisHeaderBar;
     private MyUserPage myUserPage;
+    private TermsOfUsePage termsOfUsePage;
 
     @Test
     @TestRail(testCaseId = {"11992","12014"})
@@ -63,6 +65,25 @@ public class NavigationPanelTest extends TestBase {
         myUserPage.clickLogOut();
 
         softAssertions.assertThat(loginPage.isLogoDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13233"})
+    @Description("Verify that user can access the Terms of Use Page")
+    public void testUserCanAccessTheTermsOfUsePage() {
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+                .clickUserIcon();
+
+        termsOfUsePage = new MyUserPage(driver)
+                .clickTermsOfUse();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(termsOfUsePage.getTermsOfUseUrl()).contains("/terms-of-use");
+        softAssertions.assertThat(termsOfUsePage.getTermsOfUseText()).contains("This Cost Insight Source application (“Application”), including the intellectual property rights and trade secrets contained therein, is the property of aPriori Technologies, Inc. and/or its suppliers. Use of this Application in any manner is governed by the terms and conditions of a signed subscription agreement between You and aPriori. In the absence of a signed subscription agreement, the use of this software is governed solely by the aPriori Subscription and Professional Services Agreement availablehere.");
 
         softAssertions.assertAll();
     }

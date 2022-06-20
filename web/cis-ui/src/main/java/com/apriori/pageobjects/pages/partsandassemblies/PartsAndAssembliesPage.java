@@ -74,6 +74,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(id = "hide-button")
     private WebElement btnShowAll;
 
+    @FindBy(xpath = "//*[@data-testid='title']")
+    private WebElement headerText;
+
+    @FindBy(xpath = "//div[@role='grid']")
+    private WebElement partsAndAssembliesTable;
+
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -352,5 +358,23 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage clickOnShowAllOption() {
         getPageUtils().waitForElementAndClick(btnShowAll);
         return this;
+    }
+
+    /**
+     * Gets the header text on header bar
+     *
+     * @return String
+     */
+    public String getHeaderText() {
+        return getPageUtils().waitForElementToAppear(headerText).getText();
+    }
+
+    /**
+     * Checks if parts and assemblies table displayed
+     *
+     * @return true/false
+     */
+    public boolean isPartAndAssembliesTableDisplayed() {
+        return pageUtils.isElementDisplayed(partsAndAssembliesTable);
     }
 }
