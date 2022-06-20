@@ -14,10 +14,13 @@
         "scenarioIdentity",
         "scenarioName",
         "scenarioState",
+        "scenarioPublished",
         "occurrences",
         "totalComponents",
         "totalSubComponents",
-        "subComponents"
+        "subComponents",
+        "depth",
+        "excluded"
       ],
       "properties": {
         "componentIdentity": {
@@ -53,6 +56,14 @@
         "subComponents": {
           "type": "array",
           "$ref": "ScenarioManifestSubComponents.json"
+        },
+        "depth": {
+          "type": "integer"
+        },
+        "excluded": {
+          "type": "boolean"
+        },"scenarioPublished": {
+          "type": "boolean"
         }
       }
     }

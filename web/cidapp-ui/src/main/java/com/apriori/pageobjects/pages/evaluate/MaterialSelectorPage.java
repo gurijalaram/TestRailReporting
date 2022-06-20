@@ -132,7 +132,6 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public <T> T submit(Class<T> klass) {
         pageUtils.waitForElementAndClick(submitButton);
-        pageUtils.waitForElementsToNotAppear(By.xpath("//h5[.='Preferences']"));
         return PageFactory.initElements(driver, klass);
     }
 

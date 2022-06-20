@@ -1,0 +1,9 @@
+{
+    "cadToleranceReplacement": 0.254,
+    "minCadToleranceThreshold": 0.254,
+    "processGroup": "Sheet Metal",
+    "scenarioName": "Initial",
+    "useCadToleranceThreshold": false,
+    "useVpeForAllProcesses": true,
+    "vpeName": "aPriori USA"
+}

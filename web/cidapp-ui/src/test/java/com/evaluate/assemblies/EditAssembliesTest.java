@@ -998,26 +998,30 @@ public class EditAssembliesTest extends TestBase {
         double initialTotalCost = evaluatePage.getCostResults("Total Cost");
         double initialComponentsCost = evaluatePage.getCostResults("Components Cost");
 
-        evaluatePage.openComponents()
+        componentsListPage = evaluatePage.openComponents()
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
             .close(ComponentsListPage.class)
+            .checkManifestComplete(componentAssembly, PIN)
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
             .close(ComponentsListPage.class)
+            .checkManifestComplete(componentAssembly, PIN)
             .multiSelectSubcomponents(PIN + "," + scenarioName)
             .publishSubcomponent()
             .changeName(editedComponentScenarioName)
             .clickContinue(PublishPage.class)
-            .publish(ComponentsListPage.class);
+            .publish(ComponentsListPage.class)
+            .checkManifestComplete(componentAssembly, PIN);
 
-        assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName), is(StatusIconEnum.PUBLIC.getStatusIcon()));
+        softAssertions.assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         evaluatePage = componentsListPage.closePanel()
-            .costScenario()
-            .costScenarioConfirmation("Yes");
+            .clickCost()
+            .confirmCost("Yes")
+            .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2);
 
         double modifiedTotalCost = evaluatePage.getCostResults("Total Cost");
         double modifiedComponentsCost = evaluatePage.getCostResults("Components Cost");

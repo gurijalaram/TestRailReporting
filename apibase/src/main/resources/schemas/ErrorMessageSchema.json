@@ -1,7 +1,114 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
+  "properties": {
+    "timestamp": {
+      "type": "integer"
+    },
+    "status": {
+      "type": "integer"
+    },
+    "error": {
+      "type": "string"
+    },
+    "errors": {
+      "type": "array",
+      "items": [
+        {
+          "type": "object",
+          "properties": {
+            "codes": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "string"
+                }
+              ]
+            },
+            "arguments": {
+              "type": "array",
+              "items": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "codes": {
+                      "type": "array",
+                      "items": [
+                        {
+                          "type": "string"
+                        },
+                        {
+                          "type": "string"
+                        }
+                      ]
+                    },
+                    "arguments": {
+                      "type": "null"
+                    },
+                    "defaultMessage": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "codes",
+                    "arguments",
+                    "defaultMessage",
+                    "code"
+                  ]
+                }
+              ]
+            },
+            "defaultMessage": {
+              "type": "string"
+            },
+            "objectName": {
+              "type": "string"
+            },
+            "field": {
+              "type": "string"
+            },
+            "rejectedValue": {
+              "type": "string"
+            },
+            "bindingFailure": {
+              "type": "boolean"
+            },
+            "code": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "codes",
+            "arguments",
+            "defaultMessage",
+            "objectName",
+            "field",
+            "rejectedValue",
+            "bindingFailure",
+            "code"
+          ]
+        }
+      ]
+    },
+    "message": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    }
+  },
   "required": [
     "status",
     "error",
@@ -10,26 +117,7 @@
   ],
   "optional": [
     "timestamp",
-    "method"
-  ],
-  "properties": {
-    "timestamp": {
-      "type": "integer"
-    },
-    "status": {
-      "type": "integer"
-    },
-    "method": {
-      "type": "string"
-    },
-    "error": {
-      "type": "string"
-    },
-    "message": {
-      "type": "string"
-    },
-    "path": {
-      "type": "string"
-    }
-  }
+    "method",
+    "errors"
+  ]
 }

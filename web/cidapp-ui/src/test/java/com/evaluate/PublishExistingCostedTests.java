@@ -38,7 +38,6 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 
 public class PublishExistingCostedTests extends TestBase {
-
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
@@ -57,7 +56,6 @@ public class PublishExistingCostedTests extends TestBase {
     @TestRail(testCaseId = {"6209", "5427"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
-
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "testpart-4";
 
@@ -79,7 +77,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -92,7 +90,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -109,7 +107,6 @@ public class PublishExistingCostedTests extends TestBase {
     @TestRail(testCaseId = {"6210", "5435"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
-
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
@@ -128,7 +125,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
             .selectProcessGroup(processGroupEnum)
@@ -136,11 +133,11 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickActions()
             .lock(EvaluatePage.class)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  ExplorePage.class);
+            .publish(cidComponentItem, ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
     }
@@ -172,7 +169,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore();
 
         cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
@@ -185,7 +182,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItemB,  EvaluatePage.class);
+            .publish(cidComponentItemB, EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
@@ -196,7 +193,6 @@ public class PublishExistingCostedTests extends TestBase {
     @TestRail(testCaseId = {"6212"})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
-
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
@@ -216,7 +212,7 @@ public class PublishExistingCostedTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario()
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem,  ExplorePage.class)
+            .publish(cidComponentItem, ExplorePage.class)
             .clickActions()
             .lock(ExplorePage.class)
             .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)

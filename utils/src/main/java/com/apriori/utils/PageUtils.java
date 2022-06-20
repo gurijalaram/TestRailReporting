@@ -972,6 +972,18 @@ public class PageUtils {
     }
 
     /**
+     * Waits for the element to become invisible
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public void waitForElementNotVisible(WebElement locator, int timeoutInMinutes) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOf(locator));
+    }
+
+    /**
      * Checks for string to be present in element text and returns true/false
      *
      * @param locator - the locator of the element
@@ -1187,7 +1199,7 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String root, String locatorValue) {
-        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@id]", root))).getAttribute("textContent").equals(locatorValue)) {
+        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(locatorValue)) {
             waitForElementAndClick(dropdownSelector);
             waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
         }
