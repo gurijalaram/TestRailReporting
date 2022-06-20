@@ -39,6 +39,7 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     SUBLICENSE_ASSOCIATIONS_USERS("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users"),
     SUBLICENSE_ASSOCIATIONS_USER_BY_ID("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s"),
     LICENSE_BY_CUSTOMER_SITE_IDS("customers/%s/sites/%s/licenses"),
+    LICENSE_BY_CUSTOMER_SITE_LICENSE_IDS("customers/%s/sites/%s/licenses/%s"),
 
     // CUSTOMER ASSOCIATIONS
     CUSTOMERS_ASSOCIATIONS("customers/%s/customer-associations?sortBy[DESC]=createdAt"),
