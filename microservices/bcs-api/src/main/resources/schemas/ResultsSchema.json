@@ -1,83 +1,11 @@
 {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "required": [
-    "response"
-  ],
   "properties": {
     "response": {
       "type": "object",
-      "required": [
-        "partIdentity",
-        "additionalAmortizedInvestment",
-        "additionalDirectCosts",
-        "amortizedInvestment",
-        "annualCost",
-        "annualVolume",
-        "batchCost",
-        "batchSetupTime",
-        "batchSize",
-        "capitalInvestment",
-        "currencyCode",
-        "cycleTime",
-        "directOverheadCost",
-        "dtcMessagesCount",
-        "elapsedTime",
-        "expendableToolingCostPerPart",
-        "extraCosts",
-        "failedGcdsCount",
-        "failuresWarningsCount",
-        "finalYield",
-        "finishMass",
-        "fixtureCost",
-        "fixtureCostPerPart",
-        "fullyBurdenedCost",
-        "gcdWithTolerancesCount",
-        "goodPartYield",
-        "hardToolingCost",
-        "height",
-        "laborCost",
-        "laborTime",
-        "lastCosted",
-        "length",
-        "lifetimeCost",
-        "logisticsCost",
-        "margin",
-        "marginPercent",
-        "materialCost",
-        "materialName",
-        "materialOverheadCost",
-        "materialUnitCost",
-        "notSupportedGcdsCount",
-        "numberOfParts",
-        "numOperators",
-        "numPartsPerSheet",
-        "numScrapParts",
-        "partsPerHour",
-        "periodOverhead",
-        "pieceAndPeriod",
-        "pieceCost",
-        "processGroupName",
-        "productionLife",
-        "programmingCost",
-        "programmingCostPerPart",
-        "roughMass",
-        "scenarioName",
-        "scrapMass",
-        "setupCostPerPart",
-        "sgaCost",
-        "stripNestingPitch",
-        "toolingCostPerPart",
-        "totalCost",
-        "totalProductionVolume",
-        "otherDirectCosts",
-        "utilization",
-        "utilizationWithAddendum",
-        "utilizationWithoutAddendum",
-        "vpeName",
-        "width"
-      ],
       "properties": {
-        "partIdentity": {
+        "identity": {
           "type": "string"
         },
         "additionalAmortizedInvestment": {
@@ -113,12 +41,6 @@
         "capitalInvestment": {
           "type": "number"
         },
-        "costingStatus": {
-          "type": "string"
-        },
-        "currencyCode": {
-          "type": "string"
-        },
         "cycleTime": {
           "type": "number"
         },
@@ -127,6 +49,9 @@
         },
         "dfmScore": {
           "type": "number"
+        },
+        "digitalFactoryDefaultMaterialName": {
+          "type": "string"
         },
         "directOverheadCost": {
           "type": "number"
@@ -194,6 +119,9 @@
         "logisticsCost": {
           "type": "number"
         },
+        "manualMaterialName": {
+          "type": "string"
+        },
         "margin": {
           "type": "number"
         },
@@ -202,6 +130,9 @@
         },
         "materialCost": {
           "type": "number"
+        },
+        "materialMode": {
+          "type": "string"
         },
         "materialName": {
           "type": "string"
@@ -218,13 +149,13 @@
         "materialUnitCost": {
           "type": "number"
         },
+        "materialUtilizationMode": {
+          "type": "string"
+        },
         "notSupportedGcdsCount": {
           "type": "integer"
         },
         "numberOfParts": {
-          "type": "number"
-        },
-        "numOperators": {
           "type": "number"
         },
         "numPartsPerSheet": {
@@ -245,7 +176,7 @@
         "pieceCost": {
           "type": "number"
         },
-        "processGroupName": {
+        "processRoutingName": {
           "type": "string"
         },
         "productionLife": {
@@ -259,9 +190,6 @@
         },
         "roughMass": {
           "type": "number"
-        },
-        "scenarioName": {
-          "type": "string"
         },
         "scrapMass": {
           "type": "number"
@@ -296,9 +224,6 @@
         "otherDirectCosts": {
           "type": "number"
         },
-        "url": {
-          "type": "string"
-        },
         "utilization": {
           "type": "number"
         },
@@ -308,13 +233,116 @@
         "utilizationWithoutAddendum": {
           "type": "number"
         },
-        "vpeName": {
-          "type": "string"
-        },
         "width": {
           "type": "number"
+        },
+        "costingStatus": {
+          "type": "string"
+        },
+        "currencyCode": {
+          "type": "string"
+        },
+        "processGroupName": {
+          "type": "string"
+        },
+        "scenarioName": {
+          "type": "string"
+        },
+        "userDefinedAttributes": {
+          "type": "object"
+        },
+        "vpeName": {
+          "type": "string"
         }
-      }
+      },
+      "required": [
+        "identity",
+        "additionalAmortizedInvestment",
+        "additionalDirectCosts",
+        "amortizedInvestment",
+        "annualCost",
+        "annualVolume",
+        "batchCost",
+        "batchSetupTime",
+        "batchSize",
+        "cadSerLength",
+        "cadSerWidth",
+        "capitalInvestment",
+        "cycleTime",
+        "dfmRisk",
+        "dfmScore",
+        "digitalFactoryDefaultMaterialName",
+        "directOverheadCost",
+        "dtcMessagesCount",
+        "elapsedTime",
+        "expendableToolingCostPerPart",
+        "extraCosts",
+        "failedGcdsCount",
+        "failuresWarningsCount",
+        "finalYield",
+        "finishMass",
+        "fixtureCost",
+        "fixtureCostPerPart",
+        "fullyBurdenedCost",
+        "gcdWithTolerancesCount",
+        "goodPartYield",
+        "hardToolingCost",
+        "height",
+        "laborCost",
+        "laborTime",
+        "lastCosted",
+        "length",
+        "lifetimeCost",
+        "logisticsCost",
+        "manualMaterialName",
+        "margin",
+        "marginPercent",
+        "materialCost",
+        "materialMode",
+        "materialName",
+        "materialOverheadCost",
+        "materialStockFormName",
+        "materialStockName",
+        "materialUnitCost",
+        "materialUtilizationMode",
+        "notSupportedGcdsCount",
+        "numberOfParts",
+        "numPartsPerSheet",
+        "numScrapParts",
+        "partsPerHour",
+        "periodOverhead",
+        "pieceAndPeriod",
+        "pieceCost",
+        "processRoutingName",
+        "productionLife",
+        "programmingCost",
+        "programmingCostPerPart",
+        "roughMass",
+        "scrapMass",
+        "setupCostPerPart",
+        "sgaCost",
+        "stockPropertyLength",
+        "stockPropertyThickness",
+        "stockPropertyWidth",
+        "stripNestingPitch",
+        "toolingCostPerPart",
+        "totalCost",
+        "totalProductionVolume",
+        "otherDirectCosts",
+        "utilization",
+        "utilizationWithAddendum",
+        "utilizationWithoutAddendum",
+        "width",
+        "costingStatus",
+        "currencyCode",
+        "processGroupName",
+        "scenarioName",
+        "userDefinedAttributes",
+        "vpeName"
+      ]
     }
-  }
+  },
+  "required": [
+    "response"
+  ]
 }

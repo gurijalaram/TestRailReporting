@@ -29,6 +29,7 @@ public class NewPartRequest {
     private String udas;
     private String vpeName;
     private String generateWatchPointReport;
+    private String fileData;
 
     @Setter(onMethod_ = {@JsonSetter("UDARegion")})
     @Getter(onMethod_ = {@JsonGetter("UDARegion")})

@@ -158,7 +158,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public PublishPage changeName(String scenarioName) {
         pageUtils.waitForElementAndClick(changeNameButton);
-        pageUtils.waitForElementToBeClickable(scenarioNameInput).clear();
+        pageUtils.clearValueOfElement(scenarioNameInput);
         scenarioNameInput.sendKeys(scenarioName);
         return this;
     }

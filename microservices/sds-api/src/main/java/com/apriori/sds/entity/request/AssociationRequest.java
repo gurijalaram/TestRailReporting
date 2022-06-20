@@ -15,4 +15,5 @@ public class AssociationRequest {
     private Integer occurrences;
     private String scenarioIdentity;
     private String createdBy;
+    private Boolean excluded;
 }
