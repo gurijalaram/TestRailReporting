@@ -15,7 +15,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -35,9 +38,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement cancelButton;
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
-    @FindBy(css = ".query-builder-action-buttons [data-icon='plus']")
+    @FindBy(css = "button [data-icon='plus']")
     private WebElement addButton;
-    @FindBy(css = ".query-builder-action-buttons [data-icon='xmark']")
+    @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement clearButton;
     @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
@@ -110,6 +113,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage rename() {
+        WebElement section = driver.findElement(By.xpath("//div[contains(@class,'section pb-3')]"));
+        WebElement renameButton = section.findElement(By.xpath("//button[contains(@class,'ml-2 btn btn-secondary')]"));
         pageUtils.waitForElementAndClick(renameButton);
         return this;
     }
@@ -131,7 +136,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public boolean isElementDisplayed(String searchedText, String className) {
 
-        //@FindBy(xpath = "//div[contains(.,'No queries applied')][@class = 'message']")
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
         WebElement element = driver.findElement(By.xpath(xpath));
         return pageUtils.waitForWebElement(element);
@@ -165,7 +169,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage inputName(String name) {
         pageUtils.waitForElementAndClick(nameInput);
-        nameInput.clear();
+        //nameInput.clear();
+        nameInput.sendKeys(Keys.chord(Keys.chord(Keys.CONTROL,"a", Keys.DELETE)));
         nameInput.sendKeys(name);
         return this;
     }
@@ -321,6 +326,16 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         By byProperty = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].subject']//div[.='%s']//div[@id]", index, propertyEnum.getProperty()));
         pageUtils.waitForElementAndClick(byProperty);
         return this;
+    }
+
+    /**
+     * clicks on the filter dropdown and read in filters names
+     *
+     * @return list of filers names
+     */
+    public String getAllFilters() {
+        WebElement filterName = driver.findElement(By.id("qa-filter-manager-filter-selector"));
+        return filterName.getText();
     }
 
     /**

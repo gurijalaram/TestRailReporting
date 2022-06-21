@@ -22,7 +22,9 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -40,6 +42,9 @@ public class ExplorePage extends ExploreToolbar {
 
     @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
     private WebElement filterButton;
+
+    @FindBy(css = "[id='qa-sub-component-detail-filter-button'] button")
+    private WebElement filterButtonOnTableView;
 
     @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
@@ -238,6 +243,15 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Open filters page on Table View
+     *
+     * @return new page object
+     */
+    public FilterPage filterOnTableView() {
+        return componentTableActions.filter(filterButtonOnTableView);
+    }
+
+    /**
      * Opens the preview panel
      *
      * @return new page object
@@ -331,5 +345,29 @@ public class ExplorePage extends ExploreToolbar {
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    }
+
+    /**
+     * Gets all scenario Component Names from Explorer Table
+     *
+     * @return - list of all scenario Component Names
+     */
+    public List<String> getAllScenarioComponentName() {
+        List<WebElement> rows = driver.findElements(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
+        List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
+        componentNames.remove("Component Name");
+        return componentNames;
+    }
+
+    /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = driver.findElement(By.xpath(xpath));
+        return pageUtils.waitForWebElement(element);
     }
 }
