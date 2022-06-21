@@ -930,18 +930,17 @@ public class EditAssembliesTest extends TestBase {
             .openComponents()
             .multiSelectSubcomponents(BOLT + "," + scenarioName)
             .editSubcomponent(EditScenarioStatusPage.class)
-            .close(EvaluatePage.class)
-            .clickRefresh(ComponentsListPage.class)
+            .close(ComponentsListPage.class)
+            .checkManifestComplete(componentAssembly, BOLT)
             .multiSelectSubcomponents(BOLT + "," + scenarioName)
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
-            .close(EvaluatePage.class)
-            .clickRefresh(ComponentsListPage.class);
+            .close(ComponentsListPage.class);
 
         subComponentNames.forEach(componentName ->
-            assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE),
-                is(ScenarioStateEnum.COST_COMPLETE.getState())));
+            softAssertions.assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE))
+                .isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState()));
 
         componentsListPage.closePanel()
             .clickExplore()
