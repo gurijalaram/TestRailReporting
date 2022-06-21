@@ -65,10 +65,10 @@ public class ReportsNavigationTests extends TestBase {
         cirUserGuide = new ReportsLoginPage(driver)
             .login()
             .navigateToReportUserGuide()
-            .switchTab()
-            .switchToIFrameUserGuide("page_iframe");
+            .switchTab();
 
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
+        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(containsString("Cost Insight Report")));
+        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(containsString("User Guide")));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
         assertThat(cirUserGuide.getTabCount(), is(2));
     }
