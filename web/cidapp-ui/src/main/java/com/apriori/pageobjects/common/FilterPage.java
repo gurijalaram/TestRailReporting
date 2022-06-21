@@ -169,7 +169,6 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage inputName(String name) {
         pageUtils.waitForElementAndClick(nameInput);
-        //nameInput.clear();
         nameInput.sendKeys(Keys.chord(Keys.chord(Keys.CONTROL,"a", Keys.DELETE)));
         nameInput.sendKeys(name);
         return this;
