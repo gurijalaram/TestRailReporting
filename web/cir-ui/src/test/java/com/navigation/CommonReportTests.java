@@ -87,7 +87,8 @@ public class CommonReportTests extends TestBase {
         reportsPageHeader = new ReportsLoginPage(driver)
             .login();
 
-        viewSearchResultsPage = reportsPageHeader.searchForReport(reportName);
+        viewSearchResultsPage = reportsPageHeader.waitForHomePageToLoad()
+            .searchForReport(reportName);
 
         assertThat(viewSearchResultsPage.getReportName(reportName),
             is(equalTo(reportName))

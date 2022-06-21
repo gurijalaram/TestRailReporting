@@ -18,6 +18,7 @@ import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,6 +39,9 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
 
     @FindBy(css = "title")
     private WebElement homePageTitle;
+
+    @FindBy(id = "logo")
+    private WebElement homePageAprioriLogo;
 
     @FindBy(id = "main_home")
     private WebElement homeMenuOption;
@@ -349,8 +353,9 @@ public class ReportsHeader extends LoadableComponent<ReportsHeader> {
         pageUtils.waitForElementAndClick(searchInput);
         searchInput.sendKeys(textToType);
         pageUtils.waitForSteadinessOfElement(By.cssSelector("span[id='globalSearch'] > a"));
-        pageUtils.waitForElementAndClick(searchButton);
-        pageUtils.isPageLoaded(homePageTitle);
+        searchInput.sendKeys(Keys.ENTER);
+        //pageUtils.waitForElementAndClick(searchButton);
+        pageUtils.isPageLoaded(homePageAprioriLogo);
         pageUtils.waitForElementToAppear(By.xpath(String.format("//a[text() = '%s']", textToType)));
         return new ViewSearchResultsPage(driver);
     }
