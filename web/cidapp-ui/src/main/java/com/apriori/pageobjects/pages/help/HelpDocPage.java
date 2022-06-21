@@ -20,7 +20,7 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
     @FindBy(xpath = "//div[@id='gdpr']//button[.='Yes I Agree']")
     private WebElement agreeButton;
 
-    @FindBy(css = "h2")
+    @FindBy(css = "h1")
     private WebElement userGuideTitle;
 
     private WebDriver driver;
