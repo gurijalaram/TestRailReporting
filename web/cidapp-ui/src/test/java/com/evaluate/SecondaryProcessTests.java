@@ -455,7 +455,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectBarChart("Powder Coat Cart")
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.30);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Fraction of Part Area that is Powder Coated")).isEqualTo(0.30);
         softAssertions.assertThat(materialProcessPage.isNoMaskingSelected()).isEqualTo(true);
         softAssertions.assertThat(materialProcessPage.getComponentsPaintCart()).isEqualTo(414.0);
         softAssertions.assertThat(materialProcessPage.getPaintedBatchSize()).isEqualTo(2.0);
