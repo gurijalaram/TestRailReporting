@@ -1,5 +1,9 @@
 package com.apriori.pageobjects.pages.login;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
@@ -169,13 +173,24 @@ public class ReportsLoginPage extends ReportsPageHeader {
     /**
      * Failed login to CI Report
      *
-     * @param email    - user email
-     * @param password - user password
-     * @return current page object
+     * @param email - email to input
+     * @param password - password to input
+     * @return instance of ReportsLoginPage
      */
     public ReportsLoginPage failedLogin(String email, String password) {
         executeLogin(email, password);
-        return new ReportsLoginPage(driver);
+        submitLogin();
+        return this;
+    }
+
+    /**
+     * Failed login with empty fields
+     *
+     * @return instance of ReportsLoginPage
+     */
+    public ReportsLoginPage failedLoginEmptyFields() {
+        submitLogin();
+        return this;
     }
 
     /**

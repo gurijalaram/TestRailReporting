@@ -66,7 +66,7 @@ public class LoginTests extends TestBase {
     @Description("Empty email/password field message displayed")
     public void emptyFieldsMessage() {
         loginPage = new ReportsLoginPage(driver)
-            .failedLogin("", "");
+            .failedLoginEmptyFields();
 
         assertThat(loginPage.getInputErrorMessagesLocalInstall(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
     }

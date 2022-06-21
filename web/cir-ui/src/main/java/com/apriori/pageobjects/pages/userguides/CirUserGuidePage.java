@@ -20,7 +20,7 @@ public class CirUserGuidePage extends ReportsPageHeader {
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
 
-    @FindBy(css = ".Documentation_Cover_Page_Title")
+    @FindBy(css = ".DocumentationCoverPageTitle")
     private WebElement reportsUserGuideTitle;
 
     @FindBy(css = "body > h1")
