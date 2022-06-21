@@ -353,7 +353,8 @@ public class ExplorePage extends ExploreToolbar {
      * @return - list of all scenario Component Names
      */
     public List<String> getAllScenarioComponentName() {
-        List<WebElement> rows = driver.findElements(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
+        List<WebElement> rows =
+            pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
         List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
         componentNames.remove("Component Name");
         return componentNames;
@@ -367,7 +368,7 @@ public class ExplorePage extends ExploreToolbar {
     public boolean isElementDisplayed(String searchedText, String className) {
 
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
-        WebElement element = driver.findElement(By.xpath(xpath));
+        WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return pageUtils.waitForWebElement(element);
     }
 }

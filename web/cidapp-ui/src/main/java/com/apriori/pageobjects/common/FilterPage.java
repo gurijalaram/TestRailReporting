@@ -38,9 +38,9 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement cancelButton;
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
-    @FindBy(css = "button [data-icon='plus']")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='plus']")
     private WebElement addButton;
-    @FindBy(id = "qa-searchCriterion[0].delete")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='xmark']")
     private WebElement clearButton;
     @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
@@ -113,7 +113,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage rename() {
-        WebElement section = driver.findElement(By.xpath("//div[contains(@class,'section pb-3')]"));
+        WebElement section = pageUtils.waitForElementToAppear(By.xpath("//div[contains(@class,'section pb-3')]"));
         WebElement renameButton = section.findElement(By.xpath("//button[contains(@class,'ml-2 btn btn-secondary')]"));
         pageUtils.waitForElementAndClick(renameButton);
         return this;
@@ -169,7 +169,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage inputName(String name) {
         pageUtils.waitForElementAndClick(nameInput);
-        nameInput.sendKeys(Keys.chord(Keys.chord(Keys.CONTROL,"a", Keys.DELETE)));
+        pageUtils.clearInput(nameInput);
         nameInput.sendKeys(name);
         return this;
     }
@@ -333,7 +333,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return list of filers names
      */
     public String getAllFilters() {
-        WebElement filterName = driver.findElement(By.id("qa-filter-manager-filter-selector"));
+        WebElement filterName = pageUtils.waitForElementToAppear(By.id("qa-filter-manager-filter-selector"));
         return filterName.getText();
     }
 

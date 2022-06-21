@@ -248,6 +248,7 @@ public class FiltersTests extends TestBase {
     @Description("User is able to edit already created filters")
     public void ableToEditCreatedFilterTest() {
         String filterName = generateStringUtil.generateFilterName();
+        String filterName2 = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -270,7 +271,6 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, "BIG RING")
             .submit(ExplorePage.class);
 
-        String filterName2 = generateStringUtil.generateFilterName();
         explorePage
             .filterOnTableView()
             .rename()
