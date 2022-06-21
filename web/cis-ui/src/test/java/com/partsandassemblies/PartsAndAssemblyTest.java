@@ -67,8 +67,8 @@ public class PartsAndAssemblyTest extends TestBase {
     @Description("Verify that user can check a table row")
     public void testCheckTableRow() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
-        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies();
 
         assertThat(partsAndAssembliesPage.getComponentCheckBoxStatus(), is(equalTo("true")));
 
@@ -110,21 +110,28 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12178","12185"})
-    @Description("Verify that user can search a field by its name and hide the field")
+    @TestRail(testCaseId = {"12178","12185","12186"})
+    @Description("Verify that user can search a field by its name and hide/show the field")
     public void testSearchAFieldToShowHide() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
-        partsAndAssembliesPage = leftHandNavigationBar.clickPartsAndAssemblies();
-        partsAndAssembliesPage.waitForTableLoad();
-        partsAndAssembliesPage.clickOnShowHideOption();
-        partsAndAssembliesPage.enterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                        .clickPartsAndAssemblies()
+                        .clickOnShowHideOption()
+                        .enterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
-        assertThat(partsAndAssembliesPage.getFieldName(),is(equalTo(CisColumnsEnum.COMPONENT_NAME.getColumns())));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getFieldName()).isEqualTo(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         partsAndAssembliesPage.clickOnToggleButton();
 
-        assertThat(partsAndAssembliesPage.getTableHeaders(), not(hasItems(CisColumnsEnum.COMPONENT_NAME.getColumns())));
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.COMPONENT_NAME.getColumns());
+
+        partsAndAssembliesPage.clickOnToggleButton();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns());
+
+        softAssertions.assertAll();
 
     }
 
@@ -189,8 +196,30 @@ public class PartsAndAssemblyTest extends TestBase {
 
         assertThat(partsAndAssembliesPage.getListOfComponents(),is(not(equalTo(1))));
 
-
     }
+
+    @Test
+    @TestRail(testCaseId = {"12066","13263"})
+    @Description("Verify that user can check all rows and uncheck all rows")
+    public void testCheckAllOption() {
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesPage.clickCheckAll();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).contains("Mui-checked");
+
+        partsAndAssembliesPage.clickCheckAll();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).doesNotContain("Mui-checked");
+
+        softAssertions.assertAll();
+    }
+
 }
 
 

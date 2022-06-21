@@ -80,6 +80,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[@role='grid']")
     private WebElement partsAndAssembliesTable;
 
+    @FindBy(css = "div.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root")
+    private WebElement checkAllCheckBox;
+
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -377,4 +380,29 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public boolean isPartAndAssembliesTableDisplayed() {
         return pageUtils.isElementDisplayed(partsAndAssembliesTable);
     }
+
+    /**
+     * Get the status of check all
+     *
+     * @return a String
+     */
+    public String getCheckAllStatus() {
+        return getPageUtils().waitForElementToAppear(checkAllCheckBox).getAttribute("class");
+    }
+
+    /**
+     * Click on check All
+     *
+     * @return current page object
+     */
+
+    public PartsAndAssembliesPage clickCheckAll() {
+        if (tableRow.size() > 0) {
+            getPageUtils().waitForElementAndClick(checkAllCheckBox);
+        }
+        return this;
+    }
+
+
+
 }
