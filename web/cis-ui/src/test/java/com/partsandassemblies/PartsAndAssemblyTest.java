@@ -250,7 +250,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickRemoveCondition();
 
-        assertThat(partsAndAssembliesPage.getListOfComponents(),is(not(equalTo(1))));
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
 
         softAssertions.assertAll();
 
