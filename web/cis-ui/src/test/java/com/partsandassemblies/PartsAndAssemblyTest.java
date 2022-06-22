@@ -220,6 +220,42 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Test
+    @TestRail(testCaseId = {"12221","12224","12226","12227","12233","13200"})
+    @Description("Verify that user can filter results in parts and assemblies page")
+    public void testFilterAComponent() {
+        String componentName = "Y_shape";
+        String scenarioName = "YShape_AutomationSearch";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickFilter();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isFilterModalDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesPage.clickAddCondition();
+
+        softAssertions.assertThat(partsAndAssembliesPage.isFilterFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesPage.isFilterTypeDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesPage.isFilterValueDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesPage.isFilterClearIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesPage.selectComponentNameField()).isEqualTo("componentName");
+
+        partsAndAssembliesPage.addFilterValue(componentName);
+
+        softAssertions.assertThat(partsAndAssembliesPage.getFilteredComponentName()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName,scenarioName)).isEqualTo(1);
+
+        partsAndAssembliesPage.clickRemoveCondition();
+
+        assertThat(partsAndAssembliesPage.getListOfComponents(),is(not(equalTo(1))));
+
+        softAssertions.assertAll();
+
+    }
+
 }
 
 
