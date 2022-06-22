@@ -72,7 +72,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      *
      * @return current page object
      */
-    public EvaluateToolbar clickCost() {
+    public EvaluateToolbar clickCostButton() {
         pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
         return this;
