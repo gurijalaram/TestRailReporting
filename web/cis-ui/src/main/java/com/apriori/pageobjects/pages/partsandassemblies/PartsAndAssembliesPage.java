@@ -120,14 +120,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         this(driver, log);
     }
 
-    private PageUtils pageUtils;
     private WebDriver driver;
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
         this.partsAndAssemblyTableController = new PartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
         this.waitForTableLoad();
@@ -152,8 +150,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * Method to wait until loading complete
      */
     public void waitForTableLoad() {
-        pageUtils.waitForElementToAppear(progressBar);
-        pageUtils.waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
+        getPageUtils().waitForElementToAppear(progressBar);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
     }
 
     /**
@@ -236,7 +234,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isPinToLeftOptionDisplayed() {
-        return pageUtils.isElementDisplayed(btnPintoLeft);
+        return getPageUtils().isElementDisplayed(btnPintoLeft);
     }
 
     /**
@@ -264,7 +262,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isSearchOptionDisplayed() {
-        return pageUtils.isElementDisplayed(btnSearch);
+        return getPageUtils().isElementDisplayed(btnSearch);
     }
 
     /**
@@ -283,7 +281,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isSearchFieldDisplayed() {
-        return pageUtils.isElementDisplayed(fieldSearch);
+        return getPageUtils().isElementDisplayed(fieldSearch);
     }
 
     /**
@@ -362,7 +360,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isUnPinOptionDisplayed() {
-        return pageUtils.isElementDisplayed(btnPintoLeft);
+        return getPageUtils().isElementDisplayed(btnPintoLeft);
     }
 
     /**
@@ -371,7 +369,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isShowHideOptionDisplayed() {
-        return pageUtils.isElementDisplayed(showHideFieldsOption);
+        return getPageUtils().isElementDisplayed(showHideFieldsOption);
     }
 
     /**
@@ -380,7 +378,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isShowHideModalDisplayed() {
-        return pageUtils.isElementDisplayed(showHideModal);
+        return getPageUtils().isElementDisplayed(showHideModal);
     }
 
     /**
@@ -408,7 +406,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isPartAndAssembliesTableDisplayed() {
-        return pageUtils.isElementDisplayed(partsAndAssembliesTable);
+        return getPageUtils().isElementDisplayed(partsAndAssembliesTable);
     }
 
     /**
@@ -449,7 +447,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isFilterModalDisplayed() {
-        return pageUtils.isElementDisplayed(filterModal);
+        return getPageUtils().isElementDisplayed(filterModal);
     }
 
     /**
@@ -468,7 +466,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isFilterFieldDisplayed() {
-        return pageUtils.isElementDisplayed(filterField);
+        return getPageUtils().isElementDisplayed(filterField);
 
     }
 
@@ -478,7 +476,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isFilterTypeDisplayed() {
-        return pageUtils.isElementDisplayed(filterType);
+        return getPageUtils().isElementDisplayed(filterType);
 
     }
 
@@ -488,7 +486,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isFilterValueDisplayed() {
-        return pageUtils.isElementDisplayed(filterValue);
+        return getPageUtils().isElementDisplayed(filterValue);
 
     }
 
@@ -498,7 +496,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isFilterClearIconDisplayed() {
-        return pageUtils.isElementDisplayed(removeIcon);
+        return getPageUtils().isElementDisplayed(removeIcon);
 
     }
 
