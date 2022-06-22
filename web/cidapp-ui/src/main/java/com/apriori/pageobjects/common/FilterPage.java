@@ -169,7 +169,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage inputName(String name) {
         pageUtils.waitForElementAndClick(nameInput);
-        pageUtils.clearInput(nameInput);
+        pageUtils.clearValueOfElement(nameInput);
         nameInput.sendKeys(name);
         return this;
     }

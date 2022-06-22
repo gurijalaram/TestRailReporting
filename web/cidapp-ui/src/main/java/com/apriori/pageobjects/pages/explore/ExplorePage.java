@@ -369,6 +369,6 @@ public class ExplorePage extends ExploreToolbar {
 
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
-        return pageUtils.waitForWebElement(element);
+        return element.isDisplayed();
     }
 }
