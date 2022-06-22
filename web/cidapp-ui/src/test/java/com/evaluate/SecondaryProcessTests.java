@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
@@ -446,21 +447,13 @@ public class SecondaryProcessTests extends TestBase {
             .expandSecondaryProcessTree("Paint")
             .selectSecondaryProcess("Powder Coat Cart")
             .inputFractionOverride("0.30")
-            .selectNoMasking()
-            .inputCompPaintCart("414")
-            .inputBatchSizeOverride("2")
             .submit(EvaluatePage.class)
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Powder Coat Cart")
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("What Fraction of Component is Painted?")).isEqualTo(0.30);
-        softAssertions.assertThat(materialProcessPage.isNoMaskingSelected()).isEqualTo(true);
-        softAssertions.assertThat(materialProcessPage.getComponentsPaintCart()).isEqualTo(414.0);
-        softAssertions.assertThat(materialProcessPage.getPaintedBatchSize()).isEqualTo(2.0);
-
-        softAssertions.assertAll();
+        assertThat(materialProcessPage.getOverriddenPso("Fraction of Part Area that is Powder Coated"), is(equalTo(0.30)));
     }
 
     @Test

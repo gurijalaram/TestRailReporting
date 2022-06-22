@@ -44,7 +44,7 @@ public class HelpTests extends TestBase {
             .goToHelp()
             .clickUserGuide();
 
-        assertThat(helpPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
+        assertThat(helpPage.getChildPageTitle(), is(equalTo("Cost Insight Design\nUser Guide")));
     }
 
     @Test
@@ -88,7 +88,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
     }
 
     @Test
@@ -130,7 +130,7 @@ public class HelpTests extends TestBase {
             .openMaterialProcess()
             .openHelp();
 
-        assertThat(helpDocPage.getChildPageTitle(), containsString("Cost Insight Design Documentation"));
+        assertThat(helpDocPage.getChildPageTitle(), containsString("Material & Utilization Details"));
     }
 
     @Test
