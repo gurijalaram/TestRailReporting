@@ -83,6 +83,36 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(css = "div.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root")
     private WebElement checkAllCheckBox;
 
+    @FindBy(xpath = "//p[@data-testid='toolbar-Filter ']")
+    private WebElement btnFilter;
+
+    @FindBy(id = "popover-filter-control")
+    private WebElement filterModal;
+
+    @FindBy(id = "add-condition-button-filter-control")
+    private WebElement addCondition;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'select-control-filter-field-select')]")
+    private WebElement filterField;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'select-control-filter-condition-type')]")
+    private WebElement filterType;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'filter-value')]")
+    private WebElement filterValue;
+
+    @FindBy(xpath = "//*[@data-icon='times-circle']")
+    private WebElement removeIcon;
+
+    @FindBy(xpath = "//li[@data-value='componentName']")
+    private WebElement componentNameFiled;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'select-control-filter-field-select')]//input")
+    private WebElement selectedFiled;
+
+    @FindBy(xpath = "//div[contains(@data-testid,'filter-value')]//input")
+    private WebElement filteredValue;
+
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -90,14 +120,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         this(driver, log);
     }
 
-    private PageUtils pageUtils;
     private WebDriver driver;
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
         this.partsAndAssemblyTableController = new PartsAndAssemblyTableController(driver);
         PageFactory.initElements(driver, this);
         this.waitForTableLoad();
@@ -122,8 +150,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * Method to wait until loading complete
      */
     public void waitForTableLoad() {
-        pageUtils.waitForElementToAppear(progressBar);
-        pageUtils.waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
+        getPageUtils().waitForElementToAppear(progressBar);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
     }
 
     /**
@@ -206,7 +234,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isPinToLeftOptionDisplayed() {
-        return pageUtils.isElementDisplayed(btnPintoLeft);
+        return getPageUtils().isElementDisplayed(btnPintoLeft);
     }
 
     /**
@@ -234,7 +262,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isSearchOptionDisplayed() {
-        return pageUtils.isElementDisplayed(btnSearch);
+        return getPageUtils().isElementDisplayed(btnSearch);
     }
 
     /**
@@ -253,7 +281,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isSearchFieldDisplayed() {
-        return pageUtils.isElementDisplayed(fieldSearch);
+        return getPageUtils().isElementDisplayed(fieldSearch);
     }
 
     /**
@@ -332,7 +360,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isUnPinOptionDisplayed() {
-        return pageUtils.isElementDisplayed(btnPintoLeft);
+        return getPageUtils().isElementDisplayed(btnPintoLeft);
     }
 
     /**
@@ -341,7 +369,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isShowHideOptionDisplayed() {
-        return pageUtils.isElementDisplayed(showHideFieldsOption);
+        return getPageUtils().isElementDisplayed(showHideFieldsOption);
     }
 
     /**
@@ -350,7 +378,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isShowHideModalDisplayed() {
-        return pageUtils.isElementDisplayed(showHideModal);
+        return getPageUtils().isElementDisplayed(showHideModal);
     }
 
     /**
@@ -378,7 +406,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isPartAndAssembliesTableDisplayed() {
-        return pageUtils.isElementDisplayed(partsAndAssembliesTable);
+        return getPageUtils().isElementDisplayed(partsAndAssembliesTable);
     }
 
     /**
@@ -403,6 +431,114 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         return this;
     }
 
+    /**
+     * Click the filter option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickFilter() {
+        getPageUtils().waitForElementAndClick(btnFilter);
+        return this;
+    }
 
+    /**
+     * Checks if filter modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterModalDisplayed() {
+        return getPageUtils().isElementDisplayed(filterModal);
+    }
+
+    /**
+     * Click the add condition
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickAddCondition() {
+        getPageUtils().waitForElementAndClick(addCondition);
+        return this;
+    }
+
+    /**
+     * Checks if filter field displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterFieldDisplayed() {
+        return getPageUtils().isElementDisplayed(filterField);
+
+    }
+
+    /**
+     * Checks if filter type displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterTypeDisplayed() {
+        return getPageUtils().isElementDisplayed(filterType);
+
+    }
+
+    /**
+     * Checks if filter value displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterValueDisplayed() {
+        return getPageUtils().isElementDisplayed(filterValue);
+
+    }
+
+    /**
+     * Checks if filter remove icon displayed
+     *
+     * @return true/false
+     */
+    public boolean isFilterClearIconDisplayed() {
+        return getPageUtils().isElementDisplayed(removeIcon);
+
+    }
+
+    /**
+     * Select a component name
+     *
+     * @return a string
+     */
+    public String selectComponentNameField() {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(componentNameFiled);
+        return selectedFiled.getAttribute("value");
+    }
+
+    /**
+     * Type a filter value
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage addFilterValue(String value) {
+        getPageUtils().waitForElementAndClick(filteredValue);
+        filteredValue.sendKeys(value);
+        return new PartsAndAssembliesPage(getDriver());
+    }
+
+    /**
+     * Get the added component Name
+     *
+     * @return a String
+     */
+    public String getFilteredComponentName() {
+        return getPageUtils().waitForElementToAppear(filteredValue).getAttribute("value");
+    }
+
+    /**
+     * Click on remove icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickRemoveCondition() {
+        getPageUtils().waitForElementAndClick(removeIcon);
+        return new PartsAndAssembliesPage(getDriver());
+    }
 
 }
