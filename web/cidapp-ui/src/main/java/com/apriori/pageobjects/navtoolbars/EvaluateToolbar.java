@@ -67,6 +67,11 @@ public class EvaluateToolbar extends ExploreToolbar {
         return new EvaluatePage(driver);
     }
 
+    /**
+     * Clicks the cost button
+     *
+     * @return current page object
+     */
     public EvaluateToolbar clickCost() {
         pageUtils.waitForElementToAppear(costLabel);
         pageUtils.waitForElementAndClick(costButton);
@@ -87,7 +92,7 @@ public class EvaluateToolbar extends ExploreToolbar {
     /**
      * Method to check cost label is in correct state
      *
-     * @param costLabel    - the cost label type
+     * @param costLabel        - the cost label type
      * @param timeoutInMinutes - time out in minutes
      * @return - new page object
      */
