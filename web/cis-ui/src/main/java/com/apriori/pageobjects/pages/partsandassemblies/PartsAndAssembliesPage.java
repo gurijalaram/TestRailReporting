@@ -458,7 +458,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickAddCondition() {
-        getPageUtils().waitForElementAndClick(addCondition));
+        getPageUtils().waitForElementAndClick(addCondition);
         return this;
     }
 
