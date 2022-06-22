@@ -439,7 +439,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickFilter() {
-        getPageUtils().waitForElementToAppear(btnFilter).click();
+        getPageUtils().waitForElementAndClick(btnFilter);
         return this;
     }
 
