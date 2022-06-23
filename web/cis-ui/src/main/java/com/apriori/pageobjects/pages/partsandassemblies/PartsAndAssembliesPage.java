@@ -115,6 +115,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
 
 
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -539,6 +540,16 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage clickRemoveCondition() {
         getPageUtils().waitForElementAndClick(removeIcon);
         return new PartsAndAssembliesPage(getDriver());
+    }
+
+    /**
+     * Get the added sorting rule
+     *
+     * @return a String
+     */
+    public String getSortingRule() {
+        getPageUtils().waitForElementAndClick(scenarioNameField);
+        return getPageUtils().waitForElementToAppear(scenarioNameField).getAttribute("aria-sort");
     }
 
 }

@@ -256,6 +256,24 @@ public class PartsAndAssemblyTest extends TestBase {
 
     }
 
+    @Test
+    @TestRail(testCaseId = {"12247","12248"})
+    @Description("Verify that user can set a single sorting rule as ascending or descending order")
+    public void testSortPartAndAssemblyTable() {
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getSortingRule()).isEqualTo("ascending");
+        softAssertions.assertThat(partsAndAssembliesPage.getSortingRule()).isEqualTo("descending");
+
+        softAssertions.assertAll();
+
+
+    }
+
 }
 
 
