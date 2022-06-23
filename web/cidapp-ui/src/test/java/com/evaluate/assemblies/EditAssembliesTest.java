@@ -1018,7 +1018,7 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.getRowDetails(PIN, editedComponentScenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         evaluatePage = componentsListPage.closePanel()
-            .clickCost()
+            .clickCostButton()
             .confirmCost("Yes")
             .waitForCostLabelNotContain(NewCostingLabelEnum.COSTING_IN_PROGRESS, 2);
 

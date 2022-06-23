@@ -1,9 +1,9 @@
 package com.apriori.cds.utils;
 
-import com.apriori.apibase.services.cds.AttributeMappings;
-import com.apriori.apibase.services.common.objects.IdentityProviderRequest;
-import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cds.entity.response.AttributeMappings;
+import com.apriori.cds.entity.response.IdentityProviderRequest;
+import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CASCustomerEnum;
 import com.apriori.cds.enums.CDSAPIEnum;
