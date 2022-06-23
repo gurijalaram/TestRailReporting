@@ -13,8 +13,6 @@ import org.junit.runners.Suite;
 @ProjectRunID("867")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
-        StartComparisonTests.class,
-        SearchTests.class,
         PartsAndAssemblyTest.class,
         NavigationPanelTest.class
 })
