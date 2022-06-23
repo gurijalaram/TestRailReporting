@@ -1,5 +1,6 @@
 package com.apriori.sds.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,6 +31,4 @@ public class CustomAttributes {
     private String shippingCompany;
     @JsonProperty("Test_Field_04")
     private String testField4;
-    @JsonProperty("ProjectName")
-    private String projectName;
 }
