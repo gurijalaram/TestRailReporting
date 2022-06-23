@@ -23,6 +23,9 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
     @FindBy(css = "h1")
     private WebElement userGuideTitle;
 
+    @FindBy(css = "h2")
+    private WebElement designGuidanceUserGuideTitle;
+
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -60,5 +63,14 @@ public class HelpDocPage extends LoadableComponent<HelpDocPage> {
     public String getChildPageTitle() {
         pageUtils.windowHandler(1);
         return pageUtils.waitForElementToAppear(userGuideTitle).getText();
+    }
+
+    /**
+     * Gets the page title
+     * @return string
+     */
+    public String getDesignGuidanceChildPageTitle() {
+        pageUtils.windowHandler(1);
+        return pageUtils.waitForElementToAppear(designGuidanceUserGuideTitle).getText();
     }
 }
