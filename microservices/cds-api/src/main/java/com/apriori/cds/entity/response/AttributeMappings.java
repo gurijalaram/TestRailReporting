@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cds;
+package com.apriori.cds.entity.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;

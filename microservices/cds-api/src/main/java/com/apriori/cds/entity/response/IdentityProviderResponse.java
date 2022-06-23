@@ -1,6 +1,6 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.cds.AttributeMappings;
+import com.apriori.apibase.services.common.objects.IdentityProviderPlatform;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 

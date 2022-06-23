@@ -1,6 +1,6 @@
 package com.apriori.nts.utils;
 
-import com.apriori.apibase.services.nts.objects.Credentials;
+import com.apriori.nts.entity.response.Credentials;
 import com.apriori.utils.EncryptionUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.json.utils.JsonManager;
@@ -12,7 +12,7 @@ import java.io.InputStream;
 @Slf4j
 public class EmailSetup {
 
-    private  Credentials credentials = null;
+    private Credentials credentials = null;
 
     /**
      * Retrieve credentials and host url for the email account.
