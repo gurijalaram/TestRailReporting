@@ -1,6 +1,5 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.cds.AttributeMappings;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;

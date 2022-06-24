@@ -352,6 +352,7 @@ public class ActionsTests extends TestBase {
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(EvaluatePage.class)
+            .clickActions()
             .assign();
 
         assertThat(assignPage.isAssigneeDisplayed(scenarioCreatedByName), is(true));
