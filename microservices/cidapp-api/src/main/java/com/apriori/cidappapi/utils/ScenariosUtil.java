@@ -29,6 +29,7 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -543,22 +544,21 @@ public class ScenariosUtil {
     /**
      * Calls an api with the DELETE verb.
      *
-     * @param componentInfo - the component info builder object
-     * @param <T>           - the generic return type
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @param userCredentials   - the user credentials
+     * @param <T>               - the generic return type
      * @return generic object
      */
-    public <T> ResponseWrapper<ErrorMessage> deleteScenario(ComponentInfoBuilder componentInfo) {
-
-        String componentId = componentInfo.getComponentIdentity();
-        String scenarioId = componentInfo.getScenarioIdentity();
+    public <T> ResponseWrapper<ErrorMessage> deleteScenario(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
 
         final RequestEntity deleteRequest =
-            genericDeleteRequest(componentInfo, CidAppAPIEnum.DELETE_SCENARIO, null, componentId, scenarioId);
+            genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity);
 
         HTTPRequest.build(deleteRequest).delete();
 
         RequestEntity scenarioRequest =
-            genericDeleteRequest(componentInfo, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentId, scenarioId);
+            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
 
         final int POLL_TIME = 2;
         final int WAIT_TIME = 240;
@@ -573,7 +573,7 @@ public class ScenariosUtil {
                 if (!scenarioResponse.getBody().contains("response")) {
 
                     RequestEntity requestEntity =
-                        genericDeleteRequest(componentInfo, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentId, scenarioId);
+                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
 
                     return HTTPRequest.build(requestEntity).get();
                 }
@@ -584,16 +584,16 @@ public class ScenariosUtil {
             Thread.currentThread().interrupt();
         }
         throw new IllegalArgumentException(
-            String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
-                componentInfo.getComponentName(), componentInfo.getScenarioName(), WAIT_TIME)
+            String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
+                componentIdentity, scenarioIdentity, WAIT_TIME)
         );
     }
 
-    private <T> RequestEntity genericDeleteRequest(ComponentInfoBuilder componentInfo, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
+    private <T> RequestEntity genericDeleteRequest(UserCredentials userCredentials, CidAppAPIEnum endPoint, Class<T> klass, String componentId, String scenarioId) {
         final int SOCKET_TIMEOUT = 240000;
 
         return RequestEntityUtil.init(endPoint, klass)
-            .token(componentInfo.getUser().getToken())
+            .token(userCredentials.getToken())
             .inlineVariables(componentId, scenarioId)
             .socketTimeout(SOCKET_TIMEOUT);
     }

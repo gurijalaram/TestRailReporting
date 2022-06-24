@@ -87,11 +87,7 @@
           "type": "object"
         },
         "customAttributes": {
-          "type": "object",
-          "optional": [
-            "function",
-            "workspaceId"
-          ]
+          "type": "object"
         },
         "resourcesAllowedToCreate": {
           "type": "array"

@@ -1,7 +1,6 @@
 
 package com.apriori.cds.entity.response;
 
-import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.apibase.services.common.objects.Pagination;
 import com.apriori.utils.http.enums.Schema;
 

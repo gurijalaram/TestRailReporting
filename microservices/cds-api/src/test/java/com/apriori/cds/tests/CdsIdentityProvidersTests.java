@@ -5,8 +5,8 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.services.common.objects.IdentityProviderResponse;
 import com.apriori.cds.entity.response.IdentityProviderPagination;
+import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
