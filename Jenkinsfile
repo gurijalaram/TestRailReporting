@@ -8,6 +8,7 @@ def browser
 def customer
 def testSuite
 def global_users_csv_file
+def default_aws_region
 def folder
 def addlJavaOpts
 
@@ -102,6 +103,11 @@ Those marked with a * are required or the job will not run
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                    }
+
+                    default_aws_region = params.REGION
+                    if (default_aws_region && default_aws_region != "none") {
+                       javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
                     }
 
                     addlJavaOpts = params.JAVAOPTS

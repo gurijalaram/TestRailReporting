@@ -320,7 +320,7 @@ public class SecondaryProcessesPage extends LoadableComponent<SecondaryProcesses
      * @return current page object
      */
     public SecondaryProcessesPage inputFractionOverride(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("What Fraction of Component is Painted?", "user"), psoController.inputLocator("What Fraction of Component is Painted?"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Fraction of Part Area that is Powder Coated", "user"), psoController.inputLocator("Fraction of Part Area that is Powder Coated"), value);
         return this;
     }
 
