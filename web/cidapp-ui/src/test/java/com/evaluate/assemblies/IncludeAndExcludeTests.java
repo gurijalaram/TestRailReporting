@@ -451,9 +451,7 @@ public class IncludeAndExcludeTests extends TestBase {
         softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
 
         componentsListPage = componentsListPage.selectScenario(componentName)
-                .updateCadFile()
-                .enterFilePath(componentResourceFile)
-                .submit(ComponentsListPage.class)
+                .updateCadFile(componentResourceFile)
                 .closePanel()
                 .clickRefresh(ComponentsListPage.class);
 

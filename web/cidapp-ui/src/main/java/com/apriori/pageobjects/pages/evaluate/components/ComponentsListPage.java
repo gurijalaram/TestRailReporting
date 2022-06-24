@@ -33,6 +33,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -589,9 +590,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return new page object
      */
-    public UpdateCadFilePage updateCadFile() {
+    public ComponentsListPage updateCadFile(File filePath) {
         pageUtils.waitForElementAndClick(updateCadButton);
-        return new UpdateCadFilePage(driver);
+        return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(ComponentsListPage.class);
     }
 
 
