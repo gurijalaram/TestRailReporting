@@ -439,7 +439,7 @@ public class IncludeAndExcludeTests extends TestBase {
                 .openComponents();
 
         subComponentNames.forEach(component ->
-                assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component), is(true)));
+                softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component)).isTrue());
 
         componentsListPage = componentsListPage.closePanel()
                 .clickActions()
