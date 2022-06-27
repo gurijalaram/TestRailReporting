@@ -5,6 +5,7 @@ import com.apriori.customer.users.UsersPage;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
+import com.apriori.security.SecurityPage;
 import com.apriori.siteLicenses.SitesLicensesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
@@ -185,6 +186,16 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     public SystemConfigurationPage goToSystemConfiguration() {
         systemConfigurationTab.navigate();
         return new SystemConfigurationPage(getDriver());
+    }
+
+    /**
+     * Go to the security tab
+     *
+     * @return new page object
+     */
+    public SecurityPage goToSecurityPage() {
+        securityTab.navigate();
+        return new SecurityPage(getDriver());
     }
 
     /**
