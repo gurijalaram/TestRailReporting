@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.workorders.CidWorkorderApiEnum;
 import com.apriori.acs.entity.enums.workorders.WorkorderStatusEnum;
+import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.request.workorders.cost.createcostworkorder.CostOrderInputs;
 import com.apriori.acs.entity.request.workorders.cost.createcostworkorder.CostOrderScenario;
 import com.apriori.acs.entity.request.workorders.cost.createcostworkorder.CostOrderScenarioIteration;
@@ -48,7 +49,6 @@ import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
-import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.apibase.utils.APIAuthentication;

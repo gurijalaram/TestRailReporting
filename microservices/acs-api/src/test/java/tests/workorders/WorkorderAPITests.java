@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfoComponent;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
@@ -30,7 +31,6 @@ import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
