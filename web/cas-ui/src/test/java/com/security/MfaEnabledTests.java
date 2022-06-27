@@ -1,10 +1,5 @@
 package com.security;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -16,6 +11,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,13 +49,20 @@ public class MfaEnabledTests extends TestBase {
     @Description("Validates security tab for MFA enabled customer")
     @TestRail(testCaseId = {"5572", "5573", "13281"})
     public void testMfaEnabledSecurityPage() {
-        assertThat(securityPage.getFieldName(), containsInRelativeOrder("Authentication:", "MFA Authentication Type:", "Supported Devices:"));
+        SoftAssertions soft = new SoftAssertions();
+        soft.assertThat(securityPage.getFieldName())
+            .overridingErrorMessage("Expected fields name to be \"Authentication:\", \"MFA Authentication Type:\", \"Supported Devices:\"")
+            .contains("Authentication:", "MFA Authentication Type:", "Supported Devices:");
 
         securityPage.clickResetMfaButton()
             .clickCancelConfirmReset()
             .clickResetMfaButton()
             .clickOkConfirmReset();
 
-        assertThat(securityPage.getSuccessTextMessage(), is(equalTo(String.format("MFA Reset has now been requested for all %s users.", customerName))));
+        soft.assertThat(securityPage.getSuccessTextMessage())
+            .overridingErrorMessage("Expected successfully notification message is displayed")
+            .isEqualTo((String.format("MFA Reset has now been requested for all %s users.", customerName)));
+
+        soft.assertAll();
     }
 }
