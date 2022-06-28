@@ -9,6 +9,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -364,6 +365,144 @@ public class PublishAssembliesTests extends TestBase {
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10775")
+    @Description("Shallow Published assemblies and scenarios can be edited and brought back into Private Workspace")
+    public void testEditShallowPublishedAssembly() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
+            .selectFilter("Private")
+            .clickSearch(assemblyName);
+
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), equalTo(1));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10773")
+    @Description("Shallow Publish correctly publishes to Public Workspace")
+    public void testShallowPublishInPublicWorkspace() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(ExplorePage.class)
+            .alertWarningWait()
+            .refresh()
+            .selectFilter("Public")
+            .clickSearch(assemblyName);
+
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), equalTo(1));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10772")
+    @Description("Ensuring Shallow Publish removes Private iterations of assembly and scenarios")
+    public void testShallowPublishInPrivateWorkspace() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(ExplorePage.class)
+            .alertWarningWait()
+            .refresh()
+            .selectFilter("Private")
+            .clickSearch(assemblyName);
+
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), equalTo(0));
     }
 }
 

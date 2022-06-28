@@ -22,7 +22,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -370,5 +369,17 @@ public class ExplorePage extends ExploreToolbar {
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
+    }
+
+    /**
+     * Wait for the alert warning to disappear
+     *
+     * @return the current page object
+     */
+    public ExplorePage alertWarningWait() {
+        By byAlert = By.cssSelector(".Toastify__toast-body");
+        pageUtils.waitForElementToAppear(byAlert);
+        pageUtils.waitForElementsToNotAppear(byAlert);
+        return this;
     }
 }
