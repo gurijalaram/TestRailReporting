@@ -568,7 +568,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage pinToLeftProcessGroupColumn() {
         getPageUtils().mouseMove(processGroupField);
         getPageUtils().waitForElementAndClick(processGroupKebabMenu);
-        getPageUtils().waitForElementToBeClickable(btnPintoLeft).click();
+        getPageUtils().waitForElementAndClick(btnPintoLeft);
         return this;
     }
 
