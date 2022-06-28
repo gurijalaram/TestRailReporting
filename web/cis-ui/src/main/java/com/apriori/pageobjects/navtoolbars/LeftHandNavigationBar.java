@@ -104,7 +104,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
 
     public LeftHandNavigationBar clickPartsAndAssembliesPage() {
         getPageUtils().waitForElementToAppear(btnPartsAndAssemblies).click();
-        return new LeftHandNavigationBar(getDriver());
+        return this;
     }
 
 }
