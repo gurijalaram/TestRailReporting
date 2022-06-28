@@ -281,7 +281,7 @@ public class PartsAndAssemblyTest extends TestBase {
         String componentName = "Y_shape";
         String scenarioName = "YShape_AutomationSearch";
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
                 .clickPartsAndAssemblies()
                 .pinToLeftProcessGroupColumn()
                 .clickOnShowHideOption()
@@ -289,13 +289,14 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickOnToggleButton()
                 .clickFilter()
                 .clickAddCondition()
-                .addFilterValue(componentName);
-
-        leftHandNavigationBar = new LeftHandNavigationBar(driver)
+                .addFilterValue(componentName)
                 .clickDashBoard()
                 .clickPartsAndAssembliesPage();
 
+
         SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesPage = new PartsAndAssembliesPage(driver);
 
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
@@ -306,9 +307,8 @@ public class PartsAndAssemblyTest extends TestBase {
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
                 .clickFilter()
-                .clickRemoveCondition();
-
-        leftHandNavigationBar.clickDashBoard()
+                .clickRemoveCondition()
+                .clickDashBoard()
                 .clickPartsAndAssembliesPage();
 
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
