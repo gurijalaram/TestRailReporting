@@ -93,7 +93,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      */
     public LeftHandNavigationBar clickDashBoard() {
         getPageUtils().waitForElementAndClick(btnDashboard);
-        return new LeftHandNavigationBar(getDriver());
+        return this;
     }
 
     /**
