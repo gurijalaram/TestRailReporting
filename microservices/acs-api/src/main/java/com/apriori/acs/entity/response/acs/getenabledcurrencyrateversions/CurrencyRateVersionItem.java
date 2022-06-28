@@ -13,6 +13,8 @@ public class CurrencyRateVersionItem {
     public double cad;
     @JsonProperty("CNY")
     public double cny;
+    @JsonProperty("CZK")
+    public double czk;
     @JsonProperty("EUR")
     public double eur;
     @JsonProperty("GBP")
