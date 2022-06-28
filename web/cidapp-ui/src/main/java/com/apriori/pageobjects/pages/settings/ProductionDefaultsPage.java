@@ -126,7 +126,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, "qa-production-defaults-process-group-select", processGroup.getProcessGroup());
+        pageUtils.modalTypeAheadSelect(processGroupDropdown, "Process Group", processGroup.getProcessGroup());
         return this;
     }
 
@@ -137,7 +137,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, "qa-production-defaults-digital-factory-select", digitalFactory.getDigitalFactory());
+        pageUtils.modalTypeAheadSelect(digitalFactoryDropdown, "Digital Factory", digitalFactory.getDigitalFactory());
         return this;
     }
 
@@ -148,7 +148,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
-        pageUtils.typeAheadSelect(materialCatalogDropdown, "qa-production-defaults-material-catalog-select", materialCatalog.getDigitalFactory());
+        pageUtils.modalTypeAheadSelect(materialCatalogDropdown, "Material Catalog", materialCatalog.getDigitalFactory());
         return this;
     }
 
