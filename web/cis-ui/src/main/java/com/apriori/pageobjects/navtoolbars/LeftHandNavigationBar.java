@@ -27,6 +27,9 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     @FindBy(xpath = "//div[@data-testid='avatar']")
     private WebElement userIcon;
 
+    @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.dashboard']")
+    private WebElement btnDashboard;
+
     public LeftHandNavigationBar(WebDriver driver) {
         this(driver, log);
     }
@@ -81,6 +84,27 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     public LeftHandNavigationBar clickUserIcon() {
         getPageUtils().waitForElementAndClick(userIcon);
         return this;
+    }
+
+    /**
+     * Navigate to dashboard page
+     *
+     * @return new page object
+     */
+    public LeftHandNavigationBar clickDashBoard() {
+        getPageUtils().waitForElementAndClick(btnDashboard);
+        return new LeftHandNavigationBar(getDriver());
+    }
+
+    /**
+     * Navigate to parts and assemblies page
+     *
+     * @return new page object
+     */
+
+    public LeftHandNavigationBar clickPartsAndAssembliesPage() {
+        getPageUtils().waitForElementToAppear(btnPartsAndAssemblies).click();
+        return new LeftHandNavigationBar(getDriver());
     }
 
 }

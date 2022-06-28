@@ -83,7 +83,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(css = "div.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root")
     private WebElement checkAllCheckBox;
 
-    @FindBy(xpath = "//p[@data-testid='toolbar-Filter ']")
+    @FindBy(xpath = "//p[starts-with(@data-testid,'toolbar-Filter ')]")
     private WebElement btnFilter;
 
     @FindBy(id = "popover-filter-control")
@@ -112,6 +112,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     @FindBy(xpath = "//div[contains(@data-testid,'filter-value')]//input")
     private WebElement filteredValue;
+
+    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']")
+    private WebElement processGroupField;
+
+    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//button[@title='Menu']")
+    private WebElement processGroupKebabMenu;
 
 
 
@@ -550,6 +556,18 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public String getSortingRule() {
         getPageUtils().waitForElementAndClick(scenarioNameField);
         return getPageUtils().waitForElementToAppear(scenarioNameField).getAttribute("aria-sort");
+    }
+
+    /**
+     * Click on pin to left on process group
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage pinToLeftProcessGroupColumn() {
+        getPageUtils().mouseMove(processGroupField);
+        getPageUtils().waitForElementAndClick(processGroupKebabMenu);
+        getPageUtils().waitForElementToBeClickable(btnPintoLeft).click();
+        return this;
     }
 
 }

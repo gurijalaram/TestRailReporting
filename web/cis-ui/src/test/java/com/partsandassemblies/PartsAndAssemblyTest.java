@@ -274,6 +274,50 @@ public class PartsAndAssemblyTest extends TestBase {
 
     }
 
+    @Test
+    @TestRail(testCaseId = {"12465", "12467","12469","12472","12476"})
+    @Description("Verify that user can Save the parts and assemblies page configuration")
+    public void testSaveConfigurations() {
+        String componentName = "Y_shape";
+        String scenarioName = "YShape_AutomationSearch";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .pinToLeftProcessGroupColumn()
+                .clickOnShowHideOption()
+                .enterFieldName(CisColumnsEnum.STATE.getColumns())
+                .clickOnToggleButton()
+                .clickFilter()
+                .clickAddCondition()
+                .addFilterValue(componentName);
+
+        leftHandNavigationBar = new LeftHandNavigationBar(driver)
+                .clickDashBoard()
+                .clickPartsAndAssembliesPage();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
+
+        partsAndAssembliesPage.pinToLeftProcessGroupColumn()
+                .clickOnShowHideOption()
+                .enterFieldName(CisColumnsEnum.STATE.getColumns())
+                .clickOnToggleButton()
+                .clickFilter()
+                .clickRemoveCondition();
+
+        leftHandNavigationBar.clickDashBoard()
+                .clickPartsAndAssembliesPage();
+
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
+
+        softAssertions.assertAll();
+    }
+
 }
 
 
