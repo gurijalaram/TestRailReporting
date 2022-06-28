@@ -1206,6 +1206,36 @@ public class PageUtils {
     }
 
     /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param label            - the label preceding the element
+     * @param locatorValue     - the locator value
+     * @return current page object
+     */
+    public void optionsTypeAheadSelect(WebElement dropdownSelector, String label, String locatorValue) {
+        if (!waitForElementToAppear(By.xpath(String.format("//label[text()='%s']/..//div[@class]", label))).getAttribute("textContent").equals(locatorValue)) {
+            waitForElementAndClick(dropdownSelector);
+            javaScriptClick(driver.findElement(By.xpath(String.format("//label[text()='%s']/..//div[.='%s']//div[@id]", label, locatorValue))));
+        }
+    }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param label            - the label preceding the element
+     * @param locatorValue     - the locator value
+     * @return current page object
+     */
+    public void modalTypeAheadSelect(WebElement dropdownSelector, String label, String locatorValue) {
+        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//label[text()='%s']/..//div[@class]", label))).getAttribute("textContent").equals(locatorValue)) {
+            waitForElementAndClick(dropdownSelector);
+            waitForElementAndClick(By.xpath(String.format("//label[text()='%s']/..//div[.='%s']//div[@id]", label, locatorValue)));
+        }
+    }
+
+    /**
      * Click on an element that is off screen. The element in this case would be marked as un-clickable.
      * This method brings the element into focus without having to scroll
      *

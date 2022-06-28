@@ -160,7 +160,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectDropdown(String filter) {
-        pageUtils.typeAheadSelect(processDropdown, root, filter);
+        pageUtils.optionsTypeAheadSelect(processDropdown, root, filter);
         return this;
     }
 
@@ -388,8 +388,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public MaterialProcessPage selectDefinedValue(String value) {
         pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities  (Piece Part & Tooling Cost Driver)", "user"));
-        pageUtils.scrollWithJavaScript(psoController.dropdownLocator("User defined value"), true);
-        pageUtils.typeAheadSelect(psoController.dropdownLocator("User defined value"), root, value);
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("User defined value"), "User defined value", value);
         return this;
     }
 
@@ -400,10 +399,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectMoldMaterial(String value) {
-        By byLocator = By.xpath("//h6[text()='Mold Material']");
-        pageUtils.waitForElementToAppear(byLocator);
-        pageUtils.scrollWithJavaScript(driver.findElement(byLocator), true);
-        pageUtils.typeAheadSelect(psoController.dropdownLocator("Mold Material"), root, value);
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Mold Material"), "Mold Material", value);
         return this;
     }
 
@@ -432,7 +428,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage selectTolerances(String value) {
-        pageUtils.typeAheadSelect(psoController.dropdownLocator("Part Tolerance"), root, value);
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Part Tolerance"), "Part Tolerance", value);
         return this;
     }
 
