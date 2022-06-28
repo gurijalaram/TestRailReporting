@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.partsandassemblies;
 
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
+import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -83,7 +84,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(css = "div.MuiDataGrid-columnHeaderTitleContainerContent .MuiCheckbox-root")
     private WebElement checkAllCheckBox;
 
-    @FindBy(xpath = "//p[@data-testid='toolbar-Filter ']")
+    @FindBy(xpath = "//p[starts-with(@data-testid,'toolbar-Filter ')]")
     private WebElement btnFilter;
 
     @FindBy(id = "popover-filter-control")
@@ -113,7 +114,14 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[contains(@data-testid,'filter-value')]//input")
     private WebElement filteredValue;
 
+    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']")
+    private WebElement processGroupField;
 
+    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//button[@title='Menu']")
+    private WebElement processGroupKebabMenu;
+
+    @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.dashboard']")
+    private WebElement btnDashboard;
 
 
     public PartsAndAssembliesPage(WebDriver driver) {
@@ -552,4 +560,25 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         return getPageUtils().waitForElementToAppear(scenarioNameField).getAttribute("aria-sort");
     }
 
+    /**
+     * Click on pin to left on process group
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage pinToLeftProcessGroupColumn() {
+        getPageUtils().mouseMove(processGroupField);
+        getPageUtils().waitForElementAndClick(processGroupKebabMenu);
+        getPageUtils().waitForElementAndClick(btnPintoLeft);
+        return this;
+    }
+
+    /**
+     * Navigate to dashboard page
+     *
+     * @return new page object
+     */
+    public LeftHandNavigationBar clickDashBoard() {
+        getPageUtils().waitForElementAndClick(btnDashboard);
+        return new LeftHandNavigationBar(getDriver());
+    }
 }
