@@ -5,8 +5,6 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.FilterPage;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
@@ -29,14 +27,14 @@ public class FiltersTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    String filterName2 = generateStringUtil.generateFilterName();
+    private String filterName2 = generateStringUtil.generateFilterName();
     private FilterPage filterPage;
     private UserCredentials currentUser;
-    String assemblyName = "Hinge assembly";
-    final String assemblyExtension = ".SLDASM";
-    List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-    final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-    final String componentExtension = ".SLDPRT";
+    private String assemblyName = "Hinge assembly";
+    private final String assemblyExtension = ".SLDASM";
+    private List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+    private final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+    private final String componentExtension = ".SLDPRT";
 
     @Test
     @TestRail(testCaseId = "10538")
@@ -94,7 +92,7 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .submit(ExplorePage.class);
 
-        assertTrue(filterPage.isElementDisplayed(filterName2, "text-overflow"));
+        assertTrue(explorePage.isElementDisplayed(filterName2, "text-overflow"));
     }
 
     @Test
@@ -269,9 +267,7 @@ public class FiltersTests extends TestBase {
             .newFilter()
             .inputName(filterName)
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, "BIG RING")
-            .submit(ExplorePage.class);
-
-        explorePage
+            .submit(ExplorePage.class)
             .filterOnTableView()
             .rename()
             .inputName(filterName2)
