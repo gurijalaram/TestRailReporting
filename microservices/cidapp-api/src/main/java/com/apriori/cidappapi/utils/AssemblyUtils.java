@@ -1,8 +1,8 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
