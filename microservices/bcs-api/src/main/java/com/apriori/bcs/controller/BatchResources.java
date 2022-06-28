@@ -72,7 +72,6 @@ public class BatchResources extends BcsBase {
      * Get single batch with batch id
      *
      * @param identity - Batch Id
-     * @param <T>      - response of type Object
      * @return - response
      */
     public static ResponseWrapper<Batch> getBatchRepresentation(String identity) {

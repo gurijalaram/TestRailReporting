@@ -11,6 +11,7 @@ import com.apriori.cds.objects.request.AccessAuthorizationRequest;
 import com.apriori.cds.objects.request.AccessControlRequest;
 import com.apriori.cds.objects.request.AddDeployment;
 import com.apriori.cds.objects.request.ApplicationInstallationRequest;
+import com.apriori.cds.objects.request.CASCustomerRequest;
 import com.apriori.cds.objects.request.CustomAttributeRequest;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
@@ -106,14 +107,14 @@ public class CdsTestUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(CASCustomerEnum.CUSTOMERS, Customer.class)
             .token(token)
             .body("customer",
-                // TODO: 01/06/2022 cn - we generally don't allow this. needs fixed
-                com.apriori.apibase.services.cas.Customer.builder().name(name)
+                CASCustomerRequest.builder().name(name)
                     .cloudReference(cloudReference)
                     .description("Add new customers api test")
                     .salesforceId(new GenerateStringUtil().generateSalesForceId())
                     .customerType("CLOUD_ONLY")
                     .active(true)
                     .mfaRequired(true)
+                    .mfaAuthenticator("ONE_TIME_PASSWORD")
                     .useExternalIdentityProvider(false)
                     .maxCadFileRetentionDays(584)
                     .maxCadFileSize(51)
