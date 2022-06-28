@@ -96,15 +96,4 @@ public class LeftHandNavigationBar extends CisHeaderBar {
         return this;
     }
 
-    /**
-     * Navigate to parts and assemblies page
-     *
-     * @return new page object
-     */
-
-    public LeftHandNavigationBar clickPartsAndAssembliesPage() {
-        getPageUtils().waitForElementToAppear(btnPartsAndAssemblies).click();
-        return this;
-    }
-
 }
