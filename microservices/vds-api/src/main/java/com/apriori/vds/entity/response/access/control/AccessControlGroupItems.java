@@ -1,6 +1,6 @@
 package com.apriori.vds.entity.response.access.control;
 
-import com.apriori.apibase.services.Pagination;
+import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
