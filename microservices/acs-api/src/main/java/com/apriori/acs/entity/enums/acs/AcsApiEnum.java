@@ -5,6 +5,7 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum AcsApiEnum implements ExternalEndpointEnum {
 
+    POST_AUTH_TOKEN("auth/token"),
     CREATE_MISSING_SCENARIO("ws/workspace/0/scenarios"),
     ACTIVE_DIMENSIONS("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/gcd-info"),
     ACTIVE_AXES("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/axes-info/active-axes"),
