@@ -1,5 +1,6 @@
 package com.explore;
 
+import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -735,5 +736,49 @@ public class ActionsTests extends TestBase {
 
         // TODO: 07/05/2021 remove comment
         //assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7177"})
+    @Description("Validate assignee is displayed in the explore view")
+    public void actionsAssignValidateAssignee() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "Push Pin";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
+            .assign()
+            .selectAssignee(scenarioCreatedByName)
+            .submit(EvaluatePage.class)
+            .clickExplore()
+            .configure()
+            .selectColumn(ColumnsEnum.ASSIGNEE)
+            .moveColumn(DirectionEnum.RIGHT)
+            .moveToTop(ColumnsEnum.ASSIGNEE)
+            .submit(ExplorePage.class);
+
+        assertThat(explorePage.getTableHeaders(), hasItems(ASSIGNEE.getColumns()));
+
+        explorePage.configure()
+            .selectColumn(ASSIGNEE)
+            .moveColumn(DirectionEnum.LEFT)
+            .submit(ExplorePage.class);
     }
 }
