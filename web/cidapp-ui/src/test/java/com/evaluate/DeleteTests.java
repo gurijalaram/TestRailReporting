@@ -20,10 +20,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.IgnoreTests;
 
 import java.io.File;
 
@@ -40,8 +37,6 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @Ignore("Processing state")
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6736", "5431"})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
@@ -54,8 +49,10 @@ public class DeleteTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .clickExplore()
             .filter()
             .saveAs()
@@ -64,14 +61,14 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .delete()
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .refresh();
 
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
     }
 
     @Test
-    @Ignore("ProcessingState")
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"7709"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
@@ -104,7 +101,9 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .delete()
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .refresh();
 
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
     }
