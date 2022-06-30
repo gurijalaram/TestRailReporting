@@ -242,6 +242,20 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("Qa Auto Test");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Uploaded and costed via automation");
 
+        infoPage.inputNotes("• Automation notes 1\n" +
+                "• Automation notes 2\n" +
+                "• Automation notes 3\n" +
+                "• Automation notes 4")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("• Automation notes 1\n" +
+            "• Automation notes 2\n" +
+            "• Automation notes 3\n" +
+            "• Automation notes 4");
+
         softAssertions.assertAll();
     }
 
