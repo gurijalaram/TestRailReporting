@@ -1,6 +1,5 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.PartReport;
@@ -9,6 +8,7 @@ import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
