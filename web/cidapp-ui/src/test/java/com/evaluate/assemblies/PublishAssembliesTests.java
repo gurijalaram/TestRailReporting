@@ -370,51 +370,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10775")
-    @Description("Shallow Published assemblies and scenarios can be edited and brought back into Private Workspace")
-    public void testEditShallowPublishedAssembly() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String assemblyName = "Hinge assembly";
-        final String assemblyExtension = ".SLDASM";
-        final String BIG_RING = "big ring";
-        final String PIN = "Pin";
-        final String SMALL_RING = "small ring";
-
-        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
-        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
-        final String subComponentExtension = ".SLDPRT";
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly)
-            .costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly)
-            .publishAssembly(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .multiSelectScenarios(assemblyName + "," + scenarioName)
-            .editScenario(EditScenarioStatusPage.class)
-            .close(ExplorePage.class)
-            .selectFilter("Private")
-            .clickSearch(assemblyName);
-
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), equalTo(1));
-    }
-
-    @Test
-    @TestRail(testCaseId = "10773")
+    @TestRail(testCaseId = {"10773", "10775"})
     @Description("Shallow Publish correctly publishes to Public Workspace")
     public void testShallowPublishInPublicWorkspace() {
         currentUser = UserUtil.getUser();
@@ -457,58 +413,21 @@ public class PublishAssembliesTests extends TestBase {
             .selectFilter("Public")
             .clickSearch(assemblyName);
 
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), equalTo(1));
-    }
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
 
-    @Test
-    @TestRail(testCaseId = "10772")
-    @Description("Ensuring Shallow Publish removes Private iterations of assembly and scenarios")
-    public void testShallowPublishInPrivateWorkspace() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-        final String FLANGE = "flange";
-        final String NUT = "nut";
-        final String BOLT = "bolt";
-        String assemblyName = "flange c";
-        final String assemblyExtension = ".CATProduct";
-
-        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentExtension = ".CATPart";
-
-        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            ProcessGroupEnum.ASSEMBLY,
-            subComponentNames,
-            componentExtension,
-            processGroupEnum,
-            scenarioName,
-            currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-        assemblyUtils.costSubComponents(componentAssembly)
-            .costAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
-
-        loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .selectFilter("Private")
-            .clickSearch(assemblyName)
-            .multiSelectScenarios(assemblyName + "," + scenarioName)
-            .publishScenario(PublishPage.class)
-            .publish(ExplorePage.class)
-            .alertWarningWait()
-            .refresh()
+        explorePage.multiSelectScenarios(assemblyName + "," + scenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
             .selectFilter("Private")
             .clickSearch(assemblyName);
 
-        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), equalTo(0));
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"10771", "10776", "10777"})
+    @TestRail(testCaseId = {"10771", "10776", "10777", "10772"})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
         currentUser = UserUtil.getUser();
@@ -542,7 +461,7 @@ public class PublishAssembliesTests extends TestBase {
         String scenarioCreatedByName = componentAssembly.getScenarioItem().getScenarioCreatedByName();
 
         loginPage = new CidAppLoginPage(driver);
-        infoPage = loginPage.login(currentUser)
+        explorePage = loginPage.login(currentUser)
             .selectFilter("Private")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
@@ -550,7 +469,12 @@ public class PublishAssembliesTests extends TestBase {
             .publish(ExplorePage.class)
             .alertWarningWait()
             .refresh()
-            .selectFilter("Public")
+            .selectFilter("Private")
+            .clickSearch(assemblyName);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(0);
+
+        infoPage = explorePage.selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .clickActions()
