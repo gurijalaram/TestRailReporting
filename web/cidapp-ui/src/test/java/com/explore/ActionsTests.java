@@ -110,7 +110,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7197", "7198"})
+    @TestRail(testCaseId = {"7197", "7198", "7200"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -209,7 +209,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7259", "7265", "7269", "7272"})
+    @TestRail(testCaseId = {"7259", "7265", "7269", "7272", "7189"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -218,6 +218,11 @@ public class ActionsTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String bulletPointNotes = "• Automation notes 1\n" +
+            "• Automation notes 2\n" +
+            "• Automation notes 3\n" +
+            "• Automation notes 4";
 
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
@@ -241,6 +246,14 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("Qa Auto Test");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Uploaded and costed via automation");
+
+        infoPage.inputNotes(bulletPointNotes)
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(bulletPointNotes);
 
         softAssertions.assertAll();
     }
@@ -780,5 +793,50 @@ public class ActionsTests extends TestBase {
             .selectColumn(ASSIGNEE)
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7190"})
+    @Description("Validate notes can be read by different users")
+    public void notesReadOtherUsers() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+        final String testDescription = "QA Notes to be read by different user";
+        final String testNotes = "Testing QA notes notes to be read by different user";
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .inputDescription(testDescription)
+            .inputNotes(testNotes)
+            .submit(EvaluatePage.class)
+            .logout()
+            .login(UserUtil.getUser())
+            .navigateToScenario(cidComponentItem)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo(testDescription);
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(testNotes);
+
+        softAssertions.assertAll();
     }
 }
