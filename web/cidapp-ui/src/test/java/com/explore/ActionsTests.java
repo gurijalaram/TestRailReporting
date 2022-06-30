@@ -794,4 +794,49 @@ public class ActionsTests extends TestBase {
             .moveColumn(DirectionEnum.LEFT)
             .submit(ExplorePage.class);
     }
+
+    @Test
+    @TestRail(testCaseId = {"7190"})
+    @Description("Validate notes can be read by different users")
+    public void notesReadOtherUsers() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+        final String testDescription = "QA Notes to be read by different user";
+        final String testNotes = "Testing QA notes notes to be read by different user";
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .inputDescription(testDescription)
+            .inputNotes(testNotes)
+            .submit(EvaluatePage.class)
+            .logout()
+            .login(UserUtil.getUser())
+            .navigateToScenario(cidComponentItem)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo(testDescription);
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(testNotes);
+
+        softAssertions.assertAll();
+    }
 }
