@@ -19,7 +19,9 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.enums.reports.ListNameEnum;
@@ -30,13 +32,11 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import utils.UIUtils;
 
 import java.io.File;
 
@@ -51,6 +51,7 @@ public class CIDIntegrationTests extends TestBase {
     private ScenarioExport scenarioExport;
     private ComponentCostReportPage componentCostReportPage;
     private static TestDataService testDataService;
+    private static final String FILE_NAME = "CID_To_AppStream.csv";
 
     public CIDIntegrationTests() {
         super();
@@ -60,8 +61,8 @@ public class CIDIntegrationTests extends TestBase {
     public static void setup() {
         testDataService = new TestDataService();
         testDataService.setInputData(testDataService.deserializeDataToMap("CIDIntegrationTestData.json"));
-        testDataService.getInputData().replace("scenarioName", UIUtils.saltString((String) testDataService.getInputData().get("scenarioName")));
-        testDataService.getInputData().replace("exportSetName", UIUtils.saltString((String) testDataService.getInputData().get("exportSetName")));
+        testDataService.getInputData().replace("scenarioName", StringUtils.saltString((String) testDataService.getInputData().get("scenarioName")));
+        testDataService.getInputData().replace("exportSetName", StringUtils.saltString((String) testDataService.getInputData().get("exportSetName")));
     }
 
     @Test
@@ -88,6 +89,7 @@ public class CIDIntegrationTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(testDataService.getInputData().get("componentName").toString(), testDataService.getInputData().get("scenarioName").toString()), is(greaterThan(0)));
+        testDataService.exportDataToCloud(FILE_NAME);
 
     }
 
