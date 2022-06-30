@@ -4,11 +4,11 @@ import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.LoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import org.junit.Assert;
 import org.junit.Before;
@@ -33,7 +33,7 @@ public class WorkflowHistoryTests extends TestBase {
     @TestRail(testCaseId = {"3589"})
     @Description("Test creating, editing and deletion of a worflow")
     public void testStartAndTrackJob() {
-        workFlowData = new TestDataService().getTestData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         workFlowData.setWorkflowName("- - - 0 0 Auto_WF_DoNotDelete");
         workflowHome = new LoginPage(driver)
             .login(currentUser)

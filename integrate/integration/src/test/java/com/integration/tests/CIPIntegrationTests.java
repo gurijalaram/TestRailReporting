@@ -9,13 +9,14 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.settings.ProductionDefaultsPage;
 import com.apriori.pageobjects.pages.view.reports.ComponentCostReportPage;
 import com.apriori.utils.TestRail;
+
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import org.hamcrest.CoreMatchers;
 import org.junit.Test;

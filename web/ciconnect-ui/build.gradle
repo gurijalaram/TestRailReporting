@@ -1,8 +1,6 @@
 dependencies {
     implementation project(':utils')
     implementation project(':apibase')
-    implementation 'org.codehaus.groovy:groovy-all:3.0.10'
     implementation 'mysql:mysql-connector-java:8.0.28'
     implementation 'org.assertj:assertj-core:3.6.1'
-
 }
