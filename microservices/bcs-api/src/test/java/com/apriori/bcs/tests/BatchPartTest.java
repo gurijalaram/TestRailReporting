@@ -7,7 +7,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
@@ -17,6 +16,7 @@ import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;

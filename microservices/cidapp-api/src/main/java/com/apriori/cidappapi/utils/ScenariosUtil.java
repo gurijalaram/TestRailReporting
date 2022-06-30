@@ -4,7 +4,6 @@ import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientGroup;
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
@@ -22,6 +21,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
