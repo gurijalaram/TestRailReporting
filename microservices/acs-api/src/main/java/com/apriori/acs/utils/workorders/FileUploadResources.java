@@ -49,9 +49,9 @@ import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
+import com.apriori.acs.utils.APIAuthentication;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
-import com.apriori.apibase.utils.APIAuthentication;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
@@ -65,9 +65,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.UrlEscapers;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -77,9 +76,9 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class FileUploadResources {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
     private static final long WAIT_TIME = 180;
 
     private static final HashMap<String, String> token = new APIAuthentication()
@@ -927,7 +926,7 @@ public class FileUploadResources {
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
 
@@ -944,7 +943,7 @@ public class FileUploadResources {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
-                logger.error(e.getMessage());
+                log.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
 
@@ -1049,7 +1048,7 @@ public class FileUploadResources {
         try {
             node = new ObjectMapper().readTree(jsonProperties);
         } catch (JsonProcessingException e) {
-            logger.debug(e.getMessage());
+            log.debug(e.getMessage());
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();

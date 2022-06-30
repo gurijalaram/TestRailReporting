@@ -25,7 +25,7 @@ public class ReportData {
         try {
             if (fileName.contains("MultipleComponentsSummary")) {
                 log.info(String.format("Getting Content Properties For Document Type: %s", fileName));
-                value = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream(fileName), klass);
+                value = JsonManager.deserializeJsonFromInputStream(FileResourceUtil.getResourceFileStream("testdata/" + fileName), klass);
             }
 
             if (fileName.contains("PartCostReport")) {

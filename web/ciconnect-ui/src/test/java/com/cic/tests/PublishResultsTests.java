@@ -13,11 +13,11 @@ import com.apriori.pages.workflows.schedule.publishresults.PRAttachReportTab;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
@@ -36,7 +36,7 @@ public class PublishResultsTests extends TestBase {
 
     @Before
     public void setUpAndLogin() {
-        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json");
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
     }
 
     @Test

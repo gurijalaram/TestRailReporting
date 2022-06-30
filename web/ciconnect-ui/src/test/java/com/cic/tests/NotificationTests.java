@@ -10,11 +10,11 @@ import com.apriori.pages.workflows.schedule.notifications.AttachReportTab;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
@@ -33,7 +33,7 @@ public class NotificationTests extends TestBase {
 
     @Before
     public void setUpAndLogin() {
-        workFlowData = new TestDataService().getTestData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
     }
 
     @Test

@@ -1,6 +1,6 @@
-package com.apriori.apibase.utils;
+package com.apriori.acs.utils;
 
-import com.apriori.apibase.enums.BaseAPIEnum;
+import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.apibase.services.response.objects.AuthenticateJSON;
 import com.apriori.utils.AuthorizationFormUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -52,7 +52,7 @@ public class APIAuthentication {
         String password = username.split("@")[0];
 
         if (accessToken == null && timeToLive < 1) {
-            RequestEntity requestEntity = RequestEntityUtil.initBuilder(BaseAPIEnum.POST_AUTH_TOKEN, AuthenticateJSON.class)
+            RequestEntity requestEntity = RequestEntityUtil.initBuilder(AcsApiEnum.POST_AUTH_TOKEN, AuthenticateJSON.class)
                 .xwwwwFormUrlEncoded(AuthorizationFormUtil.getDefaultAuthorizationForm(username,password))
                 .build();
 

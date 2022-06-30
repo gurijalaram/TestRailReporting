@@ -7,7 +7,6 @@ import com.apriori.nts.email.EmailService;
 import com.apriori.nts.excel.ExcelService;
 import com.apriori.nts.pdf.PDFDocument;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
-import com.apriori.nts.reports.data.ReportData;
 import com.apriori.nts.reports.partscost.PartsCost;
 import com.apriori.pagedata.WorkFlowData;
 import com.apriori.pages.login.LoginPage;
@@ -17,12 +16,13 @@ import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
+import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
@@ -34,6 +34,7 @@ import org.junit.Test;
 public class CICIntegrationTests extends TestBase {
 
     private UserCredentials currentUser = UserUtil.getUser();
+    private TestDataService testDataService;
     private static final String emailSubject = "aPriori CI Generate DFM Part Summary";
 
     public CICIntegrationTests() {
@@ -42,13 +43,15 @@ public class CICIntegrationTests extends TestBase {
 
     @Before
     public void setup() {
+        testDataService = new TestDataService();
     }
 
     @Test
     @TestRail(testCaseId = {"12045"})
     @Description("Test creating, invoking, tracking and deletion of a workflow")
     public void testCreateAndDeleteWorkflow() {
-        WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json");
+        WorkFlowData workFlowData = testDataService.getTestData("WorkFlowData.json", WorkFlowData.class);
+        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         log.info(String.format("Start Creating Workflow >> %s <<", workFlowData.getWorkflowName()));
         SchedulePage schedulePage = new LoginPage(driver)
             .login(currentUser)
@@ -82,8 +85,9 @@ public class CICIntegrationTests extends TestBase {
     @Description("Create Workflow, Invoke workflow, verify Parts Cost watchpoint report from email and delete workflow")
     public void testVerifyWatchPointReport() {
         SoftAssertions softAssertions = new SoftAssertions();
-        WorkFlowData workFlowData = new TestDataService().getTestData("WatchPointReportData.json");
-        PartsCost xlsWatchPointReportExpectedData = ReportData.getExpectedData("testdata/PartCostReport.json", PartsCost.class);
+        WorkFlowData workFlowData = testDataService.getTestData("WatchPointReportData.json", WorkFlowData.class);
+        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        PartsCost xlsWatchPointReportExpectedData = testDataService.getReportData("PartCostReport.json", PartsCost.class);
         EmailService emailService = new EmailService();
         WorkflowHome workflowHome = new LoginPage(driver)
             .login(currentUser)
@@ -146,8 +150,9 @@ public class CICIntegrationTests extends TestBase {
     @TestRail(testCaseId = {"12046"})
     @Description("Create Workflow, Invoke workflow, verify CIR report from email and delete workflow")
     public void testVerifyCIRReport() {
-        WorkFlowData workFlowData = new TestDataService().getTestData("CIRReportData.json");
-        MultipleComponentSummary pdfExpectedReportData = ReportData.getExpectedData("testdata/MultipleComponentsSummary.json", MultipleComponentSummary.class);
+        WorkFlowData workFlowData = testDataService.getTestData("CIRReportData.json", WorkFlowData.class);
+        workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
+        MultipleComponentSummary pdfExpectedReportData = testDataService.getReportData("MultipleComponentsSummary.json", MultipleComponentSummary.class);
         EmailService emailService = new EmailService();
         WorkflowHome workflowHome;
 

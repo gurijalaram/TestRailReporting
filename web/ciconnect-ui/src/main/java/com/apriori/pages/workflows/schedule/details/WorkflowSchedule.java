@@ -1,6 +1,6 @@
 package com.apriori.pages.workflows.schedule.details;
 
-import utils.UIUtils;
+import com.apriori.utils.StringUtils;
 
 import java.util.ArrayList;
 
@@ -194,7 +194,7 @@ public class WorkflowSchedule {
     }
 
     public String getMonthlyOccurance() {
-        return UIUtils.getFirstLetterUpperCase(monthlyOccurance.toString());
+        return StringUtils.getFirstLetterUpperCase(monthlyOccurance.toString());
     }
 
     public void setMonthlyOccurance(MonthlyOccurance monthlyOccurance) {
@@ -202,7 +202,7 @@ public class WorkflowSchedule {
     }
 
     public String getMonth() {
-        return UIUtils.getFirstLetterUpperCase(month.toString());
+        return StringUtils.getFirstLetterUpperCase(month.toString());
     }
 
     public void setMonth(Month month) {
@@ -217,6 +217,6 @@ public class WorkflowSchedule {
      * @return
      */
     private String getWeekDayString(WeekDay weekDay) {
-        return UIUtils.getFirstLetterUpperCase(weekDay.toString());
+        return StringUtils.getFirstLetterUpperCase(weekDay.toString());
     }
 }
