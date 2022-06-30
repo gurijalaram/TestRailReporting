@@ -219,6 +219,11 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        final String bulletPointNotes = "• Automation notes 1\n" +
+            "• Automation notes 2\n" +
+            "• Automation notes 3\n" +
+            "• Automation notes 4";
+
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
@@ -242,19 +247,13 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo("Qa Auto Test");
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Uploaded and costed via automation");
 
-        infoPage.inputNotes("• Automation notes 1\n" +
-                "• Automation notes 2\n" +
-                "• Automation notes 3\n" +
-                "• Automation notes 4")
+        infoPage.inputNotes(bulletPointNotes)
             .submit(EvaluatePage.class)
             .costScenario()
             .clickActions()
             .info();
 
-        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("• Automation notes 1\n" +
-            "• Automation notes 2\n" +
-            "• Automation notes 3\n" +
-            "• Automation notes 4");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(bulletPointNotes);
 
         softAssertions.assertAll();
     }
