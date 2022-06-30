@@ -1,4 +1,4 @@
-package utils;
+package com.apriori.utils;
 
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
@@ -11,8 +11,8 @@ import java.util.Date;
 import java.util.Random;
 import java.util.UUID;
 
-public class UIUtils {
-    private static final Logger logger = LoggerFactory.getLogger(UIUtils.class);
+public class StringUtils {
+    private static final Logger logger = LoggerFactory.getLogger(StringUtils.class);
 
     /**
      * Generate a serial date string and concatenate to the supplied string.
