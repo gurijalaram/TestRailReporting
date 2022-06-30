@@ -110,7 +110,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7197", "7198"})
+    @TestRail(testCaseId = {"7197", "7198", "7200"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
