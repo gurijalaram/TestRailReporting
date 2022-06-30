@@ -559,13 +559,11 @@ public class PublishAssembliesTests extends TestBase {
             .selectStatus("New")
             .inputCostMaturity("Low")
             .submit(ExplorePage.class)
-            .refresh()
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .clickActions()
             .lock(ExplorePage.class)
-            .refresh()
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
@@ -573,7 +571,6 @@ public class PublishAssembliesTests extends TestBase {
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
-            .refresh()
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
@@ -651,6 +648,8 @@ public class PublishAssembliesTests extends TestBase {
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
         softAssertions.assertThat(infoPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(false);
+
+        softAssertions.assertAll();
     }
 }
 
