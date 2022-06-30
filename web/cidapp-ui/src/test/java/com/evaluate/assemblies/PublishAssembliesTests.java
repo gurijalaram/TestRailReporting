@@ -508,7 +508,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10771")
+    @TestRail(testCaseId = {"10771", "10776", "10777"})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
         currentUser = UserUtil.getUser();
@@ -540,7 +540,6 @@ public class PublishAssembliesTests extends TestBase {
         assemblyUtils.publishSubComponents(componentAssembly);
 
         String scenarioCreatedByName = componentAssembly.getScenarioItem().getScenarioCreatedByName();
-        Boolean isScenarioLocked = componentAssembly.getScenarioItem().getScenarioLocked();
 
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
