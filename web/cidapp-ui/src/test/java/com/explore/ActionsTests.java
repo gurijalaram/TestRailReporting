@@ -209,7 +209,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7259", "7265", "7269", "7272"})
+    @TestRail(testCaseId = {"7259", "7265", "7269", "7272", "7189"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
