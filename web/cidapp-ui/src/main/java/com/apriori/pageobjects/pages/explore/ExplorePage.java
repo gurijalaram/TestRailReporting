@@ -371,4 +371,16 @@ public class ExplorePage extends ExploreToolbar {
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
     }
+
+    /**
+     * Wait for the alert warning to disappear
+     *
+     * @return the current page object
+     */
+    public ExplorePage alertWarningWait() {
+        By byAlert = By.cssSelector(".Toastify__toast-body");
+        pageUtils.waitForElementToAppear(byAlert);
+        pageUtils.waitForElementsToNotAppear(byAlert);
+        return this;
+    }
 }

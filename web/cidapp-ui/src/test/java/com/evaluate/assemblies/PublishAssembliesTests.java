@@ -9,6 +9,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -362,6 +363,70 @@ public class PublishAssembliesTests extends TestBase {
             .clickSearch(assemblyName);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10787", "10789"})
+    @Description("Shallow Publish over existing Public Scenarios")
+    public void testShallowPublishOverExistingPublicScenario() {
+        String preExistingScenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        ComponentInfoBuilder preExistingComponentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            preExistingScenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(preExistingComponentAssembly)
+            .uploadAssembly(preExistingComponentAssembly);
+        assemblyUtils.costSubComponents(preExistingComponentAssembly)
+            .costAssembly(preExistingComponentAssembly);
+        assemblyUtils.publishSubComponents(preExistingComponentAssembly)
+            .publishAssembly(preExistingComponentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + preExistingScenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + preExistingScenarioName)
+            .publishScenario(PublishPage.class)
+            .override()
+            .clickContinue(PublishPage.class)
+            .cancel(ExplorePage.class);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, preExistingScenarioName)).isEqualTo(1);
+
+        explorePage.publishScenario(PublishPage.class)
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(ExplorePage.class)
+            .alertWarningWait()
+            .refresh()
+            .selectFilter("Public")
+            .clickSearch(assemblyName);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, preExistingScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
     }
