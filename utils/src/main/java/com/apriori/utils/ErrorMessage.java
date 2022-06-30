@@ -1,6 +1,5 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.utils;
 
-import com.apriori.apibase.services.response.objects.ErrorResponse;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
