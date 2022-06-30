@@ -103,7 +103,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11097", "11090", "11092", "11097"})
+    @TestRail(testCaseId = {"11097", "11090", "11092", "11094"})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {
         final String retainText = "Retain Existing Input";
@@ -167,6 +167,7 @@ public class GroupCostingTests extends TestBase {
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("gear");
+            //ToDo:- Select each component and assert set inputs button is disabled
         });
 
         componentsListPage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));

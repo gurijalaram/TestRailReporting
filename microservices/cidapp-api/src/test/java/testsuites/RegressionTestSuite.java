@@ -4,6 +4,7 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.evaluate.CostAllCadTests;
+import com.evaluate.GroupCostingTests;
 import com.evaluate.IncludeAndExcludeTests;
 import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
@@ -21,6 +22,7 @@ import testsuites.suiteinterfaces.SmokeTests;
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
     CostAllCadTests.class,
+    GroupCostingTests.class,
     ListOfDigitalFactoryTests.class,
     ListProcessGroupTests.class,
     ScenariosTests.class,
