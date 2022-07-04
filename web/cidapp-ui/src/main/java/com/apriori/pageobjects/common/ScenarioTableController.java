@@ -2,6 +2,8 @@ package com.apriori.pageobjects.common;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 
@@ -265,7 +267,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return String representation of icon
      */
     public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
-        String cost =  getByParentLocator(componentName, scenarioName)
+        String cost = getByParentLocator(componentName, scenarioName)
             .findElement(By.cssSelector("div[data-header-id='analysisOfScenario.fullyBurdenedCost'] span"))
             .getText();
         return Double.parseDouble(cost.replaceAll("[^0-9?!\\.]", ""));
@@ -440,5 +442,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public String getCellColour(String componentName, String scenarioName) {
         return Color.fromString(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             scenarioName.trim(), componentName.toUpperCase().trim()))).getCssValue("background-color")).asHex();
+    }
+
+    /**
+     * Checks component is in a required state
+     *
+     * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state to check for
+     * @return current page object
+     */
+    public ScenarioTableController checkComponentState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        new ScenariosUtil().getScenarioRepresentation(componentInfo, scenarioState);
+        return this;
     }
 }
