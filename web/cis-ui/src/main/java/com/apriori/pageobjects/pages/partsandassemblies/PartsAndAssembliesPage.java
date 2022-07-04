@@ -593,6 +593,4 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
-
-
 }

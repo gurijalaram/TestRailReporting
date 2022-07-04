@@ -50,13 +50,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
 
-
-
-
-
-
     }
-
 
 }
 

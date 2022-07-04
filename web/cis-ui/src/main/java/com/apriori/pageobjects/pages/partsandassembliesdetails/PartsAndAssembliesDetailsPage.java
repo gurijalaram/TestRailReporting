@@ -119,13 +119,4 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         return getPageUtils().isElementDisplayed(commentsCard);
     }
 
-
-
-
-
-
-
-
-
-
 }
