@@ -31,6 +31,12 @@
         "customerIdentity": {
           "type": "string"
         },
+        "description": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        },
         "scenarioName": {
           "type": "string"
         },
