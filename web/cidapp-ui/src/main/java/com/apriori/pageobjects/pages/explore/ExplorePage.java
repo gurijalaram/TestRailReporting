@@ -354,8 +354,9 @@ public class ExplorePage extends ExploreToolbar {
      * @param scenarioState - the scenario state to check for
      * @return current page object
      */
-    public ExplorePage checkComponentState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+    public ExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
         scenarioTableController.checkComponentState(componentInfo, scenarioState);
+        refresh();
         return this;
     }
 
