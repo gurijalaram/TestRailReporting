@@ -2,7 +2,7 @@ package com.apriori.pageobjects.pages.partsandassemblies;
 
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
-import com.apriori.utils.PageUtils;
+import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[@role='progressbar']")
     private WebElement progressBar;
 
-    @FindBy(xpath = "//div[@Class='MuiDataGrid-row']")
+    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-row')]")
     private List<WebElement> tableRow;
 
     @FindBy(xpath = "//div[@class='MuiDataGrid-row Mui-selected']")
@@ -42,10 +42,10 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[@data-testid='switch']")
     private WebElement toggleButton;
 
-    @FindBy(xpath = "//*[@data-field='scenarioName']")
-    private WebElement scenarioNameField;
+    @FindBy(xpath = "//*[@data-field='scenarioState']")
+    private WebElement scenarioStateField;
 
-    @FindBy(xpath = "//*[@data-field='scenarioName']//button[@title='Menu']")
+    @FindBy(xpath = "//*[@data-field='scenarioState']//button[@title='Menu']")
     private WebElement tripleDotIcon;
 
     @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
@@ -131,6 +131,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     private WebDriver driver;
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
+    private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {
         super(driver, logger);
@@ -232,7 +233,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickKebabMenuOnTableHeader() {
-        getPageUtils().mouseMove(scenarioNameField);
+        getPageUtils().mouseMove(scenarioStateField);
         getPageUtils().waitForElementToAppear(tripleDotIcon).click();
         return this;
     }
@@ -556,8 +557,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return a String
      */
     public String getSortingRule() {
-        getPageUtils().waitForElementAndClick(scenarioNameField);
-        return getPageUtils().waitForElementToAppear(scenarioNameField).getAttribute("aria-sort");
+        getPageUtils().waitForElementAndClick(scenarioStateField);
+        return getPageUtils().waitForElementToAppear(scenarioStateField).getAttribute("aria-sort");
     }
 
     /**
@@ -581,4 +582,17 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         getPageUtils().waitForElementAndClick(btnDashboard);
         return new LeftHandNavigationBar(getDriver());
     }
+
+    /**
+     * Click on selected scenarioName
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnScenarioName(String scenarioName) {
+        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']")));
+        return new PartsAndAssembliesDetailsPage(getDriver());
+    }
+
+
+
 }
