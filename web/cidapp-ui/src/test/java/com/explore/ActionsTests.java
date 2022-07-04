@@ -22,6 +22,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -413,7 +414,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187"})
+    @TestRail(testCaseId = {"7187", "7271"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -422,6 +423,7 @@ public class ActionsTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
+        final String editedNotes = "Testing QA notes validating the ability to edit notes";
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
@@ -439,7 +441,7 @@ public class ActionsTests extends TestBase {
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario("BasicScenario_Forging", scenarioName)
+            .highlightScenario(componentName, scenarioName)
             .clickActions()
             .info()
             .selectStatus("New")
@@ -447,18 +449,39 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario("BasicScenario_Forging", scenarioName)
+            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
+            .highlightScenario(componentName, scenarioName)
             .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+
+        infoPage.cancel(ExplorePage.class)
             .clickActions()
             .info()
-            .editNotes("Testing QA notes validating the ability to edit notes")
+            .inputCostMaturity("Medium")
+            .submit(ExplorePage.class)
+            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
+            .highlightScenario(componentName, scenarioName)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
+
+        infoPage.cancel(ExplorePage.class)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName)
+            .clickActions()
+            .info()
+            .editNotes(editedNotes)
             .submit(EvaluatePage.class)
             .clickActions()
             .info();
 
-        assertThat(infoPage.getNotes(), is("Testing QA notes validating the ability to edit notes"));
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(editedNotes);
+
+        softAssertions.assertAll();
     }
 
     @Test

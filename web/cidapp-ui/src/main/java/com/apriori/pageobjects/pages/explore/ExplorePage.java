@@ -90,7 +90,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return this;
     }
