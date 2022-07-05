@@ -150,7 +150,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickPinToLeft();
 
-        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.SCENARIO_NAME.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
 
         partsAndAssembliesPage.clickKebabMenuOnTableHeader();
 
@@ -158,7 +158,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickOnUnpinOption();
 
-        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.SCENARIO_NAME.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
 
 
         softAssertions.assertAll();
