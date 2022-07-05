@@ -427,7 +427,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10771", "10776", "10777", "10772"})
+    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778"})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
         currentUser = UserUtil.getUser();
@@ -481,6 +481,8 @@ public class PublishAssembliesTests extends TestBase {
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
+            .inputDescription("QA Test Description")
+            .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
             .selectFilter("Public")
             .clickSearch(assemblyName)
@@ -502,6 +504,8 @@ public class PublishAssembliesTests extends TestBase {
 
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
         softAssertions.assertThat(infoPage.isScenarioInfo("Assignee", scenarioCreatedByName)).isEqualTo(true);
         softAssertions.assertThat(infoPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
