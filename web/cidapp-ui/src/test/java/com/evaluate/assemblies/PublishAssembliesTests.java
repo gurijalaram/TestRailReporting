@@ -15,6 +15,8 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
@@ -429,6 +431,121 @@ public class PublishAssembliesTests extends TestBase {
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, preExistingScenarioName)).isEqualTo(1);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10786")
+    @Description("Attempt to Shallow Publish over existing Public locked scenarios")
+    public void testShallowPublishExistingPublicLockedScenario() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        String publishingMessage = "A public scenario with this name already exists." +
+            " The public scenario is locked and cannot be overridden, please supply a different scenario name or cancel the operation.";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .publishAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        publishPage = loginPage.login(currentUser)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .lock(ExplorePage.class)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .publishScenario(PublishPage.class);
+
+        assertThat(publishPage.getConflictMessage(), is(equalTo(publishingMessage)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10780")
+    @Description("Shallow Publish an assembly with Out of Date cost results")
+    public void testShallowPublishWithOutOfDateCostResults() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser).selectFilter("Private")
+            .clickSearch(BOLT)
+            .multiSelectScenarios(BOLT + "," + scenarioName)
+            .openScenario(BOLT, scenarioName)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_BRAZIL)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .clickExplore()
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(FLANGE + "," + scenarioName, NUT + "," + scenarioName)
+            .publishSubcomponent()
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class)
+            .close(ComponentsListPage.class)
+            .checkManifestComplete(componentAssembly, FLANGE)
+            .closePanel()
+            .publishScenario(PublishPage.class)
+            .publish(EvaluatePage.class)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_PUBLISH_ACTION, 1)
+            .clickRefresh(EvaluatePage.class);
+
+        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }
 }
 

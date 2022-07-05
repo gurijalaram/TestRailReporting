@@ -5,6 +5,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
@@ -46,9 +47,6 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
 
-    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
-    private WebElement publishButton;
-
     @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
 
@@ -88,11 +86,13 @@ public class ExploreToolbar extends MainNavBar {
     private PageUtils pageUtils;
     private WebDriver driver;
     private CssComponent cssComponent = new CssComponent();
+    private ModalDialogController modalDialogController;
 
     public ExploreToolbar(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(newButton);
@@ -129,6 +129,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Checks a component has been deleted
+     *
      * @param component - the component object
      * @return new page object
      */
@@ -330,23 +331,14 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens the scenario
+     * Select the publish button
      *
+     * @param <T> - the object type
      * @return generic page object
      */
     public <T> T publishScenario(Class<T> klass) {
-        pageUtils.waitForElementAndClick(publishButton);
+        modalDialogController.publishScenario(klass);
         return PageFactory.initElements(driver, klass);
-    }
-
-    /**
-     * Clicks on the publish button to open PublishScenario page with Unpublished Scenario(s)
-     *
-     * @return new page object
-     */
-    public PublishScenarioPage publishPrivateScenario() {
-        pageUtils.waitForElementAndClick(publishButton);
-        return new PublishScenarioPage(driver);
     }
 
     /**
@@ -372,6 +364,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Clicks the actions button
+     *
      * @return current page object
      */
     public ExploreToolbar clickActions() {

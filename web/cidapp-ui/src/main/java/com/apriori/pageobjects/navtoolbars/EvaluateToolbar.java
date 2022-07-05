@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.NewCostingLabelEnum;
@@ -34,11 +35,13 @@ public class EvaluateToolbar extends ExploreToolbar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
+    private ModalDialogController modalDialogController;
 
     public EvaluateToolbar(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(costButton);
@@ -132,5 +135,16 @@ public class EvaluateToolbar extends ExploreToolbar {
         By byButton = By.xpath(String.format("//button[contains(text(),'%s')]", buttonLabel));
         pageUtils.waitForElementAndClick(byButton);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Select the publish button
+     *
+     * @param <T> - the object type
+     * @return generic page object
+     */
+    public <T> T publishScenario(Class<T> klass) {
+        modalDialogController.publishScenario(klass);
+        return PageFactory.initElements(driver, klass);
     }
 }
