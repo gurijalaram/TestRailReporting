@@ -98,6 +98,7 @@ public class ScenariosUtil {
      * GET scenario representation of a part
      *
      * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
