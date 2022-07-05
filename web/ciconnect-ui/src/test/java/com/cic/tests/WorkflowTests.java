@@ -9,19 +9,19 @@ import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
+import com.apriori.utils.StringUtils;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import common.testdata.TestDataService;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import utils.UIUtils;
 
 public class WorkflowTests extends TestBase {
     private UserCredentials currentUser = UserUtil.getUser();
@@ -42,7 +42,7 @@ public class WorkflowTests extends TestBase {
     @Description("Test creating, editing and deletion of a workflow")
     public void testCreateEditAndDeleteWorkflow() {
         softAssertions = new SoftAssertions();
-        workFlowData = new TestDataService().getTestData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         // CREATE WORK FLOW
         WorkFlowFeatures workFlowFeatures = new LoginPage(driver)
             .login(currentUser)
@@ -58,7 +58,7 @@ public class WorkflowTests extends TestBase {
         workflowHome.selectScheduleTab()
             .selectWorkflow(workFlowData.getWorkflowName())
             .clickEditButton();
-        workFlowData.setWorkflowName(UIUtils.saltString("- - - 0 0 Auto_Upd"));
+        workFlowData.setWorkflowName(StringUtils.saltString("- - - 0 0 Auto_Upd"));
         workflowHome = workFlowFeatures.editWorkflow();
         softAssertions.assertThat(workflowHome.getWorkFlowStatusMessage()).isEqualTo("Job definition updated!");
         workflowHome.closeMessageAlertBox();
@@ -77,7 +77,7 @@ public class WorkflowTests extends TestBase {
         "and with no WF selected")
     public void testButtonState() {
         softAssertions = new SoftAssertions();
-        workFlowData = new TestDataService().getTestData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         // CREATE WORK FLOW
         QueryDefinitions queryDefinitions = (QueryDefinitions) new LoginPage(driver)
             .login(currentUser)
@@ -121,7 +121,7 @@ public class WorkflowTests extends TestBase {
     @Description("Test default sorting, ascending and descending of workflows by name in the schedule table")
     public void testSortedByName() {
         softAssertions = new SoftAssertions();
-        workFlowData = new TestDataService().getTestData();
+        workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         // CREATE WORK FLOW
         QueryDefinitions queryDefinitions = (QueryDefinitions) new LoginPage(driver)
             .login(currentUser)

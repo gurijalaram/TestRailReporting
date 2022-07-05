@@ -8,7 +8,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.LoadableComponent;
 import utils.TableUtils;
-import utils.UIUtils;
 
 
 public class CICBasePage extends LoadableComponent<CICBasePage> {
@@ -21,14 +20,11 @@ public class CICBasePage extends LoadableComponent<CICBasePage> {
     protected WebDriver driver;
     protected PageUtils pageUtils;
     protected TableUtils tableUtils;
-    protected UIUtils uiUtils;
-
 
     public CICBasePage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         tableUtils = new TableUtils(driver);
-        uiUtils = new UIUtils();
     }
 
     @Override
