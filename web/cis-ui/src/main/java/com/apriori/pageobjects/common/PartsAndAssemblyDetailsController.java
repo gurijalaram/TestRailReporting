@@ -22,8 +22,6 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
 
     @Override
     protected void isLoaded() throws Error {
-
-
     }
 
     /**
