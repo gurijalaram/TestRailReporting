@@ -474,10 +474,7 @@ public class DFMRiskTests extends TestBase {
             .costScenario(5);
 
         evaluatePage.clickActions()
-            .updateCadFile(cadResourceFile)
-            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3)
-            .clickCostButton()
-            .confirmCost("Yes");
+            .updateCadFile(cadResourceFile);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
 
