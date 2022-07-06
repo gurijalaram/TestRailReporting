@@ -13,6 +13,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
 
 import org.assertj.core.api.SoftAssertions;
@@ -31,7 +32,7 @@ public class NavigationPanelTest extends TestBase {
     private TermsOfUsePage termsOfUsePage;
 
     @Test
-    @TestRail(testCaseId = {"11992","12014"})
+    @TestRail(testCaseId = {"11992","12014","12007"})
     @Description("Verify the navigation bar default state and Header text on the home page")
     public void testNavigationBarDefaultStateAndWelcomeText() {
         loginPage = new CisLoginPage(driver);
@@ -87,4 +88,28 @@ public class NavigationPanelTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"11997","11998","11999","12000","12001","12003","12008"})
+    @Description("Verify that user can view the left navigation bar items and aPriori logo")
+    public void testNavBarItems() {
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(leftHandNavigationBar.isaPrioriLogoDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(leftHandNavigationBar.isDashboardBtnDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(leftHandNavigationBar.getDashBoardBtnDefaultState()).contains("Mui-selected");
+        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.COLLABORATION.getNavBarItems())).contains(CisNavBarItemsEnum.SOURCING_PROJECT.getNavBarItems());
+        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.DATA.getNavBarItems())).contains(CisNavBarItemsEnum.PARTS_N_ASSEMBLIES.getNavBarItems(),CisNavBarItemsEnum.BID_PACKAGES.getNavBarItems());
+        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.ACCESS_CONTROL.getNavBarItems())).contains(CisNavBarItemsEnum.SUPPLIERS.getNavBarItems(),CisNavBarItemsEnum.USERS.getNavBarItems());
+
+        leftHandNavigationBar.collapseNavigationPanel();
+
+        softAssertions.assertThat(leftHandNavigationBar.isCollapsedAprioriLogoDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
 }
