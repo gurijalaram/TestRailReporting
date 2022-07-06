@@ -409,6 +409,7 @@ public class PublishAssembliesTests extends TestBase {
             .multiSelectScenarios(assemblyName + "," + preExistingScenarioName)
             .editScenario(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
+            .checkComponentStateRefresh(preExistingComponentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Private")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + preExistingScenarioName)
@@ -423,8 +424,7 @@ public class PublishAssembliesTests extends TestBase {
             .override()
             .clickContinue(PublishPage.class)
             .publish(ExplorePage.class)
-            .alertWarningWait()
-            .refresh()
+            .checkComponentStateRefresh(preExistingComponentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Public")
             .clickSearch(assemblyName);
 
@@ -476,11 +476,13 @@ public class PublishAssembliesTests extends TestBase {
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .clickActions()
             .lock(ExplorePage.class)
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .editScenario(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Private")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
@@ -521,7 +523,8 @@ public class PublishAssembliesTests extends TestBase {
             .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser).selectFilter("Private")
+        evaluatePage = loginPage.login(currentUser)
+            .selectFilter("Private")
             .clickSearch(BOLT)
             .multiSelectScenarios(BOLT + "," + scenarioName)
             .openScenario(BOLT, scenarioName)
