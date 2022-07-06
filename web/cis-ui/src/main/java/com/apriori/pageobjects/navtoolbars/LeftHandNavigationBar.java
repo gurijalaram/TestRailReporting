@@ -34,7 +34,6 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     @FindBy(xpath = "//img[@data-testid='collapsed-logo']")
     private WebElement collapsedAprioriLogo;
 
-
     private LetNavigationBarController letNavigationBarController;
 
     public LeftHandNavigationBar(WebDriver driver) {
@@ -44,12 +43,10 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     public LeftHandNavigationBar(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.letNavigationBarController = new LetNavigationBarController(driver);
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -150,5 +147,4 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     public List<String> getItemsOfSections(String section) {
         return letNavigationBarController.getItemsOfSections(section);
     }
-
 }

@@ -106,10 +106,8 @@ public class NavigationPanelTest extends TestBase {
         softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.ACCESS_CONTROL.getNavBarItems())).contains(CisNavBarItemsEnum.SUPPLIERS.getNavBarItems(),CisNavBarItemsEnum.USERS.getNavBarItems());
 
         leftHandNavigationBar.collapseNavigationPanel();
-
         softAssertions.assertThat(leftHandNavigationBar.isCollapsedAprioriLogoDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
     }
-
 }

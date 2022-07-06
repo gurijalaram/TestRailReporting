@@ -18,12 +18,10 @@ public class LetNavigationBarController extends EagerPageComponent<LetNavigation
 
     public LetNavigationBarController(WebDriver driver) {
         super(driver, log);
-
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -34,5 +32,4 @@ public class LetNavigationBarController extends EagerPageComponent<LetNavigation
     public List<String> getItemsOfSections(String section) {
         return Stream.of(getDriver().findElement(By.xpath("//span[text()='" + section + "']//..")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
-
 }
