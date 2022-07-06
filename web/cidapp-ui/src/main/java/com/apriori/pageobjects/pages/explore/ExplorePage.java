@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
@@ -22,7 +23,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +90,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return this;
     }
@@ -345,6 +345,19 @@ public class ExplorePage extends ExploreToolbar {
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    }
+
+    /**
+     * Checks component is in a required state
+     *
+     * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state to check for
+     * @return current page object
+     */
+    public ExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        scenarioTableController.checkComponentState(componentInfo, scenarioState);
+        refresh();
+        return this;
     }
 
     /**
