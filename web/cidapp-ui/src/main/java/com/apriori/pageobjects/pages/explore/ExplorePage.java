@@ -386,14 +386,14 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
-     * Wait for the alert warning to disappear
+     * close the alert warning
      *
      * @return the current page object
      */
-    public ExplorePage alertWarningWait() {
-        By byAlert = By.cssSelector(".Toastify__toast-body");
+    public ExplorePage closeAlertWarning() {
+        By byAlert = By.cssSelector(".Toastify__toast-container [aria-label='close']");
         pageUtils.waitForElementToAppear(byAlert);
-        pageUtils.waitForElementsToNotAppear(byAlert);
+        pageUtils.waitForElementAndClick(byAlert);
         return this;
     }
 }

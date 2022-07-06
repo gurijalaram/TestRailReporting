@@ -408,16 +408,21 @@ public class PublishAssembliesTests extends TestBase {
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .publishScenario(PublishPage.class)
             .publish(ExplorePage.class)
-            .alertWarningWait()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .closeAlertWarning()
             .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Public")
             .clickSearch(assemblyName);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
 
-        explorePage.multiSelectScenarios(assemblyName + "," + scenarioName)
+        explorePage.selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
             .editScenario(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Private")
             .clickSearch(assemblyName);
 
@@ -467,14 +472,17 @@ public class PublishAssembliesTests extends TestBase {
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .publishScenario(PublishPage.class)
             .publish(ExplorePage.class)
-            .alertWarningWait()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .closeAlertWarning()
             .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Private")
             .clickSearch(assemblyName);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(0);
 
-        infoPage = explorePage.selectFilter("Public")
+        infoPage = explorePage.checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .clickActions()
@@ -484,11 +492,15 @@ public class PublishAssembliesTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .clickActions()
             .lock(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
@@ -496,6 +508,8 @@ public class PublishAssembliesTests extends TestBase {
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Public")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
@@ -554,17 +568,23 @@ public class PublishAssembliesTests extends TestBase {
             .selectStatus("New")
             .inputCostMaturity("Low")
             .submit(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Private")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .clickActions()
             .lock(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .selectFilter("Private")
             .clickSearch(assemblyName)
             .multiSelectScenarios(assemblyName + "," + scenarioName)
             .publishScenario(PublishPage.class)
             .publish(ExplorePage.class)
-            .alertWarningWait()
+            .closeAlertWarning()
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .selectFilter("Public")
             .clickSearch(assemblyName)
@@ -574,7 +594,7 @@ public class PublishAssembliesTests extends TestBase {
 
         softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
         softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
-        softAssertions.assertThat(infoPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(false);
+        softAssertions.assertThat(infoPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
