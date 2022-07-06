@@ -51,6 +51,8 @@ public class ScenarioResponse {
     private Boolean systemLocked;
     private String updatedBy;
     private String updatedByName;
+    private String lockedBy;
+    private String lockedByName;
     private List<String> permissions;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
@@ -64,4 +66,6 @@ public class ScenarioResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime updatedAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
+    private LocalDateTime lockedAt;
 }

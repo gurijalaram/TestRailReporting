@@ -6,9 +6,11 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -49,6 +51,7 @@ public class PublishAssembliesTests extends TestBase {
     private ComponentsListPage componentsListPage;
     private SoftAssertions softAssertions = new SoftAssertions();
     private ExplorePage explorePage;
+    private InfoPage infoPage;
 
     public PublishAssembliesTests() {
         super();
@@ -362,6 +365,228 @@ public class PublishAssembliesTests extends TestBase {
             .clickSearch(assemblyName);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10773", "10775"})
+    @Description("Shallow Publish correctly publishes to Public Workspace")
+    public void testShallowPublishInPublicWorkspace() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String BOLT = "bolt";
+        String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        List<String> subComponentNames = Arrays.asList(FLANGE, NUT, BOLT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
+            .clickSearch(assemblyName);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
+        explorePage.selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(ExplorePage.class)
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Private")
+            .clickSearch(assemblyName);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778"})
+    @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
+    public void testShallowPublishWithModifiedFeatures() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        String scenarioCreatedByName = componentAssembly.getScenarioItem().getScenarioCreatedByName();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Private")
+            .clickSearch(assemblyName);
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(0);
+
+        infoPage = explorePage.checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .inputDescription("QA Test Description")
+            .inputNotes("Testing QA notes")
+            .submit(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .lock(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .assign()
+            .selectAssignee(scenarioCreatedByName)
+            .submit(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("QA Test Description");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Testing QA notes");
+        softAssertions.assertThat(infoPage.isScenarioInfo("Assignee", scenarioCreatedByName)).isEqualTo(true);
+        softAssertions.assertThat(infoPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "10770")
+    @Description("Retain the Status/ Cost Maturity/ Lock during a Shallow Publish")
+    public void testShallowPublishWithRetainedFeatures() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final String BIG_RING = "big ring";
+        final String PIN = "Pin";
+        final String SMALL_RING = "small ring";
+
+        final List<String> subComponentNames = Arrays.asList(BIG_RING, PIN, SMALL_RING);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+        final String subComponentExtension = ".SLDPRT";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        infoPage = loginPage.login(currentUser)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Low")
+            .submit(ExplorePage.class)
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .lock(ExplorePage.class)
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Private")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .publishScenario(PublishPage.class)
+            .publish(ExplorePage.class)
+            .refresh()
+            .checkComponentStateRefresh(componentAssembly, ScenarioStateEnum.COST_COMPLETE)
+            .selectFilter("Public")
+            .clickSearch(assemblyName)
+            .multiSelectScenarios(assemblyName + "," + scenarioName)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+        softAssertions.assertThat(infoPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
