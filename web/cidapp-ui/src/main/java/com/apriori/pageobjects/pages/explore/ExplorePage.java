@@ -384,16 +384,4 @@ public class ExplorePage extends ExploreToolbar {
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
     }
-
-    /**
-     * close the alert warning
-     *
-     * @return the current page object
-     */
-    public ExplorePage closeAlertWarning() {
-        By byAlert = By.cssSelector(".Toastify__toast-container [aria-label='close']");
-        pageUtils.waitForElementToAppear(byAlert);
-        pageUtils.waitForElementAndClick(byAlert);
-        return this;
-    }
 }
