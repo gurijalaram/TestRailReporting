@@ -453,4 +453,34 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"12071"})
+    @Description("Validate that Update CAD file is successful with Creo version components")
+    public void updateCADCreoVersion() {
+        final String cadFile = "bar_test1.prt";
+        final String creoVersionFile = "bar_test1.prt.2";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
+
+        String componentName = "bar_test1";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, cadFile);
+        cadResourceFile = FileResourceUtil.getCloudCadFile(processGroupEnum, creoVersionFile);
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario(5);
+
+        evaluatePage.clickActions()
+            .updateCadFile(cadResourceFile)
+            .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3)
+            .clickCostButton()
+            .confirmCost("Yes");
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isTrue();
+
+        softAssertions.assertAll();
+    }
 }
