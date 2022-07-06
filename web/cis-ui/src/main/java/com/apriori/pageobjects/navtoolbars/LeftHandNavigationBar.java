@@ -1,17 +1,15 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.pages.compare.ComparePage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.help.HelpPage;
-import com.apriori.pageobjects.pages.myuser.MyUserPage;
+import com.apriori.pageobjects.common.LetNavigationBarController;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
-import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
+
+import java.util.List;
 
 @Slf4j
 public class LeftHandNavigationBar extends CisHeaderBar {
@@ -27,8 +25,16 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     @FindBy(xpath = "//div[@data-testid='avatar']")
     private WebElement userIcon;
 
-    @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.dashboard']")
+    @FindBy(xpath = "//div[@data-testid='list-subitem-left-menu.subTitle.dashboard']")
     private WebElement btnDashboard;
+
+    @FindBy(xpath = "//img[@data-testid='main-logo']")
+    private WebElement aprioriLogo;
+
+    @FindBy(xpath = "//img[@data-testid='collapsed-logo']")
+    private WebElement collapsedAprioriLogo;
+
+    private LetNavigationBarController letNavigationBarController;
 
     public LeftHandNavigationBar(WebDriver driver) {
         this(driver, log);
@@ -36,12 +42,11 @@ public class LeftHandNavigationBar extends CisHeaderBar {
 
     public LeftHandNavigationBar(WebDriver driver, Logger logger) {
         super(driver, logger);
-
+        this.letNavigationBarController = new LetNavigationBarController(driver);
     }
 
     @Override
     protected void isLoaded() throws Error {
-
     }
 
     /**
@@ -96,4 +101,50 @@ public class LeftHandNavigationBar extends CisHeaderBar {
         return this;
     }
 
+    /**
+     * Checks if aPriori logo displayed
+     *
+     * @return true/false
+     */
+    public boolean isaPrioriLogoDisplayed() {
+        getPageUtils().waitForElementToAppear(aprioriLogo);
+        return getPageUtils().isElementDisplayed(aprioriLogo);
+    }
+
+    /**
+     * Checks if dashboard navbar item displayed
+     *
+     * @return true/false
+     */
+    public boolean isDashboardBtnDisplayed() {
+        getPageUtils().waitForElementToAppear(btnDashboard);
+        return getPageUtils().isElementDisplayed(btnDashboard);
+    }
+
+    /**
+     * Get Dashboard state as default selected
+     *
+     * @return String
+     */
+    public String getDashBoardBtnDefaultState() {
+        return getPageUtils().waitForElementToAppear(btnDashboard).getAttribute("class");
+    }
+
+    /**
+     * Checks if  collapsed aPriori logo displayed
+     *
+     * @return true/false
+     */
+    public boolean isCollapsedAprioriLogoDisplayed() {
+        return getPageUtils().isElementDisplayed(collapsedAprioriLogo);
+    }
+
+    /**
+     * Get Nav bar items on each section
+     *
+     * @return list of string
+     */
+    public List<String> getItemsOfSections(String section) {
+        return letNavigationBarController.getItemsOfSections(section);
+    }
 }
