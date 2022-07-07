@@ -450,7 +450,7 @@ public class IncludeAndExcludeTests extends TestBase {
         softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(componentName)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.isTextDecorationStruckOut(componentName)).isEqualTo(true);
 
-        componentsListPage = componentsListPage.selectScenario(componentName)
+        componentsListPage = componentsListPage.clickScenarioCheckbox(componentName)
                 .updateCadFile(componentResourceFile)
                 .closePanel()
                 .clickRefresh(ComponentsListPage.class);

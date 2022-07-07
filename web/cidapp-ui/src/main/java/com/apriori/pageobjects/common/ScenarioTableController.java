@@ -379,7 +379,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
+    public ScenarioTableController clickScenarioCheckbox(String componentName, String scenarioName) {
         findScenarioCheckbox(componentName, scenarioName).click();
         return this;
     }
