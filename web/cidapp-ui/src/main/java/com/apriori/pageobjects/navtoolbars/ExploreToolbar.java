@@ -5,7 +5,6 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
-import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
@@ -89,13 +88,11 @@ public class ExploreToolbar extends MainNavBar {
     private PageUtils pageUtils;
     private WebDriver driver;
     private CssComponent cssComponent = new CssComponent();
-    private ModalDialogController modalDialogController;
 
     public ExploreToolbar(WebDriver driver) {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        this.modalDialogController = new ModalDialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(newButton);
