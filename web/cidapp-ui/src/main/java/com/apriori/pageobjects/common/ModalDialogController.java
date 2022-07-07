@@ -63,9 +63,6 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@id='modal-body']//button[.='Close']")
     private WebElement closeButton;
 
-    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
-    private WebElement publish;
-
     private WebDriver driver;
     private PageUtils pageUtils;
 
@@ -114,16 +111,6 @@ public class ModalDialogController {
      */
     public <T> T publish(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
-        return PageFactory.initElements(driver, klass);
-    }
-
-    /**
-     * Select the publish button from the ExploreToolBar or EvaluateToolBar
-     *
-     * @return generic page object
-     */
-    public <T> T publishScenario(Class<T> klass) {
-        pageUtils.waitForElementAndClick(publish);
         return PageFactory.initElements(driver, klass);
     }
 

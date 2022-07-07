@@ -83,6 +83,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-action-bar-action-update-cad-file")
     private WebElement cadFileButton;
 
+    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
+    private WebElement publishButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private CssComponent cssComponent = new CssComponent();
@@ -331,13 +334,13 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Select the publish button
+     * Clicks on the publish button
      *
      * @param <T> - the object type
      * @return generic page object
      */
     public <T> T publishScenario(Class<T> klass) {
-        modalDialogController.publishScenario(klass);
+        pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, klass);
     }
 
