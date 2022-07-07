@@ -223,6 +223,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
