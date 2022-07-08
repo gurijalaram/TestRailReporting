@@ -125,7 +125,7 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         partsAndAssembliesPage.clickOnShowHideOption();
-        softAssertions.assertThat(partsAndAssembliesPage.isShowHideOptionDisplayed()).isEqualTo(false);
+        softAssertions.assertThat(partsAndAssembliesPage.isShowHideModalDisplayed()).isEqualTo(false);
 
         softAssertions.assertAll();
     }
