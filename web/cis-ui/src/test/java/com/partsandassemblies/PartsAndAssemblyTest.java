@@ -106,7 +106,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12178","12185","12186"})
+    @TestRail(testCaseId = {"12178","12185","12186","12176"})
     @Description("Verify that user can search a field by its name and hide/show the field")
     public void testSearchAFieldToShowHide() {
         loginPage = new CisLoginPage(driver);
@@ -116,19 +116,18 @@ public class PartsAndAssemblyTest extends TestBase {
                         .enterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(partsAndAssembliesPage.getFieldName()).isEqualTo(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         partsAndAssembliesPage.clickOnToggleButton();
-
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         partsAndAssembliesPage.clickOnToggleButton();
-
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
-        softAssertions.assertAll();
+        partsAndAssembliesPage.clickOnShowHideOption();
+        softAssertions.assertThat(partsAndAssembliesPage.isShowHideOptionDisplayed()).isEqualTo(false);
 
+        softAssertions.assertAll();
     }
 
     @Test
