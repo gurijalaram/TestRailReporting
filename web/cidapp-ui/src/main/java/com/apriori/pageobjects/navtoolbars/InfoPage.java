@@ -182,7 +182,8 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return true/false
      */
     public boolean isIconDisplayed(StatusIconEnum icon) {
-        return statusIcon.isIconDisplayed(icon);
+        By iconStatus = By.cssSelector(String.format("[id='modal-body'] [data-icon='%s']", icon.getStatusIcon()));
+        return pageUtils.waitForElementToAppear(iconStatus).isDisplayed();
     }
 
     /**

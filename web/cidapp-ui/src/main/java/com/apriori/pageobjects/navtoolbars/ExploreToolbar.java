@@ -46,9 +46,6 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
 
-    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
-    private WebElement publishButton;
-
     @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
 
@@ -84,6 +81,9 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(id = "qa-action-bar-action-update-cad-file")
     private WebElement cadFileButton;
+
+    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
+    private WebElement publishButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -129,6 +129,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Checks a component has been deleted
+     *
      * @param component - the component object
      * @return new page object
      */
@@ -330,23 +331,14 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens the scenario
+     * Clicks on the publish button
      *
+     * @param <T> - the object type
      * @return generic page object
      */
     public <T> T publishScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, klass);
-    }
-
-    /**
-     * Clicks on the publish button to open PublishScenario page with Unpublished Scenario(s)
-     *
-     * @return new page object
-     */
-    public PublishScenarioPage publishPrivateScenario() {
-        pageUtils.waitForElementAndClick(publishButton);
-        return new PublishScenarioPage(driver);
     }
 
     /**
@@ -372,6 +364,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Clicks the actions button
+     *
      * @return current page object
      */
     public ExploreToolbar clickActions() {
