@@ -366,7 +366,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController shiftHighlightScenario(String componentName, String scenarioName) {
         Actions shiftHighlight = new Actions(driver);
-        shiftHighlight.keyDown(Keys.SHIFT)
+        shiftHighlight.sendKeys(Keys.LEFT_SHIFT)
             .click(pageUtils.waitForElementToAppear(byComponentName(componentName, scenarioName)))
             .build()
             .perform();
