@@ -188,4 +188,14 @@ public class GenerateStringUtil {
     public String getRandomNumbers() {
         return RandomStringUtils.randomNumeric(8);
     }
+
+    /**
+     * Generates a 102 character hash password string
+     *
+     * @return String
+     */
+    @Attachment
+    public String getHashPassword() {
+        return RandomStringUtils.random(102, "0123456789abcdefghijklmnopqrstuvwxyz:");
+    }
 }
