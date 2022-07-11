@@ -21,7 +21,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[@role='progressbar']")
     private WebElement progressBar;
 
-    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-row')]")
+    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-cellCheckbox')]")
     private List<WebElement> tableRow;
 
     @FindBy(xpath = "//div[@class='MuiDataGrid-row Mui-selected']")
