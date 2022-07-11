@@ -866,8 +866,8 @@ public class ActionsTests extends TestBase {
 
     @Test
     @TestRail(testCaseId = {"6207", "6208"})
-    @Description("Validate notes can be read by different users")
-    public void hoverOverScenario() {
+    @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
+    public void shiftControlHighlightScenarios() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
 
         String componentName = "BasicScenario_Forging";
