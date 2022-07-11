@@ -891,9 +891,11 @@ public class ActionsTests extends TestBase {
             .shiftHighlightScenario(componentName, scenarioName3)
             .controlHighlightScenario(componentName, scenarioName4);
 
-            assertThat(explorePage.getCellColour(componentName, scenarioName), is(ColourEnum.PLACEBO_BLUE.getColour()));
-            assertThat(explorePage.getCellColour(componentName, scenarioName2), is(ColourEnum.PLACEBO_BLUE.getColour()));
-            assertThat(explorePage.getCellColour(componentName, scenarioName3), is(ColourEnum.PLACEBO_BLUE.getColour()));
-            assertThat(explorePage.getCellColour(componentName, scenarioName4), is(ColourEnum.PLACEBO_BLUE.getColour()));
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName2)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName3)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertAll();
     }
 }
