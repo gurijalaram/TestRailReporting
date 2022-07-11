@@ -63,7 +63,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-2043")
-    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
+    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268", "6342"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
