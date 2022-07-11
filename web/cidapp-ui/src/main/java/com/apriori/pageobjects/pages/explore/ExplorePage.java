@@ -396,4 +396,15 @@ public class ExplorePage extends ExploreToolbar {
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
     }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return scenarioTableController.getCellColour(componentName, scenarioName);
+    }
 }
