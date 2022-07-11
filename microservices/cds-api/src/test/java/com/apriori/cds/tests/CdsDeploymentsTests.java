@@ -84,7 +84,7 @@ public class CdsDeploymentsTests {
         );
 
         assertThat(deployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(deployment.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(deployment.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
