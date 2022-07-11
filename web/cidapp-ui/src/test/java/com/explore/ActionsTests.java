@@ -28,6 +28,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
@@ -861,5 +862,38 @@ public class ActionsTests extends TestBase {
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo(testNotes);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6207", "6208"})
+    @Description("Validate notes can be read by different users")
+    public void hoverOverScenario() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName4 = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName3, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName4, resourceFile, currentUser)
+            .clickExplore()
+            .selectFilter("Private")
+            .shiftHighlightScenario(componentName, scenarioName)
+            .controlHighlightScenario(componentName, scenarioName2)
+            .shiftHighlightScenario(componentName, scenarioName3)
+            .controlHighlightScenario(componentName, scenarioName4);
+
+            assertThat(explorePage.getCellColour(componentName, scenarioName), is(ColourEnum.PLACEBO_BLUE.getColour()));
+            assertThat(explorePage.getCellColour(componentName, scenarioName2), is(ColourEnum.PLACEBO_BLUE.getColour()));
+            assertThat(explorePage.getCellColour(componentName, scenarioName3), is(ColourEnum.PLACEBO_BLUE.getColour()));
+            assertThat(explorePage.getCellColour(componentName, scenarioName4), is(ColourEnum.PLACEBO_BLUE.getColour()));
     }
 }
