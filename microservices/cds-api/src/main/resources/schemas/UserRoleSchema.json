@@ -1,28 +1,28 @@
 {
   "type": "object",
   "required": [
-    "userCredential"
+    "response"
   ],
   "properties": {
-    "userCredential": {
+    "response": {
       "type": "object",
       "required": [
-        "currentPasswordHash",
-        "newPasswordHash",
-        "newPasswordSalt",
-        "newEncryptedPassword"
+        "identity",
+        "createdBy",
+        "createdAt",
+        "role"
       ],
       "properties": {
-        "currentPasswordHash": {
+        "identity": {
           "type": "string"
         },
-        "newPasswordHash": {
+        "createdBy": {
           "type": "string"
         },
-        "newPasswordSalt": {
+        "createdAt": {
           "type": "string"
         },
-        "newEncryptedPassword": {
+        "role": {
           "type": "string"
         }
       }

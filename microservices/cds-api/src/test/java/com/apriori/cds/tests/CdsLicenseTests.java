@@ -17,6 +17,7 @@ import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.SubLicenseAssociation;
 import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
+import com.apriori.cds.objects.response.UsersLicensing;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -132,7 +133,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5653"})
+    @TestRail(testCaseId = {"13301"})
     @Description("Returns a list of licenses for a specific customer site.")
     public void getLicensesOfTheSite() {
 
@@ -147,7 +148,7 @@ public class CdsLicenseTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"5654"})
+    @TestRail(testCaseId = {"13302"})
     @Description("Returns a specific license for a specific customer site")
     public void getLicenseOfSiteById() {
         ResponseWrapper<LicenseResponse> licenseById = cdsTestUtil.getCommonRequest(CDSAPIEnum.LICENSE_BY_CUSTOMER_SITE_LICENSE_IDS,
@@ -280,7 +281,50 @@ public class CdsLicenseTests {
         );
 
         assertThat(associationUserResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(associationUserResponse.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(associationUserResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        deleteIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licenseIdentity)
+            .subLicenseIdentity(subLicenseIdentity)
+            .userIdentity(userIdentity)
+            .build();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13303"})
+    @Description("Returns a list of sites, licenses, and sub-licenses that the user is associated with")
+    public void getUsersLicenses() {
+        String userName = generateStringUtil.generateUserName();
+
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        String userIdentity = user.getResponseEntity().getIdentity();
+        userIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .userIdentity(userIdentity)
+            .build();
+
+        ResponseWrapper<LicenseResponse> licenseResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.SPECIFIC_LICENSE_BY_CUSTOMER_LICENSE_ID,
+            LicenseResponse.class,
+            customerIdentity,
+            licenseIdentity
+        );
+
+        String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().stream()
+            .filter(x -> !x.getName().contains("master"))
+            .collect(Collectors.toList()).get(0).getIdentity();
+
+        cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+
+        ResponseWrapper<UsersLicensing> licensing = cdsTestUtil.getCommonRequest(CDSAPIEnum.USERS_LICENSES,
+            UsersLicensing.class,
+            customerIdentity,
+            userIdentity
+        );
+
+        assertThat(licensing.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(licensing.getResponseEntity().getResponse().get(0).getSubLicenseIdentity(), is(equalTo(subLicenseIdentity)));
+
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
             .siteIdentity(siteIdentity)
