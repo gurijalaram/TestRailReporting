@@ -4,6 +4,7 @@ import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -25,6 +26,10 @@ public class UserDefinedAttributes extends Pagination {
     private String type;
     private String requiredAttributeType;
     private String multiSelect;
+    @JsonProperty("ProjectName")
+    private String projectName;
+    @JsonProperty("ProjectOwner")
+    private String projectOwner;
     private String[] allowedValues;
     private List<UserDefinedAttributes> items;
     private String defaultValue;
