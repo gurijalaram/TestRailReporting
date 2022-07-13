@@ -223,6 +223,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
@@ -383,5 +395,16 @@ public class ExplorePage extends ExploreToolbar {
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
+    }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return scenarioTableController.getCellColour(componentName, scenarioName);
     }
 }

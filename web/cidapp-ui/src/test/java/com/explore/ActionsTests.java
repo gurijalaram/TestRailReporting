@@ -28,6 +28,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
@@ -62,7 +63,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-2043")
-    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
+    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268", "6342"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -414,7 +415,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187", "7271"})
+    @TestRail(testCaseId = {"7187", "7271", "6199"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -859,6 +860,41 @@ public class ActionsTests extends TestBase {
 
         softAssertions.assertThat(infoPage.getDescription()).isEqualTo(testDescription);
         softAssertions.assertThat(infoPage.getNotes()).isEqualTo(testNotes);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6207", "6208"})
+    @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
+    public void shiftControlHighlightScenarios() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName4 = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName3, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName4, resourceFile, currentUser)
+            .clickExplore()
+            .selectFilter("Private")
+            .shiftHighlightScenario(componentName, scenarioName)
+            .controlHighlightScenario(componentName, scenarioName2)
+            .shiftHighlightScenario(componentName, scenarioName3)
+            .controlHighlightScenario(componentName, scenarioName4);
+
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName2)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName3)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
 
         softAssertions.assertAll();
     }
