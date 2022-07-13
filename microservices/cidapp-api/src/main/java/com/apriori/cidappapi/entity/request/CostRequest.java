@@ -26,6 +26,4 @@ public class CostRequest {
     private Boolean deleteTemplateAfterUse;
     private String costingTemplateIdentity;
     private List<Object> propertiesToReset;
-    @JsonProperty("UDARegion")
-    private String udaRegion;
 }

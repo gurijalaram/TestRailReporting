@@ -2,6 +2,8 @@ package com.apriori.pageobjects.common;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 
@@ -265,7 +267,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return String representation of icon
      */
     public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
-        String cost =  getByParentLocator(componentName, scenarioName)
+        String cost = getByParentLocator(componentName, scenarioName)
             .findElement(By.cssSelector("div[data-header-id='analysisOfScenario.fullyBurdenedCost'] span"))
             .getText();
         return Double.parseDouble(cost.replaceAll("[^0-9?!\\.]", ""));
@@ -356,6 +358,22 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController shiftHighlightScenario(String componentName, String scenarioName) {
+        Actions shiftHighlight = new Actions(driver);
+        shiftHighlight.sendKeys(Keys.LEFT_SHIFT)
+            .click(pageUtils.waitForElementToAppear(byComponentName(componentName, scenarioName)))
+            .build()
+            .perform();
+        return this;
+    }
+
+    /**
      * Multi-select scenario
      * This method takes any number of arguments as string. A combination of component and scenario name needs to passed in the argument eg. {"PISTON, Initial", "Television, AutoScenario101"}
      *
@@ -377,7 +395,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
+    public ScenarioTableController clickScenarioCheckbox(String componentName, String scenarioName) {
         findScenarioCheckbox(componentName, scenarioName).click();
         return this;
     }
@@ -440,5 +458,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public String getCellColour(String componentName, String scenarioName) {
         return Color.fromString(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             scenarioName.trim(), componentName.toUpperCase().trim()))).getCssValue("background-color")).asHex();
+    }
+
+    /**
+     * Checks component is in a required state
+     *
+     * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state to check for
+     * @return current page object
+     */
+    public ScenarioTableController checkComponentState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        new ScenariosUtil().getScenarioRepresentation(componentInfo, scenarioState);
+        return this;
     }
 }
