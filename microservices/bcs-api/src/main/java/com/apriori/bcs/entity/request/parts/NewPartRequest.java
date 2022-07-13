@@ -1,14 +1,10 @@
 package com.apriori.bcs.entity.request.parts;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
-import com.fasterxml.jackson.annotation.JsonSetter;
 import com.google.common.primitives.Bytes;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Data
 @Builder
@@ -30,10 +26,6 @@ public class NewPartRequest {
     private String vpeName;
     private String generateWatchPointReport;
     private String fileData;
-
-    @Setter(onMethod_ = {@JsonSetter("UDARegion")})
-    @Getter(onMethod_ = {@JsonGetter("UDARegion")})
-    private String udaRegion;
 
     public void setVpeName(String vpeName) {
         if (vpeName == null) {

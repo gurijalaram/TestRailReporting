@@ -1,7 +1,6 @@
 package com.apriori.sds.entity.request;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +26,4 @@ public class CostRequest {
     private Boolean deleteTemplateAfterUse;
     private String costingTemplateIdentity;
     private List<Object> propertiesToReset;
-
-    @JsonProperty("UDARegion")
-    private String udaRegion;
 }

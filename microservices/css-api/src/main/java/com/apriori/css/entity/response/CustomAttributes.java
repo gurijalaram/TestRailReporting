@@ -19,8 +19,6 @@ import java.util.List;
 public class CustomAttributes {
     @JsonProperty("StringPredefDefault_1")
     private List<String> stringPredefDefault1;
-    @JsonProperty("UDARegion")
-    private String udaRegion;
     @JsonProperty("UserListMulti")
     private List<String> userListMulti;
     @JsonProperty("UserList")
