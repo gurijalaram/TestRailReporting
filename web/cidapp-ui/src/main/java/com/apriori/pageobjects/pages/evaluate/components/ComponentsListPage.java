@@ -275,8 +275,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ComponentsListPage selectScenario(String componentName, String scenarioName) {
-        scenarioTableController.selectScenario(componentName, scenarioName);
+    public ComponentsListPage clickScenarioCheckbox(String componentName, String scenarioName) {
+        scenarioTableController.clickScenarioCheckbox(componentName, scenarioName);
         return this;
     }
 
@@ -680,7 +680,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param componentName - component name
      * @return current page object
      */
-    public ComponentsListPage selectScenario(String componentName) {
+    public ComponentsListPage clickScenarioCheckbox(String componentName) {
         By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
             componentName.toUpperCase().trim()));
         pageUtils.waitForElementToAppear(scenario);

@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 public class BatchPartResources {
 
     private static RequestEntity requestEntity = null;
-    private static final long WAIT_TIME = 300;
+    private static final long WAIT_TIME = 600;
     private static String batchID;
     static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(10);
 

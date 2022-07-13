@@ -27,6 +27,8 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     // ROLES
     ROLES("roles"),
     ROLE_BY_ID("roles/%s"),
+    USER_ROLES("customers/%s/users/%s/roles"),
+    USER_ROLES_BY_ID("customers/%s/users/%s/roles/%s"),
 
     // CONFIGURATIONS
     CONFIGURATIONS_EMAIL("configurations/blacklisted-email-domains"),
@@ -56,9 +58,11 @@ public enum CDSAPIEnum implements ExternalEndpointEnum {
     USERS("users"),
     USER_BY_ID("users/%s"),
     USER_CREDENTIALS_BY_ID("users/%s/credentials"),
+    USER_CREDENTIALS_BY_CUSTOMER_USER_IDS("customers/%s/users/%s/credentials"),
     CUSTOMER_USERS("customers/%s/users"),
     DELETE_USER_WRONG_ID("customers/%s/users/L2H992829CFB"),
     USER_BY_CUSTOMER_USER_IDS("customers/%s/users/%s"),
+    USERS_LICENSES("customers/%s/users/%s/licensing"),
 
     //DEPLOYMENTS
     DEPLOYMENTS_BY_CUSTOMER_ID("customers/%s/deployments"),
