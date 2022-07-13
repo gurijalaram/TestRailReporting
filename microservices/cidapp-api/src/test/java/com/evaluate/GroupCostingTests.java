@@ -134,10 +134,10 @@ public class GroupCostingTests {
 
         ResponseWrapper<ErrorMessage> error = scenariosUtil.postGroupCostNullScenarios(componentAssembly);
 
+        componentAssembly.getSubComponents().forEach(o -> softAssertions.assertThat(o.getScenarioItem().getScenarioState()).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+
         softAssertions.assertThat(error.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(error.getResponseEntity().getMessage()).contains("validation failures were found");
-
-        componentAssembly.getSubComponents().forEach(o -> softAssertions.assertThat(o.getScenarioItem().getScenarioState()).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         softAssertions.assertAll();
     }
