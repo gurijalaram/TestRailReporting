@@ -2,12 +2,14 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.LicensedApplication;
+import com.apriori.cds.objects.response.LicensedApplications;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -102,6 +104,15 @@ public class CdsSitesApplicationsTests {
              .siteIdentity(siteIdentity)
              .licenseIdentity(licensedApplicationIdentity)
              .build();
+
+        ResponseWrapper<LicensedApplications> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
+            LicensedApplications.class,
+            customerIdentity,
+            siteIdentity
+        );
+
+        assertThat(licensedApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(licensedApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             LicensedApplication.class,
