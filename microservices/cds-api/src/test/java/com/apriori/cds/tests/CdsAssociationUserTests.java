@@ -96,6 +96,15 @@ public class CdsAssociationUserTests {
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
+        ResponseWrapper<AssociationUserResponse> associationUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS,
+            AssociationUserResponse.class,
+            aPCustomerIdentity,
+            associationIdentity
+        );
+
+        assertThat(associationUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(associationUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
         ResponseWrapper<AssociationUserItems> users = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
             aPCustomerIdentity,

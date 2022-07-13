@@ -94,13 +94,13 @@ public class BatchPartNegativeTest {
     @Description("Create a part with invalid UDA")
     public void createBatchPartInvalidUDA() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
-        newPartRequest.setUdas("{\"UDARegion\":\"Invalid UDA\"}");
+        newPartRequest.setUdas("{\"ProjectName\":\"Invalid Project Name for negative automation test\"}");
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
         assertTrue("Track and wait until part is errored", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED));
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
 
-        Assert.assertEquals("Verify the error when part is created with invalid UDA",
-            "Custom attribute with name 'UDARegion' was not found", partResponse.getResponseEntity().getErrors());
+        Assert.assertTrue("Verify the error when part is created with invalid UDA",
+                partResponse.getResponseEntity().getErrors().contains("Custom attribute with name 'ProjectName' and value 'Invalid Project Name for negative automation test' does not match any of the allowed values"));
     }
 
     @Test

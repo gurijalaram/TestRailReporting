@@ -96,7 +96,7 @@ public class GroupCostingTests extends TestBase {
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
-        componentsListPage.selectScenario(subComponentNames.get(rand.nextInt(subComponentNames.size())).toUpperCase(), scenarioName);
+        componentsListPage.clickScenarioCheckbox(subComponentNames.get(rand.nextInt(subComponentNames.size())).toUpperCase(), scenarioName);
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
         softAssertions.assertAll();
@@ -150,7 +150,7 @@ public class GroupCostingTests extends TestBase {
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("circle-minus");
         });
 
-        subComponentNames.forEach(subComponentName -> componentsListPage.selectScenario(subComponentName.toUpperCase(), scenarioName));
+        subComponentNames.forEach(subComponentName -> componentsListPage.clickScenarioCheckbox(subComponentName.toUpperCase(), scenarioName));
 
         componentPrimaryPage = componentsListPage.setInputs();
 

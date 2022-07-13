@@ -358,6 +358,22 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController shiftHighlightScenario(String componentName, String scenarioName) {
+        Actions shiftHighlight = new Actions(driver);
+        shiftHighlight.sendKeys(Keys.LEFT_SHIFT)
+            .click(pageUtils.waitForElementToAppear(byComponentName(componentName, scenarioName)))
+            .build()
+            .perform();
+        return this;
+    }
+
+    /**
      * Multi-select scenario
      * This method takes any number of arguments as string. A combination of component and scenario name needs to passed in the argument eg. {"PISTON, Initial", "Television, AutoScenario101"}
      *
@@ -379,7 +395,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
+    public ScenarioTableController clickScenarioCheckbox(String componentName, String scenarioName) {
         findScenarioCheckbox(componentName, scenarioName).click();
         return this;
     }
