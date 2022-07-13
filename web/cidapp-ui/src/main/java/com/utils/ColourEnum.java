@@ -19,7 +19,8 @@ public enum ColourEnum {
     ORANGE_PEEL("#ff9800"),
     ORANGE("#ff5722"),
     ROMAN_COFFEE("#795548"),
-    LYNCH("##607d8b");
+    LYNCH("##607d8b"),
+    PLACEBO_BLUE("#ecf7fc");
 
     private final String colour;
 

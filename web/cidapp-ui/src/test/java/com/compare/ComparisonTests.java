@@ -300,7 +300,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5783"})
+    @TestRail(testCaseId = {"5783", "6200"})
     @Description("User can add scenarios to the currently open comparison via UI within current comparison")
     public void addScenarioToComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -340,7 +340,7 @@ public class ComparisonTests extends TestBase {
             .modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .selectScenario(componentName3, scenarioName3)
+            .clickScenarioCheckbox(componentName3, scenarioName3)
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName3.toUpperCase() + "  / " + scenarioName3);
@@ -348,7 +348,7 @@ public class ComparisonTests extends TestBase {
         comparePage.modify()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .selectScenario(componentName4, scenarioName4)
+            .clickScenarioCheckbox(componentName4, scenarioName4)
             .submit(ComparePage.class);
 
         softAssertions.assertThat(comparePage.getScenariosInComparison()).contains(componentName4.toUpperCase() + "  / " + scenarioName4);
