@@ -30,7 +30,6 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 public class ScenariosTest extends SDSTestUtil {
 
@@ -258,33 +257,6 @@ public class ScenariosTest extends SDSTestUtil {
         scenariosToDelete.remove(componentToDelete);
     }
 
-    private Scenario getReadyToWorkScenario(final String componentIdentity, final String scenarioIdentity) {
-        final int attemptsCount = 15;
-        final int secondsToWait = 10;
-        int currentCount = 0;
-        Scenario scenario;
-
-        do {
-            this.doSleep(secondsToWait);
-            scenario = this.getScenarioByCustomerScenarioIdentity(componentIdentity, scenarioIdentity);
-
-            if (scenario.getScenarioState().toUpperCase().contains("FAILED")) {
-                throw new IllegalStateException(String.format("Scenario failed state: %s. Scenario Id: %s",
-                    scenario.getScenarioState(), scenario.getIdentity())
-                );
-            }
-
-            if (isScenarioStateAsExpected(scenario)) {
-                return scenario;
-            }
-        } while (currentCount++ < attemptsCount);
-
-        throw new IllegalArgumentException(
-            String.format("Failed to get scenario by identity: %s, after %d attempts with period in %d seconds.",
-                scenarioIdentity, attemptsCount, secondsToWait)
-        );
-    }
-
     private ScenarioItem createWatchpoint() {
 
         if (testingScenarioWithWatchpoint != null) {
@@ -309,41 +281,8 @@ public class ScenariosTest extends SDSTestUtil {
         return testingScenarioWithWatchpoint = scenario;
     }
 
-    private void doSleep(final int secondsToWait) {
-        try {
-            TimeUnit.SECONDS.sleep(secondsToWait);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private boolean isScenarioStateAsExpected(final Scenario scenario) {
-        final String currentScenarioState = scenario.getScenarioState().toUpperCase();
-
-        return currentScenarioState.equals(ScenarioStateEnum.NOT_COSTED.getState())
-            || currentScenarioState.equals(ScenarioStateEnum.COST_COMPLETE.getState());
-    }
-
     private Scenario getScenarioByIdentity(final String scenarioIdentity) {
         return getScenarioByCustomerScenarioIdentity(null, scenarioIdentity);
-    }
-
-
-    private Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
-        if (componentIdentity == null) {
-            componentIdentity = getComponentId();
-        }
-
-        final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
-                .inlineVariables(
-                    componentIdentity, scenarioIdentity
-                );
-
-        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).get();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
-
-        return response.getResponseEntity();
     }
 
     private List<Scenario> getScenarios() {
