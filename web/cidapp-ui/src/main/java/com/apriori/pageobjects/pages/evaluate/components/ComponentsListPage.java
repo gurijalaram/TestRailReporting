@@ -17,6 +17,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
@@ -95,6 +96,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
     @FindBy(css = ".sub-component-tree .table-body")
     private WebElement componentTable;
+
+    @FindBy(id = "qa-sub-components-detail-card-filter-selector")
+    private WebElement filterDropdown;
+
+    @FindBy(css = "div.no-content.medium-no-content")
+    private WebElement noScenariosMessage;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -703,5 +710,60 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    }
+
+    /**
+     * Uses type ahead to input the filter
+     *
+     * @param filter - the filter
+     * @return current page object
+     */
+    public ComponentsListPage selectFilter(String filter) {
+        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
+        setPagination();
+        return this;
+    }
+
+    /**
+     * Gets no scenarios message
+     *
+     * @return string
+     */
+    public String getScenarioMessage() {
+        return pageUtils.waitForElementToAppear(noScenariosMessage).getText();
+    }
+
+    /**
+     * Gets all scenario State from Explorer Table
+     *
+     * @return - list of all scenario state
+     */
+    public List<String> getAllScenarioState() {
+        List<WebElement> rowsStateCol =
+            pageUtils.waitForElementsToAppear(By.xpath("//*[local-name()='svg' and contains(@class,'scenario-state-icon fa-1-5x')]"));
+        List<String> rowStateNames = rowsStateCol.stream().map(s -> s.getAttribute("data-icon")).collect(Collectors.toList());
+        List<String> stateNames = rowStateNames.stream().map(s -> changeToProperNames(s)).collect(Collectors.toList());
+        return stateNames;
+    }
+
+    private String changeToProperNames(String s) {
+        if (s.equals("circle-minus")) {
+            return "Uncosted";
+        } else if (s.equals("check")) {
+            return "Costed";
+        }
+        return null;
+    }
+
+    /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        return element.isDisplayed();
     }
 }
