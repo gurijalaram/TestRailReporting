@@ -10,7 +10,6 @@ import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
-import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.entity.response.Application;
@@ -22,7 +21,9 @@ import com.apriori.sds.entity.request.ShallowPublishRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
+import com.apriori.sds.entity.response.Scenario;
 import com.apriori.utils.CssComponent;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -394,18 +395,18 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param scenarioIdentity  - the scenario id
      * @return scenario object
      */
-    protected com.apriori.sds.entity.response.Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
+    protected Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
         if (componentIdentity == null) {
             componentIdentity = getComponentId();
         }
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, com.apriori.sds.entity.response.Scenario.class)
+            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
                 .inlineVariables(
                     componentIdentity, scenarioIdentity
                 );
 
-        ResponseWrapper<com.apriori.sds.entity.response.Scenario> response = HTTPRequest.build(requestEntity).get();
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
 
         return response.getResponseEntity();
@@ -417,7 +418,7 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param scenario - scenario object
      * @return boolean
      */
-    private boolean isScenarioStateAsExpected(final com.apriori.sds.entity.response.Scenario scenario) {
+    private boolean isScenarioStateAsExpected(final Scenario scenario) {
         final String currentScenarioState = scenario.getScenarioState().toUpperCase();
 
         return currentScenarioState.equals(ScenarioStateEnum.NOT_COSTED.getState())
@@ -431,11 +432,11 @@ public abstract class SDSTestUtil extends TestUtil {
      * @param scenarioIdentity  - the scenario id
      * @return scenario object
      */
-    protected com.apriori.sds.entity.response.Scenario getReadyToWorkScenario(final String componentIdentity, final String scenarioIdentity) {
+    protected Scenario getReadyToWorkScenario(final String componentIdentity, final String scenarioIdentity) {
         final int attemptsCount = 15;
         final int secondsToWait = 10;
         int currentCount = 0;
-        com.apriori.sds.entity.response.Scenario scenario;
+        Scenario scenario;
 
         do {
             waitSeconds(secondsToWait);
@@ -462,9 +463,9 @@ public abstract class SDSTestUtil extends TestUtil {
      * Shallow publish an Assembly
      *
      * @param componentInfoBuilder - the component info builder object
-     * @return component info builder object
+     * @return - scenario object
      */
-    protected ComponentInfoBuilder publishAssembly(ComponentInfoBuilder componentInfoBuilder) {
+    protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass) {
         ShallowPublishRequest shallowPublishRequest = ShallowPublishRequest.builder()
             .assignedTo(componentInfoBuilder.getAssignedTo())
             .locked(false)
@@ -475,19 +476,20 @@ public abstract class SDSTestUtil extends TestUtil {
             .build();
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, com.apriori.sds.entity.response.Scenario.class)
+            RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
                 .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
                 .body("scenario", shallowPublishRequest);
 
-        ResponseWrapper<com.apriori.sds.entity.response.Scenario> responseWrapper = HTTPRequest.build(requestEntity).post();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
+        return HTTPRequest.build(requestEntity).post();
+    }
 
-        final com.apriori.sds.entity.response.Scenario publishedScenario = responseWrapper.getResponseEntity();
-
-        assertEquals("Published scenario should present for a component",
-            componentInfoBuilder.getScenarioName(), this.getReadyToWorkScenario(componentInfoBuilder.getComponentIdentity(), publishedScenario.getIdentity()).getScenarioName()
-        );
-
-        return componentInfoBuilder;
+    /**
+     * Publish an assembly expecting a conflict
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @return - scenario object
+     */
+    public ResponseWrapper<Scenario> publishAssemblyExpectError(ComponentInfoBuilder componentInfoBuilder) {
+        return publishAssembly(componentInfoBuilder, ErrorMessage.class);
     }
 }
