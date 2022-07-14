@@ -31,5 +31,6 @@ public enum CidWorkorderApiEnum implements ExternalEndpointEnum {
     public String getEndpoint(Object... variables) {
         return PropertiesContext.get("${env}.base_url") + String.format(getEndpointString(), variables)
             + "?key=" + PropertiesContext.get("${env}.secret_key");
+        //return PropertiesContext.get("${env}.base_url").concat(String.format(getEndpointString(), variables));
     }
 }

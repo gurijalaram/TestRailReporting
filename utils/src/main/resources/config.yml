@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: int-core
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/
@@ -7,7 +7,7 @@ global:
   users_csv_file: common-users.csv
   different_users: true
   different_parts: true
-  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
+  auth_cloud_context: "H337GKD0LA0MH337GKD0LA0N70EGN68B5CMHHINFI93FGL80"
 
   db_recording: true
 
@@ -85,7 +85,7 @@ default:
 int-core:
   name: int-core
   secret_key: 65J1ID2B6LDG
-  base_url: https://na-1.apriori-internal.int.apriori.net/
+  base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   user_identity: 8GFDIG229629
 
