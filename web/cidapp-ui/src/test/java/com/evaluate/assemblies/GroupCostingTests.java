@@ -110,7 +110,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11097", "11090", "11092", "11097", "11099"})
+    @TestRail(testCaseId = {"11097", "11090", "11092", "11097", "11091"})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {
         final String retainText = "Retain Existing Input";
