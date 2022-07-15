@@ -36,6 +36,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -383,6 +384,28 @@ public class ScenariosUtil {
                             .scenarioIdentity(component.getScenarioIdentity())
                             .build())
                         .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to cost a group of null scenarios
+     *
+     * @param componentInfo - the component info object
+     * @return response object
+     */
+    public ResponseWrapper<ErrorMessage> postGroupCostNullScenarios(ComponentInfoBuilder componentInfo) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
+                .body(GroupCostRequest.builder()
+                    .costingTemplateIdentity("")
+                    .groupItems(Collections.singletonList(GroupItems.builder()
+                        .componentIdentity(null)
+                        .scenarioIdentity(null)
+                        .build()))
                     .build())
                 .token(componentInfo.getUser().getToken());
 
