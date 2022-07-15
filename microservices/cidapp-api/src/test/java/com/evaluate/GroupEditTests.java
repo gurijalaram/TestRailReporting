@@ -27,7 +27,7 @@ public class GroupEditTests {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"11094", "11095"})
+    @TestRail(testCaseId = {"10949"})
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditSubcomponents() {
         currentUser = UserUtil.getUser();
