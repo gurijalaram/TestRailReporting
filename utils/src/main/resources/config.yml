@@ -1,5 +1,5 @@
 # Define the environment
-env: int-core
+env: qa-cid-perf
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/

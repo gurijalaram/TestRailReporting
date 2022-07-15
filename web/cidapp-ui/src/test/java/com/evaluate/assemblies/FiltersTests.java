@@ -1,15 +1,12 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.common.FilterPage;
-import com.apriori.pageobjects.navtoolbars.InfoPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -393,23 +390,23 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
-            .selectProcessGroup(ASSEMBLY)
-            .costScenario()
-            .confirmCost("Yes");
-
-        componentsListPage = new ComponentsListPage(driver);
-
-        explorePage = new ExplorePage(driver);
-        List<String> stateList = componentsListPage.getAllScenarioState();
-        assertThat(stateList).contains("Costed", "Uncosted");
-
-        componentsListPage
+        componentsListPage = loginPage.login(currentUser)
+            .uploadsAndOpenAssembly(
+                assemblyName,
+                assemblyExtension,
+                ProcessGroupEnum.ASSEMBLY,
+                subComponentNames,
+                componentExtension,
+                processGroupEnum,
+                scenarioName,
+                currentUser)
+            .openComponents()
             .tableView()
             .selectFilter("Uncosted");
+
         List<String> stateListUncosted = componentsListPage.getAllScenarioState();
-        assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted");
+        assertTrue(componentsListPage.isElementDisplayed("Uncosted", "text-overflow"));
+        assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
     }
 
     @Test
@@ -430,8 +427,52 @@ public class FiltersTests extends TestBase {
         componentsListPage
             .tableView()
             .selectFilter("Assigned To Me");
-
+        assertTrue(componentsListPage.isElementDisplayed("Assigned To Me", "text-overflow"));
         MatcherAssert.assertThat(componentsListPage.getScenarioMessage(), containsString("No scenarios found"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10523")
+    @Description("Validate user can select Missing scenarios")
+    public void ableToSelectMissingScenarioTest() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
+
+        componentsListPage = new ComponentsListPage(driver);
+
+        componentsListPage
+            .tableView()
+            .selectFilter("Missing");
+        assertTrue(componentsListPage.isElementDisplayed("Missing", "text-overflow"));
+        MatcherAssert.assertThat(componentsListPage.getScenarioMessage(), containsString("No scenarios found"));
+    }
+
+    @Test
+    @TestRail(testCaseId = "10522")
+    @Description("Validate user can select All scenarios")
+    public void ableToSelectAllScenarioTest() {
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+        assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
+
+        componentsListPage = new ComponentsListPage(driver);
+
+        componentsListPage
+            .tableView()
+            .selectFilter("All");
+        assertTrue(componentsListPage.isElementDisplayed("All", "text-overflow"));
+        assertThat(componentsListPage.getAllScenarioComponentName()).hasSize(3);
     }
 
 }
