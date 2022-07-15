@@ -813,6 +813,7 @@ public class PublishAssembliesTests extends TestBase {
             .publish(ComponentsListPage.class)
             .multiSelectSubcomponents(STAND + "," + scenarioName + "", DRIVE + "," + scenarioName + "");
 
+        softAssertions.assertThat(componentsListPage.getRowDetails(STAND, scenarioName)).contains("gear");
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isFalse();
 
         componentsListPage.checkSubcomponentState(componentAssembly, STAND)
