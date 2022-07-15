@@ -774,5 +774,54 @@ public class PublishAssembliesTests extends TestBase {
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.PUBLIC), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = "11095")
+    @Description("Validate when I select a sub components in a processing state the set inputs button is disabled until the scenario is unselected")
+    public void testInputsEnabledDisabled() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String STAND = "stand";
+        final String DRIVE = "drive";
+        final String JOINT = "joint";
+        String assemblyName = "oldham";
+        final String assemblyExtension = ".asm.1";
+
+        List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".prt.1";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents(STAND + ", " + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .multiSelectSubcomponents(STAND + "," + scenarioName + "", DRIVE + "," + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isFalse();
+
+        componentsListPage.checkSubcomponentState(componentAssembly, STAND)
+            .multiSelectSubcomponents(STAND + "," + scenarioName + "", DRIVE + "," + scenarioName + "")
+            .multiSelectSubcomponents(JOINT + "," + scenarioName + "", DRIVE + "," + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isTrue();
+
+        softAssertions.assertAll();
+    }
 }
 
