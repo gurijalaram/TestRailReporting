@@ -776,7 +776,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11095")
+    @TestRail(testCaseId = {"11094", "11095"})
     @Description("Validate when I select a sub components in a processing state the set inputs button is disabled until the scenario is unselected")
     public void testInputsEnabledDisabled() {
         currentUser = UserUtil.getUser();
