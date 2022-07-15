@@ -766,4 +766,18 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
     }
+
+    /**
+     * Gets all scenario Component Names from Explorer Table
+     *
+     * @return - list of all scenario Component Names
+     */
+    public List<String> getAllScenarioComponentName() {
+        pageUtils.waitFor(3000);
+        List<WebElement> rows =
+            pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
+        List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
+        componentNames.remove("Component Name");
+        return componentNames;
+    }
 }
