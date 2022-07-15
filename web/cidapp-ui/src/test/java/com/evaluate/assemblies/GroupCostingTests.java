@@ -39,7 +39,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11088", "11089"})
+    @TestRail(testCaseId = {"11088", "11089", "11093"})
     @Description("Verify set inputs button only available for 10 or less sub-components")
     public void selectMaxTenSubComponentsTest() {
 
