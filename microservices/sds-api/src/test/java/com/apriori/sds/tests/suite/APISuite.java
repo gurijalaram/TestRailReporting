@@ -5,6 +5,7 @@ import com.apriori.sds.tests.ComponentsTest;
 import com.apriori.sds.tests.ConnectionsTest;
 import com.apriori.sds.tests.CostingTemplatesTest;
 import com.apriori.sds.tests.IterationsTest;
+import com.apriori.sds.tests.PublishAssembliesTests;
 import com.apriori.sds.tests.ScenarioAssociationsTest;
 import com.apriori.sds.tests.ScenarioIterationsTest;
 import com.apriori.sds.tests.ScenariosTest;
@@ -26,7 +27,8 @@ import org.junit.runners.Suite;
     ScenarioAssociationsTest.class,
     ScenarioIterationsTest.class,
     ScenariosTest.class,
-    SecondaryProcessesTest.class
+    SecondaryProcessesTest.class,
+    PublishAssembliesTests.class
 })
 public class APISuite {
 }
