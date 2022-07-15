@@ -362,10 +362,10 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", 0));
         pageUtils.waitForElementAndClick(operationDropdown);
         WebElement elementsOperations =
-        pageUtils.waitForElementToAppear(By.xpath("//div[@class = 'apriori-select-menu-list css-1ew0esf']"));
-        String  operations = elementsOperations.getText();
+            pageUtils.waitForElementToAppear(By.xpath("//div[@class = 'apriori-select-menu-list css-1ew0esf']"));
+        String operations = elementsOperations.getText();
 
-        return  Arrays.asList(operations.split("\n"));
+        return Arrays.asList(operations.split("\n"));
     }
 
     /**
