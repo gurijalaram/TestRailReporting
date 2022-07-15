@@ -49,13 +49,12 @@ import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
-import com.apriori.acs.utils.APIAuthentication;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
-import com.apriori.utils.authorization.AuthorizationUtil;
+import com.apriori.utils.authorization.OldAuthorizationUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -82,10 +81,7 @@ public class FileUploadResources {
 
     private static final long WAIT_TIME = 180;
 
-    /*private static final HashMap<String, String> token = new APIAuthentication()
-        .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());*/
-
-    private static final String token = new AuthorizationUtil().getTokenAsString();
+    private static final String token = new OldAuthorizationUtil().getTokenAsString();
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
@@ -759,7 +755,6 @@ public class FileUploadResources {
                     inputs))
             );
 
-        //requestEntity.token(token);
         return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
     }
 

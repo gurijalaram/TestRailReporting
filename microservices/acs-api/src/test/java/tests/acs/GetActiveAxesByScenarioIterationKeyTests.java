@@ -11,7 +11,6 @@ import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterati
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
-import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -19,7 +18,6 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.json.utils.JsonManager;
 
-import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.junit.Test;

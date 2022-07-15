@@ -56,6 +56,10 @@ public class APIAuthentication {
         };
     }
 
+    public String getTokenSingular(String username) {
+        return getCachedToken(username);
+    }
+
     private String getCachedToken(String username) {
         String password = username.split("@")[0];
 
