@@ -40,7 +40,7 @@ public class GroupEditTests {
         String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND, DRIVE);
+        List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
