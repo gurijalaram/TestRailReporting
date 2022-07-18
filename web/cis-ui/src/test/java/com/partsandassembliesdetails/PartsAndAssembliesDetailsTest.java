@@ -7,6 +7,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -47,6 +48,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isScenarioResultsCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isInsightsCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentsCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartsAndAssembliesLinkDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesPage = partsAndAssembliesDetailsPage.clicksPartsAndAssembliesLink();
 
         softAssertions.assertAll();
 
@@ -59,7 +63,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         String componentName = "ChampferOut";
         String scenarioName = "ChampferOut_AutomationDetails";
         loginPage = new CisLoginPage(driver);
-
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -91,6 +94,150 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertAll();
     }
 
+    @Test
+    @TestRail(testCaseId = {"12910","12914"})
+    @Description("Verify insights section and details for a costed scenario")
+    public void testInsightsSection() {
+        String componentName = "ChampferOut";
+        String scenarioName = "ChampferOut_AutomationDetails";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getHeaderTitleOnInsights()).isEqualTo("Insights");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessRoutingMenuIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCostMenuIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingMenuIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockMenuIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesMenuIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDfmRiskMenuIconDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12912","12913","12915","12916"})
+    @Description("Verify part nesting section on Insights")
+    public void testPartNestingSection() {
+        String componentName = "ChampferOut";
+        String scenarioName = "ChampferOut_AutomationDetails";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName)
+                .clickPartNestingIcon();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getPartNestingTitle()).isEqualTo("Part Nesting");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingDetailsSectionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DETAILS.getInsightsFields())).contains(CisInsightsFieldsEnum.UTILIZATION_INFO.getInsightsFields(),CisInsightsFieldsEnum.SELECTED_SHEET.getInsightsFields(),CisInsightsFieldsEnum.BLANK_SIZE.getInsightsFields(),
+                CisInsightsFieldsEnum.PARTS_PER_SHEET.getInsightsFields(),CisInsightsFieldsEnum.CONFIGURATION.getInsightsFields(),CisInsightsFieldsEnum.UTILIZATION_MODE.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getPartNestingState()).isEqualTo("caret-up");
+
+        partsAndAssembliesDetailsPage.collapsePartNestingSection();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getPartNestingState()).isEqualTo("caret-down");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13043","13044","13045","13046"})
+    @Description("Verify material properties section on Insights")
+    public void testMaterialPropertiesSection() {
+        String componentName = "ChampferOut";
+        String scenarioName = "ChampferOut_AutomationDetails";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName)
+                .clickMaterialPropertiesIcon();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialPropertiesTitle()).isEqualTo(CisInsightsFieldsEnum.MATERIAL_PROPERTIES.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.MATERIAL_PROPERTIES.getInsightsFields())).contains(CisInsightsFieldsEnum.CUT_COST.getInsightsFields(),CisInsightsFieldsEnum.USA_NAME.getInsightsFields(),CisInsightsFieldsEnum.DIN_NAME.getInsightsFields(),CisInsightsFieldsEnum.EN_NAME.getInsightsFields(),
+                CisInsightsFieldsEnum.UNIT_COST.getInsightsFields(),CisInsightsFieldsEnum.DENSITY.getInsightsFields(),CisInsightsFieldsEnum.YOUNG_MODULE.getInsightsFields(),CisInsightsFieldsEnum.STRAIN_HARDENING_COEFFICIENT.getInsightsFields(),CisInsightsFieldsEnum.STRAIN_HARDENING_EXPONENT.getInsightsFields(),
+                CisInsightsFieldsEnum.LANKFORD_PARAMETER.getInsightsFields(),CisInsightsFieldsEnum.MILLING_SPEED.getInsightsFields(),CisInsightsFieldsEnum.HARDNESS.getInsightsFields(),CisInsightsFieldsEnum.HARDNESS_SYSTEM.getInsightsFields(),CisInsightsFieldsEnum.POSSION_RATIO.getInsightsFields(),CisInsightsFieldsEnum.SHER_STRENGTH.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialPropertiesState()).isEqualTo("caret-up");
+
+        partsAndAssembliesDetailsPage.collapseMaterialPropertiesSection();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialPropertiesState()).isEqualTo("caret-down");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13047","13048","13049","13050"})
+    @Description("Verify material stock section on Insights")
+    public void testMaterialStockSection() {
+        String componentName = "ChampferOut";
+        String scenarioName = "ChampferOut_AutomationDetails";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName)
+                .clickMaterialStockIcon();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialStockTitle()).isEqualTo("Material Stock");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.BASIC_INFORMATION.getInsightsFields())).contains(CisInsightsFieldsEnum.SELECTED_STOCK.getInsightsFields(),CisInsightsFieldsEnum.SELECTED_METHOD.getInsightsFields(),CisInsightsFieldsEnum.STOCK_FORM.getInsightsFields(),
+                CisInsightsFieldsEnum.VIRTUAL_STOCK.getInsightsFields(),CisInsightsFieldsEnum.UNIT_COST.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DIMENSIONS.getInsightsFields())).contains(CisInsightsFieldsEnum.PART.getInsightsFields(),CisInsightsFieldsEnum.STOCK.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialStockState()).isEqualTo("caret-up");
+
+        partsAndAssembliesDetailsPage.collapseMaterialStockSection();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialStockState()).isEqualTo("caret-down");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13180", "13182","13197"})
+    @Description("Verify insights for a non-costed scenario")
+    public void testInsightsSectionForUnCostedScenario() {
+        String componentName = "bluesky-latch-cover";
+        String scenarioName = "bluesky-latch-AutomationDetails";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingMenuIconDisplayed()).isEqualTo(false);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesMenuIconDisplayed()).isEqualTo(false);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockMenuIconDisplayed()).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
 }
 
 

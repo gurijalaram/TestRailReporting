@@ -34,4 +34,12 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
         return Stream.of(getDriver().findElement(By.xpath("//h2[text()='" + cardName + "']//following::div[starts-with(@class,'MuiCollapse-root MuiCollapse-vertical')]")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 
+    /**
+     * Gets items on each detail section
+     *
+     * @return list of string
+     */
+    public List<String> getItemsOfSections(String section) {
+        return Stream.of(getDriver().findElement(By.xpath("//div[@data-testid='" + section + "']")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
 }
