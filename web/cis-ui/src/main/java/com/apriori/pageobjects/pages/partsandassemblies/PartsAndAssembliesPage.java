@@ -21,7 +21,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//span[@role='progressbar']")
     private WebElement progressBar;
 
-    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-row')]")
+    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-cellCheckbox')]")
     private List<WebElement> tableRow;
 
     @FindBy(xpath = "//div[@class='MuiDataGrid-row Mui-selected']")
@@ -123,6 +123,11 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.dashboard']")
     private WebElement btnDashboard;
 
+    @FindBy(xpath = "//*[@data-field='scenarioCreatedBy']")
+    private WebElement createdByField;
+
+    @FindBy(xpath = "//*[@data-field='scenarioState']//button//*[local-name()='svg']")
+    private WebElement scenarioStateIcon;
 
     public PartsAndAssembliesPage(WebDriver driver) {
 
@@ -593,4 +598,31 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
+    /**
+     * sort digital factory field
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesPage sortCreatedByField() {
+        getPageUtils().waitForElementAndClick(createdByField);
+        return this;
+    }
+
+    /**
+     * Get the sorting rule
+     *
+     * @return a String
+     */
+    public String getCreatedBySortingRule() {
+        return getPageUtils().waitForElementToAppear(createdByField).getAttribute("aria-sort");
+    }
+
+    /**
+     * Get sorting status
+     *
+     * @return a String
+     */
+    public String getSortingStatus() {
+        return getPageUtils().waitForElementToAppear(scenarioStateIcon).getAttribute("data-icon");
+    }
 }

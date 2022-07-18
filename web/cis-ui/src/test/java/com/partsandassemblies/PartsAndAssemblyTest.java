@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.not;
 
-import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
@@ -17,9 +16,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.CisColumnsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.CoreMatchers;
-import org.hamcrest.Matchers;
-import org.hamcrest.core.IsEqual;
 import org.junit.Test;
 
 
@@ -36,7 +32,7 @@ public class PartsAndAssemblyTest extends TestBase {
     private SoftAssertions softAssertions;
 
     @Test
-    @TestRail(testCaseId = {"12058","12056","12057"})
+    @TestRail(testCaseId = {"12058","12056","12057","12055"})
     @Description("Verify the fields included in the table and page title")
     public void testPartsAndAssemblyTableHeader() {
         loginPage = new CisLoginPage(driver);
@@ -110,7 +106,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12178","12185","12186"})
+    @TestRail(testCaseId = {"12178","12185","12186","12176"})
     @Description("Verify that user can search a field by its name and hide/show the field")
     public void testSearchAFieldToShowHide() {
         loginPage = new CisLoginPage(driver);
@@ -120,19 +116,18 @@ public class PartsAndAssemblyTest extends TestBase {
                         .enterFieldName(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(partsAndAssembliesPage.getFieldName()).isEqualTo(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         partsAndAssembliesPage.clickOnToggleButton();
-
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
         partsAndAssembliesPage.clickOnToggleButton();
-
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns());
 
-        softAssertions.assertAll();
+        partsAndAssembliesPage.clickOnShowHideOption();
+        softAssertions.assertThat(partsAndAssembliesPage.isShowHideModalDisplayed()).isEqualTo(false);
 
+        softAssertions.assertAll();
     }
 
     @Test
@@ -199,10 +194,9 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12066","13263"})
+    @TestRail(testCaseId = {"12066","13263","12063","12065","12067"})
     @Description("Verify that user can check all rows and uncheck all rows")
     public void testCheckAllOption() {
-
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickPartsAndAssemblies();
@@ -210,11 +204,16 @@ public class PartsAndAssemblyTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         partsAndAssembliesPage.clickCheckAll();
+        softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).contains("Mui-checked");
 
+        partsAndAssembliesPage.clickDashBoard()
+                .clickPartsAndAssemblies();
+        softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).doesNotContain("Mui-checked");
+
+        partsAndAssembliesPage.clickCheckAll();
         softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).contains("Mui-checked");
 
         partsAndAssembliesPage.clickCheckAll();
-
         softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).doesNotContain("Mui-checked");
 
         softAssertions.assertAll();
@@ -257,7 +256,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12247","12248"})
+    @TestRail(testCaseId = {"12247","12248","12249"})
     @Description("Verify that user can set a single sorting rule as ascending or descending order")
     public void testSortPartAndAssemblyTable() {
         loginPage = new CisLoginPage(driver);
@@ -267,15 +266,15 @@ public class PartsAndAssemblyTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesPage.getSortingRule()).isEqualTo("ascending");
+        softAssertions.assertThat(partsAndAssembliesPage.getSortingStatus()).isEqualTo("sort-up");
         softAssertions.assertThat(partsAndAssembliesPage.getSortingRule()).isEqualTo("descending");
+        softAssertions.assertThat(partsAndAssembliesPage.getSortingStatus()).isEqualTo("sort-down");
 
         softAssertions.assertAll();
-
-
     }
 
     @Test
-    @TestRail(testCaseId = {"12465", "12467","12469","12472","12476"})
+    @TestRail(testCaseId = {"12465", "12467","12469","12472","12476","12468","12470","12191"})
     @Description("Verify that user can Save the parts and assemblies page configuration")
     public void testSaveConfigurations() {
         String componentName = "Y_shape";
@@ -283,6 +282,7 @@ public class PartsAndAssemblyTest extends TestBase {
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickPartsAndAssemblies()
+                .sortCreatedByField()
                 .pinToLeftProcessGroupColumn()
                 .clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
@@ -293,14 +293,15 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickDashBoard()
                 .clickPartsAndAssemblies();
 
-
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("descending");
 
-        partsAndAssembliesPage.pinToLeftProcessGroupColumn()
+        partsAndAssembliesPage.sortCreatedByField()
+                .pinToLeftProcessGroupColumn()
                 .clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
@@ -312,10 +313,10 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("ascending");
 
         softAssertions.assertAll();
     }
-
 }
 
 
