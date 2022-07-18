@@ -484,7 +484,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return true/false
      */
-    public boolean isPartsNAssembliesLinkDisplayed() {
+    public boolean isPartsAndAssembliesLinkDisplayed() {
         return getPageUtils().isElementDisplayed(linkBackToPartNAssemblyPage);
     }
 
@@ -493,7 +493,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return new page object
      */
-    public PartsAndAssembliesPage clicksPartsNAssembliesLink() {
+    public PartsAndAssembliesPage clicksPartsAndAssembliesLink() {
         getPageUtils().waitForElementAndClick(linkBackToPartNAssemblyPage);
         return new PartsAndAssembliesPage(driver);
     }
