@@ -215,7 +215,6 @@ qa-cid-perf:
 
   reports:
     ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
-    on_prem_vm_url: https://conqbaci02/jasperserver-pro/
 
   sds:
     api_url: https://sds.na-1.qa-cid-perf.apriori.net/
@@ -293,6 +292,7 @@ onprem:
 
   reports:
     ui_url: ${onprem.base_url}jasperserver-pro/login.html
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
 
   bcs:
     report_identity: 50A4DFJF3NC7
