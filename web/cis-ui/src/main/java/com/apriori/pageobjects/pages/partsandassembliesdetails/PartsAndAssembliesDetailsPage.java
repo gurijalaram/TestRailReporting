@@ -38,22 +38,22 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='comments-expanded']")
     private WebElement commentsCard;
 
-    @FindBy(xpath = "//div[@data-testid='collapsible-card-1']")
+    @FindBy(xpath = "//div[@data-testid='Total Cost']")
     private WebElement totalCostCard;
 
-    @FindBy(xpath = "//div[@data-testid='collapsible-card-2']")
+    @FindBy(xpath = "//div[@data-testid='Scenario Inputs']")
     private WebElement scenarioInputCard;
 
-    @FindBy(xpath = "//div[@data-testid='collapsible-card-3']")
+    @FindBy(xpath = "//div[@data-testid='Material']")
     private WebElement materialCard;
 
-    @FindBy(xpath = "//div[@data-testid='collapsible-card-4']")
+    @FindBy(xpath = "//div[@data-testid='Manufacturing']")
     private WebElement manufacturingCard;
 
-    @FindBy(xpath = "//div[@data-testid='collapsible-card-5']")
+    @FindBy(xpath = "//div[@data-testid='Additional Cost']")
     private WebElement additionalCostCard;
 
-    @FindBy(xpath = "//div[@data-testid='collapsible-card-6']")
+    @FindBy(xpath = "//div[@data-testid='Total Capital Expenses']")
     private WebElement totalCapitalExpensesCard;
 
     @FindBy(xpath = "//button[@aria-label='Process Routing']")
