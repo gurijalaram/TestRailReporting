@@ -65,16 +65,16 @@ public class UsersTableController extends LoadableComponent<UsersTableController
 
         TableHeaderComponent header = table.getHeader(id);
         soft.assertThat(header)
-                .overridingErrorMessage("The '%s' column is missing.", expectedName)
+                .overridingErrorMessage(String.format("The '%s' column is missing.", expectedName))
                 .isNotNull();
 
         if (header != null) {
             String name = header.getName();
             soft.assertThat(name)
-                    .overridingErrorMessage("The '%s' column is incorrectly named '%s'", expectedName, name)
+                    .overridingErrorMessage(String.format("The '%s' column is incorrectly named '%s'", expectedName, name))
                     .isEqualTo(expectedName);
             soft.assertThat(header.canSort())
-                    .overridingErrorMessage("The '%s' column is not sortable.")
+                    .overridingErrorMessage(String.format("The '%s' column is not sortable.", name))
                     .isTrue();
         }
         return PageFactory.initElements(driver, klass);

@@ -39,7 +39,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11088", "11089"})
+    @TestRail(testCaseId = {"11088", "11089", "11093", "12041"})
     @Description("Verify set inputs button only available for 10 or less sub-components")
     public void selectMaxTenSubComponentsTest() {
 
@@ -86,13 +86,20 @@ public class GroupCostingTests extends TestBase {
 
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
-        componentsListPage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," +  scenarioName, ellipse + "," + scenarioName, octagon + "," +  scenarioName,
-            cube75 + "," +  scenarioName, hexagon + "," +  scenarioName, cube100 + "," +  scenarioName, slot + "," +  scenarioName, cuboid + "," +  scenarioName,
-            cylinder + "," +  scenarioName);
+        componentsListPage.multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName, octagon + "," + scenarioName,
+            cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName, cuboid + "," + scenarioName,
+            cylinder + "," + scenarioName);
+
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isTrue();
 
+        evaluatePage = componentsListPage.closePanel();
 
-        componentsListPage.multiSelectSubcomponents(blob + "," + scenarioName);
+        softAssertions.assertThat(evaluatePage.getListOfProcessGroups()).containsOnly(ProcessGroupEnum.ASSEMBLY.getProcessGroup());
+
+        componentsListPage = evaluatePage.openComponents().multiSelectSubcomponents(arc + "," + scenarioName, cube50 + "," + scenarioName, ellipse + "," + scenarioName,
+            octagon + "," + scenarioName, cube75 + "," + scenarioName, hexagon + "," + scenarioName, cube100 + "," + scenarioName, slot + "," + scenarioName,
+            cuboid + "," + scenarioName, cylinder + "," + scenarioName, blob + "," + scenarioName);
+
         softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button Enabled").isFalse();
 
         Random rand = new Random();
@@ -103,7 +110,7 @@ public class GroupCostingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11097", "11090", "11092", "11097"})
+    @TestRail(testCaseId = {"11097", "11090", "11092", "11097", "11091"})
     @Description("Verify sub-components are group costed successfully.")
     public void groupCostSubComponentsTest() {
         final String retainText = "Retain Existing Input";
@@ -178,8 +185,8 @@ public class GroupCostingTests extends TestBase {
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon - " + subComponentName).isEqualTo("check");
             softAssertions.assertThat(
                 componentsListPage.getScenarioFullyBurdenedCost(subComponentName.toUpperCase(), scenarioName)
-                ).as("Fully Burdened Cost - " + subComponentName
-                    ).isCloseTo(fullyBurdenedCosts.get(subComponentName), Percentage.withPercentage(10));
+            ).as("Fully Burdened Cost - " + subComponentName
+            ).isCloseTo(fullyBurdenedCosts.get(subComponentName), Percentage.withPercentage(10));
         });
 
         softAssertions.assertAll();

@@ -3,21 +3,19 @@ package com.apriori.pages.workflows.schedule.notifications;
 import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.schedule.publishresults.PublishResultsPart;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import utils.Constants;
 
 /**
  * Notifications tab during workflow creation or modification
  * Navigate to Attach Report tab or Email Tab
  */
+@Slf4j
 public class NotificationsPart extends CICBasePage {
-
-    private static final Logger logger = LoggerFactory.getLogger(NotificationsPart.class);
 
     public static final String PARENT_ELEMENT = "div[id*='root_pagemashupcontainer-1_navigation-']";
 
@@ -26,6 +24,9 @@ public class NotificationsPart extends CICBasePage {
 
     @FindBy(css = PARENT_ELEMENT + "[id$='-popup_tabsv2-154'] > div.tab-content > div.tabsv2-viewport > div > div > div[class^='tabsv2-tab'][tab-value='attach-email-report']")
     protected WebElement attachReportTab;
+
+    @FindBy(css = PARENT_ELEMENT + "[id$='-popup_tabsv2-154'] > div.tab-content > div.tabsv2-viewport > div > div > div[class^='tabsv2-tab'][tab-value='email-filter']")
+    protected WebElement filterTab;
 
     @FindBy(css = "div[class='BMCollectionViewCellWrapper'] div[class='BMCollectionViewCell BMCollectionViewCellHoverable']")
     protected WebElement ciReportConfigurationRowElement;
@@ -37,13 +38,14 @@ public class NotificationsPart extends CICBasePage {
 
     public NotificationsPart(WebDriver driver) {
         super(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
 
     /**
      * Navigate to Email Tab in notifications part
+     *
      * @return Email Tab
      */
     public EmailTab selectEmailTab() {
@@ -54,7 +56,20 @@ public class NotificationsPart extends CICBasePage {
     }
 
     /**
+     * Navigate to Filter Tab in notifications part
+     *
+     * @return Email Tab
+     */
+    public FilterTab selectFilterTab() {
+        if (this.filterTab.isEnabled()) {
+            pageUtils.waitForElementAndClick(filterTab);
+        }
+        return new FilterTab(driver);
+    }
+
+    /**
      * Navigate to AttachReport tab in notification part
+     *
      * @return AttachReportTab object
      */
     public AttachReportTab selectAttachReport() {
@@ -83,5 +98,32 @@ public class NotificationsPart extends CICBasePage {
      */
     public WebElement getNotificationNextButton() {
         return notificationNextButton;
+    }
+
+    /**
+     * Getter for email tab element
+     *
+     * @return emailTab Webelement
+     */
+    public WebElement getEmailTab() {
+        return emailTab;
+    }
+
+    /**
+     * getter for Attach report tab element
+     *
+     * @return WebElement
+     */
+    public WebElement getAttachReportTab() {
+        return attachReportTab;
+    }
+
+    /**
+     * getter for Filter tab element
+     *
+     * @return WebElement
+     */
+    public WebElement getFilterTab() {
+        return filterTab;
     }
 }
