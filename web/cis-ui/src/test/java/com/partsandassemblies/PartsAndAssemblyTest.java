@@ -14,6 +14,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisColumnsEnum;
+import com.utils.CisFilterOperationEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
@@ -220,7 +221,7 @@ public class PartsAndAssemblyTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12221","12224","12226","12227","12233","13200"})
+    @TestRail(testCaseId = {"12221","12224","12226","12227","12233","13200","12230"})
     @Description("Verify that user can filter results in parts and assemblies page")
     public void testFilterAComponent() {
         String componentName = "Y_shape";
@@ -298,10 +299,10 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
-        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("descending");
+        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("sort-down");
 
-        partsAndAssembliesPage.sortCreatedByField()
-                .pinToLeftProcessGroupColumn()
+        partsAndAssembliesPage.pinToLeftProcessGroupColumn()
+                .sortCreatedByField()
                 .clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
@@ -313,7 +314,39 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
-        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("ascending");
+        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("sort-up");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12225","12228", "12229", "12349", "12350"})
+    @Description("Verify that user can see filter operations in parts and assemblies filter modal")
+    public void testFilterOperations() {
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickFilterOption()
+                .clickAddCondition()
+                .selectFilterField(CisColumnsEnum.COMPONENT_NAME.getColumns());
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(partsAndAssembliesPage.getOperationList()).contains(CisFilterOperationEnum.CONTAINS.getOperation());
+
+        partsAndAssembliesPage.clickFilterOption()
+                .selectFilterField(CisColumnsEnum.BATCH_SIZE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getOperationList()).contains(CisFilterOperationEnum.EQUALS.getOperation(), CisFilterOperationEnum.NOT_EQUALS.getOperation(), CisFilterOperationEnum.GREATER_THAN.getOperation(), CisFilterOperationEnum.GREATER_THAN_OR_EQUAL_TO.getOperation(), CisFilterOperationEnum.LESS_THAN.getOperation(), CisFilterOperationEnum.LESS_THAN_OR_EQUAL_TO.getOperation());
+
+        partsAndAssembliesPage.clickFilterOption()
+                .selectFilterField(CisColumnsEnum.STATE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getOperationList()).contains(CisFilterOperationEnum.IS_ANY_OF.getOperation(), CisFilterOperationEnum.IS_NONE_OF.getOperation(), CisFilterOperationEnum.IS_EMPTY.getOperation());
+
+        partsAndAssembliesPage.clickFilterOption()
+                .selectFilterField(CisColumnsEnum.CREATED_AT.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getOperationList()).contains(CisFilterOperationEnum.IS_BEFORE.getOperation(), CisFilterOperationEnum.IS_AFTER.getOperation());
+
+        partsAndAssembliesPage.removeFilterModal();
+        softAssertions.assertThat(partsAndAssembliesPage.isFilterModalDisplayed()).isEqualTo(false);
 
         softAssertions.assertAll();
     }

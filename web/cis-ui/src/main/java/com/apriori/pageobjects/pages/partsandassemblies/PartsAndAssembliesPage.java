@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.partsandassemblies;
 
+import com.apriori.pageobjects.common.PartsAndAssemblyFilterController;
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
@@ -129,6 +130,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioState']//button//*[local-name()='svg']")
     private WebElement scenarioStateIcon;
 
+    @FindBy(xpath = "//div[contains(@data-testid,'filter-condition-type')]")
+    private WebElement filterCondition;
+
+    @FindBy(xpath = "//*[@data-field='scenarioCreatedBy']//button//*[local-name()='svg']")
+    private WebElement createdByIcon;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -137,11 +144,14 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     private WebDriver driver;
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
+    private PartsAndAssemblyFilterController partsAndAssemblyFilterController;
+
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {
         super(driver, logger);
         this.driver = driver;
         this.partsAndAssemblyTableController = new PartsAndAssemblyTableController(driver);
+        this.partsAndAssemblyFilterController = new PartsAndAssemblyFilterController(driver);
         PageFactory.initElements(driver, this);
         this.waitForTableLoad();
 
@@ -573,7 +583,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage pinToLeftProcessGroupColumn() {
         getPageUtils().mouseMove(processGroupField);
-        getPageUtils().waitForElementAndClick(processGroupKebabMenu);
+        getPageUtils().moveAndClick(processGroupKebabMenu);
         getPageUtils().waitForElementAndClick(btnPintoLeft);
         return this;
     }
@@ -614,7 +624,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return a String
      */
     public String getCreatedBySortingRule() {
-        return getPageUtils().waitForElementToAppear(createdByField).getAttribute("aria-sort");
+        return getPageUtils().waitForElementToAppear(createdByIcon).getAttribute("data-icon");
     }
 
     /**
@@ -624,5 +634,47 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public String getSortingStatus() {
         return getPageUtils().waitForElementToAppear(scenarioStateIcon).getAttribute("data-icon");
+    }
+
+    /**
+     * Click the filter option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickFilterOption() {
+        getPageUtils().moveAndClick(btnFilter);
+        return this;
+    }
+
+    /**
+     * Select a filter field
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesPage selectFilterField(String fieldName) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(By.xpath("//li[starts-with(@class,'MuiMenuItem-root')]//span[text()='" + fieldName + "']"));
+        getPageUtils().waitForElementAndClick(filterCondition);
+        return this;
+    }
+
+    /**
+     * Gets operation list
+     *
+     * @return list of string
+     */
+    public List<String> getOperationList() {
+        return partsAndAssemblyFilterController.getOperationList();
+    }
+
+    /**
+     * remove filter modal
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage removeFilterModal() {
+        getPageUtils().moveAndClick(removeIcon);
+        getPageUtils().moveAndClick(btnFilter);
+        return this;
     }
 }
