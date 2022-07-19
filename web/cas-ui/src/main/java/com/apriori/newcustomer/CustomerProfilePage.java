@@ -29,6 +29,9 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     @FindBy(css = "input[name='name']")
     private WebElement customerNameInput;
 
+    @FindBy(css = ".read-field.read-field-name")
+    private WebElement customerName;
+
     @FindBy(className = "invalid-feedback-for-name")
     private WebElement customerNameFeedback;
 
@@ -462,5 +465,14 @@ public class CustomerProfilePage extends EagerPageComponent<CustomerProfilePage>
     public CustomerProfilePage changeCustomerStatus() {
         getPageUtils().waitForElementAndClick(statusCheckbox);
         return this;
+    }
+
+    /**
+     * Returns name of customer
+     *
+     * @return string
+     */
+    public String getCustomerName() {
+        return getPageUtils().waitForElementToAppear(customerName).getAttribute("textContent");
     }
 }

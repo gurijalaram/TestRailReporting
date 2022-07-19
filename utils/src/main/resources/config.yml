@@ -141,6 +141,9 @@ int-core:
   nts:
     api_url: https://nts.core.int.apriori.net/
 
+  sds:
+    api_url: https://sds.core.int.apriori.net/
+
   reports:
     ui_url: ${int-core.base_url}jasperserver-pro/login.html
 
