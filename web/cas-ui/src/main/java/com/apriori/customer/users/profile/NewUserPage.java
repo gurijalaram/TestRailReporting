@@ -208,7 +208,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @param namePrefix - name prefix
      * @return current page object
      */
-    private NewUserPage inputNamePrefix(String namePrefix) {
+    public NewUserPage inputNamePrefix(String namePrefix) {
         pageUtils.waitForElementToAppear(namePrefixInput).clear();
         namePrefixInput.sendKeys(namePrefix);
         return this;
@@ -378,7 +378,7 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
     public NewUserPage testNewUserLabelAvailable(List<String> labelsToCheck, SoftAssertions soft) {
 
         labelsToCheck.forEach(label -> {
-            List<WebElement> elements = driver.findElements(By.xpath(String.format("//span[.='%s']", label)));
+            List<WebElement> elements = driver.findElements(By.xpath(String.format("//label[.='%s']", label)));
             soft.assertThat(elements.size())
                     .overridingErrorMessage(String.format("Could not find the label, %s", label))
                     .isGreaterThan(0);
@@ -394,6 +394,23 @@ public class NewUserPage extends LoadableComponent<NewUserPage> {
      * @return
      */
     public String getFieldFeedback(String label) {
-        return driver.findElement(By.xpath(String.format("//input[@name='userProfile.%s']/following-sibling::span[@class='invalid-feedback']", label))).getAttribute("textContent");
+        return driver.findElement(By.className(String.format("invalid-feedback-for-user-profile-%s", label))).getAttribute("textContent");
+    }
+
+    /**
+     * @param button button locator
+     * @return true or false
+     */
+    private boolean isButtonEnabled(WebElement button) {
+        return button != null && button.isEnabled();
+    }
+
+    /**
+     * Can click the save button.
+     *
+     * @return Boolean representing can click save button
+     */
+    public boolean canSave() {
+        return isButtonEnabled(saveButton);
     }
 }

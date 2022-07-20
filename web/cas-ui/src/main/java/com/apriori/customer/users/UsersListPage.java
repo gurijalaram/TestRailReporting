@@ -231,7 +231,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return web element
      */
     private WebElement findStatusIcon(String customerIdentity, String userIdentity) {
-        return driver.findElement(By.xpath((String.format("//a[@href='/customers/%s/user-profiles/%s']//span[@class='float-right']",
+        return driver.findElement(By.xpath((String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']//div[@class='right']",
                 customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim()))));
     }
 
@@ -243,7 +243,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return list of fields names
      */
     public List<String> getFieldName(String customerIdentity, String userIdentity) {
-        List<WebElement> fieldName = driver.findElements(By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']//div[@class='row no-gutters display-field']//span[@class='display-field-label']",
+        List<WebElement> fieldName = driver.findElements(By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']/following-sibling::div[@class='card-body']//label",
                 customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim())));
         return fieldName.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
