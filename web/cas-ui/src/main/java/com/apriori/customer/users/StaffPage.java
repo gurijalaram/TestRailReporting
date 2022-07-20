@@ -27,7 +27,7 @@ public final class StaffPage extends EagerPageComponent<StaffPage> {
     @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
     private WebElement confirmRemoveCancelButton;
 
-    @FindBy(className = "user-list-apriroi-staff")
+    @FindBy(className = "user-list-apriori-staff")
     private WebElement staffAssociationListViewRoot;
     private SourceListComponent staffAssociationList;
 
