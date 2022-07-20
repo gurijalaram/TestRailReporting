@@ -187,9 +187,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         softAssertions.assertAll();
 
-        partsAndAssembliesPage.clickClearOption()
-                .waitForTableLoad();
-
+        partsAndAssembliesPage.clickClearOption();
         assertThat(partsAndAssembliesPage.getListOfComponents(),is(not(equalTo(1))));
 
     }
@@ -301,11 +299,12 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("sort-down");
 
-        partsAndAssembliesPage.pinToLeftProcessGroupColumn()
-                .sortCreatedByField()
-                .clickOnShowHideOption()
+        partsAndAssembliesPage.clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
+                .sortCreatedByField()
+                .waitForTableResults()
+                .pinToLeftProcessGroupColumn()
                 .clickFilter()
                 .clickRemoveCondition()
                 .clickDashBoard()
