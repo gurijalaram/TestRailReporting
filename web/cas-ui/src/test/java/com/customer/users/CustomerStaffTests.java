@@ -2,6 +2,7 @@ package com.customer.users;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 import static org.hamcrest.Matchers.greaterThan;
@@ -11,10 +12,11 @@ import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.UsersListPage;
+import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
@@ -27,16 +29,13 @@ import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.text.SimpleDateFormat;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,28 +48,24 @@ public class CustomerStaffTests extends TestBase {
     private List<User> sourceUsers;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
-    private String customerName;
     private UserCreation userCreation;
 
     @Before
     public void setup() {
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
-        String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String salesforce = StringUtils.leftPad(now, 15, "0");
-        String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
-        String customerType = Constants.CLOUD_CUSTOMER;
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
+        String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
                 : targetCustomer;
 
         customerIdentity = targetCustomer.getIdentity();
-        customerName = targetCustomer.getName();
         userCreation = new UserCreation();
-        sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, customerName);
+        sourceUsers = userCreation.populateStaffTestUsers(11, customerIdentity, email);
 
         usersListPage = new CasLoginPage(driver)
                 .login(UserUtil.getUser())
@@ -100,7 +95,6 @@ public class CustomerStaffTests extends TestBase {
                 .validateUsersTableHasCorrectColumns("User Type", "userType", soft)
                 .validateUsersTableHasCorrectColumns("Family Name", "userProfile.familyName", soft)
                 .validateUsersTableHasCorrectColumns("Given Name", "userProfile.givenName", soft)
-                .validateUsersTableHasCorrectColumns("Status", "active", soft)
                 .validateUsersTableHasCorrectColumns("Job Title", "userProfile.jobTitle", soft)
                 .validateUsersTableHasCorrectColumns("Department", "userProfile.department", soft)
                 .validateUsersTableHasCorrectColumns("Created", "createdAt", soft);
@@ -117,7 +111,9 @@ public class CustomerStaffTests extends TestBase {
         long rows = usersTable.getRows().count();
         assertThat("There are no users on next page.", rows, is(greaterThan(0L)));
 
-        paginator.clickFirstPage().getPageSize().select("20").select("50");
+        paginator.clickFirstPage().getPageSize().select("20");
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+        paginator.getPageSize().select("50");
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
 
         String userName = sourceUsers.get(0).getUsername();
@@ -141,7 +137,7 @@ public class CustomerStaffTests extends TestBase {
     @Test
     @Description("Validate Card button switches to card view of customer staff")
     @Category(SmokeTest.class)
-    @TestRail(testCaseId = {"10573", "10575", "4371", "10576", "10577"})
+    @TestRail(testCaseId = {"10573", "10575", "10576", "10577"})
     public void testCustomerStaffCardView() {
         UsersListPage goToCardView = usersListPage
                 .clickCardViewButton();
@@ -161,15 +157,14 @@ public class CustomerStaffTests extends TestBase {
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
-        assertThat(goToCardView.getFieldName(customerIdentity, userIdentity), containsInRelativeOrder("Identity", "Email", "Created"));
+        assertThat(goToCardView.getFieldName(customerIdentity, userIdentity), containsInRelativeOrder("Identity:", "Email:", "Created:"));
         assertThat(goToCardView.isIconColour(customerIdentity, userIdentity,"green"), is(true));
 
-        goToCardView.selectCard(customerIdentity, userIdentity)
-                .edit()
-                .changeStatus()
-                .save()
-                .backToUsersListPage(UsersListPage.class)
-                .clickCardViewButton();
+        UserProfilePage openProfile = goToCardView.selectCard(customerIdentity, userIdentity);
+        assertThat(openProfile, is(notNullValue()));
+
+        openProfile.backToUsersListPage(UsersListPage.class)
+            .clickCardViewButton();
 
         Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
 
@@ -178,6 +173,5 @@ public class CustomerStaffTests extends TestBase {
         long count = cardFound.getCards("user-card").count();
 
         assertThat(count, is(equalTo(1L)));
-        assertThat(goToCardView.isIconColour(customerIdentity, userIdentity, "red"), is(true));
     }
 }

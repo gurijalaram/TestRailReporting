@@ -72,6 +72,8 @@ public class ComponentCustomAttributesPage extends LoadableComponent<CustomAttri
         return new SecondaryPage(driver);
     }
 
+
+
     /**
      * Select the cancel button
      *
@@ -88,14 +90,5 @@ public class ComponentCustomAttributesPage extends LoadableComponent<CustomAttri
      */
     public <T> T applyAndCost(Class<T> klass) {
         return modalDialogController.applyCost(klass);
-    }
-
-    /**
-     * Close
-     *
-     * @return generic page object
-     */
-    public <T> T close(Class<T> klass) {
-        return modalDialogController.close(klass);
     }
 }

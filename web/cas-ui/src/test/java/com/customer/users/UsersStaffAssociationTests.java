@@ -55,11 +55,8 @@ public class UsersStaffAssociationTests extends TestBase {
     public void setup() {
         Map<String, Object> existingUsers = Collections.singletonMap("username[CN]", STAFF_TEST_USER);
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
-        String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String salesforce = StringUtils.leftPad(now, 15, "0");
-        String email = "test.com";
-        String customerType = Constants.CLOUD_CUSTOMER;
+        String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
@@ -73,7 +70,7 @@ public class UsersStaffAssociationTests extends TestBase {
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, cloudRef, salesforce, email).getResponseEntity()
+            ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
             : targetCustomer;
 
         staffPage = new CasLoginPage(driver)
@@ -143,6 +140,7 @@ public class UsersStaffAssociationTests extends TestBase {
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
         userCandidatesTable.getRows().findFirst().ifPresent((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
+        ++selected;
         paginator.clickFirstPage().getPageSize().select("50").select("100");
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
@@ -207,7 +205,7 @@ public class UsersStaffAssociationTests extends TestBase {
         staffPage.clickAddFromList();
         SourceListComponent candidatesUpd = staffPage.getCandidates();
         TableComponent candidatesUpdTable = Obligation.mandatory(candidatesUpd::getTable, "The candidate table is missing.");
-        Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search("qatest");
+        Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search(STAFF_TEST_USER);
         long removedUser = candidatesUpdTable.getRows().count();
         assertThat("Users do not appear in the list of aPriori staff candidates", removedUser, is(equalTo(count)));
     }

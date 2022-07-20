@@ -8,6 +8,7 @@ import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -24,6 +25,8 @@ public class GroupCostingTests {
 
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private static ComponentInfoBuilder componentAssembly;
+    private SoftAssertions softAssertions = new SoftAssertions();
     private UserCredentials currentUser;
 
     private final List<String> subComponentNames = Arrays.asList(
@@ -34,7 +37,7 @@ public class GroupCostingTests {
     private String assemblyExtension = ".SLDASM";
 
     @Test
-    @TestRail(testCaseId = "10620")
+    @TestRail(testCaseId = {"10620", "11845"})
     @Description("Group Cost 10 components")
     public void testGroupCostTenParts() {
 
@@ -56,7 +59,7 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        String[] subComponentsToCost = subComponentNames.subList(0,10).toArray(new String[10]);
+        String[] subComponentsToCost = subComponentNames.subList(0, 10).toArray(new String[10]);
         for (int i = 0; i < subComponentsToCost.length; i++) {
             subComponentsToCost[i] += "," + scenarioName;
         }
@@ -71,7 +74,7 @@ public class GroupCostingTests {
     }
 
     @Test
-    @TestRail(testCaseId = "10620")
+    @TestRail(testCaseId = {"10620", "11846"})
     @Description("Attempt to Group Cost 11 components")
     public void testGroupCostElevenParts() {
 
@@ -98,5 +101,44 @@ public class GroupCostingTests {
         softAssertions.assertThat(groupErrorResponse.getStatusCode()).as("Group Cost Bad Request Code").isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(
             groupErrorResponse.getResponseEntity().getMessage()).as("Group Cost Error Message").isEqualTo("'groupItems' should be less than or equal to 10.");
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11850", "11849", "11848", "11847"})
+    @Description("Verify 400 Error")
+    public void testVerify400Error() {
+        final String FLANGE = "flange";
+        final String NUT = "nut";
+        final String assemblyName = "flange c";
+        final String assemblyExtension = ".CATProduct";
+
+        final List<String> subComponentNames = Arrays.asList(FLANGE, NUT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".CATPart";
+
+        currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        ResponseWrapper<ErrorMessage> error = scenariosUtil.postGroupCostNullScenarios(componentAssembly);
+
+        componentAssembly.getSubComponents().forEach(o -> softAssertions.assertThat(o.getScenarioItem().getScenarioState()).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+
+        softAssertions.assertThat(error.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(error.getResponseEntity().getMessage()).contains("validation failures were found");
+
+        softAssertions.assertAll();
     }
 }
