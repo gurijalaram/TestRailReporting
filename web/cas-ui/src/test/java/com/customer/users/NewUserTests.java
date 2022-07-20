@@ -9,12 +9,12 @@ import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.utils.CdsTestUtil;
-import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.UsersListPage;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -23,17 +23,14 @@ import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -44,26 +41,23 @@ public class NewUserTests extends TestBase {
     private Customer targetCustomer;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
-    private String customerName;
     private String userIdentity;
     private NewUserPage newUserPage;
+    private String email;
 
     @Before
     public void setup() {
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
-        String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String salesforce = StringUtils.leftPad(now, 15, "0");
-        String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
-        String customerType = Constants.CLOUD_CUSTOMER;
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
+        email = STAFF_TEST_CUSTOMER.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
                 : targetCustomer;
         customerIdentity = targetCustomer.getIdentity();
-        customerName = targetCustomer.getName();
 
         newUserPage = new CasLoginPage(driver)
                 .login(UserUtil.getUser())
@@ -86,12 +80,12 @@ public class NewUserTests extends TestBase {
     public void testUserIsCreatedWithOnlyRequiredFields() {
         SoftAssertions soft = new SoftAssertions();
         List<String> labelsToCheck = Arrays.asList(
-                "User Name:*",
-                "Email:*",
-                "User Type",
-                "Status:",
-                "Given Name:*",
-                "Family Name:*",
+                "User Name:",
+                "Identity:",
+                "Email:",
+                "User Type:",
+                "Given Name:",
+                "Family Name:",
                 "Name Prefix:",
                 "Name Suffix:",
                 "Job Title:",
@@ -102,23 +96,25 @@ public class NewUserTests extends TestBase {
                 "Time Zone:",
                 "Office Phone Country Code:",
                 "Office Phone Number:",
-                "Authentication"
+                "Authentication:"
         );
 
         newUserPage.testNewUserLabelAvailable(labelsToCheck, soft);
 
-        newUserPage.inputUserName("NewTestUser")
-                .inputEmail("NewUserTest@" + customerName + ".com")
-                .save(NewUserPage.class);
+        newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + email + ".com", "", "")
+            .inputNamePrefix("");
 
-        soft.assertThat(newUserPage.getFieldFeedback("givenName"))
+        soft.assertThat(newUserPage.canSave())
+            .overridingErrorMessage("Expected save button to be disabled.")
+            .isFalse();
+        soft.assertThat(newUserPage.getFieldFeedback("given-name"))
                 .isEqualTo("Enter a given name.");
-        soft.assertThat(newUserPage.getFieldFeedback("familyName"))
+        soft.assertThat(newUserPage.getFieldFeedback("family-name"))
                 .isEqualTo("Enter a family name.");
 
         soft.assertAll();
 
-        newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + customerName + ".com", "Test", "User")
+        newUserPage.formFillNewUserDetails("NewUserTest", "NewUserTest@" + email + ".com", "Test", "User")
                 .save(UserProfilePage.class);
 
         userIdentity = new UserProfilePage(driver).getUserIdentity();
