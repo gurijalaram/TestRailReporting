@@ -15,27 +15,6 @@ allprojects {
     targetCompatibility = 1.8
 }
 
-
-/* use this template to copy specific files into modules
-    findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
-*/
-
-void findModuleAndCopyRes(String fromDir, String toDir, String moduleName) {
-    if (findProject(moduleName) != null) {
-        project(moduleName) {
-            copyResources(fromDir, buildDir.path + toDir)
-        }
-    }
-}
-
-void copyResources(String fromDir, String toDir) {
-    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
-    copy {
-        from(fromDir)
-        into(toDir)
-    }
-}
-
 subprojects {
 
     configurations {
@@ -99,15 +78,14 @@ subprojects {
 
     //compile jar file
     task fatJar(type: Jar) {
-        archiveBaseName = project.jar_name
-        // destinationDir = file("${project.rootDir}/fatJar")
+        archiveBaseName.set 'automation-qa'
         zip64 = true
 
         manifest {
             attributes 'Main-Class': 'testsuites.TestMain'
         }
 
-        duplicatesStrategy = 'include'
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
         from sourceSets.test.output
         from { configurations.runtimeClasspath.findAll { !it.name.endsWith('pom') }.collect { it.isDirectory() ? it : zipTree(it) } }
         exclude 'META-INF/*.RSA', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.txt'
@@ -116,18 +94,8 @@ subprojects {
 
     //define checkstyle xml and version
     checkstyle {
-        configFile file("${project.rootDir}/checkstyle.xml")
         toolVersion '8.24'
         ignoreFailures = false
-    }
-
-    //set checkstyle main class
-    checkstyleMain {
-        source = 'src/main/java'
-    }
-    //set checkstyle test class
-    checkstyleTest {
-        source = 'src/test/java'
     }
 
     //define sonarqube properties
