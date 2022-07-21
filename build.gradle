@@ -107,7 +107,7 @@ subprojects {
             System.setProperty('sonar.language', 'java')
             System.setProperty('sonar.sourceEncoding', encodingType)
             System.setProperty('sonar.test.inclusions', '**/src/test/**.java')
-            System.setProperty('sonar.projectBaseDir', "${rootDir.parentFile}")
+            System.setProperty('sonar.projectBaseDir', "${rootDir}")
         }
     }
 
