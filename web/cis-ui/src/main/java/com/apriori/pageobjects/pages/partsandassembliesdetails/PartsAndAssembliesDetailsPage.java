@@ -113,32 +113,38 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@class='MuiBox-root css-pf0r2f']//p")
     private WebElement titleOfModal;
 
-    @FindBy(xpath = "//div[@data-testid='input-properties']")
+    @FindBy(xpath = "//button[@title='Open']//*[local-name()='svg']")
     private WebElement dropDownFieldOnModal;
 
-    @FindBy(id="properties")
+    @FindBy(id = "properties")
     private WebElement dropDownOption;
 
-    @FindBy(id="chip-properties-costingInput.processGroupName")
-    private WebElement chipDropDownOption;
+    @FindBy(id = "chip-properties-costingInput.processGroupName")
+    private WebElement selectedFieldName;
 
-    @FindBy(xpath = "//*[@data-testid='chip-properties-costingInput.vpeName-data-chip-delete-icon']")
-    private WebElement chipRemoveIcon;
+    @FindBy(xpath = "//div[@data-testid='chip-properties-costingInput.processGroupName-data-chip']//*[local-name()='svg']")
+    private WebElement selectedFieldRemoveIcon;
 
-    @FindBy(id="save-btn")
+    @FindBy(id = "save-btn")
     private WebElement btnSave;
 
-    @FindBy(id="title")
+    @FindBy(id = "title")
     private WebElement nameField;
 
-   // @FindBy(xpath = "//div[@data-testid='Testautomation']")
-   // private WebElement createdNewCard;
+    @FindBy(xpath = "//div[@role='dialog']//*[@data-icon='times-circle']")
+    private WebElement modalCloseIcon;
 
-    @FindBy(xpath = "//button[@class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nn0sz6']//*[@data-icon='times-circle']")
-    private WebElement modalClearIcon;
-
-    @FindBy(xpath = "//div[@class='MuiBox-root css-pf0r2f']")
+    @FindBy(xpath = "//div[@role='dialog']")
     private WebElement createCardModal;
+
+    @FindBy(xpath = "//li[@data-testid ='option-item-remove']")
+    private WebElement removeCardOption;
+
+    @FindBy(id = "primary-id")
+    private WebElement btnDelete;
+
+    @FindBy(xpath = "//div[@data-testid='icon-button-group']")
+    private WebElement partNestingGraphController;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -574,37 +580,36 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage selectAnOption(String fieldOption) {
-        getPageUtils().mouseMove(dropDownOption);
-         getPageUtils().waitForElementAndClick(By.xpath("//input[@aria-activedescendant='" + fieldOption + "']"));
-         return this;
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(.,'" + fieldOption + "')]"));
+        return this;
     }
 
     /**
-     * get selected option as chip
+     * get selected field name
      *
      * @return a String
      */
-    public String getSelectedFieldOption() {
-        return getPageUtils().waitForElementToAppear(chipDropDownOption).getAttribute("id");
+    public String getSelectedFieldName() {
+        return getPageUtils().waitForElementToAppear(selectedFieldName).getAttribute("innerText");
     }
 
     /**
-     * clicks to remove the selected option on chip list
+     * clicks to remove the selected field
      *
      * @return current page object
      */
-    public PartsAndAssembliesDetailsPage clickToRemoveChip() {
-        getPageUtils().waitForElementAndClick(chipRemoveIcon);
+    public PartsAndAssembliesDetailsPage clickToRemoveSelectedField() {
+        getPageUtils().waitForElementAndClick(selectedFieldRemoveIcon);
         return this;
     }
 
     /**
      * get save button status as disabled
      *
-     * @return a String
+     * @return a boolean
      */
-    public String getSaveButtonStatus() {
-        return getPageUtils().waitForElementToAppear(btnSave).getAttribute("");
+    public boolean getSaveButtonStatus() {
+        return getPageUtils().waitForElementToAppear(btnSave).isEnabled();
     }
 
     /**
@@ -612,28 +617,28 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      *
      * @return current page object
      */
-    public PartsAndAssembliesDetailsPage enterAName(String cardName) {
+    public PartsAndAssembliesDetailsPage enterCardName(String cardName) {
         getPageUtils().waitForElementToAppear(nameField).sendKeys(cardName);
         return this;
     }
 
     /**
-     * clicks save button to create new card
+     * clicks save button
      *
      * @return current page object
      */
-    public PartsAndAssembliesDetailsPage clickSaveBtn() {
+    public PartsAndAssembliesDetailsPage clickSaveButton() {
         getPageUtils().waitForElementAndClick(btnSave);
         return this;
     }
 
     /**
-     * clicks clear button on modal
+     * clicks close icon on modal
      *
      * @return current page object
      */
-    public PartsAndAssembliesDetailsPage clickClearBtn() {
-        getPageUtils().waitForElementAndClick(btnSave);
+    public PartsAndAssembliesDetailsPage closeModal() {
+        getPageUtils().waitForElementAndClick(modalCloseIcon);
         return this;
     }
 
@@ -643,7 +648,67 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return true/false
      */
     public boolean isCreateCardModalDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='dialog']"),1);
         return getPageUtils().isElementDisplayed(createCardModal);
     }
 
+    /**
+     * Checks if created new card displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreatedCardDisplayed(String cardName) {
+        return getPageUtils().isElementDisplayed(By.xpath("//div[@data-testid='" + cardName + "']"));
+    }
+
+    /**
+     * clicks on ellipsis icon on created card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickMoreOptions(String cardName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-v']"));
+        return this;
+    }
+
+    /**
+     * clicks on remove card option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickRemoveCardOption() {
+        getPageUtils().waitForElementAndClick(removeCardOption);
+        return this;
+    }
+
+    /**
+     * clicks on remove card option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickDeleteButton() {
+        getPageUtils().waitForElementAndClick(btnDelete);
+        return this;
+    }
+
+    /**
+     * Delete Scenario Result Card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage deleteScenarioResultsCard(String cardName) {
+        clickMoreOptions(cardName);
+        clickRemoveCardOption();
+        clickDeleteButton();
+        return this;
+    }
+
+    /**
+     * Checks if part nesting graph controller displayed
+     *
+     * @return true/false
+     */
+    public boolean isPartNestingGraphControllerDisplayed() {
+        return getPageUtils().isElementDisplayed(partNestingGraphController);
+    }
 }

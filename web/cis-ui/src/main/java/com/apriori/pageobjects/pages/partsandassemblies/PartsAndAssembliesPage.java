@@ -332,6 +332,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage enterAComponentName(String componentName) {
         getPageUtils().waitForElementToAppear(searchInputField).sendKeys(componentName);
+        getPageUtils().waitForElementToAppear(filterRecords);
         return this;
     }
 
