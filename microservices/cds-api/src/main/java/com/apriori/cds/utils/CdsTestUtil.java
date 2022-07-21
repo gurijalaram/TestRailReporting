@@ -16,6 +16,7 @@ import com.apriori.cds.objects.request.CustomAttributeRequest;
 import com.apriori.cds.objects.request.License;
 import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.cds.objects.request.PostBatch;
+import com.apriori.cds.objects.request.UpdateCredentials;
 import com.apriori.cds.objects.response.AccessAuthorization;
 import com.apriori.cds.objects.response.AccessControlResponse;
 import com.apriori.cds.objects.response.AssociationUserItems;
@@ -30,6 +31,8 @@ import com.apriori.cds.objects.response.SubLicenseAssociationUser;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.UserPreference;
 import com.apriori.cds.objects.response.UserProfile;
+import com.apriori.cds.objects.response.UserRole;
+import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.authorization.AuthorizationUtil;
@@ -171,6 +174,29 @@ public class CdsTestUtil extends TestUtil {
                     .userProfile(UserProfile.builder()
                         .department("Design Dept")
                         .supervisor("Moya Parker").build())
+                    .build());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * PATCH call to update the user credentials
+     *
+     * @param customerIdentity - the customer id
+     * @param userIdentity - the user id
+     * @param passwordHashCurrent - current hash password
+     * @param passwordSalt - the salt password
+     * @return new object
+     */
+    public ResponseWrapper<CredentialsItems> updateUserCredentials(String customerIdentity, String userIdentity, String passwordHashCurrent, String passwordSalt) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_CREDENTIALS_BY_CUSTOMER_USER_IDS, CredentialsItems.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("userCredential",
+                UpdateCredentials.builder()
+                    .currentPasswordHash(passwordHashCurrent)
+                    .newPasswordHash(new GenerateStringUtil().getHashPassword())
+                    .newPasswordSalt(passwordSalt)
+                    .newEncryptedPassword(new GenerateStringUtil().getRandomString().toLowerCase())
                     .build());
 
         return HTTPRequest.build(requestEntity).patch();
@@ -640,6 +666,25 @@ public class CdsTestUtil extends TestUtil {
             .token(token)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", batchFile))
             .inlineVariables(customerIdentity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Creates role for a user
+     *
+     * @param customerIdentity - customer identity
+     * @param userIdentity - user identity
+     * @return new object
+     */
+    public ResponseWrapper<UserRole> createRoleForUser(String customerIdentity, String userIdentity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CDSAPIEnum.USER_ROLES, UserRole.class)
+            .inlineVariables(customerIdentity, userIdentity)
+            .body("role",
+                UserRole.builder()
+                    .role("ADMIN")
+                    .createdBy("#SYSTEM00000")
+                    .build());
 
         return HTTPRequest.build(requestEntity).post();
     }

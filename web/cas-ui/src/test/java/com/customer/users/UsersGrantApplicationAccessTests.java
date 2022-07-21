@@ -191,7 +191,7 @@ public class UsersGrantApplicationAccessTests extends TestBase {
         PageUtils utils = new PageUtils(getDriver());
         SourceListComponent accessControls = addModal.getGrantedAccessControlsContainer();
         CardsViewComponent controlsCards = Obligation.mandatory(accessControls::getCardGrid, "The access controls grid is missing");
-        controlsCards.getCards("apriori-card").findFirst().ifPresent((card) -> Obligation.mandatory(card::getCheck, "The check cell is missing").check(true));
+        controlsCards.getCards("apriori-card").findFirst().ifPresent(card -> Obligation.mandatory(card::getCheck, "The check cell is missing").check(true));
 
         userProfilePage.clickRemoveButton()
             .clickCancelConfirmRemove();

@@ -1,35 +1,32 @@
-package com.apriori.apibase.services.common.objects;
+package com.apriori.cds.objects.response;
 
-import com.apriori.apibase.services.response.objects.ErrorResponse;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
+import java.time.LocalDateTime;
 
-@Schema(location = "ErrorMessageSchema.json")
-@Getter
+@Schema(location = "UserRoleSchema.json")
+@JsonRootName("response")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @Data
-@Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ErrorMessage {
+@Builder
+public class UserRole {
+    private String identity;
+    private String createdBy;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDate timestamp;
-    private Integer status;
-    private String method;
-    private String error;
-    private ArrayList<ErrorResponse> errors;
-    private String message;
-    private String path;
+    private LocalDateTime createdAt;
+    private String role;
 }

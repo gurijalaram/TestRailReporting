@@ -8,13 +8,14 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
+import com.apriori.cds.objects.response.credentials.CredentialsItems;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -140,5 +141,23 @@ public class CdsCustomerUsersTests {
         ResponseWrapper<ErrorMessage> responseWrapper = HTTPRequest.build(requestEntity).delete();
         assertThat(responseWrapper.getStatusCode(), is(equalTo(HttpStatus.SC_NOT_FOUND)));
         assertThat(responseWrapper.getResponseEntity().getMessage(), is(containsString("Unable to get user with identity")));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13304"})
+    @Description("Updates/changes the credentials for the user identified by their identity")
+    public void updateUserCredentials() {
+        String userName = generateStringUtil.generateUserName();
+        ResponseWrapper<User> user = cdsTestUtil.addUser(customerIdentity, userName, customerName);
+        userIdentity = user.getResponseEntity().getIdentity();
+
+        ResponseWrapper<CredentialsItems> credentials = cdsTestUtil.getCommonRequest(CDSAPIEnum.USER_CREDENTIALS_BY_ID, CredentialsItems.class, userIdentity);
+        String currentHashPassword = credentials.getResponseEntity().getPasswordHash();
+        String currentPasswordSalt = credentials.getResponseEntity().getPasswordSalt();
+
+        ResponseWrapper<CredentialsItems> updatedCredentials = cdsTestUtil.updateUserCredentials(customerIdentity, userIdentity, currentHashPassword, currentPasswordSalt);
+
+        assertThat(updatedCredentials.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(updatedCredentials.getResponseEntity().getPasswordHashHistory().get(0), is(equalTo(currentHashPassword)));
     }
 }

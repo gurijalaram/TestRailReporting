@@ -1,7 +1,10 @@
-package com.apriori.apibase.services.response.objects;
+package com.apriori.utils;
+
+import lombok.Data;
 
 import java.util.ArrayList;
 
+@Data
 public class ErrorResponse {
     public ArrayList<String> codes;
     public ArrayList<ErrorArgumentResponse> arguments;

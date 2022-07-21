@@ -13,8 +13,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class CustomAttributesRequest {
-    @JsonProperty("UDARegion")
-    private String udaRegion;
     @JsonProperty("StringPredefDefault_1")
     private String stringPredefDefault1;
     @JsonProperty("BoxMaterial")

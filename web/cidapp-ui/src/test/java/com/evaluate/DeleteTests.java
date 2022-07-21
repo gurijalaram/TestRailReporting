@@ -20,10 +20,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.IgnoreTests;
 
 import java.io.File;
 
@@ -40,8 +37,6 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @Ignore("Processing state")
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6736", "5431"})
     @Description("Test a private scenario can be deleted from the component table")
     public void testDeletePrivateScenario() {
@@ -54,8 +49,10 @@ public class DeleteTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        explorePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .clickExplore()
             .filter()
             .saveAs()
@@ -64,14 +61,14 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .delete()
-            .submit(ExplorePage.class);
+            .submit(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .refresh();
 
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
     }
 
     @Test
-    @Ignore("ProcessingState")
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"7709"})
     @Description("Test a public scenario can be deleted from the component table")
     public void testDeletePublicScenario() {
@@ -104,6 +101,74 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .delete()
+            .submit(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .refresh();
+
+        assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5432"})
+    @Description("Test a private scenario can be deleted from the evaluate view")
+    public void testDeletePrivateScenarioEvaluate() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String filterName = new GenerateStringUtil().generateFilterName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .delete()
+            .submit(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
+            .submit(ExplorePage.class);
+
+        assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13306"})
+    @Description("Test a public scenario can be deleted from the evaluate view")
+    public void testDeletePublicScenarioEvaluate() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        String componentName = "Casting";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String filterName = new GenerateStringUtil().generateFilterName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .selectProcessGroup(STOCK_MACHINING)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Hot Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .delete()
+            .submit(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));

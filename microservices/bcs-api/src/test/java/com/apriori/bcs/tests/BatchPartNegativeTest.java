@@ -7,7 +7,6 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
@@ -16,6 +15,7 @@ import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -94,13 +94,13 @@ public class BatchPartNegativeTest {
     @Description("Create a part with invalid UDA")
     public void createBatchPartInvalidUDA() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
-        newPartRequest.setUdas("{\"UDARegion\":\"Invalid UDA\"}");
+        newPartRequest.setUdas("{\"ProjectName\":\"Invalid Project Name for negative automation test\"}");
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
         assertTrue("Track and wait until part is errored", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED));
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
 
-        Assert.assertEquals("Verify the error when part is created with invalid UDA",
-            "Custom attribute with name 'UDARegion' was not found", partResponse.getResponseEntity().getErrors());
+        Assert.assertTrue("Verify the error when part is created with invalid UDA",
+                partResponse.getResponseEntity().getErrors().contains("Custom attribute with name 'ProjectName' and value 'Invalid Project Name for negative automation test' does not match any of the allowed values"));
     }
 
     @Test

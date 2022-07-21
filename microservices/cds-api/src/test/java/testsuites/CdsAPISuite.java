@@ -8,9 +8,11 @@ import com.apriori.cds.tests.CdsAssociationUserTests;
 import com.apriori.cds.tests.CdsConfigurationsTests;
 import com.apriori.cds.tests.CdsCustomAttributesTests;
 import com.apriori.cds.tests.CdsCustomerAssociationTests;
+import com.apriori.cds.tests.CdsCustomerUserRolesTests;
 import com.apriori.cds.tests.CdsCustomerUsersTests;
 import com.apriori.cds.tests.CdsCustomersTests;
 import com.apriori.cds.tests.CdsDeploymentsTests;
+import com.apriori.cds.tests.CdsGetCustomerTests;
 import com.apriori.cds.tests.CdsIdentityProvidersTests;
 import com.apriori.cds.tests.CdsInstallationApplicationTests;
 import com.apriori.cds.tests.CdsInstallationsTests;
@@ -38,17 +40,19 @@ import org.junit.runners.Suite;
     CdsCustomAttributesTests.class,
     CdsCustomerAssociationTests.class,
     CdsCustomersTests.class,
+    CdsCustomerUserRolesTests.class,
     CdsCustomerUsersTests.class,
     CdsDeploymentsTests.class,
+    CdsGetCustomerTests.class,
+    CdsIdentityProvidersTests.class,
     CdsInstallationApplicationTests.class,
     CdsInstallationsTests.class,
     CdsLicenseTests.class,
     CdsRolesTests.class,
+    CdsSitesApplicationsTests.class,
     CdsSitesTests.class,
     CdsUserPreferencesTests.class,
-    CdsUsersTests.class,
-    CdsIdentityProvidersTests.class,
-    CdsSitesApplicationsTests.class
+    CdsUsersTests.class
 })
 public class CdsAPISuite {
 

@@ -3,6 +3,7 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -45,9 +46,6 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
 
-    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
-    private WebElement publishButton;
-
     @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
 
@@ -83,6 +81,9 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(id = "qa-action-bar-action-update-cad-file")
     private WebElement cadFileButton;
+
+    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
+    private WebElement publishButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -124,6 +125,17 @@ public class ExploreToolbar extends MainNavBar {
                 .user(userCredentials)
                 .build());
         return navigateToScenario(component);
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param component - the component object
+     * @return new page object
+     */
+    public ExplorePage checkComponentDelete(ComponentInfoBuilder component) {
+        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        return new ExplorePage(driver);
     }
 
     /**
@@ -319,23 +331,14 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Opens the scenario
+     * Clicks on the publish button
      *
+     * @param <T> - the object type
      * @return generic page object
      */
     public <T> T publishScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
         return PageFactory.initElements(driver, klass);
-    }
-
-    /**
-     * Clicks on the publish button to open PublishScenario page with Unpublished Scenario(s)
-     *
-     * @return new page object
-     */
-    public PublishScenarioPage publishPrivateScenario() {
-        pageUtils.waitForElementAndClick(publishButton);
-        return new PublishScenarioPage(driver);
     }
 
     /**
@@ -361,6 +364,7 @@ public class ExploreToolbar extends MainNavBar {
 
     /**
      * Clicks the actions button
+     *
      * @return current page object
      */
     public ExploreToolbar clickActions() {

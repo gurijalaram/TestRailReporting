@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
@@ -22,7 +23,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -90,7 +90,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return this;
     }
@@ -223,6 +223,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
@@ -348,6 +360,19 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Checks component is in a required state
+     *
+     * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state to check for
+     * @return current page object
+     */
+    public ExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        scenarioTableController.checkComponentState(componentInfo, scenarioState);
+        refresh();
+        return this;
+    }
+
+    /**
      * Gets all scenario Component Names from Explorer Table
      *
      * @return - list of all scenario Component Names
@@ -370,5 +395,16 @@ public class ExplorePage extends ExploreToolbar {
         String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
         WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
         return element.isDisplayed();
+    }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return scenarioTableController.getCellColour(componentName, scenarioName);
     }
 }

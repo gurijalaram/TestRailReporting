@@ -33,6 +33,7 @@ public class ScenarioResponse {
     private String createdByName;
     private String customerIdentity;
     private String description;
+    private String notes;
     private String identity;
     private String lastAction;
     private Boolean locked;
@@ -50,21 +51,21 @@ public class ScenarioResponse {
     private Boolean systemLocked;
     private String updatedBy;
     private String updatedByName;
+    private String lockedBy;
+    private String lockedByName;
     private List<String> permissions;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime assignedAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime createdAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime publishedAt;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
     private LocalDateTime updatedAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSLetterZ.class)
+    private LocalDateTime lockedAt;
 }

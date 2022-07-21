@@ -96,8 +96,8 @@ public class ModifyComparisonPage extends LoadableComponent<ModifyComparisonPage
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ModifyComparisonPage selectScenario(String componentName, String scenarioName) {
-        scenarioTableController.selectScenario(componentName, scenarioName);
+    public ModifyComparisonPage clickScenarioCheckbox(String componentName, String scenarioName) {
+        scenarioTableController.clickScenarioCheckbox(componentName, scenarioName);
         return this;
     }
 

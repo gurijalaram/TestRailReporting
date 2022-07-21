@@ -4,7 +4,6 @@ import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientGroup;
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
@@ -22,6 +21,7 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -36,6 +36,7 @@ import org.apache.http.HttpStatus;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -98,6 +99,7 @@ public class ScenariosUtil {
      * GET scenario representation of a part
      *
      * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state
      * @return response object
      */
     public ResponseWrapper<ScenarioResponse> getScenarioRepresentation(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
@@ -389,6 +391,28 @@ public class ScenariosUtil {
     }
 
     /**
+     * Post to cost a group of null scenarios
+     *
+     * @param componentInfo - the component info object
+     * @return response object
+     */
+    public ResponseWrapper<ErrorMessage> postGroupCostNullScenarios(ComponentInfoBuilder componentInfo) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
+                .body(GroupCostRequest.builder()
+                    .costingTemplateIdentity("")
+                    .groupItems(Collections.singletonList(GroupItems.builder()
+                        .componentIdentity(null)
+                        .scenarioIdentity(null)
+                        .build()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Post to cost a group of scenarios and expect error
      *
      * @param componentInfo - A number of copy component objects
@@ -561,6 +585,49 @@ public class ScenariosUtil {
             genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, null, componentIdentity, scenarioIdentity);
 
         HTTPRequest.build(deleteRequest).delete();
+
+        RequestEntity scenarioRequest =
+            genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
+
+        final int POLL_TIME = 2;
+        final int WAIT_TIME = 240;
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.MILLISECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<ScenarioResponse> scenarioResponse = HTTPRequest.build(scenarioRequest).get();
+
+                if (!scenarioResponse.getBody().contains("response")) {
+
+                    RequestEntity requestEntity =
+                        genericDeleteRequest(userCredentials, CidAppAPIEnum.DELETE_SCENARIO, ErrorMessage.class, componentIdentity, scenarioIdentity);
+
+                    return HTTPRequest.build(requestEntity).get();
+                }
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException ie) {
+            log.error(ie.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(
+            String.format("Failed to get uploaded component identity: %s, with scenario identity: %s, after %d seconds.",
+                componentIdentity, scenarioIdentity, WAIT_TIME)
+        );
+    }
+
+    /**
+     * Calls an api with the GET verb.
+     *
+     * @param componentIdentity - the component identity
+     * @param scenarioIdentity  - the scenario identity
+     * @param userCredentials   - the user credentials
+     * @param <T>               - the generic return type
+     * @return generic object
+     */
+    public <T> ResponseWrapper<ErrorMessage> getDelete(String componentIdentity, String scenarioIdentity, UserCredentials userCredentials) {
 
         RequestEntity scenarioRequest =
             genericDeleteRequest(userCredentials, CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null, componentIdentity, scenarioIdentity);
