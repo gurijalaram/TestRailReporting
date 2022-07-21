@@ -107,6 +107,38 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//header[@data-testid='app-bar']//a")
     private WebElement linkBackToPartNAssemblyPage;
 
+    @FindBy(xpath = "//button[@aria-label='Create New Card']")
+    private WebElement createScenarioCardIcon;
+
+    @FindBy(xpath = "//div[@class='MuiBox-root css-pf0r2f']//p")
+    private WebElement titleOfModal;
+
+    @FindBy(xpath = "//div[@data-testid='input-properties']")
+    private WebElement dropDownFieldOnModal;
+
+    @FindBy(id="properties")
+    private WebElement dropDownOption;
+
+    @FindBy(id="chip-properties-costingInput.processGroupName")
+    private WebElement chipDropDownOption;
+
+    @FindBy(xpath = "//*[@data-testid='chip-properties-costingInput.vpeName-data-chip-delete-icon']")
+    private WebElement chipRemoveIcon;
+
+    @FindBy(id="save-btn")
+    private WebElement btnSave;
+
+    @FindBy(id="title")
+    private WebElement nameField;
+
+   // @FindBy(xpath = "//div[@data-testid='Testautomation']")
+   // private WebElement createdNewCard;
+
+    @FindBy(xpath = "//button[@class='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeSmall css-1nn0sz6']//*[@data-icon='times-circle']")
+    private WebElement modalClearIcon;
+
+    @FindBy(xpath = "//div[@class='MuiBox-root css-pf0r2f']")
+    private WebElement createCardModal;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -497,4 +529,121 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         getPageUtils().waitForElementAndClick(linkBackToPartNAssemblyPage);
         return new PartsAndAssembliesPage(driver);
     }
+
+    /**
+     * Checks if option to create new scenario results card displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreateNewCardOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(createScenarioCardIcon);
+    }
+
+    /**
+     * clicks to open the card setting modal
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToOpenModal() {
+        getPageUtils().waitForElementAndClick(createScenarioCardIcon);
+        return this;
+    }
+
+    /**
+     * gets the modal title
+     *
+     * @return a String
+     */
+    public String getModalTitle() {
+        return getPageUtils().waitForElementToAppear(titleOfModal).getText();
+    }
+
+    /**
+     * clicks to open the drop-down field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToOpenDropDown() {
+        getPageUtils().waitForElementAndClick(dropDownFieldOnModal);
+        return this;
+    }
+
+    /**
+     * select a field from drop-down
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectAnOption(String fieldOption) {
+        getPageUtils().mouseMove(dropDownOption);
+         getPageUtils().waitForElementAndClick(By.xpath("//input[@aria-activedescendant='" + fieldOption + "']"));
+         return this;
+    }
+
+    /**
+     * get selected option as chip
+     *
+     * @return a String
+     */
+    public String getSelectedFieldOption() {
+        return getPageUtils().waitForElementToAppear(chipDropDownOption).getAttribute("id");
+    }
+
+    /**
+     * clicks to remove the selected option on chip list
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToRemoveChip() {
+        getPageUtils().waitForElementAndClick(chipRemoveIcon);
+        return this;
+    }
+
+    /**
+     * get save button status as disabled
+     *
+     * @return a String
+     */
+    public String getSaveButtonStatus() {
+        return getPageUtils().waitForElementToAppear(btnSave).getAttribute("");
+    }
+
+    /**
+     * Enter a name for the new card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage enterAName(String cardName) {
+        getPageUtils().waitForElementToAppear(nameField).sendKeys(cardName);
+        return this;
+    }
+
+    /**
+     * clicks save button to create new card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickSaveBtn() {
+        getPageUtils().waitForElementAndClick(btnSave);
+        return this;
+    }
+
+    /**
+     * clicks clear button on modal
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickClearBtn() {
+        getPageUtils().waitForElementAndClick(btnSave);
+        return this;
+    }
+
+    /**
+     * Checks if create new card modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreateCardModalDisplayed() {
+        return getPageUtils().isElementDisplayed(createCardModal);
+    }
+
 }

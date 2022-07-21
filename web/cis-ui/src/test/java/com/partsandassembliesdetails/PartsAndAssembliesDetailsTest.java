@@ -238,6 +238,55 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"12485","12486","12487","12489","12490","12491","12492","12495"})
+    @Description("Verify the creation of new scenario results cards")
+    public void testCreateNewScenarioResultsCards() {
+        String componentName = "ChampferOut";
+        String scenarioName = "ChampferOut_AutomationDetails";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+        try {
+            Thread.sleep(8000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateNewCardOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickToOpenModal();
+        partsAndAssembliesDetailsPage.clickClearBtn();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateCardModalDisplayed()).isEqualTo(false);
+
+        partsAndAssembliesDetailsPage.clickToOpenModal();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateCardModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getModalTitle()).isEqualTo("Card Settings");
+
+        partsAndAssembliesDetailsPage.clickToOpenDropDown();
+        partsAndAssembliesDetailsPage.selectAnOption("properties-option-1");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSelectedFieldOption()).isEqualTo("chip-properties-costingInput.processGroupName");
+
+        partsAndAssembliesDetailsPage.clickToRemoveChip();
+        partsAndAssembliesDetailsPage.selectAnOption("properties-option-3");
+        partsAndAssembliesDetailsPage.selectAnOption("properties-option-5");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSaveButtonStatus()).isEqualTo("disabled");
+
+        partsAndAssembliesDetailsPage.enterAName("Test Automation Card");
+        partsAndAssembliesDetailsPage.clickSaveBtn();
+        partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName("").contains("");
+
+        softAssertions.assertAll();
+    }
 }
 
 
