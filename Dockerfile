@@ -16,7 +16,7 @@ COPY . .
 FROM sdk as build
 ARG FOLDER
 ARG MODULE
-RUN gradle --build-cache clean :$FOLDER:$MODULE:build -x test
+RUN gradle --build-cache clean build -x test
 
 # Build & Test.
 FROM build as test
