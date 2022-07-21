@@ -19,7 +19,7 @@ import java.util.List;
 @Slf4j
 public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssembliesPage> {
 
-    @FindBy(xpath = "//span[@role='progressbar']")
+    @FindBy(xpath = "//div[@role='grid']//span[@role='progressbar']")
     private WebElement progressBar;
 
     @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-cellCheckbox')]")
@@ -46,7 +46,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioState']")
     private WebElement scenarioStateField;
 
-    @FindBy(xpath = "//*[@data-field='scenarioState']//button[@title='Menu']")
+    @FindBy(xpath = "//*[@data-field='scenarioState']//button[@title='Menu']//*[local-name()='svg']")
     private WebElement tripleDotIcon;
 
     @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
@@ -118,7 +118,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']")
     private WebElement processGroupField;
 
-    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//button[@title='Menu']")
+    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//button[@title='Menu']//*[local-name()='svg']")
     private WebElement processGroupKebabMenu;
 
     @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.dashboard']")
@@ -135,6 +135,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     @FindBy(xpath = "//*[@data-field='scenarioCreatedBy']//button//*[local-name()='svg']")
     private WebElement createdByIcon;
+
+    @FindBy(xpath = "//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible' and @data-rowindex='0']")
+    private WebElement filterRecords;
+
+    @FindBy(xpath = "//div[@class='MuiDataGrid-row']")
+    private WebElement tableRecords;
 
     public PartsAndAssembliesPage(WebDriver driver) {
 
@@ -153,8 +159,6 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         this.partsAndAssemblyTableController = new PartsAndAssemblyTableController(driver);
         this.partsAndAssemblyFilterController = new PartsAndAssemblyFilterController(driver);
         PageFactory.initElements(driver, this);
-        this.waitForTableLoad();
-
     }
 
     @Override
@@ -176,7 +180,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public void waitForTableLoad() {
         getPageUtils().waitForElementToAppear(progressBar);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//span[@role='progressbar']"),1);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='grid']//span[@role='progressbar']"),1);
     }
 
     /**
@@ -185,8 +189,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return String
      */
     public String getComponentCheckBoxStatus() {
-        if (tableRow.size() > 0) {
-            for (int i = 0;i <= tableRow.size();i++) {
+        if (getPageUtils().waitForElementsToAppear(tableRow).size() > 0) {
+            for (int i = 0;i < tableRow.size();i++) {
                 getPageUtils().waitForElementToAppear(driver.findElement(By.xpath("//div[@data-rowindex='" + i + "']//span[starts-with(@class,'MuiCheckbox-root')]"))).click();
             }
         }
@@ -248,8 +252,10 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickKebabMenuOnTableHeader() {
+        getPageUtils().waitForElementToAppear(tableRecords);
+        getPageUtils().waitForElementToAppear(scenarioStateField);
         getPageUtils().mouseMove(scenarioStateField);
-        getPageUtils().waitForElementToAppear(tripleDotIcon).click();
+        getPageUtils().waitForElementAndClick(tripleDotIcon);
         return this;
     }
 
@@ -287,7 +293,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isSearchOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(btnSearch);
+        return getPageUtils().waitForElementAppear(btnSearch).isDisplayed();
     }
 
     /**
@@ -357,6 +363,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage clickClearOption() {
         getPageUtils().waitForElementAndClick(btnClear);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']"));
         return this;
     }
 
@@ -375,7 +382,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickOnUnpinOption() {
-        getPageUtils().waitForElementAndClick(btnPintoLeft);
+        getPageUtils().waitForElementToAppear(btnPintoLeft).click();
         return this;
     }
 
@@ -394,7 +401,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return true/false
      */
     public boolean isShowHideOptionDisplayed() {
-        return getPageUtils().isElementDisplayed(showHideFieldsOption);
+        return getPageUtils().waitForElementAppear(showHideFieldsOption).isDisplayed();
     }
 
     /**
@@ -450,7 +457,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
 
     public PartsAndAssembliesPage clickCheckAll() {
-        if (tableRow.size() > 0) {
+        if (getPageUtils().waitForElementsToAppear(tableRow).size() > 0) {
             getPageUtils().waitForElementAndClick(checkAllCheckBox);
         }
         return this;
@@ -544,6 +551,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage addFilterValue(String value) {
         getPageUtils().waitForElementAndClick(filteredValue);
         filteredValue.sendKeys(value);
+        getPageUtils().waitForElementToAppear(filterRecords);
         return new PartsAndAssembliesPage(getDriver());
     }
 
@@ -563,6 +571,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage clickRemoveCondition() {
         getPageUtils().waitForElementAndClick(removeIcon);
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']"));
         return new PartsAndAssembliesPage(getDriver());
     }
 
@@ -642,6 +651,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage clickFilterOption() {
+        getPageUtils().waitForElementToAppear(btnFilter);
         getPageUtils().moveAndClick(btnFilter);
         return this;
     }
@@ -675,6 +685,14 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage removeFilterModal() {
         getPageUtils().moveAndClick(removeIcon);
         getPageUtils().moveAndClick(btnFilter);
+        return this;
+    }
+
+    /**
+     * Method to wait until loading complete after filter
+     */
+    public PartsAndAssembliesPage waitForTableResults() {
+        getPageUtils().waitForElementToAppear(filterRecords);
         return this;
     }
 }
