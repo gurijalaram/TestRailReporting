@@ -134,6 +134,10 @@ public class CssComponent {
 
         ResponseWrapper<CssComponentResponse> response = HTTPRequest.build(requestEntity).get();
 
+        while (response.getResponseEntity().getItems().isEmpty()) {
+            response = HTTPRequest.build(requestEntity).get();
+        }
+
         while (response.getResponseEntity().getItems().stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
             .findAny()
