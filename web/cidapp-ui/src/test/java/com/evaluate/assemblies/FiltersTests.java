@@ -2,7 +2,6 @@ package com.evaluate.assemblies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -22,6 +21,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
@@ -36,14 +36,14 @@ public class FiltersTests extends TestBase {
     private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    String filterName2 = generateStringUtil.generateFilterName();
+    private String filterName2 = generateStringUtil.generateFilterName();
     private FilterPage filterPage;
     private UserCredentials currentUser;
-    String assemblyName = "Hinge assembly";
-    final String assemblyExtension = ".SLDASM";
-    List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
-    final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
-    final String componentExtension = ".SLDPRT";
+    private String assemblyName = "Hinge assembly";
+    private final String assemblyExtension = ".SLDASM";
+    private List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+    private final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+    private final String componentExtension = ".SLDPRT";
     private File assembly;
 
     @Test
@@ -102,7 +102,7 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .submit(ExplorePage.class);
 
-        assertTrue(filterPage.isElementDisplayed(filterName2, "text-overflow"));
+        assertTrue(explorePage.isElementDisplayed(filterName2, "text-overflow"));
     }
 
     @Test
@@ -240,6 +240,7 @@ public class FiltersTests extends TestBase {
                 processGroupEnum,
                 scenarioName,
                 currentUser)
+
             .openComponents()
             .tableView()
             .filter()
@@ -354,30 +355,32 @@ public class FiltersTests extends TestBase {
             .inputName(filterName)
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, "BIG RING");
 
+        SoftAssertions soft = new SoftAssertions();
+
         List<String> operations1 =
             filterPage.getListOfOperationsForCriteria((PropertyEnum.PROCESS_GROUP));
-        assertEquals(Arrays.asList("In", "Is Not Defined", "Not In"), operations1);
+        soft.assertThat(Arrays.asList("In", "Is Not Defined", "Not In")).isEqualTo(operations1);
 
         List<String> operations2 =
             filterPage.getListOfOperationsForCriteria((PropertyEnum.SCENARIO_TYPE));
-        assertEquals(Arrays.asList("In", "Is Not Defined", "Not In"), operations2);
+        soft.assertThat(Arrays.asList("In", "Is Not Defined", "Not In")).isEqualTo(operations2);
 
         List<String> operations3 =
             filterPage.getListOfOperationsForCriteria((PropertyEnum.CREATED_AT));
-        assertEquals(Arrays.asList("Greater Than", "Less Than"), operations3);
+        soft.assertThat(Arrays.asList("Greater Than", "Less Than")).isEqualTo(operations3);
 
         List<String> operations4 =
             filterPage.getListOfOperationsForCriteria((PropertyEnum.DFM_RISK));
-        assertEquals(Arrays.asList("In", "Is Not Defined", "Not In"), operations4);
+        soft.assertThat(Arrays.asList("In", "Is Not Defined", "Not In")).isEqualTo(operations4);
 
         List<String> operations5 =
             filterPage.getListOfOperationsForCriteria((PropertyEnum.MATERIAL_COST));
-        assertEquals(Arrays.asList("Greater Than", "Less Than"), operations5);
+        soft.assertThat(Arrays.asList("Greater Than", "Less Than")).isEqualTo(operations5);
 
         List<String> operations6 =
             filterPage.getListOfOperationsForCriteria((PropertyEnum.FINISH_MASS));
-        assertEquals(Arrays.asList("Equals", "Not Equal", "Greater Than", "Greater Than or Equal To",
-            "Less Than", "Less Than or Equal To"), operations6);
+        soft.assertThat(Arrays.asList("Equals", "Not Equal", "Greater Than", "Greater Than or Equal To",
+            "Less Than", "Less Than or Equal To")).isEqualTo(operations6);
     }
 
     @Test
@@ -419,12 +422,9 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
-
-        componentsListPage = new ComponentsListPage(driver);
-
-        componentsListPage
+        componentsListPage = loginPage.login(currentUser)
+        .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .openComponents()
             .tableView()
             .selectFilter("Assigned To Me");
         assertTrue(componentsListPage.isElementDisplayed("Assigned To Me", "text-overflow"));
@@ -441,14 +441,12 @@ public class FiltersTests extends TestBase {
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
 
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
-
-        componentsListPage = new ComponentsListPage(driver);
-
-        componentsListPage
+        componentsListPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .openComponents()
             .tableView()
             .selectFilter("Missing");
+
         assertTrue(componentsListPage.isElementDisplayed("Missing", "text-overflow"));
         MatcherAssert.assertThat(componentsListPage.getScenarioMessage(), containsString("No scenarios found"));
     }
@@ -461,18 +459,15 @@ public class FiltersTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
-
         loginPage = new CidAppLoginPage(driver);
-        evaluatePage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser);
 
-        componentsListPage = new ComponentsListPage(driver);
-
-        componentsListPage
+        componentsListPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(assemblyName, scenarioName, assembly, currentUser)
+            .openComponents()
             .tableView()
             .selectFilter("All");
-        assertTrue(componentsListPage.isElementDisplayed("All", "text-overflow"));
-        assertThat(componentsListPage.getAllScenarioComponentName()).hasSize(3);
-    }
 
+        assertTrue(componentsListPage.isElementDisplayed("All", "text-overflow"));
+        assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
+    }
 }

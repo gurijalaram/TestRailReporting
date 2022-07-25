@@ -719,7 +719,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return current page object
      */
     public ComponentsListPage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-sub-components-detail-card-filter-selector", filter);
         setPagination();
         return this;
     }
@@ -772,10 +772,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return - list of all scenario Component Names
      */
-    public List<String> getAllScenarioComponentName() {
-        pageUtils.waitFor(3000);
+    public List<String> getAllScenarioComponentName(int size) {
         List<WebElement> rows =
-            pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
+            pageUtils.waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"),size);
         List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
         componentNames.remove("Component Name");
         return componentNames;
