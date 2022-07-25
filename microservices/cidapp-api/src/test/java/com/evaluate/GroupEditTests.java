@@ -84,7 +84,7 @@ public class GroupEditTests {
         ResponseWrapper<ScenarioSuccessesFailures> singleEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
             JOINT + "," + scenarioName);
 
-        softAssertions.assertThat(singleEditResponse.getResponseEntity().getSuccesses()).isEqualTo(1);
+        softAssertions.assertThat(singleEditResponse.getResponseEntity().getSuccesses().size()).isEqualTo(1);
         singleEditResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(newScenarioName));
 
         softAssertions.assertAll();
