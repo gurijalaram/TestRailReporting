@@ -50,6 +50,7 @@ public class FiltersTests extends TestBase {
     @TestRail(testCaseId = "10538")
     @Description("Verify that filter criteria can be deleted")
     public void filterCriteriaCanBeDeletedTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -73,13 +74,14 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .clear();
 
-        assertTrue(filterPage.isElementDisplayed("No queries applied", "message"));
+        soft.assertThat(filterPage.isElementDisplayed("No queries applied", "message")).isTrue();
     }
 
     @Test
     @TestRail(testCaseId = "10537")
     @Description("Verify that newly created filter is displayed in filters dropdown in my filter section")
     public void newlyCreatedFilterIsDisplayedInFiltersTest() {
+        SoftAssertions soft = new SoftAssertions();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -102,13 +104,14 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Medium")
             .submit(ExplorePage.class);
 
-        assertTrue(explorePage.isElementDisplayed(filterName2, "text-overflow"));
+        soft.assertThat(explorePage.isElementDisplayed(filterName2, "text-overflow")).isTrue();
     }
 
     @Test
     @TestRail(testCaseId = "10535")
     @Description("Verify Cancel button closes the Scenario filter table")
     public void cancelBtnCloseFilterTableTest() {
+        SoftAssertions soft = new SoftAssertions();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -128,13 +131,14 @@ public class FiltersTests extends TestBase {
             .filter()
             .cancel(ExplorePage.class);
 
-        assertFalse(explorePage.isFilterTablePresent());
+        soft.assertThat(explorePage.isFilterTablePresent()).isFalse();
     }
 
     @Test
     @TestRail(testCaseId = "10534")
     @Description("User can clear added criteria simultaneously by Clear button")
     public void canClearAddedCriteriaTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -159,13 +163,14 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Low")
             .deleteAllCriteria();
 
-        assertTrue(filterPage.isElementDisplayed("No queries applied", "message"));
+        soft.assertThat(filterPage.isElementDisplayed("No queries applied", "message")).isTrue();
     }
 
     @Test
     @TestRail(testCaseId = "10532")
     @Description("Validate that user can cancel action New before saving")
     public void canCancelBeforeSavingTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -188,13 +193,14 @@ public class FiltersTests extends TestBase {
             .inputName(filterName)
             .cancel(FilterPage.class);
 
-        assertThat(filterPage.getAllFilters()).doesNotContain(filterName);
+        soft.assertThat(filterPage.getAllFilters()).doesNotContain(filterName);
     }
 
     @Test
     @TestRail(testCaseId = "10531")
     @Description("User can filter scenarios from scenario filter modal box")
     public void canFilterScenariosFromModalBoxTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -218,13 +224,14 @@ public class FiltersTests extends TestBase {
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.EQUALS, "BIG RING")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getAllScenarioComponentName()).containsExactly("BIG RING");
+        soft.assertThat(explorePage.getAllScenarioComponentName()).containsExactly("BIG RING");
     }
 
     @Test
     @TestRail(testCaseId = "10529")
     @Description("User can create new filter from already existing one using Save As button")
     public void canCreateNewFilterBySaveAsTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -249,13 +256,14 @@ public class FiltersTests extends TestBase {
             .inputName(filterName)
             .submit(ExplorePage.class);
 
-        assertTrue(explorePage.isElementDisplayed(filterName, "text-overflow"));
+        soft.assertThat(explorePage.isElementDisplayed(filterName, "text-overflow")).isTrue();
     }
 
     @Test
     @TestRail(testCaseId = "10528")
     @Description("User is able to edit already created filters")
     public void ableToEditCreatedFilterTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
@@ -287,13 +295,14 @@ public class FiltersTests extends TestBase {
             .save(FilterPage.class)
             .submit(ExplorePage.class);
 
-        assertTrue(explorePage.isElementDisplayed(filterName2, "text-overflow"));
+        soft.assertThat(explorePage.isElementDisplayed(filterName2, "text-overflow")).isTrue();
     }
 
     @Test
     @TestRail(testCaseId = "10527")
     @Description("Validate user can select custom filter")
     public void ableToSelectCustomFilterTest() {
+        SoftAssertions soft = new SoftAssertions();
         String filterName = generateStringUtil.generateFilterName();
         String filterName2 = generateStringUtil.generateFilterName();
         currentUser = UserUtil.getUser();
@@ -326,7 +335,7 @@ public class FiltersTests extends TestBase {
             .tableView()
             .selectFilter(filterName);
 
-        assertTrue(componentsListPage.isElementDisplayed(filterName, "text-overflow"));
+        soft.assertThat(componentsListPage.isElementDisplayed(filterName, "text-overflow")).isTrue();
     }
 
     @Test
@@ -387,7 +396,7 @@ public class FiltersTests extends TestBase {
     @TestRail(testCaseId = "10525")
     @Description("Validate user can select Uncosted scenarios")
     public void ableToSelectUncostedScenarioTest() {
-
+        SoftAssertions soft = new SoftAssertions();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
@@ -408,15 +417,16 @@ public class FiltersTests extends TestBase {
             .selectFilter("Uncosted");
 
         List<String> stateListUncosted = componentsListPage.getAllScenarioState();
-        assertTrue(componentsListPage.isElementDisplayed("Uncosted", "text-overflow"));
-        assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
+
+        soft.assertThat(componentsListPage.isElementDisplayed("Uncosted", "text-overflow")).isTrue();
+        soft.assertThat(stateListUncosted).containsExactly("Uncosted", "Uncosted", "Uncosted");
     }
 
     @Test
     @TestRail(testCaseId = "10524")
     @Description("Validate user can select Assigned to Me scenarios")
     public void ableToSelectAssignedToMeScenarioTest() {
-
+        SoftAssertions soft = new SoftAssertions();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
@@ -427,15 +437,16 @@ public class FiltersTests extends TestBase {
             .openComponents()
             .tableView()
             .selectFilter("Assigned To Me");
-        assertTrue(componentsListPage.isElementDisplayed("Assigned To Me", "text-overflow"));
-        MatcherAssert.assertThat(componentsListPage.getScenarioMessage(), containsString("No scenarios found"));
+
+        soft.assertThat(componentsListPage.isElementDisplayed("Assigned To Me", "text-overflow")).isTrue();
+        soft.assertThat(componentsListPage.getScenarioMessage()).contains("No scenarios found");
     }
 
     @Test
     @TestRail(testCaseId = "10523")
     @Description("Validate user can select Missing scenarios")
     public void ableToSelectMissingScenarioTest() {
-
+        SoftAssertions soft = new SoftAssertions();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
@@ -447,15 +458,15 @@ public class FiltersTests extends TestBase {
             .tableView()
             .selectFilter("Missing");
 
-        assertTrue(componentsListPage.isElementDisplayed("Missing", "text-overflow"));
-        MatcherAssert.assertThat(componentsListPage.getScenarioMessage(), containsString("No scenarios found"));
+        soft.assertThat(componentsListPage.isElementDisplayed("Missing", "text-overflow")).isTrue();
+        soft.assertThat(componentsListPage.getScenarioMessage()).contains("No scenarios found");
     }
 
     @Test
     @TestRail(testCaseId = "10522")
     @Description("Validate user can select All scenarios")
     public void ableToSelectAllScenarioTest() {
-
+        SoftAssertions soft = new SoftAssertions();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
         assembly = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, assemblyName + ".SLDASM");
@@ -467,7 +478,7 @@ public class FiltersTests extends TestBase {
             .tableView()
             .selectFilter("All");
 
-        assertTrue(componentsListPage.isElementDisplayed("All", "text-overflow"));
-        assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
+        soft.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isTrue();
+        soft.assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
     }
 }
