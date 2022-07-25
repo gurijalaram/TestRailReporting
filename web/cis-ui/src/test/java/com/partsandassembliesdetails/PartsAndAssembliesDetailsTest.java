@@ -123,7 +123,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12912","12913","12915","12916"})
+    @TestRail(testCaseId = {"12912","12913","12915","12916","13179"})
     @Description("Verify part nesting section on Insights")
     public void testPartNestingSection() {
         String componentName = "ChampferOut";
@@ -142,6 +142,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getPartNestingTitle()).isEqualTo("Part Nesting");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingGraphControllerDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingDetailsSectionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DETAILS.getInsightsFields())).contains(CisInsightsFieldsEnum.UTILIZATION_INFO.getInsightsFields(),CisInsightsFieldsEnum.SELECTED_SHEET.getInsightsFields(),CisInsightsFieldsEnum.BLANK_SIZE.getInsightsFields(),
                 CisInsightsFieldsEnum.PARTS_PER_SHEET.getInsightsFields(),CisInsightsFieldsEnum.CONFIGURATION.getInsightsFields(),CisInsightsFieldsEnum.UTILIZATION_MODE.getInsightsFields());
@@ -235,6 +236,53 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingMenuIconDisplayed()).isEqualTo(false);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesMenuIconDisplayed()).isEqualTo(false);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockMenuIconDisplayed()).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12485","12486","12487","12489","12490","12491","12492","12495"})
+    @Description("Verify the creation of new scenario results cards")
+    public void testCreateNewScenarioResultsCards() {
+        String componentName = "ChampferOut";
+        String scenarioName = "ChampferOut_AutomationDetails";
+        String cardName = "Process Cost Card";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateNewCardOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickToOpenModal()
+                .closeModal();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateCardModalDisplayed()).isEqualTo(false);
+
+        partsAndAssembliesDetailsPage.clickToOpenModal();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getModalTitle()).isEqualTo("Card Settings");
+
+        partsAndAssembliesDetailsPage.clickToOpenDropDown()
+                .selectAnOption("Process Group");
+
+        partsAndAssembliesDetailsPage.clickToOpenDropDown()
+                .selectAnOption("Identity")
+                .clickToOpenDropDown()
+                .selectAnOption("Digital Factory");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSelectedFieldName()).contains("Process Group");
+
+        partsAndAssembliesDetailsPage.clickToRemoveSelectedField();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSaveButtonStatus()).isEqualTo(false);
+
+        partsAndAssembliesDetailsPage.enterCardName(cardName)
+                .clickSaveButton();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(cardName)).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.deleteScenarioResultsCard(cardName);
 
         softAssertions.assertAll();
     }

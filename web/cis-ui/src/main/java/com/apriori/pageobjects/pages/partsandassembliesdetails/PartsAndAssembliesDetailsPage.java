@@ -107,6 +107,44 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//header[@data-testid='app-bar']//a")
     private WebElement linkBackToPartNAssemblyPage;
 
+    @FindBy(xpath = "//button[@aria-label='Create New Card']")
+    private WebElement createScenarioCardIcon;
+
+    @FindBy(xpath = "//div[@class='MuiBox-root css-pf0r2f']//p")
+    private WebElement titleOfModal;
+
+    @FindBy(xpath = "//button[@title='Open']//*[local-name()='svg']")
+    private WebElement dropDownFieldOnModal;
+
+    @FindBy(id = "properties")
+    private WebElement dropDownOption;
+
+    @FindBy(id = "chip-properties-costingInput.processGroupName")
+    private WebElement selectedFieldName;
+
+    @FindBy(xpath = "//div[@data-testid='chip-properties-costingInput.processGroupName-data-chip']//*[local-name()='svg']")
+    private WebElement selectedFieldRemoveIcon;
+
+    @FindBy(id = "save-btn")
+    private WebElement btnSave;
+
+    @FindBy(id = "title")
+    private WebElement nameField;
+
+    @FindBy(xpath = "//div[@role='dialog']//*[@data-icon='times-circle']")
+    private WebElement modalCloseIcon;
+
+    @FindBy(xpath = "//div[@role='dialog']")
+    private WebElement createCardModal;
+
+    @FindBy(xpath = "//li[@data-testid ='option-item-remove']")
+    private WebElement removeCardOption;
+
+    @FindBy(id = "primary-id")
+    private WebElement btnDelete;
+
+    @FindBy(xpath = "//div[@data-testid='icon-button-group']")
+    private WebElement partNestingGraphController;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -496,5 +534,181 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesPage clicksPartsAndAssembliesLink() {
         getPageUtils().waitForElementAndClick(linkBackToPartNAssemblyPage);
         return new PartsAndAssembliesPage(driver);
+    }
+
+    /**
+     * Checks if option to create new scenario results card displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreateNewCardOptionDisplayed() {
+        return getPageUtils().isElementDisplayed(createScenarioCardIcon);
+    }
+
+    /**
+     * clicks to open the card setting modal
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToOpenModal() {
+        getPageUtils().waitForElementAndClick(createScenarioCardIcon);
+        return this;
+    }
+
+    /**
+     * gets the modal title
+     *
+     * @return a String
+     */
+    public String getModalTitle() {
+        return getPageUtils().waitForElementToAppear(titleOfModal).getText();
+    }
+
+    /**
+     * clicks to open the drop-down field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToOpenDropDown() {
+        getPageUtils().waitForElementAndClick(dropDownFieldOnModal);
+        return this;
+    }
+
+    /**
+     * select a field from drop-down
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectAnOption(String fieldOption) {
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(.,'" + fieldOption + "')]"));
+        return this;
+    }
+
+    /**
+     * get selected field name
+     *
+     * @return a String
+     */
+    public String getSelectedFieldName() {
+        return getPageUtils().waitForElementToAppear(selectedFieldName).getAttribute("innerText");
+    }
+
+    /**
+     * clicks to remove the selected field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickToRemoveSelectedField() {
+        getPageUtils().waitForElementAndClick(selectedFieldRemoveIcon);
+        return this;
+    }
+
+    /**
+     * get save button status as disabled
+     *
+     * @return a boolean
+     */
+    public boolean getSaveButtonStatus() {
+        return getPageUtils().waitForElementToAppear(btnSave).isEnabled();
+    }
+
+    /**
+     * Enter a name for the new card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage enterCardName(String cardName) {
+        getPageUtils().waitForElementToAppear(nameField).sendKeys(cardName);
+        return this;
+    }
+
+    /**
+     * clicks save button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickSaveButton() {
+        getPageUtils().waitForElementAndClick(btnSave);
+        return this;
+    }
+
+    /**
+     * clicks close icon on modal
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage closeModal() {
+        getPageUtils().waitForElementAndClick(modalCloseIcon);
+        return this;
+    }
+
+    /**
+     * Checks if create new card modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreateCardModalDisplayed() {
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@role='dialog']"),1);
+        return getPageUtils().isElementDisplayed(createCardModal);
+    }
+
+    /**
+     * Checks if created new card displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreatedCardDisplayed(String cardName) {
+        return getPageUtils().isElementDisplayed(By.xpath("//div[@data-testid='" + cardName + "']"));
+    }
+
+    /**
+     * clicks on ellipsis icon on created card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickMoreOptions(String cardName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-v']"));
+        return this;
+    }
+
+    /**
+     * clicks on remove card option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickRemoveCardOption() {
+        getPageUtils().waitForElementAndClick(removeCardOption);
+        return this;
+    }
+
+    /**
+     * clicks on remove card option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickDeleteButton() {
+        getPageUtils().waitForElementAndClick(btnDelete);
+        return this;
+    }
+
+    /**
+     * Delete Scenario Result Card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage deleteScenarioResultsCard(String cardName) {
+        clickMoreOptions(cardName);
+        clickRemoveCardOption();
+        clickDeleteButton();
+        return this;
+    }
+
+    /**
+     * Checks if part nesting graph controller displayed
+     *
+     * @return true/false
+     */
+    public boolean isPartNestingGraphControllerDisplayed() {
+        return getPageUtils().isElementDisplayed(partNestingGraphController);
     }
 }
