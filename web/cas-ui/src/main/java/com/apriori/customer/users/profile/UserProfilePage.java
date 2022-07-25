@@ -234,6 +234,15 @@ public final class UserProfilePage extends EagerPageComponent<UserProfilePage> {
     }
 
     /**
+     * Can click the edit button.
+     *
+     * @return Boolean representing can click edit button
+     */
+    public boolean canEdit() {
+        return isButtonEnabled(editButton);
+    }
+
+    /**
      * Enter given name
      *
      * @param givenName - given name
