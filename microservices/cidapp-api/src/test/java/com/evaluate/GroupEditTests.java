@@ -2,9 +2,14 @@ package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
+import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
+import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -27,7 +32,7 @@ public class GroupEditTests {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"10949", "11851", "11853"})
+    @TestRail(testCaseId = {"10949", "11853"})
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponents() {
         currentUser = UserUtil.getUser();
@@ -80,11 +85,13 @@ public class GroupEditTests {
 
         softAssertions.assertThat(singleEditResponse.getResponseEntity().getSuccesses()).isEqualTo(1);
         singleEditResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(newScenarioName));
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"11852", "11854"})
-    @Description("Publish a single private sub-component with no public counterpart Setting Override to false and supplying a scenario name")
+    @TestRail(testCaseId = {"11851"})
+    @Description("Publish a single private sub-component with no public counterpart")
     public void testGroupEditPrivateSubcomponents() {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -96,7 +103,7 @@ public class GroupEditTests {
         String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
+        List<String> subComponentNames = Arrays.asList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -112,29 +119,26 @@ public class GroupEditTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
+        User user = new PeopleUtil().getCurrentUser(currentUser);
 
-        assemblyUtils.costAssembly(componentAssembly);
-
-        assemblyUtils.publishSubComponents(componentAssembly);
-
-        ForkRequest forkRequest = ForkRequest.builder()
-            .scenarioName(newScenarioName)
-            .override(false)
+        PublishRequest publishRequest = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial".toUpperCase())
+            .override(true)
+            .status("New".toUpperCase())
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> groupEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName);
+        ResponseWrapper<ScenarioSuccessesFailures> singleEditResponse = scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(),
+            componentAssembly, STAND + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        groupEditResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(newScenarioName));
+        singleEditResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
 
-        ResponseWrapper<ScenarioSuccessesFailures> singleEditResponse = scenariosUtil.postEditGroupScenarios(componentAssembly, forkRequest,
-            JOINT + "," + scenarioName);
+        List<ScenarioItem> scenarioItem = new CssComponent().getSimpleCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
 
-        softAssertions.assertThat(singleEditResponse.getResponseEntity().getSuccesses()).isEqualTo(1);
-        singleEditResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(newScenarioName));
+        softAssertions.assertThat(scenarioItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
+
+        softAssertions.assertAll();
     }
 }
