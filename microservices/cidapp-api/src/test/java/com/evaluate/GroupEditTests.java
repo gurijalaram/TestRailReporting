@@ -33,7 +33,7 @@ public class GroupEditTests {
     private UserCredentials currentUser;
 
     @Test
-    @TestRail(testCaseId = {"10949", "11853"})
+    @TestRail(testCaseId = {"10949"})
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponents() {
         currentUser = UserUtil.getUser();
