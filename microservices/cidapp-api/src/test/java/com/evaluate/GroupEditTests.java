@@ -19,6 +19,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -30,23 +31,27 @@ public class GroupEditTests {
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private CssComponent cssComponent = new CssComponent();
     private ComponentInfoBuilder componentAssembly;
-    private UserCredentials currentUser;
+    private static UserCredentials currentUser;
+
+    @Before
+    public void setupUser() {
+        currentUser = UserUtil.getUser();
+    }
 
     @Test
     @TestRail(testCaseId = {"10949"})
     @Description("Edit multiple public sub-components with no Private counterparts (Overwrite)")
     public void testGroupEditPublicSubcomponents() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String STAND = "stand";
         final String DRIVE = "drive";
         final String JOINT = "joint";
-        String assemblyName = "oldham";
+        final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
+        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -94,16 +99,15 @@ public class GroupEditTests {
     @TestRail(testCaseId = {"11851", "11852"})
     @Description("Publish a single private sub-component with no public counterpart")
     public void testGroupPublishPrivateSubcomponent() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String STAND = "stand";
         final String DRIVE = "drive";
-        String assemblyName = "oldham";
+        final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND, DRIVE);
+        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -164,16 +168,15 @@ public class GroupEditTests {
     @TestRail(testCaseId = {"11853"})
     @Description("Publish a multiple private sub-components with no public counterpart")
     public void testGroupPublishPrivateSubcomponents() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String STAND = "stand";
         final String DRIVE = "drive";
         final String JOINT = "joint";
-        String assemblyName = "oldham";
+        final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
+        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
