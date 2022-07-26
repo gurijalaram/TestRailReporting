@@ -1,6 +1,8 @@
 package com.ootbreports.newreportstests.dtcmetrics.castingdtc;
 
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -108,21 +110,21 @@ public class CastingDtcReportTests {
         double usdAnnualSpend = usdChartDataPoint.getAnnualSpend();
 
         // 3- Change currency to GBP and re-generate report
-        reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(CurrencyEnum.GBP.getCurrency()));
-
         assertThat(usdFullyBurdenedCost, is(notNullValue()));
         assertThat(usdAnnualSpend, is(notNullValue()));
 
-        //ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
+        reportRequest.getParameters().getReportParameterByName("currencyCode")
+            .setValue(Collections.singletonList(CurrencyEnum.GBP.getCurrency()));
+
+        ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
 
         // 4 - Get values from GBP report
-        /*String gbpFullyBurdenedCost = gbpChartDataPoint.getFullyBurdenedCost();
-        double gbpAnnualSpend = gbpChartDataPoint.getAnnualSpend();*/
+        String gbpFullyBurdenedCost = gbpChartDataPoint.getFullyBurdenedCost();
+        double gbpAnnualSpend = gbpChartDataPoint.getAnnualSpend();
 
         // 5 - Assert that USD values are not equal to GBP values
-        /*assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
-        assertThat(gbpAnnualSpend == usdAnnualSpend, is(equalTo(false)));*/
+        assertThat(usdFullyBurdenedCost.equals(gbpFullyBurdenedCost), equalTo(false));
+        assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
     }
 
     private static void skipSslCheck() throws NoSuchAlgorithmException, KeyManagementException {
