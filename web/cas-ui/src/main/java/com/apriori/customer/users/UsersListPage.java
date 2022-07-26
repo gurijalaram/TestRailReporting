@@ -3,12 +3,15 @@ package com.apriori.customer.users;
 import com.apriori.common.UsersTableController;
 import com.apriori.customer.users.profile.NewUserPage;
 import com.apriori.customer.users.profile.UserProfilePage;
+import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 
 import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,7 +22,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**
  * Represents the page under the users tab that contains the users list.
@@ -231,7 +233,7 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return web element
      */
     private WebElement findStatusIcon(String customerIdentity, String userIdentity) {
-        return driver.findElement(By.xpath((String.format("//a[@href='/customers/%s/user-profiles/%s']//span[@class='float-right']",
+        return driver.findElement(By.xpath((String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']//div[@class='right']",
                 customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim()))));
     }
 
@@ -243,8 +245,31 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
      * @return list of fields names
      */
     public List<String> getFieldName(String customerIdentity, String userIdentity) {
-        List<WebElement> fieldName = driver.findElements(By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']//div[@class='row no-gutters display-field']//span[@class='display-field-label']",
+        List<WebElement> fieldName = driver.findElements(By.xpath(String.format("//a[@href='/customers/%s/user-profiles/%s']/ancestor::div[@class='card-header']/following-sibling::div[@class='card-body']//label",
                 customerIdentity.toUpperCase().trim(), userIdentity.toUpperCase().trim())));
         return fieldName.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Opens a customer profile from source table
+     *
+     * @param name - name of customer
+     * @return The profile page for customer
+     */
+    public UserProfilePage openUser(String name) {
+        SourceListComponent list = getUsersList();
+        SearchFieldComponent search = Obligation.mandatory(list::getSearch, "The user search is missing.");
+        search.search(name);
+        pageUtils.waitForCondition(list::isStable, PageUtils.DURATION_LOADING);
+
+        list.selectTableLayout();
+        Obligation.mandatory(list::getTable, "The table layout is not active")
+            .getRows()
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("User %s is missing.", name)))
+            .getCell("username")
+            .click();
+
+        return new UserProfilePage(driver);
     }
 }
