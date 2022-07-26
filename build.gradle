@@ -93,8 +93,9 @@ subprojects {
 
     //define checkstyle xml and version
     checkstyle {
-        toolVersion '8.24'
+        toolVersion '10.1'
         ignoreFailures = false
+        configFile file("${rootDir}/config/checkstyle/checkstyle.xml")
     }
 
     //define sonarqube properties
