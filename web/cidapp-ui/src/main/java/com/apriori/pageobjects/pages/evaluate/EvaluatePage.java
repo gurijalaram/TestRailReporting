@@ -150,6 +150,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
 
+    @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
+    private WebElement treeButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -744,5 +747,15 @@ public class EvaluatePage extends EvaluateToolbar {
     public <T> T clickRefresh(Class<T> className) {
         pageUtils.waitForElementAndClick(refreshButton);
         return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Changes the view to tree view
+     *
+     * @return current page object
+     */
+    public EvaluatePage treeView() {
+        pageUtils.waitForElementAndClick(treeButton);
+        return this;
     }
 }
