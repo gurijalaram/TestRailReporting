@@ -20,17 +20,15 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.apache.commons.lang.StringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -43,26 +41,22 @@ public class EditUserTests extends TestBase {
     private CustomerWorkspacePage customerViewPage;
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
-    private String customerName;
     private String userIdentity;
     private UserProfilePage userProfilePage;
 
     @Before
     public void setup() {
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
-        String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
-        String salesforce = StringUtils.leftPad(now, 15, "0");
-        String email = "\\S+@".concat(STAFF_TEST_CUSTOMER);
-        String customerType = Constants.CLOUD_CUSTOMER;
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
+        String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
 
         targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-                ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, customerType, now, salesforce, email).getResponseEntity()
+                ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
                 : targetCustomer;
         customerIdentity = targetCustomer.getIdentity();
-        customerName = targetCustomer.getName();
 
         userProfilePage = new CasLoginPage(driver)
                 .login(UserUtil.getUser())
@@ -70,7 +64,7 @@ public class EditUserTests extends TestBase {
                 .goToUsersPage()
                 .goToCustomerStaff()
                 .clickNew()
-                .formFillNewUserDetails(USER_NAME, USER_NAME + "@" + customerName + ".com", "Test", "User")
+                .formFillNewUserDetails(USER_NAME, USER_NAME + "@" + email + ".com", "Test", "User")
                 .save(UserProfilePage.class);
     }
 
@@ -128,7 +122,7 @@ public class EditUserTests extends TestBase {
                 .overridingErrorMessage("Expected edit button to be displayed and clickable.")
                 .isNotNull();
 
-        userProfilePage.assertNonEditable(Arrays.asList("username", "identity", "email"), soft)
+        userProfilePage.assertNonEditable(Arrays.asList("username", "identity", "email", "userType"), soft)
                 .assertEditable(editModeFields, soft)
                 .assertButtonAvailable(soft, "Cancel")
                 .assertButtonAvailable(soft, "Save");
@@ -168,6 +162,7 @@ public class EditUserTests extends TestBase {
     }
 
     @Test
+    @Ignore("Status field is disabled")
     @Description("Status field is greyed out (non editable) if Customer is set to inactive")
     @TestRail(testCaseId = {"10644", "10645"})
     public void testUserStatusFieldNotEditableIfCustomerIsDisabled() {

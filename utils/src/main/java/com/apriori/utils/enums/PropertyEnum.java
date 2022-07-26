@@ -12,6 +12,7 @@ public enum PropertyEnum {
     DESCRIPTION("Description"),
     NOTES("Notes"),
     SCENARIO_NAME("Scenario Name"),
+    SCENARIO_TYPE("Scenario Type"),
     TOLERANCE_COUNT("Tolerance Count"),
     FULLY_BURDENED_COST("Fully Burdened Cost"),
     MATERIAL_COST("Material Cost"),
@@ -41,7 +42,8 @@ public enum PropertyEnum {
     LAST_UPDATED_BY("Last Updated By"),
     STATE("State"),
     STATUS("Status"),
-    DFM("Dfm");
+    DFM("Dfm"),
+    DFM_RISK("DFM Risk");
 
     private final String property;
 
