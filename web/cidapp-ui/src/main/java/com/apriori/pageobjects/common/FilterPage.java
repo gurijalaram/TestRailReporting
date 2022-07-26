@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -349,6 +350,22 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         By byOperation = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operationEnum.getOperation()));
         pageUtils.waitForElementAndClick(byOperation);
         return this;
+    }
+
+    /**
+     * Checks and return list of properties in Operation dropdown (in criteria section)
+     *
+     * @return list of available properties in Operation dropdown
+     */
+    public List<String> getListOfOperationsForCriteria(PropertyEnum propertyEnum) {
+        selectProperty(0, propertyEnum);
+        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", 0));
+        pageUtils.waitForElementAndClick(operationDropdown);
+        WebElement elementsOperations =
+            pageUtils.waitForElementToAppear(By.xpath("//div[@class = 'apriori-select-menu-list css-1ew0esf']"));
+        String operations = elementsOperations.getText();
+
+        return Arrays.asList(operations.split("\n"));
     }
 
     /**
