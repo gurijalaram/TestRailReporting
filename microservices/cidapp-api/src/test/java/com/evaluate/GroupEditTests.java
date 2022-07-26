@@ -123,9 +123,9 @@ public class GroupEditTests {
 
         PublishRequest publishRequest = PublishRequest.builder()
             .assignedTo(user.getIdentity())
-            .costMaturity("Initial".toUpperCase())
+            .costMaturity("Initial")
             .override(true)
-            .status("New".toUpperCase())
+            .status("new")
             .build();
 
         ResponseWrapper<ScenarioSuccessesFailures> standResponse = scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(),
@@ -141,9 +141,9 @@ public class GroupEditTests {
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
-            .costMaturity("Initial".toUpperCase())
+            .costMaturity("Initial")
             .override(false)
-            .status("New".toUpperCase())
+            .status("new")
             .scenarioName(newScenarioName)
             .build();
 
@@ -193,9 +193,9 @@ public class GroupEditTests {
 
         PublishRequest publishRequest = PublishRequest.builder()
             .assignedTo(user.getIdentity())
-            .costMaturity("Initial".toUpperCase())
+            .costMaturity("Initial")
             .override(true)
-            .status("New".toUpperCase())
+            .status("new")
             .build();
 
         ResponseWrapper<ScenarioSuccessesFailures> publishResponse = scenariosUtil.postPublishGroupScenarios(componentAssembly, publishRequest,
