@@ -15,7 +15,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
-
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
