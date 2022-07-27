@@ -332,7 +332,12 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickFilterOption()
                 .selectFilterField(CisColumnsEnum.BATCH_SIZE.getColumns());
-        softAssertions.assertThat(partsAndAssembliesPage.getOperationList()).contains(CisFilterOperationEnum.EQUALS.getOperation(), CisFilterOperationEnum.NOT_EQUALS.getOperation(), CisFilterOperationEnum.GREATER_THAN.getOperation(), CisFilterOperationEnum.GREATER_THAN_OR_EQUAL_TO.getOperation(), CisFilterOperationEnum.LESS_THAN.getOperation(), CisFilterOperationEnum.LESS_THAN_OR_EQUAL_TO.getOperation());
+        softAssertions.assertThat(partsAndAssembliesPage.getOperationList()).contains(CisFilterOperationEnum.EQUALS.getOperation(),
+                CisFilterOperationEnum.NOT_EQUALS.getOperation(),
+                CisFilterOperationEnum.GREATER_THAN.getOperation(),
+                CisFilterOperationEnum.GREATER_THAN_OR_EQUAL_TO.getOperation(),
+                CisFilterOperationEnum.LESS_THAN.getOperation(),
+                CisFilterOperationEnum.LESS_THAN_OR_EQUAL_TO.getOperation());
 
         partsAndAssembliesPage.clickFilterOption()
                 .selectFilterField(CisColumnsEnum.STATE.getColumns());

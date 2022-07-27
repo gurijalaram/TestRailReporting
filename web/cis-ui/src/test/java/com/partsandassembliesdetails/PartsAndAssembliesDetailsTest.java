@@ -77,19 +77,38 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.TOTAL_COST.getFieldName())).contains(CisScenarioResultsEnum.TOTAL_CAPITAL_EXPENSES.getFieldName(),CisScenarioResultsEnum.PIECE_PART_COST.getFieldName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isScenarioInputsCardDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.SCENARIO_INPUTS.getFieldName())).contains(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName(),CisScenarioResultsEnum.PROCESS_GROUP.getFieldName(),CisScenarioResultsEnum.ANNUAL_VOLUME.getFieldName(),CisScenarioResultsEnum.BATCH_SIZE.getFieldName(),CisScenarioResultsEnum.MATERIAL.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.SCENARIO_INPUTS.getFieldName())).contains(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName(),
+                CisScenarioResultsEnum.PROCESS_GROUP.getFieldName(),
+                CisScenarioResultsEnum.ANNUAL_VOLUME.getFieldName(),
+                CisScenarioResultsEnum.BATCH_SIZE.getFieldName(),
+                CisScenarioResultsEnum.MATERIAL.getFieldName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialCardDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.MATERIAL.getFieldName())).contains(CisScenarioResultsEnum.FINISH_MASS.getFieldName(),CisScenarioResultsEnum.MATERIAL_COST.getFieldName(),CisScenarioResultsEnum.MATERIAL.getFieldName(),CisScenarioResultsEnum.MATERIAL_OVERHEAD.getFieldName(),CisScenarioResultsEnum.MATERIAL_UNIT_COST.getFieldName(),CisScenarioResultsEnum.ROUGH_MASS.getFieldName(),CisScenarioResultsEnum.UTILIZATION.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.MATERIAL.getFieldName())).contains(CisScenarioResultsEnum.FINISH_MASS.getFieldName(),
+                CisScenarioResultsEnum.MATERIAL_COST.getFieldName(),
+                CisScenarioResultsEnum.MATERIAL.getFieldName(),
+                CisScenarioResultsEnum.MATERIAL_OVERHEAD.getFieldName(),
+                CisScenarioResultsEnum.MATERIAL_UNIT_COST.getFieldName(),
+                CisScenarioResultsEnum.ROUGH_MASS.getFieldName(),
+                CisScenarioResultsEnum.UTILIZATION.getFieldName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isManufacturingCardDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.MANUFACTURING.getFieldName())).contains(CisScenarioResultsEnum.CYCLE_TIME.getFieldName(),CisScenarioResultsEnum.DIRECT_OVERHEAD_COST.getFieldName(),CisScenarioResultsEnum.LABOR_COST.getFieldName(),CisScenarioResultsEnum.OTHER_DIRECT_COSTS.getFieldName(),CisScenarioResultsEnum.INDIRECT_OVERHEAD_COST.getFieldName(),CisScenarioResultsEnum.ROUTING.getFieldName(),CisScenarioResultsEnum.AMORTIZED_BATCH_SETUP_COST.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.MANUFACTURING.getFieldName())).contains(CisScenarioResultsEnum.CYCLE_TIME.getFieldName(),
+                CisScenarioResultsEnum.DIRECT_OVERHEAD_COST.getFieldName(),
+                CisScenarioResultsEnum.LABOR_COST.getFieldName(),
+                CisScenarioResultsEnum.OTHER_DIRECT_COSTS.getFieldName(),
+                CisScenarioResultsEnum.INDIRECT_OVERHEAD_COST.getFieldName(),
+                CisScenarioResultsEnum.ROUTING.getFieldName(),
+                CisScenarioResultsEnum.AMORTIZED_BATCH_SETUP_COST.getFieldName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isAdditionalCostCardDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.ADDITIONAL_COST.getFieldName())).contains(CisScenarioResultsEnum.LOGISTICS.getFieldName(),CisScenarioResultsEnum.MARGIN.getFieldName(),CisScenarioResultsEnum.SG_AND_A.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.ADDITIONAL_COST.getFieldName())).contains(CisScenarioResultsEnum.LOGISTICS.getFieldName(),
+                CisScenarioResultsEnum.MARGIN.getFieldName(),
+                CisScenarioResultsEnum.SG_AND_A.getFieldName());
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalCapitalExpensesCardDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.TOTAL_CAPITAL_EXPENSES.getFieldName())).contains(CisScenarioResultsEnum.FIXTURE.getFieldName(),CisScenarioResultsEnum.HARD_TOOLING.getFieldName(),CisScenarioResultsEnum.PROGRAMMING.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getScenarioResultCardFieldsName(CisScenarioResultsEnum.TOTAL_CAPITAL_EXPENSES.getFieldName())).contains(CisScenarioResultsEnum.FIXTURE.getFieldName(),
+                CisScenarioResultsEnum.HARD_TOOLING.getFieldName(),CisScenarioResultsEnum.PROGRAMMING.getFieldName());
 
         softAssertions.assertAll();
     }
