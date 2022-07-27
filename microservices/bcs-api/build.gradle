@@ -16,7 +16,7 @@ sourceSets {
 dependencies {
     implementation project(':apibase')
     implementation project(':utils')
-    implementation project(':database')
+    implementation project(':db')
     implementation 'com.massisframework:j-text-utils:0.3.4'
 
     testImplementation group: 'junit', name: 'junit', version: '4.12'
