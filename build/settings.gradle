@@ -24,7 +24,6 @@ Map<String, String[]> buildConfigurations = new HashMap<String, String[]>() {
         put("web", webModules)
     }
 }
-
 final String configuration = System.getProperty("conf");
 
 if (configuration != null) {
@@ -53,7 +52,6 @@ if (configuration != null) {
     include(':microservices:nts-api')
     include(':microservices:vds-api')
     include(':microservices:sds-api')
-    include(':microservices:integration')
     include(':microservices:cis-api')
 
     project(':microservices:acs-api').projectDir = file('../microservices/acs-api')
@@ -69,7 +67,6 @@ if (configuration != null) {
     project(':microservices:nts-api').projectDir = file('../microservices/nts-api')
     project(':microservices:vds-api').projectDir = file('../microservices/vds-api')
     project(':microservices:sds-api').projectDir = file('../microservices/sds-api')
-    project(':microservices:integration').projectDir = file('../microservices/integration')
     project(':microservices:cis-api').projectDir = file('../microservices/cis-api')
 
     //Web
