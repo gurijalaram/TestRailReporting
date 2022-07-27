@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.pageobjects.common.LetNavigationBarController;
+import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 
 import lombok.extern.slf4j.Slf4j;
@@ -86,9 +87,9 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      * @return current page object
      */
 
-    public LeftHandNavigationBar clickUserIcon() {
+    public MyUserPage clickUserIcon() {
         getPageUtils().waitForElementAndClick(userIcon);
-        return this;
+        return new MyUserPage(getDriver());
     }
 
     /**

@@ -53,10 +53,8 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify that user can logout from the CIS application")
     public void testUserCanLogOutFromTheCISApplication() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+        myUserPage = loginPage.cisLogin(UserUtil.getUser())
                         .clickUserIcon();
-
-        myUserPage = new MyUserPage(driver);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -77,7 +75,7 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify that user can access the Terms of Use Page")
     public void testUserCanAccessTheTermsOfUsePage() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+        myUserPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickUserIcon();
 
         termsOfUsePage = new MyUserPage(driver)
@@ -118,7 +116,7 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify that user can access the 'Support' page")
     public void testUserCanAccessTheSupportPage() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+        myUserPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickUserIcon();
 
         zendeskSignInPage = new MyUserPage(driver)
