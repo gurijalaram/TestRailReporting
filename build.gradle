@@ -92,7 +92,7 @@ subprojects {
 
     //define checkstyle xml and version
     checkstyle {
-        toolVersion '10.1'
+        toolVersion '9.3'
         ignoreFailures = false
         configFile file("${rootDir}/config/checkstyle/checkstyle.xml")
     }
