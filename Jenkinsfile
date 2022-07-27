@@ -126,7 +126,6 @@ Those marked with a * are required or the job will not run
                 sh """
                     docker build \
                         --no-cache \
-                        --target build \
                         --tag ${buildInfo.name}-test-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
                         --build-arg FOLDER=${folder} \
