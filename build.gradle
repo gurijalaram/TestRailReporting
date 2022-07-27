@@ -14,6 +14,26 @@ allprojects {
     targetCompatibility = 1.8
 }
 
+/* use this template to copy specific files into modules
+    findModuleAndCopyRes(project(":utils").projectDir.path + "/src/main/resources/cas-int", "/resources", ":web:cas")
+*/
+
+void findModuleAndCopyRes(String fromDir, String toDir, String moduleName) {
+    if (findProject(moduleName) != null) {
+        project(moduleName) {
+            copyResources(fromDir, buildDir.path + toDir)
+        }
+    }
+}
+
+void copyResources(String fromDir, String toDir) {
+    println 'Copying from dir: ' + fromDir + ' to dir: ' + toDir
+    copy {
+        from(fromDir)
+        into(toDir)
+    }
+}
+
 subprojects {
     configurations {
         testCompile
