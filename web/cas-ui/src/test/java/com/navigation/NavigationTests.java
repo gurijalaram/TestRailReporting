@@ -82,8 +82,6 @@ public class NavigationTests extends TestBase {
         validateOnPageURL(soft, "/users/customer-staff");
         usersPage.goToImport();
         validateOnPageURL(soft,  "/users/import");
-        customerProfilePage.goToSitesLicenses();
-        validateOnPageURL(soft, "/sites-and-licenses");
         customerProfilePage.goToInfrastructure();
         validateOnPageURL(soft, "/infrastructure");
 
