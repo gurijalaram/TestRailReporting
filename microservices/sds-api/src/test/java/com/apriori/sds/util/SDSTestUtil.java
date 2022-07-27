@@ -109,8 +109,9 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return object
      */
     protected static ScenarioItem postTestingComponentAndAddToRemoveList() {
-        String componentName = "AGC0-LP-700144754.prt.1";
-        ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+//        String componentName = "AGC0-LP-700144754.prt.1";
+        String componentName = "2062987.prt";
+        ProcessGroupEnum processGroup = ProcessGroupEnum.PLASTIC_MOLDING;
 
         return postPart(componentName, processGroup);
     }
