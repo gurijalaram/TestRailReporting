@@ -1,31 +1,23 @@
 package com.apriori.pageobjects.navtoolbars.help;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class AboutUsPage extends LoadableComponent<AboutUsPage> {
+public class AboutUsPage extends EagerPageComponent<AboutUsPage> {
 
-    @FindBy(id = "about_us_section")
+    @FindBy(css = ".fade-in-delay")
     private WebElement aboutUs;
 
-    @FindBy(css = ".red-btn")
+    @FindBy(xpath = "//button [@class='cookie-ignore-btn']")
     private WebElement termsButton;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-
     public AboutUsPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
     }
 
     @Override
@@ -35,7 +27,7 @@ public class AboutUsPage extends LoadableComponent<AboutUsPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(aboutUs);
+        getPageUtils().waitForElementToAppear(aboutUs);
     }
 
     /**
@@ -44,7 +36,7 @@ public class AboutUsPage extends LoadableComponent<AboutUsPage> {
      * @return page object
      */
     public AboutUsPage agreeTermsAndCondition() {
-        pageUtils.waitForElementAndClick(termsButton);
+        getPageUtils().waitForElementAndClick(termsButton);
         return this;
     }
 
@@ -54,7 +46,7 @@ public class AboutUsPage extends LoadableComponent<AboutUsPage> {
      * @return String
      */
     public String getAboutUsPageUrl() {
-        return pageUtils.windowHandler(1).getCurrentUrl();
+        return getPageUtils().windowHandler(1).getCurrentUrl();
     }
 
     /**
@@ -63,8 +55,8 @@ public class AboutUsPage extends LoadableComponent<AboutUsPage> {
      * @return page object
      */
     public AboutUsPage switchTab() {
-        pageUtils.windowHandler(1);
-        return new AboutUsPage(driver);
+        getPageUtils().windowHandler(1);
+        return new AboutUsPage(getDriver());
     }
 
     /**
@@ -73,6 +65,6 @@ public class AboutUsPage extends LoadableComponent<AboutUsPage> {
      * @return String
      */
     public String getAboutUsMetaTag() {
-        return pageUtils.waitForElementToAppear(aboutUs).getAttribute("textContent");
+        return getPageUtils().waitForElementToAppear(aboutUs).getAttribute("textContent");
     }
 }
