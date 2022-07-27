@@ -17,7 +17,6 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
-import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
@@ -288,6 +287,21 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @return current page object
+     */
+    public ComponentsListPage clickScenarioCheckbox(String componentName) {
+        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
+            componentName.toUpperCase().trim()));
+        pageUtils.waitForElementToAppear(scenario);
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementAndClick(scenario);
+        return this;
+    }
+
+    /**
      * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name
@@ -367,6 +381,22 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public String getScenarioState(String componentName, String scenarioName) {
         return scenarioTableController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the scenario state of the component
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @param stateEnum     -  scenario state enum
+     * @return - string
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, stateEnum);
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 
     /**
@@ -679,37 +709,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
         return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
-    }
-
-    /**
-     * Selects the scenario by checkbox
-     *
-     * @param componentName - component name
-     * @return current page object
-     */
-    public ComponentsListPage clickScenarioCheckbox(String componentName) {
-        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
-            componentName.toUpperCase().trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
-        pageUtils.waitForElementAndClick(scenario);
-        return this;
-    }
-
-    /**
-     * Gets the scenario state of the component
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param currentUser   -  current user
-     * @param stateEnum     -  scenario state enum
-     * @return - string
-     */
-    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, stateEnum);
-
-        return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 
     /**
