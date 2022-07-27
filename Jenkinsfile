@@ -124,7 +124,9 @@ Those marked with a * are required or the job will not run
             steps {
                 echo "Building..."
                 sh """
-                    docker --no-cache \
+                    docker build \
+                        --no-cache \
+                        --target apriori-qa \
                         --tag ${buildInfo.name}-test-${timeStamp}:latest \
                         --label \"build-date=${timeStamp}\" \
                         --build-arg FOLDER=${folder} \
