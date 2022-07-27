@@ -52,8 +52,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
                 CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
-                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns(),
-                CisColumnsEnum.FULLY_BURDENED_COST.getColumns());
+                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns());
 
         softAssertions.assertAll();
 
@@ -99,8 +98,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
                 CisColumnsEnum.COMPONENT_TYPE.getColumns(), CisColumnsEnum.STATE.getColumns(), CisColumnsEnum.PROCESS_GROUP.getColumns(), CisColumnsEnum.DIGITAL_FACTORY.getColumns(), CisColumnsEnum.CREATED_AT.getColumns(),
-                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns(),
-                CisColumnsEnum.FULLY_BURDENED_COST.getColumns());
+                CisColumnsEnum.CREATED_BY.getColumns(), CisColumnsEnum.ANNUAL_VOLUME.getColumns(), CisColumnsEnum.BATCH_SIZE.getColumns(), CisColumnsEnum.DFM_RISK.getColumns(), CisColumnsEnum.STOCK_FORM.getColumns());
 
         softAssertions.assertAll();
 
@@ -281,7 +279,7 @@ public class PartsAndAssemblyTest extends TestBase {
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickPartsAndAssemblies()
-                .sortCreatedByField()
+                .sortDownDigitalFactoryField()
                 .pinToLeftProcessGroupColumn()
                 .clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
@@ -297,14 +295,14 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
-        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("sort-down");
+        softAssertions.assertThat(partsAndAssembliesPage.getDigitalFactorySortingRule()).isEqualTo("sort-up");
 
         partsAndAssembliesPage.clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
-                .sortCreatedByField()
+                .sortUpDigitalFactoryField()
                 .waitForTableResults()
-                .pinToLeftProcessGroupColumn()
+                .pinToRightProcessGroupColumn()
                 .clickFilter()
                 .clickRemoveCondition()
                 .clickDashBoard()
@@ -313,7 +311,7 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.PROCESS_GROUP.getColumns());
         softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
-        softAssertions.assertThat(partsAndAssembliesPage.getCreatedBySortingRule()).isEqualTo("sort-up");
+        softAssertions.assertThat(partsAndAssembliesPage.getDigitalFactorySortingRule()).isEqualTo("sort-down");
 
         softAssertions.assertAll();
     }

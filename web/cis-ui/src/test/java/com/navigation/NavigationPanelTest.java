@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
+import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.myuser.TermsOfUsePage;
@@ -30,6 +31,7 @@ public class NavigationPanelTest extends TestBase {
     private CisHeaderBar cisHeaderBar;
     private MyUserPage myUserPage;
     private TermsOfUsePage termsOfUsePage;
+    private ZendeskSignInPage zendeskSignInPage;
 
     @Test
     @TestRail(testCaseId = {"11992","12014","12007"})
@@ -107,6 +109,25 @@ public class NavigationPanelTest extends TestBase {
 
         leftHandNavigationBar.collapseNavigationPanel();
         softAssertions.assertThat(leftHandNavigationBar.isCollapsedAprioriLogoDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13553"})
+    @Description("Verify that user can access the 'Support' page")
+    public void testUserCanAccessTheSupportPage() {
+        loginPage = new CisLoginPage(driver);
+        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+                .clickUserIcon();
+
+        zendeskSignInPage = new MyUserPage(driver)
+                .clickSupport()
+                .switchTab();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(zendeskSignInPage.isSupportLogoDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
     }
