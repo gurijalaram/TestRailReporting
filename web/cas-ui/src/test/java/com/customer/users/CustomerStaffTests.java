@@ -7,9 +7,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsInRelativeOrder;
 import static org.hamcrest.Matchers.greaterThan;
 
+import com.apriori.cds.entity.IdentityHolder;
+import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.Customers;
+import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.customer.users.UsersListPage;
@@ -21,6 +24,7 @@ import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.UserCreation;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.components.CardsViewComponent;
 import com.apriori.utils.web.components.PaginatorComponent;
@@ -34,10 +38,13 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import org.openqa.selenium.NoSuchElementException;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class CustomerStaffTests extends TestBase {
 
@@ -49,6 +56,7 @@ public class CustomerStaffTests extends TestBase {
     private CdsTestUtil cdsTestUtil;
     private String customerIdentity;
     private UserCreation userCreation;
+    private IdentityHolder deleteIdentityHolder;
 
     @Before
     public void setup() {
@@ -76,6 +84,15 @@ public class CustomerStaffTests extends TestBase {
 
     @After
     public void teardown() {
+        if (deleteIdentityHolder != null) {
+            cdsTestUtil.delete(CDSAPIEnum.SUBLICENSE_ASSOCIATIONS_USER_BY_ID,
+                deleteIdentityHolder.customerIdentity(),
+                deleteIdentityHolder.siteIdentity(),
+                deleteIdentityHolder.licenseIdentity(),
+                deleteIdentityHolder.subLicenseIdentity(),
+                deleteIdentityHolder.userIdentity()
+            );
+        }
         sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, user.getIdentity()));
         cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
@@ -173,5 +190,66 @@ public class CustomerStaffTests extends TestBase {
         long count = cardFound.getCards("user-card").count();
 
         assertThat(count, is(equalTo(1L)));
+    }
+
+    @Test
+    @Description("Validate license details panel")
+    @TestRail(testCaseId = {"13101", "13102", "13103", "13104"})
+    public void licenseDetailsTest() {
+        String siteName = new GenerateStringUtil().generateSiteName();
+        String siteId = new GenerateStringUtil().generateSiteID();
+        ResponseWrapper<Site> site = cdsTestUtil.addSite(customerIdentity, siteName, siteId);
+        String siteIdentity = site.getResponseEntity().getIdentity();
+        String licenseId = UUID.randomUUID().toString();
+        String subLicenseId = UUID.randomUUID().toString();
+
+        ResponseWrapper<LicenseResponse> license = cdsTestUtil.addLicense(customerIdentity, siteIdentity, STAFF_TEST_CUSTOMER, siteId, licenseId, subLicenseId);
+        String licenseIdentity = license.getResponseEntity().getIdentity();
+        String subLicenseIdentity = license.getResponseEntity().getSubLicenses().stream()
+            .filter(x -> !x.getName().contains("master"))
+            .collect(Collectors.toList()).get(0).getIdentity();
+        String sublicenseName = license.getResponseEntity().getSubLicenses().stream()
+            .filter(x -> !x.getName().contains("master"))
+            .collect(Collectors.toList()).get(0).getName();
+        String userName = sourceUsers.get(0).getUsername();
+        String userIdentity = sourceUsers.get(0).getIdentity();
+
+        cdsTestUtil.addSubLicenseAssociationUser(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
+
+        UsersListPage openLicenseDetails = usersListPage.clickLicenceDetailsButton("left");
+
+        assertThat(openLicenseDetails.getDetailsText(), is(equalTo("Select a User")));
+
+        PageUtils utils = new PageUtils(getDriver());
+        SourceListComponent users = usersListPage.getUsersList();
+        Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+        users.selectTableLayout();
+        Obligation.mandatory(users::getTable, "The table layout is not active")
+            .getRows()
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("User %s is missing.", userName)))
+            .getCell("identity")
+            .click();
+
+        SourceListComponent licenses = openLicenseDetails.getLicenseDetailsList();
+        TableComponent licenseTable = Obligation.mandatory(licenses::getTable, "The license table is missing");
+
+        long siteRow = licenseTable.getRows().filter(row -> row.getCell("siteName").hasValue(siteName)).count();
+        assertThat("There is no site in details", siteRow, is(equalTo(1L)));
+
+        long assignedLicense = licenseTable.getRows().filter(row -> row.getCell("subLicenseName").hasValue(sublicenseName)).count();
+        assertThat("There is no sublicense in details", assignedLicense, is(equalTo(1L)));
+
+        openLicenseDetails.clickLicenceDetailsButton("right");
+        assertThat(usersListPage.isDetailsPanelOpened("right"), is(equalTo(false)));
+
+        deleteIdentityHolder = IdentityHolder.builder()
+            .customerIdentity(customerIdentity)
+            .siteIdentity(siteIdentity)
+            .licenseIdentity(licenseIdentity)
+            .subLicenseIdentity(subLicenseIdentity)
+            .userIdentity(userIdentity)
+            .build();
     }
 }
