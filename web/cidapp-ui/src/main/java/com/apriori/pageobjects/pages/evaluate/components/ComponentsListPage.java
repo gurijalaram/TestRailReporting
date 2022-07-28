@@ -96,6 +96,12 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = ".sub-component-tree .table-body")
     private WebElement componentTable;
 
+    @FindBy(id = "qa-sub-components-detail-card-filter-selector")
+    private WebElement filterDropdown;
+
+    @FindBy(css = "div.no-content.medium-no-content")
+    private WebElement noScenariosMessage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private PanelController panelController;
@@ -281,6 +287,21 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
+     * Selects the scenario by checkbox
+     *
+     * @param componentName - component name
+     * @return current page object
+     */
+    public ComponentsListPage clickScenarioCheckbox(String componentName) {
+        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
+            componentName.toUpperCase().trim()));
+        pageUtils.waitForElementToAppear(scenario);
+        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
+        pageUtils.waitForElementAndClick(scenario);
+        return this;
+    }
+
+    /**
      * Multi-select subcomponents
      *
      * @param componentScenarioName - component name and method name
@@ -360,6 +381,22 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public String getScenarioState(String componentName, String scenarioName) {
         return scenarioTableController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
+     * Gets the scenario state of the component
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @param stateEnum     -  scenario state enum
+     * @return - string
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, stateEnum);
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
     }
 
     /**
@@ -675,33 +712,70 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     }
 
     /**
-     * Selects the scenario by checkbox
+     * Uses type ahead to input the filter
      *
-     * @param componentName - component name
+     * @param filter - the filter
      * @return current page object
      */
-    public ComponentsListPage clickScenarioCheckbox(String componentName) {
-        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
-            componentName.toUpperCase().trim()));
-        pageUtils.waitForElementToAppear(scenario);
-        pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
-        pageUtils.waitForElementAndClick(scenario);
+    public ComponentsListPage selectFilter(String filter) {
+        pageUtils.typeAheadSelect(filterDropdown, "qa-sub-components-detail-card-filter-selector", filter);
+        setPagination();
         return this;
     }
 
     /**
-     * Gets the scenario state of the component
+     * Gets no scenarios message
      *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
-     * @param currentUser   -  current user
-     * @param stateEnum     -  scenario state enum
-     * @return - string
+     * @return string
      */
-    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponent(componentName, scenarioName, currentUser, stateEnum);
+    public String getScenarioMessage() {
+        return pageUtils.waitForElementToAppear(noScenariosMessage).getText();
+    }
 
-        return itemResponse.stream().filter(item ->
-            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    /**
+     * Gets all scenario State from Explorer Table
+     *
+     * @return - list of all scenario state
+     */
+    public List<String> getAllScenarioState() {
+        List<WebElement> rowsStateCol =
+            pageUtils.waitForElementsToAppear(By.xpath("//*[local-name()='svg' and contains(@class,'scenario-state-icon fa-1-5x')]"));
+        List<String> rowStateNames = rowsStateCol.stream().map(s -> s.getAttribute("data-icon")).collect(Collectors.toList());
+        List<String> stateNames = rowStateNames.stream().map(s -> changeToProperNames(s)).collect(Collectors.toList());
+        return stateNames;
+    }
+
+    private String changeToProperNames(String s) {
+        if (s.equals("circle-minus")) {
+            return "Uncosted";
+        } else if (s.equals("check")) {
+            return "Costed";
+        }
+        return null;
+    }
+
+    /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        return element.isDisplayed();
+    }
+
+    /**
+     * Gets all scenario Component Names from Explorer Table
+     *
+     * @return - list of all scenario Component Names
+     */
+    public List<String> getAllScenarioComponentName(int size) {
+        List<WebElement> rows =
+            pageUtils.waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"),size);
+        List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
+        componentNames.remove("Component Name");
+        return componentNames;
     }
 }

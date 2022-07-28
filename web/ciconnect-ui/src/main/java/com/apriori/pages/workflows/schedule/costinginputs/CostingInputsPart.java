@@ -4,7 +4,6 @@ import com.apriori.pages.CICBasePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.notifications.NotificationsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
-
 import com.apriori.utils.StringUtils;
 
 import lombok.extern.slf4j.Slf4j;

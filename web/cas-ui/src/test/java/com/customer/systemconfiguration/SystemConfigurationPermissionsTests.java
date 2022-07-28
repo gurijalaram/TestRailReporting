@@ -17,6 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 
@@ -24,6 +25,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Ignore("Feature is not fully ready yet.  Can remove this once fully built e2e.")
 public class SystemConfigurationPermissionsTests extends TestBase {
     private SystemConfigurationPermissionsPage systemConfigurationPermissionsPage;
 
