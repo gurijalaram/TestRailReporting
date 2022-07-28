@@ -1,12 +1,5 @@
 package com.customer.users;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInRelativeOrder;
-import static org.hamcrest.Matchers.greaterThan;
-
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.entity.response.LicenseResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
@@ -57,6 +50,7 @@ public class CustomerStaffTests extends TestBase {
     private String customerIdentity;
     private UserCreation userCreation;
     private IdentityHolder deleteIdentityHolder;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void setup() {
@@ -102,7 +96,6 @@ public class CustomerStaffTests extends TestBase {
     @Category(SmokeTest.class)
     @TestRail(testCaseId = {"4061", "4380", "10572", "10574", "10580"})
     public void testCustomerStaffTableViewHasCorrectDetails() {
-        SoftAssertions soft = new SoftAssertions();
         UsersListPage goToTableView = usersListPage
                 .clickTableViewButton()
                 .validateCustomerStaffTableArePageableRefreshable(soft)
@@ -126,7 +119,9 @@ public class CustomerStaffTests extends TestBase {
         TableComponent usersTable = Obligation.mandatory(users::getTable, "The users list table is missing");
 
         long rows = usersTable.getRows().count();
-        assertThat("There are no users on next page.", rows, is(greaterThan(0L)));
+        soft.assertThat(rows)
+            .overridingErrorMessage("There are no users on next page.")
+            .isGreaterThan(0L);
 
         paginator.clickFirstPage().getPageSize().select("20");
         utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
@@ -148,7 +143,10 @@ public class CustomerStaffTests extends TestBase {
         SourceListComponent searchResult = goToTableView.getUsersList();
         TableComponent userFound = Obligation.mandatory(searchResult::getTable, "The user was not found");
         long count = userFound.getRows().count();
-        assertThat(count, is(equalTo(1L)));
+        soft.assertThat(count)
+            .overridingErrorMessage("Expected 1 user is displayed")
+            .isEqualTo(1L);
+        soft.assertAll();
     }
 
     @Test
@@ -168,17 +166,24 @@ public class CustomerStaffTests extends TestBase {
         CardsViewComponent usersGrid = Obligation.mandatory(users::getCardGrid, "The customer staff grid is missing");
 
         long cards = usersGrid.getCards("user-card").count();
-        assertThat(cards, is(equalTo(10L)));
+        soft.assertThat(cards)
+            .overridingErrorMessage("Expected 10 cards are dislayed")
+            .isEqualTo(10L);
         utils.waitForCondition(usersGrid::isStable, PageUtils.DURATION_LOADING);
 
         String userName = sourceUsers.get(0).getUsername();
         String userIdentity = sourceUsers.get(0).getIdentity();
 
-        assertThat(goToCardView.getFieldName(customerIdentity, userIdentity), containsInRelativeOrder("Identity:", "Email:", "Created:"));
-        assertThat(goToCardView.isIconColour(customerIdentity, userIdentity,"green"), is(true));
+        soft.assertThat(goToCardView.getFieldName(customerIdentity, userIdentity))
+            .overridingErrorMessage("Expected field names are Identity, Email and Created")
+            .containsExactly("Identity:", "Email:", "Created:");
+        soft.assertThat(goToCardView.isIconColour(customerIdentity, userIdentity, "green"))
+            .overridingErrorMessage("Icon color should be green")
+            .isTrue();
 
         UserProfilePage openProfile = goToCardView.selectCard(customerIdentity, userIdentity);
-        assertThat(openProfile, is(notNullValue()));
+        soft.assertThat(openProfile)
+            .isNotNull();
 
         openProfile.backToUsersListPage(UsersListPage.class)
             .clickCardViewButton();
@@ -189,7 +194,10 @@ public class CustomerStaffTests extends TestBase {
         CardsViewComponent cardFound = Obligation.mandatory(searchResult::getCardGrid, "The user was not found");
         long count = cardFound.getCards("user-card").count();
 
-        assertThat(count, is(equalTo(1L)));
+        soft.assertThat(count)
+            .overridingErrorMessage("Expected 1 card is displayed")
+            .isEqualTo(1L);
+        soft.assertAll();
     }
 
     @Test
@@ -218,7 +226,9 @@ public class CustomerStaffTests extends TestBase {
 
         UsersListPage openLicenseDetails = usersListPage.clickLicenceDetailsButton("left");
 
-        assertThat(openLicenseDetails.getDetailsText(), is(equalTo("Select a User")));
+        soft.assertThat(openLicenseDetails.getDetailsText())
+            .overridingErrorMessage("Expected 'Select a User' placeholder is displayed")
+            .isEqualTo("Select a User");
 
         PageUtils utils = new PageUtils(getDriver());
         SourceListComponent users = usersListPage.getUsersList();
@@ -236,13 +246,20 @@ public class CustomerStaffTests extends TestBase {
         TableComponent licenseTable = Obligation.mandatory(licenses::getTable, "The license table is missing");
 
         long siteRow = licenseTable.getRows().filter(row -> row.getCell("siteName").hasValue(siteName)).count();
-        assertThat("There is no site in details", siteRow, is(equalTo(1L)));
+        soft.assertThat(siteRow)
+            .overridingErrorMessage(String.format("Expected site with name %s is displayed", siteName))
+            .isEqualTo(1L);
 
         long assignedLicense = licenseTable.getRows().filter(row -> row.getCell("subLicenseName").hasValue(sublicenseName)).count();
-        assertThat("There is no sublicense in details", assignedLicense, is(equalTo(1L)));
+        soft.assertThat(assignedLicense)
+            .overridingErrorMessage(String.format("Expected sublicense %s is displayed", sublicenseName))
+            .isEqualTo(1L);
 
         openLicenseDetails.clickLicenceDetailsButton("right");
-        assertThat(usersListPage.isDetailsPanelOpened("right"), is(equalTo(false)));
+        soft.assertThat(usersListPage.isDetailsPanelOpened("right"))
+            .overridingErrorMessage("Detail panel expected to be closed")
+            .isFalse();
+        soft.assertAll();
 
         deleteIdentityHolder = IdentityHolder.builder()
             .customerIdentity(customerIdentity)
