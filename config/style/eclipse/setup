@@ -1,0 +1,10 @@
+Install and setup:
+Install the checkstyle plugin https://checkstyle.org/eclipse-cs/#!/ (drag and drop the Install button into Eclipse)
+Window -> Preferences -> Checkstyle -> New -> Type: External -> Select /build/checkstyle.xml -> Set it as default once its added
+Window -> Preferences -> Java -> Code Style -> Clean Up -> Import /build/style/eclipse/cleanup.xml
+Window -> Preferences -> Java -> Code Style -> Formatter -> Import /build/style/eclipse/eclipse_style.xml
+Window -> Preferences -> Java -> Code Style -> Organize Imports -> Import /build/style/eclipse/eclipse.importorder
+
+Usage:
+Add checkstyle view: Window -> Show View -> Other -> Checkstyle/Checkstyle violations
+To check a file or module: right click on it -> Checkstyle -> Check code with checkstyle
