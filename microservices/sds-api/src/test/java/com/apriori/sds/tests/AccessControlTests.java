@@ -14,6 +14,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
+
 import jdk.jfr.Description;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
@@ -81,7 +82,7 @@ public class AccessControlTests extends SDSTestUtil {
 
         ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).delete();
 
-        if(response.getStatusCode() == HttpStatus.SC_NO_CONTENT) {
+        if (response.getStatusCode() == HttpStatus.SC_NO_CONTENT) {
             scenariosToDelete.remove(componentToDeleteForTestingUser);
         }
 
