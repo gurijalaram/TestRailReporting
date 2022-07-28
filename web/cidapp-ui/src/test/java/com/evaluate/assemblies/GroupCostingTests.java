@@ -174,7 +174,9 @@ public class GroupCostingTests extends TestBase {
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(
                 componentsListPage.getScenarioState(subComponentName.toUpperCase(), scenarioName)).as("Costing Icon").isEqualTo("gear");
-            //ToDo:- Select each component and assert set inputs button is disabled
+            componentsListPage.multiSelectSubcomponents(subComponentName + "," + scenarioName);
+            softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).as("Set Inputs Button state").isFalse();
+            componentsListPage.multiSelectSubcomponents(subComponentName + "," + scenarioName);
         });
 
         componentsListPage.checkSubcomponentState(componentAssembly, subComponentNames.toArray(new String[subComponentNames.size()]));
