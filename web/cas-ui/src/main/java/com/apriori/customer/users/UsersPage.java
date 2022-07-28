@@ -25,6 +25,10 @@ public final class UsersPage extends EagerPageComponent<UsersPage> {
     private WebElement aPrioriStaffTabRoot;
     private final RoutingComponent aPrioriStaffTab;
 
+    @FindBy(xpath = "//a[.='aPriori Staff Access History']")
+    private WebElement aPrioriAccessHistoryTabRoot;
+    private final RoutingComponent aPrioriAccessHistoryTab;
+
     /**
      * Initializes a new instance of this object.
      *
@@ -39,6 +43,7 @@ public final class UsersPage extends EagerPageComponent<UsersPage> {
 
         // Optional Tabs
         aPrioriStaffTab = getPageUtils().isElementDisplayed(aPrioriStaffTabRoot) ? new RoutingComponent(getDriver(), aPrioriStaffTabRoot) : null;
+        aPrioriAccessHistoryTab = getPageUtils().isElementDisplayed(aPrioriAccessHistoryTabRoot) ? new RoutingComponent(getDriver(), aPrioriAccessHistoryTabRoot) : null;
     }
 
     /**
@@ -78,5 +83,15 @@ public final class UsersPage extends EagerPageComponent<UsersPage> {
     public StaffPage goToStaffPage() {
         aPrioriStaffTab.navigate();
         return new StaffPage(getDriver());
+    }
+
+    /**
+     * Navigates to the aPriori Staff History tab.
+     *
+     * @return The aPriori Staff History tab
+     */
+    public StaffAccessHistoryPage goToAccessHistory() {
+        aPrioriAccessHistoryTab.navigate();
+        return new StaffAccessHistoryPage(getDriver());
     }
 }

@@ -5,6 +5,7 @@ import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.evaluate.CostAllCadTests;
 import com.evaluate.GroupCostingTests;
+import com.evaluate.GroupEditTests;
 import com.evaluate.IncludeAndExcludeTests;
 import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
@@ -22,12 +23,13 @@ import testsuites.suiteinterfaces.SmokeTests;
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
     CostAllCadTests.class,
-    GroupCostingTests.class,
     ListOfDigitalFactoryTests.class,
     ListProcessGroupTests.class,
     ScenariosTests.class,
     ReCostScenarioTests.class,
-    IncludeAndExcludeTests.class
+    IncludeAndExcludeTests.class,
+    GroupCostingTests.class,
+    GroupEditTests.class
 })
 public class RegressionTestSuite {
 }

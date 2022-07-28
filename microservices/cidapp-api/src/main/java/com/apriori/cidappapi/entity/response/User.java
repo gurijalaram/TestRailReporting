@@ -41,4 +41,9 @@ public class User {
 
     public static class CustomProperties {
     }
+
+    @Data
+    public static class CustomAttributes {
+        private Integer workspaceId;
+    }
 }

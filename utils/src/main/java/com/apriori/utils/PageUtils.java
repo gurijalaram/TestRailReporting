@@ -4,6 +4,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElementsToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.or;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
@@ -666,6 +667,32 @@ public class PageUtils {
     }
 
     /**
+     * Checks the specific elements number are displayed
+     *
+     * @param element - the element
+     * @return int
+     */
+    public List<WebElement> waitForSpecificElementsNumberToAppear(By element, int size) {
+        long webDriverWait = 5L;
+        int retries = 0;
+        int maxRetries = 12;
+
+        while (retries < maxRetries) {
+            try {
+
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(numberOfElementsToBe(element,size));
+
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
+        }
+        return driver.findElements(element);
+    }
+
+    /**
      * Checks element is not displayed by size
      *
      * @param element - the element
@@ -1179,6 +1206,7 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String root, String locatorValue) {
+        String str = String.format("//div[@id='%s']//div[@class]", root);
         if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(locatorValue)) {
             waitForElementAndClick(dropdownSelector);
             waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
