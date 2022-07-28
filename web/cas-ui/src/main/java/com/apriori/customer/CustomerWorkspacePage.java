@@ -6,7 +6,6 @@ import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
 import com.apriori.security.SecurityPage;
-import com.apriori.siteLicenses.SitesLicensesPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
@@ -33,10 +32,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     @FindBy(xpath = "//a[.='Users']")
     private WebElement usersTabRoot;
     private RoutingComponent usersTab;
-
-    @FindBy(xpath = "//a[.='Sites & Licenses']")
-    private WebElement siteLicenseTabRoot;
-    private RoutingComponent siteLicenseTab;
 
     @FindBy(xpath = "//a[.='Infrastructure']")
     private WebElement infrastructureTabRoot;
@@ -89,7 +84,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         // Required Tabs
         profileTab = new RoutingComponent(getDriver(), profileTabRoot);
         usersTab = new RoutingComponent(getDriver(), usersTabRoot);
-        siteLicenseTab = new RoutingComponent(getDriver(), siteLicenseTabRoot);
         infrastructureTab = new RoutingComponent(getDriver(), infrastructureTabRoot);
         systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
 
@@ -126,15 +120,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      */
     public RoutingComponent getUsersTab() {
         return usersTab;
-    }
-
-    /**
-     * Gets the sites and licenses tab.
-     *
-     * @return The sites and licenses tab.
-     */
-    public RoutingComponent getSiteLicenseTab() {
-        return siteLicenseTab;
     }
 
     /**
@@ -182,16 +167,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     public UsersPage goToUsersPage() {
         usersTab.navigate();
         return new UsersPage(getDriver());
-    }
-
-    /**
-     * Go to sites and licenses tab
-     *
-     * @return new page object
-     */
-    public SitesLicensesPage goToSitesLicenses() {
-        siteLicenseTab.navigate();
-        return new SitesLicensesPage(getDriver());
     }
 
     /**

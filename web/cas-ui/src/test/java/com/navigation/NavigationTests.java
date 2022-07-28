@@ -8,7 +8,6 @@ import com.apriori.customer.users.UsersPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
-import com.apriori.siteLicenses.SitesLicensesPage;
 import com.apriori.testsuites.categories.SmokeTest;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.properties.PropertiesContext;
@@ -54,9 +53,6 @@ public class NavigationTests extends TestBase {
         soft.assertThat(ImportPage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "ImportPage")
             .isInstanceOf(LoadableComponent.class);
-        soft.assertThat(SitesLicensesPage.getViaURL(driver, customerID))
-            .overridingErrorMessage(errorMessage, "SitesLicensesPage")
-            .isInstanceOf(LoadableComponent.class);
         soft.assertThat(InfrastructurePage.getViaURL(driver, customerID))
             .overridingErrorMessage(errorMessage, "InfrastructurePage")
             .isInstanceOf(LoadableComponent.class);
@@ -82,8 +78,6 @@ public class NavigationTests extends TestBase {
         validateOnPageURL(soft, "/users/customer-staff");
         usersPage.goToImport();
         validateOnPageURL(soft,  "/users/import");
-        customerProfilePage.goToSitesLicenses();
-        validateOnPageURL(soft, "/sites-and-licenses");
         customerProfilePage.goToInfrastructure();
         validateOnPageURL(soft, "/infrastructure");
 
