@@ -116,7 +116,9 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify that user can access the 'Support' page")
     public void testUserCanAccessTheSupportPage() {
         loginPage = new CisLoginPage(driver);
-        myUserPage = loginPage.cisLogin(UserUtil.getUser())
+        zendeskSignInPage = loginPage.cisLogin(UserUtil.getUser())
+        .clickUserIcon()
+        .clickSupport()
                 .clickUserIcon();
 
         zendeskSignInPage = new MyUserPage(driver)
