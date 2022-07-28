@@ -21,6 +21,8 @@ import com.apriori.cidappapi.entity.response.scenarios.ImageResponse;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifest;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -528,6 +530,56 @@ public class ScenariosUtil {
                     .collect(Collectors.toList()).get(0));
             }
         }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+                .body(PublishRequest.builder()
+                    .groupItems(subComponentInfo
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .options(Options.builder()
+                        .scenarioName(publishRequest.getScenarioName())
+                        .override(publishRequest.getOverride())
+                        .costMaturity(publishRequest.getCostMaturity().toUpperCase())
+                        .status(publishRequest.getStatus().toUpperCase())
+                        .build())
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to publish group of scenarios
+     *
+     * @param publishRequest        - the publish request
+     * @param workspaceId           - the workspace id
+     * @param componentInfo         - the component info object
+     * @param componentScenarioName - the component and scenario name
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioSuccessesFailures> postPublishGroupScenarios(PublishRequest publishRequest, int workspaceId, ComponentInfoBuilder componentInfo, String... componentScenarioName) {
+
+
+        List<String[]> componentScenarioNames = Arrays.stream(componentScenarioName).map(x -> x.split(",")).collect(Collectors.toList());
+        List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
+
+        for (String[] componentScenario : componentScenarioNames) {
+
+            ScenarioItem component = new CssComponent().getWorkspaceComponent(workspaceId, componentScenario[0], componentScenario[1], componentInfo.getUser());
+
+            subComponentInfo.add(ComponentInfoBuilder.builder()
+                .componentName(component.getComponentName())
+                .scenarioName(component.getScenarioName())
+                .componentIdentity(component.getComponentIdentity())
+                .scenarioIdentity(component.getScenarioIdentity())
+                .build());
+        }
+
 
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
