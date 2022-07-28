@@ -18,6 +18,7 @@ import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
 
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.core.Is;
 import org.junit.Test;
 
 public class NavigationPanelTest extends TestBase {
@@ -123,10 +124,6 @@ public class NavigationPanelTest extends TestBase {
                 .clickSupport()
                 .switchTab();
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(zendeskSignInPage.isSupportLogoDisplayed()).isEqualTo(true);
-
-        softAssertions.assertAll();
+        assertThat(zendeskSignInPage.isSupportLogoDisplayed(), is(true));
     }
 }
