@@ -1,4 +1,4 @@
-package com.apriori.pageobjects.navtoolbars.help;
+package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.utils.web.components.EagerPageComponent;
 

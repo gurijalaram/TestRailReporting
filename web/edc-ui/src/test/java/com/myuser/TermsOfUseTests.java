@@ -3,7 +3,7 @@ package com.myuser;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.pageobjects.navtoolbars.myuser.TermsOfUsePage;
+import com.apriori.pageobjects.navtoolbars.TermsOfUsePage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;

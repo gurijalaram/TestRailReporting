@@ -1,9 +1,5 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.pageobjects.navtoolbars.help.AboutUsPage;
-import com.apriori.pageobjects.navtoolbars.help.ZendeskSignInPage;
-import com.apriori.pageobjects.navtoolbars.myuser.MyProfilePage;
-import com.apriori.pageobjects.navtoolbars.myuser.TermsOfUsePage;
 import com.apriori.pageobjects.pages.login.AccountsPage;
 import com.apriori.pageobjects.pages.login.EdcAppLoginPage;
 import com.apriori.pageobjects.pages.login.FileUploadPage;
