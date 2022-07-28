@@ -50,16 +50,6 @@ public class AboutUsPage extends EagerPageComponent<AboutUsPage> {
     }
 
     /**
-     * Switches from parent to child tab
-     *
-     * @return page object
-     */
-    public AboutUsPage switchTab() {
-        getPageUtils().windowHandler(1);
-        return new AboutUsPage(getDriver());
-    }
-
-    /**
      * Gets About Us meta tag
      *
      * @return String

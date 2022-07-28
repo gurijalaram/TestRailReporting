@@ -28,16 +28,6 @@ public class ZendeskSignInPage extends EagerPageComponent<ZendeskSignInPage> {
     }
 
     /**
-     * Switches from parent to child tab
-     *
-     * @return page object
-     */
-    public ZendeskSignInPage switchTab() {
-        getPageUtils().windowHandler(1);
-        return this;
-    }
-
-    /**
      * Gets the current url
      *
      * @return string

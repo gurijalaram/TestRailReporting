@@ -32,10 +32,10 @@ public class NavigationBar extends EagerPageComponent<NavigationBar> {
     @FindBy(css = "[data-icon='sign-out-alt']")
     private WebElement logoutButton;
 
-    @FindBy(css = "[data-icon='user']")
+    @FindBy(css = ".dropdown-item [data-icon='user']")
     private WebElement myProfile;
 
-    @FindBy(css = "[data-icon='gavel']")
+    @FindBy(css = ".dropdown-item [data-icon='gavel']")
     private WebElement termsOfUse;
 
     @FindBy(css = ".dropdown-item [data-icon='folder-plus']")
