@@ -117,11 +117,7 @@ public class NavigationPanelTest extends TestBase {
     public void testUserCanAccessTheSupportPage() {
         loginPage = new CisLoginPage(driver);
         zendeskSignInPage = loginPage.cisLogin(UserUtil.getUser())
-        .clickUserIcon()
-        .clickSupport()
-                .clickUserIcon();
-
-        zendeskSignInPage = new MyUserPage(driver)
+                .clickUserIcon()
                 .clickSupport()
                 .switchTab();
 
