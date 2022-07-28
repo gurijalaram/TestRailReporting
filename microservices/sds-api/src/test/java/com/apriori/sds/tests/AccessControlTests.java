@@ -1,11 +1,8 @@
 package com.apriori.sds.tests;
 
-import static org.junit.Assert.assertEquals;
-
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
-import com.apriori.sds.entity.response.Scenario;
 import com.apriori.sds.entity.response.ScenarioItemsResponse;
 import com.apriori.sds.util.SDSTestUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -19,7 +16,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import jdk.jfr.Description;
 import org.apache.http.HttpStatus;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -66,7 +62,6 @@ public class AccessControlTests extends SDSTestUtil {
                 .body("scenario", scenarioRequestBody);
 
         ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).patch();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CONFLICT, response.getStatusCode());
     }
 
@@ -115,26 +110,6 @@ public class AccessControlTests extends SDSTestUtil {
                 .body("scenario", scenarioRequestBody);
 
         ResponseWrapper<Void> response = HTTPRequest.build(requestEntity).post();
-
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CONFLICT, response.getStatusCode());
     }
-
-//    private ResponseWrapper<Scenario> publishScenario(final UserCredentials userCredentials) {
-//        final String publishScenarioName = new GenerateStringUtil().generateScenarioName();
-//        final ScenarioItem testingComponent = postTestingComponentAndAddToRemoveList();
-//
-//        PostComponentRequest scenarioRequestBody = PostComponentRequest.builder()
-//            .scenarioName(publishScenarioName)
-//            .override(false)
-//            .updatedBy(testingComponent.getCreatedBy())
-//            .build();
-//
-//        final RequestEntity requestEntity =
-//            RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, Scenario.class)
-//                .token(userCredentials.getToken())
-//                .inlineVariables(testingComponent.getComponentIdentity(), testingComponent.getScenarioIdentity())
-//                .body("scenario", scenarioRequestBody);
-//
-//        return HTTPRequest.build(requestEntity).post();
-//    }
 }
