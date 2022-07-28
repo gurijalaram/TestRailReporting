@@ -13,7 +13,6 @@ dependencies {
     implementation group: 'org.hibernate', name: 'hibernate-core', version: '5.2.6.Final'
     implementation group: 'mysql', name: 'mysql-connector-java', version: '5.1.40'
 
-
 // TODO migrate o separate module
 
 //    implementation group: 'com.fbc', name: 'fbc-util-core', version: '+'

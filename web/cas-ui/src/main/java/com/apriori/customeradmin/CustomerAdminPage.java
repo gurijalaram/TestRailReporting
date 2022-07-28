@@ -7,7 +7,6 @@ import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
-
 import com.apriori.utils.web.components.TableComponent;
 import com.apriori.utils.web.components.TableHeaderComponent;
 
@@ -138,7 +137,7 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
      */
     public boolean isStatusIconColour(String color) {
         return getPageUtils().waitForElementToAppear(By.cssSelector(".apriori-card.card.customer-card.light.medium-card svg[role='img']"))
-                .getAttribute("color").equals(color);
+            .getAttribute("color").equals(color);
     }
 
     /**
@@ -155,8 +154,8 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
      * Validates that table has a correct columns
      *
      * @param expectedName name of column
-     * @param id id of column
-     * @param soft soft assertions
+     * @param id           id of column
+     * @param soft         soft assertions
      * @return This object
      */
     public CustomerAdminPage validateCustomersTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft) {
@@ -180,7 +179,7 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     /**
      * Validates that table columns are sortable
      *
-     * @param id - id of column
+     * @param id   - id of column
      * @param soft - soft assertions
      * @return This object
      */

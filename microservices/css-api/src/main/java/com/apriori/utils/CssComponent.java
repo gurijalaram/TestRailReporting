@@ -118,4 +118,52 @@ public class CssComponent {
             componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
         );
     }
+
+    /**
+     * Gets a css component that is NOT in PROCESSING state
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ResponseWrapper<CssComponentResponse> getSimpleCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
+            .token(userCredentials.getToken());
+
+        ResponseWrapper<CssComponentResponse> response = HTTPRequest.build(requestEntity).get();
+
+        while (response.getResponseEntity().getItems().isEmpty()) {
+            response = HTTPRequest.build(requestEntity).get();
+        }
+
+        while (response.getResponseEntity().getItems().stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
+            .findAny()
+            .get()
+            .getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING.getState())) {
+            response = HTTPRequest.build(requestEntity).get();
+        }
+
+        return response;
+    }
+
+    /**
+     * Gets a css component specified by workspace id
+     *
+     * @param workspaceId     - the workspace id
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - the user credentials
+     * @return response object
+     */
+    public ScenarioItem getWorkspaceComponent(int workspaceId, String componentName, String scenarioName, UserCredentials userCredentials) {
+        return getSimpleCssComponent(componentName, scenarioName, userCredentials)
+            .getResponseEntity()
+            .getItems()
+            .stream()
+            .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(workspaceId))
+            .collect(Collectors.toList()).get(0);
+    }
 }
