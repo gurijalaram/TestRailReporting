@@ -282,4 +282,56 @@ public class GroupEditTests {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"11855"})
+    @Description("Publish private sub-component with public counterpart Setting Override to true")
+    public void testGroupPublishPrivateSubcomponentTrueOverride() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String STAND = "stand";
+        String assemblyName = "oldham";
+        final String assemblyExtension = ".asm.1";
+
+        List<String> subComponentNames = Arrays.asList(STAND);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".prt.1";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        User user = new PeopleUtil().getCurrentUser(currentUser);
+
+        PublishRequest publishRequest = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial")
+            .override(true)
+            .status("New")
+            .scenarioName(newScenarioName)
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(), componentAssembly,
+            STAND + "," + scenarioName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        componentAssembly.getSubComponents().forEach(scenario -> scenariosUtil.getScenarioRepresentation(scenario, ScenarioStateEnum.NOT_COSTED));
+
+        List<ScenarioItem> standItem = cssComponent.getSimpleCssComponent(STAND, newScenarioName, currentUser).getResponseEntity().getItems();
+        softAssertions.assertThat(standItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
+        softAssertions.assertThat(standItem.stream().findAny().get().getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId());
+
+        softAssertions.assertAll();
+    }
 }
