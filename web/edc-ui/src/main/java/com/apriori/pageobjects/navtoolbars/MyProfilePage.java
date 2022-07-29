@@ -1,16 +1,14 @@
-package com.apriori.pageobjects.navtoolbars.myuser;
+package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class MyProfilePage extends LoadableComponent<MyProfilePage> {
+public class MyProfilePage extends EagerPageComponent<MyProfilePage> {
 
     @FindBy(css = "div[class='panel'] .panel-title")
     private WebElement myProfile;
@@ -18,15 +16,9 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
     @FindBy(id = "name")
     private WebElement username;
 
-    private final WebDriver driver;
-    private final PageUtils pageUtils;
-
     public MyProfilePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver, log);
+
     }
 
     @Override
@@ -35,7 +27,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(myProfile);
+        getPageUtils().waitForElementToAppear(myProfile);
     }
 
     /**
@@ -44,7 +36,7 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
      * @return String
      */
     public String getUserProfileUrl() {
-        return driver.getCurrentUrl();
+        return getDriver().getCurrentUrl();
     }
 
     /**
@@ -53,6 +45,6 @@ public class MyProfilePage extends LoadableComponent<MyProfilePage> {
      * @return boolean
      */
     public boolean isTextFieldEnabled() {
-        return pageUtils.waitForElementToAppear(username).isEnabled();
+        return getPageUtils().waitForElementToAppear(username).isEnabled();
     }
 }
