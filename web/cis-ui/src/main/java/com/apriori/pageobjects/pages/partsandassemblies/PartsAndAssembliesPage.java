@@ -629,8 +629,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return new page object
      */
-    public PartsAndAssembliesDetailsPage clickOnScenarioName(String scenarioName) {
-        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']")));
+    public PartsAndAssembliesDetailsPage clickOnComponentName(String componentName) {
+        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='componentName']//p[text()='" + componentName + "']")));
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 

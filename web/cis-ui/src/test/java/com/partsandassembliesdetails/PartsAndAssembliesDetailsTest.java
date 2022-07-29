@@ -38,7 +38,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -69,7 +69,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -126,7 +126,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -154,7 +154,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName)
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
                 .clickPartNestingIcon();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -186,7 +186,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName)
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
                 .clickMaterialPropertiesIcon();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -217,7 +217,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName)
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
                 .clickMaterialStockIcon();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -248,7 +248,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -275,7 +275,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnScenarioName(scenarioName);
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreateNewCardOptionDisplayed()).isEqualTo(true);
 
         partsAndAssembliesDetailsPage.clickToOpenModal()
