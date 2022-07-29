@@ -22,9 +22,6 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
     @FindBy(xpath = "//button[.='20']")
     private WebElement paginator;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     public ElectronicsDataCollectionPage(WebDriver driver) {
         super(driver, log);
     }
