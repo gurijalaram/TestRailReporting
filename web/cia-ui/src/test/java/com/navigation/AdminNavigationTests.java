@@ -66,7 +66,7 @@ public class AdminNavigationTests extends TestBase {
     @Category(OnPremTest.class)
     @TestRail(testCaseId = {"2982"})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
-    public void testHelpCostInsightReportGuideNavigation() throws Exception {
+    public void testHelpCostInsightReportGuideNavigation() {
         cirUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToHelpReportsGuide()
