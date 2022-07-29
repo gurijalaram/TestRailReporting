@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: int-core
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/
@@ -7,7 +7,10 @@ global:
   users_csv_file: common-users.csv
   different_users: true
   different_parts: true
-  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
+# TODO z: should be migrated to environment variable
+  auth_cloud_context: "H337GKD0LA0MH337GKD0LA0N70EGN68B5CMHHINFI93FGL80"
+#  cloud context for qa-cid-perf
+#  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
 
   db_recording: true
 
