@@ -4,6 +4,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 
 import com.opencsv.CSVReader;
 import com.opencsv.CSVReaderBuilder;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.nio.file.Files;
 import java.util.List;
 
 @Slf4j
@@ -64,6 +66,16 @@ public class FileResourceUtil {
             log.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
+    }
+
+    @SneakyThrows
+    public static File getS3FileAndSaveWithUniqueName(String s3ComponentName, ProcessGroupEnum processGroup) {
+        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(s3ComponentName);
+        File tempFile = getCloudFile(processGroup, s3ComponentName);
+        File newFile = new File(tempFile.getParent(), uniqueComponentName);
+        Files.move(tempFile.toPath(), newFile.toPath());
+
+        return newFile;
     }
 
     /**
