@@ -41,6 +41,7 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
+import java.io.File;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -109,8 +110,8 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return object
      */
     protected static ScenarioItem postTestingComponentAndAddToRemoveList() {
-        String componentName = "AGC0-LP-700144754.prt.1";
-        ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "AGC0-LP-700144754.prt.1";
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
 
         return postPart(componentName, processGroup);
     }
@@ -154,12 +155,13 @@ public abstract class SDSTestUtil extends TestUtil {
      */
     protected static ScenarioItem postPart(String componentName, ProcessGroupEnum processGroup) {
         final String uniqueScenarioName = new GenerateStringUtil().generateScenarioName();
+        final File fileToUpload = FileResourceUtil.getS3FileAndSaveWithUniqueName(componentName,
+            processGroup
+        );
 
         ComponentInfoBuilder componentInfo = ComponentInfoBuilder.builder()
             .resourceFiles(
-                Collections.singletonList(
-                    FileResourceUtil.getCloudFile(processGroup, componentName)
-                )
+                Collections.singletonList(fileToUpload)
             )
             .scenarioName(uniqueScenarioName)
             .user(testingUser)
@@ -173,14 +175,14 @@ public abstract class SDSTestUtil extends TestUtil {
             .getResourceName();
 
         String fileMetadataIdentity = FileManagementController
-            .uploadFileWithResourceName(testingUser, processGroup, componentName, uploadedComponentResourceName)
+            .uploadFileWithResourceName(testingUser, fileToUpload, uploadedComponentResourceName)
             .getIdentity();
 
         return postComponent(PostComponentRequest.builder()
             .fileMetadataIdentity(fileMetadataIdentity)
             .scenarioName(uniqueScenarioName)
             .override(false)
-            .build(), componentName);
+            .build(), fileToUpload.getName());
     }
 
     /**
