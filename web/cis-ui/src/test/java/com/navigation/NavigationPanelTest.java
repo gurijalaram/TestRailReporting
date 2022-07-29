@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.navtoolbars.CisHeaderBar;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
+import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.myuser.TermsOfUsePage;
@@ -16,6 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.core.Is;
 import org.junit.Test;
 
 public class NavigationPanelTest extends TestBase {
@@ -29,6 +31,7 @@ public class NavigationPanelTest extends TestBase {
     private CisHeaderBar cisHeaderBar;
     private MyUserPage myUserPage;
     private TermsOfUsePage termsOfUsePage;
+    private ZendeskSignInPage zendeskSignInPage;
 
     @Test
     @TestRail(testCaseId = {"11992","12014","12007"})
@@ -50,10 +53,8 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify that user can logout from the CIS application")
     public void testUserCanLogOutFromTheCISApplication() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+        myUserPage = loginPage.cisLogin(UserUtil.getUser())
                         .clickUserIcon();
-
-        myUserPage = new MyUserPage(driver);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -74,7 +75,7 @@ public class NavigationPanelTest extends TestBase {
     @Description("Verify that user can access the Terms of Use Page")
     public void testUserCanAccessTheTermsOfUsePage() {
         loginPage = new CisLoginPage(driver);
-        leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser())
+        myUserPage = loginPage.cisLogin(UserUtil.getUser())
                 .clickUserIcon();
 
         termsOfUsePage = new MyUserPage(driver)
@@ -108,5 +109,18 @@ public class NavigationPanelTest extends TestBase {
         softAssertions.assertThat(leftHandNavigationBar.isCollapsedAprioriLogoDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13553"})
+    @Description("Verify that user can access the 'Support' page")
+    public void testUserCanAccessTheSupportPage() {
+        loginPage = new CisLoginPage(driver);
+        zendeskSignInPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickUserIcon()
+                .clickSupport()
+                .switchTab();
+
+        assertThat(zendeskSignInPage.isSupportLogoDisplayed(), is(true));
     }
 }

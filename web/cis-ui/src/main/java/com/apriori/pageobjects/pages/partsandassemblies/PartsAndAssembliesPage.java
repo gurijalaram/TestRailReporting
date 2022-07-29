@@ -142,6 +142,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//div[@class='MuiDataGrid-row']")
     private WebElement tableRecords;
 
+    @FindBy(xpath = "//*[@data-field='costingInput.vpeName']")
+    private WebElement digitalFactoryField;
+
+    @FindBy(xpath = "//*[@data-field='costingInput.vpeName']//button//*[local-name()='svg']")
+    private WebElement digitalFactoryIcon;
+
+    @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//div[contains(@class,'columnHeaderDraggableContainer')]")
+    private WebElement processGroupFieldDrag;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -573,6 +582,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage clickRemoveCondition() {
         getPageUtils().waitForElementAndClick(removeIcon);
         getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']"));
+        getPageUtils().waitForElementsToAppear(tableRow);
         return new PartsAndAssembliesPage(getDriver());
     }
 
@@ -592,9 +602,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage pinToLeftProcessGroupColumn() {
-        getPageUtils().mouseMove(processGroupField);
-        getPageUtils().moveAndClick(processGroupKebabMenu);
-        getPageUtils().waitForElementAndClick(btnPintoLeft);
+        getPageUtils().waitForElementsToAppear(tableRow);
+        while (getPageUtils().waitForElementToAppear(processGroupFieldDrag).getAttribute("draggable").equals("true")) {
+            getPageUtils().waitForElementToAppear(processGroupField);
+            getPageUtils().mouseMove(processGroupField);
+            getPageUtils().waitForElementToAppear(processGroupKebabMenu);
+            getPageUtils().moveAndClick(processGroupKebabMenu);
+            getPageUtils().waitForElementToAppear(btnPintoLeft);
+            getPageUtils().waitForElementAndClick(btnPintoLeft);
+        }
         return this;
     }
 
@@ -613,8 +629,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return new page object
      */
-    public PartsAndAssembliesDetailsPage clickOnScenarioName(String scenarioName) {
-        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']")));
+    public PartsAndAssembliesDetailsPage clickOnComponentName(String componentName) {
+        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath("//div[@data-field='componentName']//p[text()='" + componentName + "']")));
         return new PartsAndAssembliesDetailsPage(getDriver());
     }
 
@@ -623,8 +639,13 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return new page object
      */
-    public PartsAndAssembliesPage sortCreatedByField() {
-        getPageUtils().waitForElementAndClick(createdByField);
+    public PartsAndAssembliesPage sortDownDigitalFactoryField() {
+        getPageUtils().waitForElementToAppear(digitalFactoryField);
+        getPageUtils().mouseMove(digitalFactoryField);
+        while (getPageUtils().waitForElementToAppear(digitalFactoryIcon).getAttribute("data-icon").equals("sort-down")) {
+            getPageUtils().waitForElementAndClick(digitalFactoryField);
+            getPageUtils().waitForElementsToAppear(tableRow);
+        }
         return this;
     }
 
@@ -633,8 +654,10 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return a String
      */
-    public String getCreatedBySortingRule() {
-        return getPageUtils().waitForElementToAppear(createdByIcon).getAttribute("data-icon");
+    public String getDigitalFactorySortingRule() {
+        getPageUtils().waitForElementToAppear(digitalFactoryIcon);
+        getPageUtils().mouseMove(digitalFactoryIcon);
+        return getPageUtils().waitForElementToAppear(digitalFactoryIcon).getAttribute("data-icon");
     }
 
     /**
@@ -694,6 +717,37 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage waitForTableResults() {
         getPageUtils().waitForElementToAppear(filterRecords);
+        return this;
+    }
+
+    /**
+     * sort digital factory field
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesPage sortUpDigitalFactoryField() {
+        getPageUtils().waitForElementToAppear(digitalFactoryField);
+        getPageUtils().mouseMove(digitalFactoryField);
+        while (getPageUtils().waitForElementToAppear(digitalFactoryIcon).getAttribute("data-icon").equals("sort-up")) {
+            getPageUtils().waitForElementAndClick(digitalFactoryField);
+            getPageUtils().waitForElementsToAppear(tableRow);
+        }
+        return this;
+    }
+
+    /**
+     * Click on pin to right on process group
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage pinToRightProcessGroupColumn() {
+        while (processGroupFieldDrag.getAttribute("draggable").equals("false")) {
+            getPageUtils().waitForElementToAppear(processGroupField);
+            getPageUtils().mouseMove(processGroupField);
+            getPageUtils().waitForElementToAppear(processGroupKebabMenu);
+            getPageUtils().moveAndClick(processGroupKebabMenu);
+            getPageUtils().waitForElementAndClick(btnPintoLeft);
+        }
         return this;
     }
 }

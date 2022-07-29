@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.myuser;
 
+import com.apriori.pageobjects.pages.help.ZendeskSignInPage;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
@@ -139,5 +140,15 @@ public class MyUserPage extends EagerPageComponent<MyUserPage> {
     public TermsOfUsePage clickTermsOfUse() {
         getPageUtils().waitForElementAndClick(termsOfUseButtonButton);
         return new TermsOfUsePage(getDriver());
+    }
+
+    /**
+     * Click Support
+     *
+     * @return new page object
+     */
+    public ZendeskSignInPage clickSupport() {
+        getPageUtils().waitForElementAndClick(supportButton);
+        return new ZendeskSignInPage(getDriver());
     }
 }
