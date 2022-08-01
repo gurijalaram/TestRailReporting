@@ -144,13 +144,13 @@ public class CssComponent {
      * Calls an api with GET verb
            * @param componentName - the component name
            * @param scenarioName - the scenario name
-     * @param paramKeyValues - the query param key and value
+     * @param paramKeysValues - the query param key and value
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponentFormParams(String componentName, String scenarioName,  UserCredentials userCredentials, String...  paramKeyValues) {
+    public ResponseWrapper<CssComponentResponse> getCssComponentQueryParams(String componentName, String scenarioName, UserCredentials userCredentials, String...  paramKeysValues) {
 
-        List<String[]> paramKeyValue = Arrays.stream(paramKeyValues).map(o -> o.split(",")).collect(Collectors.toList());
+        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
 
         paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
