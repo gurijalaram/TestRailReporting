@@ -9,7 +9,8 @@ public enum CisNavBarItemsEnum {
     PARTS_N_ASSEMBLIES("Parts & Assemblies"),
     BID_PACKAGES("Bid Packages"),
     SUPPLIERS("Suppliers"),
-    USERS("Users");
+    USERS("Users"),
+    MESSAGES("Messages");
 
     private final String navBarItems;
 

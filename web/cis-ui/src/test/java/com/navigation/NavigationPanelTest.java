@@ -17,7 +17,6 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.CisNavBarItemsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.core.Is;
 import org.junit.Test;
 
 public class NavigationPanelTest extends TestBase {
@@ -44,12 +43,12 @@ public class NavigationPanelTest extends TestBase {
 
         cisHeaderBar = new CisHeaderBar(driver);
 
-        assertThat(cisHeaderBar.getHeaderText(), is(equalTo("Dashboard")));
+        assertThat(cisHeaderBar.getHeaderText(), is(equalTo("All Messages")));
 
     }
 
     @Test
-    @TestRail(testCaseId = {"13194","13051"})
+    @TestRail(testCaseId = {"13194","13051","12013"})
     @Description("Verify that user can logout from the CIS application")
     public void testUserCanLogOutFromTheCISApplication() {
         loginPage = new CisLoginPage(driver);
@@ -58,6 +57,7 @@ public class NavigationPanelTest extends TestBase {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
+        softAssertions.assertThat(myUserPage.getLoggedUsername().contains("QA"));
         softAssertions.assertThat(myUserPage.isSettingsOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(myUserPage.isTermsOfUseOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(myUserPage.isSupportOptionDisplayed()).isEqualTo(true);
@@ -90,7 +90,7 @@ public class NavigationPanelTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11997","11998","11999","12000","12001","12003","12008"})
+    @TestRail(testCaseId = {"11997","11999","12000","12003","12008"})
     @Description("Verify that user can view the left navigation bar items and aPriori logo")
     public void testNavBarItems() {
         loginPage = new CisLoginPage(driver);
@@ -99,11 +99,9 @@ public class NavigationPanelTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(leftHandNavigationBar.isaPrioriLogoDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(leftHandNavigationBar.isDashboardBtnDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(leftHandNavigationBar.getDashBoardBtnDefaultState()).contains("Mui-selected");
-        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.COLLABORATION.getNavBarItems())).contains(CisNavBarItemsEnum.SOURCING_PROJECT.getNavBarItems());
-        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.DATA.getNavBarItems())).contains(CisNavBarItemsEnum.PARTS_N_ASSEMBLIES.getNavBarItems(),CisNavBarItemsEnum.BID_PACKAGES.getNavBarItems());
-        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.ACCESS_CONTROL.getNavBarItems())).contains(CisNavBarItemsEnum.SUPPLIERS.getNavBarItems(),CisNavBarItemsEnum.USERS.getNavBarItems());
+        softAssertions.assertThat(leftHandNavigationBar.getMessageBtnDefaultState()).contains("Mui-selected");
+        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.COLLABORATION.getNavBarItems())).contains(CisNavBarItemsEnum.MESSAGES.getNavBarItems());
+        softAssertions.assertThat(leftHandNavigationBar.getItemsOfSections(CisNavBarItemsEnum.DATA.getNavBarItems())).contains(CisNavBarItemsEnum.PARTS_N_ASSEMBLIES.getNavBarItems());
 
         leftHandNavigationBar.collapseNavigationPanel();
         softAssertions.assertThat(leftHandNavigationBar.isCollapsedAprioriLogoDisplayed()).isEqualTo(true);
