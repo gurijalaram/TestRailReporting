@@ -136,23 +136,43 @@ public class CssComponent {
 
 
 
-
-
-
-
+    /**
+     * Calls an api with GET verb
+           * @param componentName - the component name
+           * @param scenarioName - the scenario name
+     * @param paramKey - the query param key
+     * @param paramValue - the query param value
+     * @param userCredentials - the user credentials
+     * @return the response wrapper that contains the response data
+     */
     public ResponseWrapper<CssComponentResponse> getCssComponentFormParams(String componentName, String scenarioName, String paramKey, String paramValue, UserCredentials userCredentials) {
         return getCssComponent(componentName, scenarioName, userCredentials, new FormParams().use(paramKey.concat("[EQ]"), paramValue));
     }
 
+    /**
+     * Calls an api with GET verb
+     * @param componentName - the component name
+     * @param scenarioName - the scenario name
+     * @param userCredentials - the user credentials
+     * @return the response wrapper that contains the response data
+     */
     public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
 
-        return getComponent(componentName, scenarioName, requestEntity);
+        return getComponentPart(componentName, scenarioName, requestEntity);
     }
 
+    /**
+     * Calls an api with GET verb
+     * @param componentName - the component name
+     * @param scenarioName - the scenario name
+     * @param userCredentials - the user credentials
+     * @param formParams - the query form params
+     * @return the response wrapper that contains the response data
+     */
     public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, FormParams formParams) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
@@ -161,10 +181,17 @@ public class CssComponent {
             .formParams(formParams)
             .socketTimeout(SOCKET_TIMEOUT);
 
-        return getComponent(componentName, scenarioName, requestEntity);
+        return getComponentPart(componentName, scenarioName, requestEntity);
     }
 
-    private ResponseWrapper<CssComponentResponse> getComponent(String componentName, String scenarioName, RequestEntity requestEntity) {
+    /**
+     * Calls an api with GET verb
+     * @param componentName - the component name
+     * @param scenarioName - the scenario name
+     * @param requestEntity - the request data
+     * @return the response wrapper that contains the response data
+     */
+    private ResponseWrapper<CssComponentResponse> getComponentPart(String componentName, String scenarioName, RequestEntity requestEntity) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
