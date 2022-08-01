@@ -9,6 +9,7 @@ import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
+import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -32,6 +33,9 @@ import java.util.stream.Stream;
 public class CssComponent {
 
     private String itemScenarioState;
+    private final int SOCKET_TIMEOUT = 630000;
+    private final int POLL_TIME = 2;
+    private final int WAIT_TIME = 600;
 
     /**
      * Gets the uncosted component from CSS
@@ -118,6 +122,134 @@ public class CssComponent {
             componentName, scenarioName, WAIT_TIME, scenarioState.getState(), itemScenarioState)
         );
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public ResponseWrapper<CssComponentResponse> getCssComponentFormParams(String componentName, String scenarioName, String paramKey, String paramValue, UserCredentials userCredentials) {
+        return getCssComponent(componentName, scenarioName, userCredentials, new FormParams().use(paramKey.concat("[EQ]"), paramValue));
+    }
+
+    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
+            .token(userCredentials.getToken())
+            .socketTimeout(SOCKET_TIMEOUT);
+
+        return getComponent(componentName, scenarioName, requestEntity);
+    }
+
+    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, FormParams formParams) {
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
+            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
+            .token(userCredentials.getToken())
+            .formParams(formParams)
+            .socketTimeout(SOCKET_TIMEOUT);
+
+        return getComponent(componentName, scenarioName, requestEntity);
+    }
+
+    private ResponseWrapper<CssComponentResponse> getComponent(String componentName, String scenarioName, RequestEntity requestEntity) {
+
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
+
+                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, cssComponentResponse.getStatusCode()),
+                    HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+
+                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+                    cssComponentResponse.getResponseEntity().getItems().stream()
+                        .anyMatch(o -> !o.getComponentType().equalsIgnoreCase("unknown"))) {
+
+                    return cssComponentResponse;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds",
+            componentName, scenarioName, WAIT_TIME)
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * Gets a css component that is NOT in PROCESSING state
