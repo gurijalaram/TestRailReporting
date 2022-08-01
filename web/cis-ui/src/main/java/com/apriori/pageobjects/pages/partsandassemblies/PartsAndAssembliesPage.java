@@ -121,8 +121,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//button[@title='Menu']//*[local-name()='svg']")
     private WebElement processGroupKebabMenu;
 
-    @FindBy(xpath = "//div[@data-testid='list-subitem-text-left-menu.subTitle.dashboard']")
-    private WebElement btnDashboard;
+    @FindBy(xpath = "//div[@data-testid='list-subitem-left-menu.subTitle.messages']")
+    private WebElement btnMessages;
 
     @FindBy(xpath = "//*[@data-field='scenarioCreatedBy']")
     private WebElement createdByField;
@@ -615,12 +615,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     }
 
     /**
-     * Navigate to dashboard page
+     * Navigate to message page
      *
      * @return new page object
      */
-    public LeftHandNavigationBar clickDashBoard() {
-        getPageUtils().waitForElementAndClick(btnDashboard);
+    public LeftHandNavigationBar clickMessages() {
+        getPageUtils().waitForElementAndClick(btnMessages);
         return new LeftHandNavigationBar(getDriver());
     }
 

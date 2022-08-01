@@ -26,8 +26,8 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     @FindBy(xpath = "//div[@data-testid='avatar']")
     private WebElement userIcon;
 
-    @FindBy(xpath = "//div[@data-testid='list-subitem-left-menu.subTitle.dashboard']")
-    private WebElement btnDashboard;
+    @FindBy(xpath = "//div[@data-testid='list-subitem-left-menu.subTitle.messages']")
+    private WebElement btnMessage;
 
     @FindBy(xpath = "//img[@data-testid='main-logo']")
     private WebElement aprioriLogo;
@@ -98,7 +98,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      * @return new page object
      */
     public LeftHandNavigationBar clickDashBoard() {
-        getPageUtils().waitForElementAndClick(btnDashboard);
+        getPageUtils().waitForElementAndClick(btnMessage);
         return this;
     }
 
@@ -118,17 +118,17 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      * @return true/false
      */
     public boolean isDashboardBtnDisplayed() {
-        getPageUtils().waitForElementToAppear(btnDashboard);
-        return getPageUtils().isElementDisplayed(btnDashboard);
+        getPageUtils().waitForElementToAppear(btnMessage);
+        return getPageUtils().isElementDisplayed(btnMessage);
     }
 
     /**
-     * Get Dashboard state as default selected
+     * Get Message state as default selected
      *
      * @return String
      */
-    public String getDashBoardBtnDefaultState() {
-        return getPageUtils().waitForElementToAppear(btnDashboard).getAttribute("class");
+    public String getMessageBtnDefaultState() {
+        return getPageUtils().waitForElementToAppear(btnMessage).getAttribute("class");
     }
 
     /**

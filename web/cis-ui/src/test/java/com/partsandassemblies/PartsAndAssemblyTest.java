@@ -203,7 +203,7 @@ public class PartsAndAssemblyTest extends TestBase {
         partsAndAssembliesPage.clickCheckAll();
         softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).contains("Mui-checked");
 
-        partsAndAssembliesPage.clickDashBoard()
+        partsAndAssembliesPage.clickMessages()
                 .clickPartsAndAssemblies();
         softAssertions.assertThat(partsAndAssembliesPage.getCheckAllStatus()).doesNotContain("Mui-checked");
 
@@ -287,7 +287,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickFilter()
                 .clickAddCondition()
                 .addFilterValue(componentName)
-                .clickDashBoard()
+                .clickMessages()
                 .clickPartsAndAssemblies();
 
         SoftAssertions softAssertions = new SoftAssertions();
@@ -305,7 +305,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .pinToRightProcessGroupColumn()
                 .clickFilter()
                 .clickRemoveCondition()
-                .clickDashBoard()
+                .clickMessages()
                 .clickPartsAndAssemblies();
 
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
