@@ -18,7 +18,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 import org.junit.Assert;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.function.Supplier;
@@ -32,6 +35,7 @@ import java.util.stream.Stream;
 @Slf4j
 public class CssComponent {
 
+    FormParams formParams = new FormParams();
     private String itemScenarioState;
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
@@ -140,13 +144,18 @@ public class CssComponent {
      * Calls an api with GET verb
            * @param componentName - the component name
            * @param scenarioName - the scenario name
-     * @param paramKey - the query param key
-     * @param paramValue - the query param value
+     * @param paramKeyValues - the query param key and value
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponentFormParams(String componentName, String scenarioName, String paramKey, String paramValue, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials, new FormParams().use(paramKey.concat("[EQ]"), paramValue));
+    public ResponseWrapper<CssComponentResponse> getCssComponentFormParams(String componentName, String scenarioName,  UserCredentials userCredentials, String...  paramKeyValues) {
+
+        List<String[]> paramKeyValue = Arrays.stream(paramKeyValues).map(o -> o.split(",")).collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+
+        paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
+
+        return getCssComponent(componentName, scenarioName, userCredentials, formParams.use(paramMap));
     }
 
     /**
