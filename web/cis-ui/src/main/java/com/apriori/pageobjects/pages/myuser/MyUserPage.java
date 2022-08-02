@@ -151,4 +151,13 @@ public class MyUserPage extends EagerPageComponent<MyUserPage> {
         getPageUtils().waitForElementAndClick(supportButton);
         return new ZendeskSignInPage(getDriver());
     }
+
+    /**
+     * Gets logged username
+     *
+     * @return String
+     */
+    public String getLoggedUsername() {
+        return getPageUtils().waitForElementToAppear(btnUserIcon).getText();
+    }
 }
