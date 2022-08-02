@@ -2,6 +2,7 @@ package com.apriori.utils;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
@@ -112,8 +113,17 @@ public class CssComponent {
                     HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
                 if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+
                     cssComponentResponse.getResponseEntity().getItems().stream()
-                        .anyMatch(o -> !o.getComponentType().equalsIgnoreCase("unknown"))) {
+                        .anyMatch(o -> !o.getComponentType().equalsIgnoreCase("unknown")) &&
+
+                    ScenarioStateEnum.terminalState.stream()
+                        .anyMatch(o -> o.getState().equalsIgnoreCase(cssComponentResponse.getResponseEntity()
+                            .getItems()
+                            .stream()
+                            .findAny()
+                            .get()
+                            .getScenarioState()))) {
 
                     return cssComponentResponse;
                 }

@@ -22,5 +22,6 @@ public enum ScenarioStateEnum {
         return this.state;
     }
 
-    public static EnumSet<ScenarioStateEnum> transientGroup = EnumSet.of(PROCESSING, COSTING);
+    public static EnumSet<ScenarioStateEnum> transientState = EnumSet.of(PROCESSING, COSTING);
+    public static EnumSet<ScenarioStateEnum> terminalState = EnumSet.of(PROCESSING_FAILED, NOT_COSTED, COST_COMPLETE, COST_INCOMPLETE, COSTING_FAILED, COST_UP_TO_DATE);
 }
