@@ -11,6 +11,8 @@ def global_users_csv_file
 def default_aws_region
 def folder
 def addlJavaOpts
+def number_of_parts
+def parts_csv_file
 
 pipeline {
 /*
@@ -108,6 +110,16 @@ Those marked with a * are required or the job will not run
                     default_aws_region = params.REGION
                     if (default_aws_region && default_aws_region != "none") {
                        javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                    }
+
+                    number_of_parts = params.NUMBER_OF_PARTS
+                    if (number_of_parts && number_of_parts != "none") {
+                       javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
+                    }
+
+                    parts_csv_file = params.PARTS_CSV_FILE
+                    if (parts_csv_file && parts_csv_file != "none") {
+                       javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
                     }
 
                     addlJavaOpts = params.JAVAOPTS
