@@ -570,7 +570,11 @@ public class ScenariosUtil {
 
         for (String[] componentScenario : componentScenarioNames) {
 
-            ScenarioItem component = new CssComponent().getWorkspaceComponent(workspaceId, componentScenario[0], componentScenario[1], componentInfo.getUser());
+            ScenarioItem component = new CssComponent().getCssComponent(componentScenario[0], componentScenario[1], componentInfo.getUser()).getResponseEntity()
+                .getItems()
+                .stream()
+                .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(workspaceId))
+                .collect(Collectors.toList()).get(0);;
 
             subComponentInfo.add(ComponentInfoBuilder.builder()
                 .componentName(component.getComponentName())

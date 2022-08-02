@@ -2,7 +2,6 @@ package com.apriori.utils;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
-import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.FormParams;
@@ -128,23 +127,5 @@ public class CssComponent {
         throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds",
             componentName, scenarioName, WAIT_TIME)
         );
-    }
-
-    /**
-     * Gets a css component specified by workspace id
-     *
-     * @param workspaceId     - the workspace id
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - the user credentials
-     * @return response object
-     */
-    public ScenarioItem getWorkspaceComponent(int workspaceId, String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials)
-            .getResponseEntity()
-            .getItems()
-            .stream()
-            .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(workspaceId))
-            .collect(Collectors.toList()).get(0);
     }
 }
