@@ -8,7 +8,6 @@ import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
-import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
@@ -209,13 +208,13 @@ public class GroupEditTests {
 
         publishResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
 
-        List<ScenarioItem> driveItem = cssComponent.getSimpleCssComponent(DRIVE, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> driveItem = cssComponent.getCssComponent(DRIVE, scenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(driveItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
-        List<ScenarioItem> standItem = cssComponent.getSimpleCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> standItem = cssComponent.getCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(standItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
-        List<ScenarioItem> jointItem = cssComponent.getSimpleCssComponent(JOINT, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> jointItem = cssComponent.getCssComponent(JOINT, scenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(jointItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
         softAssertions.assertAll();
