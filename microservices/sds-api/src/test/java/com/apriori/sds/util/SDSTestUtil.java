@@ -205,6 +205,18 @@ public abstract class SDSTestUtil extends TestUtil {
         return postComponent(postComponentRequest, uniqueComponentName);
     }
 
+    /**
+     * Gets the uncosted component from CSS
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
+     * @return response object
+     */
+    public static List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return new CssComponent().getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, not_costed").getResponseEntity().getItems();
+    }
+
     protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
@@ -217,7 +229,7 @@ public abstract class SDSTestUtil extends TestUtil {
         Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentName, postComponentRequest.getScenarioName(),
+        List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentName, postComponentRequest.getScenarioName(),
             testingUser);
 
         scenariosToDelete.add(scenarioItemResponse.get(0));
@@ -339,7 +351,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return new CssComponent().getUnCostedCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser());
+        return getUnCostedComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser());
     }
 
     /**

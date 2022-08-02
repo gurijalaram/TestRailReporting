@@ -20,6 +20,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
@@ -71,6 +72,18 @@ public class ComponentsUtil {
     }
 
     /**
+     * Gets the uncosted component from CSS
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
+     * @return response object
+     */
+    public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return new CssComponent().getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, not_costed").getResponseEntity().getItems();
+    }
+
+    /**
      * POST new component and query CSS
      *
      * @param componentBuilder - the component object
@@ -81,7 +94,7 @@ public class ComponentsUtil {
         List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
 
         componentSuccesses.forEach(componentSuccess -> {
-            List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
+            List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
                 componentBuilder.getUser());
             componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
             componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
@@ -164,7 +177,7 @@ public class ComponentsUtil {
         assertEquals("The component(s) was not uploaded.", HttpStatus.SC_OK, postComponentResponse.getStatusCode());
 
         List<ScenarioItem> scenarioItemList = postComponentResponse.getResponseEntity().getSuccesses().stream().flatMap(component ->
-            new CssComponent().getUnCostedCssComponent(component.getFilename(), component.getScenarioName(), componentInfoBuilder.getUser()).stream()).collect(Collectors.toList());
+            getUnCostedComponent(component.getFilename(), component.getScenarioName(), componentInfoBuilder.getUser()).stream()).collect(Collectors.toList());
 
         scenarioItemList.forEach(scenario -> {
             componentInfoBuilder.setComponentIdentity(scenario.getComponentIdentity());

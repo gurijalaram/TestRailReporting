@@ -35,18 +35,6 @@ public class CssComponent {
     private final int WAIT_TIME = 600;
 
     /**
-     * Gets the uncosted component from CSS
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - user to upload the part
-     * @return response object
-     */
-    public List<ScenarioItem> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, not_costed").getResponseEntity().getItems();
-    }
-
-    /**
      * Calls an api with GET verb
      *
      * @param componentName   - the component name
