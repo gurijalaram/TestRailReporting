@@ -31,8 +31,8 @@ public class MultiPartResources {
     /**
      * Add number of parts (configured in config file) to batch
      *
-     * @param numberOfParts- number of parts
-     * @param batchIdentity- Batch Identity
+     * @param numberOfParts - number of parts
+     * @param batchIdentity - Batch Identity
      */
     public static void addPartsToBatch(int numberOfParts, String batchIdentity) {
         partsCollector = new HashMap<>();
