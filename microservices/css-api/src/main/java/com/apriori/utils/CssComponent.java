@@ -128,28 +128,17 @@ public class CssComponent {
     }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
     /**
      * Calls an api with GET verb
-           * @param componentName - the component name
-           * @param scenarioName - the scenario name
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
      * @param userCredentials - the user credentials
-     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      * @return the response wrapper that contains the response data
+     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponentQueryParams(String componentName, String scenarioName, UserCredentials userCredentials, String...  paramKeysValues) {
+    public ResponseWrapper<CssComponentResponse> getCssComponentQueryParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
 
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
@@ -161,8 +150,9 @@ public class CssComponent {
 
     /**
      * Calls an api with GET verb
-     * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      */
@@ -177,10 +167,11 @@ public class CssComponent {
 
     /**
      * Calls an api with GET verb
-     * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
      * @param userCredentials - the user credentials
-     * @param formParams - the query form params
+     * @param formParams      - the query form params
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, FormParams formParams) {
@@ -196,8 +187,9 @@ public class CssComponent {
 
     /**
      * Calls an api with GET verb
+     *
      * @param componentName - the component name
-     * @param scenarioName - the scenario name
+     * @param scenarioName  - the scenario name
      * @param requestEntity - the request data
      * @return the response wrapper that contains the response data
      */
@@ -231,61 +223,6 @@ public class CssComponent {
             componentName, scenarioName, WAIT_TIME)
         );
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     /**
