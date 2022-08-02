@@ -144,8 +144,9 @@ public class CssComponent {
      * Calls an api with GET verb
            * @param componentName - the component name
            * @param scenarioName - the scenario name
-     * @param paramKeysValues - the query param key and value
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
      * @param userCredentials - the user credentials
+     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> getCssComponentQueryParams(String componentName, String scenarioName, UserCredentials userCredentials, String...  paramKeysValues) {
