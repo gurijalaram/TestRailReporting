@@ -339,7 +339,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+        return new CssComponent().getUnCostedCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser());
     }
 
     /**
