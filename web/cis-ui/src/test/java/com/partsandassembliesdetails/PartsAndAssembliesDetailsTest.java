@@ -305,6 +305,94 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"12499","12500","12502","12503","12507","12509","12510","13088","13089","13090"})
+    @Description("Verify scenario results cards can be edited")
+    public void testEditScenarioResultsCards() {
+        String componentName = "ChampferOut";
+        String cardName = "Process Cost Card";
+        String editedCardName = "Process Analysis Card";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickToOpenModal()
+                .clickToOpenDropDown()
+                .selectAnOption("Process Group")
+                .clickToOpenDropDown()
+                .selectAnOption("Identity")
+                .clickToOpenDropDown()
+                .selectAnOption("Digital Factory")
+                .enterCardName(cardName)
+                .clickSaveButton()
+                .clickMoreOptions(cardName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isEditCardOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickEditCardOption();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCardName()).isEqualTo(cardName);
+
+        partsAndAssembliesDetailsPage.clearCardName()
+                .enterCardName(editedCardName)
+                .removeSelectedField("Process Group")
+                .clickToOpenDropDown()
+                .selectAnOption("Annual Cost");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getNewSelectedFieldName()).contains("Annual Cost");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSaveButtonStatus()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickSaveButton();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(editedCardName)).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.deleteScenarioResultsCard(editedCardName);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12523","12524","12525","12527"})
+    @Description("Verify scenario results cards can be removed")
+    public void testRemoveScenarioResultsCards() {
+        String componentName = "ChampferOut";
+        String cardName = "Process Cost Card";
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickToOpenModal()
+                .clickToOpenDropDown()
+                .selectAnOption("Process Group")
+                .clickToOpenDropDown()
+                .selectAnOption("Identity")
+                .clickToOpenDropDown()
+                .selectAnOption("Digital Factory")
+                .enterCardName(cardName)
+                .clickSaveButton()
+                .clickMoreOptions(cardName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isRemoveOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickRemoveCardOption();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDeleteConfirmationModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDeleteModalTitle()).contains("Delete Card?");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDeleteModalContent()).contains("Once a card has been deleted, it cannot be undone.");
+
+        partsAndAssembliesDetailsPage.clickDeleteButton();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(cardName)).isEqualTo(false);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isInsightsCardsDeleteOptionDisplayed("Design Guidance")).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
 }
 
 

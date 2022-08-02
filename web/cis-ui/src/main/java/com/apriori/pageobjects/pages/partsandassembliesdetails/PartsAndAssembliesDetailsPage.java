@@ -146,6 +146,21 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='icon-button-group']")
     private WebElement partNestingGraphController;
 
+    @FindBy(xpath = "//li[@data-testid ='option-item-edit']")
+    private WebElement editCardOption;
+
+    @FindBy(id = "chip-properties-analysisOfScenario.annualCost")
+    private WebElement newSelectedFieldName;
+
+    @FindBy(xpath = "//div[@data-testid='model-paper-comp-id']")
+    private WebElement deleteConfirmationModal;
+
+    @FindBy(xpath = "//div[@data-testid='title-content-id']")
+    private WebElement deleteConfirmationModalTitle;
+
+    @FindBy(xpath = "//p[@data-testid='model-content-id']")
+    private WebElement deleteConfirmationModalContent;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -710,5 +725,107 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isPartNestingGraphControllerDisplayed() {
         return getPageUtils().isElementDisplayed(partNestingGraphController);
+    }
+
+    /**
+     * Checks if edit card option displayed
+     *
+     * @return true/false
+     */
+    public boolean isEditCardOptionDisplayed() {
+        return getPageUtils().waitForElementToAppear(editCardOption).isDisplayed();
+    }
+
+    /**
+     * clicks on edit card option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickEditCardOption() {
+        getPageUtils().waitForElementAndClick(editCardOption);
+        return this;
+    }
+
+    /**
+     * Get the card name
+     *
+     * @return String
+     */
+    public String getCardName() {
+        return getPageUtils().waitForElementToAppear(nameField).getAttribute("value");
+    }
+
+    /**
+     * clear card name
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clearCardName() {
+        getPageUtils().clearValueOfElement(nameField);
+        return this;
+    }
+
+    /**
+     * get selected field name
+     *
+     * @return a String
+     */
+    public String getNewSelectedFieldName() {
+        return getPageUtils().waitForElementToAppear(newSelectedFieldName).getAttribute("innerText");
+    }
+
+    /**
+     * Remove selected fields
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage removeSelectedField(String selectedFieldName) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[starts-with(@id,'chip-properties')]//span[text()='" + selectedFieldName + "']//..//*[local-name()='svg']"));
+        return this;
+    }
+
+    /**
+     * Checks if remove option displayed for scenario results card
+     *
+     * @return true/false
+     */
+    public boolean isRemoveOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(removeCardOption).isDisplayed();
+    }
+
+    /**
+     * Checks if delete confirmation modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isDeleteConfirmationModalDisplayed() {
+        return getPageUtils().waitForElementAppear(deleteConfirmationModal).isDisplayed();
+    }
+
+    /**
+     * get delete confirmation modal title
+     *
+     * @return a String
+     */
+    public String getDeleteModalTitle() {
+        return getPageUtils().waitForElementToAppear(deleteConfirmationModalTitle).getText();
+    }
+
+    /**
+     * get delete confirmation modal content
+     *
+     * @return a String
+     */
+    public String getDeleteModalContent() {
+        return getPageUtils().waitForElementToAppear(deleteConfirmationModalContent).getText();
+    }
+
+    /**
+     * Check if insight cards have option to delete
+     *
+     * @return true/false
+     */
+    public Boolean isInsightsCardsDeleteOptionDisplayed(String cardName) {
+        return getPageUtils().isElementDisplayed(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-v']"));
     }
 }
