@@ -210,6 +210,22 @@ class ConnectionManager<T> {
     }
 
     /**
+     * Sends request to desired endpoint with the desired specifications using HTTP GET method
+     *
+     * @return JSON POJO object instance of @returnType
+     */
+    public <T> ResponseWrapper<T> getMultiPart() {
+        return resultOf(
+            createRequestSpecification()
+                .when()
+                .relaxedHTTPSValidation()
+                .get(requestEntity.buildEndpoint())
+                .then()
+                .log().ifError()
+        );
+    }
+
+    /**
      * Sends request to desired endpoint with the desired specifications using HTTP POST method
      *
      * @return JSON POJO object instance of @returnType
@@ -295,4 +311,5 @@ class ConnectionManager<T> {
                 .log().all()
         );
     }
+
 }

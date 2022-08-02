@@ -2,17 +2,15 @@ package com.apriori.pageobjects.pages.login;
 
 import com.apriori.pageobjects.common.EditBomPage;
 import com.apriori.pageobjects.common.UploadedBomTableActions;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
+public class MatchedPartPage extends EagerPageComponent<MatchedPartPage> {
 
     @FindBy(css = ".part-card")
     private WebElement fileMatch;
@@ -26,17 +24,10 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
     @FindBy(css = "p:nth-child(5) > span.title")
     private WebElement pinCount;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-
-    private UploadedBomTableActions uploadedBomTableActions;
+    private UploadedBomTableActions uploadedBomTableActions = new UploadedBomTableActions(getDriver());
 
     public MatchedPartPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        this.uploadedBomTableActions = new UploadedBomTableActions(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
     }
 
     @Override
@@ -46,7 +37,7 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(addButton);
+        getPageUtils().waitForElementToAppear(addButton);
     }
 
     /**
@@ -55,7 +46,7 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
      * @return current page object
      */
     public MatchedPartPage highlightItem() {
-        pageUtils.waitForElementAndClick(fileMatch);
+        getPageUtils().waitForElementAndClick(fileMatch);
         return this;
     }
 
@@ -74,6 +65,6 @@ public class MatchedPartPage extends LoadableComponent<MatchedPartPage> {
      * @return String
      */
     public String getPinCountHeaderText() {
-        return pageUtils.waitForElementToAppear(pinCount).getAttribute("textContent");
+        return getPageUtils().waitForElementToAppear(pinCount).getAttribute("textContent");
     }
 }

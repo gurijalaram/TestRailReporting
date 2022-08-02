@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.bcs.controller.BatchPartResources;
 import com.apriori.bcs.controller.BatchResources;
+import com.apriori.bcs.controller.MultiPartResources;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
@@ -25,6 +26,7 @@ import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Issues;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -42,6 +44,23 @@ public class BatchPartTest {
 
         part = BatchPartResources.createNewBatchPartByID(batch.getIdentity()).getResponseEntity();
         assertThat(part.getState(), is(equalTo(BCSState.CREATED.toString())));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"9111"})
+    @Description("Test costing scenario" +
+        "1. Create a new batch, " +
+        "2. Add 10 parts to batch " +
+        "3. Wait for the costing process to complete for all parts" +
+        "4. Log Parts costing results.")
+    public void cost10Parts() {
+        SoftAssertions softAssertions = new SoftAssertions();
+        Batch batch = BatchResources.createBatch().getResponseEntity();
+        MultiPartResources.addPartsToBatch(10, batch.getIdentity());
+        softAssertions.assertThat(MultiPartResources.waitUntilBatchPartsCostingAreCompleted(batch.getIdentity())).isTrue();
+        Parts parts = BatchPartResources.getBatchPartById(batch.getIdentity()).getResponseEntity();
+        MultiPartResources.summarizeAndLogPartsCostingInfo(parts);
+        softAssertions.assertAll();
     }
 
     @Test

@@ -14,6 +14,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -68,14 +69,26 @@ public class FileManagementController {
      * @return FileResponse instance
      */
     public static FileResponse uploadFileWithResourceName(UserCredentials userCredentials, ProcessGroupEnum processGroup, String fileName, String resourceName) {
-        FormParams requestFormParams = new FormParams().use("filename", fileName);
+        return uploadFileWithResourceName(userCredentials, FileResourceUtil.getCloudFile(processGroup, fileName), resourceName);
+    }
+
+    /**
+     * Upload a file
+     *
+     * @param userCredentials - user to authenticate with
+     * @param fileToUpload    - file that should be uploaded
+     * @param resourceName    - resource name received after cad file upload
+     * @return FileResponse instance
+     */
+    public static FileResponse uploadFileWithResourceName(UserCredentials userCredentials, File fileToUpload, String resourceName) {
+        FormParams requestFormParams = new FormParams().use("filename", fileToUpload.getName());
         if (requestFormParams != null) {
             requestFormParams.use("resourceName", resourceName);
         }
 
         RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FileResponse.class)
             .headers(initHeaders(userCredentials, true))
-            .multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getCloudFile(processGroup, fileName)))
+            .multiPartFiles(new MultiPartFiles().use("data", fileToUpload))
             .formParams(requestFormParams);
 
         return (FileResponse) HTTPRequest.build(requestEntity).postMultipart().getResponseEntity();

@@ -134,18 +134,23 @@ public class CssComponent {
 
         ResponseWrapper<CssComponentResponse> response = HTTPRequest.build(requestEntity).get();
 
-        while (response.getResponseEntity().getItems().isEmpty()) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+        final int WAIT_TIME = 240;
+
+        final List<ScenarioItem> items = response.getResponseEntity().getItems();
+
+        while (items.size() < 1 && ((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME) {
             response = HTTPRequest.build(requestEntity).get();
         }
 
-        while (response.getResponseEntity().getItems().stream()
+        while (items.stream()
             .filter(o -> o.getComponentName().equalsIgnoreCase(componentName))
             .findAny()
             .get()
             .getScenarioState().equalsIgnoreCase(ScenarioStateEnum.PROCESSING.getState())) {
+
             response = HTTPRequest.build(requestEntity).get();
         }
-
         return response;
     }
 
