@@ -18,7 +18,7 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
     BATCH_BY_ID("%s/batches/%s"),
 
     // PARTS
-    BATCH_PARTS_BY_ID("%s/batches/%s/parts?pageSize=100"),
+    BATCH_PARTS_BY_ID("%s/batches/%s/parts?pageSize"),
     BATCH_PARTS("%s/batches/parts"),
     BATCH_PART_BY_BATCH_PART_IDS("%s/batches/%s/parts/%s"),
     RESULTS_BY_BATCH_PART_IDS("%s/batches/%s/parts/%s/results"),
@@ -53,7 +53,7 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
     public String getEndpoint(Object... variables) {
 
         return PropertiesContext.get("${env}.bcs.api_url") + "customers/" +
-                String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
+            String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
     }
 
     private String addQuery(String endpointString) {
@@ -64,7 +64,5 @@ public enum BCSAPIEnum implements ExternalEndpointEnum {
         }
 
         return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
-
     }
-
 }

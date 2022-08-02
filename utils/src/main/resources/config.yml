@@ -8,7 +8,10 @@ global:
   users_csv_file: onprem-users.csv
   different_users: false
   different_parts: true
-  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
+# TODO z: should be migrated to environment variable
+  auth_cloud_context: "H337GKD0LA0MH337GKD0LA0N70EGN68B5CMHHINFI93FGL80"
+#  cloud context for qa-cid-perf
+#  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
 
   db_recording: true
 
@@ -155,6 +158,7 @@ int-core:
     api_url: https://cis-api.core.int.apriori.net/
 
   edc:
+    ui_url: https://edc.core.int.apriori.net/
     api_url: https://edc-api.core.int.apriori.net/
 
 ######################################################## QA-CID-PERF ########################################################

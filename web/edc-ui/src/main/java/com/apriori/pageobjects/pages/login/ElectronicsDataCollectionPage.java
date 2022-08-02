@@ -7,7 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
 
 import java.io.File;
 
@@ -23,16 +22,8 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
     @FindBy(xpath = "//button[.='20']")
     private WebElement paginator;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-
     public ElectronicsDataCollectionPage(WebDriver driver) {
-        super(driver);
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
-        this.get();
+        super(driver, log);
     }
 
     /**
@@ -41,7 +32,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      * @return String
      */
     public String getUploadedBillOfMaterials() {
-        return pageUtils.waitForElementToAppear(uploadedBillOfMaterials).getAttribute("textContent");
+        return getPageUtils().waitForElementToAppear(uploadedBillOfMaterials).getAttribute("textContent");
     }
 
     /**
@@ -51,7 +42,7 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      * @return new page object
      */
     public FileUploadPage uploadComponent(File resourceFile) {
-        return new FileUploadPage(driver).inputComponentDetails(resourceFile);
+        return new FileUploadPage(getDriver()).inputComponentDetails(resourceFile);
     }
 
     /**
@@ -60,9 +51,9 @@ public class ElectronicsDataCollectionPage extends NavigationBar {
      * @return current page object
      */
     public ElectronicsDataCollectionPage setPagination() {
-        pageUtils.waitForElementAndClick(paginatorDropdown);
-        pageUtils.waitForElementAppear(paginator);
-        pageUtils.javaScriptClick(paginator);
+        getPageUtils().waitForElementAndClick(paginatorDropdown);
+        getPageUtils().waitForElementAppear(paginator);
+        getPageUtils().javaScriptClick(paginator);
         return this;
     }
 }
