@@ -19,7 +19,7 @@ public class CirUserGuidePage {
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
 
-    @FindBy(xpath = "//div[@id='mc-main-content']")
+    @FindBy(css = ".DocumentationCoverPageTitle")
     private WebElement reportsUserGuideTitle;
 
     @FindBy(css = "body > h1")
@@ -63,7 +63,52 @@ public class CirUserGuidePage {
      */
     public String getReportsUserGuidePageHeading() {
         pageUtils.waitForElementToAppear(reportsUserGuideTitle);
-        return reportsUserGuideTitle.getAttribute("innerText");
+        return reportsUserGuideTitle.getAttribute("textContent").trim();
+    }
+
+    /**
+     * Ensures page is loaded before continuing
+     */
+    public CirUserGuidePage ensurePageIsLoaded() {
+        pageUtils.waitForElementToAppear(heading);
+        pageUtils.waitForElementToBeClickable(heading);
+        return this;
+    }
+
+    /**
+     * Gets page heading
+     *
+     * @return - string
+     */
+    public String getPageHeading() {
+        return heading.getText();
+    }
+
+    /**
+     * Gets window url
+     *
+     * @return - string
+     */
+    public String getChildWindowURL() {
+        return pageUtils.getTabTwoUrl();
+    }
+
+    /**
+     * Switches to iframe within a page by its "id" value
+     *
+     * @param iframeId - iframe id attribute
+     * @return new CirUserGuide page object
+     */
+    public CirUserGuidePage switchToIFrameUserGuide(String iframeId) throws Exception {
+        pageUtils.isElementEnabled(pageTitle);
+
+        if (pageBody.getAttribute("className").startsWith("error404")) {
+            throw new Exception("Link broken. Wrong page was opened - iframe wasn't found as a result");
+        } else {
+            driver.switchTo().frame(iframeId);
+        }
+
+        return new CirUserGuidePage(driver);
     }
 
     /**

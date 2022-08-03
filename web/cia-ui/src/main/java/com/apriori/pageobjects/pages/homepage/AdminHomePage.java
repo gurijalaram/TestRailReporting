@@ -16,6 +16,9 @@ public class AdminHomePage extends AdminPageHeader {
     @FindBy(css = "div[class='devices']")
     private WebElement reportsWelcomeText;
 
+    @FindBy(xpath = "//h2[contains(text(), 'Domains')]")
+    private WebElement domainOption;
+
     @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
     private WebElement adminHomePageWelcomeText;
 
@@ -74,7 +77,7 @@ public class AdminHomePage extends AdminPageHeader {
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(reportsWelcomeText);
+        pageUtils.waitForElementToAppear(domainOption);
     }
 
     /**
@@ -83,7 +86,7 @@ public class AdminHomePage extends AdminPageHeader {
      * @return boolean
      */
     public boolean isReportsWelcomeTextDisplayed() {
-        return pageUtils.isElementDisplayed(reportsWelcomeText);
+        return pageUtils.isElementDisplayed(domainOption);
     }
 
     /**
@@ -92,6 +95,6 @@ public class AdminHomePage extends AdminPageHeader {
      * @return boolean
      */
     public boolean isReportsWelcomeTextEnabled() {
-        return pageUtils.isElementEnabled(reportsWelcomeText);
+        return pageUtils.isElementEnabled(domainOption);
     }
 }
