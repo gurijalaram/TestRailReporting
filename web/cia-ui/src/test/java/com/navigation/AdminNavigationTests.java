@@ -3,6 +3,7 @@ package com.navigation;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
@@ -13,6 +14,7 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -65,14 +67,13 @@ public class AdminNavigationTests extends TestBase {
     @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2982"})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
-    public void testHelpCostInsightReportGuideNavigation() throws Exception {
+    public void testHelpCostInsightReportGuideNavigation() {
         cirUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToHelpReportsGuide()
-            .switchTab()
-            .switchToIFrameUserGuide("page_iframe");
+            .switchTab();
 
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
+        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), startsWith("Cost Insight Report"));
         assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
         assertThat(cirUserGuide.getTabCount(), is(2));
     }
@@ -86,9 +87,10 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
         assertThat(ciaUserGuide.getTabCount(), is(2));
+        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
+        assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false),
+            containsString(Constants.CIA_USER_GUIDE_TITLE));
     }
 
     @Test
@@ -102,9 +104,9 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
+        assertThat(currentUrl, containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL));
+        assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true),
+            startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE));
     }
 
     @Test
@@ -130,18 +132,11 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToReports();
 
-        String urlToCheck = homePage.getUrlToCheck();
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(
-                String.format(
-                        "%s%s%s",
-                        urlToCheck,
-                        Constants.REPORTS_URL_SUFFIX,
-                        Constants.REPORTS_LAST_SUFFIX))
-        );
+        assertThat(homePage.getCurrentUrl(), startsWith(PropertiesContext.get("${env}.reports.ui_url").substring(0, 71)));
         assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(homePage.isReportsLogoutEnabled(), is(true));
+        assertThat(homePage.isReportsWelcomeTextDisplayed(), is(true));
+        assertThat(homePage.isReportsWelcomeTextEnabled(), is(true));
     }
 }
