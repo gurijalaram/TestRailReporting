@@ -13,35 +13,14 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class AdminHomePage extends AdminPageHeader {
 
-    @FindBy(id = "manage.scenario-export-manager")
-    private WebElement manageScenarioExportMenuOption;
+    @FindBy(css = "div[class='devices']")
+    private WebElement reportsWelcomeText;
 
-    @FindBy(id = "manage.system-data-export-manager")
-    private WebElement manageSystemDataExportMenuOption;
+    @FindBy(xpath = "//h2[contains(text(), 'Domains')]")
+    private WebElement domainOption;
 
-    @FindBy(id = "jasper")
-    private WebElement reportMenuOption;
-
-    @FindBy(id = "help")
-    private WebElement helpMenuOption;
-
-    @FindBy(id = "help.cost-insight_rep")
-    private WebElement helpCIReportGuideMenuOption;
-
-    @FindBy(id = "help.cost-insight_adm")
-    private WebElement helpCIAdminGuideMenuOption;
-
-    @FindBy(id = "help.scenario-expt")
-    private WebElement helpScenarioExportChapterMenuOption;
-
-    @FindBy(id = "user")
-    private WebElement userMenuOption;
-
-    @FindBy(id = "user.log-out")
-    private WebElement logoutMenuOption;
-
-    @FindBy(id = "main_logOut_link")
-    private WebElement reportsLogoutOption;
+    @FindBy(xpath = "//div[contains(text(), 'Welcome to')]")
+    private WebElement adminHomePageWelcomeText;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -62,7 +41,8 @@ public class AdminHomePage extends AdminPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-
+        pageUtils.isElementDisplayed(adminHomePageWelcomeText);
+        pageUtils.isElementEnabled(adminHomePageWelcomeText);
     }
 
     /**
@@ -97,7 +77,7 @@ public class AdminHomePage extends AdminPageHeader {
      */
     public void waitForReportsLogoutDisplayedToAppear() {
         pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(reportsLogoutOption);
+        pageUtils.waitForElementToAppear(domainOption);
     }
 
     /**
@@ -105,8 +85,8 @@ public class AdminHomePage extends AdminPageHeader {
      *
      * @return boolean
      */
-    public boolean isReportsLogoutDisplayed() {
-        return pageUtils.isElementDisplayed(reportsLogoutOption);
+    public boolean isReportsWelcomeTextDisplayed() {
+        return pageUtils.isElementDisplayed(domainOption);
     }
 
     /**
@@ -114,7 +94,7 @@ public class AdminHomePage extends AdminPageHeader {
      *
      * @return boolean
      */
-    public boolean isReportsLogoutEnabled() {
-        return pageUtils.isElementEnabled(reportsLogoutOption);
+    public boolean isReportsWelcomeTextEnabled() {
+        return pageUtils.isElementEnabled(domainOption);
     }
 }
