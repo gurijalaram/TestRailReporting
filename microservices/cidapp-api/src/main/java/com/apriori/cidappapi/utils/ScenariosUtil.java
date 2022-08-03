@@ -420,27 +420,22 @@ public class ScenariosUtil {
      * @param componentInfo - A number of copy component objects
      * @return response object
      */
-    public ResponseWrapper<ErrorMessage> postIncorrectGroupCostScenarios(
-        ComponentInfoBuilder componentInfo, Boolean useEmptyComponentID, Boolean useEmptyScenarioID, Boolean useEmptyCostingTemplateID) {
+    public ResponseWrapper<ErrorMessage> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfo) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.GROUP_COST_COMPONENTS, ErrorMessage.class)
                 .body(GroupCostRequest.builder()
-                    .costingTemplateIdentity((useEmptyCostingTemplateID ? "" : getCostingTemplateId(componentInfo).getIdentity()))
+                    .costingTemplateIdentity((componentInfo.getSettings().getUseEmptyCostingTemplateID() ? "" : getCostingTemplateId(componentInfo).getIdentity()))
                     .groupItems(componentInfo.getSubComponents()
                         .stream()
                         .map(component -> GroupItems.builder()
-                            .componentIdentity((useEmptyComponentID ? "" : component.getComponentIdentity()))
-                            .scenarioIdentity((useEmptyScenarioID ? "" : component.getScenarioIdentity()))
+                            .componentIdentity((component.getSettings().getUseEmptyComponentID() ? "" : component.getComponentIdentity()))
+                            .scenarioIdentity((component.getSettings().getUseEmptyScenarioID() ? "" : component.getScenarioIdentity()))
                             .build())
                         .collect(Collectors.toList()))
                     .build())
                 .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
-    }
-
-    public ResponseWrapper<ErrorMessage> postIncorrectGroupCostScenarios(ComponentInfoBuilder componentInfo) {
-        return postIncorrectGroupCostScenarios(componentInfo, false, false, false);
     }
 
     /**

@@ -1,6 +1,7 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilderSettings;
 import com.apriori.cidappapi.entity.response.GroupCostResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -165,8 +166,9 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(
-            componentAssembly, true, false, false);
+        componentAssembly.getSettings().setUseEmptyComponentID(true);
+
+        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -198,8 +200,9 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(
-            componentAssembly, false, true, false);
+        componentAssembly.getSettings().setUseEmptyScenarioID(true);
+
+        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -231,8 +234,9 @@ public class GroupCostingTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
-        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(
-            componentAssembly, false, false, true);
+        componentAssembly.getSettings().setUseEmptyCostingTemplateID(true);
+
+        ResponseWrapper<ErrorMessage> groupErrorResponse = scenariosUtil.postIncorrectGroupCostScenarios(componentAssembly);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
