@@ -1,10 +1,5 @@
 package com.navigation;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.pageobjects.cirpages.CirUserGuidePage;
 import com.apriori.pageobjects.pages.homepage.AdminHomePage;
 import com.apriori.pageobjects.pages.login.AdminLoginPage;
@@ -13,9 +8,11 @@ import com.apriori.pageobjects.pages.manage.ScenarioExport;
 import com.apriori.pageobjects.pages.manage.SystemDataExport;
 import com.apriori.pageobjects.pages.userguides.CiaUserGuide;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.AdminSmokeTest;
@@ -24,6 +21,7 @@ import utils.Constants;
 
 public class AdminNavigationTests extends TestBase {
 
+    private SoftAssertions softAssertions = new SoftAssertions();
     private SystemDataExport systemDataExport;
     private ScenarioExport scenarioExport;
     private CirUserGuidePage cirUserGuide;
@@ -44,8 +42,9 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToManageScenarioExport();
 
-        assertThat(scenarioExport.isHeaderDisplayed(), is(equalTo(true)));
-        assertThat(scenarioExport.isHeaderEnabled(), is(equalTo(true)));
+        softAssertions.assertThat(scenarioExport.isHeaderDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(scenarioExport.isHeaderEnabled()).isEqualTo(true);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -57,24 +56,25 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToManageSystemDataExport();
 
-        assertThat(systemDataExport.isHeaderDisplayed(), is(equalTo(true)));
-        assertThat(systemDataExport.isHeaderEnabled(), is(equalTo(true)));
+        softAssertions.assertThat(systemDataExport.isHeaderDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(systemDataExport.isHeaderEnabled()).isEqualTo(true);
+        softAssertions.assertAll();
     }
 
     @Test
     @Category(AdminSmokeTest.class)
     @TestRail(testCaseId = {"2982"})
     @Description("Ensure that the Help Cost Insight Report Guide Link works")
-    public void testHelpCostInsightReportGuideNavigation() throws Exception {
+    public void testHelpCostInsightReportGuideNavigation() {
         cirUserGuide = new AdminLoginPage(driver)
             .login()
             .navigateToHelpReportsGuide()
-            .switchTab()
-            .switchToIFrameUserGuide("page_iframe");
+            .switchTab();
 
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), is(equalTo("Cost Insight Report:User Guide")));
-        assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
-        assertThat(cirUserGuide.getTabCount(), is(2));
+        softAssertions.assertThat(cirUserGuide.getReportsUserGuidePageHeading()).startsWith("Cost Insight Report");
+        softAssertions.assertThat(cirUserGuide.getCurrentUrl()).contains("CIR_UG");
+        softAssertions.assertThat(cirUserGuide.getTabCount()).isEqualTo(2);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -86,9 +86,11 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToHelpAdminGuide();
 
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.CIA_USER_GUIDE_TITLE)));
-        assertThat(ciaUserGuide.getCurrentUrl(), is(containsString(Constants.CIA_USER_GUIDE_URL_SUBSTRING)));
-        assertThat(ciaUserGuide.getTabCount(), is(2));
+        softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
+        softAssertions.assertThat(ciaUserGuide.getCurrentUrl()).contains(Constants.CIA_USER_GUIDE_URL_SUBSTRING);
+        softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(false))
+            .contains(Constants.CIA_USER_GUIDE_TITLE);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -101,10 +103,11 @@ public class AdminNavigationTests extends TestBase {
             .navigateToScenarioExportChapterPage();
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
-        assertThat(ciaUserGuide.getTabCount(), is(2));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE)));
-        assertThat(currentUrl, is(containsString(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO)));
-        assertThat(ciaUserGuide.getAdminUserGuidePageHeading(), is(equalTo(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE)));
+        softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
+        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL);
+        softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true))
+            .startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -116,9 +119,10 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToAdminLogout();
 
-        assertThat(logout.isLoginButtonDisplayedAndEnabled(), is(equalTo(true)));
-        assertThat(logout.isHeaderEnabled(), is(equalTo(true)));
-        assertThat(logout.isHeaderDisplayed(), is(true));
+        softAssertions.assertThat(logout.isLoginButtonDisplayedAndEnabled()).isEqualTo(true);
+        softAssertions.assertThat(logout.isHeaderEnabled()).isEqualTo(true);
+        softAssertions.assertThat(logout.isHeaderDisplayed()).isEqualTo(true);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -130,18 +134,12 @@ public class AdminNavigationTests extends TestBase {
             .login()
             .navigateToReports();
 
-        String urlToCheck = homePage.getUrlToCheck();
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        assertThat(homePage.getCurrentUrl(), equalTo(
-                String.format(
-                        "%s%s%s",
-                        urlToCheck,
-                        Constants.REPORTS_URL_SUFFIX,
-                        Constants.REPORTS_LAST_SUFFIX))
-        );
-        assertThat(homePage.getTabCount(), is(equalTo(2)));
-        assertThat(homePage.isReportsLogoutDisplayed(), is(true));
-        assertThat(homePage.isReportsLogoutEnabled(), is(true));
+        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("${env}.reports.ui_url").substring(0, 71));
+        softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
+        softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);
+        softAssertions.assertAll();
     }
 }
