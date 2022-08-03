@@ -18,6 +18,7 @@ import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.AdminSmokeTest;
@@ -73,9 +74,11 @@ public class AdminNavigationTests extends TestBase {
             .navigateToHelpReportsGuide()
             .switchTab();
 
-        assertThat(cirUserGuide.getReportsUserGuidePageHeading(), startsWith("Cost Insight Report"));
-        assertThat(cirUserGuide.getCurrentUrl(), is(containsString("CIR_UG")));
-        assertThat(cirUserGuide.getTabCount(), is(2));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(cirUserGuide.getReportsUserGuidePageHeading()).startsWith("Cost Insight Report");
+        softAssertions.assertThat(cirUserGuide.getCurrentUrl()).contains("CIR_UG");
+        softAssertions.assertThat(cirUserGuide.getTabCount()).isEqualTo(2);
+        softAssertions.assertAll();
     }
 
     @Test
