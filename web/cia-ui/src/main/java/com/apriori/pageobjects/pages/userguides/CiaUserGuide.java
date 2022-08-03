@@ -4,6 +4,7 @@ import com.apriori.pageobjects.header.AdminPageHeader;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -12,8 +13,11 @@ import org.openqa.selenium.support.PageFactory;
 @Slf4j
 public class CiaUserGuide extends AdminPageHeader {
 
-    @FindBy(css = "div[id='page_content'] > div")
-    private WebElement pageTitle;
+    @FindBy(xpath = "//*[contains(text(), 'Cost Insight Admin Guide')])")
+    private WebElement adminUserGuidePageTitle;
+
+    @FindBy(xpath = "//*[contains(text(), 'Cost Insight Admin Guide')]")
+    private WebElement scenarioExportChapterPageTitle;
 
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
@@ -62,11 +66,10 @@ public class CiaUserGuide extends AdminPageHeader {
      * Gets page heading of Admin User Guide page
      * @return String - page title
      */
-    public String getAdminUserGuidePageHeading() {
-        pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(mainContentIframe);
-        driver.switchTo().frame(mainContentIframe);
-        pageUtils.waitForElementAppear(pageTitle);
-        return pageTitle.getText();
+    public String getAdminOrScenarioChapterUserGuidePageHeading(boolean getScenarioChapterTitle) {
+        By locatorToUse = getScenarioChapterTitle ? By.xpath("//div[@id='mc-main-content']")
+            : By.xpath("//*[contains(text(), 'Cost Insight Admin Guide')]");
+        pageUtils.waitForElementToAppear(locatorToUse);
+        return driver.findElement(locatorToUse).getAttribute("innerText");
     }
 }
