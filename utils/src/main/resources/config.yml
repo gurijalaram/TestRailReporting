@@ -1,5 +1,6 @@
 # Define the environment
 env: int-core
+
 # Define the global properties not related to environment
 global:
   schema_base_path: schemas/
@@ -88,7 +89,7 @@ default:
 int-core:
   name: int-core
   secret_key: 65J1ID2B6LDG
-  base_url: https://na-1.apriori-internal.int.apriori.net/
+  base_url: https://cost.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   user_identity: 8GFDIG229629
 
@@ -141,6 +142,7 @@ int-core:
 
   reports:
     ui_url: ${int-core.base_url}jasperserver-pro/login.html
+    api_url: https://cost.apriori-internal.int.apriori.net/jasperserver-pro/
 
   vds:
     api_url: https://vds.core.int.apriori.net/
