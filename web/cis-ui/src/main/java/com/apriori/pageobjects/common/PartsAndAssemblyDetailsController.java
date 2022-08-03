@@ -15,6 +15,8 @@ import java.util.stream.Stream;
 @Slf4j
 public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsAndAssemblyDetailsController> {
 
+    @FindBy(xpath = "//div[@data-testid='Process']")
+    private WebElement processList;
 
     public PartsAndAssemblyDetailsController(WebDriver driver) {
         super(driver, log);
@@ -41,5 +43,14 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
      */
     public List<String> getItemsOfSections(String section) {
         return Stream.of(getDriver().findElement(By.xpath("//div[@data-testid='" + section + "']")).getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets process routing details
+     *
+     * @return list of string
+     */
+    public List<String> getProcessRoutingDetails() {
+        return Stream.of(processList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 }
