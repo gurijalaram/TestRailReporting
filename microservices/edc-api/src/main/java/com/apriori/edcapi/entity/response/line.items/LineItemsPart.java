@@ -3,7 +3,8 @@ package com.apriori.edcapi.entity.response.line.items;
 import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
-@Schema
+
+@Schema(location = "LineItemsPart.json")
 @Data
 public class LineItemsPart {
 

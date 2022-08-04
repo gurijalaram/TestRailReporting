@@ -54,7 +54,8 @@ public class LineItemsTest extends LineItemsUtil {
         softAssertions.assertThat(allLineItems.get(0).getStatus()).isEqualTo(status);
         softAssertions.assertThat(allLineItems.get(0).getLevel()).isEqualTo(level);
         softAssertions.assertThat(allLineItems.get(8).getQuantity()).isEqualTo(quantity);
-//        softAssertions.assertThat(allLineItems.get(8).getLineItemsPart().get(0).getIsUserPart()).isEqualTo(false);
+        softAssertions.assertThat(allLineItems.get(8).getParts().get(0).getIsUserPart()).isEqualTo(false);
+
         softAssertions.assertAll();
     }
 }

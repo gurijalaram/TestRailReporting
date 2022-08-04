@@ -5,7 +5,7 @@ import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
 
 import java.util.List;
-@Schema
+@Schema(location = "LineItemsPart.json")
 @Data
 public class LineItemsParts {
     private List<LineItemsPart> parts;
