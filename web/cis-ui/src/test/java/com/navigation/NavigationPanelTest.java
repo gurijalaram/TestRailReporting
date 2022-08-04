@@ -84,7 +84,7 @@ public class NavigationPanelTest extends TestBase {
         SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(termsOfUsePage.getTermsOfUseUrl()).contains("/terms-of-use");
-        softAssertions.assertThat(termsOfUsePage.getTermsOfUseText()).contains("This Cost Insight Source application (“Application”), including the intellectual property rights and trade secrets contained therein, is the property of aPriori Technologies, Inc. and/or its suppliers. Use of this Application in any manner is governed by the terms and conditions of a signed subscription agreement between You and aPriori. In the absence of a signed subscription agreement, the use of this software is governed solely by the aPriori Subscription and Professional Services Agreement availablehere.");
+        softAssertions.assertThat(termsOfUsePage.getTermsOfUseText()).contains("This Cost Insight Source application (“Application”), including the intellectual property rights and trade secrets contained therein");
 
         softAssertions.assertAll();
     }

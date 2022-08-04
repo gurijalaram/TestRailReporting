@@ -14,8 +14,8 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisCostDetailsEnum;
+import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
