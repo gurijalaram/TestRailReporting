@@ -1,9 +1,15 @@
 package com.apriori.pageobjects.pages.partsandassemblies;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.PartsAndAssemblyFilterController;
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -136,7 +142,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioCreatedBy']//button//*[local-name()='svg']")
     private WebElement createdByIcon;
 
-    @FindBy(xpath = "//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible' and @data-rowindex='0']")
+    @FindBy(xpath = "//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']")
     private WebElement filterRecords;
 
     @FindBy(xpath = "//div[@class='MuiDataGrid-row']")
@@ -160,6 +166,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
     private PartsAndAssemblyFilterController partsAndAssemblyFilterController;
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
 
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {
@@ -749,5 +757,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
             getPageUtils().waitForElementAndClick(btnPintoLeft);
         }
         return this;
+    }
+
+    /**
+     * Click on selected componentName
+     *
+     * @return new page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnComponent(String componentName, String scenarioName) {
+        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath(String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim()))));
+        return new PartsAndAssembliesDetailsPage(getDriver());
     }
 }

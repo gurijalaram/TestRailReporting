@@ -1,19 +1,27 @@
 package com.partsandassembliesdetails;
 
+
+
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.CisColumnsEnum;
 import com.utils.CisInsightsFieldsEnum;
-import com.utils.CisProcessRoutingEnum;
+import com.utils.CisCostDetailsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+
+import java.io.File;
 
 
 public class PartsAndAssembliesDetailsTest extends TestBase {
@@ -25,7 +33,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private CisLoginPage loginPage;
     private PartsAndAssembliesPage partsAndAssembliesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
-
+    private File resourceFile;
+    UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = {"12396","12458","12460","12461","12254","12459"})
@@ -400,18 +409,24 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13283","13144","13145","13146","13284","13165","13151","13162"})
     @Description("Verify process routing cycle time details card")
     public void testProcessRoutingCycleTimeDetailsCard() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(componentName,scenarioName)
                 .clickProcessRouting();
+
+        SoftAssertions softAssertions = new SoftAssertions();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessRoutingMenuIconDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessRoutingCardDisplayed()).isEqualTo(true);
@@ -424,10 +439,10 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         partsAndAssembliesDetailsPage.clickCycleTimeChart();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisProcessRoutingEnum.PROCESS_GROUP_NAME.getProcessRoutingName(),CisProcessRoutingEnum.PROCESS_NAME.getProcessRoutingName(),
-                CisProcessRoutingEnum.MACHINE_NAME.getProcessRoutingName(),CisProcessRoutingEnum.CYCLE_TIME.getProcessRoutingName(),
-                CisProcessRoutingEnum.FULLY_BURDENED_COST.getProcessRoutingName(),CisProcessRoutingEnum.PIECE_PART_COST.getProcessRoutingName(),
-                CisProcessRoutingEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
 
         softAssertions.assertAll();
     }
@@ -456,10 +471,10 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         partsAndAssembliesDetailsPage.clickFullyBurdenedCostChart();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisProcessRoutingEnum.PROCESS_GROUP_NAME.getProcessRoutingName(),CisProcessRoutingEnum.PROCESS_NAME.getProcessRoutingName(),
-                CisProcessRoutingEnum.MACHINE_NAME.getProcessRoutingName(),CisProcessRoutingEnum.CYCLE_TIME.getProcessRoutingName(),
-                CisProcessRoutingEnum.FULLY_BURDENED_COST.getProcessRoutingName(),CisProcessRoutingEnum.PIECE_PART_COST.getProcessRoutingName(),
-                CisProcessRoutingEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
 
         softAssertions.assertAll();
     }
@@ -488,10 +503,10 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         partsAndAssembliesDetailsPage.clickPiecePartCostCostChart();
 
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisProcessRoutingEnum.PROCESS_GROUP_NAME.getProcessRoutingName(),CisProcessRoutingEnum.PROCESS_NAME.getProcessRoutingName(),
-                CisProcessRoutingEnum.MACHINE_NAME.getProcessRoutingName(),CisProcessRoutingEnum.CYCLE_TIME.getProcessRoutingName(),
-                CisProcessRoutingEnum.FULLY_BURDENED_COST.getProcessRoutingName(),CisProcessRoutingEnum.PIECE_PART_COST.getProcessRoutingName(),
-                CisProcessRoutingEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
 
         softAssertions.assertAll();
     }

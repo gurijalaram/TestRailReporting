@@ -1,6 +1,6 @@
 package com.utils;
 
-public enum CisProcessRoutingEnum {
+public enum CisCostDetailsEnum {
 
     PROCESS_GROUP_NAME("Process Group Name"),
     PROCESS_NAME("Process Name"),
@@ -10,13 +10,13 @@ public enum CisProcessRoutingEnum {
     PIECE_PART_COST("Piece Part Cost"),
     TOTAL_CAPITAL_INVESTMENT("Total Capital Investment");
 
-    private final String processName;
+    private final String costDetail;
 
-    CisProcessRoutingEnum(String fields) {
-        this.processName = fields;
+    CisCostDetailsEnum(String fields) {
+        this.costDetail = fields;
     }
 
     public String getProcessRoutingName() {
-        return this.processName;
+        return this.costDetail;
     }
 }

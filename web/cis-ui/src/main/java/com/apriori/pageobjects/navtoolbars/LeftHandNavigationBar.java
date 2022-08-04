@@ -1,8 +1,14 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.LetNavigationBarController;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
@@ -10,6 +16,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 
+import java.io.File;
 import java.util.List;
 
 @Slf4j
@@ -36,6 +43,8 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     private WebElement collapsedAprioriLogo;
 
     private LetNavigationBarController letNavigationBarController;
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
 
     public LeftHandNavigationBar(WebDriver driver) {
         this(driver, log);
@@ -147,5 +156,32 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      */
     public List<String> getItemsOfSections(String section) {
         return letNavigationBarController.getItemsOfSections(section);
+    }
+
+    /**
+     * Upload and cost a component via API
+     *
+     * @return current page object
+     */
+    public LeftHandNavigationBar uploadAndCostScenario(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials,ProcessGroupEnum processGroupEnum,DigitalFactoryEnum digitalFactoryEnum) {
+        ComponentInfoBuilder scenarioItem = componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(userCredentials)
+                .build());
+
+        scenariosUtil.postCostScenario(
+                ComponentInfoBuilder.builder()
+                        .componentName(componentName)
+                        .scenarioName(scenarioName)
+                        .componentIdentity(scenarioItem.getComponentIdentity())
+                        .scenarioIdentity(scenarioItem.getScenarioIdentity())
+                        .processGroup(processGroupEnum)
+                        .digitalFactory(digitalFactoryEnum)
+                        .user(userCredentials)
+                        .build());
+
+        return this;
     }
 }
