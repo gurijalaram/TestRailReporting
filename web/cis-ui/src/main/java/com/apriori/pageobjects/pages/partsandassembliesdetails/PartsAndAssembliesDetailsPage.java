@@ -984,4 +984,13 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         getPageUtils().waitForElementAndClick(piecePartCostChart);
         return this;
     }
+
+    /**
+     * Gets the process details
+     *
+     * @return string
+     */
+    public String getProcessDetails(String processDetails) {
+        return driver.findElement(By.xpath("//div[@id='process-routing']//div[text()='" + processDetails + "']")).getAttribute("textContent");
+    }
 }

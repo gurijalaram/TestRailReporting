@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: cis-sbx
 
 # Define the global properties not related to environment
 global:
@@ -55,11 +55,11 @@ default:
     api_url: https://cds.${default.aws_region}.${env}.apriori.net/
 
   cidapp:
-    api_url: https://cid-api.dev-cis-sbx.apriori.net/
-    ui_url:  https://cid.dev-cis-sbx.apriori.net/
+    api_url: https://cid-api.${default.aws_region}-v22-1.${env}.apriori.net/
+    ui_url:  https://ci-design.${default.aws_region}-v22-1.${env}.apriori.net/
 
   css:
-    api_url: https://css.dev-cis-sbx.apriori.net/
+    api_url: https://css.${default.aws_region}-v22-1.${env}.apriori.net/
 
   edc:
     ui_url: https://edc.${default.aws_region}.${env}.apriori.net/
@@ -78,7 +78,7 @@ default:
     api_url: https://vds.${default.aws_region}-v22-1.${env}.apriori.net/
 
   cis:
-    ui_url: https://cis.dev-cis-sbx.apriori.net/
+    ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
     api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
 
 #  Specific environment configurations
@@ -367,3 +367,62 @@ local:
 
   cis:
     ui_url: ${local.base_url}:3004
+
+######################################################## CIS_SANDBOX ########################################################
+cis-sbx:
+  aws_region: na-1
+  name: cis-sbx
+  secret_key: 502M4JBUCE36
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 92E1E4E9DFCD
+  base_url: https://demo.apriori-internal.qa-cid-perf.apriori.net/
+
+  cloud:
+    ui_url: https://cloud.${default.aws_region}.${env}.apriori.net/
+
+  ats:
+    api_url: https://ats.na-1.qa-cid-perf.apriori.net/
+    token_username: qa-automation-01
+    token_email: qa-automation-01@apriori.com
+    token_issuer: 2021 R1
+    token_subject: 4127
+    auth_application: CID
+    automation_username: qa-automation-%s@apriori.com
+    automation_password: TrumpetSnakeFridgeToasty18!%
+
+  bcs:
+    api_url: https://bcs.${default.aws_region}-v22-1.${env}.apriori.net/
+
+  cas:
+    ui_url: https://cas.${default.aws_region}.${env}.apriori.net/
+    api_url: https://cas-api.${default.aws_region}.${env}.apriori.net/%s
+
+  cds:
+    api_url: https://cds.${default.aws_region}.${env}.apriori.net/
+
+  cidapp:
+    api_url: https://cid-api.dev-cis-sbx.apriori.net/
+    ui_url:  https://cid.dev-cis-sbx.apriori.net/
+
+  css:
+    api_url: https://css.dev-cis-sbx.apriori.net/
+
+  edc:
+    ui_url: https://edc.${default.aws_region}.${env}.apriori.net/
+    api_url: https://edc-api.${default.aws_region}.${env}.apriori.net/
+
+  fms:
+    api_url: https://fms.${default.aws_region}.${env}.apriori.net/
+
+  nts:
+    api_url: https://nts.${default.aws_region}.${env}.apriori.net/
+
+  sds:
+    api_url: https://sds.${default.aws_region}-v22-1.${env}.apriori.net/
+
+  vds:
+    api_url: https://vds.${default.aws_region}-v22-1.${env}.apriori.net/
+
+  cis:
+    ui_url: https://cis.dev-cis-sbx.apriori.net/
+    api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/

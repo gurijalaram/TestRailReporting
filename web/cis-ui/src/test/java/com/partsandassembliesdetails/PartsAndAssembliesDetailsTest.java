@@ -444,6 +444,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
                 CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
 
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
+
         softAssertions.assertAll();
     }
 
@@ -476,6 +484,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
                 CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
 
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
+
         softAssertions.assertAll();
     }
 
@@ -507,6 +523,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
                 CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
                 CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
 
         softAssertions.assertAll();
     }
