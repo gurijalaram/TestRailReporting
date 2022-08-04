@@ -1,7 +1,9 @@
 package com.apriori.edcapi.entity.response.line.items;
 
-import lombok.Data;
+import com.apriori.utils.http.enums.Schema;
 
+import lombok.Data;
+@Schema
 @Data
 public class LineItemsPart {
 
