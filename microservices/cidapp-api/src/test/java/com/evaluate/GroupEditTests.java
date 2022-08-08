@@ -197,21 +197,14 @@ public class GroupEditTests {
             .status("new")
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishResponse = scenariosUtil.postPublishGroupScenarios(componentAssembly, publishRequest,
+         scenariosUtil.postPublishGroupScenarios(componentAssembly, publishRequest,
             STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        publishResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
-
-        List<ScenarioItem> driveItem = cssComponent.getCssComponent(DRIVE, scenarioName, currentUser).getResponseEntity().getItems();
-        softAssertions.assertThat(driveItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
-
-        List<ScenarioItem> standItem = cssComponent.getCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
-        softAssertions.assertThat(standItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
-
-        List<ScenarioItem> jointItem = cssComponent.getCssComponent(JOINT, scenarioName, currentUser).getResponseEntity().getItems();
-        softAssertions.assertThat(jointItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
+        subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "lastAction, publish").getResponseEntity()
+            .getItems()
+            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0)));
 
         softAssertions.assertAll();
     }
