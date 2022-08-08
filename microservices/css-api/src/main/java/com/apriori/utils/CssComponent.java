@@ -2,7 +2,7 @@ package com.apriori.utils;
 
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.QueryParams;
@@ -33,18 +33,6 @@ public class CssComponent {
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 600;
-
-    /**
-     * Gets the uncosted component from CSS
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - user to upload the part
-     * @return response object
-     */
-    public List<ScenarioItem> getUnCostedCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, not_costed").getResponseEntity().getItems();
-    }
 
     /**
      * Calls an api with GET verb
@@ -125,8 +113,17 @@ public class CssComponent {
                     HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
                 if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+
                     cssComponentResponse.getResponseEntity().getItems().stream()
-                        .anyMatch(o -> !o.getComponentType().equalsIgnoreCase("unknown"))) {
+                        .anyMatch(o -> !o.getComponentType().equalsIgnoreCase("unknown")) &&
+
+                    ScenarioStateEnum.terminalState.stream()
+                        .anyMatch(o -> o.getState().equalsIgnoreCase(cssComponentResponse.getResponseEntity()
+                            .getItems()
+                            .stream()
+                            .findAny()
+                            .get()
+                            .getScenarioState()))) {
 
                     return cssComponentResponse;
                 }
@@ -140,23 +137,5 @@ public class CssComponent {
         throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds",
             componentName, scenarioName, WAIT_TIME)
         );
-    }
-
-    /**
-     * Gets a css component specified by workspace id
-     *
-     * @param workspaceId     - the workspace id
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - the user credentials
-     * @return response object
-     */
-    public ScenarioItem getWorkspaceComponent(int workspaceId, String componentName, String scenarioName, UserCredentials userCredentials) {
-        return getCssComponent(componentName, scenarioName, userCredentials)
-            .getResponseEntity()
-            .getItems()
-            .stream()
-            .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(workspaceId))
-            .collect(Collectors.toList()).get(0);
     }
 }
