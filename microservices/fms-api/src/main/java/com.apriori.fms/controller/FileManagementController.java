@@ -8,8 +8,8 @@ import com.apriori.utils.authusercontext.AuthUserContextUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -81,15 +81,15 @@ public class FileManagementController {
      * @return FileResponse instance
      */
     public static FileResponse uploadFileWithResourceName(UserCredentials userCredentials, File fileToUpload, String resourceName) {
-        FormParams requestFormParams = new FormParams().use("filename", fileToUpload.getName());
-        if (requestFormParams != null) {
-            requestFormParams.use("resourceName", resourceName);
+        QueryParams requestQueryParams = new QueryParams().use("filename", fileToUpload.getName());
+        if (requestQueryParams != null) {
+            requestQueryParams.use("resourceName", resourceName);
         }
 
         RequestEntity requestEntity = RequestEntityUtil.init(FMSAPIEnum.FILES, FileResponse.class)
             .headers(initHeaders(userCredentials, true))
             .multiPartFiles(new MultiPartFiles().use("data", fileToUpload))
-            .formParams(requestFormParams);
+            .queryParams(requestQueryParams);
 
         return (FileResponse) HTTPRequest.build(requestEntity).postMultipart().getResponseEntity();
     }
