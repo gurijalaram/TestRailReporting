@@ -85,8 +85,6 @@ public class CastingDtcReportTests extends TestBase {
             .navigateToLibraryPage();
 
         jSessionId = driver.manage().getCookieNamed("JSESSIONID").getValue();
-        //driver.close();
-        //driver.quit();
 
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
 
