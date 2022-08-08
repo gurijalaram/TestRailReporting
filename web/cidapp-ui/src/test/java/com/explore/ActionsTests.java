@@ -415,7 +415,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187", "7271", "6199"})
+    @TestRail(testCaseId = {"7187", "7271", "6199", "6339"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
