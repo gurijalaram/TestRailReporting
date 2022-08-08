@@ -5,7 +5,7 @@ import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CssComponent {
 
-    FormParams formParams = new FormParams();
+    QueryParams queryParams = new QueryParams();
     private String itemScenarioState;
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
@@ -51,7 +51,7 @@ public class CssComponent {
 
         paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
 
-        return getCssComponent(componentName, scenarioName, userCredentials, formParams.use(paramMap));
+        return getCssComponent(componentName, scenarioName, userCredentials, queryParams.use(paramMap));
     }
 
     /**
@@ -77,15 +77,15 @@ public class CssComponent {
      * @param componentName   - the component name
      * @param scenarioName    - the scenario name
      * @param userCredentials - the user credentials
-     * @param formParams      - the query form params
+     * @param queryParams      - the query form params
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, FormParams formParams) {
+    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, QueryParams queryParams) {
 
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
             .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
             .token(userCredentials.getToken())
-            .formParams(formParams)
+            .queryParams(queryParams)
             .socketTimeout(SOCKET_TIMEOUT);
 
         return getComponentPart(componentName, scenarioName, requestEntity);
