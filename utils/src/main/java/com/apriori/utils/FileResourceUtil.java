@@ -102,6 +102,18 @@ public class FileResourceUtil {
         return copyFileFromCloudToTempFolder("common", processGroup, fileName);
     }
 
+    /**
+     * Get file from common workspace in S3 bucket
+     * The file will be copied inti local temp directory
+     *
+     * @param workspaceName - subfolder in bucket
+     * @return
+     */
+    public static File getCloudFile(String workspaceName, String fileName) {
+
+        return copyFileFromCloudToTempFolder(workspaceName, fileName);
+    }
+
     public static void uploadCloudFile(final String workspaceName, File fileToUpload) {
         String fileName = fileToUpload.getName();
         final String cloudFilePath = String.format("%s/%s", workspaceName, fileName);
@@ -122,18 +134,6 @@ public class FileResourceUtil {
 
         waiterResponse.matched().response().ifPresent(System.out::println);
         log.info(String.format("File Uploaded to AWS S3 Bucket  %s/%s", S3_BUCKET_NAME, cloudFilePath));
-    }
-
-    /**
-     * Get file from common workspace in S3 bucket
-     * The file will be copied inti local temp directory
-     *
-     * @param workspaceName - subfolder in bucket
-     * @return
-     */
-    public static File getCloudFile(String workspaceName, String fileName) {
-
-        return copyFileFromCloudToTempFolder(workspaceName, fileName);
     }
 
     /**
