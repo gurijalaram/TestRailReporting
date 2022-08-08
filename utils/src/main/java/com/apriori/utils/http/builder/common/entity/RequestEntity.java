@@ -2,8 +2,8 @@ package com.apriori.utils.http.builder.common.entity;
 
 import com.apriori.utils.http.enums.EndpointEnum;
 import com.apriori.utils.http.enums.EndpointType;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,7 +42,7 @@ public class RequestEntity {
     private EndpointType endpointType = EndpointType.EXTERNAL;
     private Integer expectedResponseCode;
     private boolean followRedirection = false;
-    private FormParams formParams;
+    private QueryParams queryParams;
     @Singular
     private Map<String, String> headers = new HashMap<>();
     private Object[] inlineVariablesArray;

@@ -8,8 +8,8 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -30,7 +30,7 @@ public class BillOfMaterialsUtil extends TestUtil {
             RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
                 .multiPartFiles(new MultiPartFiles()
                     .use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
-                .formParams(new FormParams()
+                .queryParams(new QueryParams()
                     .use("type", "pcba"));
 
         return HTTPRequest.build(requestEntity).postMultipart();
