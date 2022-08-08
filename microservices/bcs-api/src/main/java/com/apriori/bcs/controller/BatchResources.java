@@ -58,6 +58,30 @@ public class BatchResources extends BcsBase {
     }
 
     /**
+     * Creates Batch with invalid customer data
+     *
+     * @return Batch response instance
+     */
+    public static <T> ResponseWrapper<T> createBatch(String customerIdentity, Class<T> klass) {
+        long currentMillis = System.currentTimeMillis();
+        Map<String, String> headerInfo = new HashMap<>();
+        headerInfo.put("Accept", "*/*");
+        headerInfo.put("Content-Type", "application/json");
+        BatchRequest newBatchRequest = BatchRequest.builder().batch(BatchProperties.builder()
+                .externalId("auto-External-" + currentMillis)
+                .exportSetName("auto-ExportSet-" + currentMillis)
+                .rollupName("auto-RollUp-" + currentMillis)
+                .rollupScenarioName("auto-Scenario-" + currentMillis)
+                .build())
+            .build();
+        final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, klass)
+            .inlineVariables(customerIdentity)
+            .headers(headerInfo)
+            .body(newBatchRequest);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Returns list of batches
      *
      * @return Response Object
@@ -161,30 +185,6 @@ public class BatchResources extends BcsBase {
             && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
         return (batch.getState().equals(bcsExpectedState.toString())) ? true : false;
-    }
-
-    /**
-     * Creates Batch with invalid customer data
-     *
-     * @return Batch response instance
-     */
-    public static <T> ResponseWrapper<T> createBatch(String customerIdentity, Class<T> klass) {
-        long currentMillis = System.currentTimeMillis();
-        Map<String, String> headerInfo = new HashMap<>();
-        headerInfo.put("Accept", "*/*");
-        headerInfo.put("Content-Type", "application/json");
-        BatchRequest newBatchRequest = BatchRequest.builder().batch(BatchProperties.builder()
-                .externalId("auto-External-" + currentMillis)
-                .exportSetName("auto-ExportSet-" + currentMillis)
-                .rollupName("auto-RollUp-" + currentMillis)
-                .rollupScenarioName("auto-Scenario-" + currentMillis)
-                .build())
-            .build();
-        final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, klass)
-            .inlineVariables(customerIdentity)
-            .headers(headerInfo)
-            .body(newBatchRequest);
-        return HTTPRequest.build(requestEntity).post();
     }
 
     /**
