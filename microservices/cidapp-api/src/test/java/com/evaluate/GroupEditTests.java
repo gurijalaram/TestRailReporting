@@ -133,16 +133,14 @@ public class GroupEditTests {
             .status("new")
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> standResponse = scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(),
+        scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(),
             componentAssembly, STAND + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        standResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
-
-        List<ScenarioItem> scenarioItem = cssComponent.getCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
-
-        softAssertions.assertThat(scenarioItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
+        cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "lastAction, publish").getResponseEntity()
+            .getItems()
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0));
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -152,15 +150,12 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> driveResponse = scenariosUtil.postPublishGroupScenarios(publishRequest2, user.getCustomAttributes().getWorkspaceId(),
+        scenariosUtil.postPublishGroupScenarios(publishRequest2, user.getCustomAttributes().getWorkspaceId(),
             componentAssembly, DRIVE + "," + scenarioName);
 
-        driveResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
-
-        List<ScenarioItem> scenarioItem2 = cssComponent.getCssComponent(DRIVE, newScenarioName, currentUser).getResponseEntity().getItems();
-
-        softAssertions.assertThat(scenarioItem2.stream().findFirst().get().getScenarioName()).isEqualTo(newScenarioName);
-        softAssertions.assertThat(scenarioItem2.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
+        cssComponent.getCssComponentQueryParams(DRIVE, newScenarioName, currentUser, "lastAction, publish").getResponseEntity()
+            .getItems()
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0));
 
         softAssertions.assertAll();
     }
