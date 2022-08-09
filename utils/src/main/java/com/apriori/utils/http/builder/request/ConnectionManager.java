@@ -5,8 +5,8 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchema;
 import com.apriori.utils.constants.CommonConstants;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.enums.Schema;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.restassured.RestAssured;
@@ -60,7 +60,7 @@ class ConnectionManager<T> {
 
         List<Map<String, ?>> urlParams = requestEntity.urlParams();
         MultiPartFiles multiPartFiles = requestEntity.multiPartFiles();
-        FormParams formParams = requestEntity.formParams();
+        QueryParams queryParams = requestEntity.queryParams();
 
         if (multiPartFiles != null) {
             builder.setContentType("multipart/form-data");
@@ -71,8 +71,8 @@ class ConnectionManager<T> {
             builder.setContentType(ContentType.JSON);
         }
 
-        if (formParams != null) {
-            formParams.forEach(builder::addFormParam);
+        if (queryParams != null) {
+            queryParams.forEach(builder::addFormParam);
         }
 
         if (urlParams != null) {

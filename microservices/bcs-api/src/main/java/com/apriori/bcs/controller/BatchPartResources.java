@@ -13,8 +13,8 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
@@ -64,18 +64,6 @@ public class BatchPartResources {
     }
 
     /**
-     * This overloaded method is to create Batch Part request entity for Batch ID.
-     * @param endPoint BCSAPIEnum
-     * @param batchIdentity - batch id
-     * @param partIdentity - part id
-     * @param klass - return class name
-     * @return RequestEntity object
-     */
-    public static <T> RequestEntity getBatchPartRequestEntity(BCSAPIEnum endPoint, String batchIdentity, String partIdentity, Class<T> klass) {
-        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
-    }
-
-    /**
      * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
      *
      * @param newPartRequest - Deserialized NewPartRequest Object
@@ -86,6 +74,19 @@ public class BatchPartResources {
     public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
         requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass);
         return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * This overloaded method is to create Batch Part request entity for Batch ID.
+     *
+     * @param endPoint      BCSAPIEnum
+     * @param batchIdentity - batch id
+     * @param partIdentity  - part id
+     * @param klass         - return class name
+     * @return RequestEntity object
+     */
+    public static <T> RequestEntity getBatchPartRequestEntity(BCSAPIEnum endPoint, String batchIdentity, String partIdentity, Class<T> klass) {
+        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
     }
 
     /**
@@ -133,7 +134,7 @@ public class BatchPartResources {
     public static ResponseWrapper<Parts> getPartsByBatchId(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
             .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
-        requestEntity.formParams(new FormParams().use("pageSize", PropertiesContext.get("number_of_parts")));
+        requestEntity.queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
         return HTTPRequest.build(requestEntity).getMultipart();
     }
 
@@ -184,6 +185,8 @@ public class BatchPartResources {
             case "PDF":
                 requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/TestFile.pdf")));
                 break;
+
+                // TODO: 02/08/2022 @rama - do we not need a default here?
         }
         return HTTPRequest.build(requestEntity).postMultipart();
     }
@@ -328,29 +331,29 @@ public class BatchPartResources {
     private static RequestEntity setPartRequestFormParams(NewPartRequest newPartRequest) {
         File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(newPartRequest.getProcessGroup()), newPartRequest.getFilename());
         Map<String, String> header = new HashMap<>();
-        FormParams formParams = new FormParams();
+        QueryParams queryParams = new QueryParams();
         if (newPartRequest.getScenarioName().equals("Unique")) {
             newPartRequest.setScenarioName("Scenario" + System.currentTimeMillis());
         }
-        formParams = (newPartRequest.getFilename() != null) ? formParams.use("filename", newPartRequest.getFilename()) : formParams;
-        formParams = (newPartRequest.getExternalId() != null) ? formParams.use("externalId", String.format(newPartRequest.getExternalId(), System.currentTimeMillis())) : formParams;
-        formParams = (newPartRequest.getAnnualVolume() != null) ? formParams.use("AnnualVolume", newPartRequest.getAnnualVolume().toString()) : formParams;
-        formParams = (newPartRequest.getBatchSize() != null) ? formParams.use("BatchSize", newPartRequest.getBatchSize().toString()) : formParams;
-        formParams = (newPartRequest.getDescription() != null) ? formParams.use("Description", newPartRequest.getDescription()) : formParams;
-        formParams = (newPartRequest.getProcessGroup() != null) ? formParams.use("ProcessGroup", newPartRequest.getProcessGroup()) : formParams;
-        formParams = (newPartRequest.getProductionLife() != null) ? formParams.use("ProductionLife", newPartRequest.getProductionLife().toString()) : formParams;
-        formParams = (newPartRequest.getScenarioName() != null) ? formParams.use("ScenarioName", newPartRequest.getScenarioName()) : formParams;
-        formParams = (newPartRequest.getVpeName() != null) ? formParams.use("VpeName", newPartRequest.getVpeName()) : formParams;
-        formParams = (newPartRequest.getMaterialName() != null) ? formParams.use("MaterialName", newPartRequest.getMaterialName()) : formParams;
-        formParams = (newPartRequest.getGenerateWatchPointReport() != null) ? formParams.use("generateWatchpointReport", newPartRequest.getGenerateWatchPointReport()) : formParams;
-        formParams = (newPartRequest.getUdas() != null) ? formParams.use("udas", newPartRequest.getUdas()) : formParams;
+        queryParams = (newPartRequest.getFilename() != null) ? queryParams.use("filename", newPartRequest.getFilename()) : queryParams;
+        queryParams = (newPartRequest.getExternalId() != null) ? queryParams.use("externalId", String.format(newPartRequest.getExternalId(), System.currentTimeMillis())) : queryParams;
+        queryParams = (newPartRequest.getAnnualVolume() != null) ? queryParams.use("AnnualVolume", newPartRequest.getAnnualVolume().toString()) : queryParams;
+        queryParams = (newPartRequest.getBatchSize() != null) ? queryParams.use("BatchSize", newPartRequest.getBatchSize().toString()) : queryParams;
+        queryParams = (newPartRequest.getDescription() != null) ? queryParams.use("Description", newPartRequest.getDescription()) : queryParams;
+        queryParams = (newPartRequest.getProcessGroup() != null) ? queryParams.use("ProcessGroup", newPartRequest.getProcessGroup()) : queryParams;
+        queryParams = (newPartRequest.getProductionLife() != null) ? queryParams.use("ProductionLife", newPartRequest.getProductionLife().toString()) : queryParams;
+        queryParams = (newPartRequest.getScenarioName() != null) ? queryParams.use("ScenarioName", newPartRequest.getScenarioName()) : queryParams;
+        queryParams = (newPartRequest.getVpeName() != null) ? queryParams.use("VpeName", newPartRequest.getVpeName()) : queryParams;
+        queryParams = (newPartRequest.getMaterialName() != null) ? queryParams.use("MaterialName", newPartRequest.getMaterialName()) : queryParams;
+        queryParams = (newPartRequest.getGenerateWatchPointReport() != null) ? queryParams.use("generateWatchpointReport", newPartRequest.getGenerateWatchPointReport()) : queryParams;
+        queryParams = (newPartRequest.getUdas() != null) ? queryParams.use("udas", newPartRequest.getUdas()) : queryParams;
 
         header.put("Accept", "*/*");
         header.put("Content-Type", "multipart/form-data");
         requestEntity.headers(header)
             .multiPartFiles(new MultiPartFiles()
                 .use("data", partFile))
-            .formParams(formParams);
+            .queryParams(queryParams);
         return requestEntity;
     }
 }

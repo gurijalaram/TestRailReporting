@@ -11,7 +11,6 @@ import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
-import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
@@ -87,7 +86,6 @@ public class ExploreToolbar extends MainNavBar {
 
     private PageUtils pageUtils;
     private WebDriver driver;
-    private CssComponent cssComponent = new CssComponent();
 
     public ExploreToolbar(WebDriver driver) {
         super(driver);
@@ -147,7 +145,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return - new page object
      */
     public EvaluatePage openComponent(String componentName, String scenarioName, UserCredentials currentUser) {
-        List<ScenarioItem> itemResponses = cssComponent.getUnCostedCssComponent(
+        List<ScenarioItem> itemResponses = new ComponentsUtil().getUnCostedComponent(
             componentName,
             scenarioName,
             currentUser);
