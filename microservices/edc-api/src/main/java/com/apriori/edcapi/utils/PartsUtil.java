@@ -12,6 +12,13 @@ import org.apache.http.HttpStatus;
 
 public class PartsUtil extends TestUtil {
 
+    /**
+     * List the parts in a line item matching a specified query
+     *
+     * @param bomIdentity      - bill of material identity
+     * @param lineItemIdentity - line of item identity
+     * @return response object
+     */
     public PartsResponse getAllPartsInLineItem(String bomIdentity, String lineItemIdentity) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, PartsResponse.class)
