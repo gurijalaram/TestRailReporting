@@ -1,64 +1,72 @@
 {
   "$schema": "https://json-schema.org/draft/2019-09/schema",
-  "type": "object",
-  "required": [
-    "createdAt",
-    "createdBy",
-    "deletedAt",
-    "deletedBy",
-    "filename",
-    "identity",
-    "name",
-    "numberOfLineItemsIncomplete",
-    "numberOfLineItemsNoPartsMatched",
-    "numberOfLineItemsReadyForExport",
-    "totalNumberOfLineItems",
-    "type",
-    "updatedAt",
-    "updatedBy"
-  ],
-  "properties": {
-    "createdAt": {
-      "type": "string"
-    },
-    "createdBy": {
-      "type": "string"
-    },
-    "deletedAt": {
-      "type": "string"
-    },
-    "deletedBy": {
-      "type": "string"
-    },
-    "filename": {
-      "type": "string"
-    },
-    "identity": {
-      "type": "string"
-    },
-    "name": {
-      "type": "string"
-    },
-    "numberOfLineItemsIncomplete": {
-      "type": "integer"
-    },
-    "numberOfLineItemsNoPartsMatched": {
-      "type": "integer"
-    },
-    "numberOfLineItemsReadyForExport": {
-      "type": "integer"
-    },
-    "totalNumberOfLineItems": {
-      "type": "integer"
-    },
-    "type": {
-      "type": "string"
-    },
-    "updatedAt": {
-      "type": "string"
-    },
-    "updatedBy": {
-      "type": "string"
+  "items": {
+    "type": "object",
+    "required": [
+      "isUserPart",
+      "isSaved",
+      "isActionRequired",
+      "identity",
+      "externalId",
+      "manufacturerPartNumber",
+      "manufacturer",
+      "classification",
+      "description",
+      "status",
+      "type"
+    ],
+    "optional": [
+      "availability",
+      "rohs",
+      "rohsVersion",
+      "dataSheetUrl"
+    ],
+    "properties": {
+      "isUserPart": {
+        "type": "boolean"
+      },
+      "isSaved": {
+        "type": "boolean"
+      },
+      "isActionRequired": {
+        "type": "boolean"
+      },
+      "identity": {
+        "type": "string"
+      },
+      "externalId": {
+        "type": "string"
+      },
+      "manufacturerPartNumber": {
+        "type": "string"
+      },
+      "manufacturer": {
+        "type": "string"
+      },
+      "classification": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "availability": {
+        "type": "string"
+      },
+      "dataSheetUrl": {
+        "type": "string"
+      },
+      "rohs": {
+        "type": "string"
+      },
+      "rohsVersion": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      }
     }
   }
 }

@@ -21,8 +21,6 @@ public class PartsTest extends PartsUtil {
 
     private static String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
-    private static LineItemsUtil lineItemsPart;
-
 
     @BeforeClass
     public static void setUp() {
@@ -38,8 +36,8 @@ public class PartsTest extends PartsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "")
-    @Description("")
+    @TestRail(testCaseId = "9417")
+    @Description("GET List the line items in a bill of materials matching a specified query.")
     public void testListPartsInLineItem() {
         LineItemsUtil lineItems = new LineItemsUtil();
 
@@ -48,12 +46,5 @@ public class PartsTest extends PartsUtil {
         String lineItemIdentity = allLineItems.get(0).getIdentity();
 
         getAllPartsInLineItem(billOfMaterialsIdentity, lineItemIdentity);
-
-//        RequestEntity requestEntity =
-//            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, PartsItemsResponse.class)
-//                .inlineVariables(billOfMaterialsIdentity, LineItemsUtil.getAllLineItems(billOfMaterialsIdentity).toString());
-//
-//        ResponseWrapper<PartsItemsResponse> getAllPartsResponse = HTTPRequest.build(requestEntity).get();
-//        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllPartsResponse.getStatusCode());
     }
 }

@@ -44,10 +44,9 @@ public class LineItemsTest extends LineItemsUtil {
     @TestRail(testCaseId = "9417")
     @Description("GET List the line items in a bill of materials matching a specified query")
     public void testGetLineItems() {
+        List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);
 
         softAssertions.assertThat(allLineItems.size()).isEqualTo(itemsCount);
         softAssertions.assertThat(allLineItems.get(1).getCustomerPartNumber()).isEqualTo(customerPartNumber);

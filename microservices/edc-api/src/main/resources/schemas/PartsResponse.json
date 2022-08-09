@@ -1,13 +1,6 @@
 {
-  "$schema": "https://json-schema.org/draft/2019-09/schema",
-  "type": "object",
-  "required": [
-    "response"
-  ],
-  "properties": {
-    "response": {
-      "type": "object",
-      "$ref": "Parts.json"
-    }
+  "type": "array",
+  "items": {
+    "$ref": "Parts.json"
   }
 }

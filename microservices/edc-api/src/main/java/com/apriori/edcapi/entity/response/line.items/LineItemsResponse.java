@@ -3,7 +3,6 @@ package com.apriori.edcapi.entity.response.line.items;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -26,7 +25,7 @@ public class LineItemsResponse {
     private Integer quantity;
     private String manufacturerPartNumber;
     private String manufacturer;
-    private List<LineItemsPart> parts;
+    private List<LineItemParts> parts;
 
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
