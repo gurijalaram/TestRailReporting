@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.utils;
 
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
-import static com.apriori.utils.enums.ScenarioStateEnum.transientGroup;
+import static com.apriori.utils.enums.ScenarioStateEnum.transientState;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -79,7 +79,7 @@ public class ScenariosUtil {
                         throw new RuntimeException(String.format("Processing has failed for Component ID: %s, Scenario ID: %s", componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity()));
                     });
 
-                if (scenarioResponse.isPresent() && transientGroup.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
+                if (scenarioResponse.isPresent() && transientState.stream().noneMatch(x -> x.getState().equals(scenarioResponse.get().getScenarioState()))) {
 
                     assertEquals("The component response should be okay.", HttpStatus.SC_OK, scenarioRepresentation.getStatusCode());
                     return scenarioRepresentation;
@@ -570,7 +570,11 @@ public class ScenariosUtil {
 
         for (String[] componentScenario : componentScenarioNames) {
 
-            ScenarioItem component = new CssComponent().getWorkspaceComponent(workspaceId, componentScenario[0], componentScenario[1], componentInfo.getUser());
+            ScenarioItem component = new CssComponent().getCssComponent(componentScenario[0], componentScenario[1], componentInfo.getUser()).getResponseEntity()
+                .getItems()
+                .stream()
+                .filter(o -> o.getScenarioIterationKey().getWorkspaceId().equals(workspaceId))
+                .collect(Collectors.toList()).get(0);;
 
             subComponentInfo.add(ComponentInfoBuilder.builder()
                 .componentName(component.getComponentName())
