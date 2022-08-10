@@ -51,12 +51,12 @@
           "isSaved",
           "isUserPart",
           "identity",
+          "lineItemIdentity",
           "externalId",
           "manufacturerPartNumber",
           "manufacturer",
           "classification",
           "description",
-          "dataSheetUrl",
           "status",
           "type"
         ],
@@ -74,6 +74,9 @@
             "type": "boolean"
           },
           "identity": {
+            "type": "string"
+          },
+          "lineItemIdentity": {
             "type": "string"
           },
           "externalId": {
