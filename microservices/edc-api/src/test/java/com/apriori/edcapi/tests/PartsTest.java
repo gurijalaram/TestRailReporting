@@ -2,8 +2,12 @@ package com.apriori.edcapi.tests;
 
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.deleteBillOfMaterialById;
 import static com.apriori.edcapi.utils.BillOfMaterialsUtil.postBillOfMaterials;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
+import com.apriori.edcapi.entity.response.parts.PartsResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
 import com.apriori.edcapi.utils.PartsUtil;
 import com.apriori.utils.TestRail;
@@ -45,6 +49,7 @@ public class PartsTest extends PartsUtil {
 
         String lineItemIdentity = allLineItems.get(0).getIdentity();
 
-        getAllPartsInLineItem(billOfMaterialsIdentity, lineItemIdentity);
+        PartsResponse allPartsInLineItem = getAllPartsInLineItem(billOfMaterialsIdentity, lineItemIdentity);
+        assertThat(allPartsInLineItem.size(), is(greaterThan(0)));
     }
 }
