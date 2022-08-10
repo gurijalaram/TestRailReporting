@@ -6,35 +6,29 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.api_utils.JasperApiAuthenticationUtil;
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
 import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
-import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.properties.PropertiesContext;
 
 import com.apriori.utils.web.driver.TestBase;
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -48,8 +42,12 @@ public class CastingDtcReportTests extends TestBase {
      * @throws NoSuchAlgorithmException - potential exception
      * @throws KeyManagementException - potential exception
      */
-    @BeforeClass
-    public static void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+    @Before
+    public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
+        jSessionId = auth.authenticateJasperApi();
+        assertThat(jSessionId, is(notNullValue()));
+
         /*skipSslCheck();
 
         String urlLink = PropertiesContext.get("${env}.reports.api_url").concat("j_spring_security_check?j_username=bhegan&j_password=bhegan");
@@ -80,11 +78,11 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
-        new ReportsLoginPage(driver)
+        /*new ReportsLoginPage(driver)
             .login()
             .navigateToLibraryPage();
 
-        jSessionId = driver.manage().getCookieNamed("JSESSIONID").getValue();
+        jSessionId = driver.manage().getCookieNamed("JSESSIONID").getValue();*/
 
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
 
@@ -128,17 +126,9 @@ public class CastingDtcReportTests extends TestBase {
         assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
     }
 
-    private static void skipSslCheck() throws NoSuchAlgorithmException, KeyManagementException {
-        // Source: https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check
-        SSLContext sc = SSLContext.getInstance("TLS");
-        sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        HttpsURLConnection.setDefaultHostnameVerifier((string, ssls) -> true);
-    }
-
     private ChartDataPoint generateReportAndGetSummary(ReportRequest reportRequest) {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
-                .generateJasperReportSummary(reportRequest);
+            .generateJasperReportSummary(reportRequest);
         return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
     }
 }
