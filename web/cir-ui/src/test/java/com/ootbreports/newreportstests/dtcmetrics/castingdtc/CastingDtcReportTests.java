@@ -6,7 +6,6 @@ import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.api_utils.JasperApiAuthenticationUtil;
 import com.apriori.cirapi.entity.JasperReportSummary;
 import com.apriori.cirapi.entity.request.ReportRequest;
 import com.apriori.cirapi.entity.response.ChartDataPoint;
@@ -14,8 +13,9 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-
 import com.apriori.utils.web.driver.TestBase;
+
+import com.api_utils.JasperApiAuthenticationUtil;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -45,7 +45,7 @@ public class CastingDtcReportTests extends TestBase {
     @Before
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
-        jSessionId = auth.authenticateJasperApi();
+        jSessionId = auth.authenticateJasperApi(driver);
         assertThat(jSessionId, is(notNullValue()));
 
         /*skipSslCheck();
