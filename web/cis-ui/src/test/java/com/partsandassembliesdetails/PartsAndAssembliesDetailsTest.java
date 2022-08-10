@@ -411,7 +411,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     public void testProcessRoutingCycleTimeDetailsCard() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
@@ -459,9 +458,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13215","13216","13217","13299"})
     @Description("Verify fully burdened cost details card")
     public void testProcessRoutingFullyBurdenedCostDetailsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -499,9 +503,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13163","13164","13296","13166"})
     @Description("Verify piece part cost details card")
     public void testProcessRoutingPiecePartCostDetailsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
