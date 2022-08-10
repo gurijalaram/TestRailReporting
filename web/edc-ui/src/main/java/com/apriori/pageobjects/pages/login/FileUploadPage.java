@@ -1,13 +1,11 @@
 package com.apriori.pageobjects.pages.login;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 import java.io.File;
 import java.io.UnsupportedEncodingException;
@@ -15,7 +13,7 @@ import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 
 @Slf4j
-public class FileUploadPage extends LoadableComponent<FileUploadPage> {
+public class FileUploadPage extends EagerPageComponent<FileUploadPage> {
 
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
@@ -26,14 +24,8 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
     @FindBy(css = ".bill-of-materials-upload")
     private WebElement uploadSection;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-
     public FileUploadPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
     }
 
     @Override
@@ -43,7 +35,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(uploadSection);
+        getPageUtils().waitForElementToAppear(uploadSection);
     }
 
     /**
@@ -78,7 +70,7 @@ public class FileUploadPage extends LoadableComponent<FileUploadPage> {
      * @return new page object
      */
     public UploadedFilePage clickUploadPCBA() {
-        pageUtils.waitForElementAndClick(uploadPcbaButton);
-        return new UploadedFilePage(driver);
+        getPageUtils().waitForElementAndClick(uploadPcbaButton);
+        return new UploadedFilePage(getDriver());
     }
 }

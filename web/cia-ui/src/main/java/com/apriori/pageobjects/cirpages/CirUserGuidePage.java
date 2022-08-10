@@ -19,7 +19,7 @@ public class CirUserGuidePage {
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
 
-    @FindBy(css = ".Documentation_Cover_Page_Title")
+    @FindBy(css = ".DocumentationCoverPageTitle")
     private WebElement reportsUserGuideTitle;
 
     @FindBy(css = "body > h1")
@@ -63,7 +63,7 @@ public class CirUserGuidePage {
      */
     public String getReportsUserGuidePageHeading() {
         pageUtils.waitForElementToAppear(reportsUserGuideTitle);
-        return reportsUserGuideTitle.getAttribute("textContent");
+        return reportsUserGuideTitle.getAttribute("textContent").trim();
     }
 
     /**

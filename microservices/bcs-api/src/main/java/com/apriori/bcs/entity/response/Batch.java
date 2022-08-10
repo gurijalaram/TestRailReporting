@@ -10,6 +10,7 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @JsonRootName("response")
@@ -33,4 +34,10 @@ public class Batch {
     private String rollupName;
     private String rollupScenarioName;
     private String exportSetName;
+    private Long costingDuration;
+
+    public Batch setCostingDuration(LocalDateTime updatedTime) {
+        this.costingDuration = ChronoUnit.SECONDS.between(createdAt, updatedTime);
+        return this;
+    }
 }

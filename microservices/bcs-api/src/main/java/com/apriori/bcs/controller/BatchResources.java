@@ -58,6 +58,30 @@ public class BatchResources extends BcsBase {
     }
 
     /**
+     * Creates Batch with invalid customer data
+     *
+     * @return Batch response instance
+     */
+    public static <T> ResponseWrapper<T> createBatch(String customerIdentity, Class<T> klass) {
+        long currentMillis = System.currentTimeMillis();
+        Map<String, String> headerInfo = new HashMap<>();
+        headerInfo.put("Accept", "*/*");
+        headerInfo.put("Content-Type", "application/json");
+        BatchRequest newBatchRequest = BatchRequest.builder().batch(BatchProperties.builder()
+                .externalId("auto-External-" + currentMillis)
+                .exportSetName("auto-ExportSet-" + currentMillis)
+                .rollupName("auto-RollUp-" + currentMillis)
+                .rollupScenarioName("auto-Scenario-" + currentMillis)
+                .build())
+            .build();
+        final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, klass)
+            .inlineVariables(customerIdentity)
+            .headers(headerInfo)
+            .body(newBatchRequest);
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Returns list of batches
      *
      * @return Response Object
@@ -76,8 +100,20 @@ public class BatchResources extends BcsBase {
      */
     public static ResponseWrapper<Batch> getBatchRepresentation(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"),identity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), identity);
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Get single batch with batch id with no logging information
+     *
+     * @param identity - Batch Id
+     * @return - response
+     */
+    public static ResponseWrapper<Batch> getBatchWithNoLogInfo(String identity) {
+        RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), identity);
+        return HTTPRequest.build(requestEntity).getMultipart();
     }
 
     /**
@@ -88,7 +124,7 @@ public class BatchResources extends BcsBase {
      */
     public static ResponseWrapper<String> startBatchCosting(Batch batch) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.START_COSTING_BY_ID, null)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batch.getIdentity())
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batch.getIdentity())
             .customBody("{}");
         return HTTPRequest.build(requestEntity).post();
     }
@@ -102,7 +138,7 @@ public class BatchResources extends BcsBase {
     public static ResponseWrapper<Cancel> cancelBatchProcessing(String batchIdentity) {
         log.info("Started cancelling the batch id " + batchIdentity);
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.CANCEL_COSTING_BY_ID, Cancel.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
             .customBody("{}");
         return HTTPRequest.build(requestEntity).post();
     }
@@ -137,10 +173,10 @@ public class BatchResources extends BcsBase {
         Batch batch;
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_BY_ID, Batch.class)
-                .inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity, batchIdentity);
-            batch = (Batch) HTTPRequest.build(requestEntity).get().getResponseEntity();
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, batchIdentity);
+            batch = (Batch) HTTPRequest.build(requestEntity).getMultipart().getResponseEntity();
             try {
-                TimeUnit.SECONDS.sleep(10);
+                TimeUnit.SECONDS.sleep(120);
             } catch (InterruptedException e) {
                 log.error(e.getMessage());
                 Thread.currentThread().interrupt();
@@ -148,41 +184,17 @@ public class BatchResources extends BcsBase {
         } while (!batch.getState().equals(bcsExpectedState.toString())
             && ((System.currentTimeMillis() / 1000) - initialTime) < WAIT_TIME);
 
-        return (batch.getState().equals(BCSState.COMPLETED.toString())) ? true : false;
-    }
-
-    /**
-     * Creates Batch with invalid customer data
-     *
-     * @return Batch response instance
-     */
-    public static <T> ResponseWrapper<T> createBatch(String customerIdentity, Class<T> klass) {
-        long currentMillis = System.currentTimeMillis();
-        Map<String, String> headerInfo = new HashMap<>();
-        headerInfo.put("Accept", "*/*");
-        headerInfo.put("Content-Type", "application/json");
-        BatchRequest newBatchRequest = BatchRequest.builder().batch(BatchProperties.builder()
-                .externalId("auto-External-" + currentMillis)
-                .exportSetName("auto-ExportSet-" + currentMillis)
-                .rollupName("auto-RollUp-" + currentMillis)
-                .rollupScenarioName("auto-Scenario-" + currentMillis)
-                .build())
-            .build();
-        final RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCHES, klass)
-            .inlineVariables(customerIdentity)
-            .headers(headerInfo)
-            .body(newBatchRequest);
-        return HTTPRequest.build(requestEntity).post();
+        return (batch.getState().equals(bcsExpectedState.toString())) ? true : false;
     }
 
     /**
      * This overloaded method is to create Batch Part request entity for Batch ID.
      *
-     * @param batchIdentity  - Batch ID
-     * @param klass          - Response class
+     * @param batchIdentity - Batch ID
+     * @param klass         - Response class
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static <T> RequestEntity getBatchRequestEntity(BCSAPIEnum endPoint, String batchIdentity, Class<T> klass) {
-        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"),batchIdentity);
+        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
     }
 }

@@ -12,8 +12,8 @@ import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.common.api.BillOfMaterialsAPIEnum;
 import com.apriori.utils.http.enums.common.api.PartsAPIEnum;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -143,7 +143,7 @@ public class UserTestDataUtil extends TestUtil {
         RequestEntity requestEntity = RequestEntityUtil.init(
             BillOfMaterialsAPIEnum.POST_BILL_OF_MATERIALS, BillOfSingleMaterialWrapper.class)
             .multiPartFiles(new MultiPartFiles().use("multiPartFile", testData))
-            .formParams(new FormParams().use("type", "WH"));
+            .queryParams(new QueryParams().use("type", "WH"));
 
         ResponseWrapper<BillOfSingleMaterialWrapper> response = HTTPRequest.build(requestEntity).postMultipart();
 

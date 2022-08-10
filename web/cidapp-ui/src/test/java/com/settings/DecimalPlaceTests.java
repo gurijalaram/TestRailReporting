@@ -49,7 +49,7 @@ public class DecimalPlaceTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295"})
+    @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295", "6633"})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

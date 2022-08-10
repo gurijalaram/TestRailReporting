@@ -140,7 +140,7 @@ public class GroupEditTests {
 
         standResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
 
-        List<ScenarioItem> scenarioItem = cssComponent.getSimpleCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> scenarioItem = cssComponent.getCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
 
         softAssertions.assertThat(scenarioItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
@@ -157,7 +157,7 @@ public class GroupEditTests {
 
         driveResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
 
-        List<ScenarioItem> scenarioItem2 = cssComponent.getSimpleCssComponent(DRIVE, newScenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> scenarioItem2 = cssComponent.getCssComponent(DRIVE, newScenarioName, currentUser).getResponseEntity().getItems();
 
         softAssertions.assertThat(scenarioItem2.stream().findFirst().get().getScenarioName()).isEqualTo(newScenarioName);
         softAssertions.assertThat(scenarioItem2.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
@@ -209,13 +209,13 @@ public class GroupEditTests {
 
         publishResponse.getResponseEntity().getSuccesses().forEach(o -> softAssertions.assertThat(o.getScenarioName()).isEqualTo(scenarioName));
 
-        List<ScenarioItem> driveItem = cssComponent.getSimpleCssComponent(DRIVE, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> driveItem = cssComponent.getCssComponent(DRIVE, scenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(driveItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
-        List<ScenarioItem> standItem = cssComponent.getSimpleCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> standItem = cssComponent.getCssComponent(STAND, scenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(standItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
-        List<ScenarioItem> jointItem = cssComponent.getSimpleCssComponent(JOINT, scenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> jointItem = cssComponent.getCssComponent(JOINT, scenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(jointItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
 
         softAssertions.assertAll();
@@ -268,15 +268,15 @@ public class GroupEditTests {
 
         componentAssembly.getSubComponents().forEach(scenario -> scenariosUtil.getScenarioRepresentation(scenario, ScenarioStateEnum.NOT_COSTED));
 
-        List<ScenarioItem> driveItem = cssComponent.getSimpleCssComponent(DRIVE, newScenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> driveItem = cssComponent.getCssComponent(DRIVE, newScenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(driveItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
         softAssertions.assertThat(driveItem.stream().findAny().get().getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId());
 
-        List<ScenarioItem> standItem = cssComponent.getSimpleCssComponent(STAND, newScenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> standItem = cssComponent.getCssComponent(STAND, newScenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(standItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
         softAssertions.assertThat(standItem.stream().findAny().get().getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId());
 
-        List<ScenarioItem> jointItem = cssComponent.getSimpleCssComponent(JOINT, newScenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> jointItem = cssComponent.getCssComponent(JOINT, newScenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(jointItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
         softAssertions.assertThat(standItem.stream().findAny().get().getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId());
 
@@ -328,7 +328,7 @@ public class GroupEditTests {
 
         componentAssembly.getSubComponents().forEach(scenario -> scenariosUtil.getScenarioRepresentation(scenario, ScenarioStateEnum.NOT_COSTED));
 
-        List<ScenarioItem> standItem = cssComponent.getSimpleCssComponent(STAND, newScenarioName, currentUser).getResponseEntity().getItems();
+        List<ScenarioItem> standItem = cssComponent.getCssComponent(STAND, newScenarioName, currentUser).getResponseEntity().getItems();
         softAssertions.assertThat(standItem.stream().findFirst().get().getScenarioIterationKey().getWorkspaceId()).isEqualTo(0);
         softAssertions.assertThat(standItem.stream().findAny().get().getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId());
 
