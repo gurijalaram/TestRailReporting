@@ -319,7 +319,7 @@ public class GroupEditTests {
             .filter(o -> o.getComponentName().equalsIgnoreCase(STAND) && o.getScenarioName().equalsIgnoreCase(scenarioName))
             .collect(Collectors.toList())
             .stream()
-            .findFirst()
+            .findAny()
             .get());
 
         softAssertions.assertThat(standItem.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
