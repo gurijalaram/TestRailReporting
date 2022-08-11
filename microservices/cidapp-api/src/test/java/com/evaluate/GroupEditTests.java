@@ -198,12 +198,18 @@ public class GroupEditTests {
             .status("new")
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(componentAssembly, publishRequest,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
+                .componentInfo(componentAssembly)
+                    .publishRequest(publishRequest)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+                            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "lastAction, publish").getResponseEntity()
+        subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "lastAction, publish")
+            .getResponseEntity()
             .getItems()
             .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0)));
 
