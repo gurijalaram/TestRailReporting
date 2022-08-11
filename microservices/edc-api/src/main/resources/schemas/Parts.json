@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2019-09/schema",
+  "items": {
+    "type": "object",
+    "required": [
+      "isUserPart",
+      "isSaved",
+      "isActionRequired",
+      "identity",
+      "externalId",
+      "manufacturerPartNumber",
+      "manufacturer",
+      "classification",
+      "description",
+      "status",
+      "type"
+    ],
+    "optional": [
+      "availability",
+      "rohs",
+      "rohsVersion",
+      "dataSheetUrl"
+    ],
+    "properties": {
+      "isUserPart": {
+        "type": "boolean"
+      },
+      "isSaved": {
+        "type": "boolean"
+      },
+      "isActionRequired": {
+        "type": "boolean"
+      },
+      "identity": {
+        "type": "string"
+      },
+      "externalId": {
+        "type": "string"
+      },
+      "manufacturerPartNumber": {
+        "type": "string"
+      },
+      "manufacturer": {
+        "type": "string"
+      },
+      "classification": {
+        "type": "string"
+      },
+      "description": {
+        "type": "string"
+      },
+      "availability": {
+        "type": "string"
+      },
+      "dataSheetUrl": {
+        "type": "string"
+      },
+      "rohs": {
+        "type": "string"
+      },
+      "rohsVersion": {
+        "type": "string"
+      },
+      "status": {
+        "type": "string"
+      },
+      "type": {
+        "type": "string"
+      }
+    }
+  }
+}
