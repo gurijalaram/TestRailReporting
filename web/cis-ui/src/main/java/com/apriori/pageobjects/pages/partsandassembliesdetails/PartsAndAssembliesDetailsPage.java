@@ -161,6 +161,39 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//p[@data-testid='model-content-id']")
     private WebElement deleteConfirmationModalContent;
 
+    @FindBy(xpath = "//div[@data-testid='Process Routing']")
+    private WebElement processRoutingCard;
+
+    @FindBy(id = "chart-type-option-select-graph-process-routing")
+    private WebElement processDropdown;
+
+    @FindBy(xpath = "//div[@data-testid='process-routing-Select a process to see related details']")
+    private WebElement processDetailsCard;
+
+    @FindBy(xpath = "//div[@data-testid='Process Routing']//span[contains(@class,'MuiCardHeader-title')]//h2")
+    private WebElement processDetailsCardTitle;
+
+    @FindBy(xpath = "//div[@id='cycle-time-chart']//*[local-name()='svg']")
+    private WebElement cycleTimeGraph;
+
+    @FindBy(xpath = "//div[contains(@class,'MuiPaper-root MuiPaper-elevation MuiPaper-rounded')]//h2")
+    private WebElement totalSection;
+
+    @FindBy(id = "cycle-time-chart")
+    private WebElement cycleTimeChart;
+
+    @FindBy(xpath = "//div[@id='fully-burden-chart']//*[local-name()='svg']")
+    private WebElement fullyBurdenedCostGraph;
+
+    @FindBy(id = "fully-burden-chart")
+    private WebElement fullyBurdenedCostChart;
+
+    @FindBy(xpath = "//div[@id='piece-part-chart']//*[local-name()='svg']")
+    private WebElement piecePartCostGraph;
+
+    @FindBy(id = "piece-part-chart")
+    private WebElement piecePartCostChart;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -827,5 +860,137 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public Boolean isInsightsCardsDeleteOptionDisplayed(String cardName) {
         return getPageUtils().isElementDisplayed(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-v']"));
+    }
+
+    /**
+     * clicks on process routing card
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickProcessRouting() {
+        getPageUtils().waitForElementAndClick(processRoutingIcon);
+        return this;
+    }
+
+    /**
+     * Checks if process routing displayed
+     *
+     * @return true/false
+     */
+    public boolean isProcessRoutingCardDisplayed() {
+        return getPageUtils().waitForElementAppear(processRoutingCard).isDisplayed();
+    }
+
+    /**
+     * select process from the dropdown
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectProcess(String processName) {
+        getPageUtils().waitForElementAndClick(processDropdown);
+        getPageUtils().waitForElementAndClick(By.xpath("//ul[@role='listbox']//span[text()='" + processName + "']"));
+        return this;
+    }
+
+    /**
+     * Checks if process details section displayed
+     *
+     * @return true/false
+     */
+    public boolean isProcessDetailsSectionDisplayed() {
+        return getPageUtils().waitForElementAppear(processDetailsCard).isDisplayed();
+    }
+
+    /**
+     * get process details routing card title
+     *
+     * @return a String
+     */
+    public String getProcessRoutingCardTitle() {
+        return getPageUtils().waitForElementToAppear(processDetailsCardTitle).getText();
+    }
+
+    /**
+     * Checks if cycle time graph displayed
+     *
+     * @return true/false
+     */
+    public boolean isCycleTimeGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(cycleTimeGraph).isDisplayed();
+    }
+
+    /**
+     * Checks if total section displayed
+     *
+     * @return true/false
+     */
+    public boolean isTotalSectionDisplayed() {
+        return getPageUtils().waitForElementAppear(totalSection).isDisplayed();
+    }
+
+    /**
+     * clicks on cycle time chart
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickCycleTimeChart() {
+        getPageUtils().waitForElementAndClick(cycleTimeChart);
+        return this;
+    }
+
+    /**
+     * Gets process routing details
+     *
+     * @return list of string
+     */
+    public  List<String> getProcessRoutingDetails() {
+        return partsAndAssemblyDetailsController.getProcessRoutingDetails();
+    }
+
+    /**
+     * Checks if fully burdened graph displayed
+     *
+     * @return true/false
+     */
+    public boolean isFullyBurdenedGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(fullyBurdenedCostGraph).isDisplayed();
+    }
+
+    /**
+     * clicks on fully burdened cost chart
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickFullyBurdenedCostChart() {
+        getPageUtils().waitForElementAndClick(fullyBurdenedCostChart);
+        return this;
+    }
+
+    /**
+     * Checks if piece part cost graph displayed
+     *
+     * @return true/false
+     */
+    public boolean isPiecePartCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(piecePartCostGraph).isDisplayed();
+    }
+
+    /**
+     * clicks on piece part cost chart
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickPiecePartCostCostChart() {
+        getPageUtils().waitForElementAndClick(piecePartCostChart);
+        return this;
+    }
+
+    /**
+     * Gets the process details
+     *
+     * @return string
+     */
+    public String getProcessDetails(String processDetails) {
+        return driver.findElement(By.xpath("//div[@id='process-routing']//div[text()='" + processDetails + "']")).getAttribute("textContent");
     }
 }

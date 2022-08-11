@@ -1,17 +1,27 @@
 package com.partsandassembliesdetails;
 
+
+
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.CisCostDetailsEnum;
 import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+
+import java.io.File;
 
 
 public class PartsAndAssembliesDetailsTest extends TestBase {
@@ -23,7 +33,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     private CisLoginPage loginPage;
     private PartsAndAssembliesPage partsAndAssembliesPage;
     private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
-
+    private File resourceFile;
+    UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = {"12396","12458","12460","12461","12254","12459"})
@@ -390,6 +401,145 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         partsAndAssembliesDetailsPage.clickDeleteButton();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedCardDisplayed(cardName)).isEqualTo(false);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isInsightsCardsDeleteOptionDisplayed("Design Guidance")).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13283","13144","13145","13146","13284","13165","13151","13162"})
+    @Description("Verify process routing cycle time details card")
+    public void testProcessRoutingCycleTimeDetailsCard() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(componentName,scenarioName)
+                .clickProcessRouting();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessRoutingMenuIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessRoutingCardDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectProcess("Cycle Time");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingCardTitle()).contains("Process Routing");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessDetailsSectionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCycleTimeGraphDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalSectionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickCycleTimeChart();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13215","13216","13217","13299"})
+    @Description("Verify fully burdened cost details card")
+    public void testProcessRoutingFullyBurdenedCostDetailsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickProcessRouting()
+                .selectProcess("Fully Burdened Cost");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessDetailsSectionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isFullyBurdenedGraphDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalSectionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickFullyBurdenedCostChart();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13163","13164","13296","13166"})
+    @Description("Verify piece part cost details card")
+    public void testProcessRoutingPiecePartCostDetailsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickProcessRouting()
+                .selectProcess("Piece Part Cost");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isProcessDetailsSectionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPiecePartCostGraphDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalSectionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickPiecePartCostCostChart();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessRoutingDetails()).contains(CisCostDetailsEnum.PROCESS_GROUP_NAME.getProcessRoutingName(), CisCostDetailsEnum.PROCESS_NAME.getProcessRoutingName(),
+                CisCostDetailsEnum.MACHINE_NAME.getProcessRoutingName(), CisCostDetailsEnum.CYCLE_TIME.getProcessRoutingName(),
+                CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName(), CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName(),
+                CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Group Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Process Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Machine Name")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Cycle Time")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
 
         softAssertions.assertAll();
     }
