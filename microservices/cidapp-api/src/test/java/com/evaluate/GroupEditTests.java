@@ -2,10 +2,10 @@ package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
+import com.apriori.cidappapi.entity.request.GroupPublishRequest;
 import com.apriori.cidappapi.entity.request.PublishRequest;
 import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.User;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -18,14 +18,12 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class GroupEditTests {
 
@@ -66,9 +64,6 @@ public class GroupEditTests {
             processGroupEnum,
             scenarioName,
             currentUser);
-        assemblyUtils.uploadSubComponents(componentAssembly)
-            .uploadAssembly(componentAssembly);
-
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
@@ -134,8 +129,13 @@ public class GroupEditTests {
             .status("new")
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(),
-            componentAssembly, STAND + "," + scenarioName);
+        GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -151,8 +151,13 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(publishRequest2, user.getCustomAttributes().getWorkspaceId(),
-            componentAssembly, DRIVE + "," + scenarioName);
+        GroupPublishRequest groupPublishRequest2 = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest2)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);
 
         cssComponent.getCssComponentQueryParams(DRIVE, newScenarioName, currentUser, "lastAction, publish").getResponseEntity()
             .getItems()
@@ -199,10 +204,10 @@ public class GroupEditTests {
             .build();
 
         GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
-                .componentInfo(componentAssembly)
-                    .publishRequest(publishRequest)
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest)
             .workspaceId(user.getCustomAttributes().getWorkspaceId())
-                            .build();
+            .build();
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
@@ -220,17 +225,16 @@ public class GroupEditTests {
     @TestRail(testCaseId = {"11854"})
     @Description("Publish multiple private sub-components with no public counterparts Setting Override to false and supplying a scenario name")
     public void testGroupPublishPrivateSubcomponentsFalseOverride() {
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String newScenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String newScenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String STAND = "stand";
         final String DRIVE = "drive";
         final String JOINT = "joint";
-        String assemblyName = "oldham";
+        final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
+        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -256,8 +260,13 @@ public class GroupEditTests {
             .scenarioName(newScenarioName)
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(), componentAssembly,
-            STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+        GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -276,13 +285,13 @@ public class GroupEditTests {
     @TestRail(testCaseId = {"11855"})
     @Description("Publish private sub-component with public counterpart Setting Override to true")
     public void testGroupPublishPrivateSubcomponentTrueOverride() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         final String STAND = "stand";
-        String assemblyName = "oldham";
+        final String assemblyName = "oldham";
         final String assemblyExtension = ".asm.1";
 
-        List<String> subComponentNames = Arrays.asList(STAND);
+        final List<String> subComponentNames = Arrays.asList(STAND);
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
         final String componentExtension = ".prt.1";
 
@@ -307,8 +316,13 @@ public class GroupEditTests {
             .status("New")
             .build();
 
-        scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(), componentAssembly,
-            STAND + "," + scenarioName);
+        GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
 
         ForkRequest forkRequest = ForkRequest.builder()
             .override(true)
@@ -316,21 +330,19 @@ public class GroupEditTests {
 
         scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND + "," + scenarioName);
 
-        scenariosUtil.postPublishGroupScenarios(publishRequest, user.getCustomAttributes().getWorkspaceId(), componentAssembly,
-            STAND + "," + scenarioName);
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        ResponseWrapper<ScenarioResponse> standItem = scenariosUtil.getScenarioRepresentation(componentAssembly.getSubComponents().stream()
-            .filter(o -> o.getComponentName().equalsIgnoreCase(STAND) && o.getScenarioName().equalsIgnoreCase(scenarioName))
-            .collect(Collectors.toList())
-            .stream()
-            .findAny()
-            .get());
+        softAssertions.assertThat(cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "iteration, 1", "latest, false")
+            .getResponseEntity()
+            .getItems()
+            .size()).isGreaterThanOrEqualTo(1);
 
-        softAssertions.assertThat(standItem.getStatusCode()).isEqualTo(HttpStatus.SC_OK);
-        softAssertions.assertThat(standItem.getResponseEntity().getLastAction()).isEqualTo("PUBLISH");
-        softAssertions.assertThat(standItem.getResponseEntity().getPublished()).isTrue();
+        softAssertions.assertThat(cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "iteration, 2", "latest, true")
+            .getResponseEntity()
+            .getItems()
+            .size()).isGreaterThanOrEqualTo(1);
 
         softAssertions.assertAll();
     }
