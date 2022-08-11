@@ -236,7 +236,7 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      * @return this page object
      */
     public InfrastructurePage closeMessage() {
-        closeMessage.click();
+        pageUtils.waitForElementAndClick(closeMessage);
         return this;
     }
 }
