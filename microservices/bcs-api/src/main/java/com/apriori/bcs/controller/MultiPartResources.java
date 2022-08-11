@@ -1,6 +1,7 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
+import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.enums.BCSState;
@@ -25,12 +26,13 @@ public class MultiPartResources {
 
     private static Map<String, BCSPartBenchmarkingDTO> partsCollector;
     private static final long WAIT_TIME = 1800;
+    private static String line = "--------------------------------------------------------------------------------------------------------------------------------------\n";
 
     /**
      * Add number of parts (configured in config file) to batch
      *
-     * @param numberOfParts- number of parts
-     * @param batchIdentity- Batch Identity
+     * @param numberOfParts - number of parts
+     * @param batchIdentity - Batch Identity
      */
     public static void addPartsToBatch(int numberOfParts, String batchIdentity) {
         partsCollector = new HashMap<>();
@@ -55,7 +57,7 @@ public class MultiPartResources {
         ResponseWrapper<Parts> partsResponse;
         Parts parts;
         do {
-            partsResponse = BatchPartResources.getBatchPartById(batchIdentity);
+            partsResponse = BatchPartResources.getPartsByBatchId(batchIdentity);
             parts = partsResponse.getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);
@@ -139,6 +141,7 @@ public class MultiPartResources {
         log.info("=============================================== BATCH PARTS STATE COUNT INFORMATION  =================================================");
         log.info("####################### TOTAL PARTS ADDED TO BATCH ==> " + parts.size() + "###########################################################");
 
+        map.put(BCSState.LOADING.toString(), (int) getPartsCount(parts, BCSState.LOADING));
         map.put(BCSState.COSTING.toString(), (int) getPartsCount(parts, BCSState.COSTING));
         map.put(BCSState.COSTED.toString(), (int) getPartsCount(parts, BCSState.COSTED));
         map.put(BCSState.READY_TO_COST.toString(), (int) getPartsCount(parts, BCSState.READY_TO_COST));
@@ -154,6 +157,43 @@ public class MultiPartResources {
         log.info("======================================================================================================================================");
     }
 
+    /**
+     * Formats batch reporting class object and returns formatted string for reporting purpose.
+     * Summarize the batch costing state and reports the performance metrics for a batch.
+     *
+     * @param batch
+     * @return String (example : returns formatted string based calculation of data size %6s %4s %10s)
+     */
+    private static String getBatchFormatString(Batch batch) {
+        StringBuilder formattedString = new StringBuilder("");
+        int identity = 1;
+        int state = 1;
+        int processingTime = 1;
+        int errors = 1;
+
+        if (null != batch.getIdentity()) {
+            identity = (batch.getIdentity().length() > identity) ? batch.getIdentity().length() : identity;
+        }
+
+        if ((null != batch.getState())) {
+            state = (batch.getState().length() > state) ? batch.getState().length() : state;
+        }
+
+        if (batch.getCostingDuration().toString().length() > processingTime) {
+            processingTime = batch.getCostingDuration().toString().length();
+        }
+
+        if (null != batch.getErrors()) {
+            errors = (batch.getErrors().length() > errors) ? batch.getErrors().length() : errors;
+        }
+
+        formattedString.append("  %" + identity + "s")
+            .append("  %" + state + "s")
+            .append("  %" + processingTime + "s")
+            .append("  %" + errors + "s");
+
+        return formattedString.toString();
+    }
 
     /**
      * Formats parts reporting class object and returns formatted string for reporting purpose.
@@ -165,13 +205,13 @@ public class MultiPartResources {
      */
     private static String getFormattedString(List<BCSPartBenchmarkingDTO> parts) {
         StringBuilder formattedString = new StringBuilder("");
-        int identity = 1;
-        int partName = 1;
-        int processGroup = 1;
-        int state = 1;
-        int costingResult = 1;
-        int processingTime = 1;
-        int errors = 1;
+        Integer identity = 1;
+        Integer partName = 1;
+        Integer processGroup = 1;
+        Integer state = 1;
+        Integer costingResult = 1;
+        Integer processingTime = 1;
+        Integer errors = 1;
 
         for (BCSPartBenchmarkingDTO partReport : parts) {
             identity = (null != partReport.getIdentity()) ? (partReport.getIdentity().length() > identity) ? partReport.getIdentity().length() : identity : identity;
@@ -194,13 +234,29 @@ public class MultiPartResources {
         return formattedString.toString();
     }
 
+    public static void summarizeBatchCostingInfo(ResponseWrapper<Batch> batch) {
+        StringBuilder batchCostingLogInfo = new StringBuilder();
+        batch.getResponseEntity().setCostingDuration(batch.getResponseEntity().getUpdatedAt());
+        batchCostingLogInfo.append("================== Batch Benchmarking Data ==================");
+        batchCostingLogInfo.append(line);
+        batchCostingLogInfo.append(String.format(getBatchFormatString(batch.getResponseEntity()), "BATCH_ID", "BATCH_STATE", "PROCESSING_TIME", "ERRORS"));
+        batchCostingLogInfo.append(line);
+        batchCostingLogInfo.append(String.format(getBatchFormatString(batch.getResponseEntity()),
+            batch.getResponseEntity().getIdentity(),
+            batch.getResponseEntity().getState(),
+            BcsUtils.convertSecsToMins(batch.getResponseEntity().getCostingDuration()),
+            batch.getResponseEntity().getErrors()));
+        batchCostingLogInfo.append(line);
+        log.info(batchCostingLogInfo.toString());
+    }
+
     /**
      * Summarize the batch parts costing state and reports the performance metrics for each part in a batch.
      *
-     * @param batchIdentity
+     * @param parts
      */
-    public static void summarizeAndLogPartsCostingInfo(String batchIdentity) {
-        Parts parts = BatchPartResources.getBatchPartById(batchIdentity).getResponseEntity();
+    public static void summarizeAndLogPartsCostingInfo(Parts parts) {
+        StringBuilder logInfoBuilder = new StringBuilder();
         parts.getItems().forEach(part -> {
             BCSPartBenchmarkingDTO benchData = partsCollector.get(part.getIdentity());
             benchData.setState(part.getState());
@@ -215,21 +271,21 @@ public class MultiPartResources {
             .collect(Collectors.toList());
 
         String formattedString = getFormattedString(partsReport);
-
-        log.info("================== Batch Parts Benchmarking Data ==================");
-        log.info("--------------------------------------------------------------------------------------------------------------------------------------");
-        log.info(String.format(formattedString, "PART_ID", "PART_NAME", "PROCESS_GROUP", "PART_STATE", "COSTING_RESULT", "PROCESSING_TIME", "ERRORS"));
-        log.info("--------------------------------------------------------------------------------------------------------------------------------------");
+        logInfoBuilder.append("================== Batch Parts Benchmarking Data ==================\n");
+        logInfoBuilder.append(line);
+        logInfoBuilder.append(String.format(formattedString, "PART_ID", "PART_NAME", "PROCESS_GROUP", "PART_STATE", "COSTING_RESULT", "PROCESSING_TIME", "ERRORS"));
+        logInfoBuilder.append(line);
 
         for (BCSPartBenchmarkingDTO partDTO : partsReport) {
-            log.info(String.format(formattedString, partDTO.getIdentity(), partDTO.getPartName(),
+            logInfoBuilder.append(String.format(formattedString, partDTO.getIdentity(), partDTO.getPartName(),
                 partDTO.getProcessGroup(), partDTO.getState(), partDTO.getCostingResults(),
                 BcsUtils.convertSecsToMins(partDTO.getCostingDuration()), partDTO.getErrorMessage()));
         }
-        log.info("--------------------------------------------------------------------------------------------------------------------------------------");
+        logInfoBuilder.append(line);
+        log.info(logInfoBuilder.toString());
 
         for (BCSPartBenchmarkingDTO partDTO : partsReport) {
-            Assert.assertEquals("Verfiy Part State", BCSState.COMPLETED.toString(), partDTO.getState());
+            Assert.assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
         }
     }
 }

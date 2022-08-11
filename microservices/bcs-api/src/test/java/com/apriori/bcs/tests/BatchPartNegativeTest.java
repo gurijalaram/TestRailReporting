@@ -59,7 +59,7 @@ public class BatchPartNegativeTest {
     public void createBatchPartInvalidPG() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
         RequestEntity requestEntity = BatchPartResources.batchPartRequestEntity(newPartRequest, batch.getIdentity());
-        requestEntity.formParams(requestEntity.formParams().use("ProcessGroup", ProcessGroupEnum.INVALID_PG.toString()));
+        requestEntity.queryParams(requestEntity.queryParams().use("ProcessGroup", ProcessGroupEnum.INVALID_PG.toString()));
         ResponseWrapper<Part> partResponse = HTTPRequest.build(requestEntity).postMultipart();
 
         assertTrue("Track and wait until part is completed", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED));
