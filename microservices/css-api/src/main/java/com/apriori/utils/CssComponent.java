@@ -77,7 +77,7 @@ public class CssComponent {
      * @param componentName   - the component name
      * @param scenarioName    - the scenario name
      * @param userCredentials - the user credentials
-     * @param queryParams      - the query form params
+     * @param queryParams     - the query form params
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, QueryParams queryParams) {
@@ -115,15 +115,11 @@ public class CssComponent {
                 if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
 
                     cssComponentResponse.getResponseEntity().getItems().stream()
-                        .anyMatch(o -> !o.getComponentType().equalsIgnoreCase("unknown")) &&
+                        .noneMatch(o -> o.getComponentType().equalsIgnoreCase("unknown")) &&
 
-                    ScenarioStateEnum.terminalState.stream()
-                        .anyMatch(o -> o.getState().equalsIgnoreCase(cssComponentResponse.getResponseEntity()
-                            .getItems()
-                            .stream()
-                            .findAny()
-                            .get()
-                            .getScenarioState()))) {
+                    cssComponentResponse.getResponseEntity().getItems().stream()
+                        .allMatch(o -> ScenarioStateEnum.terminalState.stream()
+                        .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
                     return cssComponentResponse;
                 }
