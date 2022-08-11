@@ -2,6 +2,7 @@ package com.apriori.edcapi.testsuites;
 
 import com.apriori.edcapi.tests.BillOfMaterialsTest;
 import com.apriori.edcapi.tests.LineItemsTest;
+import com.apriori.edcapi.tests.PartsTest;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
@@ -12,7 +13,8 @@ import org.junit.runners.Suite;
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     BillOfMaterialsTest.class,
-    LineItemsTest.class
+    LineItemsTest.class,
+    PartsTest.class
 })
 public class RegressionSuite {
 }

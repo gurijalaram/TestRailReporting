@@ -1,10 +1,12 @@
-package com.apriori.edcapi.entity.response.line.items;
+package com.apriori.edcapi.entity.response.parts;
+
+import com.apriori.utils.http.enums.Schema;
 
 import lombok.Data;
 
+@Schema(location = "Parts.json")
 @Data
-public class LineItemsPart {
-
+public class Parts {
     private Boolean isSaved;
     private Boolean isActionRequired;
     private Boolean isUserPart;

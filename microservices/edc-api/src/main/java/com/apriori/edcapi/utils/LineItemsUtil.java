@@ -21,7 +21,7 @@ public class LineItemsUtil extends TestUtil {
      * @param identity - identity
      * @return response object
      */
-    protected static List<LineItemsResponse> getAllLineItems(String identity) {
+    public List<LineItemsResponse> getAllLineItems(String identity) {
         RequestEntity requestEntity = RequestEntityUtil.init(EDCAPIEnum.GET_LINE_ITEMS, LineItemsItemsResponse.class)
             .inlineVariables(identity);
 

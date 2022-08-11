@@ -19,7 +19,7 @@
             "items": {
               "type": "array",
               "items": {
-                "$ref": "LineItems.json"
+                "$ref": "LineItemsResponse.json"
               }
             }
           }
