@@ -15,7 +15,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.api_utils.JasperApiAuthenticationUtil;
+import com.apiutils.JasperApiAuthenticationUtil;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -32,7 +32,6 @@ import java.util.Collections;
 
 public class CastingDtcReportTests extends TestBase {
 
-    private ChartDataPoint chartDataPoint;
     private static String jSessionId = "";
 
     /**
@@ -46,30 +45,6 @@ public class CastingDtcReportTests extends TestBase {
     public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
         JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
         jSessionId = auth.authenticateJasperApi(driver);
-        assertThat(jSessionId, is(notNullValue()));
-
-        /*skipSslCheck();
-
-        String urlLink = PropertiesContext.get("${env}.reports.api_url").concat("j_spring_security_check?j_username=bhegan&j_password=bhegan");
-        URL url = new URL(urlLink);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.connect();
-        System.out.println("Login response code :" + con.getResponseCode());
-        String sessionId = con + "";
-        jSessionId = sessionId.split(";")[1].substring(11, 43);
-        assertThat(jSessionId, is(notNullValue()));*/
-    }
-
-    @Test
-    @Ignore
-    public void exampleOfInputParamsUsage() {
-        InputControl inputControl =  JasperReportUtil.init(jSessionId)
-            .getInputControls();
-
-        inputControl.getExportSetName().getOption("---01-dtc-casting").getValue();
-        inputControl.getCostMetric().getValue();
-        inputControl.getInputControlStateByName("requiredInputControl").getOption("requiredOptionInInputControl");
     }
 
 
@@ -78,12 +53,6 @@ public class CastingDtcReportTests extends TestBase {
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
-        /*new ReportsLoginPage(driver)
-            .login()
-            .navigateToLibraryPage();
-
-        jSessionId = driver.manage().getCookieNamed("JSESSIONID").getValue();*/
-
         ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
@@ -130,5 +99,16 @@ public class CastingDtcReportTests extends TestBase {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
             .generateJasperReportSummary(reportRequest);
         return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+    }
+
+    @Test
+    @Ignore
+    public void exampleOfInputParamsUsage() {
+        InputControl inputControl =  JasperReportUtil.init(jSessionId)
+            .getInputControls();
+
+        inputControl.getExportSetName().getOption("---01-dtc-casting").getValue();
+        inputControl.getCostMetric().getValue();
+        inputControl.getInputControlStateByName("requiredInputControl").getOption("requiredOptionInInputControl");
     }
 }
