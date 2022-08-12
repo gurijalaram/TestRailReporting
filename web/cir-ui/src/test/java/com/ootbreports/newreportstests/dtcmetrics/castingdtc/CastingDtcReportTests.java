@@ -15,13 +15,13 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.apiutils.JasperApiAuthenticationUtil;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.ReportsTest;
+import utils.JasperApiAuthenticationUtil;
 
 import java.io.IOException;
 import java.security.KeyManagementException;

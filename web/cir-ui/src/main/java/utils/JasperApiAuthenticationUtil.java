@@ -1,4 +1,4 @@
-package com.apiutils;
+package utils;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
@@ -6,11 +6,9 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.login.ReportsLoginPage;
 import com.apriori.utils.properties.PropertiesContext;
-import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.ootbreports.newreportstests.dtcmetrics.castingdtc.TrustAllX509TrustManager;
 import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 
@@ -37,13 +35,13 @@ public class JasperApiAuthenticationUtil extends TestBase {
     private String authenticateOnPrem() throws NoSuchAlgorithmException, KeyManagementException, IOException {
         skipSslCheck();
 
-        UserCredentials user = UserUtil.getUser();
+        String usernamePassword = UserUtil.getUserOnPrem().getUsername();
         String urlLink = PropertiesContext.get("${env}.reports.api_url")
             .concat(
                 String.format(
                     "j_spring_security_check?j_username=%s&j_password=%s",
-                    user.getUsername(),
-                    user.getUsername()
+                    usernamePassword,
+                    usernamePassword
                 )
             );
         URL url = new URL(urlLink);

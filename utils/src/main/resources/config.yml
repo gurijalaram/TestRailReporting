@@ -1,5 +1,5 @@
 # Define the environment
-env: onprem
+env: int-core
 
 # Define the global properties not related to environment
 global:
@@ -265,7 +265,7 @@ onprem:
 
   reports:
     ui_url: ${onprem.base_url}jasperserver-pro/login.html
-    on_prem_vm_url: https://conqbaci01/jasperserver-pro/
+    api_url: https://conqbaci01/jasperserver-pro/
 
   bcs:
     report_identity: 50A4DFJF3NC7
