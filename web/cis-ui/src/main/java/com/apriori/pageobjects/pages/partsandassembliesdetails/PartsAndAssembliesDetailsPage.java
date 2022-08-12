@@ -194,6 +194,27 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "piece-part-chart")
     private WebElement piecePartCostChart;
 
+    @FindBy(xpath = "//button[@aria-label='Assembly Tree']")
+    private WebElement assemblyTreeIcon;
+
+    @FindBy(xpath = "//div[@data-testid='Assembly Tree View']")
+    private WebElement assemblyTreeView;
+
+    @FindBy(xpath = "//button[@data-testid='toolbar-control-button']")
+    private WebElement showHideIcon;
+
+    @FindBy(id = "show-hide-field-input")
+    private WebElement showHideSearchField;
+
+    @FindBy(xpath = "//span[@data-testid='switch']")
+    private WebElement toggleButton;
+
+    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-cell--withRenderer')]")
+    private List<WebElement> tableRow;
+
+    @FindBy(xpath = "//*[@data-testid='app-bar']//h3")
+    private WebElement subComponentName;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -992,5 +1013,86 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public String getProcessDetails(String processDetails) {
         return driver.findElement(By.xpath("//div[@id='process-routing']//div[text()='" + processDetails + "']")).getAttribute("textContent");
+    }
+
+    /**
+     * clicks on assembly tree icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickAssemblyTree() {
+        getPageUtils().waitForElementAppear(processRoutingCard);
+        getPageUtils().waitForElementAndClick(assemblyTreeIcon);
+        return this;
+    }
+
+    /**
+     * Checks if assembly tree icon is displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssemblyTreeIconDisplayed() {
+        return getPageUtils().waitForElementAppear(assemblyTreeIcon).isDisplayed();
+    }
+
+    /**
+     * Checks if assembly tree view is displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssemblyTreeViewDisplayed() {
+        return getPageUtils().waitForElementAppear(assemblyTreeView).isDisplayed();
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public  List<String> getTableHeaders() {
+        return partsAndAssemblyDetailsController.getTableHeaders();
+    }
+
+    /**
+     * clicks on show/hide icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickShowHideOption() {
+        getPageUtils().waitForElementAndClick(showHideIcon);
+        return this;
+    }
+
+    /**
+     * hide field from table
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage hideField(String fieldName) {
+        getPageUtils().waitForElementToAppear(showHideSearchField).sendKeys(fieldName);
+        getPageUtils().waitForElementAndClick(toggleButton);
+        getPageUtils().waitForElementsToAppear(tableRow);
+        return this;
+    }
+
+    /**
+     * Opens the assembly part
+     *
+     * @return a new page object
+     */
+    public PartsAndAssembliesDetailsPage openAssembly(String componentName, String scenarioName) {
+        getPageUtils().waitForElementsToAppear(tableRow);
+        getPageUtils().waitForElementAndClick(driver.findElement(By.xpath(String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim()))));
+        getPageUtils().windowHandler(1);
+        return new PartsAndAssembliesDetailsPage(getDriver());
+    }
+
+    /**
+     * Get subcomponent name
+     *
+     * @return string
+     */
+    public String getSubComponentName() {
+        return getPageUtils().waitForElementToAppear(subComponentName).getText();
     }
 }

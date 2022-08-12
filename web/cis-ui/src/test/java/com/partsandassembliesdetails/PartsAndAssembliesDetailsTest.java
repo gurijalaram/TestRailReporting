@@ -14,6 +14,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.CisColumnsEnum;
 import com.utils.CisCostDetailsEnum;
 import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
@@ -22,6 +23,8 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 
 public class PartsAndAssembliesDetailsTest extends TestBase {
@@ -540,6 +543,56 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Fully Burdened Cost")).isNotEmpty();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Piece Part Cost")).isNotEmpty();
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getProcessDetails("Total Capital Investment")).isNotEmpty();
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13243","13244","13245","13248","13485","13488"})
+    @Description("Verify assembly tree view")
+    public void testAssemblyTreeView() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostAssembly(assemblyName,
+                        assemblyExtension,
+                        assemblyProcessGroup,
+                        subComponentNames,
+                        subComponentExtension,
+                        subComponentProcessGroup,
+                        scenarioName,
+                        currentUser)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(assemblyName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName,scenarioName)
+                .clickAssemblyTree();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyTreeIconDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyTreeViewDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_NAME.getColumns(),CisColumnsEnum.SCENARIO_NAME.getColumns(),
+                CisColumnsEnum.COMPONENT_TYPE.getColumns(),CisColumnsEnum.STATE.getColumns(),CisColumnsEnum.PROCESS_GROUP.getColumns());
+
+        partsAndAssembliesDetailsPage.clickShowHideOption()
+                .hideField("State");
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
+
+        partsAndAssembliesDetailsPage.openAssembly("Pin",scenarioName);
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName().equals("Pin"));
 
         softAssertions.assertAll();
     }
