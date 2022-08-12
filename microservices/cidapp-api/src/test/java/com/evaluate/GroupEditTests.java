@@ -344,6 +344,13 @@ public class GroupEditTests {
             .getItems()
             .size()).isGreaterThanOrEqualTo(1);
 
+        softAssertions.assertThat(cssComponent.getCssComponent(STAND, scenarioName, currentUser)
+                .getResponseEntity()
+                .getItems()
+                .stream()
+                .noneMatch(o -> o.getScenarioIterationKey().getWorkspaceId().equals(user.getCustomAttributes().getWorkspaceId())))
+            .isTrue();
+
         softAssertions.assertAll();
     }
 }
