@@ -77,7 +77,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6187", "5898"})
+    @TestRail(testCaseId = {"6187"})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -110,7 +110,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6188", "5898"})
+    @TestRail(testCaseId = {"6188"})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -142,7 +142,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6189", "5898"})
+    @TestRail(testCaseId = {"6189"})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -177,7 +177,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6190", "5420", "5898"})
+    @TestRail(testCaseId = {"6190", "5420"})
     @Description("Test making changes to the Material for Stock Machining, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestStockMachining() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
