@@ -33,6 +33,8 @@ public class GroupEditTests {
     private ComponentInfoBuilder componentAssembly;
     private static UserCredentials currentUser;
 
+    private int PUBLIC_WORKSPACE = 0;
+
     @Before
     public void setupUser() {
         currentUser = UserUtil.getUser();
@@ -141,7 +143,7 @@ public class GroupEditTests {
 
         cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "lastAction, publish").getResponseEntity()
             .getItems()
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0));
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
         PublishRequest publishRequest2 = PublishRequest.builder()
             .assignedTo(user.getIdentity())
@@ -161,7 +163,7 @@ public class GroupEditTests {
 
         cssComponent.getCssComponentQueryParams(DRIVE, newScenarioName, currentUser, "lastAction, publish").getResponseEntity()
             .getItems()
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0));
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
         softAssertions.assertAll();
     }
@@ -216,7 +218,7 @@ public class GroupEditTests {
         subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "lastAction, publish")
             .getResponseEntity()
             .getItems()
-            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0)));
+            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         softAssertions.assertAll();
     }
@@ -272,7 +274,7 @@ public class GroupEditTests {
 
         subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, newScenarioName, currentUser, "lastAction, publish").getResponseEntity()
             .getItems()
-            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(0)));
+            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         subComponentNames.forEach(componentName -> cssComponent.getCssComponent(componentName, newScenarioName, currentUser).getResponseEntity()
             .getItems()
