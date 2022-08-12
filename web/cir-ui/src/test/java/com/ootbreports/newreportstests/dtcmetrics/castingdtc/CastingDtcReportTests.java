@@ -47,7 +47,6 @@ public class CastingDtcReportTests extends TestBase {
         jSessionId = auth.authenticateJasperApi(driver);
     }
 
-
     @Test
     @Category(ReportsTest.class)
     @TestRail(testCaseId = {"1699"})
@@ -101,6 +100,9 @@ public class CastingDtcReportTests extends TestBase {
         return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
     }
 
+    /**
+     * Example, created by Vlad Z
+     */
     @Test
     @Ignore
     public void exampleOfInputParamsUsage() {

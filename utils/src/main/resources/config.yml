@@ -89,7 +89,7 @@ default:
 int-core:
   name: int-core
   secret_key: 65J1ID2B6LDG
-  base_url: https://cost.apriori-internal.int.apriori.net/
+  base_url: https://na-1.apriori-internal.int.apriori.net/
   customer_identity: H337GKD0LA0M
   user_identity: 8GFDIG229629
 

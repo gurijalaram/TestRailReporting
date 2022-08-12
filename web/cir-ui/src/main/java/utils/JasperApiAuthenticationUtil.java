@@ -23,6 +23,15 @@ import javax.net.ssl.TrustManager;
 
 public class JasperApiAuthenticationUtil extends TestBase {
 
+    /**
+     * Authenticates jasper api, opening session
+     *
+     * @param driver - instance of driver to use for cloud auth
+     * @return String jSessionId
+     * @throws NoSuchAlgorithmException - potentially thrown by on prem auth
+     * @throws IOException - potentially thrown by on prem auth
+     * @throws KeyManagementException - potentially thrown by on prem auth
+     */
     public String authenticateJasperApi(WebDriver driver) throws NoSuchAlgorithmException, IOException, KeyManagementException {
         this.driver = driver;
 
@@ -53,6 +62,11 @@ public class JasperApiAuthenticationUtil extends TestBase {
         return sessionId.split(";")[1].substring(11, 43);
     }
 
+    /**
+     * Authenticate jasper api for cloud, opening session
+     *
+     * @return String jSessionId
+     */
     @Test
     public String authenticateCloud() {
         new ReportsLoginPage(driver)
