@@ -47,7 +47,7 @@ public class FiltersTests extends TestBase {
     private File assembly;
 
     @Test
-    @TestRail(testCaseId = "10538")
+    @TestRail(testCaseId = {"10538", "6168"})
     @Description("Verify that filter criteria can be deleted")
     public void filterCriteriaCanBeDeletedTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -78,7 +78,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10537")
+    @TestRail(testCaseId = {"10537", "6167", "6083"})
     @Description("Verify that newly created filter is displayed in filters dropdown in my filter section")
     public void newlyCreatedFilterIsDisplayedInFiltersTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -108,7 +108,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10535")
+    @TestRail(testCaseId = {"10535", "6165"})
     @Description("Verify Cancel button closes the Scenario filter table")
     public void cancelBtnCloseFilterTableTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -135,7 +135,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10534")
+    @TestRail(testCaseId = {"10534", "6164"})
     @Description("User can clear added criteria simultaneously by Clear button")
     public void canClearAddedCriteriaTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -197,7 +197,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10531")
+    @TestRail(testCaseId = {"10531", "6099"})
     @Description("User can filter scenarios from scenario filter modal box")
     public void canFilterScenariosFromModalBoxTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -228,7 +228,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10529")
+    @TestRail(testCaseId = {"10529", "6085"})
     @Description("User can create new filter from already existing one using Save As button")
     public void canCreateNewFilterBySaveAsTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -260,7 +260,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10528")
+    @TestRail(testCaseId = {"10528", "6084"})
     @Description("User is able to edit already created filters")
     public void ableToEditCreatedFilterTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -299,7 +299,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10527")
+    @TestRail(testCaseId = {"10527", "6353"})
     @Description("Validate user can select custom filter")
     public void ableToSelectCustomFilterTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -339,7 +339,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10526")
+    @TestRail(testCaseId = {"10526", "6081"})
     @Description("Validate user can create custom filter with all available attributes")
     public void ableToCreateCustomFilterWithAllAttributesTest() {
         String filterName = generateStringUtil.generateFilterName();
@@ -423,7 +423,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10524")
+    @TestRail(testCaseId = {"10524", "6077"})
     @Description("Validate user can select Assigned to Me scenarios")
     public void ableToSelectAssignedToMeScenarioTest() {
         SoftAssertions soft = new SoftAssertions();
@@ -463,7 +463,7 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "10522")
+    @TestRail(testCaseId = {"10522", "6531"})
     @Description("Validate user can select All scenarios")
     public void ableToSelectAllScenarioTest() {
         SoftAssertions soft = new SoftAssertions();
