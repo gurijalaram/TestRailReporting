@@ -4,6 +4,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.LetNavigationBarController;
+import com.apriori.pageobjects.pages.messages.MessagesPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.utils.enums.DigitalFactoryEnum;
@@ -183,5 +184,25 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                         .build());
 
         return this;
+    }
+
+    /**
+     * Checks if Messages navbar item displayed
+     *
+     * @return true/false
+     */
+    public boolean isMessagesLinkDisplayed() {
+        return getPageUtils().waitForElementAppear(btnMessage).isDisplayed();
+    }
+
+    /**
+     * Click on Messages link
+     *
+     * @return new page object
+     */
+
+    public MessagesPage clickMessages() {
+        getPageUtils().waitForElementAndClick(btnMessage);
+        return new MessagesPage(getDriver());
     }
 }
