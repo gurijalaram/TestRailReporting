@@ -215,6 +215,28 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//*[@data-testid='app-bar']//h3")
     private WebElement subComponentName;
 
+    @FindBy(xpath = "//button[@aria-label='Design Guidance']")
+    private WebElement designGuidanceIcon;
+
+    @FindBy(xpath = "//div[@data-testid='Issues']//button//*[local-name()='svg']")
+    private WebElement issueCollapsibleIcon;
+
+    @FindBy(xpath = "//div[@data-testid='Design Guidance']")
+    private WebElement designGuidanceCard;
+
+    @FindBy(xpath = "//div[@data-testid='Issues']")
+    private WebElement issuesPanel;
+
+    @FindBy(xpath = "//div[contains(@id,'design-guidance-holeIssue')]")
+    private WebElement holeIssueIcon;
+
+    @FindBy(xpath = "//div[@role='grid']")
+    private WebElement gcdTable;
+
+    @FindBy(xpath = "//div[contains(@class,'MuiDataGrid-virtualScrollerRenderZone')]//span")
+    private WebElement gcdTableCheckBox;
+
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -1095,4 +1117,99 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public String getSubComponentName() {
         return getPageUtils().waitForElementToAppear(subComponentName).getText();
     }
+
+    /**
+     * clicks on design guidance icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickDesignGuidance() {
+        getPageUtils().waitForElementAndClick(designGuidanceIcon);
+        return this;
+    }
+
+    /**
+     * clicks on design guidance issue collapsible icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickIssueCollapsibleIcon() {
+        getPageUtils().waitForElementAndClick(issueCollapsibleIcon);
+        return this;
+    }
+
+    /**
+     * get issue collapsible status
+     *
+     * @return String
+     */
+    public String getIssueCollapsibleIcons() {
+        return getPageUtils().waitForElementToAppear(issueCollapsibleIcon).getAttribute("data-icon");
+    }
+
+    /**
+     * Checks if design guidance card displayed
+     *
+     * @return true/false
+     */
+    public boolean isDesignGuidanceCardDisplayed() {
+        return getPageUtils().waitForElementAppear(designGuidanceCard).isDisplayed();
+    }
+
+    /**
+     * Checks if issues panel displayed
+     *
+     * @return true/false
+     */
+    public boolean isIssuesPanelDisplayed() {
+        return getPageUtils().waitForElementAppear(issuesPanel).isDisplayed();
+    }
+
+    /**
+     * Gets design guidance details
+     *
+     * @return list of string
+     */
+    public  List<String> getDesignGuidanceDetails() {
+        return partsAndAssemblyDetailsController.getDesignGuidanceDetails();
+    }
+
+    /**
+     * Gets the issue details
+     *
+     * @return string
+     */
+    public String getIssueDetails(String issueName) {
+        return driver.findElement(By.xpath("//div[@data-testid='Issues']//div[text()='" + issueName + "']//..//div[starts-with(@data-testid,'collapsible-header')]")).getAttribute("textContent");
+    }
+
+    /**
+     * clicks on hole issue section
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnHoleIssue() {
+        getPageUtils().waitForElementAndClick(holeIssueIcon);
+        return this;
+    }
+
+    /**
+     * Checks if GCD table displayed
+     *
+     * @return true/false
+     */
+    public boolean isGCDTableDisplayed() {
+        return getPageUtils().waitForElementAppear(gcdTable).isDisplayed();
+    }
+
+    /**
+     * get checkbox status
+     *
+     * @return String
+     */
+    public String geCheckBoxStatus() {
+        return getPageUtils().waitForElementToAppear(gcdTableCheckBox).getAttribute("class");
+    }
+
+
 }
