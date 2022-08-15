@@ -18,6 +18,9 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
     @FindBy(xpath = "//div[@data-testid='Process']")
     private WebElement processList;
 
+    @FindBy(xpath = "//div[@role='row']")
+    private WebElement tableHeaders;
+
     public PartsAndAssemblyDetailsController(WebDriver driver) {
         super(driver, log);
     }
@@ -52,5 +55,14 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
      */
     public List<String> getProcessRoutingDetails() {
         return Stream.of(processList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return Stream.of(tableHeaders.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 }

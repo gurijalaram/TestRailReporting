@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.LetNavigationBarController;
@@ -46,6 +47,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     private LetNavigationBarController letNavigationBarController;
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     public LeftHandNavigationBar(WebDriver driver) {
         this(driver, log);
@@ -182,6 +184,36 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                         .digitalFactory(digitalFactoryEnum)
                         .user(userCredentials)
                         .build());
+
+        return this;
+    }
+
+    /**
+     * Upload and cost assembly
+     *
+     * @return current page object
+     */
+    public LeftHandNavigationBar uploadAndCostAssembly(String assemblyName,
+                                                       String assemblyExtension,
+                                                       ProcessGroupEnum assemblyProcessGroup,
+                                                       List<String> subComponentNames,
+                                                       String subComponentExtension,
+                                                       ProcessGroupEnum subComponentProcessGroup,
+                                                       String scenarioName,
+                                                       UserCredentials currentUser) {
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+                assemblyExtension,
+                assemblyProcessGroup,
+                subComponentNames,
+                subComponentExtension,
+                subComponentProcessGroup,
+                scenarioName,
+                currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+                .uploadAssembly(componentAssembly);
+
+        assemblyUtils.costAssembly(componentAssembly);
 
         return this;
     }
