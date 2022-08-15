@@ -232,7 +232,6 @@ public class LeftHandNavigationBar extends CisHeaderBar {
      *
      * @return new page object
      */
-
     public MessagesPage clickMessages() {
         getPageUtils().waitForElementAndClick(btnMessage);
         return new MessagesPage(getDriver());
