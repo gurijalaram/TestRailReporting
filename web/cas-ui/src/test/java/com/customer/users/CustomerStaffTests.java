@@ -23,6 +23,7 @@ import com.apriori.utils.web.components.CardsViewComponent;
 import com.apriori.utils.web.components.PaginatorComponent;
 import com.apriori.utils.web.components.SourceListComponent;
 import com.apriori.utils.web.components.TableComponent;
+import com.apriori.utils.web.components.TableRowComponent;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -228,7 +229,7 @@ public class CustomerStaffTests extends TestBase {
 
         soft.assertThat(openLicenseDetails.getDetailsText())
             .overridingErrorMessage("Expected 'Select a User' placeholder is displayed")
-            .isEqualTo("Select a User");
+            .isEqualTo("Select a single User");
 
         PageUtils utils = new PageUtils(getDriver());
         SourceListComponent users = usersListPage.getUsersList();
@@ -268,5 +269,92 @@ public class CustomerStaffTests extends TestBase {
             .subLicenseIdentity(subLicenseIdentity)
             .userIdentity(userIdentity)
             .build();
+    }
+
+    private long checkEveryOtherItem(List<TableRowComponent> rows, long pageSize) {
+        long count = 0;
+        for (int i = 0; i < pageSize; i += 2, ++count) {
+            final TableRowComponent row = rows.get(i);
+            Obligation.mandatory(row::getCheck, "The check cell is missing").check(true);
+        }
+        return count;
+    }
+
+    @Test
+    @Description("Validate delete users can be canceled")
+    @TestRail(testCaseId = {"14228", "14230", "14231", "14232", "14233"})
+    public void deleteUserCancel() {
+        soft.assertThat(usersListPage.isDeleteButtonEnable())
+            .overridingErrorMessage("Delete user button expected to be disabled")
+            .isFalse();
+
+        PageUtils utils = new PageUtils(getDriver());
+        long pageSize = 10;
+        long selected = 0;
+        SourceListComponent users = usersListPage.getUsersList();
+        TableComponent usersTable = Obligation.mandatory(users::getTable, "The users table is missing from customer staff page");
+        PaginatorComponent paginator = Obligation.mandatory(users::getPaginator, "The users table is missing pagination.");
+        paginator.getPageSize().select(String.format("%d", pageSize));
+
+        selected += checkEveryOtherItem(usersTable.getRows().collect(Collectors.toList()), pageSize);
+        paginator.clickNextPage();
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+        usersTable.getRows().findFirst().ifPresent((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
+        ++selected;
+
+        long expected = usersTable.getRows().filter((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").isChecked()).count();
+        soft.assertThat(expected)
+            .overridingErrorMessage("The selection is not holding across pages.")
+            .isEqualTo(selected);
+
+        soft.assertThat(usersListPage.isDeleteButtonEnable())
+            .overridingErrorMessage("Delete user button expected to be enabled")
+            .isTrue();
+
+        usersListPage.clickDeleteButton()
+            .clickConfirmDeleteCancelButton();
+
+        soft.assertThat(expected)
+            .overridingErrorMessage("Expected users were not deleted")
+            .isEqualTo(selected);
+    }
+
+    @Test
+    @Description("Validate users can be deleted from customer staff table")
+    @TestRail(testCaseId = {"14229", "14234", "14235"})
+    public void deleteUserFromStaffTable() {
+        String userName = sourceUsers.get(5).getUsername();
+        PageUtils utils = new PageUtils(getDriver());
+        SourceListComponent users = usersListPage.getUsersList();
+        Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+
+        TableComponent usersTable = Obligation.mandatory(users::getTable, "The users table is missing from customer staff page");
+        usersTable.getRows()
+            .findFirst()
+            .orElseThrow(() -> new NoSuchElementException(String.format("User %s is missing.", userName)))
+            .getCheck()
+            .check(true);
+
+        usersListPage.clickDeleteButton()
+            .clickConfirmDeleteOkButton();
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+        Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+
+        long notDeletedUsers = usersTable.getRows().count();
+        soft.assertThat(notDeletedUsers)
+            .overridingErrorMessage("The staff users were not removed.")
+            .isEqualTo(0L);
+
+        usersListPage.clickOnTrashcanIcon();
+
+        Obligation.mandatory(users::getSearch, "Users list search is missing").search(userName);
+        utils.waitForCondition(users::isStable, PageUtils.DURATION_LOADING);
+
+        long deletedUsers = usersTable.getRows().count();
+        soft.assertThat(deletedUsers)
+            .overridingErrorMessage("Expected soft deleted users are displayed")
+            .isEqualTo(1L);
     }
 }
