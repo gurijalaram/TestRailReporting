@@ -104,7 +104,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799"})
+    @TestRail(testCaseId = {"10799", "6076"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
         final String assemblyName = "Hinge assembly";
