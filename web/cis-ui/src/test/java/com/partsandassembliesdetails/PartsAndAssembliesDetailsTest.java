@@ -16,6 +16,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.CisColumnsEnum;
 import com.utils.CisCostDetailsEnum;
+import com.utils.CisDesignGuidanceDetailsEnum;
 import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
@@ -593,6 +594,53 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         partsAndAssembliesDetailsPage.openAssembly("Pin",scenarioName);
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName().equals("Pin"));
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13320","13321","13322","13323","13324","13375","13376","13377"})
+    @Description("Verify design guidance issue details")
+    public void testDesignGuidanceIssueDetails() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickDesignGuidance()
+                .clickIssueCollapsibleIcon();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueCollapsibleIcons()).isEqualTo("caret-down");
+
+        partsAndAssembliesDetailsPage.clickIssueCollapsibleIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueCollapsibleIcons()).isEqualTo("caret-up");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDesignGuidanceCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isIssuesPanelDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDesignGuidanceDetails()).contains(CisDesignGuidanceDetailsEnum.HOLE_ISSUE.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.PROXIMITY_WARNING.getDesignGuidanceDetailsName(),
+                CisDesignGuidanceDetailsEnum.BLANK_ISSUE.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.MATERIAL_ISSUE.getDesignGuidanceDetailsName());
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Hole Issue")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Proximity Warning")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Blank Issue")).isNotEmpty();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getIssueDetails("Material Issue")).isNotEmpty();
+
+        partsAndAssembliesDetailsPage.clickOnHoleIssue();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isGCDTableDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.geCheckBoxStatus()).isEqualTo("Mui-checked");
 
         softAssertions.assertAll();
     }
