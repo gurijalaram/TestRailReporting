@@ -43,7 +43,7 @@ public class MaterialPMITests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6283"})
+    @TestRail(testCaseId = {"6283", "5917"})
     @Description("Test setting a default material and ensure parts are costed in that material by default")
     public void materialTestProductionDefault() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
