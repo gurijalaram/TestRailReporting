@@ -236,6 +236,39 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[contains(@class,'MuiDataGrid-virtualScrollerRenderZone')]//span")
     private WebElement gcdTableCheckBox;
 
+    @FindBy(xpath = "//div[@data-testid='Investigation']//button//*[local-name()='svg']")
+    private WebElement investigationCollapsibleIcon;
+
+    @FindBy(xpath = "//div[@data-testid='Investigation']")
+    private WebElement investigationPanel;
+
+    @FindBy(xpath = "//div[contains(@id,'design-guidance-DISTINCT_SIZES')]")
+    private WebElement distinctSizeCountTopic;
+
+    @FindBy(xpath = "//*[@data-icon='circle-dollar']")
+    private WebElement costIcon;
+
+    @FindBy(xpath = "//div[@data-testid='Cost']")
+    private WebElement costSection;
+
+    @FindBy(xpath = "//div[@data-testid='Cost']//h2")
+    private WebElement titleCost;
+
+    @FindBy(xpath = "//div[@data-testid='chart-type-option-select-graph-cost']")
+    private WebElement costDropDown;
+
+    @FindBy(id = "fullyBurdenedCost-cost-graph")
+    private WebElement costGraphFullyBurdened;
+
+    @FindBy(id = "piecePartCost-cost-graph")
+    private WebElement costGraphPiecePart;
+
+    @FindBy(id = "totalCapitalInvestment-cost-graph")
+    private WebElement costGraphTotalCapitalInvestment;
+
+    @FindBy(xpath = "//div[contains(@id,'design-guidance-row-proximityWarning')]")
+    private WebElement proximityLbl;
+
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1124,6 +1157,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickDesignGuidance() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
         getPageUtils().waitForElementAndClick(designGuidanceIcon);
         return this;
     }
@@ -1180,7 +1214,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return string
      */
     public String getIssueDetails(String issueName) {
-        return driver.findElement(By.xpath("//div[@data-testid='Issues']//div[text()='" + issueName + "']//..//div[starts-with(@data-testid,'collapsible-header')]")).getAttribute("textContent");
+        return driver.findElement(By.xpath("//div[@data-testid='Issues']//div[text()='" + issueName + "']//..//div[contains(@data-testid,'value')]")).getAttribute("textContent");
     }
 
     /**
@@ -1211,5 +1245,126 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         return getPageUtils().waitForElementToAppear(gcdTableCheckBox).getAttribute("class");
     }
 
+    /**
+     * clicks on design guidance investigation collapsible icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickInvestigationCollapsibleIcon() {
+        getPageUtils().waitForElementAndClick(investigationCollapsibleIcon);
+        return this;
+    }
 
+    /**
+     * get investigation section collapsible status
+     *
+     * @return String
+     */
+    public String getInvestigationCollapsibleState() {
+        return getPageUtils().waitForElementToAppear(investigationCollapsibleIcon).getAttribute("data-icon");
+    }
+
+    /**
+     * Checks if investigation panel displayed
+     *
+     * @return true/false
+     */
+    public boolean isInvestigationPanelDisplayed() {
+        return getPageUtils().waitForElementAppear(investigationPanel).isDisplayed();
+    }
+
+    /**
+     * Gets investigation topics details
+     *
+     * @return list of string
+     */
+    public  List<String> getInvestigationTopics() {
+        return partsAndAssemblyDetailsController.getInvestigationDetails();
+    }
+
+    /**
+     * clicks on Distinct Sizes Count topic
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnDistinctSizesCount() {
+        getPageUtils().waitForElementAndClick(distinctSizeCountTopic);
+        return this;
+    }
+
+    /**
+     * Checks if costs icon is displayed
+     *
+     * @return true/false
+     */
+    public boolean isCostsOptionDisplayed() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
+        return getPageUtils().waitForElementAppear(costIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on costs icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickCostsOption() {
+        getPageUtils().waitForElementAndClick(costIcon);
+        return this;
+    }
+
+    /**
+     * Checks if costs section is displayed
+     *
+     * @return true/false
+     */
+    public boolean isCostSectionDisplayed() {
+        return getPageUtils().waitForElementAppear(costSection).isDisplayed();
+    }
+
+    /**
+     * Get Cost section title
+     *
+     * @return a String
+     */
+    public String getCostTitle() {
+        return getPageUtils().waitForElementAppear(titleCost).getText();
+    }
+
+    /**
+     * select option
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectCostDropDownOption(String option) {
+        getPageUtils().waitForElementAndClick(costDropDown);
+        getPageUtils().waitForElementAndClick(By.xpath("//li[@role='option']//*[contains(text(),'" + option + "')]"));
+        return this;
+    }
+
+    /**
+     * Checks if fully burdened cost- cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isFullyBurdenedCostCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphFullyBurdened).isDisplayed();
+    }
+
+    /**
+     * Checks if piece Part cost- cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isPiecePartCostCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphPiecePart).isDisplayed();
+    }
+
+    /**
+     * Checks if total capital investment- cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isTotalCapitalInvestmentCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphTotalCapitalInvestment).isDisplayed();
+    }
 }
