@@ -16,6 +16,7 @@ import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.FiltersTests;
+import com.evaluate.assemblies.GroupCostingTests;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
@@ -53,6 +54,7 @@ import testsuites.suiteinterface.SmokeTests;
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
     EditAssembliesTest.class,
+    GroupCostingTests.class,
     CostAllCadTests.class,
     CostScenarioTests.class,
     NewScenarioNameTests.class,

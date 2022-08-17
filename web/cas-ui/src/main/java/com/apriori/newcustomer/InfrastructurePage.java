@@ -1,13 +1,11 @@
 package com.apriori.newcustomer;
 
 import com.apriori.common.ModalUserList;
-import com.apriori.common.UsersTableController;
 import com.apriori.customeradmin.NavToolbar;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.SourceListComponent;
 
-import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,12 +25,6 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     @FindBy(xpath = "//div[contains(text(),'Please select infrastructure within the Tree View')]")
     private WebElement noContentMessage;
 
-    @FindBy(className = "application-grant-button")
-    private WebElement grantFromListButton;
-
-    @FindBy(className = "application-deny-button")
-    private WebElement denySelectedButton;
-
     @FindBy(className = "application-grant-all-button")
     private WebElement grantAllButton;
 
@@ -45,11 +37,16 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     @FindBy(css = ".btn.btn-secondary.mr-2")
     private WebElement confirmAllCancelButton;
 
+    @FindBy(css = ".Toastify__toast.Toastify__toast--success .Toastify__toast-body")
+    private WebElement successMessage;
+
+    @FindBy(css = ".Toastify__close-button.Toastify__close-button--success")
+    private WebElement closeMessage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private NavToolbar navToolbar;
     private ModalUserList modalUserList;
-    private UsersTableController usersTableController;
 
     public InfrastructurePage(WebDriver driver) {
         this.driver = driver;
@@ -59,7 +56,6 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
         PageFactory.initElements(driver, this);
         this.get();
         modalUserList = new ModalUserList(driver);
-        usersTableController = new UsersTableController(driver);
     }
 
     @Override
@@ -123,50 +119,12 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
     }
 
     /**
-     * Gets the access controls table
-     *
-     * @return application access controls table
-     */
-    public SourceListComponent getApplicationAccessControlsTable() {
-        return usersTableController.getUsersTable();
-    }
-
-    /**
-     * Validates that table has a correct columns
-     *
-     * @return This object
-     */
-    public InfrastructurePage validateAccessControlsTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft) {
-        return usersTableController.validateUsersTableHasCorrectColumns(expectedName, id, soft, InfrastructurePage.class);
-    }
-
-    /**
-     * Clicks on Grant From List button
-     *
-     * @return this object
-     */
-    public InfrastructurePage clickGrantFromList() {
-        pageUtils.waitForElementAndClick(grantFromListButton);
-        return this;
-    }
-
-    /**
      * Clicks on Grant All button
      *
      * @return this object
      */
     public InfrastructurePage clickGrantAllButton() {
         pageUtils.waitForElementAndClick(grantAllButton);
-        return this;
-    }
-
-    /**
-     * Clicks on Deny Selected button
-     *
-     * @return this object
-     */
-    public InfrastructurePage clickDenySelectedButton() {
-        pageUtils.waitForElementAndClick(denySelectedButton);
         return this;
     }
 
@@ -260,6 +218,25 @@ public class InfrastructurePage extends LoadableComponent<InfrastructurePage> {
      */
     public InfrastructurePage clickAllOkButton() {
         pageUtils.waitForElementAndClick(confirmAllOkButton);
+        return this;
+    }
+
+    /**
+     * Gets success message text
+     *
+     * @return string success message
+     */
+    public String getTextSuccessMessage() {
+        return pageUtils.waitForElementToAppear(successMessage).getAttribute(("textContent"));
+    }
+
+    /**
+     * Closes modal message
+     *
+     * @return this page object
+     */
+    public InfrastructurePage closeMessage() {
+        pageUtils.waitForElementAndClick(closeMessage);
         return this;
     }
 }

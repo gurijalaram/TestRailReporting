@@ -46,7 +46,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5612"})
+    @TestRail(testCaseId = {"5612", "6511"})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssemblyTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;

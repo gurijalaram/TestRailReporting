@@ -43,4 +43,6 @@ public class ComponentInfoBuilder {
     private PostComponentResponse component;
     private String assignedTo;
     private String status;
+    @Builder.Default
+    private ComponentInfoBuilderSettings settings = ComponentInfoBuilderSettings.builder().build();
 }
