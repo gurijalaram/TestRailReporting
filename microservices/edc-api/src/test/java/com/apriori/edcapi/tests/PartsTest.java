@@ -8,6 +8,7 @@ import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
 import com.apriori.edcapi.entity.response.parts.PartsResponse;
+import com.apriori.edcapi.entity.response.parts.PostPartResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
 import com.apriori.edcapi.utils.PartsUtil;
 import com.apriori.utils.ErrorMessage;
@@ -74,5 +75,17 @@ public class PartsTest extends PartsUtil {
         softAssertions.assertThat(partsRequest.getResponseEntity().getMessage()).contains("validation failures were found");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    public void testPostNewPart() {
+        LineItemsUtil lineItems = new LineItemsUtil();
+
+        List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
+
+        String lineItemIdentity = allLineItems.get(0).getIdentity();
+
+        ResponseWrapper<PostPartResponse> postPartResponseResponseWrapper = postPart(billOfMaterialsIdentity, lineItemIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postPartResponseResponseWrapper.getStatusCode());
     }
 }
