@@ -3,6 +3,7 @@ package com.apriori.edcapi.utils;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.request.PartsRequest;
+import com.apriori.edcapi.entity.response.parts.Parts;
 import com.apriori.edcapi.entity.response.parts.PartsResponse;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -32,12 +33,12 @@ public class PartsUtil extends TestUtil {
         return getAllPartsResponse.getResponseEntity();
     }
 
-    public ResponseWrapper<ErrorMessage> postNewPartToLineItem(String bomIdentity, String lineItemIdentity) {
+    public ResponseWrapper<Parts> postNewPartToLineItem(String bomIdentity, String lineItemIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, ErrorMessage.class)
+            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
                 .inlineVariables(bomIdentity, lineItemIdentity)
-                .body("partsInput",
-                    PartsRequest.builder().availability("Active")
+                .body(PartsRequest.builder()
+                        .availability("Active")
                         .actionRequired(true)
                         .averageCost(1.1239)
                         .externalId("523648")

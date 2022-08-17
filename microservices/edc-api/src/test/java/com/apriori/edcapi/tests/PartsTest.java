@@ -7,6 +7,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
+import com.apriori.edcapi.entity.response.parts.Parts;
 import com.apriori.edcapi.entity.response.parts.PartsResponse;
 import com.apriori.edcapi.utils.LineItemsUtil;
 import com.apriori.edcapi.utils.PartsUtil;
@@ -68,10 +69,10 @@ public class PartsTest extends PartsUtil {
 
         String lineItemIdentity = allLineItems.get(0).getIdentity();
 
-        ResponseWrapper<ErrorMessage> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
+        ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
 
-        softAssertions.assertThat(partsRequest.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
-        softAssertions.assertThat(partsRequest.getResponseEntity().getMessage()).contains("validation failures were found");
+        softAssertions.assertThat(partsRequest.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
+      //  softAssertions.assertThat(partsRequest.getResponseEntity().getMessage()).contains("validation failures were found");
 
         softAssertions.assertAll();
     }
