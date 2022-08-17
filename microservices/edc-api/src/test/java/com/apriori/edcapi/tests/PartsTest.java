@@ -71,6 +71,7 @@ public class PartsTest extends PartsUtil {
         ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, partsRequest.getStatusCode());
 
+        softAssertions.assertThat(partsRequest.getStatusCode()).isEqualTo(HttpStatus.SC_CREATED);
         softAssertions.assertThat(partsRequest.getResponseEntity().getLineItemIdentity()).isEqualTo(lineItemIdentity);
         softAssertions.assertThat(partsRequest.getResponseEntity().getDescription()).isEqualTo("ELECTRO-TAP, 18-14 AWG RUN TAP");
 
