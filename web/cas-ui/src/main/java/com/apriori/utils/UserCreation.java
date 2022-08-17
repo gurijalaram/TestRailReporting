@@ -33,7 +33,7 @@ public class UserCreation extends TestUtil {
         String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         for (int i = 0; i < count; ++i) {
             String username = String.format("%s-%s-%s", STAFF_TEST_USER, now, i);
-            User added = cdsTestUtil.addUser(customerIdentity, username, customerName).getResponseEntity();
+            User added = cdsTestUtil.addUser(customerIdentity, username, customerName.toLowerCase()).getResponseEntity();
             sourceUsers.add(added);
         }
         return sourceUsers;
