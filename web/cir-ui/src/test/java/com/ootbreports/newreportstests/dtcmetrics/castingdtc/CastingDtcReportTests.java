@@ -13,6 +13,7 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
@@ -20,7 +21,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsTest;
+import testsuites.suiteinterface.ReportsApiTest;
 import utils.JasperApiAuthenticationUtil;
 
 import java.io.IOException;
@@ -33,6 +34,11 @@ import java.util.Collections;
 public class CastingDtcReportTests extends TestBase {
 
     private static String jSessionId = "";
+    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private static final String usdCurrency = CurrencyEnum.USD.getCurrency();
+    private static final String gbpCurrency = CurrencyEnum.GBP.getCurrency();
+    private static final String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final String reportCurrencyTestPartName = "40137441.MLDES.0002 (Initial)";
 
     /**
      * This before class method skips the invalid ssl cert issue we have with on prem installs
@@ -48,7 +54,7 @@ public class CastingDtcReportTests extends TestBase {
     }
 
     @Test
-    @Category(ReportsTest.class)
+    @Category(ReportsApiTest.class)
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -56,16 +62,16 @@ public class CastingDtcReportTests extends TestBase {
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
             .getInputControls();
-        String value = inputControl.getExportSetName().getOption("- - - 0 0 0-dtc-casting").getValue();
+        String value = inputControl.getExportSetName().getOption(exportSetName).getValue();
 
         // 1 - Generate report with USD currency setting
         reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(CurrencyEnum.USD.getCurrency()));
+            .setValue(Collections.singletonList(usdCurrency));
 
         reportRequest.getParameters().getReportParameterByName("exportSetName")
             .setValue(Collections.singletonList(value));
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dateFormat);
         String currentDateTime = dtf.format(LocalDateTime.now());
         reportRequest.getParameters().getReportParameterByName("latestExportDate")
             .setValue(Collections.singletonList(currentDateTime));
@@ -81,7 +87,7 @@ public class CastingDtcReportTests extends TestBase {
         assertThat(usdAnnualSpend, is(notNullValue()));
 
         reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(CurrencyEnum.GBP.getCurrency()));
+            .setValue(Collections.singletonList(gbpCurrency));
 
         ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
 
@@ -97,7 +103,7 @@ public class CastingDtcReportTests extends TestBase {
     private ChartDataPoint generateReportAndGetSummary(ReportRequest reportRequest) {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
             .generateJasperReportSummary(reportRequest);
-        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+        return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
     }
 
     /**

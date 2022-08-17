@@ -45,7 +45,7 @@ public class JasperApiAuthenticationUtil extends TestBase {
         skipSslCheck();
 
         String usernamePassword = UserUtil.getUserOnPrem().getUsername();
-        String urlLink = PropertiesContext.get("${env}.reports.api_url")
+        String urlLink = PropertiesContext.get("${env}.reports.ui_url")
             .concat(
                 String.format(
                     "j_spring_security_check?j_username=%s&j_password=%s",
@@ -77,7 +77,6 @@ public class JasperApiAuthenticationUtil extends TestBase {
     }
 
     private void skipSslCheck() throws NoSuchAlgorithmException, KeyManagementException {
-        // Source: https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check
         SSLContext sc = SSLContext.getInstance("TLS");
         sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
         HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
