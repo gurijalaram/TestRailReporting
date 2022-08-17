@@ -732,7 +732,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7021"})
+    @TestRail(testCaseId = {"7021", "5906"})
     @Description("Validate percentages are correct in comparison")
     public void validatePercentageInComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
