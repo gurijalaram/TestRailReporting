@@ -104,7 +104,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10799"})
+    @TestRail(testCaseId = {"10799", "6076"})
     @Description("Shallow Edit assembly and scenarios that was costed in CI Design")
     public void testShallowEditCostedCID() {
         final String assemblyName = "Hinge assembly";
@@ -893,7 +893,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "12040")
+    @TestRail(testCaseId = {"12040", "11954", "6521"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
         String assemblyName = "flange c";
