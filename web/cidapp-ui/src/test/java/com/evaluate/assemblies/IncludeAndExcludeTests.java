@@ -254,7 +254,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "12089")
+    @TestRail(testCaseId = {"12089", "6554"})
     @Description("Verify Excluded scenarios are not highlighted in flattened view")
     public void testExcludedScenarioInFlattenedView() {
         String assemblyName = "Hinge assembly";
