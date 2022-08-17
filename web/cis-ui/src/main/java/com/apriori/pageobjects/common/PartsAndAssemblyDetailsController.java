@@ -24,6 +24,9 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
     @FindBy(xpath = "//div[@data-testid='Issues']")
     private WebElement issueList;
 
+    @FindBy(xpath = "//div[@data-testid='Investigation']")
+    private WebElement topicsList;
+
     public PartsAndAssemblyDetailsController(WebDriver driver) {
         super(driver, log);
     }
@@ -76,5 +79,14 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
      */
     public List<String> getDesignGuidanceDetails() {
         return Stream.of(issueList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets investigation topics
+     *
+     * @return list of string
+     */
+    public List<String> getInvestigationDetails() {
+        return Stream.of(topicsList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 }

@@ -142,7 +142,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioCreatedBy']//button//*[local-name()='svg']")
     private WebElement createdByIcon;
 
-    @FindBy(xpath = "//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']")
+    @FindBy(xpath = "//div[@class='MuiDataGrid-row']")
     private WebElement filterRecords;
 
     @FindBy(xpath = "//div[@class='MuiDataGrid-row']")

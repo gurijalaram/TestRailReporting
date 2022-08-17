@@ -640,7 +640,88 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         partsAndAssembliesDetailsPage.clickOnHoleIssue();
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isGCDTableDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.geCheckBoxStatus()).isEqualTo("Mui-checked");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.geCheckBoxStatus()).contains("Mui-checked");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13584","13585","13586","13588","13589","13590"})
+    @Description("Verify design guidance investigation section details")
+    public void testDesignGuidanceInvestigationDetails() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickDesignGuidance()
+                .clickInvestigationCollapsibleIcon();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getInvestigationCollapsibleState()).isEqualTo("caret-down");
+
+        partsAndAssembliesDetailsPage.clickInvestigationCollapsibleIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getInvestigationCollapsibleState()).isEqualTo("caret-up");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDesignGuidanceCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isInvestigationPanelDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getInvestigationTopics()).contains(CisDesignGuidanceDetailsEnum.DISTINCT_SIZES_COUNT.getDesignGuidanceDetailsName(), CisDesignGuidanceDetailsEnum.MACHINING_SETUPS.getDesignGuidanceDetailsName(),
+                CisDesignGuidanceDetailsEnum.MACHINED_GCD.getDesignGuidanceDetailsName());
+
+        partsAndAssembliesDetailsPage.clickOnDistinctSizesCount();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isGCDTableDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.geCheckBoxStatus()).contains("Mui-checked");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"13799","13800","13801","13992","13993","13996","13997"})
+    @Description("Verify cost details for part")
+    public void testPartCostCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCostsOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickCostsOption();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCostSectionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCostTitle()).isEqualTo("Cost");
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.FULLY_BURDENED_COST.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isFullyBurdenedCostCostGraphDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.PIECE_PART_COST.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isPiecePartCostCostGraphDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.TOTAL_CAPITAL_INVESTMENT.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalCapitalInvestmentCostGraphDisplayed()).isEqualTo(true);
 
         softAssertions.assertAll();
     }
