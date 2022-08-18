@@ -148,7 +148,7 @@ int-core:
     api_url: https://sds.core.int.apriori.net/
 
   reports:
-    ui_url: ${int-core.base_url}jasperserver-pro/login.html
+    ui_url: https://cost.apriori-internal.int.apriori.net/jasperserver-pro/
 
   vds:
     api_url: https://vds.core.int.apriori.net/

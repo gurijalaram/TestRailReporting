@@ -13,32 +13,33 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
-import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.enums.reports.ExportSetEnum;
+import com.apriori.utils.web.driver.TestBase;
 
 import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.ReportsTest;
+import testsuites.suiteinterface.ReportsApiTest;
+import utils.JasperApiAuthenticationUtil;
 
 import java.io.IOException;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
-import javax.net.ssl.HttpsURLConnection;
-import javax.net.ssl.SSLContext;
-import javax.net.ssl.TrustManager;
 
-public class CastingDtcReportTests {
+public class CastingDtcReportTests extends TestBase {
 
-    private ChartDataPoint chartDataPoint;
     private static String jSessionId = "";
+    private static final String exportSetName = ExportSetEnum.CASTING_DTC.getExportSetName();
+    private static final String usdCurrency = CurrencyEnum.USD.getCurrency();
+    private static final String gbpCurrency = CurrencyEnum.GBP.getCurrency();
+    private static final String dateFormat = "yyyy-MM-dd'T'HH:mm:ss";
+    private static final String reportCurrencyTestPartName = "40137441.MLDES.0002 (Initial)";
 
     /**
      * This before class method skips the invalid ssl cert issue we have with on prem installs
@@ -47,41 +48,14 @@ public class CastingDtcReportTests {
      * @throws NoSuchAlgorithmException - potential exception
      * @throws KeyManagementException - potential exception
      */
-    @BeforeClass
-    public static void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
-        skipSslCheck();
-
-        String usernamePassword = UserUtil.getUser().getUsername();
-        String urlLink = PropertiesContext.get("${env}.reports.on_prem_vm_url")
-            .concat(String.format(
-                "j_spring_security_check?j_username=%s&j_password=%s",
-                usernamePassword,
-                usernamePassword)
-            );
-
-        URL url = new URL(urlLink);
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.connect();
-        System.out.println("Login response code :" + con.getResponseCode());
-        String sessionId = con + "";
-        jSessionId = sessionId.split(";")[1].substring(11, 43);
-        assertThat(jSessionId, is(notNullValue()));
+    @Before
+    public void setupSession() throws IOException, NoSuchAlgorithmException, KeyManagementException {
+        JasperApiAuthenticationUtil auth = new JasperApiAuthenticationUtil();
+        jSessionId = auth.authenticateJasperApi(driver);
     }
 
     @Test
-    @Ignore
-    public void exampleOfInputParamsUsage() {
-        InputControl inputControl =  JasperReportUtil.init(jSessionId)
-            .getInputControls();
-
-        inputControl.getExportSetName().getOption("---01-dtc-casting").getValue();
-        inputControl.getCostMetric().getValue();
-        inputControl.getInputControlStateByName("requiredInputControl").getOption("requiredOptionInInputControl");
-    }
-
-    @Test
-    @Category(ReportsTest.class)
+    @Category(ReportsApiTest.class)
     @TestRail(testCaseId = {"1699"})
     @Description("Verify Currency Code input control functions correctly")
     public void testCurrencyCode() {
@@ -89,16 +63,16 @@ public class CastingDtcReportTests {
 
         InputControl inputControl = JasperReportUtil.init(jSessionId)
             .getInputControls();
-        String value = inputControl.getExportSetName().getOption("- - - 0 0 0-dtc-casting").getValue();
+        String value = inputControl.getExportSetName().getOption(exportSetName).getValue();
 
         // 1 - Generate report with USD currency setting
         reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(CurrencyEnum.USD.getCurrency()));
+            .setValue(Collections.singletonList(usdCurrency));
 
         reportRequest.getParameters().getReportParameterByName("exportSetName")
             .setValue(Collections.singletonList(value));
 
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dateFormat);
         String currentDateTime = dtf.format(LocalDateTime.now());
         reportRequest.getParameters().getReportParameterByName("latestExportDate")
             .setValue(Collections.singletonList(currentDateTime));
@@ -114,7 +88,7 @@ public class CastingDtcReportTests {
         assertThat(usdAnnualSpend, is(notNullValue()));
 
         reportRequest.getParameters().getReportParameterByName("currencyCode")
-            .setValue(Collections.singletonList(CurrencyEnum.GBP.getCurrency()));
+            .setValue(Collections.singletonList(gbpCurrency));
 
         ChartDataPoint gbpChartDataPoint = generateReportAndGetSummary(reportRequest);
 
@@ -127,17 +101,23 @@ public class CastingDtcReportTests {
         assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
     }
 
-    private static void skipSslCheck() throws NoSuchAlgorithmException, KeyManagementException {
-        // Source: https://stackoverflow.com/questions/19723415/java-overriding-function-to-disable-ssl-certificate-check
-        SSLContext sc = SSLContext.getInstance("TLS");
-        sc.init(null, new TrustManager[] { new TrustAllX509TrustManager() }, new java.security.SecureRandom());
-        HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
-        HttpsURLConnection.setDefaultHostnameVerifier((string, ssls) -> true);
-    }
-
     private ChartDataPoint generateReportAndGetSummary(ReportRequest reportRequest) {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
-                .generateJasperReportSummary(reportRequest);
-        return jasperReportSummary.getChartDataPointByPartName("40137441.MLDES.0002 (Initial)");
+            .generateJasperReportSummary(reportRequest);
+        return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
+    }
+
+    /**
+     * Example, created by Vlad Z
+     */
+    @Test
+    @Ignore
+    public void exampleOfInputParamsUsage() {
+        InputControl inputControl =  JasperReportUtil.init(jSessionId)
+            .getInputControls();
+
+        inputControl.getExportSetName().getOption("---01-dtc-casting").getValue();
+        inputControl.getCostMetric().getValue();
+        inputControl.getInputControlStateByName("requiredInputControl").getOption("requiredOptionInInputControl");
     }
 }
