@@ -39,7 +39,7 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Category({SmokeTests.class})
-    @TestRail(testCaseId = {"5441"})
+    @TestRail(testCaseId = {"5441", "6631", "6632"})
     @Description("Testing process group Forging")
     public void testProcessGroupForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
