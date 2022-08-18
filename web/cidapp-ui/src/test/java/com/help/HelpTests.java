@@ -71,7 +71,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264","6371"})
+    @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void materialUtilHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -92,7 +92,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264","6371"})
+    @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void designGuidanceHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -113,7 +113,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264","6371"})
+    @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void processDetailsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
@@ -134,7 +134,7 @@ public class HelpTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"264","6371"})
+    @TestRail(testCaseId = {"264"})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void costResultsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
