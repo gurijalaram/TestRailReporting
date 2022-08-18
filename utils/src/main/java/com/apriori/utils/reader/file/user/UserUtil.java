@@ -52,6 +52,17 @@ public class UserUtil {
     }
 
     /**
+     * Gets a common user for on prem env (without token or cloud context)
+     *
+     * @return UserCredentials instance
+     */
+    public static UserCredentials getUserOnPrem() {
+        UserCredentials user = UserCommonService.getUser();
+        logInfo(user);
+        return user;
+    }
+
+    /**
      * Return user by access level
      *
      * @param accessLevel - access level of needed user

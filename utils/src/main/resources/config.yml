@@ -141,7 +141,7 @@ int-core:
     api_url: https://sds.core.int.apriori.net/
 
   reports:
-    ui_url: ${int-core.base_url}jasperserver-pro/login.html
+    ui_url: https://cost.apriori-internal.int.apriori.net/jasperserver-pro/
 
   vds:
     api_url: https://vds.core.int.apriori.net/
@@ -244,6 +244,32 @@ qa-cig-perf:
     part_identity: 6E5GDN0CHB95
     batch_identity: 6N92EN8EHM52
 
+######################################################## On Prem ########################################################
+onprem:
+  name: onprem
+  base_url: https://conqbaci02/
+
+  admin:
+    ui_url: ${onprem.base_url}apriori/login
+
+  cds:
+    apriori_core_services_installation_identity:
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity:
+    cia_application_identity: 1J8M416FBJ94
+    automation_user_identity02: 9671G0C4GNK2
+    automation_user_identity03: 775K40H47HEF
+    identity_role: 67J517C9L762
+
+  reports:
+    ui_url: ${onprem.base_url}jasperserver-pro/
+
+  bcs:
+    report_identity: 50A4DFJF3NC7
+    reportType_identity: 0J3JMAA4MCAJ
+    part_identity: 6E5GDN0CHB95
+    batch_identity: 6N92EN8EHM52
 
 ######################################################## QA-20-1 ########################################################
 qa-20-1:
