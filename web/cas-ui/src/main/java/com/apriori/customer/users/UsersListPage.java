@@ -52,6 +52,18 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     private WebElement licenseDetailsListRoot;
     private final SourceListComponent licenseDetailsList;
 
+    @FindBy(css = ".delete-user-button")
+    private WebElement deleteUserButton;
+
+    @FindBy(xpath = "//button[@class='mr-2 btn btn-secondary'][.='Cancel']")
+    private WebElement confirmDeleteCancelButton;
+
+    @FindBy(xpath = "//button[@class='btn btn-primary'][.='OK']")
+    private WebElement confirmDeleteOkButton;
+
+    @FindBy(css = ".fa-file-circle-minus")
+    private WebElement trashcanIcon;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private UsersTableController usersTableController;
@@ -319,5 +331,54 @@ public class UsersListPage extends LoadableComponent<UsersListPage> {
     public SourceListComponent getLicenseDetailsList() {
         pageUtils.waitForCondition(licenseDetailsList::isStable, pageUtils.DURATION_LOADING);
         return licenseDetailsList;
+    }
+
+    /**
+     * Checks is button is enabled
+     *
+     * @return true or false
+     */
+    public boolean isDeleteButtonEnable() {
+        return pageUtils.isElementEnabled(deleteUserButton);
+    }
+
+    /**
+     * Clicks on delete button
+     *
+     * @return this page object
+     */
+    public UsersListPage clickDeleteButton() {
+        pageUtils.waitForElementAndClick(deleteUserButton);
+        return this;
+    }
+
+    /**
+     * Clicks on OK button of remove confirm dialog
+     *
+     * @return this object
+     */
+    public UsersListPage clickConfirmDeleteOkButton() {
+        pageUtils.waitForElementAndClick(confirmDeleteOkButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Cancel button of remove confirm dialog
+     *
+     * @return this page object
+     */
+    public UsersListPage clickConfirmDeleteCancelButton() {
+        pageUtils.waitForElementAndClick(confirmDeleteCancelButton);
+        return this;
+    }
+
+    /**
+     * Clicks on trashcan icon
+     *
+     * @return this page object
+     */
+    public UsersListPage clickOnTrashcanIcon() {
+        pageUtils.waitForElementAndClick(trashcanIcon);
+        return this;
     }
 }
