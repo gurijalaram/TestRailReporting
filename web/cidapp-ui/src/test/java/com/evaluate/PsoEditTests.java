@@ -32,7 +32,7 @@ public class PsoEditTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
-    @TestRail(testCaseId = {"7286", "7287", "7288", "7289"})
+    @TestRail(testCaseId = {"7286", "7287", "7288", "7289", "6634", "6635"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
