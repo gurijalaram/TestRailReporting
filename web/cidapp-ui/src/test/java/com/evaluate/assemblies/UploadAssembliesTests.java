@@ -46,7 +46,7 @@ public class UploadAssembliesTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5612", "6511"})
+    @TestRail(testCaseId = {"6511", "10510"})
     @Description("Upload Assembly file with no missing sub-components")
     public void uploadAssemblyTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -103,7 +103,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11902")
+    @TestRail(testCaseId = {"11902", "10762"})
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -125,7 +125,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11903")
+    @TestRail(testCaseId = {"11903", "10767"})
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -169,7 +169,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11905")
+    @TestRail(testCaseId = {"11905", "10764"})
     @Description("Upload Assembly with sub-components from SolidEdge")
     public void testSolidEdgeMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -191,7 +191,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11906")
+    @TestRail(testCaseId = {"11906", "10765"})
     @Description("Upload Assembly with sub-components from NX")
     public void testNxMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -214,7 +214,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11907")
+    @TestRail(testCaseId = {"11907", "10766"})
     @Description("Upload Assembly with sub-components from Inventor")
     public void testInventorMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
