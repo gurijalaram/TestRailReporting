@@ -34,7 +34,7 @@ public class AccountsTest extends TestUtil {
 
     @Before
     public void initUser() {
-        PropertiesContext.get("${env}.edc.url");
+        PropertiesContext.get("${env}.edc.api_url");
         token = new UserTestDataUtil().initToken(userData.getUserCredentials());
         RequestEntityUtil.useTokenForRequests(token);
 
