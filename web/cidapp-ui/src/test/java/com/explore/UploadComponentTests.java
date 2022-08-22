@@ -78,7 +78,7 @@ public class UploadComponentTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = "11879")
+    @TestRail(testCaseId = {"11879", "11878"})
     @Description("Validate messaging upon successful upload of multiple files")
     public void testMultiUploadSuccessMessage() {
         UserCredentials currentUser = UserUtil.getUser();
@@ -317,7 +317,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11888")
+    @TestRail(testCaseId = {"11888", "5618"})
     @Description("Validate override existing scenario is successful through multiple uploads when checked")
     public void testOverrideExistingScenarioSuccess() {
         currentUser = UserUtil.getUser();
