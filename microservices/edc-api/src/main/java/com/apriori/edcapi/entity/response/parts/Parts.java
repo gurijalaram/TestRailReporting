@@ -2,10 +2,12 @@ package com.apriori.edcapi.entity.response.parts;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.Data;
 
 @Schema(location = "Parts.json")
 @Data
+@JsonRootName("response")
 public class Parts {
     private Boolean isSaved;
     private Boolean isActionRequired;
