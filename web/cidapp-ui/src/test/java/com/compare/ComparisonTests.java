@@ -531,7 +531,6 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @Ignore("ProcessingState")
     @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5799"})
     @Description("Delete private scenarios that are included in the comparison")
