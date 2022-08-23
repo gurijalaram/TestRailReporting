@@ -35,7 +35,6 @@ import com.utils.EvaluateDfmIconEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.IgnoreTests;
@@ -573,7 +572,6 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @Ignore("ProcessingState")
     @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"5798"})
     @Description("Delete public scenarios that are included in the comparison")
