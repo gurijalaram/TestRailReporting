@@ -296,9 +296,7 @@ public class SettingsTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6289"})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
@@ -306,14 +304,13 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .inputBatchSize("0");
+            .inputBatchSize("0")
+            .submit();
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be greater than 0.")));
     }
 
     @Ignore("feature has not yet been added for 21.1")
