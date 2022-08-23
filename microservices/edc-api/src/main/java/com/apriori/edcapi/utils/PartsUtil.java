@@ -42,16 +42,40 @@ public class PartsUtil extends TestUtil {
      * @return parts response object
      */
     public ResponseWrapper<Parts> postNewPartToLineItem(String bomIdentity, String lineItemIdentity) {
-        PartsRequest partsInfoInput = JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile(
-                "CreatePartData.json"
-            ).getPath(), PartsRequest.class);
-
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
                 .inlineVariables(bomIdentity, lineItemIdentity)
-                .body(partsInfoInput);
+                .body(partsInfoBody());
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Patch update a part
+     *
+     * @param bomIdentity      - the bom identity
+     * @param lineItemIdentity - the line item identity
+     * @param partIdentity     - the part identity
+     * @return parts response object
+     */
+    public ResponseWrapper<Parts> patchUpdatePart(String bomIdentity, String lineItemIdentity, String partIdentity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.PATCH_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
+                .inlineVariables(bomIdentity, lineItemIdentity, partIdentity)
+                .body(partsInfoBody());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * This method has a json file to input info for the parts body
+     *
+     * @return response object
+     */
+    private PartsRequest partsInfoBody() {
+        return JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "CreatePartData.json"
+            ).getPath(), PartsRequest.class);
     }
 }
