@@ -266,7 +266,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6279"})
+    @TestRail(testCaseId = {"6279", "6692", "6696"})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
         currentUser = UserUtil.getUser();
