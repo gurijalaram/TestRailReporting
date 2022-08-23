@@ -77,4 +77,28 @@ public class PartsTest extends PartsUtil {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = "9420")
+    @Description("PATCH Update a part")
+    public void testUpdatePart() {
+        LineItemsUtil lineItems = new LineItemsUtil();
+
+        List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
+
+        String lineItemIdentity = allLineItems.get(0).getIdentity();
+
+        ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
+
+        String partIdentity = partsRequest.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Parts> partsResponseWrapper = patchUpdatePart(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partsResponseWrapper.getStatusCode());
+
+        softAssertions.assertThat(partsResponseWrapper.getResponseEntity().getIdentity()).isEqualTo(partIdentity);
+        softAssertions.assertThat(partsResponseWrapper.getResponseEntity().getPinCount()).isEqualTo(5456);
+        softAssertions.assertThat(partsResponseWrapper.getResponseEntity().getAverageCost()).isEqualTo(3.654);
+
+        softAssertions.assertAll();
+    }
 }
