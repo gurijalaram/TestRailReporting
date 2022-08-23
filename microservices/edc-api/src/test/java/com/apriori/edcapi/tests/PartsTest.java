@@ -30,7 +30,7 @@ public class PartsTest extends PartsUtil {
     private static String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
     private SoftAssertions softAssertions = new SoftAssertions();
-    LineItemsUtil lineItems = new LineItemsUtil();
+    private LineItemsUtil lineItems = new LineItemsUtil();
 
     @BeforeClass
     public static void setUp() {
