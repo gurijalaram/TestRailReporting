@@ -461,4 +461,87 @@ public class GroupPublishTests {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"11858"})
+    @Description("Publish multiple private sub-components with public counterparts Setting Override to false and supplying a scenario name")
+    public void testGroupPublishPrivateSubcomponentsFalseOverrideNewScenario() {
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        final String STAND = "stand";
+        final String DRIVE = "drive";
+        final String JOINT = "joint";
+        final String assemblyName = "oldham";
+        final String assemblyExtension = ".asm.1";
+
+        final List<String> subComponentNames = Arrays.asList(STAND, DRIVE, JOINT);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".prt.1";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        User user = new PeopleUtil().getCurrentUser(currentUser);
+
+        PublishRequest publishRequest = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial")
+            .override(false)
+            .status("New")
+            .build();
+
+        GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+
+        ForkRequest forkRequest = ForkRequest.builder()
+            .override(true)
+            .build();
+
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+
+        PublishRequest publishRequest2 = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial")
+            .override(false)
+            .status("New")
+            .scenarioName(scenarioName2)
+            .build();
+
+        GroupPublishRequest groupPublishRequest2 = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest2)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName, DRIVE + "," + scenarioName, JOINT + "," + scenarioName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        subComponentNames.forEach(subComponent -> cssComponent.getCssComponentQueryParams(subComponent, scenarioName, currentUser, "iteration, 1", "latest, true")
+            .getResponseEntity()
+            .getItems()
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+
+        subComponentNames.forEach(subComponent -> cssComponent.getCssComponentQueryParams(subComponent, scenarioName2, currentUser, "iteration, 1", "latest, true")
+            .getResponseEntity()
+            .getItems()
+            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+
+        softAssertions.assertAll();
+    }
 }
