@@ -612,7 +612,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10896", "10898"})
+    @TestRail(testCaseId = {"10896", "10898", "5619"})
     @Description("Edit public sub-component with Private counterpart (Override)")
     public void testEditPublicAndRenamePrivateSubcomponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -893,7 +893,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12040", "11954", "6521"})
+    @TestRail(testCaseId = {"12040", "11954", "6521", "10874"})
     @Description("Validate I can switch between public sub components when private iteration is deleted")
     public void testSwitchingPublicSubcomponentsWithDeletedPrivateIteration() {
         String assemblyName = "flange c";
