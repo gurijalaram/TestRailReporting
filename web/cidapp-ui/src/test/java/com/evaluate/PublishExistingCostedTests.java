@@ -103,7 +103,6 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Category(IgnoreTests.class)
-    @Ignore("Processing state")
     @TestRail(testCaseId = {"6210", "5435"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
