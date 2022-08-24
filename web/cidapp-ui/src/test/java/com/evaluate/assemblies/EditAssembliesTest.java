@@ -256,7 +256,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10804"})
+    @TestRail(testCaseId = {"10804", "6733"})
     @Description("Shallow Edit keeps original assembly intact on Public Workspace")
     public void testShallowEditCheckDuplicate() {
         final String assemblyName = "Hinge assembly";
