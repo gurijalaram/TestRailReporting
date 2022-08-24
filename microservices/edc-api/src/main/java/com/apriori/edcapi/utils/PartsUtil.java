@@ -83,6 +83,15 @@ public class PartsUtil extends TestUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    public ResponseWrapper<Parts> postCostParts(String bomIdentity, String lineItemIdentity, String partIdentity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST, null)
+                .inlineVariables(bomIdentity, lineItemIdentity)
+                .body(partIdentity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
     /**
      * This method has a json file to input info for the parts body
      *

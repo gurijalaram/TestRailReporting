@@ -112,4 +112,20 @@ public class PartsTest extends PartsUtil {
         ResponseWrapper<Parts> partsResponseWrapper = postSelectPartForExport(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, partsResponseWrapper.getStatusCode());
     }
+
+    @Test
+    @TestRail(testCaseId = "9422")
+    @Description("POST Cost one or more parts in a line item.")
+    public void testCostPartInLineItem() {
+        List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
+
+        String lineItemIdentity = allLineItems.get(0).getIdentity();
+
+        ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
+
+        String partIdentity = partsRequest.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Parts> partsResponseWrapper = postCostParts(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partsResponseWrapper.getStatusCode());
+    }
 }
