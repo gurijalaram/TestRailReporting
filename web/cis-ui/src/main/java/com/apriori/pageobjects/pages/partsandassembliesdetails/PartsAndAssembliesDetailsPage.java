@@ -269,6 +269,15 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[contains(@id,'design-guidance-row-proximityWarning')]")
     private WebElement proximityLbl;
 
+    @FindBy(xpath = "//div[@data-testid='Threads']//button//*[local-name()='svg']")
+    private WebElement threadsCollapsibleIcon;
+
+    @FindBy(xpath = "//div[@data-testid='Threads']")
+    private WebElement threadsPanel;
+
+    @FindBy(xpath = "//div[contains(@id,'design-guidance-threadableGcds-SimpleHole')]")
+    private WebElement simpleHolesItem;
+
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1366,5 +1375,61 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isTotalCapitalInvestmentCostGraphDisplayed() {
         return getPageUtils().waitForElementAppear(costGraphTotalCapitalInvestment).isDisplayed();
+    }
+
+    /**
+     * clicks on design guidance- threads collapsible icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickThreadsCollapsibleIcon() {
+        getPageUtils().waitForElementAndClick(threadsCollapsibleIcon);
+        return this;
+    }
+
+    /**
+     * get threads section collapsible status
+     *
+     * @return String
+     */
+    public String getThreadsCollapsibleState() {
+        return getPageUtils().waitForElementToAppear(threadsCollapsibleIcon).getAttribute("data-icon");
+    }
+
+    /**
+     * Checks if threads panel displayed
+     *
+     * @return true/false
+     */
+    public boolean isThreadsPanelDisplayed() {
+        return getPageUtils().waitForElementAppear(threadsPanel).isDisplayed();
+    }
+
+    /**
+     * Gets threads items details
+     *
+     * @return list of string
+     */
+    public  List<String> getThreadsItems() {
+        return partsAndAssemblyDetailsController.getThreadsDetails();
+    }
+
+    /**
+     * clicks on simple holes count
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnSimpleHolesItem() {
+        getPageUtils().waitForElementAndClick(simpleHolesItem);
+        return this;
+    }
+
+    /**
+     * Gets the threads counts details
+     *
+     * @return string
+     */
+    public String getThreadsCount(String threadsCount) {
+        return driver.findElement(By.xpath("//div[@data-testid='Threads']//div[text()='" + threadsCount + "']//..//div[contains(@data-testid,'value')]")).getAttribute("textContent");
     }
 }
