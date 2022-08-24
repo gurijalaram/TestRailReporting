@@ -1,9 +1,13 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.request.GroupPublishRequest;
 import com.apriori.cidappapi.entity.request.PublishRequest;
+import com.apriori.cidappapi.entity.response.ScenarioSuccessesFailures;
 import com.apriori.cidappapi.entity.response.User;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.PeopleUtil;
@@ -12,6 +16,7 @@ import com.apriori.utils.CssComponent;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -543,5 +548,91 @@ public class GroupPublishTests {
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11859"})
+    @Description("Attempt to use pre-existing scenario name for public component when publishing with create new option")
+    public void testGroupPublishPrivateSubAttemptExistingScenarioName() {
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        final String STAND = "stand";
+        final String assemblyName = "oldham";
+        final String assemblyExtension = ".asm.1";
+
+        final List<String> subComponentNames = Arrays.asList(STAND);
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentExtension = ".prt.1";
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        User user = new PeopleUtil().getCurrentUser(currentUser);
+
+        PublishRequest publishRequest = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial")
+            .override(false)
+            .status("New")
+            .build();
+
+        GroupPublishRequest groupPublishRequest = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest, STAND + "," + scenarioName);
+
+        ForkRequest forkRequest = ForkRequest.builder()
+            .override(true)
+            .build();
+
+        scenariosUtil.postEditPublicGroupScenarios(componentAssembly, forkRequest, STAND + "," + scenarioName);
+
+        PublishRequest publishRequest2 = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial")
+            .override(false)
+            .status("New")
+            .scenarioName(scenarioName2)
+            .build();
+
+        GroupPublishRequest groupPublishRequest2 = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest2)
+            .workspaceId(user.getCustomAttributes().getWorkspaceId())
+            .build();
+
+        scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, STAND + "," + scenarioName);
+
+        PublishRequest publishRequest3 = PublishRequest.builder()
+            .assignedTo(user.getIdentity())
+            .costMaturity("Initial")
+            .override(false)
+            .status("New")
+            .scenarioName(scenarioName)
+            .build();
+
+        GroupPublishRequest groupPublishRequest3 = GroupPublishRequest.builder()
+            .componentInfo(componentAssembly)
+            .publishRequest(publishRequest3)
+            .workspaceId(PUBLIC_WORKSPACE)
+            .build();
+
+        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure = scenariosUtil.postPublishGroupScenarios(groupPublishRequest3, STAND + "," + scenarioName);
+
+        publishSuccessFailure.getResponseEntity()
+            .getFailures().forEach(o -> assertThat(o.getError(), equalTo("Scenario '" + scenarioName + "' has been published, scenario can not be published")));
     }
 }
