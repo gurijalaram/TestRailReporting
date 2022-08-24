@@ -35,10 +35,8 @@ import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -730,49 +728,6 @@ public class ActionsTests extends TestBase {
             .info();
 
         assertThat(infoPage.getDescription(), is(""));
-    }
-
-    @Ignore("Not sure if this is allowed or not yet")
-    @Test
-    @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"6727"})
-    @Description("Ensure scripts cannot be entered into text input fields")
-    public void cannotUseScript() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
-
-        String componentName = "Push Pin";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .selectMaterial("ABS")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .clickExplore()
-            .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .highlightScenario(componentName, scenarioName)
-            .clickActions()
-            .info()
-            .selectStatus("New")
-            .inputCostMaturity("Low")
-            .inputDescription("<script src=http://www.example.com/malicious-code.js></script>")
-            .inputNotes("<script>alert(document.cookie)</script>")
-            .submit(ExplorePage.class);
-
-        // TODO: 07/05/2021 remove comment
-        //assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
     }
 
     @Test
