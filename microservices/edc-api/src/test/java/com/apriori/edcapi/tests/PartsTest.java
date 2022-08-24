@@ -30,6 +30,7 @@ public class PartsTest extends PartsUtil {
     private static String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private LineItemsUtil lineItems = new LineItemsUtil();
 
     @BeforeClass
     public static void setUp() {
@@ -48,8 +49,6 @@ public class PartsTest extends PartsUtil {
     @TestRail(testCaseId = "9417")
     @Description("GET List the line items in a bill of materials matching a specified query.")
     public void testListPartsInLineItem() {
-        LineItemsUtil lineItems = new LineItemsUtil();
-
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
 
         String lineItemIdentity = allLineItems.get(0).getIdentity();
@@ -62,8 +61,6 @@ public class PartsTest extends PartsUtil {
     @TestRail(testCaseId = "9419")
     @Description("POST Add a new part to a line item.")
     public void testAddNewPartTOLineItem() {
-        LineItemsUtil lineItems = new LineItemsUtil();
-
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
 
         String lineItemIdentity = allLineItems.get(0).getIdentity();
@@ -82,8 +79,6 @@ public class PartsTest extends PartsUtil {
     @TestRail(testCaseId = "9420")
     @Description("PATCH Update a part")
     public void testUpdatePart() {
-        LineItemsUtil lineItems = new LineItemsUtil();
-
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
 
         String lineItemIdentity = allLineItems.get(0).getIdentity();
@@ -100,5 +95,21 @@ public class PartsTest extends PartsUtil {
         softAssertions.assertThat(partsResponseWrapper.getResponseEntity().getAverageCost()).isEqualTo(3.654);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "9421")
+    @Description("POST Select a part for export")
+    public void testSelectPartForExport() {
+        List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
+
+        String lineItemIdentity = allLineItems.get(0).getIdentity();
+
+        ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
+
+        String partIdentity = partsRequest.getResponseEntity().getIdentity();
+
+        ResponseWrapper<Parts> partsResponseWrapper = postSelectPartForExport(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, partsResponseWrapper.getStatusCode());
     }
 }

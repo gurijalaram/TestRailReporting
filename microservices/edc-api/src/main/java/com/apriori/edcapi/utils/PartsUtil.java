@@ -68,6 +68,22 @@ public class PartsUtil extends TestUtil {
     }
 
     /**
+     * Select a part for export
+     *
+     * @param bomIdentity      - the bom identity
+     * @param lineItemIdentity - the line item identity
+     * @param partIdentity     - the part identity
+     * @return parts response object
+     */
+    public ResponseWrapper<Parts> postSelectPartForExport(String bomIdentity, String lineItemIdentity, String partIdentity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT, null)
+                .inlineVariables(bomIdentity, lineItemIdentity, partIdentity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * This method has a json file to input info for the parts body
      *
      * @return response object

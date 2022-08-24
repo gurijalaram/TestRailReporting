@@ -3,6 +3,7 @@ package com.settings;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -30,10 +31,8 @@ import com.utils.ColourEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -267,7 +266,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6279"})
+    @TestRail(testCaseId = {"6279", "6692", "6696"})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
         currentUser = UserUtil.getUser();
@@ -296,9 +295,7 @@ public class SettingsTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6289"})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
@@ -306,19 +303,16 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .inputBatchSize("0");
+            .inputBatchSize("0")
+            .submit();
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be greater than 0.")));
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"3605"})
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
@@ -326,19 +320,15 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize("JUNK");
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getBatchSize(), is(emptyString()));
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
@@ -346,14 +336,12 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize("0.12.00");
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
     }
 
     @Test
