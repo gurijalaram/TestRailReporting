@@ -725,6 +725,48 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"14033","14034","14035","14036","14037","14038","14039"})
+    @Description("Verify design guidance threads section details")
+    public void testDesignGuidanceThreadsDetails() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickDesignGuidance()
+                .clickThreadsCollapsibleIcon();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getThreadsCollapsibleState()).isEqualTo("caret-down");
+
+        partsAndAssembliesDetailsPage.clickThreadsCollapsibleIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getThreadsCollapsibleState()).isEqualTo("caret-up");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isDesignGuidanceCardDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isThreadsPanelDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getThreadsItems()).contains(CisDesignGuidanceDetailsEnum.SIMPLE_HOLES.getDesignGuidanceDetailsName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getThreadsCount("Simple Holes")).isNotEmpty();
+
+        partsAndAssembliesDetailsPage.clickOnSimpleHolesItem();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isGCDTableDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.geCheckBoxStatus()).contains("Mui-checked");
+
+        softAssertions.assertAll();
+    }
 }
 
 
