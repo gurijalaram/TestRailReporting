@@ -767,6 +767,7 @@ public class ActionsTests extends TestBase {
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
+            // TODO: 23/08/2022 cn - seems to have no effect
             .inputDescription("<script src=http://www.example.com/malicious-code.js></script>")
             .inputNotes("<script>alert(document.cookie)</script>")
             .submit(ExplorePage.class);

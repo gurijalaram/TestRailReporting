@@ -36,7 +36,7 @@ public class HelpTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"263"})
+    @TestRail(testCaseId = {"263", "6370", "6691", "6693"})
     @Description("Be able to access help information in the application header")
     public void onlineHelpTest() {
         loginPage = new CidAppLoginPage(driver);
@@ -50,7 +50,7 @@ public class HelpTests extends TestBase {
     @Test
     @Ignore("Currently no help button for inputs")
     @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"264"})
+    @TestRail(testCaseId = {"264","6371"})
     @Description("Have links to a detailed help page in relevant areas of the UI")
     public void moreInputsHelp() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;

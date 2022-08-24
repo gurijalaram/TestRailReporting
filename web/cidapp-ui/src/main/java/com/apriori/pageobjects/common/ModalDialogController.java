@@ -85,6 +85,16 @@ public class ModalDialogController {
     }
 
     /**
+     * Selects the submit button
+     *
+     * @return current page object
+     */
+    public ModalDialogController submit(WebElement button) {
+        pageUtils.waitForElementAndClick(button);
+        return this;
+    }
+
+    /**
      * Select the cancel button
      *
      * @return generic page object
