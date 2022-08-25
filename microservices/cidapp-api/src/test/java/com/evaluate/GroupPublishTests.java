@@ -789,7 +789,7 @@ public class GroupPublishTests {
             .user(componentAssembly.getUser())
             .build();
 
-        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure2= scenariosUtil.postSimplePublishGroupScenarios(publishRequest3);
+        ResponseWrapper<ScenarioSuccessesFailures> publishSuccessFailure2 = scenariosUtil.postSimplePublishGroupScenarios(publishRequest3);
 
         publishSuccessFailure2.getResponseEntity()
             .getFailures().forEach(o -> softAssertions.assertThat(o.getError()).isEqualTo("Resource 'Scenario' with identity '" + UNKNOWN_SCENARIO_ID + "' was not found"));
