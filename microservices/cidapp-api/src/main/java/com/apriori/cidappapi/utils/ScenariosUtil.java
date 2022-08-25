@@ -554,7 +554,7 @@ public class ScenariosUtil {
     }
 
     /**
-     * Post to edit group of scenarios
+     * Post to publish group of scenarios
      *
      * @param groupPublishRequest   - the group publish request object
      * @param componentScenarioName - component and scenario name
@@ -600,6 +600,36 @@ public class ScenariosUtil {
                         .build())
                     .build())
                 .token(groupPublishRequest.getComponentInfo().getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post to publish group scenarios
+     *
+     * @param publishRequest - the group publish request object
+     * @return response object
+     */
+    public ResponseWrapper<ScenarioSuccessesFailures> postSimplePublishGroupScenarios(PublishRequest publishRequest) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+                .body(PublishRequest.builder()
+                    .groupItems(publishRequest.getGroupItems()
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .options(Options.builder()
+                        .scenarioName(publishRequest.getScenarioName())
+                        .override(publishRequest.getOverride())
+                        .costMaturity(publishRequest.getCostMaturity().toUpperCase())
+                        .status(publishRequest.getStatus().toUpperCase())
+                        .build())
+                    .build())
+                .token(publishRequest.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
     }
