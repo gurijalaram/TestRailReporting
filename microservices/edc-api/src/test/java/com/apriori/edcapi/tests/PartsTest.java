@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
 
+import com.apriori.edcapi.entity.response.line.items.LineItemParts;
 import com.apriori.edcapi.entity.response.line.items.LineItemsResponse;
 import com.apriori.edcapi.entity.response.parts.Parts;
 import com.apriori.edcapi.entity.response.parts.PartsResponse;
@@ -23,7 +24,9 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class PartsTest extends PartsUtil {
 
@@ -119,13 +122,13 @@ public class PartsTest extends PartsUtil {
     public void testCostPartInLineItem() {
         List<LineItemsResponse> allLineItems = lineItems.getAllLineItems(billOfMaterialsIdentity);
 
-        String lineItemIdentity = allLineItems.get(0).getIdentity();
+        String lineItemIdentity = allLineItems.get(4).getIdentity();
 
-        ResponseWrapper<Parts> partsRequest = postNewPartToLineItem(billOfMaterialsIdentity, lineItemIdentity);
+        List<LineItemParts> itemPartsList = Arrays.stream(allLineItems.get(4).getParts().toArray(new LineItemParts[0])).collect(Collectors.toList());
 
-        String partIdentity = partsRequest.getResponseEntity().getIdentity();
+        List<Object> identityList = Arrays.stream(itemPartsList.stream().map(LineItemParts::getIdentity).toArray()).collect(Collectors.toList());
 
-        ResponseWrapper<Parts> partsResponseWrapper = postCostParts(billOfMaterialsIdentity, lineItemIdentity, partIdentity);
+        ResponseWrapper<Parts> partsResponseWrapper = postSelectPartsToCost(billOfMaterialsIdentity, lineItemIdentity, identityList);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partsResponseWrapper.getStatusCode());
     }
 }
