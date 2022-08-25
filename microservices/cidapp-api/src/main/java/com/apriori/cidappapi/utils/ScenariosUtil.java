@@ -797,6 +797,6 @@ public class ScenariosUtil {
     public boolean isSubcomponentExcluded(ComponentInfoBuilder componentInfo, String componentName, String scenarioName) {
         return getScenarioManifest(componentInfo).getResponseEntity().getSubcomponents().stream()
             .filter(x -> x.getComponentName().equalsIgnoreCase(componentName) && x.getScenarioName().equalsIgnoreCase(scenarioName))
-            .map(ScenarioManifestSubcomponents::getExcluded).findFirst().isPresent();
+            .map(ScenarioManifestSubcomponents::getExcluded).findFirst().get();
     }
 }
