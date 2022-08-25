@@ -24,7 +24,7 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -124,9 +124,9 @@ public class PartsTest extends PartsUtil {
 
         String lineItemIdentity = allLineItems.get(4).getIdentity();
 
-        List<LineItemParts> itemPartsList = Arrays.stream(allLineItems.get(4).getParts().toArray(new LineItemParts[0])).collect(Collectors.toList());
+        List<LineItemParts> itemPartsList = new ArrayList<>(allLineItems.get(4).getParts());
 
-        List<Object> identityList = Arrays.stream(itemPartsList.stream().map(LineItemParts::getIdentity).toArray()).collect(Collectors.toList());
+        List<String> identityList = itemPartsList.stream().map(LineItemParts::getIdentity).collect(Collectors.toList());
 
         ResponseWrapper<Parts> partsResponseWrapper = postSelectPartsToCost(billOfMaterialsIdentity, lineItemIdentity, identityList);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, partsResponseWrapper.getStatusCode());
