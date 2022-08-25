@@ -604,6 +604,30 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    public ResponseWrapper<ScenarioSuccessesFailures> postSimplePublishGroupScenarios(PublishRequest publishRequest) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.PUBLISH_SCENARIOS, ScenarioSuccessesFailures.class)
+                .body(PublishRequest.builder()
+                    .groupItems(publishRequest.getGroupItems()
+                        .stream()
+                        .map(component -> GroupItems.builder()
+                            .componentIdentity(component.getComponentIdentity())
+                            .scenarioIdentity(component.getScenarioIdentity())
+                            .build())
+                        .collect(Collectors.toList()))
+                    .options(Options.builder()
+                        .scenarioName(publishRequest.getScenarioName())
+                        .override(publishRequest.getOverride())
+                        .costMaturity(publishRequest.getCostMaturity().toUpperCase())
+                        .status(publishRequest.getStatus().toUpperCase())
+                        .build())
+                    .build())
+                .token(publishRequest.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
     /**
      * Upload and Publish a subcomponent/assembly
      *
