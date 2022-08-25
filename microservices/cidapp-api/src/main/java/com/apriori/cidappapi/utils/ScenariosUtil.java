@@ -554,7 +554,7 @@ public class ScenariosUtil {
     }
 
     /**
-     * Post to edit group of scenarios
+     * Post to publish group of scenarios
      *
      * @param groupPublishRequest   - the group publish request object
      * @param componentScenarioName - component and scenario name
@@ -604,6 +604,12 @@ public class ScenariosUtil {
         return HTTPRequest.build(requestEntity).post();
     }
 
+    /**
+     * Post to publish group scenarios
+     *
+     * @param publishRequest - the group publish request object
+     * @return response object
+     */
     public ResponseWrapper<ScenarioSuccessesFailures> postSimplePublishGroupScenarios(PublishRequest publishRequest) {
 
         final RequestEntity requestEntity =
