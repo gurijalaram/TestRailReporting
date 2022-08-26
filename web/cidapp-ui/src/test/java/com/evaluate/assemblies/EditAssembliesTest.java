@@ -198,7 +198,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10802", "10803", "10835"})
+    @TestRail(testCaseId = {"10802", "10803", "10835", "6613"})
     @Description("Modify the Status/Cost Maturity/Lock after a Shallow Edit and ensure subcomponents are associated")
     public void testShallowEditModifyStatusCheckAssociationSmallSetSubcomponents() {
         final String assemblyName = "Hinge assembly";
@@ -256,7 +256,7 @@ public class EditAssembliesTest extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"10804", "6733"})
+    @TestRail(testCaseId = {"10804", "6733", "6594"})
     @Description("Shallow Edit keeps original assembly intact on Public Workspace")
     public void testShallowEditCheckDuplicate() {
         final String assemblyName = "Hinge assembly";
@@ -299,7 +299,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10806", "10807", "10809"})
+    @TestRail(testCaseId = {"10806", "10807", "10809", "6614"})
     @Description("Shallow Edited assemblies and scenarios can be published into Public Workspace and can also add notes and lock/unlock scenario")
     public void testShallowEditPublishPublicWorkspaceLockNotes() {
         final String assemblyName = "Hinge assembly";
@@ -508,7 +508,7 @@ public class EditAssembliesTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10814"})
+    @TestRail(testCaseId = {"10814", "6596"})
     @Description("Shallow Edit over existing Private scenarios with override")
     public void testShallowEditPrivateOverride() {
         final String assemblyName = "Hinge assembly";
