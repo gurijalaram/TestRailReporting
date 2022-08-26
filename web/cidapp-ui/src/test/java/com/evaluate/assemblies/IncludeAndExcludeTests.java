@@ -115,7 +115,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11874", "11843", "11842", "11155"})
+    @TestRail(testCaseId = {"11874", "11843", "11842", "11155", "11148"})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
         String assemblyName = "Hinge assembly";
