@@ -1,12 +1,12 @@
 package com.apriori.cnh.tests;
 
-import java.util.Arrays;
-
 import com.apriori.cnh.entity.apicalls.CnhService;
 import com.apriori.cnh.entity.request.ExecuteRequest;
-import com.apriori.cnh.entity.request.Params;
+import com.apriori.cnh.entity.response.ExecuteResponse;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 import io.qameta.allure.Description;
 import org.junit.Test;
 
@@ -16,23 +16,13 @@ public class CnhPositiveTests {
     @TestRail(testCaseId = {"14057"})
     @Description("Verify report-1")
     public void shouldExecuteReport1Test() {
-
-        ExecuteRequest executeRequest = ExecuteRequest
-            .builder()
-            .params(Arrays.asList(Params.builder()
-                    .name("time")
-                    .value("2022-08-01T00:00:00Z")
-                    .type("timestamp")
-                .build()))
-            .build();
+        ExecuteRequest executeRequest = JsonManager.deserializeJsonFromFile(
+            FileResourceUtil.getResourceAsFile(
+                "ExecuteRequest.json"
+            ).getPath(), ExecuteRequest.class);
 
         CnhService cnhService = new CnhService();
-        //ResponseWrapper<ExecuteResponse> responseWrapper = cnhService.execute(executeRequest);
-         cnhService.execute(executeRequest);
-
-        System.out.println("ff");
+        ResponseWrapper<ExecuteResponse> responseActual = cnhService.execute(executeRequest);
 
     }
-
-
 }

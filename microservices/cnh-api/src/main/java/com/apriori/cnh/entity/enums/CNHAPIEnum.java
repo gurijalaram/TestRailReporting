@@ -20,25 +20,10 @@ public enum CNHAPIEnum implements ExternalEndpointEnum {
         return endpoint;
     }
 
-//    @Override
-//    public String getEndpoint(Object... variables) {
-//        return PropertiesContext.get("${env}.vds.api_url") + String.format(getEndpointString(), variables) + this.addQuery(getEndpointString());
-//    }
 
     @Override
     public String getEndpoint(Object... variables) {
         return PropertiesContext.get("${env}.cnh.api_url") + String.format(getEndpointString(), variables);
-    }
-
-    private String addQuery(String endpointString) {
-        String querySymbol = "?";
-
-        if (endpointString.contains("?")) {
-            querySymbol = "&";
-        }
-
-        return querySymbol + "key=" + PropertiesContext.get("${env}.secret_key");
-
     }
 
 }

@@ -1,12 +1,12 @@
 package com.apriori.cnh.entity.request;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.List;
 
-import lombok.Builder;
-import lombok.Data;
-
-@Data
-@Builder
+@Getter
+@Setter
 public class ExecuteRequest {
     private List<Params> params;
 }

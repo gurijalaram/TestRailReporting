@@ -2,11 +2,13 @@ package com.apriori.cnh.entity.request;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Builder
+@Getter
+@Setter
 public class Params {
-    String name;
-    String value;
-    String type;
+    private String name;
+    private String value;
+    private String type;
 }
