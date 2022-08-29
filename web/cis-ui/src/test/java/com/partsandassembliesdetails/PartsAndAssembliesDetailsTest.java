@@ -44,10 +44,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"12396","12458","12460","12461","12254","12459"})
     @Description("Verify 3D viewer and column cards on parts and assemblies details page")
     public void testPartsAndAssembliesDetailPageHeaderTitle() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -75,10 +80,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13067","13068","13069","13070","13071","13072"})
     @Description("Verify Scenario Results Default Cards on parts and assemblies details page")
     public void testScenarioResultsDefaultCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -132,10 +142,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"12910","12914"})
     @Description("Verify insights section and details for a costed scenario")
     public void testInsightsSection() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -160,10 +175,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"12912","12913","12915","12916","13179"})
     @Description("Verify part nesting section on Insights")
     public void testPartNestingSection() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -192,10 +212,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13043","13044","13045","13046"})
     @Description("Verify material properties section on Insights")
     public void testMaterialPropertiesSection() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -223,10 +248,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13047","13048","13049","13050"})
     @Description("Verify material stock section on Insights")
     public void testMaterialStockSection() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -254,10 +284,15 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"13180", "13182","13197"})
     @Description("Verify insights for a non-costed scenario")
     public void testInsightsSectionForUnCostedScenario() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "bluesky-latch-cover";
-        String scenarioName = "bluesky-latch-AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadComponent(componentName,scenarioName,resourceFile,currentUser)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -278,11 +313,16 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"12485","12486","12487","12489","12490","12491","12492","12495"})
     @Description("Verify the creation of new scenario results cards")
     public void testCreateNewScenarioResultsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
-        String scenarioName = "ChampferOut_AutomationDetails";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         String cardName = "Process Cost Card";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -325,11 +365,17 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"12499","12500","12502","12503","12507","12509","12510","13088","13089","13090"})
     @Description("Verify scenario results cards can be edited")
     public void testEditScenarioResultsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         String cardName = "Process Cost Card";
         String editedCardName = "Process Analysis Card";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
@@ -373,10 +419,16 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     @TestRail(testCaseId = {"12523","12524","12525","12527"})
     @Description("Verify scenario results cards can be removed")
     public void testRemoveScenarioResultsCards() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
         String cardName = "Process Cost Card";
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
                 .clickOnSearchField()
