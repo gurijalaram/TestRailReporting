@@ -236,4 +236,20 @@ public class LeftHandNavigationBar extends CisHeaderBar {
         getPageUtils().waitForElementAndClick(btnMessage);
         return new MessagesPage(getDriver());
     }
+
+    /**
+     * Upload a component via API
+     *
+     * @return current page object
+     */
+    public LeftHandNavigationBar uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
+        componentsUtil.postComponentQueryCSS(ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(userCredentials)
+                .build());
+
+        return this;
+    }
 }

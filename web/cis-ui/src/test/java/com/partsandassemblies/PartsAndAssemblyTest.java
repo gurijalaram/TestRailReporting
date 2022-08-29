@@ -9,7 +9,12 @@ import static org.hamcrest.Matchers.not;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
+import com.apriori.utils.FileResourceUtil;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
@@ -19,6 +24,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
+import java.io.File;
 
 
 public class PartsAndAssemblyTest extends TestBase {
@@ -31,6 +37,8 @@ public class PartsAndAssemblyTest extends TestBase {
     private LeftHandNavigationBar leftHandNavigationBar;
     private PartsAndAssembliesPage partsAndAssembliesPage;
     private SoftAssertions softAssertions;
+    private File resourceFile;
+    UserCredentials currentUser;
 
     @Test
     @TestRail(testCaseId = {"12058","12056","12057","12055"})
@@ -162,10 +170,15 @@ public class PartsAndAssemblyTest extends TestBase {
     @TestRail(testCaseId = {"12110","12111","12112","12113","12115"})
     @Description("Verify that Parts and Assemblies can search by Component Name")
     public void testSearchByComponentName() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "Y_shape";
-        String scenarioName = "YShape_AutomationSearch";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies();
 
         assertThat(partsAndAssembliesPage.isSearchOptionDisplayed(), is(true));
@@ -220,10 +233,15 @@ public class PartsAndAssemblyTest extends TestBase {
     @TestRail(testCaseId = {"12221","12224","12226","12227","12233","13200","12230"})
     @Description("Verify that user can filter results in parts and assemblies page")
     public void testFilterAComponent() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "Y_shape";
-        String scenarioName = "YShape_AutomationSearch";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickFilter();
 
@@ -274,10 +292,15 @@ public class PartsAndAssemblyTest extends TestBase {
     @TestRail(testCaseId = {"12465", "12467","12469","12472","12476","12468","12470","12191"})
     @Description("Verify that user can Save the parts and assemblies page configuration")
     public void testSaveConfigurations() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "Y_shape";
-        String scenarioName = "YShape_AutomationSearch";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        currentUser = UserUtil.getUser();
+
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownDigitalFactoryField()
                 .pinToLeftProcessGroupColumn()
