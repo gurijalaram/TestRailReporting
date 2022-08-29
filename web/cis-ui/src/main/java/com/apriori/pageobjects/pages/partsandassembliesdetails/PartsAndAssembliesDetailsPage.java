@@ -152,13 +152,13 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "chip-properties-analysisOfScenario.annualCost")
     private WebElement newSelectedFieldName;
 
-    @FindBy(xpath = "//div[@data-testid='model-paper-comp-id']")
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-id']")
     private WebElement deleteConfirmationModal;
 
     @FindBy(xpath = "//div[@data-testid='title-content-id']")
     private WebElement deleteConfirmationModalTitle;
 
-    @FindBy(xpath = "//p[@data-testid='model-content-id']")
+    @FindBy(xpath = "//p[@data-testid='modal-content-id']")
     private WebElement deleteConfirmationModalContent;
 
     @FindBy(xpath = "//div[@data-testid='Process Routing']")
