@@ -15,6 +15,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -25,6 +26,13 @@ public class IncludeAndExcludeTests {
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
+
+    private static UserCredentials currentUser;
+
+    @Before
+    public void setupUser() {
+        currentUser = UserUtil.getUser();
+    }
 
     @Test
     @TestRail(testCaseId = {"11925"})
@@ -41,8 +49,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -89,8 +96,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -143,8 +149,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -203,8 +208,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -249,8 +253,7 @@ public class IncludeAndExcludeTests {
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
 
-        UserCredentials currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
             assemblyExtension,
@@ -292,6 +295,56 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11932"})
+    @Description("Error returned on invalid Scenario Association Identity")
+    public void testIncorrectAssociationId() {
+        final String assemblyName = "Assembly01";
+        final String assemblyExtension = ".iam";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String PART_0001 = "Part0001";
+        final List<String> subComponentNames = Arrays.asList(PART_0001);
+        final String subComponentExtension = ".ipt";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
+        final String INCORRECT_SCENARIO_ASSOCIATION_ID = "INC27C000000";
+
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        ScenarioManifestSubcomponents part001Details = scenariosUtil.filterScenarioManifest(componentAssembly, PART_0001, scenarioName).get(0);
+
+        ScenarioAssociationGroupItems scenarioAssociation1 = ScenarioAssociationGroupItems.builder()
+            .scenarioAssociationIdentity(INCORRECT_SCENARIO_ASSOCIATION_ID)
+            .childScenarioIdentity(part001Details.getScenarioIdentity())
+            .occurrences(part001Details.getOccurrences())
+            .excluded(true)
+            .build();
+
+        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation1));
+
+        softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(2);
+
+        scenariosUtil.postCostScenario(componentAssembly);
+
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
 
         softAssertions.assertAll();
     }
