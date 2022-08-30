@@ -18,7 +18,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage> {
+public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
     @FindBy(css = ".modal-body div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
     private WebElement processGroupDropdown;
@@ -47,14 +47,14 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     @FindBy(css = ".modal-body input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Primary']")
-    private WebElement primaryTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
+    private WebElement basicTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Secondary']")
-    private WebElement secondaryTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
+    private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
+    private WebElement customTab;
 
     @FindBy(css = "button[data-testid='primary-button']")
     private WebElement applyAndCostBtn;
@@ -74,7 +74,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     private ModalDialogController modalDialogController;
     private String root = "modal-body";
 
-    public ComponentPrimaryPage(WebDriver driver) {
+    public ComponentBasicPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
@@ -91,7 +91,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Primary tab was not selected", primaryTab.getAttribute("class").contains("active"));
+        assertTrue("Basic tab was not selected", basicTab.getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(processGroupDropdown);
     }
 
@@ -100,9 +100,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return new page object
      */
-    public ComponentSecondaryPage goToSecondaryInputsTab() {
-        pageUtils.waitForElementAndClick(secondaryTab);
-        return new ComponentSecondaryPage(driver);
+    public ComponentAdvancedPage goToAdvancedInputsTab() {
+        pageUtils.waitForElementAndClick(advancedTab);
+        return new ComponentAdvancedPage(driver);
     }
 
     /**
@@ -110,9 +110,9 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      *
      * @return new page object
      */
-    public ComponentCustomAttributesPage goToCustomAttributesTab() {
-        pageUtils.waitForElementAndClick(customAttributesTab);
-        return new ComponentCustomAttributesPage(driver);
+    public ComponentCustomPage goToCustomTab() {
+        pageUtils.waitForElementAndClick(customTab);
+        return new ComponentCustomPage(driver);
     }
 
     /**
@@ -121,7 +121,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @param processGroup - the process group
      * @return current page object
      */
-    public ComponentPrimaryPage selectProcessGroup(ProcessGroupEnum processGroup) {
+    public ComponentBasicPage selectProcessGroup(ProcessGroupEnum processGroup) {
         inputsController.selectInputsDropdown(processGroupDropdown, root, processGroup.getProcessGroup());
         return this;
     }
@@ -141,7 +141,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @param digitalFactory - the vpe
      * @return current page object
      */
-    public ComponentPrimaryPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
+    public ComponentBasicPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
         inputsController.selectInputsDropdown(digitalFactoryDropdown, root, digitalFactory.getDigitalFactory());
         return this;
     }
@@ -189,7 +189,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @param annualVolume - the annual volume
      * @return current page object
      */
-    public ComponentPrimaryPage enterAnnualVolume(String annualVolume) {
+    public ComponentBasicPage enterAnnualVolume(String annualVolume) {
         inputsController.enterAnnualVolume(annualVolumeInput, annualVolume);
         return this;
     }
@@ -218,7 +218,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
      * @param productionLife - the years
      * @return current page object
      */
-    public ComponentPrimaryPage enterAnnualYears(String productionLife) {
+    public ComponentBasicPage enterAnnualYears(String productionLife) {
         inputsController.enterAnnualYears(productionLifeInput, productionLife);
         return this;
     }
@@ -263,7 +263,7 @@ public class ComponentPrimaryPage extends LoadableComponent<ComponentPrimaryPage
     /**
      * Click Apply and Cost
      */
-    public ComponentPrimaryPage clickApplyAndCost() {
+    public ComponentBasicPage clickApplyAndCost() {
         pageUtils.waitForElementAndClick(applyAndCostBtn);
         pageUtils.waitForElementToAppear(costingSpinner);
         pageUtils.waitForElementNotVisible(costingSpinner, 1);

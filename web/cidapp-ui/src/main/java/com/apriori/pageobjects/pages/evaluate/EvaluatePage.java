@@ -6,8 +6,8 @@ import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
@@ -141,11 +141,11 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
     private WebElement currentProcessGroup;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Secondary']")
-    private WebElement secondaryTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Advanced']")
+    private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom']")
+    private WebElement customTab;
 
     @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
     private WebElement refreshButton;
@@ -249,23 +249,23 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens secondary input tab
+     * Opens advanced input tab
      *
      * @return new page object
      */
-    public SecondaryPage goToSecondaryTab() {
-        pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryPage(driver);
+    public AdvancedPage goToAdvancedTab() {
+        pageUtils.javaScriptClick(advancedTab);
+        return new AdvancedPage(driver);
     }
 
     /**
-     * Opens custom attributes tab
+     * Opens custom tab
      *
      * @return new page object
      */
-    public CustomAttributesPage goToCustomAttributesTab() {
-        pageUtils.waitForElementAndClick(customAttributesTab);
-        return new CustomAttributesPage(driver);
+    public CustomPage goToCustomTab() {
+        pageUtils.waitForElementAndClick(customTab);
+        return new CustomPage(driver);
     }
 
     /**

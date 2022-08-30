@@ -16,7 +16,7 @@ import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.help.HelpDocPage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
@@ -219,9 +219,9 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      *
      * @return new page object
      */
-    public ComponentPrimaryPage setInputs() {
+    public ComponentBasicPage setInputs() {
         pageUtils.waitForElementAndClick(setInputsButton);
-        return new ComponentPrimaryPage(driver);
+        return new ComponentBasicPage(driver);
     }
 
     /**

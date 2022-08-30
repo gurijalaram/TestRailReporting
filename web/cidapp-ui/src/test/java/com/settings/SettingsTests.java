@@ -10,7 +10,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
@@ -46,7 +46,7 @@ public class SettingsTests extends TestBase {
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
     private ComponentInfoBuilder cidComponentItem;
-    private SecondaryPage secondaryPage;
+    private AdvancedPage advancedPage;
     private MaterialSelectorPage materialSelectorPage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -182,7 +182,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        secondaryPage = loginPage.login(currentUser)
+        advancedPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize(batchSize)
@@ -190,9 +190,9 @@ public class SettingsTests extends TestBase {
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab();
+            .goToAdvancedTab();
 
-        assertThat(secondaryPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
+        assertThat(advancedPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
     }
 
     @Test

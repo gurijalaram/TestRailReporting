@@ -1,6 +1,5 @@
 package com.evaluate.dtc;
 
-import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -491,7 +490,7 @@ public class ThreadTests extends TestBase {
 
         threadingPage.closePanel()
             .selectProcessGroup(processGroupEnum.CASTING_DIE)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Packaging")
