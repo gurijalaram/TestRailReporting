@@ -1340,7 +1340,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     }
 
     /**
-     * select option
+     * select cost option
      *
      * @return current page object
      */
@@ -1431,5 +1431,51 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public String getThreadsCount(String threadsCount) {
         return driver.findElement(By.xpath("//div[@data-testid='Threads']//div[text()='" + threadsCount + "']//..//div[contains(@data-testid,'value')]")).getAttribute("textContent");
+    }
+
+    /**
+     * Checks if Assembly Process cost- cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isAssemblyProcessCostCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphFullyBurdened).isDisplayed();
+    }
+
+    /**
+     * Checks if Component cost fully burdened - cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isComponentCostFullyBurdenedCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphFullyBurdened).isDisplayed();
+    }
+
+    /**
+     * Checks if Component cost piece part - cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isComponentCostPiecePartCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphPiecePart).isDisplayed();
+    }
+
+    /**
+     * Checks if Total cost - cost graph is displayed
+     *
+     * @return true/false
+     */
+    public boolean isTotalCostGraphDisplayed() {
+        return getPageUtils().waitForElementAppear(costGraphFullyBurdened).isDisplayed();
+    }
+
+    /**
+     * Checks if costs icon is displayed for assembly
+     *
+     * @return true/false
+     */
+    public boolean isAssemblyCostsOptionDisplayed() {
+        getPageUtils().waitForElementToAppear(cycleTimeGraph);
+        return getPageUtils().waitForElementAppear(costIcon).isDisplayed();
     }
 }
