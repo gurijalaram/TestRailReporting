@@ -764,6 +764,23 @@ public class ScenariosUtil {
     }
 
     /**
+     * Filters the scenario manifest and returns a list of scenario manifest subcomponents
+     *
+     * @param componentInfo - the component info builder object
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return - response object
+     */
+    public List<ScenarioManifestSubcomponents> filterScenarioManifest(ComponentInfoBuilder componentInfo, String componentName, String scenarioName) {
+        return getScenarioManifest(componentInfo)
+            .getResponseEntity()
+            .getSubcomponents()
+            .stream()
+            .filter(o -> o.getComponentName().equalsIgnoreCase(componentName) && o.getScenarioName().equalsIgnoreCase(scenarioName))
+            .collect(Collectors.toList());
+    }
+
+    /**
      * PATCH scenario associations
      *
      * @param componentInfo         - the component info builder object
@@ -795,6 +812,34 @@ public class ScenariosUtil {
                             .childScenarioIdentity(component.getScenarioIdentity())
                             .occurrences(component.getOccurrences())
                             .excluded(excluded)
+                            .build())
+                        .collect(Collectors.toList()))
+                    .build())
+                .token(componentInfo.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * PATCH scenario associations
+     *
+     * @param componentInfo                 - the component info builder object
+     * @param scenarioManifestSubcomponents - the scenario manifest subcomponents
+     * @return response object
+     */
+    public ResponseWrapper<AssociationSuccessesFailures> patchAssociations(ComponentInfoBuilder componentInfo, List<ScenarioAssociationGroupItems> scenarioManifestSubcomponents) {
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, AssociationSuccessesFailures.class)
+                .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
+                .body(ScenarioAssociationsRequest.builder()
+                    .groupItems(scenarioManifestSubcomponents
+                        .stream()
+                        .map(component -> ScenarioAssociationGroupItems.builder()
+                            .scenarioAssociationIdentity(component.getScenarioAssociationIdentity())
+                            .childScenarioIdentity(component.getChildScenarioIdentity())
+                            .occurrences(component.getOccurrences())
+                            .excluded(component.getExcluded())
                             .build())
                         .collect(Collectors.toList()))
                     .build())

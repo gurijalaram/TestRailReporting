@@ -1,6 +1,8 @@
 package com.evaluate;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.entity.request.ScenarioAssociationGroupItems;
+import com.apriori.cidappapi.entity.response.scenarios.ScenarioManifestSubcomponents;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.AssociationSuccessesFailures;
 import com.apriori.cidappapi.utils.ScenariosUtil;
@@ -230,6 +232,66 @@ public class IncludeAndExcludeTests {
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(false);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0003, scenarioName)).isEqualTo(false);
         softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0004, scenarioName)).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"11931"})
+    @Description("Include and Exclude at the same time")
+    public void testIncludeExcludeSimultaneous() {
+        final String assemblyName = "Assembly01";
+        final String assemblyExtension = ".iam";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String PART_0001 = "Part0001";
+        final String PART_0002 = "Part0002";
+        final List<String> subComponentNames = Arrays.asList(PART_0001, PART_0002);
+        final String subComponentExtension = ".ipt";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
+        ScenarioManifestSubcomponents part001Details = scenariosUtil.filterScenarioManifest(componentAssembly, PART_0001, scenarioName).get(0);
+        ScenarioManifestSubcomponents part002Details = scenariosUtil.filterScenarioManifest(componentAssembly, PART_0002, scenarioName).get(0);
+
+        ScenarioAssociationGroupItems scenarioAssociation1 = ScenarioAssociationGroupItems.builder()
+            .scenarioAssociationIdentity(part001Details.getScenarioAssociationIdentity())
+            .childScenarioIdentity(part001Details.getScenarioIdentity())
+            .occurrences(part001Details.getOccurrences())
+            .excluded(true)
+            .build();
+
+        ScenarioAssociationGroupItems scenarioAssociation2 = ScenarioAssociationGroupItems.builder()
+            .scenarioAssociationIdentity(part002Details.getScenarioAssociationIdentity())
+            .childScenarioIdentity(part002Details.getScenarioIdentity())
+            .occurrences(part002Details.getOccurrences())
+            .excluded(false)
+            .build();
+
+        ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation1, scenarioAssociation2));
+
+        softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(2);
+
+        scenariosUtil.postCostScenario(componentAssembly);
+
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
+        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0002, scenarioName)).isEqualTo(false);
 
         softAssertions.assertAll();
     }
