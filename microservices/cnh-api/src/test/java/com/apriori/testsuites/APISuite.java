@@ -1,8 +1,8 @@
-package com.apriori.vds.tests.suite;
+package com.apriori.testsuites;
 
+import com.apriori.tests.CnhPositiveTests;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
-import com.apriori.cnh.tests.CnhPositiveTests;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
