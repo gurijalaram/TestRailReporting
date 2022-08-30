@@ -103,7 +103,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11902", "10762"})
+    @TestRail(testCaseId = {"11902", "10762", "11861"})
     @Description("Upload Assembly with sub-components from Catia")
     public void testCatiaMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -125,7 +125,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11903", "10767"})
+    @TestRail(testCaseId = {"11903", "10767", "6562"})
     @Description("Upload Assembly with sub-components from Creo")
     public void testCreoMultiUpload() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
