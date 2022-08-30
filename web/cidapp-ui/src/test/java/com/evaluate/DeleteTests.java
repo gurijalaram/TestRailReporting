@@ -109,7 +109,7 @@ public class DeleteTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5432"})
+    @TestRail(testCaseId = {"5432", "6730"})
     @Description("Test a private scenario can be deleted from the evaluate view")
     public void testDeletePrivateScenarioEvaluate() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;

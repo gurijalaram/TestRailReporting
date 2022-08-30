@@ -115,7 +115,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11874", "11843", "11842", "11155"})
+    @TestRail(testCaseId = {"11874", "11843", "11842", "11155", "11148"})
     @Description("Verify Include and Exclude buttons disabled if mixture selected")
     public void testIncludeAndExcludeDisabledButtonsWithMixedSelections() {
         String assemblyName = "Hinge assembly";
@@ -404,7 +404,7 @@ public class IncludeAndExcludeTests extends TestBase {
 
     @Test
     @Issue("AP-74028")
-    @TestRail(testCaseId = {"12135", "12052"})
+    @TestRail(testCaseId = {"12135", "12052", "12138"})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
         String assemblyName = "Hinge assembly";

@@ -53,7 +53,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6209", "5427"})
+    @TestRail(testCaseId = {"6209", "5427", "6732"})
     @Description("Publish an existing scenario from the Public Workspace back to the Public Workspace")
     public void testPublishExistingCostedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -103,7 +103,7 @@ public class PublishExistingCostedTests extends TestBase {
 
     @Test
     @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"6210", "5435"})
+    @TestRail(testCaseId = {"6210", "5435", "6735"})
     @Description("Edit & publish Scenario A from the public workspace as Scenario B")
     public void testPublishLockedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -146,7 +146,7 @@ public class PublishExistingCostedTests extends TestBase {
         @Issue("BA-2052"),
         @Issue("BA-2137")
     })
-    @TestRail(testCaseId = {"6211"})
+    @TestRail(testCaseId = {"6211", "6734", "6040"})
     @Description("Load & publish a new single scenario which duplicates an existing unlocked public workspace scenario")
     public void testDuplicatePublic() {
 
