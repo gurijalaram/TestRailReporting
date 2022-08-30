@@ -25,10 +25,11 @@ public class CnhService {
      *
      * @param executeRequest - pass the body
      */
-    public ResponseWrapper<ExecuteResponse> execute(ExecuteRequest executeRequest) {
+    public ResponseWrapper<ExecuteResponse> execute(ExecuteRequest executeRequest,String... inlineVariables) {
         RequestEntity requestEntity = RequestEntityUtil.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
             .headers(headers)
-            .body(executeRequest);
+            .body(executeRequest)
+            .inlineVariables(inlineVariables);
 
         return HTTPRequest.build(requestEntity).post();
     }
