@@ -5,8 +5,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.ThreadsPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -31,10 +29,7 @@ import java.io.File;
 public class ThreadTests extends TestBase {
 
     private CidAppLoginPage loginPage;
-    private EvaluatePage evaluatePage;
-    private InvestigationPage investigationPage;
     private ThreadsPage threadingPage;
-    private GuidanceIssuesPage designGuidancePage;
     private UserCredentials currentUser;
     SoftAssertions softAssertions = new SoftAssertions();
 
