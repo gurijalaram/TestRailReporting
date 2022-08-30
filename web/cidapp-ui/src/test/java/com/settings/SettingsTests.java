@@ -59,7 +59,7 @@ public class SettingsTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"6283", "6637"})
+    @TestRail(testCaseId = {"6283", "6637", "6275", "8883"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

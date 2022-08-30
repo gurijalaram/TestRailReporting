@@ -396,7 +396,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8904"})
+    @TestRail(testCaseId = {"8904", "6358", "6359"})
     @Description("Testing thread units persist when changed to inches")
     public void validateThreadUnitsInches() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -432,7 +432,7 @@ public class ThreadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"8905"})
+    @TestRail(testCaseId = {"8905", "6299", "6362"})
     @Description("Testing thread units persist when changed to centimetres")
     public void validateThreadUnitsCM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
