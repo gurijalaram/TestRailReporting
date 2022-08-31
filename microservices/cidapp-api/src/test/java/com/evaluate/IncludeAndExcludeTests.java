@@ -493,8 +493,7 @@ public class IncludeAndExcludeTests {
         ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation1), AssociationSuccessesFailures.class);
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().size()).isEqualTo(1);
-        softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError())
-            .isEqualTo("Error");
+        softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError()).isEqualTo("Error");
 
         softAssertions.assertAll();
     }
