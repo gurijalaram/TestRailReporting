@@ -14,6 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 public class CnhPositiveTests {
@@ -22,6 +23,7 @@ public class CnhPositiveTests {
     @TestRail(testCaseId = {"14057"})
     @Description("Verify report-1")
     public void shouldExecuteReport1Test() {
+        SoftAssertions soft = new SoftAssertions();
         ExecuteRequest executeRequest = JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "ExecuteRequestReport-1.json"
@@ -30,8 +32,7 @@ public class CnhPositiveTests {
         CnhService cnhService = new CnhService();
         ResponseWrapper<ExecuteResponse> responseActual = cnhService.execute(executeRequest,"report-1");
 
-        assertThat(responseActual.getResponseEntity().getStatus(), is(equalTo("RUNNING")));
-        assertThat(responseActual.getResponseEntity().getExecutionId(), is(notNullValue()));
-
+        soft.assertThat(responseActual.getResponseEntity().getStatus()).isEqualTo("RUNNING");
+        soft.assertThat(responseActual.getResponseEntity().getExecutionId()).isNotEmpty();
     }
 }
