@@ -7,20 +7,31 @@ import com.apriori.bcs.entity.response.Batch;
 import com.apriori.bcs.entity.response.Parts;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.part.PartData;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import lombok.extern.slf4j.Slf4j;
 import org.assertj.core.api.SoftAssertions;
+import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.List;
 
 
 @Slf4j
 public class MultiPartCostingTest {
     private static Batch batch;
     private static final Integer NUMBER_OF_PARTS = Integer.parseInt(PropertiesContext.get("number_of_parts"));
+    private static List<PartData> partDataList = null;
+
+    @BeforeClass
+    public static void testSetup() {
+        partDataList = new TestDataService().getPartsFromCloud(NUMBER_OF_PARTS);
+    }
 
     @Test
     @TestRail(testCaseId = {"9111"})
@@ -34,7 +45,7 @@ public class MultiPartCostingTest {
     public void costBatchParts() {
         SoftAssertions softAssertions = new SoftAssertions();
         Batch batch = BatchResources.createBatch().getResponseEntity();
-        MultiPartResources.addPartsToBatch(NUMBER_OF_PARTS, batch.getIdentity());
+        MultiPartResources.addPartsToBatch(partDataList, batch.getIdentity());
         BatchResources.startBatchCosting(batch);
         softAssertions.assertThat(MultiPartResources.waitUntilBatchPartsCostingAreCompleted(batch.getIdentity())).isTrue();
         softAssertions.assertThat(BatchResources.waitUntilBatchCostingReachedExpected(batch.getIdentity(), BCSState.COMPLETED)).isTrue();
