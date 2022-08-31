@@ -16,12 +16,19 @@
                 "type": "object",
                 "required": [
                   "identity",
+                  "customerIdentity",
                   "username",
                   "givenName",
                   "familyName"
                 ],
                 "properties": {
                   "identity": {
+                    "type": "string"
+                  },
+                  "customerIdentity": {
+                    "type": "string"
+                  },
+                  "email": {
                     "type": "string"
                   },
                   "username": {
