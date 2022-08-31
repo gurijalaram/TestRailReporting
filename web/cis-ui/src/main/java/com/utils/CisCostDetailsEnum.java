@@ -8,7 +8,11 @@ public enum CisCostDetailsEnum {
     CYCLE_TIME("Cycle Time"),
     FULLY_BURDENED_COST("Fully Burdened Cost"),
     PIECE_PART_COST("Piece Part Cost"),
-    TOTAL_CAPITAL_INVESTMENT("Total Capital Investment");
+    TOTAL_CAPITAL_INVESTMENT("Total Capital Investment"),
+    ASSEMBLY_PROCESS_COST("Assembly Process Cost"),
+    COMPONENT_COST_FULLY_BURDENED("Components Cost (Fully Burdened)"),
+    COMPONENT_COST_PIECE_PART("Components Cost (Piece Part)"),
+    TOTAL_COST("Total Cost");
 
     private final String costDetail;
 

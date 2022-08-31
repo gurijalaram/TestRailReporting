@@ -819,6 +819,60 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"14040","14041","14042","14043","14044","14045","14046","14047"})
+    @Description("Verify assembly cost details breakdowns")
+    public void testAssemblyCostDetails() {
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        UserCredentials currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostAssembly(assemblyName,
+                        assemblyExtension,
+                        assemblyProcessGroup,
+                        subComponentNames,
+                        subComponentExtension,
+                        subComponentProcessGroup,
+                        scenarioName,
+                        currentUser)
+                .clickPartsAndAssemblies()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(assemblyName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName,scenarioName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyCostsOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickCostsOption();
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCostSectionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCostTitle()).isEqualTo("Cost");
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.ASSEMBLY_PROCESS_COST.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAssemblyProcessCostCostGraphDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.COMPONENT_COST_FULLY_BURDENED.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isComponentCostFullyBurdenedCostGraphDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.COMPONENT_COST_PIECE_PART.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isComponentCostPiecePartCostGraphDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.selectCostDropDownOption(CisCostDetailsEnum.TOTAL_COST.getProcessRoutingName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isTotalCostGraphDisplayed()).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
 }
 
 
