@@ -340,11 +340,9 @@ public class IncludeAndExcludeTests {
 
         ResponseWrapper<AssociationSuccessesFailures> patchResponse = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation1));
 
-        softAssertions.assertThat(patchResponse.getResponseEntity().getSuccesses().size()).isEqualTo(2);
-
-        scenariosUtil.postCostScenario(componentAssembly);
-
-        softAssertions.assertThat(scenariosUtil.isSubcomponentExcluded(componentAssembly, PART_0001, scenarioName)).isEqualTo(true);
+        softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().size()).isEqualTo(1);
+        softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError())
+            .isEqualTo("Scenario association with identity '" + INCORRECT_SCENARIO_ASSOCIATION_ID + "' is not a member of scenario with identity '" + componentAssembly.getScenarioIdentity() + "'");
 
         softAssertions.assertAll();
     }
