@@ -300,17 +300,19 @@ public class IncludeAndExcludeTests {
     }
 
     @Test
-    @TestRail(testCaseId = {"11932"})
+    @TestRail(testCaseId = {"11932", "11933"})
     @Description("Error returned on invalid Scenario Association Identity")
     public void testIncorrectAssociationId() {
         final String assemblyName = "Assembly01";
         final String assemblyExtension = ".iam";
         final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
         final String PART_0001 = "Part0001";
-        final List<String> subComponentNames = Arrays.asList(PART_0001);
+        final String PART_0002 = "Part0002";
+        final List<String> subComponentNames = Arrays.asList(PART_0001, PART_0002);
         final String subComponentExtension = ".ipt";
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.SHEET_METAL;
         final String INCORRECT_SCENARIO_ASSOCIATION_ID = "INC27C000000";
+        final String INCORRECT_CHILD_SCENARIO_ID = "ABCDEF123456";
 
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -343,6 +345,21 @@ public class IncludeAndExcludeTests {
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().size()).isEqualTo(1);
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError())
             .isEqualTo("Scenario association with identity '" + INCORRECT_SCENARIO_ASSOCIATION_ID + "' is not a member of scenario with identity '" + componentAssembly.getScenarioIdentity() + "'");
+
+        ScenarioManifestSubcomponents part002Details = scenariosUtil.filterScenarioManifest(componentAssembly, PART_0002, scenarioName).get(0);
+
+        ScenarioAssociationGroupItems scenarioAssociation2 = ScenarioAssociationGroupItems.builder()
+            .scenarioAssociationIdentity(part002Details.getScenarioAssociationIdentity())
+            .childScenarioIdentity(INCORRECT_CHILD_SCENARIO_ID)
+            .occurrences(part002Details.getOccurrences())
+            .excluded(true)
+            .build();
+
+        ResponseWrapper<AssociationSuccessesFailures> patchResponse2 = scenariosUtil.patchAssociations(componentAssembly, Arrays.asList(scenarioAssociation2));
+
+        softAssertions.assertThat(patchResponse2.getResponseEntity().getFailures().size()).isEqualTo(1);
+        softAssertions.assertThat(patchResponse2.getResponseEntity().getFailures().get(0).getError())
+            .isEqualTo("Resource 'Scenario' with identity '" + INCORRECT_CHILD_SCENARIO_ID + "' was not found");
 
         softAssertions.assertAll();
     }
