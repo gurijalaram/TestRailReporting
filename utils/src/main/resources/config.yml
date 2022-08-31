@@ -1,5 +1,5 @@
 # Define the environment
-env: qa-cid-perf
+env: int-core
 
 # Define the global properties not related to environment
 global:
@@ -80,6 +80,9 @@ default:
   cis:
     ui_url: https://cis.${default.aws_region}.${env}.apriori.net/
     api_url: https://cis-api.${default.aws_region}.${env}.apriori.net/
+
+  cnh:
+    api_url: https://f2jdom33dk.execute-api.us-east-1.amazonaws.com/
 
 #  Specific environment configurations
 ######################################################## INT-CORE ########################################################
