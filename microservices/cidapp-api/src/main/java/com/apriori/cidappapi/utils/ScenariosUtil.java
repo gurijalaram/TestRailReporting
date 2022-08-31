@@ -827,10 +827,10 @@ public class ScenariosUtil {
      * @param scenarioManifestSubcomponents - the scenario manifest subcomponents
      * @return response object
      */
-    public ResponseWrapper<AssociationSuccessesFailures> patchAssociations(ComponentInfoBuilder componentInfo, List<ScenarioAssociationGroupItems> scenarioManifestSubcomponents) {
+    public <T> ResponseWrapper<T> patchAssociations(ComponentInfoBuilder componentInfo, List<ScenarioAssociationGroupItems> scenarioManifestSubcomponents, Class<T> klass) {
 
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, AssociationSuccessesFailures.class)
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_ASSOCIATIONS, klass)
                 .inlineVariables(componentInfo.getComponentIdentity(), componentInfo.getScenarioIdentity())
                 .body(ScenarioAssociationsRequest.builder()
                     .groupItems(scenarioManifestSubcomponents
