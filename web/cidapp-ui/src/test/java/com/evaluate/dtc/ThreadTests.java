@@ -490,7 +490,7 @@ public class ThreadTests extends TestBase {
 
         threadingPage.closePanel()
             .selectProcessGroup(processGroupEnum.CASTING_DIE)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
             .selectSecondaryProcess("Packaging")
