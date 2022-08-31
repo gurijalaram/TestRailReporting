@@ -494,7 +494,7 @@ public class IncludeAndExcludeTests {
 
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().size()).isEqualTo(1);
         softAssertions.assertThat(patchResponse.getResponseEntity().getFailures().get(0).getError())
-            .isEqualTo("Part is already included");
+            .isEqualTo("Error");
 
         softAssertions.assertAll();
     }
