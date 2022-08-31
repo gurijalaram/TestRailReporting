@@ -4,7 +4,7 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentPrimaryPage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -30,7 +30,7 @@ public class GroupCostingTests extends TestBase {
     private AssemblyUtils assemblyUtils = new AssemblyUtils();
     private EvaluatePage evaluatePage;
     private ComponentsListPage componentsListPage;
-    private ComponentPrimaryPage componentPrimaryPage;
+    private ComponentBasicPage componentBasicPage;
     private UserCredentials currentUser;
     private List<File> subComponents = new ArrayList<File>();
 
@@ -159,15 +159,15 @@ public class GroupCostingTests extends TestBase {
 
         subComponentNames.forEach(subComponentName -> componentsListPage.clickScenarioCheckbox(subComponentName.toUpperCase(), scenarioName));
 
-        componentPrimaryPage = componentsListPage.setInputs();
+        componentBasicPage = componentsListPage.setInputs();
 
-        softAssertions.assertThat(componentPrimaryPage.getProcessGroup()).as("Process Group Text").isEqualTo(retainText);
-        softAssertions.assertThat(componentPrimaryPage.getDigitalFactory()).as("Digital Factory Text").isEqualTo(retainText);
-        softAssertions.assertThat(componentPrimaryPage.getMaterialPlaceholder()).as("Material Text").isEqualTo(retainText);
-        softAssertions.assertThat(componentPrimaryPage.getAnnualVolumePlaceholder()).as("Annual Volume Text").isEqualTo(retainText);
-        softAssertions.assertThat(componentPrimaryPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentBasicPage.getProcessGroup()).as("Process Group Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentBasicPage.getDigitalFactory()).as("Digital Factory Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentBasicPage.getMaterialPlaceholder()).as("Material Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentBasicPage.getAnnualVolumePlaceholder()).as("Annual Volume Text").isEqualTo(retainText);
+        softAssertions.assertThat(componentBasicPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
 
-        componentsListPage = componentPrimaryPage.selectProcessGroup(prtProcessGroupEnum)
+        componentsListPage = componentBasicPage.selectProcessGroup(prtProcessGroupEnum)
             .clickApplyAndCost()
             .clickCloseButton();
 
