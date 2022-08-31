@@ -34,5 +34,6 @@ public class CnhPositiveTests {
 
         soft.assertThat(responseActual.getResponseEntity().getStatus()).isEqualTo("RUNNING");
         soft.assertThat(responseActual.getResponseEntity().getExecutionId()).isNotEmpty();
+        soft.assertAll();
     }
 }
