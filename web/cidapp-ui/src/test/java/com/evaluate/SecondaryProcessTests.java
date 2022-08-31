@@ -11,7 +11,7 @@ import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -43,7 +43,7 @@ import java.io.File;
 public class SecondaryProcessTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private SecondaryPage secondaryPage;
+    private AdvancedPage secondaryPage;
     private MaterialProcessPage materialProcessPage;
 
     private File resourceFile;
@@ -80,7 +80,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
             .expandSecondaryProcessTree("Testing and Inspection")
@@ -120,7 +120,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS, 10% Glass")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab();
+            .goToAdvancedTab();
 
         softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).isEmpty();
 
@@ -133,7 +133,7 @@ public class SecondaryProcessTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Xray Inspection");
 
-        secondaryPage = evaluatePage.goToSecondaryTab();
+        secondaryPage = evaluatePage.goToAdvancedTab();
 
         softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("Xray", " Packaging");
 
@@ -158,7 +158,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
@@ -203,7 +203,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -211,7 +211,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMaskingOverride("2")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -239,7 +239,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
@@ -277,7 +277,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Temper")
@@ -285,7 +285,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMaskingOverride("3")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree(" Heat Treat Processes, Temper")
@@ -314,7 +314,7 @@ public class SecondaryProcessTests extends TestBase {
             .search("7075")
             .selectMaterial("Aluminum, Cast, ANSI 7075")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes")
@@ -345,7 +345,7 @@ public class SecondaryProcessTests extends TestBase {
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .expandSecondaryProcessTree("Anodize, Anodizing Tank")
@@ -375,7 +375,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .selectSecondaryProcess("Certification")
@@ -404,7 +404,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .expandSecondaryProcessTree("Paint")
@@ -441,7 +441,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .expandSecondaryProcessTree("Paint")
@@ -472,7 +472,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .expandSecondaryProcessTree("Paint")
@@ -513,7 +513,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
@@ -544,7 +544,7 @@ public class SecondaryProcessTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("Stainless Steel, Stock, 440B")
             .submit(EvaluatePage.class)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
@@ -564,7 +564,7 @@ public class SecondaryProcessTests extends TestBase {
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.EQUALS, scenarioName)
             .submit(ExplorePage.class)
             .openScenario("SheetMetal", scenarioName)
-            .goToSecondaryTab();
+            .goToAdvancedTab();
 
         softAssertions.assertThat(evaluatePage.isSecondaryProcessButtonEnabled()).isEqualTo(false);
 
@@ -592,7 +592,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .expandSecondaryProcessTree("Anodize, Anodizing Tank")
@@ -624,7 +624,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
@@ -632,7 +632,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("1")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
@@ -660,7 +660,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -668,7 +668,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("2")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -696,7 +696,7 @@ public class SecondaryProcessTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI 1050A")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -704,7 +704,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("1")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -729,7 +729,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -737,7 +737,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("3")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -762,7 +762,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -770,7 +770,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("1")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -795,7 +795,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -803,7 +803,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("3")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
@@ -828,7 +828,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
@@ -836,7 +836,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("4")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
@@ -862,7 +862,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
@@ -870,7 +870,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("2")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
@@ -895,7 +895,7 @@ public class SecondaryProcessTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Temper")
@@ -903,7 +903,7 @@ public class SecondaryProcessTests extends TestBase {
             .inputMasking("1")
             .submit(EvaluatePage.class)
             .costScenario()
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToHeatTreatmentTab()
             .expandSecondaryProcessTree("Heat Treat Processes, Temper")
@@ -929,14 +929,14 @@ public class SecondaryProcessTests extends TestBase {
         secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToOtherSecProcessesTab()
             .expandSecondaryProcessTree("Testing and Inspection")
             .selectSecondaryProcess("Xray Inspection")
             .cancel()
             .costScenario()
-            .goToSecondaryTab();
+            .goToAdvancedTab();
 
         assertThat(secondaryPage.getSecondaryProcesses(), is(empty()));
     }
@@ -958,7 +958,7 @@ public class SecondaryProcessTests extends TestBase {
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
@@ -982,7 +982,7 @@ public class SecondaryProcessTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         secondaryPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .goToSecondaryTab()
+            .goToAdvancedTab()
             .openSecondaryProcesses()
             .goToSurfaceTreatmentTab()
             .selectSecondaryProcess("Passivation")
@@ -992,7 +992,7 @@ public class SecondaryProcessTests extends TestBase {
             .reset()
             .cancel()
             .costScenario()
-            .goToSecondaryTab();
+            .goToAdvancedTab();
 
         softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("No Processes Selected...");
 

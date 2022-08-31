@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import java.util.List;
 
 @Slf4j
-public class SecondaryPage extends LoadableComponent<SecondaryPage> {
+public class AdvancedPage extends LoadableComponent<AdvancedPage> {
 
     @FindBy(css = "input[name='batchSize']")
     private WebElement batchSizeInput;
@@ -29,11 +29,11 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     @FindBy(css = "[id='qa-secondary-digital-factory-select']")
     private WebElement secDigitalFactoryList;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom']")
+    private WebElement customTab;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Primary']")
-    private WebElement primaryTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Basic']")
+    private WebElement basicTab;
 
     @FindBy(css = ".secondary-process-modal-select-field .pill-box")
     private WebElement secondaryProcesses;
@@ -43,7 +43,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
-    public SecondaryPage(WebDriver driver) {
+    public AdvancedPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
@@ -69,7 +69,7 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
      * @param batchSize - the batch size
      * @return current page object
      */
-    public SecondaryPage enterBatchSize(String batchSize) {
+    public AdvancedPage enterBatchSize(String batchSize) {
         inputsController.enterBatchSize(batchSizeInput, batchSize);
         return this;
     }
@@ -95,22 +95,22 @@ public class SecondaryPage extends LoadableComponent<SecondaryPage> {
     }
 
     /**
-     * Opens custom attributes tab
+     * Opens custom tab
      *
      * @return new page object
      */
-    public CustomAttributesPage goToCustomAttributesTab() {
-        pageUtils.waitForElementAndClick(customAttributesTab);
-        return new CustomAttributesPage(driver);
+    public CustomPage goToCustomTab() {
+        pageUtils.waitForElementAndClick(customTab);
+        return new CustomPage(driver);
     }
 
     /**
-     * Opens primary tab
+     * Opens basic tab
      *
      * @return new page object
      */
-    public EvaluatePage goToPrimaryTab() {
-        pageUtils.waitForElementAndClick(primaryTab);
+    public EvaluatePage goToBasicTab() {
+        pageUtils.waitForElementAndClick(basicTab);
         return new EvaluatePage(driver);
     }
 
