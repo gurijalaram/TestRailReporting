@@ -33,7 +33,7 @@ public class TermsOfUseTests extends TestBase {
         termsOfUsePage = loginPage.login(currentUser)
             .clickTermsOfUse();
 
-        assertThat(termsOfUsePage.getTermsOfUseUrl(), containsString("https://edc.na-1.qa-cid-perf.apriori.net/terms-of-use"));
+        assertThat(termsOfUsePage.getTermsOfUseUrl(), containsString("https://edc.na-1.qa-test.apriori.net/terms-of-use"));
         assertThat(termsOfUsePage.getTermsOfUseText(), containsString(" application (”Application”), including the intellectual property rights and trade secrets contained therein"));
     }
 }
