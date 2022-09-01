@@ -19,6 +19,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
 import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.part.PartData;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -66,6 +67,42 @@ public class BatchPartResources {
     /**
      * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
      *
+     * @param partData      - PartData Object retrieved from cloud
+     * @param batchIdentity - batch Identity
+     * @return Response of type part object
+     */
+    public static ResponseWrapper<Part> createNewBatchPartByID(PartData partData, String batchIdentity) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
+        Map<String, String> header = new HashMap<>();
+        QueryParams queryParams = new QueryParams();
+        partData.setScenarioName("Scenario" + System.currentTimeMillis());
+        partData.setExternalId("External" + System.currentTimeMillis());
+        partData.setDescription("Description" + System.currentTimeMillis());
+        queryParams = (partData.getFilename() != null) ? queryParams.use("filename", partData.getFilename()) : queryParams;
+        queryParams = (partData.getExternalId() != null) ? queryParams.use("externalId", String.format(partData.getExternalId(), System.currentTimeMillis())) : queryParams;
+        queryParams = (partData.getAnnualVolume() != null) ? queryParams.use("AnnualVolume", partData.getAnnualVolume().toString()) : queryParams;
+        queryParams = (partData.getBatchSize() != null) ? queryParams.use("BatchSize", partData.getBatchSize().toString()) : queryParams;
+        queryParams = (partData.getDescription() != null) ? queryParams.use("Description", partData.getDescription()) : queryParams;
+        queryParams = (partData.getProcessGroup() != null) ? queryParams.use("ProcessGroup", partData.getProcessGroup()) : queryParams;
+        queryParams = (partData.getProductionLife() != null) ? queryParams.use("ProductionLife", partData.getProductionLife().toString()) : queryParams;
+        queryParams = (partData.getScenarioName() != null) ? queryParams.use("ScenarioName", partData.getScenarioName()) : queryParams;
+        queryParams = (partData.getDigitalFactory() != null) ? queryParams.use("VpeName", partData.getDigitalFactory()) : queryParams;
+        queryParams = (partData.getMaterial() != null) ? queryParams.use("MaterialName", partData.getMaterial()) : queryParams;
+        queryParams = (partData.getGenerateWatchPointReport() != null) ? queryParams.use("generateWatchpointReport", partData.getGenerateWatchPointReport()) : queryParams;
+        queryParams = (partData.getUdas() != null) ? queryParams.use("udas", partData.getUdas()) : queryParams;
+
+        header.put("Accept", "*/*");
+        header.put("Content-Type", "multipart/form-data");
+        requestEntity.headers(header)
+            .multiPartFiles(new MultiPartFiles()
+                .use("data", partData.getFile()))
+            .queryParams(queryParams);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
+     *
      * @param newPartRequest - Deserialized NewPartRequest Object
      * @param batchIdentity  - batch Identity
      * @return Response of type part object
@@ -96,7 +133,7 @@ public class BatchPartResources {
      * @return Response
      */
     public static ResponseWrapper<Part> createNewBatchPartWithValidUDA(String batchIdentity) {
-        requestEntity = batchPartRequestEntity(newPartRequest("schemas/requests/CreatePartDataWithUda.json"), batchIdentity);
+        requestEntity = batchPartRequestEntity(newPartRequest("schemas/testdata/CreatePartDataWithUda.json"), batchIdentity);
         return HTTPRequest.build(requestEntity).postMultipart();
     }
 
@@ -185,8 +222,8 @@ public class BatchPartResources {
             case "PDF":
                 requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/TestFile.pdf")));
                 break;
-
-                // TODO: 02/08/2022 @rama - do we not need a default here?
+            default:
+                requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/TestFile.jpeg")));
         }
         return HTTPRequest.build(requestEntity).postMultipart();
     }
@@ -212,7 +249,7 @@ public class BatchPartResources {
     public static NewPartRequest newPartRequest() {
         NewPartRequest newPartRequest =
             JsonManager.deserializeJsonFromInputStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+                FileResourceUtil.getResourceFileStream("schemas/testdata/CreatePartData.json"), NewPartRequest.class);
         return newPartRequest;
     }
 
@@ -343,8 +380,8 @@ public class BatchPartResources {
         queryParams = (newPartRequest.getProcessGroup() != null) ? queryParams.use("ProcessGroup", newPartRequest.getProcessGroup()) : queryParams;
         queryParams = (newPartRequest.getProductionLife() != null) ? queryParams.use("ProductionLife", newPartRequest.getProductionLife().toString()) : queryParams;
         queryParams = (newPartRequest.getScenarioName() != null) ? queryParams.use("ScenarioName", newPartRequest.getScenarioName()) : queryParams;
-        queryParams = (newPartRequest.getVpeName() != null) ? queryParams.use("VpeName", newPartRequest.getVpeName()) : queryParams;
-        queryParams = (newPartRequest.getMaterialName() != null) ? queryParams.use("MaterialName", newPartRequest.getMaterialName()) : queryParams;
+        queryParams = (newPartRequest.getDigitalFactory() != null) ? queryParams.use("VpeName", newPartRequest.getDigitalFactory()) : queryParams;
+        queryParams = (newPartRequest.getMaterial() != null) ? queryParams.use("MaterialName", newPartRequest.getMaterial()) : queryParams;
         queryParams = (newPartRequest.getGenerateWatchPointReport() != null) ? queryParams.use("generateWatchpointReport", newPartRequest.getGenerateWatchPointReport()) : queryParams;
         queryParams = (newPartRequest.getUdas() != null) ? queryParams.use("udas", newPartRequest.getUdas()) : queryParams;
 
