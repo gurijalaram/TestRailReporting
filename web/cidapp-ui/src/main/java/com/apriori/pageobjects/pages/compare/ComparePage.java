@@ -33,13 +33,13 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "[placeholder='Description']")
     private WebElement descriptionInput;
 
-    @FindBy(css = ".basis-column .apriori-card .card-header")
+    @FindBy(css = ".basis .card-header")
     private WebElement basisColumnHeader;
 
-    @FindBy(css = "[data-rbd-droppable-id='basis-column']")
+    @FindBy(css = ".comparison-basis-column")
     private WebElement basisColumn;
 
-    @FindBy(css = "[data-rbd-droppable-id='basis-column'] .close-button")
+    @FindBy(css = ".basis .card-header .close-button")
     private WebElement deleteBasis;
 
     @FindBy(xpath = "//p[.='Preparing Comparison']")
@@ -50,6 +50,9 @@ public class ComparePage extends CompareToolbar {
 
     @FindBy(css = ".comparison-column.draggable .card-header")
     private List<WebElement> cardHeader;
+
+    @FindBy(css = ".card-header")
+    private List<WebElement> cardHeaders;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -210,6 +213,15 @@ public class ComparePage extends CompareToolbar {
      */
     public List<String> getScenariosInComparison() {
         return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets list of scenarios included to comparison
+     *
+     * @return list of scenarios
+     */
+    public List<String> getAllScenariosInComparison() {
+        return cardHeaders.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
