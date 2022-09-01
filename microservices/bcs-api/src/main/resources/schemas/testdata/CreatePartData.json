@@ -4,12 +4,13 @@
   "annualVolume": 500,
   "batchSize": 100,
   "description": "Part created by automation.",
-  "materialName": "Steel, Cold Worked, AISI 1020",
+  "material": "Steel, Cold Worked, AISI 1020",
   "pinnedRouting": "Material Stock / Laser Cut",
   "processGroup": "Sheet Metal",
   "productionLife": 3.45,
   "scenarioName": "Unique",
-  "vpeName": "aPriori USA",
+  "digitalFactory": "aPriori USA",
   "generateWatchPointReport": "true",
-  "fileData": ""
+  "years": 5,
+  "secondaryDigitalFactory": ""
 }
