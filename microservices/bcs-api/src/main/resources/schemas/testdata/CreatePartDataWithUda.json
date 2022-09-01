@@ -9,7 +9,7 @@
   "processGroup": "Sheet Metal",
   "productionLife": 3.45,
   "scenarioName": "Unique",
-  "vpeName": "aPriori USA",
+  "digitalFactory": "aPriori USA",
   "udas": "{\"ProjectName\":\"Beta\"}",
   "generateWatchPointReport": "true"
 }

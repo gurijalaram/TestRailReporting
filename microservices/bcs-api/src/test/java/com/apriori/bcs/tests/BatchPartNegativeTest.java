@@ -44,7 +44,7 @@ public class BatchPartNegativeTest {
     @Description("Create a part with invalid VPE")
     public void createBatchPartInvalidVPE() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
-        newPartRequest.setVpeName("Invalid VPE");
+        newPartRequest.setDigitalFactory("Invalid VPE");
         ResponseWrapper<Part> partResponse = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
         assertTrue("Track and wait until part is errored", BatchPartResources.waitUntilPartStateIsCompleted(batch.getIdentity(), partResponse.getResponseEntity().getIdentity(), BCSState.ERRORED));
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
@@ -287,8 +287,8 @@ public class BatchPartNegativeTest {
     @Description("Attempt to add a new part to a batch using empty string values")
     public void createBatchPartWithEmptyStringValues() {
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
-        newPartRequest.setMaterialName("");
-        newPartRequest.setVpeName("");
+        newPartRequest.setMaterial("");
+        newPartRequest.setDigitalFactory("");
         ResponseWrapper<Part> response = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
         assertEquals("Create batch with empty material name and vpename", HttpStatus.SC_CREATED, response.getStatusCode());
     }
