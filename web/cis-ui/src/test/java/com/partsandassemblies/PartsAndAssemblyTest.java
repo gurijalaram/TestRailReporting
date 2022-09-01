@@ -309,7 +309,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickOnToggleButton()
                 .clickFilter()
                 .clickAddCondition()
-                .addFilterValue(componentName,scenarioName)
+                .addFilterValue(componentName, scenarioName)
                 .clickMessages()
                 .clickPartsAndAssemblies();
 
@@ -323,7 +323,6 @@ public class PartsAndAssemblyTest extends TestBase {
         partsAndAssembliesPage.clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
-                .waitForTableResults()
                 .sortUpDigitalFactoryField()
                 .waitForTableResults()
                 .pinToRightProcessGroupColumn()

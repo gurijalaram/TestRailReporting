@@ -160,6 +160,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='componentType']")
     private WebElement componentTypeField;
 
+    @FindBy(xpath = "//li[@data-value='scenarioName']")
+    private WebElement scenarioNameFiled;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -570,9 +573,11 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return current page object
      */
     public PartsAndAssembliesPage addFilterValue(String componentName, String scenarioName) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(scenarioNameFiled);
         getPageUtils().waitForElementAndClick(filteredValue);
-        filteredValue.sendKeys(componentName);
-        getPageUtils().waitFor(5000);
+        filteredValue.sendKeys(scenarioName);
+        getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']"));
         return new PartsAndAssembliesPage(getDriver());
     }
 
