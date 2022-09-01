@@ -1,6 +1,5 @@
 package com.apriori.utils.enums;
 
-import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
