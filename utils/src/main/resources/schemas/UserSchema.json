@@ -2,19 +2,7 @@
   "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
   "properties": {
-    "identity": {
-      "type": "string"
-    },
-    "createdBy": {
-      "type": "string"
-    },
-    "createdAt": {
-      "type": "string"
-    },
-    "updatedAt": {
-      "type": "string"
-    },
-    "userProfile": {
+    "response": {
       "type": "object",
       "properties": {
         "identity": {
@@ -26,77 +14,94 @@
         "createdAt": {
           "type": "string"
         },
-        "givenName": {
+        "updatedAt": {
           "type": "string"
         },
-        "familyName": {
+        "userProfile": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "givenName": {
+              "type": "string"
+            },
+            "familyName": {
+              "type": "string"
+            }
+          },
+          "required": [
+            "identity",
+            "createdBy",
+            "createdAt",
+            "givenName",
+            "familyName"
+          ]
+        },
+        "email": {
           "type": "string"
+        },
+        "username": {
+          "type": "string"
+        },
+        "active": {
+          "type": "boolean"
+        },
+        "sites": {
+          "type": "array",
+          "items": {}
+        },
+        "customAttributes": {
+          "type": "object",
+          "properties": {
+            "workspaceId": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "workspaceId"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            }
+          ]
+        },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        },
+        "mfaRequired": {
+          "type": "boolean"
         }
       },
       "required": [
         "identity",
         "createdBy",
         "createdAt",
-        "givenName",
-        "familyName"
+        "updatedAt",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "sites",
+        "customAttributes",
+        "roles",
+        "customerIdentity",
+        "userType",
+        "mfaRequired"
       ]
-    },
-    "email": {
-      "type": "string"
-    },
-    "username": {
-      "type": "string"
-    },
-    "active": {
-      "type": "boolean"
-    },
-    "sites": {
-      "type": "array",
-      "items": {}
-    },
-    "customAttributes": {
-      "type": "object",
-      "properties": {
-        "workspaceId": {
-          "type": "integer"
-        }
-      },
-      "required": [
-        "workspaceId"
-      ]
-    },
-    "roles": {
-      "type": "array",
-      "items": [
-        {
-          "type": "string"
-        }
-      ]
-    },
-    "customerIdentity": {
-      "type": "string"
-    },
-    "userType": {
-      "type": "string"
-    },
-    "mfaRequired": {
-      "type": "boolean"
     }
-  },
-  "required": [
-    "identity",
-    "createdBy",
-    "createdAt",
-    "updatedAt",
-    "userProfile",
-    "email",
-    "username",
-    "active",
-    "sites",
-    "customAttributes",
-    "roles",
-    "customerIdentity",
-    "userType",
-    "mfaRequired"
-  ]
+  }
 }
