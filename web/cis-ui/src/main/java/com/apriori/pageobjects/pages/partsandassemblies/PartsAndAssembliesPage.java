@@ -52,7 +52,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioState']")
     private WebElement scenarioStateField;
 
-    @FindBy(xpath = "//*[@data-field='scenarioState']//button[@title='Menu']//*[local-name()='svg']")
+    @FindBy(xpath = "//*[@data-field='componentType']//button[@title='Menu']//*[local-name()='svg']")
     private WebElement tripleDotIcon;
 
     @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
@@ -156,6 +156,9 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//div[contains(@class,'columnHeaderDraggableContainer')]")
     private WebElement processGroupFieldDrag;
+
+    @FindBy(xpath = "//*[@data-field='componentType']")
+    private WebElement componentTypeField;
 
     public PartsAndAssembliesPage(WebDriver driver) {
 
@@ -270,8 +273,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage clickKebabMenuOnTableHeader() {
         getPageUtils().waitForElementToAppear(tableRecords);
-        getPageUtils().waitForElementToAppear(scenarioStateField);
-        getPageUtils().mouseMove(scenarioStateField);
+        getPageUtils().waitForElementToAppear(componentTypeField);
+        getPageUtils().mouseMove(componentTypeField);
         getPageUtils().waitForElementAndClick(tripleDotIcon);
         return this;
     }
@@ -566,10 +569,10 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return current page object
      */
-    public PartsAndAssembliesPage addFilterValue(String value) {
+    public PartsAndAssembliesPage addFilterValue(String componentName, String scenarioName) {
         getPageUtils().waitForElementAndClick(filteredValue);
-        filteredValue.sendKeys(value);
-        getPageUtils().waitForElementToAppear(filterRecords);
+        filteredValue.sendKeys(componentName);
+        getPageUtils().waitFor(5000);
         return new PartsAndAssembliesPage(getDriver());
     }
 
@@ -663,8 +666,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return a String
      */
     public String getDigitalFactorySortingRule() {
-        getPageUtils().waitForElementToAppear(digitalFactoryIcon);
         getPageUtils().mouseMove(digitalFactoryIcon);
+        getPageUtils().waitForElementToAppear(digitalFactoryIcon);
         return getPageUtils().waitForElementToAppear(digitalFactoryIcon).getAttribute("data-icon");
     }
 

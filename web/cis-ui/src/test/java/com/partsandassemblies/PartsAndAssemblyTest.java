@@ -152,7 +152,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickPinToLeft();
 
-        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getPinnedTableHeaders()).contains(CisColumnsEnum.COMPONENT_TYPE.getColumns());
 
         partsAndAssembliesPage.clickKebabMenuOnTableHeader();
 
@@ -160,7 +160,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.clickOnUnpinOption();
 
-        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.STATE.getColumns());
+        softAssertions.assertThat(partsAndAssembliesPage.getTableHeaders()).contains(CisColumnsEnum.COMPONENT_TYPE.getColumns());
 
 
         softAssertions.assertAll();
@@ -177,7 +177,7 @@ public class PartsAndAssemblyTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies();
 
@@ -240,7 +240,7 @@ public class PartsAndAssemblyTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickFilter();
@@ -257,7 +257,7 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.isFilterClearIconDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesPage.selectComponentNameField()).isEqualTo("componentName");
 
-        partsAndAssembliesPage.addFilterValue(componentName);
+        partsAndAssembliesPage.addFilterValue(componentName,scenarioName);
 
         softAssertions.assertThat(partsAndAssembliesPage.getFilteredComponentName()).isEqualTo(componentName);
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName,scenarioName)).isEqualTo(1);
@@ -299,7 +299,7 @@ public class PartsAndAssemblyTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownDigitalFactoryField()
@@ -309,7 +309,7 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickOnToggleButton()
                 .clickFilter()
                 .clickAddCondition()
-                .addFilterValue(componentName)
+                .addFilterValue(componentName,scenarioName)
                 .clickMessages()
                 .clickPartsAndAssemblies();
 
@@ -323,6 +323,7 @@ public class PartsAndAssemblyTest extends TestBase {
         partsAndAssembliesPage.clickOnShowHideOption()
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
+                .waitForTableResults()
                 .sortUpDigitalFactoryField()
                 .waitForTableResults()
                 .pinToRightProcessGroupColumn()
