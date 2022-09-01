@@ -142,7 +142,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issues( {
+    @Issues({
         @Issue("BA-2052"),
         @Issue("BA-2137")
     })
