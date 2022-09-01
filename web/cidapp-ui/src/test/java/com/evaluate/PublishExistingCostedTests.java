@@ -142,7 +142,7 @@ public class PublishExistingCostedTests extends TestBase {
     }
 
     @Test
-    @Issues({
+    @Issues( {
         @Issue("BA-2052"),
         @Issue("BA-2137")
     })
@@ -171,7 +171,9 @@ public class PublishExistingCostedTests extends TestBase {
             .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore();
 
-        cidComponentItemB = new ExplorePage(driver).uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+        cidComponentItemB = new ExplorePage(driver)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
         evaluatePage = new ExplorePage(driver).selectFilter("Private")
             .enterKeySearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
@@ -181,7 +183,7 @@ public class PublishExistingCostedTests extends TestBase {
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
-            .publish(cidComponentItemB, EvaluatePage.class);
+            .publish(EvaluatePage.class);
 
         assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
     }
