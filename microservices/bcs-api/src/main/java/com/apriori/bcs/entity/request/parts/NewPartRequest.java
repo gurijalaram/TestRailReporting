@@ -17,29 +17,30 @@ public class NewPartRequest {
     private Integer annualVolume;
     private Integer batchSize;
     private String description;
-    private String materialName;
+    private String material;
     private String pinnedRouting;
     private String processGroup;
     private Object productionLife;
     private String scenarioName;
     private String udas;
-    private String vpeName;
+    private String digitalFactory;
     private String generateWatchPointReport;
     private String fileData;
 
-    public void setVpeName(String vpeName) {
-        if (vpeName == null) {
-            this.vpeName = null;
+    public void setDigitalFactory(String digitalFactory) {
+        if (digitalFactory == null) {
+            this.digitalFactory = null;
         } else {
-            this.vpeName = vpeName;
+            this.digitalFactory = digitalFactory;
         }
     }
 
-    public void setMaterialName(String materialName) {
-        if (materialName == null) {
-            this.materialName = null;
+    public void setMaterial(String material) {
+        if (material == null) {
+            this.material = null;
         } else {
-            this.materialName = materialName;
+            this.material = material;
         }
     }
 }
+

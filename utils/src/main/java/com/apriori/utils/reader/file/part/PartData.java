@@ -1,12 +1,13 @@
 package com.apriori.utils.reader.file.part;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.File;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Data
 @Builder
@@ -14,15 +15,50 @@ import java.io.File;
 @AllArgsConstructor
 public class PartData {
 
-    @JsonProperty("filename")
-    private String fileName;
-    private File file;
-    private String processGroup;
-    private String material;
-    private String digitalFactory;
+    private String filename;
+    private String externalId;
     private Integer annualVolume;
-    @JsonProperty("secondaryDigitalFactory")
-    private String secondary;
-    private Double years;
     private Integer batchSize;
+    private String description;
+    private String material;
+    private String pinnedRouting;
+    private String processGroup;
+    private Object productionLife;
+    private String scenarioName;
+    private String udas;
+    private String digitalFactory;
+    private String generateWatchPointReport;
+    private File file;
+    private Double years;
+    private String secondaryDigitalFactory;
+    // benchmark metrics
+    private String identity;
+    private String partName;
+    private String batchIdentity;
+    private String costingResults;
+    private String errorMessage;
+    private String state;
+    private LocalDateTime startTime;
+    private Long costingDuration;
+
+    public void setDigitalFactory(String digitalFactory) {
+        if (digitalFactory == null) {
+            this.digitalFactory = null;
+        } else {
+            this.digitalFactory = digitalFactory;
+        }
+    }
+
+    public void setMaterial(String material) {
+        if (material == null) {
+            this.material = null;
+        } else {
+            this.material = material;
+        }
+    }
+
+    public PartData setCostingDuration(LocalDateTime updatedTime) {
+        this.costingDuration = ChronoUnit.SECONDS.between(startTime, updatedTime);
+        return this;
+    }
 }
