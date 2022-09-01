@@ -214,7 +214,7 @@ class ConnectionManager<T> {
      *
      * @return JSON POJO object instance of @returnType
      */
-    public <T> ResponseWrapper<T> getMultiPart() {
+    public <T> ResponseWrapper<T> getWithNoLogInfo() {
         return resultOf(
             createRequestSpecification()
                 .when()

@@ -24,25 +24,24 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MultiPartResources {
 
-    private static Map<String, BCSPartBenchmarkingDTO> partsCollector;
+    private static Map<String, PartData> partsCollector;
     private static final long WAIT_TIME = 1800;
     private static String line = "--------------------------------------------------------------------------------------------------------------------------------------\n";
+
 
     /**
      * Add number of parts (configured in config file) to batch
      *
-     * @param numberOfParts - number of parts
+     * @param partDataList  - bunch of parts
      * @param batchIdentity - Batch Identity
      */
-    public static void addPartsToBatch(int numberOfParts, String batchIdentity) {
+    public static void addPartsToBatch(List<PartData> partDataList, String batchIdentity) {
         partsCollector = new HashMap<>();
-
-        for (int i = 0; i < numberOfParts; i++) {
-            NewPartRequest newPartRequest = getNewPartRequestAndOverridePartData(BatchPartResources.newPartRequest());
-            Part batchPart = BatchPartResources.createNewBatchPartByID(newPartRequest, batchIdentity).getResponseEntity();
-            BCSPartBenchmarkingDTO benchData = consolidatePartsStatus(batchPart, newPartRequest);
-            benchData.setBatchIdentity(batchIdentity);
-            partsCollector.put(batchPart.getIdentity(), benchData);
+        for (PartData partData : partDataList) {
+            Part batchPart = BatchPartResources.createNewBatchPartByID(partData, batchIdentity).getResponseEntity();
+            batchPart.convertToBCSPartBenchData(partData);
+            partData.setBatchIdentity(batchIdentity);
+            partsCollector.put(batchPart.getIdentity(), partData);
         }
     }
 
@@ -80,9 +79,9 @@ public class MultiPartResources {
     private static NewPartRequest getNewPartRequestAndOverridePartData(NewPartRequest newPartRequest) {
         PartData partData = PartUtil.getPartData();
 
-        newPartRequest.setFilename(partData.getFileName());
+        newPartRequest.setFilename(partData.getFilename());
         newPartRequest.setProcessGroup(partData.getProcessGroup());
-        newPartRequest.setMaterialName(partData.getMaterial());
+        newPartRequest.setMaterial(partData.getMaterial());
         newPartRequest.setAnnualVolume(partData.getAnnualVolume());
         newPartRequest.setBatchSize(partData.getBatchSize());
 
@@ -100,7 +99,7 @@ public class MultiPartResources {
         BCSPartBenchmarkingDTO benchData = batchPart.convertToBCSPartBenchData();
         benchData.setFilename(newPartRequest.getFilename());
         benchData.setProcessGroup(newPartRequest.getProcessGroup());
-        benchData.setMaterialName(newPartRequest.getMaterialName());
+        benchData.setMaterialName(newPartRequest.getMaterial());
         benchData.setAnnualVolume(newPartRequest.getAnnualVolume());
         benchData.setBatchSize(newPartRequest.getBatchSize());
 
@@ -203,7 +202,7 @@ public class MultiPartResources {
      * @param parts List of parts
      * @return String (example : returns formatted string based calculation of data size %6s %4s %10s)
      */
-    private static String getFormattedString(List<BCSPartBenchmarkingDTO> parts) {
+    private static String getFormattedString(List<PartData> parts) {
         StringBuilder formattedString = new StringBuilder("");
         Integer identity = 1;
         Integer partName = 1;
@@ -213,7 +212,7 @@ public class MultiPartResources {
         Integer processingTime = 1;
         Integer errors = 1;
 
-        for (BCSPartBenchmarkingDTO partReport : parts) {
+        for (PartData partReport : parts) {
             identity = (null != partReport.getIdentity()) ? (partReport.getIdentity().length() > identity) ? partReport.getIdentity().length() : identity : identity;
             partName = (null != partReport.getPartName()) ? (partReport.getPartName().length() > partName) ? partReport.getPartName().length() : partName : partName;
             processGroup = (null != partReport.getProcessGroup()) ? (partReport.getProcessGroup().length() > processGroup) ? partReport.getProcessGroup().length() : processGroup : processGroup;
@@ -258,7 +257,7 @@ public class MultiPartResources {
     public static void summarizeAndLogPartsCostingInfo(Parts parts) {
         StringBuilder logInfoBuilder = new StringBuilder();
         parts.getItems().forEach(part -> {
-            BCSPartBenchmarkingDTO benchData = partsCollector.get(part.getIdentity());
+            PartData benchData = partsCollector.get(part.getIdentity());
             benchData.setState(part.getState());
             benchData.setCostingResults(part.getCostingResult());
             benchData.setErrorMessage(part.getErrors());
@@ -266,7 +265,7 @@ public class MultiPartResources {
             partsCollector.put(part.getIdentity(), benchData);
         });
 
-        List<BCSPartBenchmarkingDTO> partsReport = partsCollector.values()
+        List<PartData> partsReport = partsCollector.values()
             .stream()
             .collect(Collectors.toList());
 
@@ -276,7 +275,7 @@ public class MultiPartResources {
         logInfoBuilder.append(String.format(formattedString, "PART_ID", "PART_NAME", "PROCESS_GROUP", "PART_STATE", "COSTING_RESULT", "PROCESSING_TIME", "ERRORS"));
         logInfoBuilder.append(line);
 
-        for (BCSPartBenchmarkingDTO partDTO : partsReport) {
+        for (PartData partDTO : partsReport) {
             logInfoBuilder.append(String.format(formattedString, partDTO.getIdentity(), partDTO.getPartName(),
                 partDTO.getProcessGroup(), partDTO.getState(), partDTO.getCostingResults(),
                 BcsUtils.convertSecsToMins(partDTO.getCostingDuration()), partDTO.getErrorMessage()));
@@ -284,7 +283,7 @@ public class MultiPartResources {
         logInfoBuilder.append(line);
         log.info(logInfoBuilder.toString());
 
-        for (BCSPartBenchmarkingDTO partDTO : partsReport) {
+        for (PartData partDTO : partsReport) {
             Assert.assertEquals("Verify Part State", BCSState.COMPLETED.toString(), partDTO.getState());
         }
     }
