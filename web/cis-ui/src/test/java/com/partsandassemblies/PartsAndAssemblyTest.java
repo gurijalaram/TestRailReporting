@@ -241,7 +241,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .uploadAndCostScenario(componentName, scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickFilter();
 
@@ -257,10 +257,10 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.isFilterClearIconDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesPage.selectComponentNameField()).isEqualTo("componentName");
 
-        partsAndAssembliesPage.addFilterValue(componentName,scenarioName);
+        partsAndAssembliesPage.addFilterValue(componentName, scenarioName);
 
         softAssertions.assertThat(partsAndAssembliesPage.getFilteredComponentName()).isEqualTo(componentName);
-        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName,scenarioName)).isEqualTo(1);
+        softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
 
         partsAndAssembliesPage.clickRemoveCondition();
 
@@ -300,7 +300,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .uploadAndCostScenario(componentName, scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownDigitalFactoryField()
                 .pinToLeftProcessGroupColumn()
