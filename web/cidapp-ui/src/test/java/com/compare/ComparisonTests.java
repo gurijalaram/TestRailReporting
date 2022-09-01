@@ -8,6 +8,7 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.containsInRelativeOrder;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -38,8 +39,11 @@ import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.List;
 
 public class ComparisonTests extends TestBase {
 
@@ -59,6 +63,7 @@ public class ComparisonTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
 
     public ComparisonTests() {
         super();
@@ -757,6 +762,248 @@ public class ComparisonTests extends TestBase {
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS)).isEqualTo("75.00%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("139.70%");
         softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("3.56%");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6534"})
+    @Description("User can add assemblies to existing comparison containing part scenario")
+    public void addAssemblyToExistingComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String componentName2 = "Push Pin";
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final String assemblyScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            assemblyScenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .costScenario()
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .createComparison()
+            .modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(assemblyName, assemblyScenarioName)
+            .submit(ComparePage.class);
+
+        assertThat(comparePage.getAllScenariosInComparison(), containsInRelativeOrder(assemblyName.toUpperCase() + "  / " + assemblyScenarioName));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6533"})
+    @Description("User can add assemblies to a blank new comparison")
+    public void addPublicAndPrivateAssemblyToComparison() {
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName1 = "Hinge assembly";
+        final String assemblyExtension1 = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup1 = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames1 = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension1 = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup1 = ProcessGroupEnum.FORGING;
+
+        final String assemblyScenarioName1 = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName1,
+            assemblyExtension1,
+            assemblyProcessGroup1,
+            subComponentNames1,
+            subComponentExtension1,
+            subComponentProcessGroup1,
+            assemblyScenarioName1,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly1).uploadAssembly(componentAssembly1);
+        assemblyUtils.costSubComponents(componentAssembly1).costAssembly(componentAssembly1);
+
+        final String assemblyName2 = "flange c";
+        final String assemblyExtension2 = ".CATProduct";
+        final ProcessGroupEnum assemblyProcessGroup2 = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames2 = Arrays.asList("flange", "nut", "bolt");
+        final String subComponentExtension2 = ".CATPart";
+        final ProcessGroupEnum subComponentProcessGroup2 = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        final String assemblyScenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName2,
+            assemblyExtension2,
+            assemblyProcessGroup2,
+            subComponentNames2,
+            subComponentExtension2,
+            subComponentProcessGroup2,
+            assemblyScenarioName2,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly2).uploadAssembly(componentAssembly2);
+        assemblyUtils.costSubComponents(componentAssembly2).costAssembly(componentAssembly2);
+
+        final String assemblyName3 = "Hinge assembly";
+        final String assemblyExtension3 = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup3 = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames3 = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension3 = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup3 = ProcessGroupEnum.FORGING;
+
+        final String assemblyScenarioName3 = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly3 = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName3,
+            assemblyExtension3,
+            assemblyProcessGroup3,
+            subComponentNames3,
+            subComponentExtension3,
+            subComponentProcessGroup3,
+            assemblyScenarioName3,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly3).uploadAssembly(componentAssembly3);
+        assemblyUtils.costSubComponents(componentAssembly3).costAssembly(componentAssembly3);
+        assemblyUtils.publishSubComponents(componentAssembly3).publishAssembly(componentAssembly3);
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .multiSelectScenarios("" + assemblyName1 + ", " + assemblyScenarioName1 + "", "" + assemblyName2 + ", " + assemblyScenarioName2 + "")
+            .createComparison()
+            .modify()
+            .selectFilter("Public")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(assemblyName3, assemblyScenarioName3)
+            .submit(ComparePage.class);
+
+        assertThat(comparePage.getAllScenariosInComparison(), containsInRelativeOrder(assemblyName3.toUpperCase() + "  / " + assemblyScenarioName3));
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6537", "6535"})
+    @Description("Assemblies in comparison can be interacted with in a similar way as part scenarios - open, basis, delete")
+    public void interactWithAssemblyInComparison() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "M3CapScrew";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String componentName2 = "Push Pin";
+        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final String assemblyScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            assemblyScenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        comparePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
+            .costScenario()
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
+            .createComparison();
+
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
+
+        comparePage.modify()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickScenarioCheckbox(assemblyName, assemblyScenarioName)
+            .submit(ComparePage.class);
+
+        evaluatePage = comparePage.openScenario(assemblyName, assemblyScenarioName);
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(assemblyScenarioName)).isEqualTo(true);
+
+        comparePage = evaluatePage.clickCompare()
+            .dragDropToBasis(assemblyName, assemblyScenarioName);
+
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(assemblyName.toUpperCase() + "  / " + assemblyScenarioName);
+
+        comparePage.collapse("Info & Inputs")
+            .collapse("Assembly Info")
+            .collapse("Material & Utilization")
+            .collapse("Design Guidance")
+            .collapse("Process")
+            .collapse("Cost Result");
+
+        softAssertions.assertThat(comparePage.isSectionExpanded("Info & Inputs")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Assembly Info")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Material & Utilization")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Design Guidance")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Process")).isEqualTo(false);
+        softAssertions.assertThat(comparePage.isSectionExpanded("Cost Result")).isEqualTo(false);
+
+        comparePage.expand("Info & Inputs")
+            .expand("Assembly Info")
+            .expand("Material & Utilization")
+            .expand("Design Guidance")
+            .expand("Process")
+            .expand("Cost Result");
+
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Description")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Components Cost")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Finish Mass")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("DFM Risk")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Routing")).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isComparisonInfoDisplayed("Investment")).isEqualTo(true);
+
+        comparePage.deleteBasis();
+        softAssertions.assertThat(comparePage.getBasis()).isEqualTo(componentName.toUpperCase() + "  / " + scenarioName);
 
         softAssertions.assertAll();
     }
