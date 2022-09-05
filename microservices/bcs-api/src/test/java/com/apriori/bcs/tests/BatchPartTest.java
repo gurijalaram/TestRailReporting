@@ -19,8 +19,10 @@ import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.part.PartData;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
@@ -31,10 +33,11 @@ import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
+import java.util.List;
+
 public class BatchPartTest {
 
     private static Batch batch;
-    private static NewPartRequest newPartRequest = null;
     private static Part part = null;
 
     @BeforeClass
@@ -54,9 +57,10 @@ public class BatchPartTest {
         "3. Wait for the costing process to complete for all parts" +
         "4. Log Parts costing results.")
     public void cost10Parts() {
+        List<PartData> partDataList = new TestDataService().getPartsFromCloud(10);
         SoftAssertions softAssertions = new SoftAssertions();
         Batch batch = BatchResources.createBatch().getResponseEntity();
-        MultiPartResources.addPartsToBatch(10, batch.getIdentity());
+        MultiPartResources.addPartsToBatch(partDataList, batch.getIdentity());
         softAssertions.assertThat(MultiPartResources.waitUntilBatchPartsCostingAreCompleted(batch.getIdentity())).isTrue();
         Parts parts = BatchPartResources.getBatchPartById(batch.getIdentity()).getResponseEntity();
         MultiPartResources.summarizeAndLogPartsCostingInfo(parts);

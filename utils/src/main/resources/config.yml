@@ -8,10 +8,10 @@ global:
   users_csv_file: onprem-users.csv
   different_users: false
   different_parts: true
-# TODO z: should be migrated to environment variable
+  # TODO z: should be migrated to environment variable
   auth_cloud_context: "H337GKD0LA0MH337GKD0LA0N70EGN68B5CMHHINFI93FGL80"
-#  cloud context for qa-cid-perf
-#  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
+  #  cloud context for qa-cid-perf
+  #  auth_cloud_context: "92E1E4E9DFCDCNLKB29B4GN84DNM9FD2HIE1HINFI93FGL80"
 
   db_recording: true
 
@@ -436,3 +436,47 @@ local:
 
   css:
     api_url: ${local.base_url}:8802/
+
+######################################################## QA-TEST ########################################################
+qa-test:
+  name: qa-test
+  secret_key: PG9E795ML3P4
+  user_identity: 1F7GAI5DLI2B
+  customer_identity: 92E1E4E9DFCD
+  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net
+
+  cidapp:
+    api_url: https://cid-api.${default.aws_region}-v23-1.${env}.apriori.net/
+    ui_url: https://ci-design.${default.aws_region}-v23-1.${env}.apriori.net/
+
+  css:
+    api_url: https://css.${default.aws_region}-v23-1.${env}.apriori.net/
+
+  admin:
+    ui_url: ${qa-cid-perf.base_url}apriori/login
+
+  bcs:
+    api_url: https://bcs.na-1-v22-1.qa-cid-perf.apriori.net/
+    number_of_parts: 5
+  cas:
+    ui_url: https://cas.na-1.qa-cid-perf.apriori.net/
+    api_url: https://cas-api.na-1.qa-cid-perf.apriori.net/
+
+  cds:
+    apriori_core_services_installation_identity: 8E9MK02F4H9F
+    apriori_cloud_home_identity: 1J8M416FBJBK
+    appro_application_identity: 1J8M416FBJ94
+    apriori_production_deployment_identity: CNLKB29B4GN8
+    cia_application_identity: 1J8M416FBJCD
+    automation_user_identity02: 1F4GF3E20D38
+    automation_user_identity03: 1F4HJ2A9GM9C
+    identity_role: 67J517C9L763
+
+  ci-connect:
+    ui_url: https://ci-connect.na-1-v23-1.qa-test.apriori.net/
+    second_page_starting_range_number: 26
+    default_connector: Automation - NA - WC
+
+  reports:
+    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
+    on_prem_vm_url: https://conqbaci01/jasperserver-pro/

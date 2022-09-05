@@ -18,5 +18,5 @@ import java.util.List;
 @JsonRootName("response")
 public class ScenarioSuccessesFailures {
     private List<Scenario> successes;
-    private List<Scenario> failures;
+    private List<Failures> failures;
 }

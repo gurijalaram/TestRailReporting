@@ -14,6 +14,8 @@ import com.apriori.utils.json.utils.JsonManager;
 
 import org.apache.http.HttpStatus;
 
+import java.util.List;
+
 public class PartsUtil extends TestUtil {
 
     /**
@@ -79,6 +81,23 @@ public class PartsUtil extends TestUtil {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT, null)
                 .inlineVariables(bomIdentity, lineItemIdentity, partIdentity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Method to select Part or Parts to cost
+     *
+     * @param bomIdentity      - the bom identity
+     * @param lineItemIdentity - the line item identity
+     * @param partIdentity     - the part identity
+     * @return parts response object
+     */
+    public ResponseWrapper<Parts> postSelectPartsToCost(String bomIdentity, String lineItemIdentity, List<String> partIdentity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST, null)
+                .inlineVariables(bomIdentity, lineItemIdentity)
+                .body(partIdentity);
 
         return HTTPRequest.build(requestEntity).post();
     }

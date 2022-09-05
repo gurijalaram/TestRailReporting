@@ -2,12 +2,15 @@ package com.apriori.utils.dataservice;
 
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.reader.file.part.PartData;
+import com.apriori.utils.reader.file.part.PartUtil;
 
 import com.opencsv.CSVWriter;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -49,11 +52,24 @@ public class TestDataService {
         return this.testDataMap;
     }
 
-    public <T> T getTestData(String inputJsonFile, Class<T> klass) {
+    public <T> T getTestData(String inputFile, Class<T> klass) {
         T testData = null;
         testData = (T) JsonManager.deserializeJsonFromInputStream(
-            FileResourceUtil.getResourceFileStream("testdata/" + inputJsonFile), klass);
+            FileResourceUtil.getResourceFileStream("testdata/" + inputFile), klass);
         return testData;
+    }
+
+    /**
+     * Get part test data from css-test-parts.csv file AWS S3 bucket
+     * @return PartData class object
+     */
+    public List<PartData> getPartsFromCloud(Integer numOfParts) {
+        List<PartData> partDataList = new ArrayList<>();
+        for (int i = 0; i < numOfParts; i++) {
+            PartData partData = PartUtil.getPartDataWithFile();
+            partDataList.add(partData);
+        }
+        return partDataList;
     }
 
     public Map deserializeDataToMap(String inputJsonFile) {
@@ -125,6 +141,7 @@ public class TestDataService {
         }
         return value;
     }
+
 
     private File writeToFile(String fileName) {
         File fileDirectory = FileResourceUtil.createTempDir("gonogo");
