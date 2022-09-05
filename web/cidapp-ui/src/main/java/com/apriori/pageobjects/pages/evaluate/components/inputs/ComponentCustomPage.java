@@ -4,9 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,23 +15,23 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class ComponentCustomAttributesPage extends LoadableComponent<CustomAttributesPage> {
+public class ComponentCustomPage extends LoadableComponent<CustomPage> {
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
+    private WebElement customTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Secondary']")
-    private WebElement secondaryTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
+    private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Primary']")
-    private WebElement primaryTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
+    private WebElement basicTab;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
-    public ComponentCustomAttributesPage(WebDriver driver) {
+    public ComponentCustomPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -44,35 +42,33 @@ public class ComponentCustomAttributesPage extends LoadableComponent<CustomAttri
 
     @Override
     protected void load() {
-    //Don't really need to do anything here
+        //Don't really need to do anything here
     }
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Custom Attributes was not selected", customAttributesTab.getAttribute("class").contains("active"));
+        assertTrue("Custom was not selected", customTab.getAttribute("class").contains("active"));
     }
 
     /**
-     * Opens primary tab
+     * Opens basic tab
      *
      * @return new page object
      */
-    public EvaluatePage goToPrimaryTab() {
-        pageUtils.waitForElementAndClick(primaryTab);
-        return new EvaluatePage(driver);
+    public ComponentBasicPage goToBasicTab() {
+        pageUtils.waitForElementAndClick(basicTab);
+        return new ComponentBasicPage(driver);
     }
 
     /**
-     * Opens secondary tab
+     * Opens advanced tab
      *
      * @return new page object
      */
-    public SecondaryPage goToSecondaryTab() {
-        pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryPage(driver);
+    public ComponentAdvancedPage goToAdvancedTab() {
+        pageUtils.waitForElementAndClick(advancedTab);
+        return new ComponentAdvancedPage(driver);
     }
-
-
 
     /**
      * Select the cancel button

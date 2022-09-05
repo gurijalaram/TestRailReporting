@@ -60,7 +60,7 @@ public class BcsSdsIntegrationTests {
         Part part;
         String materialMode;
         NewPartRequest newPartRequest = BatchPartResources.newPartRequest();
-        newPartRequest.setMaterialName("");
+        newPartRequest.setMaterial("");
         ResponseWrapper<Part> response = BatchPartResources.createNewBatchPartByID(newPartRequest, batch.getIdentity());
         part = response.getResponseEntity();
         BcsUtils.waitForCostingState(batch.getIdentity(), part.getIdentity());

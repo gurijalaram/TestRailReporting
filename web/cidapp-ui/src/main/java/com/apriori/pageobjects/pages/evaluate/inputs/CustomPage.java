@@ -15,23 +15,23 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class CustomAttributesPage extends LoadableComponent<CustomAttributesPage> {
+public class CustomPage extends LoadableComponent<CustomPage> {
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom']")
+    private WebElement customTab;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Secondary']")
-    private WebElement secondaryTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Advanced']")
+    private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Primary']")
-    private WebElement primaryTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Basic']")
+    private WebElement basicTab;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
-    public CustomAttributesPage(WebDriver driver) {
+    public CustomPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
@@ -47,26 +47,26 @@ public class CustomAttributesPage extends LoadableComponent<CustomAttributesPage
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Custom Attributes was not selected", customAttributesTab.getAttribute("class").contains("active"));
+        assertTrue("Custom was not selected", customTab.getAttribute("class").contains("active"));
     }
 
     /**
-     * Opens primary tab
+     * Opens basic tab
      *
      * @return new page object
      */
-    public EvaluatePage goToPrimaryTab() {
-        pageUtils.waitForElementAndClick(primaryTab);
+    public EvaluatePage goToBasicTab() {
+        pageUtils.waitForElementAndClick(basicTab);
         return new EvaluatePage(driver);
     }
 
     /**
-     * Opens secondary tab
+     * Opens advanced tab
      *
      * @return new page object
      */
-    public SecondaryPage goToSecondaryTab() {
-        pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryPage(driver);
+    public AdvancedPage goToAdvancedTab() {
+        pageUtils.waitForElementAndClick(advancedTab);
+        return new AdvancedPage(driver);
     }
 }

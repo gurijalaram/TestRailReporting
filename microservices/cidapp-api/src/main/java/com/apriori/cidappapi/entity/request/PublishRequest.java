@@ -1,5 +1,7 @@
 package com.apriori.cidappapi.entity.request;
 
+import com.apriori.utils.reader.file.user.UserCredentials;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,4 +23,5 @@ public class PublishRequest {
     private String scenarioName;
     private List<GroupItems> groupItems;
     private Options options;
+    private UserCredentials user;
 }

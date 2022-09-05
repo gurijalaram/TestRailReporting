@@ -4,8 +4,7 @@ import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryDFPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.utils.PageUtils;
@@ -20,44 +19,44 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import java.util.List;
 
 @Slf4j
-public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondaryPage> {
+public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPage> {
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Secondary']")
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
     private WebElement secondaryTab;
 
     @FindBy(css = ".modal-body input[name='batchSize']")
     private WebElement batchSizeInput;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field-part-costing'] button")
+    @FindBy(css = ".secondary-process-modal-select-field [data-icon='pencil']")
     private WebElement secondaryProcessesPencil;
 
-    @FindBy(css = "div[id='qa-secondary-process-modal-select-field-part-costing'] button")
+    @FindBy(css = ".secondary-process-modal-select-field .input-group-append button")
     private WebElement secondaryProcesses;
 
     @FindBy(css = "div[id='qa-secondary-process-modal-select-field-part-costing'] .modal-select-content")
     private WebElement secondaryProcessesInput;
 
-    @FindBy(css = "div[id='qa-secondary-digital-factory-select-part-costing'] button")
+    @FindBy(css = ".secondary-digital-factory-modal-select-field [data-icon='pencil']")
     private WebElement secondaryDFPencil;
 
-    @FindBy(css = "div[id='qa-secondary-digital-factory-select-part-costing'] .modal-select-content")
+    @FindBy(css = ".secondary-digital-factory-modal-select-field .input-group-append button")
     private WebElement secondaryDFInput;
 
     @FindBy(css = "[id='qa-secondary-digital-factory-select-part-costing']")
     private WebElement secDigitalFactoryList;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
+    private WebElement customTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Primary']")
-    private WebElement primaryTab;
+    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
+    private WebElement basicTab;
 
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
 
-    public ComponentSecondaryPage(WebDriver driver) {
+    public ComponentAdvancedPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.inputsController = new InputsController(driver);
@@ -74,7 +73,7 @@ public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondary
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Secondary tab was not selected", secondaryTab.getAttribute("class").contains("active"));
+        assertTrue("Advanced tab was not selected", secondaryTab.getAttribute("class").contains("active"));
         pageUtils.waitForElementToAppear(batchSizeInput);
     }
 
@@ -84,7 +83,7 @@ public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondary
      * @param batchSize - the batch size
      * @return current page object
      */
-    public ComponentSecondaryPage enterBatchSize(String batchSize) {
+    public ComponentAdvancedPage enterBatchSize(String batchSize) {
         inputsController.enterBatchSize(batchSizeInput, batchSize);
         return this;
     }
@@ -159,9 +158,9 @@ public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondary
      *
      * @return new page object
      */
-    public CustomAttributesPage goToCustomAttributesTab() {
-        pageUtils.waitForElementAndClick(customAttributesTab);
-        return new CustomAttributesPage(driver);
+    public CustomPage goToCustomTab() {
+        pageUtils.waitForElementAndClick(customTab);
+        return new CustomPage(driver);
     }
 
     /**
@@ -169,9 +168,9 @@ public class ComponentSecondaryPage extends LoadableComponent<ComponentSecondary
      *
      * @return new page object
      */
-    public EvaluatePage goToPrimaryTab() {
-        pageUtils.waitForElementAndClick(primaryTab);
-        return new EvaluatePage(driver);
+    public ComponentBasicPage goToBasicTab() {
+        pageUtils.waitForElementAndClick(basicTab);
+        return new ComponentBasicPage(driver);
     }
 
     /**

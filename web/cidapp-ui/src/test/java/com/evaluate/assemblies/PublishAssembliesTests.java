@@ -432,7 +432,7 @@ public class PublishAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778"})
+    @TestRail(testCaseId = {"10771", "10772", "10776", "10777", "10778", "6746", "6615", "6616", "6617"})
     @Description("Modify the Status/ Cost Maturity/ Assignee/ Lock during a Shallow Publish")
     public void testShallowPublishWithModifiedFeatures() {
         currentUser = UserUtil.getUser();

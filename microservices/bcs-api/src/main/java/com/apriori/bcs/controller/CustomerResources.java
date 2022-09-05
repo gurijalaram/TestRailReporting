@@ -26,7 +26,7 @@ public class CustomerResources {
     public static ResponseWrapper<UserPreferences> patchCostingPreferences() {
         PatchCostingPreferenceRequest request =
             JsonManager.deserializeJsonFromInputStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
+                FileResourceUtil.getResourceFileStream("schemas/testdata/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
         request.setCadToleranceReplacement(100.00);
         request.setMinCadToleranceThreshold(new Random().nextDouble());
         RequestEntity requestEntity = RequestEntityUtil
