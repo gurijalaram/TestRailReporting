@@ -15,11 +15,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
 
@@ -41,7 +39,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement nameInput;
     @FindBy(css = ".query-builder-action-buttons [data-icon='plus']")
     private WebElement addButton;
-    @FindBy(css = ".query-builder-action-buttons [data-icon='xmark']")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='circle-xmark']")
     private WebElement clearButton;
     @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
