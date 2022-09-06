@@ -22,7 +22,8 @@ public class OldAuthorizationUtil {
     private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
     private static final HashMap<String, String> headers = new HashMap<>();
 
-    public OldAuthorizationUtil() {}
+    public OldAuthorizationUtil() {
+    }
 
     /**
      * POST to get a JWT token
