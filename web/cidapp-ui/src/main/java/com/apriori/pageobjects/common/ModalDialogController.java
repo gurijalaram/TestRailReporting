@@ -33,6 +33,12 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
     private WebElement cancelButton;
 
+    @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Cancel']")
+    private WebElement cancel;
+
+    @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Submit']")
+    private WebElement submit;
+
     @FindBy(xpath = "//div[@class='modal-content']//button[.='Try Again']")
     private WebElement tryAgainButton;
 
@@ -101,6 +107,26 @@ public class ModalDialogController {
      */
     public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T cancelButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(cancel);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Select the cancel button
+     *
+     * @return generic page object
+     */
+    public <T> T submitButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(submit);
         return PageFactory.initElements(driver, klass);
     }
 
