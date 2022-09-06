@@ -938,13 +938,11 @@ public class EditAssembliesTest extends TestBase {
             .applyAndCost(SetInputStatusPage.class)
             .close(ComponentsListPage.class);
 
-        subComponentNames.forEach(componentName ->
-            softAssertions.assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE))
-                .isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState()));
-
         componentsListPage.closePanel()
             .clickExplore()
-            .selectFilter("Recent")
+            .queryCssComponentParams(BOLT, scenarioName, currentUser, "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
+            .selectFilter("Private")
             .clickSearch(BOLT)
             .multiSelectScenarios("" + BOLT + ", " + scenarioName + "")
             .delete()
