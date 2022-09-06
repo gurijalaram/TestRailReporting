@@ -2,6 +2,7 @@ package com.apriori.cnh.entity.response;
 
 import com.apriori.utils.http.enums.Schema;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,4 +16,7 @@ import lombok.NoArgsConstructor;
 public class ExecuteResponse {
     private String executionId;
     private String status;
+    private String error;
+    @JsonProperty
+    private String Message;
 }

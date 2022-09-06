@@ -33,4 +33,32 @@ public class CnhService {
 
         return HTTPRequest.build(requestEntity).post();
     }
+
+    /**
+     * overload method to pass extra headers, calls 'execute' POST endpoint
+     *
+     * @param executeRequest - pass the body
+     */
+    public ResponseWrapper<ExecuteResponse> execute(Map<String, String> headers, ExecuteRequest executeRequest,String... inlineVariables) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CNHAPIEnum.EXECUTE, ExecuteResponse.class)
+            .headers(headers)
+            .body(executeRequest)
+            .inlineVariables(inlineVariables);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+
+
+    /**
+     * calls 'execution' GET endpoint
+     *
+     */
+    public ResponseWrapper<ExecuteResponse> status(String... inlineVariables) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CNHAPIEnum.STATUS, ExecuteResponse.class)
+            .headers(headers)
+            .inlineVariables(inlineVariables);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
 }
