@@ -1065,9 +1065,5 @@ public class FileUploadResources {
         headers.put("apriori.tenantgroup", defaultString);
         headers.put("apriori.tenant", defaultString);
         headers.put("Authorization", "Bearer " + token);
-        /*Object[] tokenArray = token.keySet().toArray();
-        for (Object key : tokenArray) {
-            headers.put(key.toString(), token.get(key));
-        }*/
     }
 }

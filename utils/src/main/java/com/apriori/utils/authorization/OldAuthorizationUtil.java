@@ -17,22 +17,12 @@ import java.util.Map;
 
 @Slf4j
 public class OldAuthorizationUtil {
-    /*private String username = PropertiesContext.get("${env}.ats.token_username");
-    private String email = PropertiesContext.get("${env}.ats.token_email");
-    private String issuer = PropertiesContext.get("${env}.ats.token_issuer");
-    private String subject = PropertiesContext.get("${customer}.token_subject");*/
 
     @Singular
     private List<Map<String, ?>> xwwwwFormUrlEncodeds = new ArrayList<>();
     private static final HashMap<String, String> headers = new HashMap<>();
 
-    /*public OldAuthorizationUtil(UserCredentials userCredentials) {
-        this.username = userCredentials.getUsername();
-        this.email = userCredentials.getEmail();
-    }*/
-
-    public OldAuthorizationUtil() {
-    }
+    public OldAuthorizationUtil() {}
 
     /**
      * POST to get a JWT token
