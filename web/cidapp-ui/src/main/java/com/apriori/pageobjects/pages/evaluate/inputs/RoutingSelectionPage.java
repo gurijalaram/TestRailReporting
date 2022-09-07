@@ -18,8 +18,8 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     @FindBy(css = "svg[data-testid='CheckBoxIcon']")
     private WebElement checkBox;
 
-    @FindBy(css = "[data-testid='select-routing-btn-%s']")
-    private WebElement routingSelection;
+    @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Submit']")
+    private WebElement submit;
 
     private ModalDialogController modalDialogController = new ModalDialogController(getDriver());
 
@@ -33,15 +33,21 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     }
 
     public RoutingSelectionPage selectLetAprioriDecide() {
-        By byCheckBox = By.xpath("//input[@class]/parent::span/parent::div[@class]//span//input[@value='false']");
+        By byCheckBox = By.xpath("//input[@class]/parent::span/parent::div[@class]//span//input[@value='true']");
         getPageUtils().waitForElementToAppear(byCheckBox);
         getPageUtils().waitForElementAndClick(byCheckBox);
         return this;
     }
 
-    public RoutingSelectionPage selectPlasma(int indexNumber) {
-        By byRoutingIndex = By.cssSelector(String.format("[data-testid='select-routing-btn-%s']", indexNumber - 1));
-        getPageUtils().waitForElementAndClick(byRoutingIndex);
+    /**
+     * Select routing preference by name
+     *
+     * @param preference - routing preference
+     * @return - this page object
+     */
+    public RoutingSelectionPage selectRoutingPreferenceByName(String preference) {
+        By byRoutingPreference = By.xpath(String.format("//h3[text()='%s']/parent::div/following-sibling::div/button", preference));
+        getPageUtils().waitForElementAndClick(byRoutingPreference);
         return this;
     }
 
@@ -60,6 +66,15 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
-        return modalDialogController.submitButton(klass);
+        return modalDialogController.submitButton(submit, klass);
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isSubmitButtonEnabled() {
+        return getPageUtils().isElementEnabled(submit);
     }
 }

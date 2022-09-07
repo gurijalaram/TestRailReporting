@@ -153,4 +153,13 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
     public List<String> getListOfSecondaryDigitalFactory() {
         return inputsController.getListOfDigitalFactory(secDigitalFactoryList, "Secondary Digital Factory");
     }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isRoutingSelectionButtonEnabled() {
+        return pageUtils.isElementEnabled(routingSelection);
+    }
 }
