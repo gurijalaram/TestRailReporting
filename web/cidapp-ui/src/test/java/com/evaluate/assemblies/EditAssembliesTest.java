@@ -936,11 +936,10 @@ public class EditAssembliesTest extends TestBase {
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
-            .close(ComponentsListPage.class);
-
-        componentsListPage.closePanel()
+            .close(ComponentsListPage.class)
+            .closePanel()
             .clickExplore()
-            .queryCssComponentParams(BOLT, scenarioName, currentUser, "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .queryCssComponentParams(BOLT, scenarioName, currentUser, "scenarioState, " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished, false", "iteration, 1")
             .refresh()
             .selectFilter("Private")
             .clickSearch(BOLT)
@@ -950,7 +949,7 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
 
         softAssertions.assertAll();
     }
