@@ -52,7 +52,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//*[@data-field='scenarioState']")
     private WebElement scenarioStateField;
 
-    @FindBy(xpath = "//*[@data-field='scenarioState']//button[@title='Menu']//*[local-name()='svg']")
+    @FindBy(xpath = "//*[@data-field='componentType']//button[@title='Menu']//*[local-name()='svg']")
     private WebElement tripleDotIcon;
 
     @FindBy(xpath = "//*[@data-testid='menu-item-pin']")
@@ -156,6 +156,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     @FindBy(xpath = "//*[@data-field='costingInput.processGroupName']//div[contains(@class,'columnHeaderDraggableContainer')]")
     private WebElement processGroupFieldDrag;
+
+    @FindBy(xpath = "//*[@data-field='componentType']")
+    private WebElement componentTypeField;
+
+    @FindBy(xpath = "//li[@data-value='scenarioName']")
+    private WebElement scenarioNameFiled;
 
     public PartsAndAssembliesPage(WebDriver driver) {
 
@@ -270,8 +276,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage clickKebabMenuOnTableHeader() {
         getPageUtils().waitForElementToAppear(tableRecords);
-        getPageUtils().waitForElementToAppear(scenarioStateField);
-        getPageUtils().mouseMove(scenarioStateField);
+        getPageUtils().waitForElementToAppear(componentTypeField);
+        getPageUtils().mouseMove(componentTypeField);
         getPageUtils().waitForElementAndClick(tripleDotIcon);
         return this;
     }
@@ -566,10 +572,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      *
      * @return current page object
      */
-    public PartsAndAssembliesPage addFilterValue(String value) {
+    public PartsAndAssembliesPage addFilterValue(String componentName, String scenarioName) {
+        getPageUtils().waitForElementAndClick(filterField);
+        getPageUtils().waitForElementAndClick(scenarioNameFiled);
         getPageUtils().waitForElementAndClick(filteredValue);
-        filteredValue.sendKeys(value);
-        getPageUtils().waitForElementToAppear(filterRecords);
+        filteredValue.sendKeys(scenarioName);
+        getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']"));
         return new PartsAndAssembliesPage(getDriver());
     }
 
@@ -663,8 +671,8 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      * @return a String
      */
     public String getDigitalFactorySortingRule() {
-        getPageUtils().waitForElementToAppear(digitalFactoryIcon);
         getPageUtils().mouseMove(digitalFactoryIcon);
+        getPageUtils().waitForElementToAppear(digitalFactoryIcon);
         return getPageUtils().waitForElementToAppear(digitalFactoryIcon).getAttribute("data-icon");
     }
 

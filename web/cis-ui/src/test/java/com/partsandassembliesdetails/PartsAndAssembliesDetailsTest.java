@@ -198,8 +198,10 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getPartNestingTitle()).isEqualTo("Part Nesting");
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingGraphControllerDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingDetailsSectionDisplayed()).isEqualTo(true);
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DETAILS.getInsightsFields())).contains(CisInsightsFieldsEnum.UTILIZATION_INFO.getInsightsFields(),CisInsightsFieldsEnum.SELECTED_SHEET.getInsightsFields(),CisInsightsFieldsEnum.BLANK_SIZE.getInsightsFields(),
-                CisInsightsFieldsEnum.PARTS_PER_SHEET.getInsightsFields(),CisInsightsFieldsEnum.CONFIGURATION.getInsightsFields(),CisInsightsFieldsEnum.UTILIZATION_MODE.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DETAILS.getInsightsFields())).contains(CisInsightsFieldsEnum.UTILIZATION_INFO.getInsightsFields(),
+                CisInsightsFieldsEnum.SELECTED_SHEET.getInsightsFields(), CisInsightsFieldsEnum.BLANK_SIZE.getInsightsFields(),
+                CisInsightsFieldsEnum.PARTS_PER_SHEET.getInsightsFields(),CisInsightsFieldsEnum.CONFIGURATION.getInsightsFields(),
+                CisInsightsFieldsEnum.UTILIZATION_MODE.getInsightsFields());
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getPartNestingState()).isEqualTo("caret-up");
 
         partsAndAssembliesDetailsPage.collapsePartNestingSection();
@@ -233,9 +235,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialPropertiesTitle()).isEqualTo(CisInsightsFieldsEnum.MATERIAL_PROPERTIES.getInsightsFields());
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.MATERIAL_PROPERTIES.getInsightsFields())).contains(CisInsightsFieldsEnum.CUT_COST.getInsightsFields(),CisInsightsFieldsEnum.USA_NAME.getInsightsFields(),CisInsightsFieldsEnum.DIN_NAME.getInsightsFields(),CisInsightsFieldsEnum.EN_NAME.getInsightsFields(),
-                CisInsightsFieldsEnum.UNIT_COST.getInsightsFields(),CisInsightsFieldsEnum.DENSITY.getInsightsFields(),CisInsightsFieldsEnum.YOUNG_MODULE.getInsightsFields(),CisInsightsFieldsEnum.STRAIN_HARDENING_COEFFICIENT.getInsightsFields(),CisInsightsFieldsEnum.STRAIN_HARDENING_EXPONENT.getInsightsFields(),
-                CisInsightsFieldsEnum.LANKFORD_PARAMETER.getInsightsFields(),CisInsightsFieldsEnum.MILLING_SPEED.getInsightsFields(),CisInsightsFieldsEnum.HARDNESS.getInsightsFields(),CisInsightsFieldsEnum.HARDNESS_SYSTEM.getInsightsFields(),CisInsightsFieldsEnum.POSSION_RATIO.getInsightsFields(),CisInsightsFieldsEnum.SHER_STRENGTH.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.MATERIAL_PROPERTIES.getInsightsFields())).contains(CisInsightsFieldsEnum.CUT_COST.getInsightsFields(),
+                CisInsightsFieldsEnum.USA_NAME.getInsightsFields(),CisInsightsFieldsEnum.DIN_NAME.getInsightsFields(),CisInsightsFieldsEnum.EN_NAME.getInsightsFields(),
+                CisInsightsFieldsEnum.UNIT_COST.getInsightsFields(),CisInsightsFieldsEnum.DENSITY.getInsightsFields(),CisInsightsFieldsEnum.YOUNG_MODULE.getInsightsFields(),
+                CisInsightsFieldsEnum.STRAIN_HARDENING_COEFFICIENT.getInsightsFields(),CisInsightsFieldsEnum.STRAIN_HARDENING_EXPONENT.getInsightsFields(),
+                CisInsightsFieldsEnum.LANKFORD_PARAMETER.getInsightsFields(),CisInsightsFieldsEnum.MILLING_SPEED.getInsightsFields(),CisInsightsFieldsEnum.HARDNESS.getInsightsFields(),
+                CisInsightsFieldsEnum.HARDNESS_SYSTEM.getInsightsFields(),CisInsightsFieldsEnum.POSSION_RATIO.getInsightsFields(),CisInsightsFieldsEnum.SHER_STRENGTH.getInsightsFields());
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialPropertiesState()).isEqualTo("caret-up");
 
         partsAndAssembliesDetailsPage.collapseMaterialPropertiesSection();
@@ -269,9 +274,11 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockCardDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialStockTitle()).isEqualTo("Material Stock");
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.BASIC_INFORMATION.getInsightsFields())).contains(CisInsightsFieldsEnum.SELECTED_STOCK.getInsightsFields(),CisInsightsFieldsEnum.SELECTED_METHOD.getInsightsFields(),CisInsightsFieldsEnum.STOCK_FORM.getInsightsFields(),
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.BASIC_INFORMATION.getInsightsFields())).contains(CisInsightsFieldsEnum.SELECTED_STOCK.getInsightsFields(),
+                CisInsightsFieldsEnum.SELECTED_METHOD.getInsightsFields(),CisInsightsFieldsEnum.STOCK_FORM.getInsightsFields(),
                 CisInsightsFieldsEnum.VIRTUAL_STOCK.getInsightsFields(),CisInsightsFieldsEnum.UNIT_COST.getInsightsFields());
-        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DIMENSIONS.getInsightsFields())).contains(CisInsightsFieldsEnum.PART.getInsightsFields(),CisInsightsFieldsEnum.STOCK.getInsightsFields());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getItemsOfSections(CisInsightsFieldsEnum.DIMENSIONS.getInsightsFields())).contains(CisInsightsFieldsEnum.PART.getInsightsFields(),
+                CisInsightsFieldsEnum.STOCK.getInsightsFields());
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getMaterialStockState()).isEqualTo("caret-up");
 
         partsAndAssembliesDetailsPage.collapseMaterialStockSection();

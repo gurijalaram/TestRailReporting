@@ -44,6 +44,9 @@ public class LeftHandNavigationBar extends CisHeaderBar {
     @FindBy(xpath = "//img[@data-testid='collapsed-logo']")
     private WebElement collapsedAprioriLogo;
 
+    @FindBy(xpath = "//div[starts-with(@Class,'MuiDataGrid-cellCheckbox')]")
+    private List<WebElement> tableRow;
+
     private LetNavigationBarController letNavigationBarController;
     private final ScenariosUtil scenariosUtil = new ScenariosUtil();
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
@@ -90,6 +93,7 @@ public class LeftHandNavigationBar extends CisHeaderBar {
 
     public PartsAndAssembliesPage clickPartsAndAssemblies() {
         getPageUtils().waitForElementToAppear(btnPartsAndAssemblies).click();
+        getPageUtils().waitForElementsToAppear(tableRow);
         return new PartsAndAssembliesPage(getDriver());
     }
 
