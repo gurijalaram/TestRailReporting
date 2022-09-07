@@ -36,7 +36,7 @@ public class LargeGroupAssemblyTests extends TestBase {
     }
 
     @Before
-    public static void assemblySetup() {
+    public void assemblySetup() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
         List<String> subComponentNames = Arrays.asList(CENTRE_BOLT.getPartName());
