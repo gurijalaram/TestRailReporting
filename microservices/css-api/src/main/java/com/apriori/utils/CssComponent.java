@@ -1,5 +1,7 @@
 package com.apriori.utils;
 
+import static org.junit.Assert.assertEquals;
+
 import com.apriori.css.entity.enums.CssAPIEnum;
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -12,7 +14,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
-import org.junit.Assert;
 
 import java.util.Arrays;
 import java.util.HashMap;
@@ -109,7 +110,7 @@ public class CssComponent {
 
                 ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
 
-                Assert.assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, cssComponentResponse.getStatusCode()),
+                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, cssComponentResponse.getStatusCode()),
                     HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
                 if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&

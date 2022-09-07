@@ -1,38 +1,10 @@
 {
+  "$schema": "http://json-schema.org/draft-04/schema#",
   "type": "object",
-  "optional": [
-    "response"
-  ],
   "properties": {
     "response": {
       "type": "object",
-      "optional": [
-        "sites"
-      ],
-      "required": [
-        "identity",
-        "createdBy",
-        "createdAt",
-        "userType",
-        "userProfile",
-        "email",
-        "username",
-        "active",
-        "customAttributes",
-        "customerIdentity",
-        "mfaRequired"
-      ],
       "properties": {
-        "mfaRequired": {
-          "type": "boolean"
-        },
-        "customAttributes": {
-          "type": "object",
-          "optional": [
-            "function",
-            "workspaceId"
-          ]
-        },
         "identity": {
           "type": "string"
         },
@@ -42,24 +14,11 @@
         "createdAt": {
           "type": "string"
         },
-        "updatedBy": {
-          "type": "string"
-        },
         "updatedAt": {
-          "type": "string"
-        },
-        "userType": {
           "type": "string"
         },
         "userProfile": {
           "type": "object",
-          "required": [
-            "identity",
-            "createdBy",
-            "createdAt",
-            "givenName",
-            "familyName"
-          ],
           "properties": {
             "identity": {
               "type": "string"
@@ -75,40 +34,15 @@
             },
             "familyName": {
               "type": "string"
-            },
-            "jobTitle": {
-              "type": "string"
-            },
-            "department": {
-              "type": "string"
-            },
-            "supervisor": {
-              "type": "string"
-            },
-            "timezone": {
-              "type": "string"
-            },
-            "townCity": {
-              "type": "string"
-            },
-            "countryCode": {
-              "type": "string"
-            },
-            "prefix": {
-              "type": "string"
-
-            },
-            "suffix": {
-              "type": "string"
-
-            },
-            "stateProvince": {
-              "type": "string"
-            },
-            "county": {
-              "type": "string"
             }
-          }
+          },
+          "required": [
+            "identity",
+            "createdBy",
+            "createdAt",
+            "givenName",
+            "familyName"
+          ]
         },
         "email": {
           "type": "string"
@@ -121,34 +55,53 @@
         },
         "sites": {
           "type": "array",
-          "items": {
-            "type": "object",
-            "required": [
-              "identity",
-              "createdBy",
-              "createdAt",
-              "siteIdentity"
-            ],
-            "properties": {
-              "identity": {
-                "type": "string"
-              },
-              "createdBy": {
-                "type": "string"
-              },
-              "createdAt": {
-                "type": "string"
-              },
-              "siteIdentity": {
-                "type": "string"
-              }
+          "items": {}
+        },
+        "customAttributes": {
+          "type": "object",
+          "properties": {
+            "workspaceId": {
+              "type": "integer"
             }
-          }
+          },
+          "required": [
+            "workspaceId"
+          ]
+        },
+        "roles": {
+          "type": "array",
+          "items": [
+            {
+              "type": "string"
+            }
+          ]
         },
         "customerIdentity": {
           "type": "string"
+        },
+        "userType": {
+          "type": "string"
+        },
+        "mfaRequired": {
+          "type": "boolean"
         }
-      }
+      },
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "updatedAt",
+        "userProfile",
+        "email",
+        "username",
+        "active",
+        "sites",
+        "customAttributes",
+        "roles",
+        "customerIdentity",
+        "userType",
+        "mfaRequired"
+      ]
     }
   }
 }
