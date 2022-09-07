@@ -1,17 +1,24 @@
 package com.evaluate.assemblies;
 
+import static com.utils.PartNamesEnum.CENTRE_BOLT;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
+import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class LargeGroupAssemblyTests extends TestBase {
 
@@ -27,14 +34,29 @@ public class LargeGroupAssemblyTests extends TestBase {
         super();
     }
 
-    @BeforeClass
+    // @BeforeClass
     public static void assemblySetup() {
-        int f = 1;
-        int r = 2;
+        final String assemblyName = "Gym Bike";
+        final String assemblyExtension = ".iam";
+        List<String> subComponentNames = Arrays.asList(CENTRE_BOLT.getPartName());
+        final String subComponentExtension = ".ipt";
 
-        if (f < r) {
-            throw new RuntimeException("Exception caught");
-        }
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+
+        currentUser = UserUtil.getUser("none");
+        scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly)
+            .uploadAssembly(componentAssembly);
     }
 
     @Test
