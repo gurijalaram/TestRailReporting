@@ -26,9 +26,9 @@ import com.apriori.acs.entity.response.acs.getsetuserpreferences.SetUserPreferen
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
-import com.apriori.acs.utils.APIAuthentication;
 import com.apriori.acs.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.authorization.OldAuthorizationUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.enums.EndpointEnum;
@@ -45,8 +45,7 @@ import java.util.List;
 @Slf4j
 public class AcsResources {
 
-    private static final HashMap<String, String> token = new APIAuthentication()
-            .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
+    private static final String token = new OldAuthorizationUtil().getTokenAsString();
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
@@ -71,7 +70,9 @@ public class AcsResources {
                     .scenarioName(new GenerateStringUtil().generateScenarioName())
                     .scenarioType(Constants.PART_COMPONENT_TYPE)
                     .missing(true)
+                    .publicItem(true)
                     .createdBy(validUsername)
+                    .userId(validUsername)
                     .build()
             );
 
@@ -723,12 +724,11 @@ public class AcsResources {
      * Sets up header with content type and token
      */
     private void setupHeader() {
+        String defaultString = "default";
         headers.put("Content-Type", "application/json");
-        headers.put("apriori.tenantgroup", "default");
-        headers.put("apriori.tenant", "default");
-        Object[] tokenArray = token.keySet().toArray();
-        for (Object key : tokenArray) {
-            headers.put(key.toString(), token.get(key));
-        }
+        headers.put("Accept", "*/*");
+        headers.put("apriori.tenantgroup", defaultString);
+        headers.put("apriori.tenant", defaultString);
+        headers.put("Authorization", "Bearer " + token);
     }
 }
