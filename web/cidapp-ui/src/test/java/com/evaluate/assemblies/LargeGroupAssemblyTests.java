@@ -6,16 +6,11 @@ import static com.utils.PartNamesEnum.DISPLAY;
 import static com.utils.PartNamesEnum.GASKET;
 import static com.utils.PartNamesEnum.HANDLE;
 import static com.utils.PartNamesEnum.LEFT_PADDLE;
-import static com.utils.PartNamesEnum.LEG;
-import static com.utils.PartNamesEnum.LEG_COVER;
 import static com.utils.PartNamesEnum.MECHANISM_BODY;
 import static com.utils.PartNamesEnum.PADDLE_BAR;
 import static com.utils.PartNamesEnum.PIN;
-import static com.utils.PartNamesEnum.RIGHT_PADDLE;
-import static com.utils.PartNamesEnum.SEAT;
 import static com.utils.PartNamesEnum.SEAT_LOCK;
 import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
-import static com.utils.PartNamesEnum.WASHER;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -55,9 +50,7 @@ public class LargeGroupAssemblyTests extends TestBase {
     public static void assemblySetup() {
         final String assemblyName = "Gym Bik";
         final String assemblyExtension = ".iam";
-        List<String> subComponentNames = Arrays.asList(CENTRE_BOLT.getPartName(), CENTRE_WASHER.getPartName(), DISPLAY.getPartName(), GASKET.getPartName(), HANDLE.getPartName(),
-            LEFT_PADDLE.getPartName(), LEG_COVER.getPartName(), LEG.getPartName(), MECHANISM_BODY.getPartName(), PADDLE_BAR.getPartName(), PIN.getPartName(),
-            RIGHT_PADDLE.getPartName(), SEAT_LOCK.getPartName(), SEAT.getPartName(), STEER_WHEEL_SUPPORT.getPartName(), WASHER.getPartName());
+        List<String> subComponentNames = Arrays.asList(CENTRE_BOLT.getPartName());
         final String subComponentExtension = ".ipt";
 
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
