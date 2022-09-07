@@ -86,20 +86,20 @@ public class LargeGroupAssemblyTests extends TestBase {
     @TestRail(testCaseId = {"11807", "11804"})
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void test1() {
-
+        loginPage = new CidAppLoginPage(driver);
     }
 
     @Test
     @TestRail(testCaseId = {"11807", "11804"})
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void test2() {
-
+        loginPage = new CidAppLoginPage(driver);
     }
 
     @Test
     @TestRail(testCaseId = {"11807", "11804"})
     @Description("Publish button becomes unavailable when 11+ private sub-components selected")
     public void test3() {
-
+        loginPage = new CidAppLoginPage(driver);
     }
 }
