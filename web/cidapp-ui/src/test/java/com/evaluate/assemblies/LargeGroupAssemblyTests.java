@@ -36,7 +36,7 @@ public class LargeGroupAssemblyTests extends TestBase {
         super();
     }
 
-   // @BeforeClass
+    // @BeforeClass
     public static void assemblySetup() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
