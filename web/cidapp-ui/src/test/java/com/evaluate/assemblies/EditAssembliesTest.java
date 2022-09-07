@@ -949,7 +949,7 @@ public class EditAssembliesTest extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents();
 
-        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PRIVATE.getStatusIcon());
+        softAssertions.assertThat(componentsListPage.getRowDetails(BOLT, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
         softAssertions.assertAll();
     }
