@@ -22,6 +22,7 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     USER_PREFERENCE_BY_NAME("ws/workspace/users/%s/preferences/preference?key=%s"),
     SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/scenario-info"),
     SCENARIOS_INFORMATION("ws/workspace/scenario-info/search"),
+    SAVE_ROUTING_SELECTION("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/routing-selection"),
     UNIT_VARIANT_SETTINGS("ws/workspace/global-info/unitVariantSettings"),
     WEB_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/web"),
     DESKTOP_IMAGE_BY_SCENARIO_ITERATION_KEY("ws/viz/%s/scenarios/%s/%s/%s/iterations/%s/images/desktop"),

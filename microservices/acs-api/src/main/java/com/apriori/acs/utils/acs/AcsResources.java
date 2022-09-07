@@ -4,6 +4,7 @@ import com.apriori.acs.entity.enums.acs.AcsApiEnum;
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioInputs;
 import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
@@ -25,6 +26,7 @@ import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferen
 import com.apriori.acs.entity.response.acs.getsetuserpreferences.SetUserPreferencesInputs;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.UnitVariantSetting;
+import com.apriori.acs.entity.response.acs.saveroutingselection.SaveRoutingSelectionInputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -512,6 +514,39 @@ public class AcsResources {
             .inlineVariables(validUsername, prefToSetKey);
 
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        List<SaveRoutingSelectionInputs> childrenList = new ArrayList<>();
+        childrenList.add(SaveRoutingSelectionInputs.builder()
+            .name("Sheet Metal")
+            .plantName("aPriori USA")
+            .processGroupName("Sheet Metal")
+            .alternNode(true)
+            .build()
+        );
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.SAVE_ROUTING_SELECTION, GenericResourceCreatedIdResponse.class)
+            .headers(headers)
+            .body(SaveRoutingSelectionInputs.builder()
+                .name("Sheet Metal/Machining")
+                .plantName("aPriori USA")
+                .processGroupName("Sheet Metal")
+                .children(childrenList)
+                .alternNode(false)
+                .build())
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
+
+        return (GenericResourceCreatedIdResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
