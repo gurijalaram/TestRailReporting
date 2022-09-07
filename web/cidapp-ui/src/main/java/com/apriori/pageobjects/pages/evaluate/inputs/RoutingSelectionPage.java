@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +16,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     @FindBy(css = "svg[data-icon='code-branch']")
     private WebElement selectRouting;
 
-    @FindBy(css = "svg[data-testid='CheckBoxIcon']")
+    @FindBy(css = ".MuiCheckbox-colorPrimary")
     private WebElement checkBox;
 
     @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Submit']")
@@ -32,10 +33,13 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
         getPageUtils().waitForElementToAppear(selectRouting);
     }
 
+    /**
+     * Clicks the Let aPriori Decide check box
+     *
+     * @return - current page object
+     */
     public RoutingSelectionPage selectLetAprioriDecide() {
-        By byCheckBox = By.xpath("//input[@class]/parent::span/parent::div[@class]//span//input[@value='true']");
-        getPageUtils().waitForElementToAppear(byCheckBox);
-        getPageUtils().waitForElementAndClick(byCheckBox);
+        getPageUtils().waitForElementAndClick(checkBox);
         return this;
     }
 
@@ -43,7 +47,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * Select routing preference by name
      *
      * @param preference - routing preference
-     * @return - this page object
+     * @return - current page object
      */
     public RoutingSelectionPage selectRoutingPreferenceByName(String preference) {
         By byRoutingPreference = By.xpath(String.format("//h3[text()='%s']/parent::div/following-sibling::div/button", preference));
@@ -76,5 +80,18 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      */
     public boolean isSubmitButtonEnabled() {
         return getPageUtils().isElementEnabled(submit);
+    }
+
+    /**
+     * Get cost label from a specific routing preference
+     *
+     * @param routingPreference - the routing preference
+     * @param label             - cost label
+     * @return - Boolean
+     */
+    public boolean isCostLabel(String routingPreference, NewCostingLabelEnum label) {
+        By byCostLabel = By.xpath(String.format("//h3[text()='%s']/parent::div//div[.='%s']", routingPreference, label.getCostingText()));
+        WebElement costLabel = getDriver().findElement(byCostLabel);
+        return getPageUtils().textPresentInElement(costLabel, label.getCostingText());
     }
 }

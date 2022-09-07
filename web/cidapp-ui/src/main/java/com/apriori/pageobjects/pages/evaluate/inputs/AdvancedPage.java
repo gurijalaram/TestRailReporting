@@ -41,6 +41,9 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
     @FindBy(css = "[id='qa-routing-modal-select-field'] [data-icon='pencil']")
     private WebElement routingSelection;
 
+    @FindBy(css = "[id='qa-routing-modal-select-field']")
+    private WebElement preferenceText;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
@@ -161,5 +164,14 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
      */
     public boolean isRoutingSelectionButtonEnabled() {
         return pageUtils.isElementEnabled(routingSelection);
+    }
+
+    /**
+     * Get the Routing preference text
+     *
+     * @return - String
+     */
+    public String getRoutingSelectionPreferenceText() {
+        return pageUtils.waitForElementToAppear(preferenceText).getAttribute("textContent");
     }
 }
