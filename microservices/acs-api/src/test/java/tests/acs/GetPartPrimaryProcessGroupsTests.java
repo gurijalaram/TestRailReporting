@@ -33,6 +33,7 @@ public class GetPartPrimaryProcessGroupsTests {
         processGroupValues.remove(ProcessGroupEnum.RESOURCES.getProcessGroup());
         processGroupValues.remove(ProcessGroupEnum.ROLL_UP.getProcessGroup());
         processGroupValues.remove(ProcessGroupEnum.WITHOUT_PG.getProcessGroup());
+        processGroupValues.remove(ProcessGroupEnum.INVALID_PG.getProcessGroup());
 
         assertThat(getPartPrimaryProcessGroupsResponse.size(), is(equalTo(22)));
         assertThat(getPartPrimaryProcessGroupsResponse.containsAll(processGroupValues), is(true));
