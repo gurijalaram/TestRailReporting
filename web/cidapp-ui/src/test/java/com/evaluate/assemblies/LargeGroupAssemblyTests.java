@@ -1,16 +1,7 @@
 package com.evaluate.assemblies;
 
 import static com.utils.PartNamesEnum.CENTRE_BOLT;
-import static com.utils.PartNamesEnum.CENTRE_WASHER;
-import static com.utils.PartNamesEnum.DISPLAY;
-import static com.utils.PartNamesEnum.GASKET;
-import static com.utils.PartNamesEnum.HANDLE;
-import static com.utils.PartNamesEnum.LEFT_PADDLE;
-import static com.utils.PartNamesEnum.MECHANISM_BODY;
-import static com.utils.PartNamesEnum.PADDLE_BAR;
 import static com.utils.PartNamesEnum.PIN;
-import static com.utils.PartNamesEnum.SEAT_LOCK;
-import static com.utils.PartNamesEnum.STEER_WHEEL_SUPPORT;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -54,7 +45,7 @@ public class LargeGroupAssemblyTests extends TestBase {
         final String subComponentExtension = ".ipt";
 
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.CASTING_DIE;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
 
         currentUser = UserUtil.getUser();
         scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -80,16 +71,7 @@ public class LargeGroupAssemblyTests extends TestBase {
             .navigateToScenario(componentAssembly)
             .openComponents()
             .multiSelectSubcomponents(
-                CENTRE_BOLT.getPartName() + ", " + scenarioName + "",
-                CENTRE_WASHER.getPartName() + ", " + scenarioName + "",
-                DISPLAY.getPartName() + ", " + scenarioName + "",
-                GASKET.getPartName() + ", " + scenarioName + "",
-                HANDLE.getPartName() + ", " + scenarioName + "",
-                LEFT_PADDLE.getPartName() + ", " + scenarioName + "",
-                STEER_WHEEL_SUPPORT.getPartName() + ", " + scenarioName + "",
-                SEAT_LOCK.getPartName() + ", " + scenarioName + "",
-                MECHANISM_BODY.getPartName() + ", " + scenarioName + "",
-                PADDLE_BAR.getPartName() + ", " + scenarioName + "");
+                CENTRE_BOLT.getPartName() + ", " + scenarioName);
 
         softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
 
