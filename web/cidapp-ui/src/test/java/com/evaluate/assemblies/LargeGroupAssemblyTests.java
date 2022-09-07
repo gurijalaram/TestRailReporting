@@ -48,13 +48,13 @@ public class LargeGroupAssemblyTests extends TestBase {
 
     @BeforeClass
     public static void assemblySetup() {
-        final String assemblyName = "Gym Bik";
+        final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
         List<String> subComponentNames = Arrays.asList(CENTRE_BOLT.getPartName());
         final String subComponentExtension = ".ipt";
 
         final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
-        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.CASTING_DIE;
 
         currentUser = UserUtil.getUser();
         scenarioName = new GenerateStringUtil().generateScenarioName();
