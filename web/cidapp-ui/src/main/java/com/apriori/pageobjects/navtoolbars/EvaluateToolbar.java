@@ -21,11 +21,11 @@ import java.util.List;
 @Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
 
-    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
-    private WebElement costButton;
-
     @FindBy(css = ".alert")
     private WebElement costLabel;
+
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
+    private WebElement costButton;
 
     @FindBy(css = ".scenario-state-preview [data-icon='cog']")
     private List<WebElement> cogIcon;
@@ -39,7 +39,6 @@ public class EvaluateToolbar extends ExploreToolbar {
         this.pageUtils = new PageUtils(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(costButton);
         pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
@@ -60,7 +59,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
         pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
+        clickCostButton(EvaluateToolbar.class);
         waitForCostLabel(timeoutInMinutes);
         return new EvaluatePage(driver);
     }
@@ -72,7 +71,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public EvaluateToolbar clickCostButton() {
         pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
+        clickCostButton(EvaluateToolbar.class);
         return this;
     }
 
