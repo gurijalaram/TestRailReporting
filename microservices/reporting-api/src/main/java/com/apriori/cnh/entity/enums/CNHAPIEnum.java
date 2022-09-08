@@ -5,7 +5,8 @@ import com.apriori.utils.properties.PropertiesContext;
 
 public enum CNHAPIEnum implements ExternalEndpointEnum {
 
-    EXECUTE("dev/customers/3KED5H5BKN85/reports/%s/execute");
+    EXECUTE("dev/customers/%s/reports/%s/execute"),
+    STATUS("dev/customers/%s/reports/%s/executions/%s/status");
 
 
     private final String endpoint;
