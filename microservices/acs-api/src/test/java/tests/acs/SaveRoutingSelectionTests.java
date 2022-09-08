@@ -5,7 +5,9 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
+import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
@@ -17,17 +19,20 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
 
 public class SaveRoutingSelectionTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "")
-    @Description("")
+    @TestRail(testCaseId = "C12356")
+    @Description("Save Routing Selection after Cost")
     public void testSaveRoutingSelection() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
@@ -44,8 +49,15 @@ public class SaveRoutingSelectionTests {
             testScenarioName
         );
 
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+                productionInfoInputs,
+                fileUploadOutputs,
+                processGroup,
+                false
+        );
+
         GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
-            fileUploadOutputs.getScenarioIterationKey()
+            costOutputs.getScenarioIterationKey()
         );
 
         assertThat(response.getId(), is(notNullValue()));
