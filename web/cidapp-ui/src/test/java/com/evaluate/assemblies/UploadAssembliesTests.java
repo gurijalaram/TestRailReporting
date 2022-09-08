@@ -3,13 +3,18 @@ package com.evaluate.assemblies;
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.authusercontext.User;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -19,6 +24,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -39,6 +45,8 @@ public class UploadAssembliesTests extends TestBase {
     private File assembly;
     private UserCredentials currentUser = UserUtil.getUser();
     private SoftAssertions softAssertions = new SoftAssertions();
+    private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private ExplorePage explorePage;
 
     public UploadAssembliesTests() {
         super();
@@ -282,5 +290,185 @@ public class UploadAssembliesTests extends TestBase {
 
         componentNames2.forEach(component ->
             assertThat(componentsListPage.isComponentNameDisplayedInTreeView(component.toUpperCase()), is(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "5620")
+    @Description("User can upload an assembly when the same assembly with same scenario name exists in the public workspace")
+    public void uploadAnAssemblyExistingInThePublicWorkspace() {
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName1 = "Hinge assembly";
+        final String assemblyExtension1 = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup1 = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames1 = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension1 = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup1 = ProcessGroupEnum.FORGING;
+
+        final String assemblyScenarioName1 = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName1,
+            assemblyExtension1,
+            assemblyProcessGroup1,
+            subComponentNames1,
+            subComponentExtension1,
+            subComponentProcessGroup1,
+            assemblyScenarioName1,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly1).uploadAssembly(componentAssembly1);
+        assemblyUtils.costSubComponents(componentAssembly1).costAssembly(componentAssembly1);
+        assemblyUtils.publishSubComponents(componentAssembly1).publishAssembly(componentAssembly1);
+
+        final String assemblyName2 = "Hinge assembly";
+        final List<String> subComponentNames2 = Arrays.asList("big ring", "Pin", "small ring");
+        List<MultiUpload> secondAssemblyBatch = new ArrayList<>();
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), assemblyScenarioName1));
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), assemblyScenarioName1));
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), assemblyScenarioName1));
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "Hinge assembly.SLDASM"), assemblyScenarioName1));
+
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .selectFilter("Public");
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName1, assemblyScenarioName1)).isEqualTo(1);
+
+            explorePage.importCadFile()
+            .inputMultiComponents(secondAssemblyBatch)
+            .inputScenarioName(assemblyScenarioName1)
+            .submit()
+            .close()
+            .selectFilter("Private");
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName2, assemblyScenarioName1)).isEqualTo(1);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = "5621")
+    @Description("Validate sub components such as bolts or screws can exist in multiple assemblies")
+    public void uploadAnAssemblyThatIsPartOfAnotherAssembly() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "titan battery ass";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentAName = Arrays.asList("titan battery release");
+        final List<String> subComponentBName = Arrays.asList("titan battery");
+        final String subComponentAExtension = ".SLDPRT";
+        final String subComponentBExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentAProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+        final ProcessGroupEnum subComponentBProcessGroup = ProcessGroupEnum.STOCK_MACHINING;
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentBName,
+            subComponentBExtension,
+            subComponentBProcessGroup,
+            scenarioName,
+            currentUser);
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        /*ComponentInfoBuilder componentAssemblyB = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentBName,
+            subComponentBExtension,
+            subComponentBProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssemblyB).uploadAssembly(componentAssemblyB);*/
+
+        /*final String assemblyName2 = "titan charger ass";
+        final String assemblyExtension2 = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup2 = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+
+
+        ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName2,
+            assemblyExtension2,
+            assemblyProcessGroup2,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly2).uploadAssembly(componentAssembly2);
+*/
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .openComponent(assemblyName, scenarioName, currentUser)
+            .openComponents();
+
+
+
+        /*final String assemblyName1 = "titan battery ass";
+        final List<String> subComponentNames1 = Arrays.asList("titan battery release", "titan battery");
+        List<MultiUpload> firstAssemblyBatch = new ArrayList<>();
+        firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan battery release.SLDPRT"), scenarioName));
+        firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.STOCK_MACHINING, "titan battery.SLDPRT"), scenarioName));
+        firstAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "titan battery ass.SLDASM"), scenarioName));
+
+        final String assemblyName2 = "titan charger ass";
+        final List<String> subComponentNames2 = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
+        List<MultiUpload> secondAssemblyBatch = new ArrayList<>();
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger base.SLDPRT"), scenarioName));
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger lead.SLDPRT"), scenarioName));
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "titan charger upper.SLDPRT"), scenarioName));
+        secondAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "titan charger ass.SLDASM"), scenarioName));
+
+        final String assemblyName3 = "titan cordless drill";
+        final List<String> subComponentNames3 = Arrays.asList("titan body RH", "titan body LH", "titan power switch", "titan speed switch", "titan bulk head",
+            "titan bit holder", "titan forward reverse switch", "titan torque setting");
+        List<MultiUpload> thirdAssemblyBatch = new ArrayList<>();
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan body RH.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan body LH.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan power switch.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan speed switch.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan bulk head.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan bit holder.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan forward reverse switch.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "titan torque setting.SLDPRT"), scenarioName));
+        thirdAssemblyBatch.add(new MultiUpload(FileResourceUtil.getCloudFile(ASSEMBLY, "titan cordless drill.SLDASM"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+         componentsListPage = loginPage.login(currentUser)
+             .importCadFile()
+             .inputMultiComponents(firstAssemblyBatch)
+             .inputMultiComponents(secondAssemblyBatch)
+             .inputMultiComponents(thirdAssemblyBatch)
+             .inputScenarioName(scenarioName)
+             .submit()
+             .close()
+             .openComponent(assemblyName2, scenarioName, currentUser)
+             .openComponents();
+
+            softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
+
+            componentsListPage.closePanel();
+            explorePage = evaluatePage.clickExplore();
+            explorePage.openComponent(assemblyName3, scenarioName, currentUser)
+                .openComponents();
+
+            softAssertions.assertThat(componentsListPage.isComponentNameDisplayedInTreeView(assemblyName1)).isEqualTo(true);
+
+            softAssertions.assertAll();
+
+
+
+    }*/
     }
 }
