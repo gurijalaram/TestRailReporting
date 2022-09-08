@@ -18,5 +18,5 @@ public class ExecuteResponse {
     private String status;
     private String error;
     @JsonProperty("Message")
-    private String Message;
+    private String message;
 }
