@@ -58,8 +58,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
-        pageUtils.waitForElementToAppear(costLabel);
-        clickCostButton(EvaluateToolbar.class);
+        clickCostButton();
         waitForCostLabel(timeoutInMinutes);
         return new EvaluatePage(driver);
     }
