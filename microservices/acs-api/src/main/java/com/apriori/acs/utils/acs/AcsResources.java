@@ -20,6 +20,7 @@ import com.apriori.acs.entity.response.acs.getsetdisplayunits.GetDisplayUnitsRes
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.entity.response.acs.getsetproductiondefaults.SetProductionDefaultsInputs;
+import com.apriori.acs.entity.response.acs.getsetproductioninfo.SetProductionInfoInputs;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
 import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferencesResponse;
@@ -516,6 +517,24 @@ public class AcsResources {
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
+    public GenericResourceCreatedIdResponse setProductionInfo() {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.SET_PRODUCTION_INFO, GenericResourceCreatedResponse.class)
+            .headers(headers)
+            .body(SetProductionInfoInputs.builder().build())
+            .inlineVariables(validUsername, "prefToSetKey");
+
+        return (GenericResourceCreatedIdResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Save routing selection
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @return GenericResourceCreatedIdResponse instance
+     */
     public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
