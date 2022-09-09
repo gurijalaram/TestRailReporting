@@ -171,7 +171,7 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
      *
      * @return - String
      */
-    public String getRoutingSelectionPreferenceText() {
+    public String getRoutingSelectionSelected() {
         return pageUtils.waitForElementToAppear(preferenceText).getAttribute("textContent");
     }
 }
