@@ -3,20 +3,26 @@ package com.evaluate.dtc;
 import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ToleranceEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.Java6StandardSoftAssertionsProvider;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -30,6 +36,8 @@ public class DTCMachiningTests extends TestBase {
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private UserCredentials currentUser;
+    private TolerancesPage tolerancesPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
 
@@ -57,15 +65,15 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Keyseat Mill Accessibility", "Slot", "Slot:3");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Keyseat Mill Accessibility", "Slot", "Slot:3");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("There is no available Groove milling tool that can fit inside the Slot."));
     }
@@ -83,15 +91,15 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Surface", "CurvedSurface:1");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Surface", "CurvedSurface:1");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Contouring: Feature contains a sharp corner that would require a zero tool diameter"));
     }
@@ -110,18 +118,18 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Planar Face", "PlanarFace:5");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Planar Face", "PlanarFace:5");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Facing: Feature contains a sharp corner that would require a zero tool diameter. " +
-            "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
+                "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     @Test
@@ -137,15 +145,15 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(STOCK_MACHINING)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Side Milling L/D", "Curved Wall", "CurvedWall:6");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(STOCK_MACHINING)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Side Milling L/D", "Curved Wall", "CurvedWall:6");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Side Milling: Required tool exceeds the max L/D Ratio"));
     }
@@ -163,15 +171,15 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Missing Setups", "Planar Face", "PlanarFace:6");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Missing Setups", "Planar Face", "PlanarFace:6");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Setup Axis was not automatically assigned"));
     }
@@ -189,15 +197,15 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Obstructed Surfaces", "Planar Face", "PlanarFace:9");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario()
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Obstructed Surfaces", "Planar Face", "PlanarFace:9");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Facing: Feature is not accessible by an active setup. Activate a new Setup, override operation feasibility, or select a specialized machining operation."));
     }
@@ -251,18 +259,18 @@ public class DTCMachiningTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Hot Worked, AISI 1010")
-            .submit(EvaluatePage.class)
-            .costScenario(3)
-            .openDesignGuidance()
-            .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Wall", "CurvedWall:22");
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .search("AISI 1010")
+                .selectMaterial("Steel, Hot Worked, AISI 1010")
+                .submit(EvaluatePage.class)
+                .costScenario(3)
+                .openDesignGuidance()
+                .selectIssueTypeGcd("Machining Issues, Sharp Corner", "Curved Wall", "CurvedWall:22");
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Side Milling: Feature contains a sharp corner that would require a zero tool diameter. " +
-            "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
+                "If sharp corner was intentional, try activating a new setup or changing process/operation. If sharp corner was unintentional, update CAD model or override operation feasibility rule."));
     }
 
     /*    @Test
@@ -300,34 +308,37 @@ public class DTCMachiningTests extends TestBase {
         assertThat(investigationPage.getInvestigationCell("SetupAxis:4", "GCD Count"), is(equalTo("39")));
     }*/
 
-    /*    @Test
-    @TestRail(testCaseId = {"6449", "6450"})
+    @Test
+    @TestRail(testCaseId = {"6452"})
     @Description("Verify tolerances which induce an additional operation are correctly respected in CI Design geometry tab")
     public void toleranceInducingTest() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
+        evaluatePage = loginPage.login(currentUser)
+                .openSettings()
+                .goToToleranceTab()
+                .selectCad()
+                .submit(ExplorePage.class)
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .costScenario();
 
-        settingsPage = new SettingsPage(driver);
-        tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadComponentAndOpen(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario()
-            .openDesignGuidance()
-            .openTolerancesTab()
-            .selectToleranceType(ToleranceEnum.DIAMTOLERANCE.getToleranceName())
-            .selectGcd("CurvedWall:99");
-        assertThat(tolerancePage.getGCDCell("CurvedWall:99", "Operation"), Matchers.is(Matchers.equalTo("Contouring / Bulk Milling Surface / General Grinding")));
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
-        tolerancePage.selectGcd("SimpleHole:13");
-        assertThat(tolerancePage.getGCDCell("SimpleHole:13", "Operation"), Matchers.is(Matchers.equalTo("Waterjet Cutting")));
-        }*/
+        tolerancesPage = evaluatePage.openDesignGuidance()
+                .openTolerancesTab()
+                .selectIssueTypeGcd(ToleranceEnum.DIAMTOLERANCE.getToleranceName(), "CurvedWall:99");
+
+        softAssertions.assertThat(tolerancesPage.getOperation("CurvedWall:99").contains("Contouring / Bulk Milling Surface / General Grinding"));
+        softAssertions.assertThat(tolerancesPage.getOperation("SimpleHole:13").contains("Waterjet Cutting"));
+
+        softAssertions.assertAll();
+    }
 
 }
