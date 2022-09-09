@@ -374,6 +374,20 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Calls an api with GET verb
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
+     * @param userCredentials - the user credentials
+     * @return current page object
+     */
+    public ExplorePage queryCssComponentParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+        scenarioTableController.getComponentQueryCssParams(componentName, scenarioName, userCredentials, paramKeysValues);
+        return this;
+    }
+
+    /**
      * Gets all scenario Component Names from Explorer Table
      *
      * @return - list of all scenario Component Names
