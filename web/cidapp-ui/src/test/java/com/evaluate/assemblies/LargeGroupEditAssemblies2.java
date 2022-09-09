@@ -15,7 +15,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -32,8 +32,8 @@ public class LargeGroupEditAssemblies2 extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    @BeforeClass
-    public static void setupAssembly() {
+    @Before
+    public void setupAssembly() {
         final String assemblyName = "Gym Bike";
         final String assemblyExtension = ".iam";
 
