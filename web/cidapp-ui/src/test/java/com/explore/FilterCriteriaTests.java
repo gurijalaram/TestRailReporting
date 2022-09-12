@@ -1,9 +1,5 @@
 package com.explore;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -20,7 +16,6 @@ import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
@@ -31,6 +26,11 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
 
 public class FilterCriteriaTests extends TestBase {
 
@@ -174,7 +174,7 @@ public class FilterCriteriaTests extends TestBase {
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
                 assemblyExtension,
-                ASSEMBLY,
+                ProcessGroupEnum.ASSEMBLY,
                 subComponentNames,
                 subComponentExtension,
                 subComponentProcessGroup,

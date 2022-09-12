@@ -9,29 +9,25 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import io.qameta.allure.Issues;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
-
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_CHINA;
-import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
-import static com.apriori.utils.enums.ProcessGroupEnum.POWDER_METAL;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
 
 public class PublishExistingCostedTests extends TestBase {
     private UserCredentials currentUser;
@@ -42,6 +38,7 @@ public class PublishExistingCostedTests extends TestBase {
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public PublishExistingCostedTests() {
         super();
@@ -81,7 +78,7 @@ public class PublishExistingCostedTests extends TestBase {
             .openScenario(componentName, scenarioName)
             .editScenario(EditScenarioStatusPage.class)
             .close(EvaluatePage.class)
-            .selectDigitalFactory(APRIORI_CHINA)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA)
             .costScenario()
             .publishScenario(PublishPage.class)
             .override()
@@ -94,10 +91,9 @@ public class PublishExistingCostedTests extends TestBase {
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, componentName)
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(greaterThan(0)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+        softAssertions.assertAll();
     }
-
-
 
     @Test
     @Issues({
@@ -110,7 +106,7 @@ public class PublishExistingCostedTests extends TestBase {
 
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
@@ -136,15 +132,15 @@ public class PublishExistingCostedTests extends TestBase {
             .enterKeySearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario(componentName, scenarioName)
-            .selectProcessGroup(FORGING)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
             .costScenario()
             .publishScenario(PublishPage.class)
             .override()
             .clickContinue(PublishPage.class)
             .publish(EvaluatePage.class);
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), is("Material Stock / Band Saw / Preheat / Hammer / Trim"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Material Stock / Band Saw / Preheat / Hammer / Trim");
+
+        softAssertions.assertAll();
     }
-
-
 }

@@ -13,10 +13,15 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.*;
+import com.apriori.utils.enums.DigitalFactoryEnum;
+import com.apriori.utils.enums.NewCostingLabelEnum;
+import com.apriori.utils.enums.OperationEnum;
+import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -26,11 +31,6 @@ import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
-
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class SecondaryProcessTests extends TestBase {
     private CidAppLoginPage loginPage;
@@ -88,10 +88,8 @@ public class SecondaryProcessTests extends TestBase {
                 .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getAverageWallThickness()).isEqualTo(0.21);
-
         softAssertions.assertAll();
     }
-
 
     @Test
     @TestRail(testCaseId = {"5142", "5149"})
@@ -134,7 +132,6 @@ public class SecondaryProcessTests extends TestBase {
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Case Depth Selection")).isEqualTo(0.46);
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Masking")).isEqualTo(1.0);
-
         softAssertions.assertAll();
     }
 
@@ -170,7 +167,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
                 .highlightSecondaryProcess("Atmosphere Oil Harden");
 
-        assertThat(secondaryProcessPage.getMasking(), is(2.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(2.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -208,7 +206,6 @@ public class SecondaryProcessTests extends TestBase {
                 .selectOptionsTab();
 
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Masking")).isEqualTo(1.0);
-
         softAssertions.assertAll();
     }
 
@@ -244,7 +241,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree(" Heat Treat Processes, Temper")
                 .highlightSecondaryProcess("Vacuum Temper");
 
-        assertThat(secondaryProcessPage.getMasking(), is(3.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(3.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -273,7 +271,9 @@ public class SecondaryProcessTests extends TestBase {
                 .submit(EvaluateToolbar.class)
                 .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Stress Relief"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Stress Relief");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -302,7 +302,9 @@ public class SecondaryProcessTests extends TestBase {
                 .submit(EvaluateToolbar.class)
                 .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Anodize");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -329,7 +331,9 @@ public class SecondaryProcessTests extends TestBase {
                 .submit(EvaluateToolbar.class)
                 .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Certification"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Certification");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -400,7 +404,9 @@ public class SecondaryProcessTests extends TestBase {
                 .selectBarChart("Powder Coat Cart")
                 .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("Fraction of Part Area that is Powder Coated"), is(equalTo(0.30)));
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Fraction of Part Area that is Powder Coated")).isEqualTo(0.30);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -465,7 +471,9 @@ public class SecondaryProcessTests extends TestBase {
                 .submit(EvaluateToolbar.class)
                 .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Passivation"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Passivation");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -546,7 +554,9 @@ public class SecondaryProcessTests extends TestBase {
                 .submit(EvaluateToolbar.class)
                 .costScenario();
 
-        assertThat(evaluatePage.getProcessRoutingDetails(), containsString("Anodize / Carton Forming / Pack & Load"));
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Anodize / Carton Forming / Pack & Load");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -582,7 +592,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Surface Harden")
                 .highlightSecondaryProcess("Carbonitride");
 
-        assertThat(secondaryProcessPage.getMasking(), is(1.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -618,7 +629,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
                 .highlightSecondaryProcess("Vacuum Air Harden");
 
-        assertThat(secondaryProcessPage.getMasking(), is(2.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(2.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -654,7 +666,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
                 .highlightSecondaryProcess("Vacuum Air Harden with High Temper");
 
-        assertThat(secondaryProcessPage.getMasking(), is(1.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -687,7 +700,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
                 .highlightSecondaryProcess("Spring Steel Harden");
 
-        assertThat(secondaryProcessPage.getMasking(), is(3.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(3.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -720,7 +734,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
                 .highlightSecondaryProcess("Stainless Steel Harden");
 
-        assertThat(secondaryProcessPage.getMasking(), is(1.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -753,7 +768,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Through Harden")
                 .highlightSecondaryProcess("High Speed Steel Harden");
 
-        assertThat(secondaryProcessPage.getMasking(), is(3.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(3.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -786,7 +802,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
                 .highlightSecondaryProcess("Low Temp Vacuum Anneal");
 
-        assertThat(secondaryProcessPage.getMasking(), is(4.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(4.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -820,7 +837,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Anneal")
                 .highlightSecondaryProcess("High Temp Vacuum Anneal");
 
-        assertThat(secondaryProcessPage.getMasking(), is(2.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(2.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -853,7 +871,8 @@ public class SecondaryProcessTests extends TestBase {
                 .expandSecondaryProcessTree("Heat Treat Processes, Temper")
                 .highlightSecondaryProcess("Standard Temper");
 
-        assertThat(secondaryProcessPage.getMasking(), is(1.0));
+        softAssertions.assertThat(secondaryProcessPage.getMasking()).isEqualTo(1.0);
+        softAssertions.assertAll();
     }
 
     @Test
@@ -907,7 +926,8 @@ public class SecondaryProcessTests extends TestBase {
                 .submit(EvaluateToolbar.class)
                 .costScenario();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
+        softAssertions.assertAll();
     }
 
     @Test

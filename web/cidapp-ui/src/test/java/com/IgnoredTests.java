@@ -11,11 +11,13 @@ import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
@@ -27,11 +29,7 @@ import testsuites.suiteinterface.IgnoreTests;
 
 import java.io.File;
 
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.utils.enums.ProcessGroupEnum.POWDER_METAL;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
+
 
 public class IgnoredTests extends TestBase {
 
@@ -60,7 +58,6 @@ public class IgnoredTests extends TestBase {
     @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
     public void testPublishEnterNewScenarioName() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
         String componentName = "partbody_2";
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, componentName + ".stp");
         String testScenarioName = generateStringUtil.generateScenarioName();
@@ -104,7 +101,7 @@ public class IgnoredTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioNameB = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "PowderMetalShaft.stp");
         currentUser = UserUtil.getUser();
@@ -123,7 +120,7 @@ public class IgnoredTests extends TestBase {
                 .editScenario(EditScenarioStatusPage.class)
                 .close(EvaluatePage.class)
                 .selectProcessGroup(processGroupEnum)
-                .selectDigitalFactory(APRIORI_USA)
+                .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
                 .publishScenario(PublishPage.class)
                 .override()
                 .clickContinue(PublishPage.class)
@@ -133,19 +130,17 @@ public class IgnoredTests extends TestBase {
                 .publishScenario(PublishPage.class)
                 .publish(cidComponentItem, ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB)).isEqualTo(0);
     }
 
     @Test
-    @Category(IgnoreTests.class)
-    @Ignore("Processing state")
     @TestRail(testCaseId = {"6212"})
     @Description("Load & publish a new single scenario which duplicates an existing locked public workspace scenario")
     public void testDuplicateLockedPublic() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String componentName = "PowderMetalShaft";
-        final ProcessGroupEnum processGroupEnum = POWDER_METAL;
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
 
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         currentUser = UserUtil.getUser();
@@ -155,7 +150,7 @@ public class IgnoredTests extends TestBase {
                 .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .selectProcessGroup(POWDER_METAL)
+                .selectProcessGroup(processGroupEnum.POWDER_METAL)
                 .openMaterialSelectorTable()
                 .selectMaterial("F-0005")
                 .submit(EvaluatePage.class)
@@ -173,6 +168,6 @@ public class IgnoredTests extends TestBase {
                 .changeName(scenarioName2)
                 .publish(cidComponentItem, EvaluatePage.class);
 
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
+        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
     }
 }
