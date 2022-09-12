@@ -20,7 +20,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='loader']")
     private WebElement spinner;
 
-    @FindBy(xpath = "//*[@data-testid='title']")
+    @FindBy(xpath = "//*[@data-testid='header']//h3")
     private WebElement headerText;
 
     @FindBy(xpath = "//div[@data-testid='apriori-cad-viewer']")
@@ -113,7 +113,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@class='MuiBox-root css-pf0r2f']//p")
     private WebElement titleOfModal;
 
-    @FindBy(xpath = "//button[@title='Open']//*[local-name()='svg']")
+    @FindBy(xpath = "//input[@id='properties']//..//button//*[local-name()='svg']")
     private WebElement dropDownFieldOnModal;
 
     @FindBy(id = "properties")
@@ -433,6 +433,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return String
      */
     public String getHeaderTitleOnInsights() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
         return getPageUtils().waitForElementToAppear(insightsCard).getText();
     }
 
