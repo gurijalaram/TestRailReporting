@@ -104,4 +104,18 @@ public class BillOfMaterialsUtil extends TestUtil {
 
         return HTTPRequest.build(requestEntity).get();
     }
+
+    /**
+     * Post Export a BOM as a CSV file
+     *
+     * @param bomIdentity - the bill of material identity
+     * @return - response object
+     */
+    public static ResponseWrapper<BillOfMaterialsResponse> postExportBomAsCsvFile(String bomIdentity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_IDENTITY_TO_EXPORT, null)
+                .inlineVariables(bomIdentity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
 }

@@ -22,18 +22,18 @@ import java.util.List;
 public class BillOfMaterialsTest extends BillOfMaterialsUtil {
 
     private static String filename = "Test BOM 5.csv";
-    private static String identity;
+    private static String billOfMaterialsIdentity;
 
     @BeforeClass
     public static void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
-        identity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
+        billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
 
     @AfterClass
     public static void deleteTestingData() {
-        if (identity != null) {
-            deleteBillOfMaterialById(identity);
+        if (billOfMaterialsIdentity != null) {
+            deleteBillOfMaterialById(billOfMaterialsIdentity);
         }
     }
 
@@ -70,7 +70,7 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     @TestRail(testCaseId = "9414")
     @Description("GET the current representation of a bill of materials")
     public void testGetBillOfMaterialsById() {
-        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(identity);
+        ResponseWrapper<BillOfMaterialsResponse> getResponse = getBillOfMaterialById(billOfMaterialsIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getResponse.getStatusCode());
     }
 
@@ -80,5 +80,13 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     public void testGetAllBillOfMaterials() {
         List<BillOfMaterialsResponse> billOfMaterialsItems = getAllBillOfMaterials();
         assertThat(billOfMaterialsItems.size(), is(greaterThan(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "9416")
+    @Description("POST Export a bill of materials as a CSV file.")
+    public void testExportBomAsCsvFile() {
+        ResponseWrapper<BillOfMaterialsResponse> responseWrapper = postExportBomAsCsvFile(billOfMaterialsIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, responseWrapper.getStatusCode());
     }
 }
