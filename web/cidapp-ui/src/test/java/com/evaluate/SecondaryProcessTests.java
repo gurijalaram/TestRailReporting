@@ -1,5 +1,11 @@
 package com.evaluate;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
@@ -17,12 +23,15 @@ import com.apriori.utils.enums.*;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
+import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -35,9 +44,9 @@ import static org.hamcrest.Matchers.is;
 public class SecondaryProcessTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private AdvancedPage secondaryPage;
-    private MaterialProcessPage materialProcessPage;
     private AdvancedPage advancedPage;
+    private MaterialProcessPage materialProcessPage;
+
     private File resourceFile;
     private UserCredentials currentUser;
     private SecondaryProcessesPage secondaryProcessPage;
@@ -518,6 +527,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
+    @Ignore("Secondary Processes has not went in yet")
     @TestRail(testCaseId = {"5117"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
@@ -869,19 +879,19 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        secondaryPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToOtherSecProcessesTab()
-                .expandSecondaryProcessTree("Testing and Inspection")
-                .selectSecondaryProcess("Xray Inspection")
-                .cancel()
-                .costScenario()
-                .goToAdvancedTab();
+        advancedPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToOtherSecProcessesTab()
+            .expandSecondaryProcessTree("Testing and Inspection")
+            .selectSecondaryProcess("Xray Inspection")
+            .cancel()
+            .costScenario()
+            .goToAdvancedTab();
 
-        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("No Processes Selected...");
+        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("No Processes Selected...");
         softAssertions.assertAll();
     }
 
@@ -922,30 +932,30 @@ public class SecondaryProcessTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        secondaryPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .goToAdvancedTab()
-                .openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .selectSecondaryProcess("Passivation")
-                .reset()
-                .goToOtherSecProcessesTab()
-                .selectSecondaryProcess("Packaging")
-                .reset()
-                .cancel()
-                .costScenario()
-                .goToAdvancedTab();
+        advancedPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .reset()
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
+            .reset()
+            .cancel()
+            .costScenario()
+            .goToAdvancedTab();
 
-        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("No Processes Selected...");
+        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("No Processes Selected...");
 
-        evaluatePage = secondaryPage.openSecondaryProcesses()
-                .goToSurfaceTreatmentTab()
-                .selectSecondaryProcess("Passivation")
-                .deselectAll()
-                .goToOtherSecProcessesTab()
-                .selectSecondaryProcess("Packaging")
-                .deselectAll()
-                .cancel();
+        evaluatePage = advancedPage.openSecondaryProcesses()
+            .goToSurfaceTreatmentTab()
+            .selectSecondaryProcess("Passivation")
+            .deselectAll()
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
+            .deselectAll()
+            .cancel();
 
         softAssertions.assertThat(evaluatePage.getListOfSecondaryProcesses()).contains("No Processes Selected...");
 

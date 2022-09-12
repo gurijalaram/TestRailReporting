@@ -36,6 +36,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ComponentsUtil {
 
+
     /**
      * POST cad files
      *
@@ -81,10 +82,16 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        return new CssComponent().getCssComponent(componentName, scenarioName, userCredentials).getResponseEntity().getItems()
-            .stream()
+        List<ScenarioItem> scenarioItem = new ArrayList<>(new CssComponent().getCssComponent(componentName, scenarioName, userCredentials).getResponseEntity().getItems());
+
+        scenarioItem.stream()
             .filter(o -> o.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.NOT_COSTED.getState()))
-            .collect(Collectors.toList());
+            .findFirst()
+            .orElseThrow(
+                () -> new RuntimeException(String.format("Expected scenario state: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
+                    scenarioItem.stream().findFirst().get().getScenarioState())));
+
+        return scenarioItem;
     }
 
     /**
