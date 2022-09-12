@@ -936,15 +936,12 @@ public class EditAssembliesTest extends TestBase {
             .setInputs()
             .selectProcessGroup(ProcessGroupEnum.CASTING)
             .applyAndCost(SetInputStatusPage.class)
-            .close(ComponentsListPage.class);
-
-        subComponentNames.forEach(componentName ->
-            softAssertions.assertThat(componentsListPage.getScenarioState(componentName, scenarioName, currentUser, ScenarioStateEnum.COST_COMPLETE))
-                .isEqualTo(ScenarioStateEnum.COST_COMPLETE.getState()));
-
-        componentsListPage.closePanel()
+            .close(ComponentsListPage.class)
+            .closePanel()
             .clickExplore()
-            .selectFilter("Recent")
+            .queryCssComponentParams(BOLT, scenarioName, currentUser, "scenarioState, " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished, false", "iteration, 1")
+            .refresh()
+            .selectFilter("Private")
             .clickSearch(BOLT)
             .multiSelectScenarios("" + BOLT + ", " + scenarioName + "")
             .delete()
