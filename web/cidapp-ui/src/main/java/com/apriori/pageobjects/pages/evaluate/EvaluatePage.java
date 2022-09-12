@@ -289,6 +289,16 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
+     * Get the currently selected Material
+     *
+     * @return String of currently used material
+     */
+    public String getCurrentlySelectedMaterial() {
+        By materialDisplayed = By.cssSelector("div[id='qa-material-modal-select-field'] div");
+        return driver.findElement(materialDisplayed).getAttribute("textContent");
+    }
+
+    /**
      * Opens the input panel
      *
      * @return new page object
