@@ -40,9 +40,9 @@ public class GroupCostTests extends TestBase {
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.PLASTIC_MOLDING;
-        final String componentName2 = "M3CapScrew";
-        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".CATPart");
+        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.SHEET_METAL;
+        final String componentName2 = "bracket_basic";
+        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".prt");
         final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
@@ -55,12 +55,13 @@ public class GroupCostTests extends TestBase {
         explorePage = new ExplorePage(driver).refresh()
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .clickCostButton(ComponentBasicPage.class)
+            .selectProcessGroup(ProcessGroupEnum.SHEET_METAL)
             .selectDigitalFactory(DigitalFactoryEnum.APRIORI_CHINA)
             .enterAnnualYears("7")
             .enterAnnualVolume("6000")
             .openMaterialSelectorTable()
             .search("1050A")
-            .selectMaterial("Aluminum, Cast, ANSI 1050A")
+            .selectMaterial("Aluminum, Stock, ANSI 1050A")
             .submit(ComponentBasicPage.class)
             .applyAndCost(EditScenarioStatusPage.class)
             .close(ExplorePage.class)
