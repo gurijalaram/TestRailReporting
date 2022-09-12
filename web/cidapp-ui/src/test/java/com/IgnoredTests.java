@@ -1,13 +1,6 @@
 package com;
 
-import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.utils.enums.ProcessGroupEnum.*;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThan;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
@@ -18,13 +11,10 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
@@ -33,9 +23,15 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.IgnoreTests;
-import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
+
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
+import static com.apriori.utils.enums.ProcessGroupEnum.POWDER_METAL;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.greaterThan;
 
 public class IgnoredTests extends TestBase {
 
@@ -174,43 +170,6 @@ public class IgnoredTests extends TestBase {
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
     }
-    @Test
-    @Category(IgnoreTests.class)
-    @Ignore("Secondary Processes has not went in yet")
-    @TestRail(testCaseId = {"5120", "5121", "5123"})
-    @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
-    public void secondaryProcessXray() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String componentName = "PlasticMoulding";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
 
-        loginPage = new CidAppLoginPage(driver);
-        advancedPage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("ABS, 10% Glass")
-                .submit(EvaluatePage.class)
-                .goToAdvancedTab();
-
-        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).isEmpty();
-
-        evaluatePage = advancedPage.openSecondaryProcesses()
-                .goToOtherSecProcessesTab()
-                .expandSecondaryProcessTree("Testing and Inspection")
-                .selectSecondaryProcess("Xray Inspection")
-                .submit(EvaluateToolbar.class)
-                .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Xray Inspection");
-
-        advancedPage = evaluatePage.goToAdvancedTab();
-
-        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("Xray", " Packaging");
-
-        softAssertions.assertAll();
-    }
 }

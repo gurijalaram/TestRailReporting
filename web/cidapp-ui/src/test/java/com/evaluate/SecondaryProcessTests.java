@@ -1,11 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
@@ -19,15 +13,10 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.NewCostingLabelEnum;
-import com.apriori.utils.enums.OperationEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.PropertyEnum;
+import com.apriori.utils.enums.*;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -40,11 +29,18 @@ import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
 
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.is;
+
 public class SecondaryProcessTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private AdvancedPage secondaryPage;
     private MaterialProcessPage materialProcessPage;
+    private AdvancedPage advancedPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -100,45 +96,7 @@ public class SecondaryProcessTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Test
-    @Category(IgnoreTests.class)
-    @Ignore("Secondary Processes has not went in yet")
-    @TestRail(testCaseId = {"5120", "5121", "5123"})
-    @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
-    public void secondaryProcessXray() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-        String componentName = "PlasticMoulding";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        secondaryPage = loginPage.login(currentUser)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .selectMaterial("ABS, 10% Glass")
-            .submit(EvaluatePage.class)
-            .goToAdvancedTab();
-
-        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).isEmpty();
-
-        evaluatePage = secondaryPage.openSecondaryProcesses()
-            .goToOtherSecProcessesTab()
-            .expandSecondaryProcessTree("Testing and Inspection")
-            .selectSecondaryProcess("Xray Inspection")
-            .submit(EvaluateToolbar.class)
-            .costScenario();
-
-        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Xray Inspection");
-
-        secondaryPage = evaluatePage.goToAdvancedTab();
-
-        softAssertions.assertThat(secondaryPage.getSecondaryProcesses()).contains("Xray", " Packaging");
-
-        softAssertions.assertAll();
-    }
 
     @Test
     @TestRail(testCaseId = {"5142", "5149"})
@@ -1006,6 +964,44 @@ public class SecondaryProcessTests extends TestBase {
             .cancel();
 
         softAssertions.assertThat(evaluatePage.getListOfSecondaryProcesses()).contains("No Processes Selected...");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"5120", "5121", "5123"})
+    @Description("Validate zero count when no secondary process is selected and Test secondary process xray")
+    public void secondaryProcessXray() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "PlasticMoulding";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        advancedPage = loginPage.login(currentUser)
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .openMaterialSelectorTable()
+                .selectMaterial("ABS, 10% Glass")
+                .submit(EvaluatePage.class)
+                .goToAdvancedTab();
+
+        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("No Processes Selected...");
+
+        evaluatePage = advancedPage.openSecondaryProcesses()
+                .goToOtherSecProcessesTab()
+                .expandSecondaryProcessTree("Testing and Inspection")
+                .selectSecondaryProcess("Xray Inspection")
+                .submit(EvaluateToolbar.class)
+                .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Xray Inspection");
+
+        advancedPage = evaluatePage.goToAdvancedTab();
+
+        softAssertions.assertThat(advancedPage.getSecondaryProcesses()).contains("[Other Secondary Processes] Xray Inspection");
 
         softAssertions.assertAll();
     }
