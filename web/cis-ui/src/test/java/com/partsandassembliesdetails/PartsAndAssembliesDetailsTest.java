@@ -51,7 +51,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -87,7 +87,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -149,7 +149,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -182,7 +182,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -221,7 +221,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -260,7 +260,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -298,7 +298,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadComponent(componentName,scenarioName,resourceFile,currentUser)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -328,7 +328,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         String cardName = "Process Cost Card";
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -381,7 +381,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         String cardName = "Process Cost Card";
         String editedCardName = "Process Analysis Card";
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -434,7 +434,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         String cardName = "Process Cost Card";
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -527,7 +527,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -572,7 +572,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
@@ -756,7 +756,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(UserUtil.getUser())
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickSearchOption()
