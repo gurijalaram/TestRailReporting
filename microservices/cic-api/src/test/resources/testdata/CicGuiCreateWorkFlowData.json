@@ -1,0 +1,68 @@
+{
+  "customer": "aPrioriInternal_Customer",
+  "queryDefinition": {
+    "qdLogicalFilter": {
+      "filterType": "AND",
+      "ruleFilters": [
+        {
+          "fieldName": "partNumber",
+          "type": "EQ",
+          "value": "0000001040"
+        }
+      ]
+    }
+  },
+  "plmSystem": "20fd9f72-2d65-406b-b108-8f4efc3a6190_Agent",
+  "name": "AUTO_CIC_AGENT_WF",
+  "description": "",
+  "schedule": "0 0 0 1/1 * ? *",
+  "selectedEmailTemplate": "none",
+  "isEmailTemplateSelected": false,
+  "ciEmailConfiguration": {
+    "ciDataShape": {
+      "ciFieldDefinitions": {
+        "key": {
+          "name": "key",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 1,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        },
+        "value": {
+          "name": "value",
+          "description": "",
+          "baseType": "STRING",
+          "ordinal": 2,
+          "aspects": {
+            "isPrimaryKey": false
+          }
+        }
+      }
+    },
+    "ciFdRows": [
+      {
+        "key": "CostRounding",
+        "value": true
+      },
+      {
+        "key": "aPrioriCost",
+        "value": "fullyBurdenedCost"
+      }
+    ]
+  },
+  "emailRecipientType": "field",
+  "isSchedulerEnabled": false,
+  "isEmailReportNameSelected": false,
+  "selectedEmailReportName": "none",
+  "isPlmWriteReportNameSelected": false,
+  "selectedPlmWriteReportName": "none",
+  "applyEmailFilter": false,
+  "applyEmailReportsFilter": false,
+  "applyPlmWriteReportsFilter": false,
+  "applyPlmWritePartFilter": false,
+  "useLatestRevision": false,
+  "jobMonitoringRecipients": "",
+  "partSelectionType": "QUERY"
+}
