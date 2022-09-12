@@ -7,6 +7,7 @@ import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -27,7 +28,6 @@ import testsuites.suiteinterface.IgnoreTests;
 import java.io.File;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static com.apriori.utils.enums.ProcessGroupEnum.FORGING;
 import static com.apriori.utils.enums.ProcessGroupEnum.POWDER_METAL;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -40,6 +40,7 @@ public class IgnoredTests extends TestBase {
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
     private AdvancedPage advancedPage;
+    private CssComponent cssComponent = new CssComponent();
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
@@ -94,6 +95,7 @@ public class IgnoredTests extends TestBase {
 
         softAssertions.assertAll();
     }
+
     @Test
     @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6210", "5435", "6735"})
@@ -133,6 +135,7 @@ public class IgnoredTests extends TestBase {
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB), is(greaterThan(0)));
     }
+
     @Test
     @Category(IgnoreTests.class)
     @Ignore("Processing state")
@@ -158,11 +161,13 @@ public class IgnoredTests extends TestBase {
                 .submit(EvaluatePage.class)
                 .costScenario()
                 .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, ExplorePage.class)
+                .publish(cidComponentItem, EvaluatePage.class)
                 .clickActions()
-                .lock(ExplorePage.class)
-                .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
-                .selectProcessGroup(FORGING)
+                .lock(EvaluatePage.class);
+        cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "scenarioLocked, " + true);
+
+        evaluatePage = new EvaluatePage(driver).uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum.FORGING)
                 .costScenario()
                 .publishScenario(PublishPage.class)
                 .changeName(scenarioName2)
@@ -170,6 +175,4 @@ public class IgnoredTests extends TestBase {
 
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2), is(true));
     }
-
-
 }
