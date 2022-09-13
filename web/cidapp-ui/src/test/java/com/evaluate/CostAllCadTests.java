@@ -73,7 +73,7 @@ public class CostAllCadTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    // TODO: 23/10/2020 uncomment when reference pnael functionality is implemented in app
+    // TODO: 23/10/2020 uncomment when reference panel functionality is implemented in app
     /*@Test
     @TestRail(testCaseId = {"566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
