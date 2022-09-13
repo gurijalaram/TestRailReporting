@@ -423,7 +423,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12156", "6557"})
+    @TestRail(testCaseId = {"12156"})
     @Description("Column Configuration button in Tree View is clickable and opens menu")
     public void testColumnConfigurationButton() {
         currentUser = UserUtil.getUser();
