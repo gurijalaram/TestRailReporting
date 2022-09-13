@@ -38,6 +38,12 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
     @FindBy(css = ".secondary-process-modal-select-field .pill-box")
     private WebElement secondaryProcesses;
 
+    @FindBy(css = "[id='qa-routing-modal-select-field'] [data-icon='pencil']")
+    private WebElement routingSelection;
+
+    @FindBy(css = "[id='qa-routing-modal-select-field']")
+    private WebElement preferenceText;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private InputsController inputsController;
@@ -72,6 +78,16 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
     public AdvancedPage enterBatchSize(String batchSize) {
         inputsController.enterBatchSize(batchSizeInput, batchSize);
         return this;
+    }
+
+    /**
+     * Opens the Routing selection modal
+     *
+     * @return new page object
+     */
+    public RoutingSelectionPage openRoutingSelection() {
+        pageUtils.waitForElementAndClick(routingSelection);
+        return new RoutingSelectionPage(driver);
     }
 
     /**
@@ -139,5 +155,23 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
      */
     public List<String> getListOfSecondaryDigitalFactory() {
         return inputsController.getListOfDigitalFactory(secDigitalFactoryList, "Secondary Digital Factory");
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return boolean
+     */
+    public boolean isRoutingSelectionButtonEnabled() {
+        return pageUtils.isElementEnabled(routingSelection);
+    }
+
+    /**
+     * Get the Routing preference text
+     *
+     * @return - String
+     */
+    public String getRoutingSelectionSelected() {
+        return pageUtils.waitForElementToAppear(preferenceText).getAttribute("textContent");
     }
 }
