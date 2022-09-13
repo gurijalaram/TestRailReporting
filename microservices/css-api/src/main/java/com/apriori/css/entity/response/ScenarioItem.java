@@ -65,15 +65,15 @@ public class ScenarioItem {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioLockedAt;
-    private Boolean scenarioLockedBy;
-    private Boolean scenarioLockedByName;
+    private String scenarioLockedBy;
+    private String scenarioLockedByName;
     private Boolean scenarioPublished;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioPublishedAt;
     private String scenarioPublishedBy;
     private String scenarioPublishedByName;
-    private String scenarioSystemLocked;
+    private Boolean scenarioSystemLocked;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioCreatedAt;
