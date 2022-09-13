@@ -1209,7 +1209,7 @@ public class PageUtils {
         String str = String.format("//div[@id='%s']//div[@class]", root);
         if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(locatorValue)) {
             waitForElementAndClick(dropdownSelector);
-            waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
+            waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@aria-label]", root, locatorValue)));
         }
     }
 

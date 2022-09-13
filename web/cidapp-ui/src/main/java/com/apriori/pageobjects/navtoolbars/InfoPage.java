@@ -45,10 +45,10 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     @FindBy(css = "textarea[name='notes']")
     private WebElement notesInput;
 
-    @FindBy(css = "[id='qa-scenario-info-form-status-select'] [id]")
+    @FindBy(css = "[id='qa-scenario-info-form-status-select'] [aria-label]")
     private WebElement statusText;
 
-    @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [id]")
+    @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [aria-label]")
     private WebElement costMaturityText;
 
     @FindBy(css = ".scenario-info-form [type='submit']")
