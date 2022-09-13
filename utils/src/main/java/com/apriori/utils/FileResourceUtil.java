@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
 @Slf4j
@@ -155,6 +156,7 @@ public class FileResourceUtil {
 
     /**
      * Connect to AWS S3 client
+     *
      * @return S3Client instance
      */
     private static S3Client getS3ClientInstance() {
@@ -334,5 +336,23 @@ public class FileResourceUtil {
             log.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
         }
         return fileData;
+    }
+
+    /**
+     * Convert JSON file into string
+     *
+     * @param file
+     * @return String
+     * @throws Exception
+     */
+    public static String convertFileIntoString(String file) {
+        // declare a variable in which we store the JSON data as a string and return it to the main() method
+        String jsonFileContent = null;
+        try {
+            jsonFileContent = new String(Files.readAllBytes(Paths.get(file)));
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+        }
+        return jsonFileContent;
     }
 }

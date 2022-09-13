@@ -39,6 +39,6 @@ public class GetArtifactTableInfoTests {
         GenericErrorResponse genericErrorResponse = acsResources.getArtifactTableInfoInvalidProcessGroup();
 
         assertThat(genericErrorResponse.getErrorCode(), is(equalTo(404)));
-        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("Uknown process group: Sheet Metals")));
+        assertThat(genericErrorResponse.getErrorMessage(), is(equalTo("Unknown process group: Sheet Metals")));
     }
 }

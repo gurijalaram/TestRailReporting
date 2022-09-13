@@ -63,8 +63,8 @@ public class GetScenariosInfoTests {
         ScenarioIterationKey keyOne = fileUploadOutputsArrayList.get(0).getScenarioIterationKey();
         ScenarioIterationKey keyTwo = fileUploadOutputsArrayList.get(1).getScenarioIterationKey();
 
-        keyOne.setIteration(11);
-        keyTwo.setIteration(12);
+        keyOne.setIteration(30);
+        keyTwo.setIteration(40);
 
         AcsResources acsResources = new AcsResources();
 
