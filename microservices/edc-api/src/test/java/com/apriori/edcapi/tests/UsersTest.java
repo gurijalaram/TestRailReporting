@@ -8,15 +8,15 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 public class UsersTest extends UsersUtil {
 
     SoftAssertions softAssertions = new SoftAssertions();
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
     }
 
