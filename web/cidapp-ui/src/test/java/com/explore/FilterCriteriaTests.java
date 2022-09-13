@@ -1,5 +1,10 @@
 package com.explore;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
+import static org.hamcrest.Matchers.is;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -16,6 +21,7 @@ import com.apriori.utils.enums.PropertyEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
@@ -26,11 +32,6 @@ import testsuites.suiteinterface.SmokeTests;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.is;
 
 public class FilterCriteriaTests extends TestBase {
 
@@ -61,14 +62,14 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "SheetMetal")
-                .submit(ExplorePage.class)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "SheetMetal")
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
@@ -88,16 +89,16 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .costScenario()
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.PROCESS_GROUP, OperationEnum.IN, ProcessGroupEnum.CASTING_DIE.getProcessGroup())
-                .submit(ExplorePage.class)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.PROCESS_GROUP, OperationEnum.IN, ProcessGroupEnum.CASTING_DIE.getProcessGroup())
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
@@ -116,14 +117,14 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Wall")
-                .submit(ExplorePage.class)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Wall")
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios(componentName, scenarioName), is(equalTo(1)));
     }
@@ -143,13 +144,13 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "oldham")
-                .submit(ExplorePage.class);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "oldham")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("oldham", scenarioName), is(equalTo(1)));
     }
@@ -173,34 +174,34 @@ public class FilterCriteriaTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(assemblyName,
-                assemblyExtension,
-                ProcessGroupEnum.ASSEMBLY,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                currentUser);
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
-                .uploadAssembly(componentAssembly);
+            .uploadAssembly(componentAssembly);
         assemblyUtils.publishSubComponents(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
-                .navigateToScenario(componentAssembly)
-                .clickActions()
-                .info()
-                .selectStatus("Analysis")
-                .inputCostMaturity("High")
-                .inputDescription("Test Description")
-                .inputNotes("Test Notes")
-                .submit(EvaluatePage.class)
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, ExplorePage.class)
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
-                .submit(ExplorePage.class);
+            .navigateToScenario(componentAssembly)
+            .clickActions()
+            .info()
+            .selectStatus("Analysis")
+            .inputCostMaturity("High")
+            .inputDescription("Test Description")
+            .inputNotes("Test Notes")
+            .submit(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, ExplorePage.class)
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
+            .submit(ExplorePage.class);
 
         assertThat(explorePage.getListOfScenarios("Hinge assembly", scenarioName), is(greaterThanOrEqualTo(1)));
     }
@@ -219,18 +220,18 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Push Pin")
-                .submit(ExplorePage.class)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, "Push Pin")
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("Push Pin", scenarioName), is(equalTo(1)));
     }
@@ -251,35 +252,35 @@ public class FilterCriteriaTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .publishScenario(PublishPage.class)
-                .selectStatus("Analysis")
-                .selectCostMaturity("Initial")
-                .selectAssignee(currentUser)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .clickExplore()
-                .filter()
-                .saveAs()
-                .inputName(filterName)
-                .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
-                .submit(ExplorePage.class)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-                .highlightScenario(componentName, scenarioName)
-                .clickActions()
-                .lock(ExplorePage.class)
-                .filter()
-                .newFilter()
-                .inputName(filterName2)
-                .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, cidComponentItem.getScenarioItem().getScenarioCreatedAt())
-                .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
-                .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
-                .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
-                .submit(ExplorePage.class)
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
+            .publishScenario(PublishPage.class)
+            .selectStatus("Analysis")
+            .selectCostMaturity("Initial")
+            .selectAssignee(currentUser)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickExplore()
+            .filter()
+            .saveAs()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .highlightScenario(componentName, scenarioName)
+            .clickActions()
+            .lock(ExplorePage.class)
+            .filter()
+            .newFilter()
+            .inputName(filterName2)
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.GREATER_THAN, cidComponentItem.getScenarioItem().getScenarioCreatedAt())
+            .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
+            .addCriteria(PropertyEnum.COST_MATURITY, OperationEnum.IN, "Initial")
+            .addCriteria(PropertyEnum.ASSIGNEE, OperationEnum.IN, scenarioCreatedByName)
+            .submit(ExplorePage.class)
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
         assertThat(explorePage.getListOfScenarios("PowderMetalShaft", scenarioName), is(equalTo(1)));
     }
