@@ -21,7 +21,7 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -35,8 +35,8 @@ public class PartsTest extends PartsUtil {
     private SoftAssertions softAssertions = new SoftAssertions();
     private LineItemsUtil lineItems = new LineItemsUtil();
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
