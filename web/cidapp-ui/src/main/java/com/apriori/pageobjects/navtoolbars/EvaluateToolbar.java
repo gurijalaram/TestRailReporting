@@ -4,14 +4,13 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,15 +18,14 @@ import java.util.List;
  * @author cfrith
  */
 
+@Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
-
-    private static final Logger logger = LoggerFactory.getLogger(EvaluateToolbar.class);
-
-    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
-    private WebElement costButton;
 
     @FindBy(css = ".alert")
     private WebElement costLabel;
+
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
+    private WebElement costButton;
 
     @FindBy(css = ".scenario-state-preview [data-icon='cog']")
     private List<WebElement> cogIcon;
@@ -39,9 +37,8 @@ public class EvaluateToolbar extends ExploreToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(costButton);
         pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
@@ -61,8 +58,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
-        pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
+        clickCostButton();
         waitForCostLabel(timeoutInMinutes);
         return new EvaluatePage(driver);
     }
@@ -74,7 +70,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public EvaluateToolbar clickCostButton() {
         pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
+        clickCostButton(EvaluateToolbar.class);
         return this;
     }
 
