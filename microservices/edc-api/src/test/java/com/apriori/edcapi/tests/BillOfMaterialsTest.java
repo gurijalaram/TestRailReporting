@@ -14,7 +14,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -24,8 +24,8 @@ public class BillOfMaterialsTest extends BillOfMaterialsUtil {
     private static String filename = "Test BOM 5.csv";
     private static String billOfMaterialsIdentity;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
