@@ -5,7 +5,6 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfo;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.acs.getsetproductioninfo.GetProductionInfoResponse;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
