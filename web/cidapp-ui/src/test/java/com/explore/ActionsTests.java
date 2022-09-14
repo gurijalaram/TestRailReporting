@@ -448,7 +448,8 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
+            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()
             .info();
@@ -460,7 +461,8 @@ public class ActionsTests extends TestBase {
             .info()
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
+            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()
             .info();
