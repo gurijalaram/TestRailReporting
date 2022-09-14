@@ -1,5 +1,6 @@
 package com.apriori.edcapi.testsuites;
 
+import com.apriori.edcapi.tests.AccountsControllerTest;
 import com.apriori.edcapi.tests.BillOfMaterialsTest;
 import com.apriori.edcapi.tests.LineItemsTest;
 import com.apriori.edcapi.tests.PartsTest;
@@ -16,7 +17,8 @@ import org.junit.runners.Suite;
     BillOfMaterialsTest.class,
     LineItemsTest.class,
     PartsTest.class,
-    UsersTest.class
+    UsersTest.class,
+    AccountsControllerTest.class
 })
 public class RegressionSuite {
 }
