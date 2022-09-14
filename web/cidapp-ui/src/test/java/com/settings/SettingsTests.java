@@ -1,12 +1,12 @@
 package com.settings;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasItems;
-import static org.hamcrest.CoreMatchers.containsString;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
@@ -31,10 +31,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
 import com.utils.CurrencyEnum;
-import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -404,7 +402,7 @@ public class SettingsTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"6277"})
     @Description("Successfully change the Currency")
-    public void changeCurrency(){
+    public void changeCurrency() {
 
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
 
@@ -415,17 +413,17 @@ public class SettingsTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .openSettings()
-                .selectCurrency(CurrencyEnum.EUR)
-                .submit(ExplorePage.class)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum)
-                .selectDigitalFactory(APRIORI_USA)
-                .openMaterialSelectorTable()
-                .search("AISI 1020")
-                .selectMaterial("Steel, Cold Worked, AISI 1020")
-                .submit(EvaluatePage.class)
-                .costScenario();
+            .openSettings()
+            .selectCurrency(CurrencyEnum.EUR)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
 
         assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost"), containsString("€"));
     }
