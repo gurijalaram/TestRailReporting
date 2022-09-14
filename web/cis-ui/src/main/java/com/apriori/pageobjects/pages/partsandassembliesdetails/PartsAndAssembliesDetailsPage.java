@@ -1086,7 +1086,6 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickAssemblyTree() {
-        getPageUtils().waitForElementAppear(processRoutingCard);
         getPageUtils().waitForElementAndClick(assemblyTreeIcon);
         return this;
     }
