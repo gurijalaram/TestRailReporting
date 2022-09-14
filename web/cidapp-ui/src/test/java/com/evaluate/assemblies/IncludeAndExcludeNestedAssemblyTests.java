@@ -17,7 +17,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ButtonTypeEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -43,8 +43,8 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     private static final String SUB_ASSEMBLY = "sub-assembly";
     private static final String TOP_LEVEL = "top-level";
 
-    @BeforeClass
-    public static void assemblySetup() {
+    @Before
+    public void assemblySetup() {
         List<String> subSubComponentNames = Arrays.asList("3570823", "3571050");
 
         List<String> subAssemblyComponentNames = Arrays.asList("3570824", "0200613", "0362752");
