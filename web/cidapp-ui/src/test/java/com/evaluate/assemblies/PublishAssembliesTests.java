@@ -356,8 +356,8 @@ public class PublishAssembliesTests extends TestBase {
             .publish(PublishPage.class)
             .close(ComponentsListPage.class);
 
-        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.COST_UP_TO_DATE)).isEqualTo(true);
-        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(BIG_RING, scenarioName, ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.getListOfScenariosWithStatus(SMALL_RING, scenarioName, ScenarioStateEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(componentsListPage.getRowDetails(BIG_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
         softAssertions.assertThat(componentsListPage.getRowDetails(SMALL_RING, scenarioName)).contains(StatusIconEnum.PUBLIC.getStatusIcon());
 
