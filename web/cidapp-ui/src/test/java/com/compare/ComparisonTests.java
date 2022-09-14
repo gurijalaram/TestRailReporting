@@ -627,7 +627,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"5800"})
+    @TestRail(testCaseId = {"5800", "6458", "6459"})
     @Description("Publish private scenarios that are included in the comparison")
     public void publishScenarioOfComparison() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -667,6 +667,7 @@ public class ComparisonTests extends TestBase {
             .openScenario(componentName2, scenarioName2);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
         comparePage = evaluatePage.clickCompare();
 
@@ -682,6 +683,7 @@ public class ComparisonTests extends TestBase {
             .openBasisScenario();
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
 
         comparePage = evaluatePage.clickCompare();
 

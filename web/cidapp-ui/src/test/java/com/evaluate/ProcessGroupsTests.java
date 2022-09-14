@@ -149,7 +149,7 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Extrusion")
-    @TestRail(testCaseId = {"6126"})
+    @TestRail(testCaseId = {"6126", "6461"})
     public void testProcessGroupExtrusion() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
@@ -167,8 +167,9 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         softAssertions.assertAll();
     }
