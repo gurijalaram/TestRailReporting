@@ -202,7 +202,7 @@ public class DTCPlasticMouldingTests extends TestBase {
     }*/
 
     @Test
-    @TestRail(testCaseId = {"6420", "6421", "6424"})
+    @TestRail(testCaseId = {"6420", "6421", "6424", "6460"})
     @Description("Testing DTC Moulding Max Wall Thickness")
     public void plasticMaxWallThickness() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -227,6 +227,9 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
         softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 3.56mm"));
+
+        evaluatePage = guidanceIssuesPage.closePanel();
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
         softAssertions.assertAll();
 
