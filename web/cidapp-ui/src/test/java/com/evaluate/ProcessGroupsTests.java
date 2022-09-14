@@ -167,7 +167,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
