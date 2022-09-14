@@ -20,7 +20,7 @@ public enum AcsApiEnum implements ExternalEndpointEnum {
     TOLERANCE_POLICY_DEFAULTS("ws/workspace/users/%s/tolerance-policy-defaults"),
     USER_PREFERENCES("ws/workspace/users/%s/preferences/"),
     USER_PREFERENCE_BY_NAME("ws/workspace/users/%s/preferences/preference?key=%s"),
-    GET_PRODUCTION_INFO("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info?applyEdits=true"),
+    GET_PRODUCTION_INFO("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info?applyEdits=%s"),
     SET_PRODUCTION_INFO("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/production-info"),
     SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY("ws/workspace/%s/scenarios/%s/%s/%s/iterations/%s/scenario-info"),
     SCENARIOS_INFORMATION("ws/workspace/scenario-info/search"),

@@ -1,10 +1,11 @@
 package com.apriori.acs.entity.response.acs.getsetproductioninfo;
 
-import java.util.List;
+import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
 
-import com.apriori.acs.entity.response.acs.createmissingscenario.ScenarioKey;
 import lombok.Builder;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Builder

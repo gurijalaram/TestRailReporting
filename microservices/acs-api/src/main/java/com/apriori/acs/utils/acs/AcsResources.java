@@ -20,7 +20,7 @@ import com.apriori.acs.entity.response.acs.getsetdisplayunits.GetDisplayUnitsRes
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.entity.response.acs.getsetproductiondefaults.SetProductionDefaultsInputs;
-import com.apriori.acs.entity.response.acs.getsetproductioninfo.SetProductionInfoInputs;
+import com.apriori.acs.entity.response.acs.getsetproductioninfo.GetProductionInfoResponse;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
 import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferencesResponse;
@@ -458,6 +458,30 @@ public class AcsResources {
     }
 
     /**
+     * Gets production info and returns the response
+     *
+     * @param scenarioIterationKey - Scenario Iteration Key to use
+     * @return GetProductionInfoResponse instance
+     */
+    public GetProductionInfoResponse getProductionInfo(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(AcsApiEnum.GET_PRODUCTION_INFO, GetProductionInfoResponse.class)
+            .headers(headers)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString(),
+                "true"
+            );
+
+        return (GetProductionInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
      * Set user preferences
      *
      * @param costTableDecimalPlaces - String - value to set
@@ -517,14 +541,27 @@ public class AcsResources {
         return (GenericResourceCreatedResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
-    public GenericResourceCreatedIdResponse setProductionInfo() {
+    /**
+     * Set production info
+     *
+     * @param getProductionInfoResponse - for use in body of request
+     * @param scenarioIterationKey - scenario to set production info for
+     * @return GenericResourceCreatedIdResponse
+     */
+    public GenericResourceCreatedIdResponse setProductionInfo(GetProductionInfoResponse getProductionInfoResponse, ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.SET_PRODUCTION_INFO, GenericResourceCreatedResponse.class)
+            .init(AcsApiEnum.SET_PRODUCTION_INFO, GenericResourceCreatedIdResponse.class)
             .headers(headers)
-            .body(SetProductionInfoInputs.builder().build())
-            .inlineVariables(validUsername, "prefToSetKey");
+            .body(getProductionInfoResponse)
+            .inlineVariables(
+                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                scenarioIterationKey.getScenarioKey().getTypeName(),
+                scenarioIterationKey.getScenarioKey().getMasterName(),
+                scenarioIterationKey.getScenarioKey().getStateName(),
+                scenarioIterationKey.getIteration().toString()
+            );
 
         return (GenericResourceCreatedIdResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
