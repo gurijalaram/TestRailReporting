@@ -518,7 +518,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13215","13216","13217","13299"})
+    @TestRail(testCaseId = {"13215","13216","13217","13299","14542"})
     @Description("Verify fully burdened cost details card")
     public void testProcessRoutingFullyBurdenedCostDetailsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -563,7 +563,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13163","13164","13296","13166"})
+    @TestRail(testCaseId = {"13163","13164","13296","13166","14541"})
     @Description("Verify piece part cost details card")
     public void testProcessRoutingPiecePartCostDetailsCards() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();

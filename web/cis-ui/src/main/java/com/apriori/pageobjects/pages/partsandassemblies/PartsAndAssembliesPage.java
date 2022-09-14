@@ -578,6 +578,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         getPageUtils().waitForElementAndClick(filteredValue);
         filteredValue.sendKeys(scenarioName);
         getPageUtils().waitForElementToAppear(By.xpath("//div[@data-field='scenarioName']//p[text()='" + scenarioName + "']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='" + componentName + "']"));
+        getPageUtils().waitForElementToAppear(By.xpath("//div[contains(@class,'MuiDataGrid-row--lastVisible')]"));
         return new PartsAndAssembliesPage(getDriver());
     }
 
@@ -597,7 +598,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
      */
     public PartsAndAssembliesPage clickRemoveCondition() {
         getPageUtils().waitForElementAndClick(removeIcon);
-        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[@class='MuiDataGrid-row MuiDataGrid-row--lastVisible']"));
+        getPageUtils().waitForElementsToNotAppear(By.xpath("//div[contains(@class,'MuiDataGrid-row--lastVisible')]"));
         getPageUtils().waitForElementsToAppear(tableRow);
         return new PartsAndAssembliesPage(getDriver());
     }

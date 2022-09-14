@@ -259,7 +259,7 @@ public class PartsAndAssemblyTest extends TestBase {
 
         partsAndAssembliesPage.addFilterValue(componentName, scenarioName);
 
-        softAssertions.assertThat(partsAndAssembliesPage.getFilteredComponentName()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesPage.getFilteredComponentName()).isEqualTo(scenarioName);
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
 
         partsAndAssembliesPage.clickRemoveCondition();
@@ -324,7 +324,6 @@ public class PartsAndAssemblyTest extends TestBase {
                 .enterFieldName(CisColumnsEnum.STATE.getColumns())
                 .clickOnToggleButton()
                 .sortUpDigitalFactoryField()
-                .waitForTableResults()
                 .pinToRightProcessGroupColumn()
                 .clickFilter()
                 .clickRemoveCondition()
