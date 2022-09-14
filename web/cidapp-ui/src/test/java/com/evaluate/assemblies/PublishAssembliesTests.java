@@ -824,5 +824,50 @@ public class PublishAssembliesTests extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"11824", "11825"})
+    @Description("Validate when I select any sub components in a processing state the publish button is disabled")
+    public void testPublishButtonDisabledEnabled() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "titan charger ass";
+        final String assemblyExtension = ".SLDASM";
+        final List<String> subComponentNames = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents("titan charger base" + "," + scenarioName)
+            .publishSubcomponent()
+            .publish(ComponentsListPage.class)
+            .multiSelectSubcomponents("titan charger base" + "," + scenarioName + "", "titan charger lead" + "," + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.getRowDetails("titan charger base", scenarioName)).contains("gear");
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("titan charger base" + "," + scenarioName);
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
 }
 
