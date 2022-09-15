@@ -8,21 +8,19 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author cfrith
  */
 
+@Slf4j
 public class MainNavBar extends LoadableComponent<MainNavBar> {
-
-    private static final Logger logger = LoggerFactory.getLogger(ExplorePage.class);
 
     @FindBy(xpath = "//button[.='Explore']")
     private WebElement exploreButton;
@@ -60,7 +58,7 @@ public class MainNavBar extends LoadableComponent<MainNavBar> {
     public MainNavBar(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
         if (pageUtils.isElementDisplayed(gainsightHelp)) {
