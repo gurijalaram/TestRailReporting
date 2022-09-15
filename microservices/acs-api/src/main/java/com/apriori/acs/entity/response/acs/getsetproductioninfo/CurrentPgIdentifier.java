@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CurrentPgIdentifier {
-    @JsonProperty("first")
     private String first;
-    @JsonProperty("second")
     private String second;
 }

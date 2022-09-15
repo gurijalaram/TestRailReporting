@@ -62,7 +62,9 @@ public class GetSetProductionInfoTests {
         assertThat(genericResourceCreatedIdResponse.getId(), is(notNullValue()));
         assertThat(genericResourceCreatedIdResponse.getResourceCreated(), is(equalTo("true")));
 
-        GetProductionInfoResponse productionInfoPostChanges = acsResources.getProductionInfo(fileUploadOutputs.getScenarioIterationKey());
+        GetProductionInfoResponse productionInfoPostChanges = acsResources.getProductionInfo(
+            fileUploadOutputs.getScenarioIterationKey()
+        );
 
         assertThat(productionInfoPostChanges.getAnnualVolume(), is(equalTo(newAnnualVolume)));
         assertThat(productionInfoPostChanges.getMachiningMode(), is(equalTo(newMachiningMode)));
