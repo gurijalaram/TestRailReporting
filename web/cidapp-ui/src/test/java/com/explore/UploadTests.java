@@ -132,4 +132,26 @@ public class UploadTests extends TestBase {
 
         assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.CAD), is(true));
     }
+
+    @Test
+    @TestRail(testCaseId = "5623")
+    @Description("Validate a user cannot upload an assembly from a non supported CAD package")
+    public void uploadUnsupportedCADFile() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        String componentName = "SC Plasma 009-005";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".f3d");
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String fileError;
+
+        loginPage = new CidAppLoginPage(driver);
+        fileError = loginPage.login(UserUtil.getUser())
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .getAlertWarning();
+
+        assertThat(fileError, containsString("The file type of the selected file is not supported"));
+    }
 }

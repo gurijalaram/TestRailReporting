@@ -12,7 +12,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -27,8 +27,8 @@ public class LineItemsTest extends LineItemsUtil {
     private int quantity = 2;
     private int itemsCount = 9;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }

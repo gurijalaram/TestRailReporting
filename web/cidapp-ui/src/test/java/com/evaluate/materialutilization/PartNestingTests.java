@@ -90,7 +90,7 @@ public class PartNestingTests extends TestBase {
             .selectUtilizationModeDropDown("Rectangular Nesting")
             .closePanel();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
     }
 
     @Test
@@ -114,7 +114,7 @@ public class PartNestingTests extends TestBase {
             .selectUtilizationModeDropDown("True-Part Shape Nesting")
             .closePanel();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
     }
 
     @Test
@@ -143,7 +143,7 @@ public class PartNestingTests extends TestBase {
             .selectUtilizationModeDropDown("Machine Default")
             .closePanel();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
     }
 
     @Test

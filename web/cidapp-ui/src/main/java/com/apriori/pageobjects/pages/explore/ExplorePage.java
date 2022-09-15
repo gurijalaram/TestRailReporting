@@ -374,6 +374,20 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Calls an api with GET verb
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
+     * @param userCredentials - the user credentials
+     * @return current page object
+     */
+    public ExplorePage queryCssComponentParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+        scenarioTableController.getComponentQueryCssParams(componentName, scenarioName, userCredentials, paramKeysValues);
+        return this;
+    }
+
+    /**
      * Gets all scenario Component Names from Explorer Table
      *
      * @return - list of all scenario Component Names
@@ -381,7 +395,7 @@ public class ExplorePage extends ExploreToolbar {
     public List<String> getAllScenarioComponentName() {
         List<WebElement> rows =
             pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
-        List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
+        List<String> componentNames = rows.stream().map(WebElement::getText).collect(Collectors.toList());
         componentNames.remove("Component Name");
         return componentNames;
     }

@@ -4,8 +4,10 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -178,7 +180,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             case NOT_COSTED:
                 stateIcon = "circle-minus";
                 break;
-            case COST_UP_TO_DATE:
+            case COST_COMPLETE:
                 stateIcon = "check";
                 break;
             default:
@@ -469,6 +471,20 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public ScenarioTableController checkComponentState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
         new ScenariosUtil().getScenarioRepresentation(componentInfo, scenarioState);
+        return this;
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
+     * @param userCredentials - the user credentials
+     * @return current page object
+     */
+    public ScenarioTableController getComponentQueryCssParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+        new CssComponent().getCssComponentQueryParams(componentName, scenarioName, userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
         return this;
     }
 }

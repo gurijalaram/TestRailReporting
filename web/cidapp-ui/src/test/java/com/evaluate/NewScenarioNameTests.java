@@ -74,49 +74,6 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testScenarioName2), is(true));
     }
 
-    @Category(IgnoreTests.class)
-    @Test
-    @Ignore("At the moment a new scenario name cannot be created from a public scenario")
-    @TestRail(testCaseId = {"5950", "5951", "5952"})
-    @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
-    public void testPublishEnterNewScenarioName() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, componentName + ".stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
-        String testNewScenarioName = generateStringUtil.generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
-
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
-
-        evaluatePage.selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, EvaluatePage.class)
-            .clickExplore()
-            .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .highlightScenario(componentName, testScenarioName)
-            .createScenario()
-            .enterScenarioName(testNewScenarioName)
-            .submit(EvaluatePage.class);
-
-        softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName)).isEqualTo(true);
-
-        softAssertions.assertAll();
-    }
-
     @Test
     @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
