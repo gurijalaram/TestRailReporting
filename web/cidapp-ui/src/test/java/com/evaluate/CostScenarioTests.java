@@ -51,7 +51,7 @@ public class CostScenarioTests extends TestBase {
         evaluatePage.selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
 
         softAssertions.assertAll();
     }

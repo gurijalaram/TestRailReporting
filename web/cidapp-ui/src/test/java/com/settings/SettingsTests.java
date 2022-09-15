@@ -1,5 +1,7 @@
 package com.settings;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -28,6 +30,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
+import com.utils.CurrencyEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
@@ -394,5 +397,35 @@ public class SettingsTests extends TestBase {
             .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
+    }
+
+    @Test
+    // TODO: 9/15/2022 Work this test into defaultProductionLife() once CID-1182 is resolved.
+    @TestRail(testCaseId = {"6277"})
+    @Description("Successfully change the Currency")
+    public void changeCurrency() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .openSettings()
+            .selectCurrency(CurrencyEnum.EUR)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost"), containsString("€"));
     }
 }

@@ -58,7 +58,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Hammer");
 
         softAssertions.assertAll();
@@ -85,7 +85,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("2 Axis Lathe");
 
         softAssertions.assertAll();
@@ -113,7 +113,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Material Stock / Tube Laser");
 
         softAssertions.assertAll();
@@ -141,7 +141,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("High Pressure Die Casting");
 
         softAssertions.assertAll();
@@ -149,7 +149,7 @@ public class ProcessGroupsTests extends TestBase {
 
     @Test
     @Description("Testing process group Extrusion")
-    @TestRail(testCaseId = {"6126"})
+    @TestRail(testCaseId = {"6126", "6461"})
     public void testProcessGroupExtrusion() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
@@ -167,8 +167,9 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Injection Molding");
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("High");
 
         softAssertions.assertAll();
     }
@@ -218,7 +219,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("3 Axis Lathe");
 
         softAssertions.assertAll();
@@ -245,7 +246,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("4 Axis Mill");
 
         softAssertions.assertAll();
@@ -275,7 +276,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("3 Axis Mill");
 
         softAssertions.assertAll();
@@ -302,7 +303,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("2 Axis Lathe");
 
         softAssertions.assertAll();
@@ -329,7 +330,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario(5);
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("4 Axis Mill");
 
         softAssertions.assertAll();
@@ -356,7 +357,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("2 Axis Lathe");
 
         softAssertions.assertAll();
@@ -407,7 +408,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Axis Mill");
 
         softAssertions.assertAll();
@@ -434,7 +435,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("5 Axis Mill");
 
         softAssertions.assertAll();
@@ -461,7 +462,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("3 Axis Mill");
 
         softAssertions.assertAll();
@@ -512,7 +513,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("2 Axis Lathe");
 
         softAssertions.assertAll();
@@ -538,7 +539,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Rotational Mold");
 
         softAssertions.assertAll();
@@ -565,7 +566,7 @@ public class ProcessGroupsTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isEqualTo(true);
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Furnace Sintering");
 
         softAssertions.assertAll();
