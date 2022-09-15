@@ -705,7 +705,7 @@ public class WorkorderAPITests {
      *
      * @return NewPartRequest instance
      */
-    private NewPartRequest setupProductionInfoInputs() {
+    public NewPartRequest setupProductionInfoInputs() {
         return JsonManager.deserializeJsonFromFile(
             FileResourceUtil.getResourceAsFile(
                 "CreatePartData.json"

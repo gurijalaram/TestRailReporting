@@ -16,10 +16,12 @@ import tests.acs.GetScenariosInfoTests;
 import tests.acs.GetSetArtifactPropertiesTests;
 import tests.acs.GetSetDisplayUnitsTests;
 import tests.acs.GetSetProductionDefaultsTests;
+import tests.acs.GetSetProductionInfoTests;
 import tests.acs.GetSetTolerancePolicyDefaultsTests;
 import tests.acs.GetSetUserPreferenceByNameTests;
 import tests.acs.GetSetUserPreferencesTests;
 import tests.acs.GetUnitVariantSettingsTests;
+import tests.acs.SaveRoutingSelectionTests;
 import testsuites.categories.AcsTest;
 
 @RunWith(CategorySuiteRunner.class)
@@ -35,11 +37,13 @@ import testsuites.categories.AcsTest;
     GetScenariosInfoTests.class,
     GetSetDisplayUnitsTests.class,
     GetSetProductionDefaultsTests.class,
+    GetSetProductionInfoTests.class,
     GetSetTolerancePolicyDefaultsTests.class,
     GetSetUserPreferenceByNameTests.class,
     GetSetUserPreferencesTests.class,
     GetUnitVariantSettingsTests.class,
-    Get2DImageByScenarioIterationKeyTests.class
+    Get2DImageByScenarioIterationKeyTests.class,
+    SaveRoutingSelectionTests.class
 })
 
 public class AcsSuite {
