@@ -100,7 +100,7 @@ public class BatchPartNegativeTest {
         partResponse = BatchPartResources.getBatchPartRepresentation(batch.getIdentity(), partResponse.getResponseEntity().getIdentity());
 
         Assert.assertTrue("Verify the error when part is created with invalid UDA",
-                partResponse.getResponseEntity().getErrors().contains("Custom attribute with name 'ProjectName' and value 'Invalid Project Name for negative automation test' does not match any of the allowed values"));
+                partResponse.getResponseEntity().getErrors().contains("Custom attribute with name 'ProjectName' was not found"));
     }
 
     @Test

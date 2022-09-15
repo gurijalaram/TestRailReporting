@@ -449,8 +449,18 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return double
      */
     public double getCostResults(String label) {
+        return Double.parseDouble(getCostResultsString(label).replaceAll("-", "0").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Gets cost result - result is returned as a String including currency symbol
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getCostResultsString(String label) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
-        return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("-", "0").replaceAll("[^0-9?!\\.]", ""));
+        return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent");
     }
 
     /**
