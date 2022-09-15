@@ -29,4 +29,18 @@ public class AccountsUtil extends TestUtil {
 
         return getAllAccountsResponse.getResponseEntity().getItems();
     }
+
+    /**
+     * Get an account by Identity
+     *
+     * @param accountIdentity - the identity
+     * @return the response object
+     */
+    public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String accountIdentity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
+                .inlineVariables(accountIdentity);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
 }
