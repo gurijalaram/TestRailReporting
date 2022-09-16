@@ -33,13 +33,11 @@ public class AccountsUtil extends TestUtil {
     /**
      * Get an account by Identity
      *
-     * @param accountIdentity - the identity
+     * @param identity - the identity
      * @return the response object
      */
-    public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String accountIdentity) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
-                .inlineVariables(accountIdentity);
+    public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity) {
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsResponse.class);
 
         return HTTPRequest.build(requestEntity).get();
     }
