@@ -1206,7 +1206,6 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String root, String locatorValue) {
-        String str = String.format("//div[@id='%s']//div[@class]", root);
         if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(locatorValue)) {
             waitForElementAndClick(dropdownSelector);
             waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
