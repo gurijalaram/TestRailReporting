@@ -254,7 +254,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return new page object
      */
     public AdvancedPage goToAdvancedTab() {
-        pageUtils.javaScriptClick(advancedTab);
+        pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(advancedTab));
         return new AdvancedPage(driver);
     }
 

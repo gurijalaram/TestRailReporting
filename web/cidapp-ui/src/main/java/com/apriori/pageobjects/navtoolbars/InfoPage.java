@@ -7,22 +7,20 @@ import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.StatusIconEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * @author cfrith
  */
 
+@Slf4j
 public class InfoPage extends LoadableComponent<InfoPage> {
-
-    private static final Logger logger = LoggerFactory.getLogger(InfoPage.class);
 
     @FindBy(xpath = "//label[.='Status']")
     private WebElement statusLabel;
@@ -58,14 +56,13 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     private WebDriver driver;
     private ModalDialogController modalDialogController;
     private StatusIcon statusIcon;
-    private String root = "modal-body";
 
     public InfoPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
         this.statusIcon = new StatusIcon(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
     }
 
@@ -86,7 +83,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage selectStatus(String status) {
-        pageUtils.typeAheadSelect(statusDropdown, root, status);
+        pageUtils.typeAheadSelect(statusDropdown, "qa-scenario-info-form-status-select", status);
         return this;
     }
 
@@ -97,7 +94,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
      * @return current page object
      */
     public InfoPage inputCostMaturity(String costMaturity) {
-        pageUtils.typeAheadSelect(costMaturityDropdown, root, costMaturity);
+        pageUtils.typeAheadSelect(costMaturityDropdown, "qa-scenario-info-form-cost-maturity-select", costMaturity);
         return this;
     }
 
