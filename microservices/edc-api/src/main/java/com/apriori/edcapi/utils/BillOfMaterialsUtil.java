@@ -43,7 +43,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialById(String billOfMaterialsId) {
-        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY);
+        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -70,7 +70,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialByIdUi(final String billOfMaterialsId) {
-        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY)
+        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
             .token(new AuthorizationUtil().getTokenAsString());
 
         return HTTPRequest.build(requestEntity).delete();
@@ -94,9 +94,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity, Class klass) {
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, klass)
-                .inlineVariables(identity);
+        RequestEntity requestEntity = genericRequest(identity, EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, klass);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -108,7 +106,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return - response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> postExportBomAsCsvFile(String billOfMaterialsId) {
-        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.POST_BILL_OF_MATERIALS_IDENTITY_TO_EXPORT);
+        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.POST_BILL_OF_MATERIALS_IDENTITY_TO_EXPORT, null);
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -116,12 +114,12 @@ public class BillOfMaterialsUtil extends TestUtil {
     /**
      * This is a generic request
      *
-     * @param billOfMaterialsId - the bill of material identity
-     * @param edcApiEnum        - the EDCApiEnum
+     * @param identity   - the identity
+     * @param edcApiEnum - the EDCApiEnum
      * @return response object
      */
-    private static RequestEntity genericRequest(String billOfMaterialsId, EDCAPIEnum edcApiEnum) {
-        return RequestEntityUtil.init(edcApiEnum, null)
-            .inlineVariables(billOfMaterialsId);
+    protected static RequestEntity genericRequest(String identity, EDCAPIEnum edcApiEnum, Class klass) {
+        return RequestEntityUtil.init(edcApiEnum, klass)
+            .inlineVariables(identity);
     }
 }
