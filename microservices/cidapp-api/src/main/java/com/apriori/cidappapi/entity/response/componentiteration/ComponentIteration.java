@@ -45,6 +45,7 @@ public class ComponentIteration {
     private ScenarioGcd scenarioGcd;
     private ScenarioMetadata scenarioMetadata;
     private List<ScenarioProcess> scenarioProcesses = null;
+    private List<ScenarioRoutings> scenarioRoutings;
     private AnalysisOfChildren analysisOfChildren;
     private AnalysisOfScenario analysisOfScenario;
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
