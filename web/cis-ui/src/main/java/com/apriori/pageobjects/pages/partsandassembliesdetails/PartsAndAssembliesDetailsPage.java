@@ -278,6 +278,29 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[contains(@id,'design-guidance-threadableGcds-SimpleHole')]")
     private WebElement simpleHolesItem;
 
+    @FindBy(id = "share-button")
+    private WebElement btnShare;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']")
+    private WebElement shareScenarioModal;
+
+    @FindBy(id = "share-scenario-user-chip-dropdown")
+    private WebElement usersDropdownOption;
+
+    @FindBy(id = "invite-button")
+    private WebElement btnInvite;
+
+    @FindBy(xpath = "//div[contains(@class,'MuiGrid-root MuiGrid-container MuiGrid-spacing')]")
+    private WebElement sharedParticipantsList;
+
+    @FindBy(xpath = "//*[@data-testid='ArrowDropDownIcon']")
+    private WebElement usersDropdownField;
+
+    @FindBy(xpath = "//div[@data-testid='chip-dropdown-share-scenario-user-chip-dropdown']")
+    private WebElement selectedUserName;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[contains(@id,'chip-0-share-scenario-user-chip-dropdown')]//*[local-name()='svg']")
+    private WebElement selectedUserRemoveIcon;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1477,5 +1500,101 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public boolean isAssemblyCostsOptionDisplayed() {
         getPageUtils().waitForElementToAppear(cycleTimeGraph);
         return getPageUtils().waitForElementAppear(costIcon).isDisplayed();
+    }
+
+    /**
+     * Checks if share button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isShareBtnDisplayed() {
+        return getPageUtils().waitForElementAppear(btnShare).isDisplayed();
+    }
+
+    /**
+     * clicks on share button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnShare() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
+        getPageUtils().waitForElementAndClick(btnShare);
+        return this;
+    }
+
+    /**
+     * Checks if share scenario modal is displayed
+     *
+     * @return true/false
+     */
+    public boolean isShareScenarioModalDisplayed() {
+        return getPageUtils().waitForElementAppear(shareScenarioModal).isDisplayed();
+    }
+
+    /**
+     * Checks if users drop down is displayed
+     *
+     * @return true/false
+     */
+    public boolean isUsersDropDownDisplayed() {
+        return getPageUtils().waitForElementAppear(usersDropdownOption).isDisplayed();
+    }
+
+    /**
+     * Checks if invite button is displayed
+     *
+     * @return true/false
+     */
+    public boolean isInviteButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnInvite).isDisplayed();
+    }
+
+    /**
+     * Checks if shared participants list is displayed
+     *
+     * @return true/false
+     */
+    public boolean isSharedParticipantsDisplayed() {
+        return getPageUtils().waitForElementAppear(sharedParticipantsList).isDisplayed();
+    }
+
+    /**
+     * select a user from drop-down
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectAUser(String user) {
+        getPageUtils().waitForElementToAppear(usersDropdownOption).sendKeys(user);
+        getPageUtils().waitForElementAndClick(By.xpath("//span[contains(.,'" + user + "')]"));
+        return this;
+    }
+
+    /**
+     * get selected field name
+     *
+     * @return a String
+     */
+    public String getSelectedUserName() {
+        return getPageUtils().waitForElementToAppear(selectedUserName).getAttribute("innerText");
+    }
+
+    /**
+     * clicks on remove icon in selected user
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnUserRemoveIcon() {
+        getPageUtils().waitForElementAndClick(selectedUserRemoveIcon);
+        return this;
+    }
+
+    /**
+     * clicks on Invite button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnInvite() {
+        getPageUtils().waitForElementAndClick(btnInvite);
+        return this;
     }
 }
