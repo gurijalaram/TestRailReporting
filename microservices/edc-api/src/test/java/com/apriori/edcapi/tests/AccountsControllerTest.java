@@ -9,8 +9,10 @@ import com.apriori.edcapi.utils.AccountsUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
 import com.apriori.utils.http.utils.RequestEntityUtil;
+import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -29,5 +31,13 @@ public class AccountsControllerTest extends AccountsUtil {
     public void testGetAllAccounts() {
         List<AccountsResponse> allAccounts = getAllAccounts();
         assertThat(allAccounts.size(), is(greaterThan(0)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1492")
+    @Description("GET the current representation of an account.")
+    public void testGetAccountByIdentity() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(getAllAccounts().get(0).getIdentity());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
     }
 }
