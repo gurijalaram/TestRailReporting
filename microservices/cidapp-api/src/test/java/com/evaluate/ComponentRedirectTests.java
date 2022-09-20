@@ -1,5 +1,9 @@
 package com.evaluate;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
@@ -43,36 +47,56 @@ public class ComponentRedirectTests {
         final String componentName = "Machined Box AMERICAS";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName = new GenerateStringUtil().generateScenarioName();
-
-//        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
-//            ComponentInfoBuilder.builder()
-//                .componentName(componentName)
-//                .scenarioName(scenarioName)
-//                .resourceFile(resourceFile)
-//                .user(currentUser)
-//                .build());
+        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
 
         ResponseWrapper<PostComponentResponse> componentResponse = componentsUtil.postComponent(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
-                .scenarioName(scenarioName)
+                .scenarioName(scenarioName1)
                 .resourceFile(resourceFile)
                 .user(currentUser)
                 .build()
         );
 
-        RequestEntity requestEntity =
+        ResponseWrapper<PostComponentResponse> componentResponseReupload = componentsUtil.postComponent(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName2)
+                .resourceFile(resourceFile)
+                .user(currentUser)
+                .build()
+        );
+
+        RequestEntity requestEntityExpect301 =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
-                .inlineVariables(componentResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity())
+                .inlineVariables(componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity())
                 .token(currentUser.getToken())
                 .followRedirection(false)
                 .expectedResponseCode(HttpStatus.SC_MOVED_PERMANENTLY);
 
-        //ToDo:- Ask Ciene what the allowed method of sleeping is
+        try {
+            TimeUnit.SECONDS.sleep(10);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
 
-        ResponseWrapper response = HTTPRequest.build(requestEntity).get();
-        response.getStatusCode();
+        ResponseWrapper response = HTTPRequest.build(requestEntityExpect301).get();
+
+        String redirectLocation = response.getHeaders().getValue("Location");
+        String ogLocation = String.format(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID.getEndpointString(), componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
+
+        assertThat(redirectLocation, is(not(ogLocation)));
+
+        RequestEntity requestEntityRedirected =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+                .inlineVariables(componentResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity())
+                .token(currentUser.getToken())
+                .followRedirection(true)
+                .expectedResponseCode(HttpStatus.SC_OK);
+
+        ResponseWrapper responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
+        responseRedirected.getStatusCode();
     }
 
 }
