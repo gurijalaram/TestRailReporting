@@ -163,6 +163,12 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     @FindBy(xpath = "//li[@data-value='scenarioName']")
     private WebElement scenarioNameFiled;
 
+    @FindBy(xpath = "//*[@data-field='scenarioCreatedAt']")
+    private WebElement createdAtField;
+
+    @FindBy(xpath = "//*[@data-field='scenarioCreatedAt']//button//*[local-name()='svg']")
+    private WebElement createdAtSortIcon;
+
     public PartsAndAssembliesPage(WebDriver driver) {
 
         this(driver, log);
@@ -776,5 +782,20 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesDetailsPage clickOnComponent(String componentName, String scenarioName) {
         getPageUtils().waitForElementAndClick(driver.findElement(By.xpath(String.format("//div[@data-field='scenarioName']//p[text()='%s']/ancestor::div[@role='row']//div[@data-field='componentName']//p[text()='%s']", scenarioName.trim(), componentName.trim()))));
         return new PartsAndAssembliesDetailsPage(getDriver());
+    }
+
+    /**
+     * sort Created At field
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage sortDownCreatedAtField() {
+        getPageUtils().waitForElementToAppear(createdAtField);
+        getPageUtils().mouseMove(createdAtField);
+        while (getPageUtils().waitForElementToAppear(createdAtSortIcon).getAttribute("data-icon").equals("sort-up")) {
+            getPageUtils().waitForElementAndClick(createdAtField);
+            getPageUtils().waitForElementsToAppear(tableRow);
+        }
+        return this;
     }
 }
