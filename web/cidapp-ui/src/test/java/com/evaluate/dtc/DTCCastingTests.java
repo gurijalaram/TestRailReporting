@@ -5,10 +5,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.pageobjects.navtoolbars.MainNavBar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
+import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -32,6 +36,7 @@ public class DTCCastingTests extends TestBase {
     private CidAppLoginPage loginPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
     private UserCredentials currentUser;
     SoftAssertions softAssertions = new SoftAssertions();
 
@@ -292,4 +297,43 @@ public class DTCCastingTests extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"6488"})
+    @Description("Failures/warnings tab - Verify costing failures are highlighted within the Design Guidance details tile Warnings tab with useful error message")
+    public void errorMessagesInDesignGuidanceTab() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .openSettings()
+            .goToToleranceTab()
+            .selectCad()
+            .submit(ExplorePage.class);
+
+        guidanceIssuesPage = explorePage
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+            .costScenario()
+            .openDesignGuidance()
+            .selectIssueType("Not Supported GCDs", "Detached Solid");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("Multiple bodies exist in the model.  Only the largest body is used and the remainder are ignored.  This is a result of \"free body\" processing mode - see Bulk costing multi-body parts in the user guide for more information.");
+
+        guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "Curved Wall");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
+
+        softAssertions.assertAll();
+
+
+
+    }
+
+
 }

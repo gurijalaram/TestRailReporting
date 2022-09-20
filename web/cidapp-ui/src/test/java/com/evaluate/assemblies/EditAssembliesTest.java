@@ -14,6 +14,7 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
+import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -39,6 +40,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -1082,6 +1084,65 @@ public class EditAssembliesTest extends TestBase {
         softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
 
         softAssertions.assertAll();
+    }
+
+    //not clear
+    @Test
+    @TestRail(testCaseId = {"11129", "11130"})
+    @Description("Validate when I select any sub components in a processing state the actions buttons are disabled")
+    public void testActionsButtonsEnabledDisabled() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String assemblyName = "Hinge assembly";
+        final String assemblyExtension = ".SLDASM";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final List<String> subComponentNames = Arrays.asList("big ring", "Pin", "small ring");
+        final String subComponentExtension = ".SLDPRT";
+
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openComponents()
+            .multiSelectSubcomponents("big ring" + "," + scenarioName)
+            .setInputs()
+            .clickApplyAndCost()
+            .clickCloseButton()
+            .multiSelectSubcomponents("big ring" + "," + scenarioName);
+
+        softAssertions.assertThat(componentsListPage.getRowDetails("big ring", scenarioName)).contains("gear");
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isCadButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("big ring" + "," + scenarioName + "", "pin" + "," + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.PUBLISH)).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isCadButtonEnabled()).isEqualTo(true);
+        softAssertions.assertThat(componentsListPage.isSetInputsEnabled()).isEqualTo(true);
+
+        softAssertions.assertAll();
+
     }
 
 }
