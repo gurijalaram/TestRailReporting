@@ -96,7 +96,7 @@ public class UploadComponentTests extends TestBase {
 
         cadFileStatusPage = importCadFilePage.submit();
 
-        assertThat(cadFileStatusPage.getImportMessage(), is(containsString(String.format("%s file(s) imported successfully.", multiComponents.size()))));
+        assertThat(cadFileStatusPage.getNumberOfSuccesses(), is(equalTo(multiComponents.size())));
     }
 
     @Test

@@ -3,19 +3,17 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+@Slf4j
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    private static final Logger logger = LoggerFactory.getLogger(ScenarioPage.class);
-
-    @FindBy(css = ".modal-title")
+    @FindBy(css = "[role='dialog'] h1")
     private WebElement dialogTitle;
 
     @FindBy(xpath = "//label[contains(text(),'Create')]/following-sibling::div[contains(@class,'apriori-select form-control')]")
@@ -24,7 +22,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
-    @FindBy(css = ".justify-content-end [type='submit']")
+    @FindBy(xpath = "//form //button[.='Submit']")
     private WebElement submitButton;
 
     private WebDriver driver;
@@ -35,7 +33,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
         this.modalDialogController = new ModalDialogController(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }

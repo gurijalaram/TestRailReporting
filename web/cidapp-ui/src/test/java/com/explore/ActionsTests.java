@@ -293,6 +293,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("CIS-531")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
