@@ -40,4 +40,18 @@ public class AccountsControllerTest extends AccountsUtil {
         ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(getAllAccounts().get(0).getIdentity());
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
     }
+
+    @Test
+    @TestRail(testCaseId = "1493")
+    @Description("DELETE an account.")
+    public void testDeleteAccountByIdentity() {
+        AccountsResponse accountsResponse = getAllAccounts().get(1);
+        String identity = accountsResponse.getIdentity();
+
+        ResponseWrapper<AccountsResponse> deleteAccountByIdentity = deleteAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, deleteAccountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> deletedAccountIdentity = getAccountByIdentity(identity, null);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, deletedAccountIdentity.getStatusCode());
+    }
 }

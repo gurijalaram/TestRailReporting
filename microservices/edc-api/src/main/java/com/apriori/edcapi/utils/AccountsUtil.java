@@ -37,8 +37,31 @@ public class AccountsUtil extends TestUtil {
      * @return the response object
      */
     public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity) {
-        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsResponse.class);
+        return getAccountByIdentity(identity, AccountsResponse.class);
+    }
+
+    /**
+     * Get an account by Identity
+     *
+     * @param identity - the identity
+     * @param klass    - the klass
+     * @return response object
+     */
+    public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity, Class klass) {
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, klass);
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Delete an account by identity
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public static ResponseWrapper<AccountsResponse> deleteAccountByIdentity(String identity) {
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.DELETE_ACCOUNTS_BY_IDENTITY, null);
+
+        return HTTPRequest.build(requestEntity).delete();
     }
 }
