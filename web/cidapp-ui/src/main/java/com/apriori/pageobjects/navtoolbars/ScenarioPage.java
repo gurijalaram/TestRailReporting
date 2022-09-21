@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    @FindBy(css = ".modal-title")
+    @FindBy(css = "[role='dialog'] h1")
     private WebElement dialogTitle;
 
     @FindBy(xpath = "//label[contains(text(),'Create')]/following-sibling::div[contains(@class,'apriori-select form-control')]")
@@ -22,7 +22,7 @@ public class ScenarioPage extends LoadableComponent<ScenarioPage> {
     @FindBy(css = "input[name='scenarioName']")
     private WebElement scenarioNameInput;
 
-    @FindBy(css = ".justify-content-end [type='submit']")
+    @FindBy(xpath = "//form //button[.='Submit']")
     private WebElement submitButton;
 
     private WebDriver driver;
