@@ -3,7 +3,6 @@ package com.evaluate.assemblies;
 import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -15,19 +14,15 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
-import com.apriori.utils.authusercontext.User;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.ColumnsEnum;
-import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
-import org.hamcrest.Matchers;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -280,7 +275,7 @@ public class UploadAssembliesTests extends TestBase {
             .inputMultiComponents(secondMultiComponentBatch)
             .inputScenarioName(scenarioName)
             .submit()
-            .close()
+            .clickClose()
             .openComponent(assemblyName1, scenarioName, currentUser)
             .openComponents();
 
@@ -342,7 +337,7 @@ public class UploadAssembliesTests extends TestBase {
             .inputMultiComponents(secondAssemblyBatch)
             .inputScenarioName(assemblyScenarioName1)
             .submit()
-            .close()
+            .clickClose()
             .selectFilter("Private");
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName2, assemblyScenarioName1)).isEqualTo(1);
@@ -370,7 +365,7 @@ public class UploadAssembliesTests extends TestBase {
             .inputScenarioName(scenarioName)
             .inputMultiComponents(firstAssemblyBatch)
             .submit()
-            .close();
+            .clickClose();
 
         final String assemblyName2 = "titan charger ass";
         final String assemblyExtension2 = ".SLDASM";
