@@ -5,10 +5,12 @@ import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.request.PartsRequest;
 import com.apriori.edcapi.entity.response.parts.Parts;
 import com.apriori.edcapi.entity.response.parts.PartsResponse;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
 import org.apache.http.HttpStatus;
 
@@ -106,7 +108,6 @@ public class PartsUtil extends TestUtil {
      * @return response object
      */
     private static PartsRequest partsInfoBody() {
-        String filename = "CreatePartData.json";
-        return (PartsRequest) BodyInformationUtil.postBodyInformation(filename, PartsRequest.class);
+        return JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), PartsRequest.class);
     }
 }
