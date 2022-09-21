@@ -69,7 +69,7 @@ public class UploadComponentTests extends TestBase {
             .inputComponentDetails(scenarioName, resourceFile)
             .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
             .submit()
-            .close()
+            .clickClose()
             .clickSearch(componentName)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
@@ -118,7 +118,7 @@ public class UploadComponentTests extends TestBase {
             .unTick("Apply to all")
             .inputMultiComponentDetails(multiComponents)
             .submit()
-            .close();
+            .clickClose();
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
@@ -143,7 +143,7 @@ public class UploadComponentTests extends TestBase {
             .inputMultiComponents(multiComponents)
             .inputScenarioName(scenarioName)
             .submit()
-            .close();
+            .clickClose();
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getListOfScenarios(component.getResourceFile().getName().split("\\.")[0],
@@ -228,7 +228,7 @@ public class UploadComponentTests extends TestBase {
             .inputMultiComponents(multiComponents)
             .inputScenarioName(scenarioName)
             .submit()
-            .close()
+            .clickClose()
             .setPagination()
             .selectFilter("Recent");
 
@@ -254,12 +254,12 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
-            .close()
+            .clickClose()
             .importCadFile()
             .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
-            .close();
+            .clickClose();
 
         //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
@@ -358,7 +358,7 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
-            .close();
+            .clickClose();
 
         multiComponents.forEach(component ->
             assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
@@ -391,13 +391,13 @@ public class UploadComponentTests extends TestBase {
             .inputScenarioName(scenarioName)
             .inputMultiComponents(multiComponents)
             .submit()
-            .close()
+            .clickClose()
             .openComponent(componentName.toUpperCase(), scenarioName, currentUser)
             .importCadFile()
             .inputScenarioName(scenarioName2)
             .inputMultiComponents(multiComponents)
             .submit()
-            .close()
+            .clickClose()
             .refresh();
 
         multiComponents.forEach(component ->
