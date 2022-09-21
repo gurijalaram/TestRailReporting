@@ -480,6 +480,7 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertAll();
     }
+    
     @Test
     @TestRail(testCaseId = {"6470"})
     @Description("Validate DFM Risk - Medium Sand Casting")

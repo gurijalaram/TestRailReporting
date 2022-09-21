@@ -323,7 +323,7 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueType("Not Supported GCDs", "Detached Solid");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("Multiple bodies exist in the model.  Only the largest body is used and the remainder are ignored.  This is a result of \"free body\" processing mode - see Bulk costing multi-body parts in the user guide for more information.");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Multiple bodies exist in the model.  Only the largest body is used and the remainder are ignored.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "CurvedWall:100");
 
