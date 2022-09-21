@@ -16,7 +16,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
-    @FindBy(xpath = "//button[.='Close']")
+    @FindBy(css = "[data-testid='close-button']")
     private WebElement closeButton;
 
     @FindBy(css = ".modal-body .mb-3")
