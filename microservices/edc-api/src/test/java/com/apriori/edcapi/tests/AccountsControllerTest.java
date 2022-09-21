@@ -35,6 +35,14 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "1492")
+    @Description("GET the current representation of an account.")
+    public void testGetAccountByIdentity() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(getAllAccounts().get(0).getIdentity());
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+    }
+
+    @Test
     @TestRail(testCaseId = "1497")
     @Description("POST Add a new account.")
     public void testCreateNewAccount() {

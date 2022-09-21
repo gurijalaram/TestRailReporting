@@ -18,25 +18,25 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CdsCustomerUserRolesTests {
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static ResponseWrapper<Customer> customer;
-    private static ResponseWrapper<User> user;
-    private static String customerName;
-    private static String userName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static String customerIdentity;
-    private static String userIdentity;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private ResponseWrapper<Customer> customer;
+    private ResponseWrapper<User> user;
+    private String customerName;
+    private String userName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private String customerIdentity;
+    private String userIdentity;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
         cloudRef = generateStringUtil.generateCloudReference();
@@ -51,8 +51,8 @@ public class CdsCustomerUserRolesTests {
         userIdentity = user.getResponseEntity().getIdentity();
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (customerIdentity != null && userIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, customerIdentity, userIdentity);
         }
