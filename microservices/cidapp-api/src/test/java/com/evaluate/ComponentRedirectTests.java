@@ -3,9 +3,11 @@ package com.evaluate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.equalTo;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
+import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
 import com.apriori.cidappapi.utils.IterationsUtil;
@@ -22,7 +24,6 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
-import io.restassured.http.Headers;
 import org.apache.http.HttpStatus;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -76,7 +77,7 @@ public class ComponentRedirectTests {
                 .expectedResponseCode(HttpStatus.SC_MOVED_PERMANENTLY);
 
         try {
-            TimeUnit.SECONDS.sleep(10);
+            TimeUnit.SECONDS.sleep(15);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
@@ -84,19 +85,19 @@ public class ComponentRedirectTests {
         ResponseWrapper response = HTTPRequest.build(requestEntityExpect301).get();
 
         String redirectLocation = response.getHeaders().getValue("Location");
-        String ogLocation = String.format(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID.getEndpointString(), componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
+        String originalEndpoint = String.format(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID.getEndpointString(), componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
 
-        assertThat(redirectLocation, is(not(ogLocation)));
+        assertThat(redirectLocation, is(not(originalEndpoint)));
 
         RequestEntity requestEntityRedirected =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
                 .inlineVariables(componentResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity())
                 .token(currentUser.getToken())
                 .followRedirection(true)
                 .expectedResponseCode(HttpStatus.SC_OK);
 
-        ResponseWrapper responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
-        responseRedirected.getStatusCode();
+        ResponseWrapper<ComponentIdentityResponse> responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
+        assertThat(responseRedirected.getResponseEntity().getIdentity(), is(equalTo(redirectLocation.substring(redirectLocation.length() - 12))));
     }
 
 }
