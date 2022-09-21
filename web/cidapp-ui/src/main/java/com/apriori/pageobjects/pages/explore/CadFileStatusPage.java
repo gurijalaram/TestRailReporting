@@ -51,7 +51,7 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
      *
      * @return new page object
      */
-    public ExplorePage close() {
+    public ExplorePage clickClose() {
         pageUtils.waitForElementAndClick(closeButton);
         return new ExplorePage(driver);
     }
