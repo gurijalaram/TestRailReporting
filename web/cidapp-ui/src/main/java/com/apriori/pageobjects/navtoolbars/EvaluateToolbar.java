@@ -82,7 +82,7 @@ public class EvaluateToolbar extends ExploreToolbar {
 
         pageUtils.waitForElementToAppear(costingDialog);
         pageUtils.waitForElementsToNotAppear(costingDialog);
-        pageUtils.waitForElementsToNotAppear(By.cssSelector(String.format(".scenario-state-preview svg[aria-label='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
+        pageUtils.waitForElementsToNotAppear(By.cssSelector(String.format("//h1[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
     }
 
     /**
