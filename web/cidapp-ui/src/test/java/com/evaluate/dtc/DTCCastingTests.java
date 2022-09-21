@@ -319,21 +319,17 @@ public class DTCCastingTests extends TestBase {
         guidanceIssuesPage = explorePage
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum.CASTING_DIE)
-            .costScenario()
+            .costScenario(4)
             .openDesignGuidance()
             .selectIssueType("Not Supported GCDs", "Detached Solid");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("Multiple bodies exist in the model.  Only the largest body is used and the remainder are ignored.  This is a result of \"free body\" processing mode - see Bulk costing multi-body parts in the user guide for more information.");
 
-        guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "Curved Wall");
+        guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "CurvedWall:100");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
 
         softAssertions.assertAll();
-
-
-
     }
-
 
 }

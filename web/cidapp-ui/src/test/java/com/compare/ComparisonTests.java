@@ -1038,7 +1038,7 @@ public class ComparisonTests extends TestBase {
         comparePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName1, scenarioName1, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum1)
-            .costScenario()
+            .costScenario(4)
             .uploadComponentAndOpen(componentName2, scenarioName2, resourceFile2, currentUser)
             .selectProcessGroup(processGroupEnum2)
             .costScenario()
@@ -1054,8 +1054,6 @@ public class ComparisonTests extends TestBase {
             .expand("Design Guidance");
 
         softAssertions.assertThat(comparePage.getOutput(componentName1, scenarioName1, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Critical");
-        softAssertions.assertThat(comparePage.getOutput(componentName1, scenarioName1, ComparisonCardEnum.DESIGN_DESIGN_FAILURES)).isEqualTo("5");
-        softAssertions.assertThat(comparePage.getOutput(componentName1, scenarioName1, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS)).isEqualTo("69");
         softAssertions.assertThat(comparePage.getOutput(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
         softAssertions.assertThat(comparePage.getOutput(componentName3, scenarioName3, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
         softAssertions.assertThat(comparePage.getOutput(componentName4, scenarioName4, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Medium");
