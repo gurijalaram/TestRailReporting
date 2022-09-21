@@ -2,15 +2,12 @@ package com.apriori.edcapi.utils;
 
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
-import com.apriori.edcapi.entity.request.AccountsRequest;
 import com.apriori.edcapi.entity.response.accounts.AccountsItemsResponse;
 import com.apriori.edcapi.entity.response.accounts.AccountsResponse;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
-import com.apriori.utils.json.utils.JsonManager;
 
 import org.apache.http.HttpStatus;
 
@@ -53,7 +50,7 @@ public class AccountsUtil extends TestUtil {
     public ResponseWrapper<AccountsResponse> postCreateNewAccount() {
         RequestEntity requestEntity =
             RequestEntityUtil.init(EDCAPIEnum.POST_ACCOUNTS, AccountsResponse.class)
-                .body(accountInfoBody());
+                .body(postBodyInformation());
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -63,10 +60,8 @@ public class AccountsUtil extends TestUtil {
      *
      * @return response object
      */
-    private AccountsRequest accountInfoBody() {
-        return JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile(
-                "CreateAccountData.json"
-            ).getPath(), AccountsRequest.class);
+    private static AccountsResponse postBodyInformation() {
+        String filename = "CreateAccountData.json";
+        return (AccountsResponse) BodyInformationUtil.postBodyInformation(filename, AccountsResponse.class);
     }
 }

@@ -1,7 +1,6 @@
 package com.apriori.edcapi.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
@@ -50,6 +49,7 @@ public class AccountsControllerTest extends AccountsUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
         String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
 
-        assertThat(postResponse.getResponseEntity().getIdentity(), is(equalTo(postResponseIdentity)));
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(postResponseIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
     }
 }
