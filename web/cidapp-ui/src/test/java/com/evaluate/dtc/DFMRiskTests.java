@@ -480,4 +480,27 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertAll();
     }
+    
+    @Test
+    @TestRail(testCaseId = {"6470"})
+    @Description("Validate DFM Risk - Medium Sand Casting")
+    public void sandCastingMediumDFM() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
+
+        String componentName = "SandCast";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".x_t");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
+        softAssertions.assertAll();
+    }
 }
