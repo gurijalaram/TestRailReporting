@@ -180,7 +180,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
             case NOT_COSTED:
                 stateIcon = "circle-minus";
                 break;
-            case COST_UP_TO_DATE:
+            case COST_COMPLETE:
                 stateIcon = "check";
                 break;
             default:

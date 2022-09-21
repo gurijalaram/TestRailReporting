@@ -26,6 +26,8 @@ public class NewPartRequest {
     private String digitalFactory;
     private String generateWatchPointReport;
     private String fileData;
+    private Integer years;
+    private String secondaryDigitalFactory;
 
     public void setDigitalFactory(String digitalFactory) {
         if (digitalFactory == null) {

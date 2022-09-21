@@ -18,26 +18,26 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CdsDeploymentsTests {
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static String customerIdentity;
-    private static ResponseWrapper<Customer> customer;
-    private static String siteName;
-    private static String siteID;
-    private static ResponseWrapper<Site> site;
-    private static String siteIdentity;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private String customerIdentity;
+    private ResponseWrapper<Customer> customer;
+    private String siteName;
+    private String siteID;
+    private ResponseWrapper<Site> site;
+    private String siteIdentity;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
@@ -54,8 +54,8 @@ public class CdsDeploymentsTests {
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }

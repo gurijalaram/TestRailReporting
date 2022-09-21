@@ -97,6 +97,9 @@ public class ScenariosTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
+        assemblyUtils.costSubComponents(componentAssembly)
+                .costAssembly(componentAssembly);
+
         assemblyUtils.publishSubComponents(componentAssembly)
             .publishAssembly(componentAssembly);
 
@@ -138,6 +141,9 @@ public class ScenariosTests {
 
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
 
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 

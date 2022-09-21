@@ -22,6 +22,7 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.dataservice.TestDataService;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.part.PartData;
 
 import io.qameta.allure.Description;
@@ -39,6 +40,7 @@ public class BatchPartTest {
 
     private static Batch batch;
     private static Part part = null;
+    private static Integer number_of_parts = Integer.parseInt(PropertiesContext.get("number_of_parts"));
 
     @BeforeClass
     public static void testSetup() {
@@ -57,7 +59,7 @@ public class BatchPartTest {
         "3. Wait for the costing process to complete for all parts" +
         "4. Log Parts costing results.")
     public void cost10Parts() {
-        List<PartData> partDataList = new TestDataService().getPartsFromCloud(10);
+        List<PartData> partDataList = new TestDataService().getPartsFromCloud(number_of_parts);
         SoftAssertions softAssertions = new SoftAssertions();
         Batch batch = BatchResources.createBatch().getResponseEntity();
         MultiPartResources.addPartsToBatch(partDataList, batch.getIdentity());

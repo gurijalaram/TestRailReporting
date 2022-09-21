@@ -328,7 +328,7 @@ public class TwoModelMachiningTests extends TestBase {
     @Test
     @Issue("BA-2320")
     @Description("Validate the user cannot use two completely different CAD models")
-    @TestRail(testCaseId = {"7871"})
+    @TestRail(testCaseId = {"7871", "6630"})
     public void testTwoModelCorrectCADModels() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
         final ProcessGroupEnum processGroupEnumTwoModel = ProcessGroupEnum.TWO_MODEL_MACHINING;
