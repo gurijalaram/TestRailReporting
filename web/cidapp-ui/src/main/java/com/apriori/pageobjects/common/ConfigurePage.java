@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.common;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
@@ -142,6 +144,30 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      */
     public List<String> getChosenList() {
         return Stream.of(columnList.get(1).getAttribute("innerText").split("\n")).filter(x -> !x.contains("Chosen".toUpperCase())).collect(Collectors.toList());
+    }
+
+    /**
+     * Select choices checkbox
+     *
+     * @return current page object
+     */
+    public ConfigurePage selectChoices() {
+        By byCheckbox = with(By.cssSelector("[data-icon='square']"))
+            .toLeftOf(By.xpath("//div[contains(text(),'Choices')]"));
+        pageUtils.waitForElementAndClick(byCheckbox);
+        return this;
+    }
+
+    /**
+     * Selects chosen checkbox
+     *
+     * @return current page object
+     */
+    public ConfigurePage selectChosen() {
+        By byCheckbox = with(By.cssSelector("[data-icon='square']"))
+            .toLeftOf(By.xpath("//div[contains(text(),'Chosen')]"));
+        pageUtils.waitForElementAndClick(byCheckbox);
+        return this;
     }
 
     /**

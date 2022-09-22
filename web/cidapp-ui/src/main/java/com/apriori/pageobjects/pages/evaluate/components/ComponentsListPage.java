@@ -779,4 +779,13 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         componentNames.remove("Component Name");
         return componentNames;
     }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return scenarioTableController.getTableHeaders();
+    }
 }
