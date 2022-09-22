@@ -154,6 +154,30 @@ public class ComponentsUtil {
     }
 
     /**
+     * POST new component and allow Override of Scenario Name
+     *
+     * @param componentBuilder - the component object
+     * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
+     */
+    public ResponseWrapper<PostComponentResponse> postComponentWithOverride(ComponentInfoBuilder componentBuilder) {
+        String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
+            .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
+
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
+                .body("groupItems",
+                    Collections.singletonList(ComponentRequest.builder()
+                        .filename(componentBuilder.getResourceFile().getName())
+                        .override(true)
+                        .resourceName(resourceName)
+                        .scenarioName(componentBuilder.getScenarioName())
+                        .build()))
+                .token(componentBuilder.getUser().getToken());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * POST new multicomponent
      *
      * @param componentInfoBuilder - the component object
