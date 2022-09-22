@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
-    @FindBy(css = ".modal-content label")
+    @FindBy(css = ".MuiPaper-root h1")
     private WebElement componentLabel;
 
     @FindBy(css = "input[type='file']")

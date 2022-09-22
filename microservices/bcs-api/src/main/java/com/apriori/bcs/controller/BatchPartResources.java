@@ -157,7 +157,8 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Parts> getBatchPartById(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -170,8 +171,8 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Parts> getPartsByBatchId(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
-            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
-        requestEntity.queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
         return HTTPRequest.build(requestEntity).getMultipart();
     }
 

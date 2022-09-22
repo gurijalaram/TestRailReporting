@@ -93,7 +93,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIR login page was not displayed", aprioriLoginPage.getPageTitle().contains("CI Report APRIORI"));
+        assertTrue("CIR login page was not displayed", aprioriLoginPage.getPageTitle().startsWith("CI Design APRIORI"));
     }
 
     /**

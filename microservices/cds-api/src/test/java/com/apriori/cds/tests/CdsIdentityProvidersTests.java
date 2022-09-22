@@ -19,26 +19,26 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.hamcrest.CoreMatchers;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CdsIdentityProvidersTests {
-    private static String customerIdentity;
-    private static String userIdentity;
-    private static String idpIdentity;
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static ResponseWrapper<Customer> customer;
-    private static String userName;
-    private static ResponseWrapper<User> user;
+    private String customerIdentity;
+    private String userIdentity;
+    private String idpIdentity;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private ResponseWrapper<Customer> customer;
+    private String userName;
+    private ResponseWrapper<User> user;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         userName = generateStringUtil.generateUserName();
         cloudRef = generateStringUtil.generateCloudReference();
@@ -53,8 +53,8 @@ public class CdsIdentityProvidersTests {
         userIdentity = user.getResponseEntity().getIdentity();
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (idpIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.SAML_BY_CUSTOMER_PROVIDER_IDS, customerIdentity, idpIdentity);
         }

@@ -18,25 +18,25 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CdsAccessControlsTests  {
-    private static IdentityHolder accessControlIdentityHolder;
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static ResponseWrapper<Customer> customer;
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static String customerType;
-    private static String customerIdentity;
-    private static String userIdentity;
+    private IdentityHolder accessControlIdentityHolder;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private ResponseWrapper<Customer> customer;
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private String customerType;
+    private String customerIdentity;
+    private String userIdentity;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         customerType = Constants.CLOUD_CUSTOMER;
         cloudRef = generateStringUtil.generateCloudReference();
@@ -47,8 +47,8 @@ public class CdsAccessControlsTests  {
         customerIdentity = customer.getResponseEntity().getIdentity();
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (accessControlIdentityHolder != null) {
             cdsTestUtil.delete(CDSAPIEnum.ACCESS_CONTROL_BY_ID,
                 accessControlIdentityHolder.customerIdentity(),

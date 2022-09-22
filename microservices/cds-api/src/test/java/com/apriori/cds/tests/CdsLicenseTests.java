@@ -27,8 +27,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.After;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.UUID;
@@ -36,28 +35,28 @@ import java.util.stream.Collectors;
 
 public class CdsLicenseTests {
 
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static ResponseWrapper<Customer> customer;
-    private static ResponseWrapper<Site> site;
-    private static ResponseWrapper<LicenseResponse> license;
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static String customerIdentity;
-    private static String siteName;
-    private static String siteId;
-    private static String siteIdentity;
-    private static String licenseId;
-    private static String subLicenseId;
-    private static String licenseIdentity;
-    private static String subLicenseIdentity;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private ResponseWrapper<Customer> customer;
+    private ResponseWrapper<Site> site;
+    private ResponseWrapper<LicenseResponse> license;
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private String customerIdentity;
+    private String siteName;
+    private String siteId;
+    private String siteIdentity;
+    private String licenseId;
+    private String subLicenseId;
+    private String licenseIdentity;
+    private String subLicenseIdentity;
     private IdentityHolder deleteIdentityHolder;
     private IdentityHolder userIdentityHolder;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
@@ -96,10 +95,6 @@ public class CdsLicenseTests {
                 userIdentityHolder.userIdentity()
             );
         }
-    }
-
-    @AfterClass
-    public static void deleteCustomer() {
         if (customerIdentity != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }

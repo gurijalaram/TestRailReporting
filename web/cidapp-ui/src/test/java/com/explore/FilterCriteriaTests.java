@@ -183,7 +183,8 @@ public class FilterCriteriaTests extends TestBase {
             currentUser);
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
-        assemblyUtils.publishSubComponents(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(currentUser)
@@ -196,14 +197,15 @@ public class FilterCriteriaTests extends TestBase {
             .inputNotes("Test Notes")
             .submit(EvaluatePage.class)
             .publishScenario(PublishPage.class)
-            .publish(cidComponentItem, ExplorePage.class)
+            .publish(componentAssembly, EvaluatePage.class)
+            .clickExplore()
             .filter()
             .saveAs()
             .inputName(filterName)
             .addCriteria(PropertyEnum.STATUS, OperationEnum.IN, "Analysis")
             .submit(ExplorePage.class);
 
-        assertThat(explorePage.getListOfScenarios("Hinge assembly", scenarioName), is(greaterThanOrEqualTo(1)));
+        assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
