@@ -30,40 +30,40 @@ public class ModalDialogController {
     @FindBy(css = "button[title='Collapse all']")
     private WebElement collapseAllButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
+    @FindBy(xpath = "//form //button[.='Cancel']")
     private WebElement cancelButton;
 
     @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Cancel']")
     private WebElement cancel;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Try Again']")
+    @FindBy(xpath = "//form //button[.='Try Again']")
     private WebElement tryAgainButton;
 
-    @FindBy(css = "button[type='submit']")
+    @FindBy(xpath = "//form //button[.='Publish']")
     private WebElement publishButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Continue']")
+    @FindBy(xpath = "//form //button[.='Continue']")
     private WebElement continueButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
+    @FindBy(xpath = "//form //button[.='Back']")
     private WebElement backButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Save']")
+    @FindBy(xpath = "//form //button[.='Save']")
     private WebElement saveButton;
 
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
+    @FindBy(xpath = "//form //button[.='Cost']")
     private WebElement costButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Apply & Cost']")
+    @FindBy(xpath = "//form //button[.='Apply & Cost']")
     private WebElement applyCostButton;
 
-    @FindBy(xpath = "//button[.='Back']")
+    @FindBy(xpath = "//form //button[.='Back']")
     private WebElement backFromError;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Close']")
+    @FindBy(xpath = "//form //button[.='Close']")
     private WebElement closeButton;
 
     private WebDriver driver;
