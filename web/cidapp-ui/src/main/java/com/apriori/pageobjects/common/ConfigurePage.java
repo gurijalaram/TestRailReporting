@@ -29,7 +29,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[@class='btn btn-primary'][.='Submit']")
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;
@@ -168,6 +168,15 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
             .near(By.xpath("//div[contains(text(),'Chosen')]"));
         driver.findElement(byCheckbox).click();
         return this;
+    }
+
+    /**
+     * Checks if the submit button is disabled
+     *
+     * @return boolean
+     */
+    public Boolean isSubmitButtonDisabled() {
+        return pageUtils.waitForElementToAppear(submitButton).getAttribute("class").contains("disabled");
     }
 
     /**
