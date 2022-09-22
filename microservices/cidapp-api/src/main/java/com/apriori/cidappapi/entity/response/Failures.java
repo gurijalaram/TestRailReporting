@@ -20,4 +20,5 @@ public class Failures {
     private String componentIdentity;
     private String scenarioIdentity;
     private String componentName;
+    private String scenarioAssociationIdentity;
 }
