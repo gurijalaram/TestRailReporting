@@ -1,6 +1,5 @@
 package com.evaluate.assemblies;
 
-import static com.apriori.utils.enums.ProcessGroupEnum.ASSEMBLY;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.hasItem;
 import static org.hamcrest.CoreMatchers.is;
@@ -14,11 +13,9 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.SetInputStatusPage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
@@ -31,7 +28,6 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
-import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -40,8 +36,6 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -1070,7 +1064,7 @@ public class EditAssembliesTest extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly2)
             .openComponents()
-            .expandSubAssembly(SUB_ASSEMBLY)
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("assy03A" + "," + scenarioName + "", "Part0005a" + "," + scenarioName + "");
 
         softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
