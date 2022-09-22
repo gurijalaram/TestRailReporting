@@ -4,10 +4,12 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.edcapi.entity.enums.EDCAPIEnum;
 import com.apriori.edcapi.entity.response.accounts.AccountsItemsResponse;
 import com.apriori.edcapi.entity.response.accounts.AccountsResponse;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.json.utils.JsonManager;
 
 import org.apache.http.HttpStatus;
 
@@ -40,5 +42,27 @@ public class AccountsUtil extends TestUtil {
         RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, AccountsResponse.class);
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Create a new account
+     *
+     * @return the response object
+     */
+    public ResponseWrapper<AccountsResponse> postCreateNewAccount() {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_ACCOUNTS, AccountsResponse.class)
+                .body(postBodyInformation());
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * This method has a json file to input info for the accounts body
+     *
+     * @return response object
+     */
+    private static AccountsResponse postBodyInformation() {
+        return JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreateAccountData.json").getPath(), AccountsResponse.class);
     }
 }
