@@ -107,10 +107,7 @@ public class PartsUtil extends TestUtil {
      *
      * @return response object
      */
-    private PartsRequest partsInfoBody() {
-        return JsonManager.deserializeJsonFromFile(
-            FileResourceUtil.getResourceAsFile(
-                "CreatePartData.json"
-            ).getPath(), PartsRequest.class);
+    private static PartsRequest partsInfoBody() {
+        return JsonManager.deserializeJsonFromFile(FileResourceUtil.getResourceAsFile("CreatePartData.json").getPath(), PartsRequest.class);
     }
 }

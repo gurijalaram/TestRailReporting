@@ -120,3 +120,4 @@ screenshots/
 /sds/build/
 build/
 /vim.exe.stackdump
+/utils/gradle/

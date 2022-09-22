@@ -482,7 +482,7 @@ public class ExploreToolbar extends MainNavBar {
             .inputMultiComponents(multiComponents)
             .inputScenarioName(scenarioName)
             .submit()
-            .close()
+            .clickClose()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents();
         return new ComponentsListPage(driver);
