@@ -30,7 +30,7 @@ public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPa
     @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
     private WebElement basicTab;
 
-    @FindBy(css = ".modal-body input[name='batchSize']")
+    @FindBy(css = "[role='dialog'] input[name='batchSize']")
     private WebElement batchSizeInput;
 
     @FindBy(css = ".secondary-process-modal-select-field [data-icon='pencil']")

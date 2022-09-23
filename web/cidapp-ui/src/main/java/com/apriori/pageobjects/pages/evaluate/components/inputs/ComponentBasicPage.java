@@ -20,33 +20,6 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
-    @FindBy(css = ".modal-body div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
-    private WebElement processGroupDropdown;
-
-    @FindBy(css = ".modal-body [id='qa-process-group-select-field'] .apriori-select")
-    private WebElement processGroupInput;
-
-    @FindBy(css = ".modal-body div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
-    private WebElement digitalFactoryDropdown;
-
-    @FindBy(css = ".modal-body [id='qa-digital-factory-select-field'] .apriori-select")
-    private WebElement digitalFactoryInput;
-
-    @FindBy(css = ".modal-body div[id='qa-material-modal-select-field'] .input-group-append button")
-    private WebElement materialsPencil;
-
-    @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .apriori-select")
-    private WebElement materialInput;
-
-    @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .placeholder")
-    private WebElement materialInputPlaceholder;
-
-    @FindBy(css = ".modal-body input[name='annualVolume']")
-    private WebElement annualVolumeInput;
-
-    @FindBy(css = ".modal-body input[name='productionLife']")
-    private WebElement productionLifeInput;
-
     @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
     private WebElement basicTab;
 
@@ -55,6 +28,33 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
     @FindBy(xpath = "//div[@role='dialog']//button[.='Custom']")
     private WebElement customTab;
+
+    @FindBy(css = "[role='dialog'] div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
+    private WebElement processGroupDropdown;
+
+    @FindBy(css = "[role='dialog'] [id='qa-process-group-select-field'] .apriori-select")
+    private WebElement processGroupInput;
+
+    @FindBy(css = "[role='dialog'] div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
+    private WebElement digitalFactoryDropdown;
+
+    @FindBy(css = "[role='dialog'] [id='qa-digital-factory-select-field'] .apriori-select")
+    private WebElement digitalFactoryInput;
+
+    @FindBy(css = "[role='dialog'] div[id='qa-material-modal-select-field'] .input-group-append button")
+    private WebElement materialsPencil;
+
+    @FindBy(css = "[role='dialog'] [id='qa-material-modal-select-field'] .apriori-select")
+    private WebElement materialInput;
+
+    @FindBy(css = "[role='dialog'] [id='qa-material-modal-select-field'] .placeholder")
+    private WebElement materialInputPlaceholder;
+
+    @FindBy(css = "[role='dialog'] input[name='annualVolume']")
+    private WebElement annualVolumeInput;
+
+    @FindBy(css = "[role='dialog'] input[name='productionLife']")
+    private WebElement productionLifeInput;
 
     @FindBy(css = "button[data-testid='primary-button']")
     private WebElement applyAndCostBtn;
