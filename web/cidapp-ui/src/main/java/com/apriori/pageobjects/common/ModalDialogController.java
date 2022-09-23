@@ -30,7 +30,7 @@ public class ModalDialogController {
     @FindBy(css = "button[title='Collapse all']")
     private WebElement collapseAllButton;
 
-    @FindBy(xpath = "//form //button[.='Cancel']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Cancel']")
     private WebElement cancelButton;
 
     @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Cancel']")
