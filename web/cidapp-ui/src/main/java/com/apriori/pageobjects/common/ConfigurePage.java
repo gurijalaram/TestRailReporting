@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.common;
 
+import static org.openqa.selenium.support.locators.RelativeLocator.with;
+
 import com.apriori.utils.PageUtils;
 
 import com.utils.ColumnsEnum;
@@ -27,7 +29,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[@class='btn btn-primary'][.='Submit']")
+    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;
@@ -142,6 +144,39 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      */
     public List<String> getChosenList() {
         return Stream.of(columnList.get(1).getAttribute("innerText").split("\n")).filter(x -> !x.contains("Chosen".toUpperCase())).collect(Collectors.toList());
+    }
+
+    /**
+     * Select choices checkbox
+     *
+     * @return current page object
+     */
+    public ConfigurePage selectChoices() {
+        By byCheckbox = with(By.cssSelector(".checkbox-icon"))
+            .near(By.xpath("//div[contains(text(),'Choices')]"));
+        driver.findElement(byCheckbox).click();
+        return this;
+    }
+
+    /**
+     * Selects chosen checkbox
+     *
+     * @return current page object
+     */
+    public ConfigurePage selectChosen() {
+        By byCheckbox = with(By.cssSelector(".checkbox-icon"))
+            .near(By.xpath("//div[contains(text(),'Chosen')]"));
+        driver.findElement(byCheckbox).click();
+        return this;
+    }
+
+    /**
+     * Checks if the submit button is disabled
+     *
+     * @return boolean
+     */
+    public Boolean isSubmitButtonDisabled() {
+        return pageUtils.waitForElementToAppear(submitButton).getAttribute("class").contains("disabled");
     }
 
     /**

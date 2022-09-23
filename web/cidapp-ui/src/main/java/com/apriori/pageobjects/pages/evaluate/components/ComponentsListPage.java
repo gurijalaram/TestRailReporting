@@ -344,20 +344,20 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @param scenarioName  - scenario name
      * @return a new page object
      */
-    public ComponentsListPage expandAssembly(String componentName, String scenarioName) {
-        scenarioTableController.expandAssembly(componentName, scenarioName);
+    public ComponentsListPage expandSubAssembly(String componentName, String scenarioName) {
+        scenarioTableController.expandSubassembly(componentName, scenarioName);
         return this;
     }
 
     /**
-     * Expands the sub assembly
+     * Expands the Assembly
      *
-     * @param subAssemblyName - the sub assembly name
-     * @return - the current page object
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return a new page object
      */
-    public ComponentsListPage expandSubAssembly(String subAssemblyName) {
-        By byExpand = By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='cell-text']/preceding-sibling::div//*[@data-icon='circle-chevron-down']", subAssemblyName.toUpperCase().trim()));
-        pageUtils.waitForElementAndClick(byExpand);
+    public ComponentsListPage collapseSubassembly(String componentName, String scenarioName) {
+        scenarioTableController.collapseSubassembly(componentName, scenarioName);
         return this;
     }
 
@@ -778,5 +778,14 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
         componentNames.remove("Component Name");
         return componentNames;
+    }
+
+    /**
+     * Gets table headers
+     *
+     * @return list of string
+     */
+    public List<String> getTableHeaders() {
+        return scenarioTableController.getTableHeaders();
     }
 }
