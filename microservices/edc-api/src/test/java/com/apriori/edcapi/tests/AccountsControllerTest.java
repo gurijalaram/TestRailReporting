@@ -13,6 +13,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,9 +21,19 @@ import java.util.List;
 
 public class AccountsControllerTest extends AccountsUtil {
 
+    private static String identity;
+
     @Before
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        identity = postCreateNewAccount().getResponseEntity().getIdentity();
+    }
+
+    @AfterClass
+    public static void deleteTestData() {
+        if (identity != null) {
+            deleteAccountByIdentity(identity);
+        }
     }
 
     @Test
@@ -37,7 +48,7 @@ public class AccountsControllerTest extends AccountsUtil {
     @TestRail(testCaseId = "1492")
     @Description("GET the current representation of an account.")
     public void testGetAccountByIdentity() {
-        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(getAllAccounts().get(0).getIdentity());
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
     }
 
