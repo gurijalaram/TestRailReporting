@@ -8,6 +8,7 @@ import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
 import com.evaluate.NewScenarioNameTests;
+import com.evaluate.OpenUnknownComponentsTests;
 import com.evaluate.ProcessGroupsTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
@@ -91,7 +92,8 @@ import testsuites.suiteinterface.SmokeTests;
     LargeGroupAssemblyTests.class,
     IncludeAndExcludeNestedAssemblyTests.class,
     FiltersTests.class,
-    FilterCriteriaTests.class
+    FilterCriteriaTests.class,
+    OpenUnknownComponentsTests.class
 })
 public class RegressionTestSuite {
 }

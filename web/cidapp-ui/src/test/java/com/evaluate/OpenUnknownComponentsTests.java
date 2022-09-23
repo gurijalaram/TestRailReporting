@@ -4,44 +4,35 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
-import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.ColumnsEnum;
-import com.utils.SortOrderEnum;
+import com.utils.MultiUpload;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.RegressionTestSuite;
-import testsuites.suiteinterface.SanityTests;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OpenUnknownComponentsTests extends TestBase {
 
     private File resourceFile;
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
-    private UserCredentials currentUser;
-    private CadFileStatusPage cadFileStatusPage;
-    private ImportCadFilePage importCadFilePage;
     private EvaluatePage evaluatePage;
-    private ComponentInfoBuilder cidComponentItem;
-    private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -63,7 +54,7 @@ public class OpenUnknownComponentsTests extends TestBase {
             .inputComponentDetails(scenarioName, resourceFile)
             .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
             .submit()
-            .close();
+            .clickClose();
 
         assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName), is(equalTo("gear")));
 
@@ -88,10 +79,81 @@ public class OpenUnknownComponentsTests extends TestBase {
             .inputComponentDetails(scenarioName, resourceFile)
             .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
             .submit()
-            .close();
+            .clickClose();
 
         assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName), is(equalTo("gear")));
 
         evaluatePage = explorePage.openScenario(componentName, scenarioName);
+    }
+
+    @Test
+    @Category(RegressionTestSuite.class)
+    @TestRail(testCaseId = "15038")
+    @Description("Test opening a single part component from import modal")
+    public void testOpenPartFromImportModal() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING;
+
+        final String componentName = "Case_17";
+        final String extension = ".stp";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
+            .submit()
+            .openFile(componentName + extension);
+
+        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
+    }
+
+    @Test
+    @Category(RegressionTestSuite.class)
+    @TestRail(testCaseId = "15038")
+    @Description("Test opening an 'unknown' component from import modal")
+    public void testOpenAssemblyFromImportModal() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+
+        final String componentName = "top-level";
+        final String extension = ".asm.1";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + extension);
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
+            .submit()
+            .openFile(componentName + extension);
+
+        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
+    }
+
+    @Test
+    @Category(RegressionTestSuite.class)
+    @TestRail(testCaseId = "15039")
+    @Description("Test opening a single part component from import modal after multi file upload")
+    public void testOpenFromImportModalMultiUpload() {
+        final String targetComponentName = "Case_17";
+        final String extension = ".stp";
+
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "nut.CATPart"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING, "Case_17.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "bolt.CATPart"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(UserUtil.getUser())
+            .importCadFile()
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .openFile(targetComponentName + extension);
+
+        assertThat(evaluatePage.getPartName(), is(equalTo(targetComponentName.toUpperCase())));
     }
 }
