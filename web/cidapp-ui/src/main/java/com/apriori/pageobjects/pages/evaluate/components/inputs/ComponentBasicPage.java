@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -56,11 +55,8 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
     @FindBy(css = "[role='dialog'] input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(css = "button[data-testid='primary-button']")
+    @FindBy(xpath = "//form //button[.='Apply & Cost']")
     private WebElement applyAndCostBtn;
-
-    @FindBy(css = "div[class='scenario-group-operations-success-message'] button")
-    private WebElement closeBtn;
 
     @FindBy(css = "div[role='status']")
     private WebElement costingSpinner;
@@ -72,7 +68,6 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
     private PageUtils pageUtils;
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
-    private String root = "modal-body";
 
     public ComponentBasicPage(WebDriver driver) {
         this.driver = driver;
@@ -122,7 +117,7 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      * @return current page object
      */
     public ComponentBasicPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        inputsController.selectInputsDropdown(processGroupDropdown, root, processGroup.getProcessGroup());
+        inputsController.selectInputsDropdown(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
         return this;
     }
 
@@ -142,7 +137,7 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      * @return current page object
      */
     public ComponentBasicPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectInputsDropdown(digitalFactoryDropdown, root, digitalFactory.getDigitalFactory());
+        inputsController.selectInputsDropdown(digitalFactoryDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
         return this;
     }
 
@@ -256,18 +251,14 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      * @return generic page object
      */
     public <T> T applyAndCost(Class<T> klass) {
-
         return modalDialogController.applyCost(klass);
     }
 
     /**
      * Click Apply and Cost
      */
-    public ComponentBasicPage clickApplyAndCost() {
-        pageUtils.waitForElementAndClick(applyAndCostBtn);
-        pageUtils.waitForElementToAppear(costingSpinner);
-        pageUtils.waitForElementNotVisible(costingSpinner, 1);
-        return this;
+    public <T> T clickApplyAndCost(Class<T> klass) {
+        return modalDialogController.applyCost(klass);
     }
 
     /**
@@ -277,16 +268,5 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      */
     public <T> T close(Class<T> klass) {
         return modalDialogController.close(klass);
-    }
-
-    /**
-     * Close
-     *
-     * @return generic page object
-     */
-    public ComponentsListPage clickCloseButton() {
-        pageUtils.waitForElementAndClick(closeBtn);
-        pageUtils.waitForElementNotVisible(loadingSpinner, 1);
-        return new ComponentsListPage(driver);
     }
 }
