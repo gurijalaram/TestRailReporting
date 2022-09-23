@@ -48,7 +48,7 @@ public class ModalDialogController {
     @FindBy(xpath = "//form //button[.='Back']")
     private WebElement backButton;
 
-    @FindBy(xpath = "//form //button[.='Save']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Save']")
     private WebElement saveButton;
 
     @FindBy(css = "button[aria-label='Close']")
