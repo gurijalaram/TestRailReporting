@@ -47,13 +47,13 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
     @FindBy(css = ".modal-body input[name='productionLife']")
     private WebElement productionLifeInput;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
     private WebElement basicTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Advanced']")
     private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Custom']")
     private WebElement customTab;
 
     @FindBy(css = "button[data-testid='primary-button']")
