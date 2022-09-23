@@ -14,7 +14,7 @@ import org.openqa.selenium.support.FindBy;
 @Slf4j
 public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPage> {
 
-    @FindBy(css = "svg[data-icon='code-branch']")
+    @FindBy(xpath = "//*[text()='Select Routing']")
     private WebElement selectRouting;
 
     @FindBy(css = ".MuiCheckbox-colorPrimary")
@@ -94,8 +94,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * @return - Boolean
      */
     public boolean isCostStatus(String routingPreference, NewCostingLabelEnum status) {
-        return getPageUtils().textPresentInElement(getDriver().findElement(
-            By.xpath(String.format("//h3[text()='%s']/parent::div//div[.='%s']", routingPreference, status.getCostingText()))), status.getCostingText());
+        return getPageUtils().textPresentInElement(getDriver().findElement(byCostStatus(routingPreference, status)), status.getCostingText());
     }
 
     /**
@@ -107,7 +106,42 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      */
     public boolean isCostDifference(String routingPreference, String value) {
         return getPageUtils().textPresentInElement(getDriver().findElement(
-            By.xpath(String.format("//h3[text()='%s']/parent::div//div//div/following-sibling::span[.='%s']", routingPreference, value))), value);
+            By.xpath(String.format("//h3[text()='%s']/parent::div//following-sibling::span[.='%s']//span", routingPreference, value))), value);
+    }
+
+    /**
+     * Get the value of the cost difference
+     *
+     * @param routingPreference - the routing preference
+     * @return double
+     */
+    public double getCostDifferenceValue(String routingPreference) {
+        By value = By.xpath(String.format("//h3[text()='%s']/parent::div", routingPreference));
+        return Double.parseDouble(getPageUtils().waitForElementToAppear(value).getAttribute("textContent")
+            .replaceAll("-", "0").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Get the value of the cost status
+     *
+     * @param routingPreference - the routing preference
+     * @param status            - the cost status
+     * @return string
+     */
+    public String getCostStatusValue(String routingPreference, NewCostingLabelEnum status) {
+        By value = byCostStatus(routingPreference, status);
+        return getPageUtils().waitForElementToAppear(value).getAttribute("textContent");
+    }
+
+    /**
+     * Get by routing preference and cost status
+     *
+     * @param routingPreference - the routing preference
+     * @param status            - the cost status
+     * @return by
+     */
+    private By byCostStatus(String routingPreference, NewCostingLabelEnum status) {
+        return By.xpath(String.format("//h3[text()='%s']/parent::div//div[.='%s']", routingPreference, status.getCostingText()));
     }
 
     /**
