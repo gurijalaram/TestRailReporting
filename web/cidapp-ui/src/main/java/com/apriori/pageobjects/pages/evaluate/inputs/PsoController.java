@@ -46,7 +46,7 @@ public class PsoController {
      * @return webelement
      */
     public WebElement inputLocator(String locatorValue) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@type='number']", locatorValue));
+        By byLocator = By.xpath(String.format("//div[text()='%s']/../..//input[@type='number']", locatorValue));
         pageUtils.waitForElementToAppear(byLocator);
         return pageUtils.scrollWithJavaScript(driver.findElement(byLocator), true);
     }
@@ -59,7 +59,7 @@ public class PsoController {
      * @return webelement
      */
     public WebElement buildLocator(String label, String value) {
-        By byLocator = By.xpath(String.format("//h6[text()='%s']/..//input[@value='%s']", label, value));
+        By byLocator = By.xpath(String.format("//div[text()='%s']/../..//input[@value='%s']", label, value));
         return pageUtils.waitForElementToAppear(byLocator);
     }
 

@@ -42,11 +42,27 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "1497")
+    @Description("POST Add a new account.")
+    public void testCreateNewAccount() {
+        ResponseWrapper<AccountsResponse> postResponse = postCreateNewAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+        String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
+
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(postResponseIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+    }
+
+    @Test
     @TestRail(testCaseId = "1493")
     @Description("DELETE an account.")
     public void testDeleteAccountByIdentity() {
-        AccountsResponse accountsResponse = getAllAccounts().get(1);
-        String identity = accountsResponse.getIdentity();
+        ResponseWrapper<AccountsResponse> postResponse = postCreateNewAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+        String identity = postResponse.getResponseEntity().getIdentity();
+
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
 
         ResponseWrapper<AccountsResponse> deleteAccountByIdentity = deleteAccountByIdentity(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, deleteAccountByIdentity.getStatusCode());
