@@ -15,10 +15,10 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class EditComponentsPage extends LoadableComponent<EditComponentsPage> {
 
-    @FindBy(css = "[class='modal-content']")
+    @FindBy(css = "[role='dialog']")
     private WebElement conflictsForm;
 
-    @FindBy(css = "[class='modal-content'] .alert-messaging")
+    @FindBy(css = "[data-testid='apriori-alert'] .alert-messaging")
     private WebElement conflictsFormMessage;
 
     @FindBy(css = "input[value='override']")

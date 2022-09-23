@@ -21,10 +21,16 @@ import java.util.List;
 @Slf4j
 public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPage> {
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Advanced']")
     private WebElement secondaryTab;
 
-    @FindBy(css = ".modal-body input[name='batchSize']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Custom']")
+    private WebElement customTab;
+
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
+    private WebElement basicTab;
+
+    @FindBy(css = "[role='dialog'] input[name='batchSize']")
     private WebElement batchSizeInput;
 
     @FindBy(css = ".secondary-process-modal-select-field [data-icon='pencil']")
@@ -44,12 +50,6 @@ public class ComponentAdvancedPage extends LoadableComponent<ComponentAdvancedPa
 
     @FindBy(css = "[id='qa-secondary-digital-factory-select-part-costing']")
     private WebElement secDigitalFactoryList;
-
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
-    private WebElement customTab;
-
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
-    private WebElement basicTab;
 
     private WebDriver driver;
     private PageUtils pageUtils;

@@ -1,5 +1,6 @@
 package com.apriori.cidappapi.utils;
 
+import com.apriori.cidappapi.entity.response.Failures;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -18,5 +19,5 @@ import java.util.List;
 @JsonRootName("response")
 public class AssociationSuccessesFailures {
     private List<AssociationStatus> successes;
-    private List<AssociationStatus> failures;
+    private List<Failures> failures;
 }

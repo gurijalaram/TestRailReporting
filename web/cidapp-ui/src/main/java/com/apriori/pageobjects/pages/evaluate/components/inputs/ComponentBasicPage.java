@@ -5,7 +5,6 @@ import static org.junit.Assert.assertTrue;
 import com.apriori.pageobjects.common.InputsController;
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
@@ -20,47 +19,44 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
 
-    @FindBy(css = ".modal-body div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
-    private WebElement processGroupDropdown;
-
-    @FindBy(css = ".modal-body [id='qa-process-group-select-field'] .apriori-select")
-    private WebElement processGroupInput;
-
-    @FindBy(css = ".modal-body div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
-    private WebElement digitalFactoryDropdown;
-
-    @FindBy(css = ".modal-body [id='qa-digital-factory-select-field'] .apriori-select")
-    private WebElement digitalFactoryInput;
-
-    @FindBy(css = ".modal-body div[id='qa-material-modal-select-field'] .input-group-append button")
-    private WebElement materialsPencil;
-
-    @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .apriori-select")
-    private WebElement materialInput;
-
-    @FindBy(css = ".modal-body [id='qa-material-modal-select-field'] .placeholder")
-    private WebElement materialInputPlaceholder;
-
-    @FindBy(css = ".modal-body input[name='annualVolume']")
-    private WebElement annualVolumeInput;
-
-    @FindBy(css = ".modal-body input[name='productionLife']")
-    private WebElement productionLifeInput;
-
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
     private WebElement basicTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Advanced']")
     private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Custom']")
     private WebElement customTab;
 
-    @FindBy(css = "button[data-testid='primary-button']")
-    private WebElement applyAndCostBtn;
+    @FindBy(css = "[role='dialog'] div[id='qa-process-group-select-field'] [data-icon='chevron-down']")
+    private WebElement processGroupDropdown;
 
-    @FindBy(css = "div[class='scenario-group-operations-success-message'] button")
-    private WebElement closeBtn;
+    @FindBy(css = "[role='dialog'] [id='qa-process-group-select-field'] .apriori-select")
+    private WebElement processGroupInput;
+
+    @FindBy(css = "[role='dialog'] div[id='qa-digital-factory-select-field'] [data-icon='chevron-down']")
+    private WebElement digitalFactoryDropdown;
+
+    @FindBy(css = "[role='dialog'] [id='qa-digital-factory-select-field'] .apriori-select")
+    private WebElement digitalFactoryInput;
+
+    @FindBy(css = "[role='dialog'] div[id='qa-material-modal-select-field'] .input-group-append button")
+    private WebElement materialsPencil;
+
+    @FindBy(css = "[role='dialog'] [id='qa-material-modal-select-field'] .apriori-select")
+    private WebElement materialInput;
+
+    @FindBy(css = "[role='dialog'] [id='qa-material-modal-select-field'] .placeholder")
+    private WebElement materialInputPlaceholder;
+
+    @FindBy(css = "[role='dialog'] input[name='annualVolume']")
+    private WebElement annualVolumeInput;
+
+    @FindBy(css = "[role='dialog'] input[name='productionLife']")
+    private WebElement productionLifeInput;
+
+    @FindBy(xpath = "//form //button[.='Apply & Cost']")
+    private WebElement applyAndCostBtn;
 
     @FindBy(css = "div[role='status']")
     private WebElement costingSpinner;
@@ -72,7 +68,6 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
     private PageUtils pageUtils;
     private InputsController inputsController;
     private ModalDialogController modalDialogController;
-    private String root = "modal-body";
 
     public ComponentBasicPage(WebDriver driver) {
         this.driver = driver;
@@ -122,7 +117,7 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      * @return current page object
      */
     public ComponentBasicPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        inputsController.selectInputsDropdown(processGroupDropdown, root, processGroup.getProcessGroup());
+        inputsController.selectInputsDropdown(processGroupDropdown, "qa-process-group-select-field", processGroup.getProcessGroup());
         return this;
     }
 
@@ -142,7 +137,7 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      * @return current page object
      */
     public ComponentBasicPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        inputsController.selectInputsDropdown(digitalFactoryDropdown, root, digitalFactory.getDigitalFactory());
+        inputsController.selectInputsDropdown(digitalFactoryDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
         return this;
     }
 
@@ -256,18 +251,14 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      * @return generic page object
      */
     public <T> T applyAndCost(Class<T> klass) {
-
         return modalDialogController.applyCost(klass);
     }
 
     /**
      * Click Apply and Cost
      */
-    public ComponentBasicPage clickApplyAndCost() {
-        pageUtils.waitForElementAndClick(applyAndCostBtn);
-        pageUtils.waitForElementToAppear(costingSpinner);
-        pageUtils.waitForElementNotVisible(costingSpinner, 1);
-        return this;
+    public <T> T clickApplyAndCost(Class<T> klass) {
+        return modalDialogController.applyCost(klass);
     }
 
     /**
@@ -277,16 +268,5 @@ public class ComponentBasicPage extends LoadableComponent<ComponentBasicPage> {
      */
     public <T> T close(Class<T> klass) {
         return modalDialogController.close(klass);
-    }
-
-    /**
-     * Close
-     *
-     * @return generic page object
-     */
-    public ComponentsListPage clickCloseButton() {
-        pageUtils.waitForElementAndClick(closeBtn);
-        pageUtils.waitForElementNotVisible(loadingSpinner, 1);
-        return new ComponentsListPage(driver);
     }
 }

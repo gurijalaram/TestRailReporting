@@ -452,5 +452,5 @@ qa-test:
     plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
 
   reports:
-    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/login.html
+    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/

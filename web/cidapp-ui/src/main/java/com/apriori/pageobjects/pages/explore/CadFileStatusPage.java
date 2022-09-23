@@ -23,14 +23,14 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     @FindBy(css = "[data-testid='close-button']")
     private WebElement closeButton;
 
-    @FindBy(css = ".modal-body .mb-3")
-    private WebElement uploadStatusText;
-
     @FindBy(xpath = "//button[(text()='Successes')]")
     private WebElement successesTab;
 
     @FindBy(xpath = "//button[(text()='Failures')]")
     private WebElement failuresTab;
+
+    @FindBy(xpath = "//button[(text()='Successes')]//span")
+    private WebElement numberOfSuccesses;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -69,12 +69,12 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     }
 
     /**
-     * This gets the message of the import status
+     * This gets the number of successes
      *
-     * @return - string
+     * @return - int
      */
-    public String getImportMessage() {
-        return pageUtils.waitForElementToAppear(uploadStatusText).getText();
+    public int getNumberOfSuccesses() {
+        return Integer.parseInt(pageUtils.waitForElementToAppear(numberOfSuccesses).getAttribute("textContent"));
     }
 
     /**
