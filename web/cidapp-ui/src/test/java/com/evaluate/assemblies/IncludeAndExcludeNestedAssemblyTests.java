@@ -76,7 +76,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .expandSubAssembly(SUB_ASSEMBLY)
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
 
         softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
@@ -93,7 +93,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .expandSubAssembly(SUB_ASSEMBLY)
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .multiSelectSubcomponents("0200613, " + scenarioName + "");
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EXCLUDE), is(false));
@@ -107,10 +107,10 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
         componentsListPage = loginPage.login(currentUser)
             .navigateToScenario(componentAssembly3)
             .openComponents()
-            .expandSubAssembly(SUB_ASSEMBLY)
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
-            .expandSubAssembly(SUB_ASSEMBLY)
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
 
         assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
