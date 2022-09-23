@@ -40,4 +40,16 @@ public class AccountsControllerTest extends AccountsUtil {
         ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(getAllAccounts().get(0).getIdentity());
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
     }
+
+    @Test
+    @TestRail(testCaseId = "1497")
+    @Description("POST Add a new account.")
+    public void testCreateNewAccount() {
+        ResponseWrapper<AccountsResponse> postResponse = postCreateNewAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+        String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
+
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(postResponseIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+    }
 }

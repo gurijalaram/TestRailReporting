@@ -14,7 +14,6 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
-import com.evaluate.assemblies.EditAssembliesTest;
 import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.PublishAssembliesTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
