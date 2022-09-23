@@ -60,8 +60,8 @@ public class ModalDialogController {
     @FindBy(xpath = "//form //button[.='Apply & Cost']")
     private WebElement applyCostButton;
 
-    @FindBy(xpath = "//form //button[.='Back']")
-    private WebElement backFromError;
+    @FindBy(xpath = "//div[@class='content']//button[.='Back']")
+    private WebElement backResourceButton;
 
     @FindBy(xpath = "//form //button[.='Close']")
     private WebElement closeButton;
@@ -274,7 +274,7 @@ public class ModalDialogController {
      * @return generic page object
      */
     public <T> T backFromError(Class<T> className) {
-        pageUtils.waitForElementAndClick(backFromError);
+        pageUtils.waitForElementAndClick(backResourceButton);
         return PageFactory.initElements(driver, className);
     }
 }
