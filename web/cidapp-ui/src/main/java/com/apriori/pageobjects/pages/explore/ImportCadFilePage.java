@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
-    @FindBy(css = ".modal-content label")
+    @FindBy(css = ".MuiPaper-root h1")
     private WebElement componentLabel;
 
     @FindBy(css = "input[type='file']")
@@ -73,7 +74,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(componentLabel);
+        assertEquals("Import CAD File page was not displayed", "Import CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"));
     }
 
     /**

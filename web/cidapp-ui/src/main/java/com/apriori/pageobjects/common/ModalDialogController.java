@@ -30,41 +30,44 @@ public class ModalDialogController {
     @FindBy(css = "button[title='Collapse all']")
     private WebElement collapseAllButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cancel']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Cancel']")
     private WebElement cancelButton;
 
     @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Cancel']")
     private WebElement cancel;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Try Again']")
+    @FindBy(xpath = "//form //button[.='Try Again']")
     private WebElement tryAgainButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Publish']")
+    @FindBy(xpath = "//form //button[.='Publish']")
     private WebElement publishButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Continue']")
+    @FindBy(xpath = "//form //button[.='Continue']")
     private WebElement continueButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Back']")
+    @FindBy(xpath = "//form //button[.='Back']")
     private WebElement backButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Save']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Save']")
     private WebElement saveButton;
 
     @FindBy(css = "button[aria-label='Close']")
     private WebElement closePanel;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Cost']")
+    @FindBy(xpath = "//form //button[.='Cost']")
     private WebElement costButton;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Apply & Cost']")
+    @FindBy(xpath = "//form //button[.='Apply & Cost']")
     private WebElement applyCostButton;
 
-    @FindBy(xpath = "//button[.='Back']")
-    private WebElement backFromError;
+    @FindBy(xpath = "//div[@class='content']//button[.='Back']")
+    private WebElement backResourceButton;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Close']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Close']")
     private WebElement closeButton;
+
+    @FindBy(css = "[role='dialog'] [data-icon='circle-xmark']")
+    private WebElement xButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -274,7 +277,17 @@ public class ModalDialogController {
      * @return generic page object
      */
     public <T> T backFromError(Class<T> className) {
-        pageUtils.waitForElementAndClick(backFromError);
+        pageUtils.waitForElementAndClick(backResourceButton);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Closes the dialog
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> className) {
+        pageUtils.waitForElementAndClick(xButton);
         return PageFactory.initElements(driver, className);
     }
 }

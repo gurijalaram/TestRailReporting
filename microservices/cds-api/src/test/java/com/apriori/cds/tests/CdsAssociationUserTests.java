@@ -19,31 +19,31 @@ import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.stream.Collectors;
 
 public class CdsAssociationUserTests {
-    private static String customerAssociationUserIdentity;
-    private static String customerAssociationUserIdentityEndpoint;
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static ResponseWrapper<Customer> customer;
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static String customerIdentity;
-    private static String url;
-    private static String customerIdentityEndpoint;
-    private static String aPCustomerIdentity;
-    private static String associationIdentity;
-    private static ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
+    private String customerAssociationUserIdentity;
+    private String customerAssociationUserIdentityEndpoint;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private ResponseWrapper<Customer> customer;
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private String customerIdentity;
+    private String url;
+    private String customerIdentityEndpoint;
+    private String aPCustomerIdentity;
+    private String associationIdentity;
+    private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         url = Constants.getServiceUrl();
 
         customerName = generateStringUtil.generateCustomerName();
@@ -63,8 +63,8 @@ public class CdsAssociationUserTests {
 
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (customerAssociationUserIdentityEndpoint != null) {
             cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
                 aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);

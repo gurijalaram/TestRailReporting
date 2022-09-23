@@ -26,6 +26,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
@@ -1027,4 +1028,56 @@ public class EditAssembliesTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"11133", "11141"})
+    @Description("Validate the edit button will only be enabled when top level sub components are selected")
+    public void testEditButtonSubAssembly() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        final String SUB_ASSEMBLY = "assy03A";
+        final String TOP_LEVEL = "assy03";
+
+        List<String> subAssemblyComponentNames = Arrays.asList("Part0005a", "Part0005b");
+        List<String> subComponentNames = Arrays.asList("Part0004", "Part0003", "Part0002");
+
+        final String componentExtension = ".ipt";
+        final String assemblyExtension = ".iam";
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        ComponentInfoBuilder componentAssembly1 = assemblyUtils.associateAssemblyAndSubComponents(
+            SUB_ASSEMBLY, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subAssemblyComponentNames,
+            componentExtension, processGroupEnum, scenarioName, currentUser);
+
+        ComponentInfoBuilder componentAssembly2 = assemblyUtils.associateAssemblyAndSubComponents(TOP_LEVEL, assemblyExtension, ProcessGroupEnum.ASSEMBLY, subComponentNames,
+            componentExtension, processGroupEnum, scenarioName, currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly1).uploadAssembly(componentAssembly1);
+        assemblyUtils.costSubComponents(componentAssembly1).costAssembly(componentAssembly1);
+        assemblyUtils.uploadSubComponents(componentAssembly2).uploadAssembly(componentAssembly2);
+        assemblyUtils.costSubComponents(componentAssembly2).costAssembly(componentAssembly2);
+        assemblyUtils.publishSubComponents(componentAssembly1).publishAssembly(componentAssembly1);
+        assemblyUtils.publishSubComponents(componentAssembly2).publishAssembly(componentAssembly2);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly2)
+            .openComponents()
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
+            .multiSelectSubcomponents("assy03A" + "," + scenarioName + "", "Part0005a" + "," + scenarioName + "");
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(false);
+
+        componentsListPage.multiSelectSubcomponents("Part0005a" + "," + scenarioName);
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
+
+        componentsListPage.tableView();
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.EDIT)).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
 }

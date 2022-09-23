@@ -3,6 +3,7 @@ package com.apriori.bcs.tests;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import com.apriori.bcs.controller.CustomerResources;
@@ -55,7 +56,7 @@ public class CustomerResourcesTest {
             .get();
 
         assertThat(userDefinedAttributesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertNotEquals(userDefinedAttributesResponse.getResponseEntity().getItems().size(), 0);
+        assertEquals(userDefinedAttributesResponse.getResponseEntity().getItems().size(), 0);
     }
 
     @Test
@@ -99,6 +100,6 @@ public class CustomerResourcesTest {
             .get();
 
         assertThat(customAttributesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertNotEquals(customAttributesResponse.getResponseEntity().getItems().length, 0);
+        assertEquals(customAttributesResponse.getResponseEntity().getItems().length, 0);
     }
 }

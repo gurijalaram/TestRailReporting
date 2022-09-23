@@ -293,6 +293,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
+    @Issue("CIS-531")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
@@ -448,7 +449,8 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
+            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()
             .info();
@@ -460,7 +462,8 @@ public class ActionsTests extends TestBase {
             .info()
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
-            .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
+            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()
             .info();

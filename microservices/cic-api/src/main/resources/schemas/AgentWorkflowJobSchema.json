@@ -1,0 +1,46 @@
+{
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "componentsProcessed": {
+          "type": "integer"
+        },
+        "componentsFailed": {
+          "type": "integer"
+        },
+        "componentsTotal": {
+          "type": "integer"
+        },
+        "errorMessage": {
+          "type": "string"
+        },
+        "startedAt": {
+          "type": "string"
+        },
+        "completedAt": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "identity",
+        "status",
+        "componentsProcessed",
+        "componentsFailed",
+        "componentsTotal",
+        "errorMessage",
+        "startedAt"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ]
+}

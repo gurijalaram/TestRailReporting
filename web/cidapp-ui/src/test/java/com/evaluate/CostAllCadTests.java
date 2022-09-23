@@ -45,7 +45,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421", "565", "567"})
+    @TestRail(testCaseId = {"5421", "565", "567", "6624", "6626"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -73,7 +73,7 @@ public class CostAllCadTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    // TODO: 23/10/2020 uncomment when functionality is implemented in app
+    // TODO: 23/10/2020 uncomment when reference panel functionality is implemented in app
     /*@Test
     @TestRail(testCaseId = {"566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
@@ -116,24 +116,6 @@ public class CostAllCadTests extends TestBase {
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), (is(true)));
-    }
-
-    @Test
-    @Ignore("awaiting a response if this is allowed or not for new CID")
-    @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"5447", "2317"})
-    @Description("Ensure scripts cannot be entered into all available text input fields")
-    public void failedUpload() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
-
-        loginPage = new CidAppLoginPage(driver);
-        importCadFilePage = loginPage.login(UserUtil.getUser())
-            .importCadFile()
-            .inputComponentDetails("<script>alert(document.cookie)</script>", resourceFile);
-
-        assertThat(importCadFilePage.getAlertWarning(), containsString("error occurred"));
     }
 
     @Test

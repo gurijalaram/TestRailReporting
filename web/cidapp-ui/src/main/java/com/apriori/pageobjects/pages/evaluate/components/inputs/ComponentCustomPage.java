@@ -17,13 +17,13 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ComponentCustomPage extends LoadableComponent<CustomPage> {
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Custom']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Custom']")
     private WebElement customTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Advanced']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Advanced']")
     private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@id='modal-body']//button[.='Basic']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Basic']")
     private WebElement basicTab;
 
     private WebDriver driver;
@@ -47,7 +47,7 @@ public class ComponentCustomPage extends LoadableComponent<CustomPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Custom was not selected", customTab.getAttribute("class").contains("active"));
+        assertTrue("Custom tab was not selected", customTab.getAttribute("class").contains("active"));
     }
 
     /**

@@ -84,6 +84,9 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(css = "[id='qa-sub-header-publish-button'] button")
     private WebElement publishButton;
 
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
+    private WebElement costButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -95,6 +98,17 @@ public class ExploreToolbar extends MainNavBar {
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(newButton);
         pageUtils.waitForElementToAppear(deleteButton);
+        pageUtils.waitForElementToAppear(costButton);
+    }
+
+    /**
+     * Clicks the cost button
+     *
+     * @return current page object
+     */
+    public <T> T clickCostButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(costButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -468,7 +482,7 @@ public class ExploreToolbar extends MainNavBar {
             .inputMultiComponents(multiComponents)
             .inputScenarioName(scenarioName)
             .submit()
-            .close()
+            .clickClose()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents();
         return new ComponentsListPage(driver);
