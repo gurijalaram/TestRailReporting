@@ -63,10 +63,10 @@ public class ModalDialogController {
     @FindBy(xpath = "//div[@class='content']//button[.='Back']")
     private WebElement backResourceButton;
 
-    @FindBy(xpath = "//form //button[.='Close']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Close']")
     private WebElement closeButton;
 
-    @FindBy(css = "[data-icon='circle-xmark']")
+    @FindBy(css = "[role='dialog'] [data-icon='circle-xmark']")
     private WebElement xButton;
 
     private WebDriver driver;
@@ -282,12 +282,12 @@ public class ModalDialogController {
     }
 
     /**
-     * Clicks the X button to close the modal
+     * Closes the dialog
      *
      * @return generic page object
      */
-    public <T> T closeModalButton(Class<T> klass) {
+    public <T> T closeDialog(Class<T> className) {
         pageUtils.waitForElementAndClick(xButton);
-        return PageFactory.initElements(driver, klass);
+        return PageFactory.initElements(driver, className);
     }
 }

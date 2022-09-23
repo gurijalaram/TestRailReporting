@@ -107,6 +107,6 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
      * @return generic page object
      */
     public <T> T closeModalButton(Class<T> klass) {
-        return modalDialogController.closeModalButton(klass);
+        return modalDialogController.closeDialog(klass);
     }
 }
