@@ -13,6 +13,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -20,9 +21,19 @@ import java.util.List;
 
 public class AccountsControllerTest extends AccountsUtil {
 
+    private static String identity;
+
     @Before
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
+        identity = postCreateNewAccount().getResponseEntity().getIdentity();
+    }
+
+    @AfterClass
+    public static void deleteTestData() {
+        if (identity != null) {
+            deleteAccountByIdentity(identity);
+        }
     }
 
     @Test
@@ -37,7 +48,37 @@ public class AccountsControllerTest extends AccountsUtil {
     @TestRail(testCaseId = "1492")
     @Description("GET the current representation of an account.")
     public void testGetAccountByIdentity() {
-        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(getAllAccounts().get(0).getIdentity());
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1497")
+    @Description("POST Add a new account.")
+    public void testCreateNewAccount() {
+        ResponseWrapper<AccountsResponse> postResponse = postCreateNewAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+        String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
+
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(postResponseIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1493")
+    @Description("DELETE an account.")
+    public void testDeleteAccountByIdentity() {
+        ResponseWrapper<AccountsResponse> postResponse = postCreateNewAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
+        String identity = postResponse.getResponseEntity().getIdentity();
+
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> deleteAccountByIdentity = deleteAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NO_CONTENT, deleteAccountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> deletedAccountIdentity = getAccountByIdentity(identity, null);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, deletedAccountIdentity.getStatusCode());
     }
 }

@@ -94,7 +94,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectStatus(String status) {
-        pageUtils.typeAheadSelect(statusDropdown, root, status);
+        pageUtils.typeAheadSelect(statusDropdown, "qa-publish-form-status-select", status);
         return this;
     }
 
@@ -105,7 +105,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      * @return current page object
      */
     public PublishPage selectCostMaturity(String costMaturity) {
-        pageUtils.typeAheadSelect(costMaturityDropdown, root, costMaturity);
+        pageUtils.typeAheadSelect(costMaturityDropdown, "qa-publish-form-cost-maturity-select", costMaturity);
         return this;
     }
 
@@ -117,7 +117,7 @@ public class PublishPage extends LoadableComponent<PublishPage> {
      */
     public PublishPage selectAssignee(UserCredentials assignee) {
         PersonResponse currentPerson = peopleUtil.getCurrentPerson(assignee);
-        pageUtils.typeAheadSelect(assigneeDropdown, root, currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
+        pageUtils.typeAheadSelect(assigneeDropdown, "qa-publish-form-assigned-to-select", currentPerson.getGivenName() + " " + currentPerson.getFamilyName());
         return this;
     }
 

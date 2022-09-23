@@ -5,6 +5,7 @@ import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
+import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -168,8 +169,8 @@ public class GroupCostingTests extends TestBase {
         softAssertions.assertThat(componentBasicPage.getYearsPlaceholder()).as("Years Text").isEqualTo(retainText);
 
         componentsListPage = componentBasicPage.selectProcessGroup(prtProcessGroupEnum)
-            .clickApplyAndCost()
-            .clickCloseButton();
+            .clickApplyAndCost(EditScenarioStatusPage.class)
+            .close(ComponentsListPage.class);
 
         subComponentNames.forEach(subComponentName -> {
             softAssertions.assertThat(

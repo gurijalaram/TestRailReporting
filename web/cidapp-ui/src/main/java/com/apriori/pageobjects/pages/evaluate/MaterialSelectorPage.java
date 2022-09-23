@@ -42,7 +42,6 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private String root = "modal-body";
 
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
@@ -70,19 +69,19 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectType(String materialType) {
-        pageUtils.typeAheadSelect(typeDropdown, root, materialType);
+        pageUtils.typeAheadSelect(typeDropdown, "qa-material-type-select", materialType);
         return this;
     }
 
     /**
-     * Selects the method
-     * <p>The material method has to be the fully qualified name eg. Digital Factory Default [Steel, Hot Worked, AISI 1010] </p>
+     * Selects the mode
+     * <p>The material mode has to be the fully qualified name eg. Digital Factory Default [Steel, Hot Worked, AISI 1010] </p>
      *
-     * @param selectionMethod - the selection method
+     * @param materialMode - the material mode
      * @return current page object
      */
-    public MaterialSelectorPage selectionMethod(String selectionMethod) {
-        pageUtils.typeAheadSelect(modeDropdown, root, selectionMethod);
+    public MaterialSelectorPage selectMaterialMode(String materialMode) {
+        pageUtils.typeAheadSelect(modeDropdown, materialMode);
         return this;
     }
 
