@@ -42,7 +42,6 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private String root = "modal-body";
 
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
@@ -70,7 +69,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectType(String materialType) {
-        pageUtils.typeAheadSelect(typeDropdown, root, materialType);
+        pageUtils.typeAheadSelect(typeDropdown, "qa-material-type-select", materialType);
         return this;
     }
 
@@ -82,7 +81,7 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      * @return current page object
      */
     public MaterialSelectorPage selectionMethod(String selectionMethod) {
-        pageUtils.typeAheadSelect(modeDropdown, root, selectionMethod);
+        pageUtils.typeAheadSelect(modeDropdown, "qa-material-selection-method-select", selectionMethod);
         return this;
     }
 
