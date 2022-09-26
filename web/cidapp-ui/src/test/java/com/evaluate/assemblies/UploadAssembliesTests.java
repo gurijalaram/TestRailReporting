@@ -500,7 +500,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12139", "12101"})
+    @TestRail(testCaseId = {"12139", "12101", "12136"})
     @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
     public void testColumnConfigurationListView() {
         currentUser = UserUtil.getUser();
@@ -526,18 +526,26 @@ public class UploadAssembliesTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         componentsListPage = loginPage.login(currentUser)
+            .openComponent("titan charger base", scenarioName, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .costScenario()
+            .clickActions()
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Medium")
+            .editDescription("Test Description")
+            .editNotes("Test Notes")
+            .submit(EvaluatePage.class)
+            .clickExplore()
             .openComponent(assemblyName, scenarioName, currentUser)
             .openComponents()
-            .treeView()
             .configure()
-            .selectColumn(ColumnsEnum.MATERIAL_NAME)
-            .moveColumn(DirectionEnum.RIGHT)
-            .selectColumn(ColumnsEnum.PIECE_PART_COST)
+            .selectChoices()
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsListPage.class);
 
-        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.MATERIAL_NAME.getColumns());
-        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.PIECE_PART_COST.getColumns());
+        softAssertions.assertThat(componentsListPage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes"
+        , "New", "5 years", "Plastic Molding", "Injection Molding", "ABS");
 
         componentsListPage.tableView()
             .configure()
