@@ -267,8 +267,7 @@ public class ModalDialogController {
      */
     public String getNotFoundMessage() {
         By message = By.cssSelector("span.message");
-        pageUtils.waitForElementToAppear(message);
-        return driver.findElement(message).getText();
+        return pageUtils.waitForElementToAppear(message).getText();
     }
 
     /**

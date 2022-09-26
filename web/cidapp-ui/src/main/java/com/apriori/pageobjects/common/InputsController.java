@@ -53,6 +53,18 @@ public class InputsController {
     }
 
     /**
+     * Selects the Digital factory dropdown
+     *
+     * @param digitalFactoryDropdown - the digital factory dropdown
+     * @param value                  - the value
+     * @return current page object
+     */
+    public InputsController selectInputsDropdown(WebElement digitalFactoryDropdown, String value) {
+        pageUtils.typeAheadSelect(digitalFactoryDropdown, value);
+        return this;
+    }
+
+    /**
      * Enters the years of annual volume
      *
      * @param productionLifeInput - the production life input
