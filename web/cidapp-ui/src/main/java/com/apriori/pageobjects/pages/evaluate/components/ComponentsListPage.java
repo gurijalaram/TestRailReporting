@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
-import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -130,7 +129,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         pageUtils.waitForElementToAppear(previewButton);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         pageUtils.waitForElementToAppear(componentTable);
-        assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
 
     /**
