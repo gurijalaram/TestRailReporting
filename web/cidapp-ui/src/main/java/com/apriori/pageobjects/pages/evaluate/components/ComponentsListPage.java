@@ -93,7 +93,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = ".sub-component-tree .component-name")
     private List<WebElement> subcomponentNames;
 
-    @FindBy(css = ".sub-component-tree .table-body")
+    @FindBy(css = ".sub-components-detail-card .table-body")
     private WebElement componentTable;
 
     @FindBy(id = "qa-sub-components-detail-card-filter-selector")
