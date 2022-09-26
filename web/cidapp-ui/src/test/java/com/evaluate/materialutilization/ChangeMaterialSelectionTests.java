@@ -314,7 +314,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectionMethod("Digital Factory Default [Steel, Hot Worked, AISI 1010]")
+            .selectMaterialMode("Digital Factory Default [Steel, Hot Worked, AISI 1010]")
             .submit(EvaluatePage.class)
             .costScenario();
 

@@ -87,13 +87,13 @@ public class DecimalPlaceTests extends TestBase {
                 .selectDecimalPlaces(DecimalPlaceEnum.ONE)
                 .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isMaterial("Finish Mass")).isEqualTo("5.3kg");
-        softAssertions.assertThat(evaluatePage.isMaterial("Utilization")).isEqualTo("81.2%");
-        softAssertions.assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4s")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$33.9")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$40.4")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$40.4")).isTrue();
-        softAssertions.assertThat(evaluatePage.isCostResultDisplayed("Total Capital Investment", "$0.0")).isTrue();
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.3), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.1), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.4), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.8), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
         materialProcessPage = evaluatePage.openMaterialProcess();
 
         softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(109.4), Offset.offset(15.0));
@@ -114,8 +114,8 @@ public class DecimalPlaceTests extends TestBase {
                 .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
                 .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isMaterial("Finish Mass")).isEqualTo("5.3095kg");
-        softAssertions.assertThat(evaluatePage.isMaterial("Utilization")).isEqualTo("81.1637%");
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.309458), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.163688), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.4000), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.871), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.4449), Offset.offset(15.0));
@@ -143,8 +143,8 @@ public class DecimalPlaceTests extends TestBase {
                 .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
                 .submit(EvaluatePage.class);
 
-        softAssertions.assertThat(evaluatePage.isMaterial("Finish Mass")).isEqualTo("5.30946kg");
-        softAssertions.assertThat(evaluatePage.isMaterial("Utilization")).isEqualTo("81.16369%");
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.87099), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.44494), Offset.offset(15.0));
@@ -154,8 +154,8 @@ public class DecimalPlaceTests extends TestBase {
         evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
                 .costScenario();
 
-        softAssertions.assertThat(evaluatePage.isMaterial("Finish Mass")).isEqualTo("5.30946kg");
-        softAssertions.assertThat(evaluatePage.isMaterial("Utilization")).isEqualTo("81.16369%");
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(21.91453), Offset.offset(15.0));
         softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
