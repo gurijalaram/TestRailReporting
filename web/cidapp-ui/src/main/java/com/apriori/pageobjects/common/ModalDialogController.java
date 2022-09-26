@@ -30,7 +30,7 @@ public class ModalDialogController {
     @FindBy(css = "button[title='Collapse all']")
     private WebElement collapseAllButton;
 
-    @FindBy(xpath = "//form //button[.='Cancel']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Cancel']")
     private WebElement cancelButton;
 
     @FindBy(xpath = "//div[@id='styled-routings-list']/following-sibling::div//button[.='Cancel']")
@@ -48,7 +48,7 @@ public class ModalDialogController {
     @FindBy(xpath = "//form //button[.='Back']")
     private WebElement backButton;
 
-    @FindBy(xpath = "//form //button[.='Save']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Save']")
     private WebElement saveButton;
 
     @FindBy(css = "button[aria-label='Close']")
@@ -60,11 +60,14 @@ public class ModalDialogController {
     @FindBy(xpath = "//form //button[.='Apply & Cost']")
     private WebElement applyCostButton;
 
-    @FindBy(xpath = "//form //button[.='Back']")
-    private WebElement backFromError;
+    @FindBy(xpath = "//div[@class='content']//button[.='Back']")
+    private WebElement backResourceButton;
 
-    @FindBy(xpath = "//form //button[.='Close']")
+    @FindBy(xpath = "//div[@role='dialog']//button[.='Close']")
     private WebElement closeButton;
+
+    @FindBy(css = "[role='dialog'] [data-icon='circle-xmark']")
+    private WebElement xButton;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -264,8 +267,7 @@ public class ModalDialogController {
      */
     public String getNotFoundMessage() {
         By message = By.cssSelector("span.message");
-        pageUtils.waitForElementToAppear(message);
-        return driver.findElement(message).getText();
+        return pageUtils.waitForElementToAppear(message).getText();
     }
 
     /**
@@ -274,7 +276,17 @@ public class ModalDialogController {
      * @return generic page object
      */
     public <T> T backFromError(Class<T> className) {
-        pageUtils.waitForElementAndClick(backFromError);
+        pageUtils.waitForElementAndClick(backResourceButton);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Closes the dialog
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> className) {
+        pageUtils.waitForElementAndClick(xButton);
         return PageFactory.initElements(driver, className);
     }
 }

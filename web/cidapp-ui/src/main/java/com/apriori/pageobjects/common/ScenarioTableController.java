@@ -128,17 +128,29 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Expands the assembly
+     * Expands the subassembly
      *
      * @param componentName - component name
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ScenarioTableController expandAssembly(String componentName, String scenarioName) {
+    public ScenarioTableController expandSubassembly(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        By byAssembly = with(By.cssSelector(".expand-button-wrapper"))
-            .toLeftOf(byComponentName(componentName, scenarioName));
+        By byAssembly = with(By.cssSelector("[data-icon='circle-chevron-down']"))
+            .toLeftOf(By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='cell-text']", componentName.toUpperCase().trim())));
         pageUtils.waitForElementAndClick(byAssembly);
+        return this;
+    }
+
+    /**
+     * Collapses the subassembly
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController collapseSubassembly(String componentName, String scenarioName) {
+        expandSubassembly(componentName, scenarioName);
         return this;
     }
 
