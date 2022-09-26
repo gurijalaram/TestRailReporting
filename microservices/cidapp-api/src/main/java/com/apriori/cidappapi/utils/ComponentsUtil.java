@@ -245,7 +245,8 @@ public class ComponentsUtil {
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(componentInfo.getComponentIdentity());
+                .inlineVariables(componentInfo.getComponentIdentity())
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).get();
     }
