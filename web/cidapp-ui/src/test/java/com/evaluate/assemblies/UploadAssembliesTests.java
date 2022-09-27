@@ -20,6 +20,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
@@ -559,10 +560,13 @@ public class UploadAssembliesTests extends TestBase {
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsListPage.class);
 
+        componentsListPage.tableView();
+
         softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.MATERIAL_NAME.getColumns());
         softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.PIECE_PART_COST.getColumns());
         softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.COMPONENT_NAME.getColumns());
         softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.CAD_CONNECTED.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
 
         softAssertions.assertAll();
     }
