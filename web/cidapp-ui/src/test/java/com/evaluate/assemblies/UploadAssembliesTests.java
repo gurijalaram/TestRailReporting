@@ -560,7 +560,8 @@ public class UploadAssembliesTests extends TestBase {
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsListPage.class);
 
-        componentsListPage.tableView();
+
+        softAssertions.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isEqualTo(true);
 
         softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.MATERIAL_NAME.getColumns());
         softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.PIECE_PART_COST.getColumns());
