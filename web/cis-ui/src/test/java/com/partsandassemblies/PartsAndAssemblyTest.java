@@ -262,7 +262,7 @@ public class PartsAndAssemblyTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesPage.getFilteredComponentName()).isEqualTo(scenarioName);
         softAssertions.assertThat(partsAndAssembliesPage.getListOfScenarios(componentName, scenarioName)).isEqualTo(1);
 
-        partsAndAssembliesPage.clickRemoveCondition();
+        partsAndAssembliesPage.clickToRemoveAddedFilter();
 
         softAssertions.assertThat(partsAndAssembliesPage.getListOfComponents()).isNotEqualTo(1);
 
