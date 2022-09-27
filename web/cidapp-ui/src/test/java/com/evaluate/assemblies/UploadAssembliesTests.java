@@ -545,8 +545,8 @@ public class UploadAssembliesTests extends TestBase {
             .moveColumn(DirectionEnum.RIGHT)
             .submit(ComponentsListPage.class);
 
-        softAssertions.assertThat(componentsListPage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes"
-        , "New", "5 years", "Plastic Molding", "Injection Molding", "ABS");
+        softAssertions.assertThat(componentsListPage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
+               "New", "5 years", "Plastic Molding", "Injection Molding", "ABS");
 
         componentsListPage.tableView()
             .configure()
