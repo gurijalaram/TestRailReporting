@@ -448,13 +448,6 @@ qa-test:
   customer_identity: 6C1F8C1D4D75
   base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net
 
-  cidapp:
-    api_url: https://cid-api.${default.aws_region}-v23-1.${env}.apriori.net/
-    ui_url: https://ci-design.${default.aws_region}-v23-1.${env}.apriori.net/
-
-  css:
-    api_url: https://css.${default.aws_region}-v23-1.${env}.apriori.net/
-
   admin:
     ui_url: ${qa-cid-perf.base_url}apriori/login
 
@@ -484,6 +477,13 @@ qa-test:
     agent_api_authorization_key: DogCatMonkey
     plm_agent_id: e1663f08-f660-4969-aeaf-b89d15624ae3_Agent
 
+  cidapp:
+    api_url: https://cid-api.${default.aws_region}-v23-1.${env}.apriori.net/
+    ui_url: https://ci-design.${default.aws_region}-v23-1.${env}.apriori.net/
+
+  css:
+    api_url: https://css.${default.aws_region}-v23-1.${env}.apriori.net/
+
   reports:
-    ui_url: ${qa-cid-perf.base_url}jasperserver-pro/
+    ui_url: ${qa-test.base_url}/jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
