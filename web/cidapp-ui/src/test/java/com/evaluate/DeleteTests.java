@@ -179,6 +179,7 @@ public class DeleteTests extends TestBase {
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
     }
 
+    // TODO: 27/09/2022 cn - qa to add testcase id as it currently doesn't exist in jira and test description
     @Test
     @TestRail(testCaseId = "")
     @Description("Test group delete")
