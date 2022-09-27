@@ -436,14 +436,14 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(5);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(908.43), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(857.47), Offset.offset(30.0));
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(771.24), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Updated Fully Burdened Cost").isCloseTo(Double.valueOf(721.1), Offset.offset(30.0));
 
         // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
