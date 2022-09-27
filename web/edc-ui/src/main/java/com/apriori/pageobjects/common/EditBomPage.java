@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -54,15 +55,22 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
         return getPageUtils().waitForElementToAppear(disabledSaveButton).isEnabled();
     }
 
+
     /**
-     * Enter the Mount Type
+     * Selects the radio button for Mount type
      *
-     * @param testMountTypeData - test mount type data
+     * @param mountType     - type of mount type to select
+     * @param mountTypeData - data if Other: is selected
      * @return current page object
      */
-    public EditBomPage enterMountType(String testMountTypeData) {
-        mountTypeInput.clear();
-        mountTypeInput.sendKeys(testMountTypeData);
+    public EditBomPage selectMountType(String mountType, String mountTypeData) {
+        By byMountTypeInput = By.xpath(String.format("//div[@class='input-radio']//label[text()='%s']", mountType));
+
+        getPageUtils().waitForElementAndClick(byMountTypeInput);
+        if (mountType.equals("Other:")) {
+            getPageUtils().clearValueOfElement(mountTypeInput);
+            mountTypeInput.sendKeys(mountTypeData);
+        }
         return this;
     }
 
