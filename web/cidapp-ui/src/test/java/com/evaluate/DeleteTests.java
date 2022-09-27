@@ -208,7 +208,8 @@ public class DeleteTests extends TestBase {
         softAssertions.assertThat(deletePage.getScenarioNames()).contains(componentName, scenarioName, componentName2, scenarioName2);
 
         explorePage = deletePage.submit(DeletePage.class)
-            .close(ExplorePage.class).checkComponentDelete(cidComponentItem)
+            .close(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
             .checkComponentDelete(cidComponentItem2);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
