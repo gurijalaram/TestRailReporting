@@ -942,6 +942,59 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"13307","13308","13309","13310","13314","13315","13316","14180"})
+    @Description("Verify that discussions can be created by scenario results attributes")
+    public void testCreateDiscussionByScenarioAttributes()  {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMessageIconDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickMessageIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentThreadModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttribute()).isEqualTo(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCancelButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCommentButtonState()).contains("Mui-disabled");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCancelButtonState()).doesNotContain("Mui-disabled");
+
+        partsAndAssembliesDetailsPage.clickCancel();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAbandonCommentModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAbandonCommentModalContent()).isEqualTo("if you abandon, what you've written will be lost.");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isAbandonButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isKeepEditingButtonDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickKeepEditing()
+                .addComment("New Comment for Digital Factory")
+                .clickComment();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionAttribute()).isEqualTo(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionMessage()).contains("New Comment for Digital Factory");
+
+        softAssertions.assertAll();
+    }
 }
-
-

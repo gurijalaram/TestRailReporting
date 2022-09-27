@@ -798,4 +798,15 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
         }
         return this;
     }
+
+    /**
+     * Click on remove icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage clickToRemoveAddedFilter() {
+        getPageUtils().waitForElementAndClick(removeIcon);
+        getPageUtils().waitForElementsToAppear(tableRow);
+        return new PartsAndAssembliesPage(getDriver());
+    }
 }

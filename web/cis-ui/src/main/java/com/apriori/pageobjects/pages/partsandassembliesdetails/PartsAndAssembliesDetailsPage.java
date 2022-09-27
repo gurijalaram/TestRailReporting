@@ -164,7 +164,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='Process Routing']")
     private WebElement processRoutingCard;
 
-    @FindBy(id = "chart-type-option-select-graph-process-routing")
+    @FindBy(xpath = "//div[@id='chart-type-option-select-graph-process-routing']//..//*[local-name()='svg']")
     private WebElement processDropdown;
 
     @FindBy(xpath = "//div[@data-testid='process-routing-Select a process to see related details']")
@@ -301,6 +301,51 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
 
     @FindBy(xpath = "//div[@data-testid='modal-paper-comp-share-scenario-participant-modal']//div[contains(@id,'chip-0-share-scenario-user-chip-dropdown')]//*[local-name()='svg']")
     private WebElement selectedUserRemoveIcon;
+
+    @FindBy(id = "costingInput.vpeName")
+    private WebElement attributeDigitalFactory;
+
+    @FindBy(xpath = "//button[@data-testid='message']//*[local-name()='svg']")
+    private WebElement attributeMessageIcon;
+
+    @FindBy(id = "new-comment-popper")
+    private WebElement commentThreadModal;
+
+    @FindBy(xpath = "//h2[@data-testid='Subject-value']")
+    private WebElement subject;
+
+    @FindBy(xpath = "//h2[@data-testid='Attribute-value']")
+    private WebElement attributeName;
+
+    @FindBy(id = "editable-mention-field-mention-text-new-comment")
+    private WebElement commentField;
+
+    @FindBy(id = "commentBtn")
+    private WebElement btnComment;
+
+    @FindBy(id = "cancelBtn")
+    private WebElement btnCancel;
+
+    @FindBy(xpath = "//div[@data-testid='modal-paper-comp-abandon-comment-modal']")
+    private WebElement abandonCommentModal;
+
+    @FindBy(xpath = "//p[@data-testid='modal-content-abandon-comment-modal']")
+    private WebElement abandonCommentModalContent;
+
+    @FindBy(id = "primary-abandon-comment-modal")
+    private WebElement btnAbandon;
+
+    @FindBy(id = "secondary-abandon-comment-modal")
+    private WebElement btnKeepEditing;
+
+    @FindBy(xpath = "//div[contains(@id,'discussion')]")
+    private WebElement createdDiscussion;
+
+    @FindBy(xpath = "//div[@data-testid='property-thread-subject']//div[contains(@id,'subject')]")
+    private WebElement discussionSubject;
+
+    @FindBy(xpath = "//div[@data-testid='property-thread-attribute']//div[contains(@id,'attribute')]")
+    private WebElement discussionAttribute;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -1596,5 +1641,210 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     public PartsAndAssembliesDetailsPage clickOnInvite() {
         getPageUtils().waitForElementAndClick(btnInvite);
         return this;
+    }
+
+    /**
+     * Checks if message Icon displayed
+     *
+     * @return true/false
+     */
+    public boolean isMessageIconDisplayed() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
+        getPageUtils().mouseMove(attributeDigitalFactory);
+        return getPageUtils().waitForElementAppear(attributeMessageIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on message icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickMessageIcon() {
+        getPageUtils().moveAndClick(attributeMessageIcon);
+        return this;
+    }
+
+    /**
+     * Checks if Create comment thread modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isCommentThreadModalDisplayed() {
+        return getPageUtils().waitForElementAppear(commentThreadModal).isDisplayed();
+    }
+
+    /**
+     * get subject name as component name
+     *
+     * @return a String
+     */
+    public String getSubject() {
+        return getPageUtils().waitForElementToAppear(subject).getText();
+    }
+
+    /**
+     * get attribute name
+     *
+     * @return a String
+     */
+    public String getAttribute() {
+        return getPageUtils().waitForElementToAppear(attributeName).getText();
+    }
+
+    /**
+     * Checks if comment field displayed
+     *
+     * @return true/false
+     */
+    public boolean isCommentFieldDisplayed() {
+        return getPageUtils().waitForElementAppear(commentField).isDisplayed();
+    }
+
+    /**
+     * Checks if comment button displayed
+     *
+     * @return true/false
+     */
+    public boolean isCommentButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnComment).isDisplayed();
+    }
+
+    /**
+     * Checks if cancel button displayed
+     *
+     * @return true/false
+     */
+    public boolean isCancelButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnCancel).isDisplayed();
+    }
+
+    /**
+     * click on cancel button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickCancel() {
+        getPageUtils().waitForElementAndClick(btnCancel);
+        return this;
+    }
+
+    /**
+     * Checks if abandon comment modal displayed
+     *
+     * @return true/false
+     */
+    public boolean isAbandonCommentModalDisplayed() {
+        return getPageUtils().waitForElementAppear(abandonCommentModal).isDisplayed();
+    }
+
+    /**
+     * Get the abandon comment thread modal content
+     *
+     * @return true/false
+     */
+    public String getAbandonCommentModalContent() {
+        return getPageUtils().waitForElementAppear(abandonCommentModalContent).getText();
+    }
+
+    /**
+     * Checks if abandon button displayed
+     *
+     * @return true/false
+     */
+    public boolean isAbandonButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnAbandon).isDisplayed();
+    }
+
+    /**
+     * Checks if keep editing button displayed
+     *
+     * @return true/false
+     */
+    public boolean isKeepEditingButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnKeepEditing).isDisplayed();
+    }
+
+    /**
+     * clicks on keep editing button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickKeepEditing() {
+        getPageUtils().waitForElementAndClick(btnKeepEditing);
+        return this;
+    }
+
+    /**
+     * get comment button state
+     *
+     * @return a String
+     */
+    public String getCommentButtonState() {
+        return getPageUtils().waitForElementToAppear(btnComment).getAttribute("class");
+    }
+
+    /**
+     * Add a comment
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage addComment(String comment) {
+        getPageUtils().waitForElementToAppear(commentField).sendKeys(comment);
+        return this;
+    }
+
+    /**
+     * clicks on comment button
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickComment() {
+        getPageUtils().waitForElementAndClick(btnComment);
+        return this;
+    }
+
+    /**
+     * Checks if created discussion displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreatedDiscussionDisplayed() {
+        return getPageUtils().waitForElementAppear(createdDiscussion).isDisplayed();
+    }
+
+    /**
+     * get discussion subject
+     *
+     * @return a String
+     */
+    public String getDiscussionSubject() {
+        return getPageUtils().waitForElementToAppear(discussionSubject).getText();
+    }
+
+    /**
+     * get discussion attribute
+     *
+     * @return a String
+     */
+    public String getDiscussionAttribute() {
+        return getPageUtils().waitForElementToAppear(discussionAttribute).getText();
+    }
+
+    /**
+     * get discussion message
+     *
+     * @return a String
+     */
+    public String getDiscussionMessage() {
+        return getPageUtils().waitForElementToAppear(createdDiscussion).getAttribute("innerText");
+    }
+
+    /**
+     * get cancel button state
+     *
+     * @return a String
+     */
+    public String getCancelButtonState() {
+        return getPageUtils().waitForElementToAppear(btnCancel).getAttribute("class");
     }
 }
