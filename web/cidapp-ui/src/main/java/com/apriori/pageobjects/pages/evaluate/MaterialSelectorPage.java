@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate;
 
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -42,10 +43,12 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ModalDialogController modalDialogController;
 
     public MaterialSelectorPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -142,5 +145,14 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
     public <T> T cancel(Class<T> klass) {
         pageUtils.waitForElementAndClick(cancelButton);
         return PageFactory.initElements(driver, klass);
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 }

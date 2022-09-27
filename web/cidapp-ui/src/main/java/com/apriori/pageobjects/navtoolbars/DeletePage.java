@@ -71,4 +71,13 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
     }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
+    }
 }

@@ -100,7 +100,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "11157")
+    @TestRail(testCaseId = {"11157", "11862"})
     @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledWithSubcomponentsFromSubAssembly() {
         loginPage = new CidAppLoginPage(driver);
@@ -110,10 +110,20 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
             .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
             .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY)
             .selectButtonType(ButtonTypeEnum.EXCLUDE)
-            .expandSubAssembly(SUB_ASSEMBLY, scenarioName)
-            .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
+            .expandSubAssembly(SUB_ASSEMBLY, scenarioName);
 
-        assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE), is(true));
+        softAssertions.assertThat(componentsListPage.getListOfScenarios("3571050", scenarioName)).isEqualTo(2);
+
+        componentsListPage.collapseSubassembly(SUB_ASSEMBLY, scenarioName);
+
+        softAssertions.assertThat(componentsListPage.getListOfScenarios("3571050", scenarioName)).isEqualTo(1);
+
+        componentsListPage.expandSubAssembly(SUB_ASSEMBLY, scenarioName)
+                .selectSubAssemblySubComponent("3571050", SUB_ASSEMBLY);
+
+        softAssertions.assertThat(componentsListPage.isAssemblyTableButtonEnabled(ButtonTypeEnum.INCLUDE)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
