@@ -68,7 +68,7 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
 
         getPageUtils().waitForElementAndClick(byMountTypeInput);
         if (mountType.equals("Other:")) {
-            mountTypeInput.clear();
+            getPageUtils().clearValueOfElement(mountTypeInput);
             mountTypeInput.sendKeys(mountTypeData);
         }
         return this;
