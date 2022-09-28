@@ -91,7 +91,7 @@ public class PublishExistingCostedTests extends TestBase {
             .addCriteria(PropertyEnum.COMPONENT_NAME, OperationEnum.CONTAINS, componentName)
             .submit(ExplorePage.class);
 
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isGreaterThan(0);
         softAssertions.assertAll();
     }
 
