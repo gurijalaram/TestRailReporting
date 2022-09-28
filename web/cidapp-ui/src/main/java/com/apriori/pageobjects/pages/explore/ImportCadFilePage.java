@@ -318,7 +318,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     /**
      * components deleted in the drop zone
      *
-     * @return
+     * @return String
      */
     public List<String> getComponentsInDropZone() {
         try {
@@ -327,5 +327,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 }
