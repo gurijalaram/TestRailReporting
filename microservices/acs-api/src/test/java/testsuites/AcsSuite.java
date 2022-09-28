@@ -1,5 +1,6 @@
 package testsuites;
 
+import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import org.junit.experimental.categories.Categories;
@@ -24,6 +25,7 @@ import tests.acs.GetUnitVariantSettingsTests;
 import tests.acs.SaveRoutingSelectionTests;
 import testsuites.categories.AcsTest;
 
+@ProjectRunID("1347")
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(AcsTest.class)
 @Suite.SuiteClasses({
