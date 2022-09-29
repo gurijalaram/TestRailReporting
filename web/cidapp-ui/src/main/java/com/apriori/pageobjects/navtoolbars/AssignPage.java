@@ -52,8 +52,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return current page object
      */
     public AssignPage selectAssignee(String assignee) {
-        // TODO: 21/09/2022 cn - when id or better locator is added just replace the 'modal-body' below
-        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", assignee);
+        pageUtils.typeAheadSelect(assigneeDropdown, "qa-assign-scenario-select-field", assignee);
         return this;
     }
 
