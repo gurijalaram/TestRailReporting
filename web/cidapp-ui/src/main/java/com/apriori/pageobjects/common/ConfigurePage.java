@@ -152,8 +152,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectChoices() {
-        By byCheckbox = with(By.cssSelector(".checkbox-icon"))
-            .near(By.xpath("//div[contains(text(),'Choices')]"));
+        By byCheckbox = with(By.cssSelector("[data-testid='checkbox']"))
+            .near(By.xpath("//span[contains(text(),'Choices')]"));
         driver.findElement(byCheckbox).click();
         return this;
     }
@@ -164,8 +164,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectChosen() {
-        By byCheckbox = with(By.cssSelector(".checkbox-icon"))
-            .near(By.xpath("//div[contains(text(),'Chosen')]"));
+        By byCheckbox = with(By.cssSelector("[data-testid='checkbox']"))
+            .near(By.xpath("//span[contains(text(),'Chosen')]"));
         driver.findElement(byCheckbox).click();
         return this;
     }
