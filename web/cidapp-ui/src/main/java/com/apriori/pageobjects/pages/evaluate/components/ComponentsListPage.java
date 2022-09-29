@@ -71,7 +71,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] button")
     private WebElement includeButton;
 
-    @FindBy(css = ".table-head [data-icon='square']")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement checkAllBox;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
