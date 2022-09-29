@@ -3,14 +3,13 @@ package com.apriori.utils.enums;
 import com.apriori.utils.http.enums.common.ExternalEndpointEnum;
 import com.apriori.utils.properties.PropertiesContext;
 
-public enum ApplicationMetadataEnum implements ExternalEndpointEnum {
+public enum DeploymentsAPIEnum implements ExternalEndpointEnum {
 
-    //APPLICATION METADATA
-    GET_APPLICATION_METADATA("application-metadata");
+    DEPLOYMENTS("customers/%s/deployments?key=%s");
 
     private final String endpoint;
 
-    ApplicationMetadataEnum(String endpoint) {
+    DeploymentsAPIEnum(String endpoint) {
         this.endpoint = endpoint;
     }
 
@@ -21,6 +20,6 @@ public enum ApplicationMetadataEnum implements ExternalEndpointEnum {
 
     @Override
     public String getEndpoint(Object... variables) {
-        return String.format((PropertiesContext.get("${env}.cidapp.api_url")).concat("%s"), String.format(getEndpointString(), variables));
+        return PropertiesContext.get("${env}.cds.api_url") + String.format(getEndpointString(), variables);
     }
 }
