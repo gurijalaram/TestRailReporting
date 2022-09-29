@@ -319,7 +319,7 @@ public class FileResourceUtil {
      *
      * @param workspaceName - Name of the folder under S3 bucket
      * @param filename      - file to be read
-     * @return List<String [ ]>
+     * @return List of Strings
      */
     public static List<String[]> getCloudFileContent(String workspaceName, String filename) {
         File file = getCloudFile(workspaceName, filename);

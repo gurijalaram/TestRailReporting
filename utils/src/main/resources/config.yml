@@ -34,6 +34,7 @@ sprockets:
 ######################################################## DEFAULT VALUES ########################################################
 default:
   aws_region: na-1
+  aws_region_full: na-1-v23-1
 
   cloud:
     ui_url: https://cloud.${default.aws_region}.${env}.apriori.net/
@@ -70,7 +71,7 @@ default:
     api_url: https://edc-api.${default.aws_region}.${env}.apriori.net/
 
   fms:
-    api_url: https://fms.${default.aws_region}-v23-1.${env}.apriori.net/
+    api_url: https://fms.${default.aws_region_full}.${env}.apriori.net/
 
   nts:
     api_url: https://nts.${default.aws_region}.${env}.apriori.net/
@@ -414,9 +415,12 @@ qa-test:
   user_identity: 1F7GAI5DLI2B
   customer_identity: 6C1F8C1D4D75
   base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
+  deployment_name: production
+  installation_name: core-na-1 - production deployment
+  application_name: cid
 
   admin:
-    ui_url: ${qa-cid-perf.base_url}apriori/login
+    ui_url: ${qa-test.base_url}apriori/login
 
   bcs:
     api_url: https://bcs.na-1-v23-1.qa-test.apriori.net/
