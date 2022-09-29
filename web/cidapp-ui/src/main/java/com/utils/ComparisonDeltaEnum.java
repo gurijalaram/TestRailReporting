@@ -7,7 +7,8 @@ public enum ComparisonDeltaEnum {
     NOT_EQUALS("not-equals"),
     GREEN("var(--green)"),
     RED("var(--red)"),
-    CYAN("var(--cyan)");
+    CYAN("var(--cyan)"),
+    MINUS("minus");
 
     String delta;
 
