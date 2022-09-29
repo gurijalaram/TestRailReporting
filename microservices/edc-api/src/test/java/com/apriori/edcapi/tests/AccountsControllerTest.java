@@ -81,4 +81,15 @@ public class AccountsControllerTest extends AccountsUtil {
         ResponseWrapper<AccountsResponse> deletedAccountIdentity = getAccountByIdentity(identity, null);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, deletedAccountIdentity.getStatusCode());
     }
+
+    @Test
+    @TestRail(testCaseId = "1494")
+    @Description("PATCH Update an account.")
+    public void testPatchUpdateAccountByIdentity() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> updateAccountByIdentity = patchUpdateAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, updateAccountByIdentity.getStatusCode());
+    }
 }
