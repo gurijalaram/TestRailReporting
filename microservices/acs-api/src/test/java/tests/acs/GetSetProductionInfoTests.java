@@ -24,8 +24,8 @@ public class GetSetProductionInfoTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "")
-    @Description("")
+    @TestRail(testCaseId = "15430")
+    @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
