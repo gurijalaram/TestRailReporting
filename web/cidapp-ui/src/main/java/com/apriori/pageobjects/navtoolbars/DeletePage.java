@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.navtoolbars;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
@@ -11,16 +13,19 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class DeletePage extends LoadableComponent<DeletePage> {
     private static final Logger logger = LoggerFactory.getLogger(DeletePage.class);
 
-    @FindBy(xpath = "//h5[.='Delete']")
+    @FindBy(xpath = "//h1[.='Delete']")
     private WebElement deleteHeader;
 
-    @FindBy(css = ".delete-confirmation-form")
-    private WebElement deleteText;
+    @FindBy(css = "[role='dialog'] li")
+    private List<WebElement> componentScenarioNames;
 
-    @FindBy(css = ".delete-confirmation-form [type='submit']")
+    @FindBy(css = "[role='dialog'] [type='submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;
@@ -42,7 +47,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(deleteHeader);
+        assertTrue("Delete modal is not displayed", pageUtils.waitForElementToAppear(deleteHeader).getAttribute("textContent").equalsIgnoreCase("Delete"));
     }
 
     /**
@@ -50,8 +55,8 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      *
      * @return string
      */
-    public String getScenarioName() {
-        return pageUtils.waitForElementToAppear(deleteText).getAttribute("textContent");
+    public List<String> getScenarioNames() {
+        return componentScenarioNames.stream().map(o -> o.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
@@ -79,5 +84,14 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      */
     public <T> T closeDialog(Class<T> klass) {
         return modalDialogController.closeDialog(klass);
+    }
+
+    /**
+     * Clicks the close button
+     *
+     * @return generic page object
+     */
+    public <T> T close(Class<T> klass) {
+        return modalDialogController.close(klass);
     }
 }
