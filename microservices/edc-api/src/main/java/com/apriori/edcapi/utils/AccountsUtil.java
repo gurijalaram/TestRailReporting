@@ -88,4 +88,19 @@ public class AccountsUtil extends TestUtil {
 
         return HTTPRequest.build(requestEntity).delete();
     }
+
+    /**
+     * Patch update an account
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public ResponseWrapper<AccountsResponse> patchUpdateAccountByIdentity(String identity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.PATCH_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
+                .inlineVariables(identity)
+                .body(postBodyInformation());
+
+        return HTTPRequest.build(requestEntity).patch();
+    }
 }
