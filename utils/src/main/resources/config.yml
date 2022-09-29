@@ -70,7 +70,7 @@ default:
     api_url: https://edc-api.${default.aws_region}.${env}.apriori.net/
 
   fms:
-    api_url: https://fms.${default.aws_region}.${env}.apriori.net/
+    api_url: https://fms.${default.aws_region}-v23-1.${env}.apriori.net/
 
   nts:
     api_url: https://nts.${default.aws_region}.${env}.apriori.net/
@@ -413,7 +413,7 @@ qa-test:
   secret_key: PG9E795ML3P4
   user_identity: 1F7GAI5DLI2B
   customer_identity: 6C1F8C1D4D75
-  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net
+  base_url: https://na-1-v23-1-demo.apriori-internal.qa-test.apriori.net/
 
   admin:
     ui_url: ${qa-cid-perf.base_url}apriori/login
