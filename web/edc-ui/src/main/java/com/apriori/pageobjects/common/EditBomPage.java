@@ -4,6 +4,7 @@ import com.apriori.pageobjects.pages.login.MatchedPartPage;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -55,14 +56,26 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
     }
 
     /**
-     * Enter the Mount Type
+     * Selects the radio button for Surface Mount and Through Hole
      *
-     * @param testMountTypeData - test mount type data
+     * @param mountType - the mount type to select
      * @return current page object
      */
-    public EditBomPage enterMountType(String testMountTypeData) {
-        mountTypeInput.clear();
-        mountTypeInput.sendKeys(testMountTypeData);
+    public EditBomPage selectMountType(String mountType) {
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[@class='input-radio']//label[text()='%s']", mountType)));
+        return this;
+    }
+
+    /**
+     * Selects the radio button for Other Mount type
+     *
+     * @param mountTypeData - mount type data
+     * @return current page object
+     */
+    public EditBomPage selectOtherMountType(String mountTypeData) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@class='input-radio']//label[text()='Other:']"));
+        getPageUtils().clearValueOfElement(mountTypeInput);
+        mountTypeInput.sendKeys(mountTypeData);
         return this;
     }
 
