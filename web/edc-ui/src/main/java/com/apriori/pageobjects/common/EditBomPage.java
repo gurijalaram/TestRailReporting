@@ -55,22 +55,27 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
         return getPageUtils().waitForElementToAppear(disabledSaveButton).isEnabled();
     }
 
-
     /**
-     * Selects the radio button for Mount type
+     * Selects the radio button for Surface Mount and Through Hole
      *
-     * @param mountType     - type of mount type to select
-     * @param mountTypeData - data if Other: is selected
+     * @param mountType - the mount type to select
      * @return current page object
      */
-    public EditBomPage selectMountType(String mountType, String mountTypeData) {
-        By byMountTypeInput = By.xpath(String.format("//div[@class='input-radio']//label[text()='%s']", mountType));
+    public EditBomPage selectMountType(String mountType) {
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[@class='input-radio']//label[text()='%s']", mountType)));
+        return this;
+    }
 
-        getPageUtils().waitForElementAndClick(byMountTypeInput);
-        if (mountType.equals("Other:")) {
-            getPageUtils().clearValueOfElement(mountTypeInput);
-            mountTypeInput.sendKeys(mountTypeData);
-        }
+    /**
+     * Selects the radio button for Other Mount type
+     *
+     * @param mountTypeData - mount type data
+     * @return current page object
+     */
+    public EditBomPage selectOtherMountType(String mountTypeData) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@class='input-radio']//label[text()='Other:']"));
+        getPageUtils().clearValueOfElement(mountTypeInput);
+        mountTypeInput.sendKeys(mountTypeData);
         return this;
     }
 
