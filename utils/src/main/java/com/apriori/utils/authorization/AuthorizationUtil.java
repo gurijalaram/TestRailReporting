@@ -1,6 +1,8 @@
 package com.apriori.utils.authorization;
 
-import com.apriori.utils.enums.ApplicationMetadataEnum;
+import com.apriori.utils.DeploymentItem;
+import com.apriori.utils.GetDeploymentsResponse;
+import com.apriori.utils.enums.DeploymentsAPIEnum;
 import com.apriori.utils.enums.TokenEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
@@ -59,17 +61,31 @@ public class AuthorizationUtil {
     }
 
     /**
-     * GET application metadata
+     * Gets deployments
      *
-     * @param userCredentials - the user credentials
-     * @return application metadata object
+     * @param userCredentials - UserCredentials instance containing user details to use in api call
+     * @return Instance of GetDeploymentsResponse with ResponseWrapper
      */
-    // TODO: 30/05/2022 cn - will be properly implemented in a future update
-    public ResponseWrapper<ApplicationMetadata> getApplicationMetadata(UserCredentials userCredentials) {
-        final RequestEntity requestEntity = RequestEntityUtil.init(ApplicationMetadataEnum.GET_APPLICATION_METADATA, ApplicationMetadata.class)
-            .token(userCredentials.getToken());
+    private ResponseWrapper<GetDeploymentsResponse> getDeployments(UserCredentials userCredentials) {
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(DeploymentsAPIEnum.DEPLOYMENTS, GetDeploymentsResponse.class)
+            .token(userCredentials.getToken())
+            .inlineVariables(
+                PropertiesContext.get("${env}.customer_identity"),
+                PropertiesContext.get("${env}.secret_key")
+            );
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Gets deployments response object to allow for usage of response
+     *
+     * @param userCredentials UserCredentials instance containing user details to use in api call
+     * @return GetDeploymentsResponse instance
+     */
+    private GetDeploymentsResponse getDeploymentsResponse(UserCredentials userCredentials) {
+        return getDeployments(userCredentials).getResponseEntity();
     }
 
     /**
@@ -78,15 +94,27 @@ public class AuthorizationUtil {
      * @param userCredentials - user credentials
      * @return string
      */
-    // TODO: 30/05/2022 cn - will be properly implemented in a future update
     public String getAuthTargetCloudContext(UserCredentials userCredentials) {
-        /*CloudContext cloudContextResponse = getApplicationMetadata(userCredentials).getResponseEntity().getCloudContext();
-        String customerIdentity = cloudContextResponse.getCustomerIdentity();
-        String deploymentIdentity = cloudContextResponse.getDeploymentIdentity();
-        String installationIdentity = cloudContextResponse.getInstallationIdentity();
-        String applicationIdentity = cloudContextResponse.getApplicationIdentity();
+        GetDeploymentsResponse getDeploymentsResponse = getDeploymentsResponse(userCredentials);
+        DeploymentItem deploymentItem = getDeploymentsResponse.getItems().get(0);
 
-        return customerIdentity + deploymentIdentity + installationIdentity + applicationIdentity;*/
-        return PropertiesContext.get("global.auth_cloud_context");
+        String cloudContext = PropertiesContext.get("${env}.customer_identity");
+        String deploymentInstallation = "";
+        String deploymentApplication = "";
+
+        String deploymentItemName = deploymentItem.getName();
+        String installationItemName = deploymentItem.getInstallations().get(3).getName();
+        String applicationItemName = deploymentItem.getInstallations().get(3).getApplications().get(2).getServiceName();
+
+        boolean correctInstallation = deploymentItemName.equalsIgnoreCase(PropertiesContext.get("${env}.deployment_name")) &&
+            installationItemName.equalsIgnoreCase(PropertiesContext.get("${env}.installation_name")) &&
+            applicationItemName.equalsIgnoreCase(PropertiesContext.get("${env}.application_name"));
+
+        if (correctInstallation) {
+            deploymentInstallation = deploymentItem.getInstallations().get(3).getIdentity();
+            deploymentApplication = deploymentItem.getInstallations().get(3).getApplications().get(2).getIdentity();
+        }
+
+        return cloudContext.concat(deploymentItem.getIdentity()).concat(deploymentInstallation).concat(deploymentApplication);
     }
 }

@@ -251,7 +251,7 @@ public class ModalDialogController {
     }
 
     /**
-     * Close
+     * Clicks the close button
      *
      * @return current page object
      */
