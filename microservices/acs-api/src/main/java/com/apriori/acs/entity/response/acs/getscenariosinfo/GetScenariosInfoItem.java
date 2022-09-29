@@ -20,4 +20,5 @@ public class GetScenariosInfoItem {
     public String updatedAt;
     public String updatedBy;
     public ScenarioIterationKey scenarioIterationKey;
+    public String configurationName;
 }
