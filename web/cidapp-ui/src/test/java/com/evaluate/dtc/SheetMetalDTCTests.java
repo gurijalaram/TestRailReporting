@@ -1,10 +1,5 @@
 package com.evaluate.dtc;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
@@ -164,11 +159,13 @@ public class SheetMetalDTCTests extends TestBase {
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("The intersection between the bend and form cannot be accessed by the tool when using Bending");
 
         guidanceIssuesPage.closePanel()
-            .openDesignGuidance().selectIssueTypeGcd("Bend Issue, Bend - Min Flap Size", "Straight Bend", "StraightBend:11");
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Bend Issue, Bend - Min Flap Size", "Straight Bend", "StraightBend:11");
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Bend flap is too short to be easily made with standard bending operations.");
 
         guidanceIssuesPage.closePanel()
-            .openDesignGuidance().selectIssueTypeGcd("Bend Issue, Bend - Min Radius", "Straight Bend", "StraightBend:4");
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Bend Issue, Bend - Min Radius", "Straight Bend", "StraightBend:4");
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Bend radius is too small for the machine capability.");
 
         softAssertions.assertAll();
@@ -253,7 +250,7 @@ public class SheetMetalDTCTests extends TestBase {
     @Test
     //TODO update testrail case 719 when editing tolerances are ported
     @Ignore("Requires tolerances for additional operation")
-    @Category({SmokeTests.class, IgnoreTests.class})
+    @Category( {SmokeTests.class, IgnoreTests.class})
     @TestRail(testCaseId = {"6502", "719"})
     @Description("Verify tolerances which induce an additional operation")
     public void toleranceAdditionalOp() {
