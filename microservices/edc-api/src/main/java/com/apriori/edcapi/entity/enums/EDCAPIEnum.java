@@ -13,6 +13,7 @@ public enum EDCAPIEnum implements ExternalEndpointEnum {
     PATCH_ACCOUNTS_BY_IDENTITY("accounts/%s"),
     POST_ACCOUNTS_BY_IDENTITY("accounts/%s/activate"),
     GET_CURRENT_ACTIVE_ACCOUNT("accounts/active"),
+    POST_REFRESH_LICENSE_BY_IDENTITY("accounts/%s/license/refresh"),
 
     //Bill Of Materials
     GET_BILL_OF_MATERIALS("bill-of-materials"),
