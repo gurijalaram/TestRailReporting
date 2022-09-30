@@ -101,7 +101,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectColumn(ColumnsEnum columnName) {
-        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
+        By byColumn = By.xpath(String.format("//span[@data-testid='checkbox']/following-sibling::span[.='%s']", columnName.getColumns()));
         pageUtils.waitForElementAndClick(byColumn);
         return this;
     }
