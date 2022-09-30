@@ -105,6 +105,20 @@ public class AccountsUtil extends TestUtil {
     }
 
     /**
+     * POST Activate an account
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public ResponseWrapper<AccountsResponse> postActivateAnAccount(String identity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
+                .inlineVariables(identity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * Post refresh the license by identity
      *
      * @param identity - the identity
