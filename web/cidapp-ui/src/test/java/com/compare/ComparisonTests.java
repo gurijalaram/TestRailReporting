@@ -58,6 +58,7 @@ public class ComparisonTests extends TestBase {
     private File resourceFile2;
     private File resourceFile3;
     private File resourceFile4;
+    private File resourceFile5;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItemC;
     private ComponentInfoBuilder cidComponentItemB;
@@ -1011,7 +1012,7 @@ public class ComparisonTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6482"})
+    @TestRail(testCaseId = {"6482", "6483"})
     @Description("Validate the user can create a comparison including parts with all dfm risk ratings for all process groups")
     public void comparisonWithAllProcessGroupsAndDFM() {
         final ProcessGroupEnum processGroupEnum1 = ProcessGroupEnum.STOCK_MACHINING;
@@ -1023,16 +1024,20 @@ public class ComparisonTests extends TestBase {
         String componentName2 = "Part0005b";
         String componentName3 = "titan charger lead";
         String componentName4 = "SandCast";
+        String componentName5 = "Part0004";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum1, componentName1 + ".catpart");
         resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName2 + ".ipt");
         resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum3, componentName3 + ".SLDPRT");
         resourceFile4 = FileResourceUtil.getCloudFile(processGroupEnum4, componentName4 + ".x_t");
+        resourceFile5 = FileResourceUtil.getCloudFile(processGroupEnum2, componentName5 + ".ipt");
 
         currentUser = UserUtil.getUser();
         String scenarioName1 = new GenerateStringUtil().generateScenarioName();
         String scenarioName2 = new GenerateStringUtil().generateScenarioName();
         String scenarioName3 = new GenerateStringUtil().generateScenarioName();
         String scenarioName4 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName5 = new GenerateStringUtil().generateScenarioName();
+
 
         loginPage = new CidAppLoginPage(driver);
         comparePage = loginPage.login(currentUser)
@@ -1048,8 +1053,12 @@ public class ComparisonTests extends TestBase {
             .uploadComponentAndOpen(componentName4, scenarioName4, resourceFile4, currentUser)
             .selectProcessGroup(processGroupEnum4)
             .costScenario()
+            .uploadComponentAndOpen(componentName5, scenarioName5, resourceFile5, currentUser)
+            .selectProcessGroup(processGroupEnum2)
+            .costScenario()
             .clickExplore()
-            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "", "" + componentName3 + ", " + scenarioName3 + "", "" + componentName4 + ", " + scenarioName4)
+            .selectFilter("Private")
+            .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "", "" + componentName3 + ", " + scenarioName3 + "", "" + componentName4 + ", " + scenarioName4 + "", "" + componentName5 + ", " + scenarioName5)
             .createComparison()
             .expand("Design Guidance");
 
@@ -1057,8 +1066,17 @@ public class ComparisonTests extends TestBase {
         softAssertions.assertThat(comparePage.getOutput(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("High");
         softAssertions.assertThat(comparePage.getOutput(componentName3, scenarioName3, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
         softAssertions.assertThat(comparePage.getOutput(componentName4, scenarioName4, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Medium");
+        softAssertions.assertThat(comparePage.getOutput(componentName5, scenarioName5, ComparisonCardEnum.DESIGN_DFM_RISK)).isEqualTo("Low");
+
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.GREEN)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_DOWN)).isEqualTo(true);
+
+        comparePage.dragDropToBasis(componentName3, scenarioName3);
+
+        softAssertions.assertThat(comparePage.isArrowColour(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.RED)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.ARROW_UP)).isEqualTo(true);
+        softAssertions.assertThat(comparePage.isDeltaIcon(componentName5, scenarioName5, ComparisonCardEnum.DESIGN_DFM_RISK, ComparisonDeltaEnum.MINUS)).isEqualTo(true);
 
         softAssertions.assertAll();
-
     }
 }
