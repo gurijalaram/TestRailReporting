@@ -110,9 +110,10 @@ public class AccountsUtil extends TestUtil {
      * @param identity - the identity
      * @return response object
      */
-    public ResponseWrapper<AccountsResponse> postRefreshLicense(String identity) {
+    public ResponseWrapper<AccountsResponse> postActivateAnAccount(String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_REFRESH_LICENSE_BY_IDENTITY, AccountsResponse.class)
+            RequestEntityUtil.init(EDCAPIEnum.POST_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
+
                 .inlineVariables(identity);
 
         return HTTPRequest.build(requestEntity).post();

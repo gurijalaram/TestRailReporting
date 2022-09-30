@@ -1,6 +1,7 @@
 package com.apriori.edcapi.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
@@ -102,5 +103,16 @@ public class AccountsControllerTest extends AccountsUtil {
 
         ResponseWrapper<AccountsResponse> refreshLicenseResponse = postRefreshLicense(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, refreshLicenseResponse.getStatusCode());
+
+    @TestRail(testCaseId = "1495")
+    @Description("POST Activate an account.")
+    public void testPostActivateAnAccount() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> activateAnAccountByIdentity = postActivateAnAccount(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, activateAnAccountByIdentity.getStatusCode());
+
+        assertThat(activateAnAccountByIdentity.getResponseEntity().getIsActive(), is(equalTo(true)));
     }
 }
