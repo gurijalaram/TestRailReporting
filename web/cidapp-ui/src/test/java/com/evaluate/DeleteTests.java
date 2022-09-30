@@ -21,7 +21,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
-import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
@@ -177,46 +176,5 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class);
 
         assertThat(explorePage.getScenarioMessage(), containsString("No scenarios found"));
-    }
-
-    // TODO: 27/09/2022 cn - qa to add testcase id as it currently doesn't exist in jira and test description
-    @Test
-    @TestRail(testCaseId = "")
-    @Description("Test group delete")
-    public void testGroupDelete() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
-
-        String componentName = "bracket_basic";
-        String componentName2 = "700-33770-01_A0";
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
-        resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum, componentName2 + ".stp");
-        currentUser = UserUtil.getUser();
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
-
-        cidComponentItem2 = new ExplorePage(driver).uploadComponent(componentName2, scenarioName2, resourceFile2, currentUser);
-
-        deletePage = new ExplorePage(driver).refresh()
-            .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .delete();
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(deletePage.getScenarioNames()).contains(componentName.toUpperCase() + "  / " + scenarioName, componentName2 + "  / " + scenarioName2);
-
-        explorePage = deletePage.submit(DeletePage.class)
-            .close(ExplorePage.class)
-            .checkComponentDelete(cidComponentItem)
-            .checkComponentDelete(cidComponentItem2)
-            .refresh();
-
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioName)).isEqualTo(0);
-        softAssertions.assertThat(explorePage.getListOfScenarios(componentName2, scenarioName2)).isEqualTo(0);
-
-        softAssertions.assertAll();
     }
 }
