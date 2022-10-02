@@ -189,6 +189,8 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                         .user(userCredentials)
                         .build());
 
+        scenariosUtil.postPublishScenario(scenarioItem);
+
         return this;
     }
 
@@ -218,6 +220,8 @@ public class LeftHandNavigationBar extends CisHeaderBar {
                 .uploadAssembly(componentAssembly);
 
         assemblyUtils.costAssembly(componentAssembly);
+        assemblyUtils.publishSubComponents(componentAssembly)
+                .publishAssembly(componentAssembly);
 
         return this;
     }

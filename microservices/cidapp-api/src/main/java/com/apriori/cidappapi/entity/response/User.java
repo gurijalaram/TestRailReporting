@@ -37,6 +37,7 @@ public class User {
     private CustomProperties customProperties;
     private String userType;
     private List<String> resourcesAllowedToCreate;
+    private String updatedBy;
 
     public static class CustomProperties {
     }
