@@ -103,7 +103,8 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
-        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL);
+        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE);
+        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO);
         softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true))
             .startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE);
         softAssertions.assertAll();
@@ -135,7 +136,7 @@ public class AdminNavigationTests extends TestBase {
 
         homePage.waitForReportsLogoutDisplayedToAppear();
 
-        softAssertions.assertThat(homePage.getCurrentUrl()).startsWith(PropertiesContext.get("${env}.reports.ui_url").substring(0, 71));
+        softAssertions.assertThat(homePage.getCurrentUrl()).isEqualTo(PropertiesContext.get("${env}.reports.ui_url"));
         softAssertions.assertThat(homePage.getTabCount()).isEqualTo(2);
         softAssertions.assertThat(homePage.isReportsWelcomeTextDisplayed()).isEqualTo(true);
         softAssertions.assertThat(homePage.isReportsWelcomeTextEnabled()).isEqualTo(true);
