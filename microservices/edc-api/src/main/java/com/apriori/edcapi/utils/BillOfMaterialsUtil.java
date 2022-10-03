@@ -27,7 +27,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      */
     public static ResponseWrapper<BillOfMaterialsResponse> postBillOfMaterials(String fileName) {
         final RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS, BillOfMaterialsResponse.class)
                 .multiPartFiles(new MultiPartFiles()
                     .use("multiPartFile", FileResourceUtil.getResourceAsFile(fileName)))
                 .queryParams(new QueryParams()
@@ -43,7 +43,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialById(String billOfMaterialsId) {
-        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null);
+        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY, null);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -55,7 +55,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      */
     protected static List<BillOfMaterialsResponse> getAllBillOfMaterials() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class);
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS, BillOfMaterialsItemsResponse.class);
 
         ResponseWrapper<BillOfMaterialsItemsResponse> getAllResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllResponse.getStatusCode());
@@ -70,7 +70,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> deleteBillOfMaterialByIdUi(final String billOfMaterialsId) {
-        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.DELETE_BILL_OF_MATERIALS_BY_IDENTITY, null)
+        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY, null)
             .token(new AuthorizationUtil().getTokenAsString());
 
         return HTTPRequest.build(requestEntity).delete();
@@ -94,7 +94,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> getBillOfMaterialById(String identity, Class klass) {
-        RequestEntity requestEntity = genericRequest(identity, EDCAPIEnum.GET_BILL_OF_MATERIALS_BY_IDENTITY, klass);
+        RequestEntity requestEntity = genericRequest(identity, EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY, klass);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -106,7 +106,7 @@ public class BillOfMaterialsUtil extends TestUtil {
      * @return - response object
      */
     public static ResponseWrapper<BillOfMaterialsResponse> postExportBomAsCsvFile(String billOfMaterialsId) {
-        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.POST_BILL_OF_MATERIALS_IDENTITY_TO_EXPORT, null);
+        RequestEntity requestEntity = genericRequest(billOfMaterialsId, EDCAPIEnum.BILL_OF_MATERIALS_BY_IDENTITY_TO_EXPORT, null);
 
         return HTTPRequest.build(requestEntity).post();
     }
