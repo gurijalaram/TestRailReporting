@@ -119,6 +119,21 @@ public class AccountsUtil extends TestUtil {
     }
 
     /**
+     * Post refresh the license by identity
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public ResponseWrapper<AccountsResponse> postRefreshLicense(String identity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.POST_REFRESH_LICENSE_BY_IDENTITY, AccountsResponse.class)
+
+                .inlineVariables(identity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
      * GET current representation of an active account
      *
      * @return response object
