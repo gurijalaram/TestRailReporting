@@ -3,9 +3,11 @@ package com.apriori.pageobjects.pages.login;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.header.ReportsPageHeader;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.login.AprioriLoginPage;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -93,7 +95,6 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIR login page was not displayed", aprioriLoginPage.getPageTitle().startsWith("CI-Admin aPriori"));
     }
 
     /**
