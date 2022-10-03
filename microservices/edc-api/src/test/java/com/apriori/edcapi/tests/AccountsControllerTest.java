@@ -106,4 +106,14 @@ public class AccountsControllerTest extends AccountsUtil {
 
         assertThat(activateAnAccountByIdentity.getResponseEntity().getIsActive(), is(equalTo(true)));
     }
+
+    @Test
+    @TestRail(testCaseId = "1498")
+    @Description("GET the current representation of the active account.")
+    public void testGetActiveAccount() {
+        ResponseWrapper<AccountsResponse> activeAccount = getActiveAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, activeAccount.getStatusCode());
+
+        assertThat(activeAccount.getResponseEntity().getIsActive(), is(equalTo(true)));
+    }
 }

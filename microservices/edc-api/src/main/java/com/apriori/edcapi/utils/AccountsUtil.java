@@ -117,4 +117,16 @@ public class AccountsUtil extends TestUtil {
 
         return HTTPRequest.build(requestEntity).post();
     }
+
+    /**
+     * GET current representation of an active account
+     *
+     * @return response object
+     */
+    public ResponseWrapper<AccountsResponse> getActiveAccount() {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.GET_CURRENT_ACTIVE_ACCOUNT, AccountsResponse.class);
+
+        return HTTPRequest.build(requestEntity).get();
+    }
 }
