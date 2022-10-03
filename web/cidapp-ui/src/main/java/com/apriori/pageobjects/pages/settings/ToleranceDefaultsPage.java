@@ -34,7 +34,7 @@ public class ToleranceDefaultsPage extends LoadableComponent<ToleranceDefaultsPa
     @FindBy(css = "[value='CAD']")
     private WebElement cadRadioButton;
 
-    @FindBy(css = "[id='qa-tolerance-defaults-use-cad-tolerance-threshold'] .checkbox-icon")
+    @FindBy(css = "[id='qa-tolerance-defaults-use-cad-tolerance-threshold'] [data-testid='CheckBoxOutlineBlankIcon']")
     private WebElement replaceValuesCheckboxIcon;
 
     @FindBy(css = "[id='qa-tolerance-defaults-use-cad-tolerance-threshold'] .checkbox")
