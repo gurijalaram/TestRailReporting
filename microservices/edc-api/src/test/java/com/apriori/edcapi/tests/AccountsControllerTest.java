@@ -95,6 +95,17 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
+    @TestRail(testCaseId = "15453")
+    @Description("POST Refresh license for specified account")
+    public void testPostRefreshLicense() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> refreshLicenseResponse = postRefreshLicense(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, refreshLicenseResponse.getStatusCode());
+    }
+
+    @Test
     @TestRail(testCaseId = "1495")
     @Description("POST Activate an account.")
     public void testPostActivateAnAccount() {
