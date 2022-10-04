@@ -317,7 +317,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - current page object
      */
     public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
-        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[@class='checkbox-icon']", componentName.trim())))
+        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//span[@data-testid='checkbox']", componentName.trim())))
             .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
         pageUtils.waitForElementAndClick(scenario);
         return this;
