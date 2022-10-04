@@ -27,7 +27,7 @@ public class PartsUtil extends TestUtil {
      */
     public PartsResponse getAllPartsInLineItem(String bomIdentity, String lineItemIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, PartsResponse.class)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS, PartsResponse.class)
                 .inlineVariables(bomIdentity, lineItemIdentity);
 
         ResponseWrapper<PartsResponse> getAllPartsResponse = HTTPRequest.build(requestEntity).get();
@@ -45,7 +45,7 @@ public class PartsUtil extends TestUtil {
      */
     public ResponseWrapper<Parts> postNewPartToLineItem(String bomIdentity, String lineItemIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
                 .inlineVariables(bomIdentity, lineItemIdentity)
                 .body(partsInfoBody());
 
@@ -62,7 +62,7 @@ public class PartsUtil extends TestUtil {
      */
     public ResponseWrapper<Parts> patchUpdatePart(String bomIdentity, String lineItemIdentity, String partIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.PATCH_BILL_OF_MATERIALS_LINE_ITEMS_PARTS, Parts.class)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_UPDATE, Parts.class)
                 .inlineVariables(bomIdentity, lineItemIdentity, partIdentity)
                 .body(partsInfoBody());
 
@@ -79,7 +79,7 @@ public class PartsUtil extends TestUtil {
      */
     public ResponseWrapper<Parts> postSelectPartForExport(String bomIdentity, String lineItemIdentity, String partIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT, null)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_EXPORT, null)
                 .inlineVariables(bomIdentity, lineItemIdentity, partIdentity);
 
         return HTTPRequest.build(requestEntity).post();
@@ -95,7 +95,7 @@ public class PartsUtil extends TestUtil {
      */
     public ResponseWrapper<Parts> postSelectPartsToCost(String bomIdentity, String lineItemIdentity, List<String> partIdentity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST, null)
+            RequestEntityUtil.init(EDCAPIEnum.BILL_OF_MATERIALS_LINE_ITEMS_PARTS_FOR_COST, null)
                 .inlineVariables(bomIdentity, lineItemIdentity)
                 .body(partIdentity);
 
