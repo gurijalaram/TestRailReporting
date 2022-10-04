@@ -2,6 +2,7 @@ package com.apriori.pageobjects.pages.explore;
 
 import static org.junit.Assert.assertTrue;
 
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
@@ -34,10 +35,12 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ModalDialogController modalDialogController;
 
     public CadFileStatusPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -50,8 +53,8 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Successes tab is not displayed", pageUtils.waitForElementToAppear(successesTab).isDisplayed());;
-        assertTrue("Failures tab is not displayed", pageUtils.waitForElementToAppear(failuresTab).isDisplayed());;
+        assertTrue("Successes tab is not displayed", pageUtils.waitForElementToAppear(successesTab).isDisplayed());
+        assertTrue("Failures tab is not displayed", pageUtils.waitForElementToAppear(failuresTab).isDisplayed());
     }
 
     public void openSuccessesTab() {
@@ -75,6 +78,15 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
      */
     public int getNumberOfSuccesses() {
         return Integer.parseInt(pageUtils.waitForElementToAppear(numberOfSuccesses).getAttribute("textContent"));
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 
     /**

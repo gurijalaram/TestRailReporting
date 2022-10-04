@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "default": {},
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "$ref": "common/PaginationSchema.json",
+      "required": [
+        "items"
+      ],
+      "items": {
+        "type": "array",
+        "items": {
+          "$ref": "LayoutConfigurationResponseSchema.json"
+        }
+      }
+    }
+  }
+}

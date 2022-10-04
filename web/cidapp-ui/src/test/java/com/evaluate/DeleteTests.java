@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.DeletePage;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -28,9 +29,12 @@ public class DeleteTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
+    private DeletePage deletePage;
     private File resourceFile;
+    private File resourceFile2;
     private UserCredentials currentUser;
     private ComponentInfoBuilder cidComponentItem;
+    private ComponentInfoBuilder cidComponentItem2;
 
     public DeleteTests() {
         super();

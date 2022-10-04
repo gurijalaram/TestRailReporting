@@ -203,6 +203,7 @@ public class BatchPartResources {
                 .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
             return HTTPRequest.build(requestEntity).get();
         }
+        // TODO: 27/09/2022 if null is returned and the test fails you will get a null pointer. this should be coded to catch the npe or recoded
         return null;
     }
 

@@ -1,6 +1,5 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
-import static org.junit.Assert.assertTrue;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -72,7 +71,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] button")
     private WebElement includeButton;
 
-    @FindBy(css = ".table-head [data-icon='square']")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement checkAllBox;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
@@ -93,7 +92,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = ".sub-component-tree .component-name")
     private List<WebElement> subcomponentNames;
 
-    @FindBy(css = ".sub-component-tree .table-body")
+    @FindBy(css = ".sub-components-detail-card .table-body")
     private WebElement componentTable;
 
     @FindBy(id = "qa-sub-components-detail-card-filter-selector")
@@ -130,7 +129,6 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
         pageUtils.waitForElementToAppear(previewButton);
         pageUtils.waitForElementNotVisible(loadingSpinner, 1);
         pageUtils.waitForElementToAppear(componentTable);
-        assertTrue("Tree View is not the default view", treeButton.getAttribute("class").contains("active"));
     }
 
     /**

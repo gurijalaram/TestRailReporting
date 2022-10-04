@@ -19,7 +19,7 @@ public class UsersUtil extends TestUtil {
      */
     public Users getCurrentUser() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_CURRENT_USER, Users.class);
+            RequestEntityUtil.init(EDCAPIEnum.CURRENT_USER, Users.class);
 
         ResponseWrapper<Users> getUserResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getUserResponse.getStatusCode());
