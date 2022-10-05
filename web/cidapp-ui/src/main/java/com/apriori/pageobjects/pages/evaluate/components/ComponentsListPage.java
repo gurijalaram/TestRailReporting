@@ -71,7 +71,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     @FindBy(css = "[id='qa-sub-component-action-bar-include-button'] button")
     private WebElement includeButton;
 
-    @FindBy(css = ".table-head [data-icon='square']")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement checkAllBox;
 
     @FindBy(css = "[id='qa-sub-component-action-bar-edit-button'] button")
@@ -317,7 +317,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - current page object
      */
     public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
-        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[@class='checkbox-icon']", componentName.trim())))
+        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//span[@data-testid='checkbox']", componentName.trim())))
             .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
         pageUtils.waitForElementAndClick(scenario);
         return this;

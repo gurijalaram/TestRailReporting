@@ -1,6 +1,7 @@
 package com.apriori.edcapi.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.core.Is.is;
 
@@ -80,5 +81,50 @@ public class AccountsControllerTest extends AccountsUtil {
 
         ResponseWrapper<AccountsResponse> deletedAccountIdentity = getAccountByIdentity(identity, null);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_NOT_FOUND, deletedAccountIdentity.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1494")
+    @Description("PATCH Update an account.")
+    public void testPatchUpdateAccountByIdentity() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> updateAccountByIdentity = patchUpdateAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, updateAccountByIdentity.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "15453")
+    @Description("POST Refresh license for specified account")
+    public void testPostRefreshLicense() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> refreshLicenseResponse = postRefreshLicense(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, refreshLicenseResponse.getStatusCode());
+    }
+
+    @Test
+    @TestRail(testCaseId = "1495")
+    @Description("POST Activate an account.")
+    public void testPostActivateAnAccount() {
+        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
+
+        ResponseWrapper<AccountsResponse> activateAnAccountByIdentity = postActivateAnAccount(identity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, activateAnAccountByIdentity.getStatusCode());
+
+        assertThat(activateAnAccountByIdentity.getResponseEntity().getIsActive(), is(equalTo(true)));
+    }
+
+    @Test
+    @TestRail(testCaseId = "1498")
+    @Description("GET the current representation of the active account.")
+    public void testGetActiveAccount() {
+        ResponseWrapper<AccountsResponse> activeAccount = getActiveAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, activeAccount.getStatusCode());
+
+        assertThat(activeAccount.getResponseEntity().getIsActive(), is(equalTo(true)));
     }
 }

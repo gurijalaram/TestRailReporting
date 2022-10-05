@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "configuration": {
+      "type": "object"
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "createdBy": {
+      "type": "string"
+    },
+    "deletedAt": {
+      "type": "string"
+    },
+    "deletedBy": {
+      "type": "string"
+    },
+    "identity": {
+      "type": "string"
+    },
+    "name": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "updatedBy": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "configuration",
+    "createdAt",
+    "createdBy",
+    "identity",
+    "name",
+    "updatedAt"
+  ],
+  "optional": [
+    "deletedAt",
+    "deletedBy",
+    "updatedBy"
+  ]
+}

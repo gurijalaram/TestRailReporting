@@ -29,7 +29,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
+    @FindBy(css = ".table-configurator [type='submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;
@@ -101,7 +101,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectColumn(ColumnsEnum columnName) {
-        By byColumn = By.xpath(String.format("//div[@class='checkbox-icon']/following-sibling::div[.='%s']", columnName.getColumns()));
+        By byColumn = By.xpath(String.format("//span[@data-testid='checkbox']/following-sibling::span[.='%s']", columnName.getColumns()));
         pageUtils.waitForElementAndClick(byColumn);
         return this;
     }
@@ -152,8 +152,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectChoices() {
-        By byCheckbox = with(By.cssSelector(".checkbox-icon"))
-            .near(By.xpath("//div[contains(text(),'Choices')]"));
+        By byCheckbox = with(By.cssSelector("[data-testid='checkbox']"))
+            .near(By.xpath("//span[contains(text(),'Choices')]"));
         driver.findElement(byCheckbox).click();
         return this;
     }
@@ -164,8 +164,8 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
      * @return current page object
      */
     public ConfigurePage selectChosen() {
-        By byCheckbox = with(By.cssSelector(".checkbox-icon"))
-            .near(By.xpath("//div[contains(text(),'Chosen')]"));
+        By byCheckbox = with(By.cssSelector("[data-testid='checkbox']"))
+            .near(By.xpath("//span[contains(text(),'Chosen')]"));
         driver.findElement(byCheckbox).click();
         return this;
     }
