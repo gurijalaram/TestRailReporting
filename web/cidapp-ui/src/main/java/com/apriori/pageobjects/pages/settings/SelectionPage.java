@@ -48,7 +48,7 @@ public class SelectionPage extends LoadableComponent<SelectionPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Production Defaults tab is not active", selectionTab.getAttribute("class").contains("active"));
+        assertTrue("Selection tab is not active", selectionTab.getAttribute("class").contains("active"));
     }
 
     /**
