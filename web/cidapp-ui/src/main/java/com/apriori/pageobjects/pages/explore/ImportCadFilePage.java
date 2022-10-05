@@ -220,7 +220,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage tick(String option) {
         By byCheckbox = byCheckbox(option);
 
-        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-testid").contains("CheckBoxIcon")) {
             pageUtils.waitForElementAndClick(byCheckbox);
         }
         return this;
