@@ -25,7 +25,8 @@
       ],
       "optional": [
         "customProperties",
-        "licenseAssignments"
+        "licenseAssignments",
+        "updatedAt"
       ],
       "properties": {
         "isSystemUser": {
@@ -38,6 +39,9 @@
           "type": "string"
         },
         "createdBy": {
+          "type": "string"
+        },
+        "updatedAt": {
           "type": "string"
         },
         "customerIdentity": {
