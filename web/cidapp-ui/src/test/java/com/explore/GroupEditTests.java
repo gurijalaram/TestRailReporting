@@ -1,20 +1,8 @@
 package com.explore;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
-import java.io.File;
-import java.util.List;
-
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.pageobjects.navtoolbars.DeletePage;
-import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
-import com.apriori.pageobjects.navtoolbars.PublishScenarioPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
-import com.apriori.pageobjects.pages.evaluate.components.inputs.ComponentBasicPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -23,13 +11,15 @@ import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
+
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
+
+import java.io.File;
 
 public class GroupEditTests extends TestBase {
 
