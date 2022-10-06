@@ -59,6 +59,9 @@ public class OpenUnknownComponentsTests extends TestBase {
         assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName), is(equalTo("gear")));
 
         evaluatePage = explorePage.openScenario(componentName, scenarioName);
+
+        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
     }
 
     @Test
@@ -84,6 +87,9 @@ public class OpenUnknownComponentsTests extends TestBase {
         assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName), is(equalTo("gear")));
 
         evaluatePage = explorePage.openScenario(componentName, scenarioName);
+
+        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
     }
 
     @Test
@@ -104,9 +110,10 @@ public class OpenUnknownComponentsTests extends TestBase {
             .inputComponentDetails(scenarioName, resourceFile)
             .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
             .submit()
-            .openFile(componentName + extension);
+            .openComponent(componentName + extension);
 
         assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
     }
 
     @Test
@@ -127,9 +134,10 @@ public class OpenUnknownComponentsTests extends TestBase {
             .inputComponentDetails(scenarioName, resourceFile)
             .waitForUploadStatus(componentName + extension, UploadStatusEnum.UPLOADED)
             .submit()
-            .openFile(componentName + extension);
+            .openComponent(componentName + extension);
 
         assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
+        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
     }
 
     @Test
@@ -152,7 +160,7 @@ public class OpenUnknownComponentsTests extends TestBase {
             .importCadFile()
             .inputMultiComponents(multiComponents)
             .submit()
-            .openFile(targetComponentName + extension);
+            .openComponent(targetComponentName + extension);
 
         assertThat(evaluatePage.getPartName(), is(equalTo(targetComponentName.toUpperCase())));
     }

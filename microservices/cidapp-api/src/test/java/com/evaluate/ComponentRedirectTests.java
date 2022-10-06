@@ -3,22 +3,15 @@ package com.evaluate;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
-import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
-import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
-import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.http.builder.common.entity.RequestEntity;
-import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -30,13 +23,11 @@ import org.junit.experimental.categories.Category;
 import testsuites.RegressionTestSuite;
 
 import java.io.File;
-import java.util.concurrent.TimeUnit;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ComponentRedirectTests {
 
     private final ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @Category(RegressionTestSuite.class)
@@ -48,56 +39,23 @@ public class ComponentRedirectTests {
         final String componentName = "Machined Box AMERICAS";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName1)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
 
-        ResponseWrapper<PostComponentResponse> componentResponseReupload = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName2)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
+        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build();
 
-        RequestEntity requestEntityExpect301 =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
-                .inlineVariables(componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity())
-                .token(currentUser.getToken())
-                .followRedirection(false)
-                .expectedResponseCode(HttpStatus.SC_MOVED_PERMANENTLY);
+        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart, false);
 
-        try {
-            TimeUnit.SECONDS.sleep(15);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
+        existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
+        existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        ResponseWrapper response = HTTPRequest.build(requestEntityExpect301).get();
-
-        String redirectLocation = response.getHeaders().getValue("Location");
-        String originalEndpoint = String.format("/" + CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID.getEndpointString(), componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
-
-        assertThat(redirectLocation, is(not(originalEndpoint)));
-
-        RequestEntity requestEntityRedirected =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity())
-                .token(currentUser.getToken())
-                .followRedirection(true)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<ComponentIdentityResponse> responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
-        assertThat(responseRedirected.getResponseEntity().getIdentity(), is(equalTo(redirectLocation.substring(redirectLocation.length() - 12))));
+        ResponseWrapper<Object> response = componentsUtil.getComponentIdentityExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
     }
 
     @Test
@@ -110,69 +68,23 @@ public class ComponentRedirectTests {
         final String componentName = "Machined Box AMERICAS";
         final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
         final UserCredentials currentUser = UserUtil.getUser();
-        final String scenarioName1 = new GenerateStringUtil().generateScenarioName();
-        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentsUtil.postComponentQueryCSS(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName1)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
 
-        ResponseWrapper<PostComponentResponse> componentResponseReupload = componentsUtil.postComponent(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName2)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
+        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build();
 
-        final String originalComponentID = componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity();
-        final String originalScenarioID = componentResponseReupload.getResponseEntity().getSuccesses().get(0).getScenarioIdentity();
-        final String endpointRegEx = String.format(
-            "/" + CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS.getEndpointString(), "(.{1,12})", "(.{1,12})").replace("/", "\\/");
-        Pattern pattern = Pattern.compile(endpointRegEx);
+        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart, false);
 
-        RequestEntity requestEntityExpect301 =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
-                .inlineVariables(originalComponentID, originalScenarioID)
-                .token(currentUser.getToken())
-                .followRedirection(false)
-                .expectedResponseCode(HttpStatus.SC_MOVED_PERMANENTLY);
+        existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
+        existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        try {
-            TimeUnit.SECONDS.sleep(15);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        ResponseWrapper response = HTTPRequest.build(requestEntityExpect301).get();
-
-        String redirectLocation = response.getHeaders().getValue("Location");
-        String originalEndpoint = String.format(
-            "/" + CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS.getEndpointString(), originalComponentID, originalScenarioID);
-
-        Matcher matcher = pattern.matcher(redirectLocation);
-        matcher.find();
-        String redirectComponentID = matcher.group(1);
-        String redirectScenarioID = matcher.group(2);
-
-        assertThat(redirectLocation, is(not(originalEndpoint)));
-        assertThat(redirectComponentID, is(not(originalComponentID)));
-
-        RequestEntity requestEntityRedirected =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(originalComponentID, originalScenarioID)
-                .token(currentUser.getToken())
-                .followRedirection(true)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<ScenarioResponse> responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
-        assertThat(responseRedirected.getResponseEntity().getIdentity(), is(equalTo(redirectScenarioID)));
+        ResponseWrapper<Object> response = scenariosUtil.getScenarioRepresentationExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
     }
 
     @Test
@@ -187,67 +99,22 @@ public class ComponentRedirectTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentsUtil.postComponentQueryCSS(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
 
-        ResponseWrapper<PostComponentResponse> componentResponseReupload = componentsUtil.postComponentWithOverride(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
+        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build();
 
-        final String originalComponentID = componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity();
-        final String originalScenarioID = componentResponseReupload.getResponseEntity().getSuccesses().get(0).getScenarioIdentity();
-        final String endpointRegEx = String.format(
-            "/" + CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS.getEndpointString(), "(.{1,12})", "(.{1,12})").replace("/", "\\/");
-        Pattern pattern = Pattern.compile(endpointRegEx);
+        componentsUtil.postComponent(existingPart, false);
+        ResponseWrapper<PostComponentResponse> existingPartScenarioResponse = componentsUtil.postComponent(existingPart, true);
 
-        RequestEntity requestEntityExpect301 =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
-                .inlineVariables(originalComponentID, originalScenarioID)
-                .token(currentUser.getToken())
-                .followRedirection(false)
-                .expectedResponseCode(HttpStatus.SC_MOVED_PERMANENTLY);
+        existingPart.setComponentIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
+        existingPart.setScenarioIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        try {
-            TimeUnit.SECONDS.sleep(15);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        ResponseWrapper response = HTTPRequest.build(requestEntityExpect301).get();
-
-        String redirectLocation = response.getHeaders().getValue("Location");
-        String originalEndpoint = String.format(
-            "/" + CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS.getEndpointString(), originalComponentID, originalScenarioID);
-
-        Matcher matcher = pattern.matcher(redirectLocation);
-        matcher.find();
-        String redirectComponentID = matcher.group(1);
-        String redirectScenarioID = matcher.group(2);
-
-        assertThat(redirectLocation, is(not(originalEndpoint)));
-        assertThat(redirectComponentID, is(not(originalComponentID)));
-        assertThat(redirectScenarioID, is(not(originalScenarioID)));
-
-        RequestEntity requestEntityRedirected =
-            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, ScenarioResponse.class)
-                .inlineVariables(originalComponentID, originalScenarioID)
-                .token(currentUser.getToken())
-                .followRedirection(true)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<ScenarioResponse> responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
-        assertThat(responseRedirected.getResponseEntity().getIdentity(), is(equalTo(redirectScenarioID)));
+        ResponseWrapper<Object> response = scenariosUtil.getScenarioRepresentationExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
     }
 
     @Test
@@ -262,65 +129,20 @@ public class ComponentRedirectTests {
         final UserCredentials currentUser = UserUtil.getUser();
         final String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        componentsUtil.postComponentQueryCSS(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
 
-        ResponseWrapper<PostComponentResponse> componentResponseReupload = componentsUtil.postComponentWithOverride(
-            ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(currentUser)
-                .build()
-        );
+        ComponentInfoBuilder existingPart = ComponentInfoBuilder.builder()
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(currentUser)
+            .build();
 
-        final String originalComponentID = componentResponseReupload.getResponseEntity().getSuccesses().get(0).getComponentIdentity();
-        final String originalScenarioID = componentResponseReupload.getResponseEntity().getSuccesses().get(0).getScenarioIdentity();
-        final String endpointRegEx = String.format(
-            "/" + CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS.getEndpointString(), "(.{1,12})", "(.{1,12})").replace("/", "\\/");
-        Pattern pattern = Pattern.compile(endpointRegEx);
+        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart, false);
 
-        RequestEntity requestEntityExpect301 =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, null)
-                .inlineVariables(originalComponentID, originalScenarioID)
-                .token(currentUser.getToken())
-                .followRedirection(false)
-                .expectedResponseCode(HttpStatus.SC_MOVED_PERMANENTLY);
+        existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
+        existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
 
-        try {
-            TimeUnit.SECONDS.sleep(15);
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-        }
-
-        ResponseWrapper response = HTTPRequest.build(requestEntityExpect301).get();
-
-        String redirectLocation = response.getHeaders().getValue("Location");
-        String originalEndpoint = String.format(
-            "/" + CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS.getEndpointString(), originalComponentID, originalScenarioID);
-
-        Matcher matcher = pattern.matcher(redirectLocation);
-        matcher.find();
-        String redirectComponentID = matcher.group(1);
-        String redirectScenarioID = matcher.group(2);
-
-        assertThat(redirectLocation, is(not(originalEndpoint)));
-        assertThat(redirectComponentID, is(not(originalComponentID)));
-        assertThat(redirectScenarioID, is(not(originalScenarioID)));
-
-        RequestEntity requestEntityRedirected =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, ComponentIteration.class)
-                .inlineVariables(originalComponentID, originalScenarioID)
-                .token(currentUser.getToken())
-                .followRedirection(true)
-                .expectedResponseCode(HttpStatus.SC_OK);
-
-        ResponseWrapper<ComponentIteration> responseRedirected = HTTPRequest.build(requestEntityRedirected).get();
+        ResponseWrapper<Object> response = componentsUtil.getComponentIterationLatestExpectingStatusCode(existingPart, HttpStatus.SC_MOVED_PERMANENTLY);
+        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_MOVED_PERMANENTLY)));
     }
 }

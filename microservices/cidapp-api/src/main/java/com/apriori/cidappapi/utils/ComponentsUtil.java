@@ -27,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -102,7 +104,7 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
-        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
+        List<Successes> componentSuccesses = postComponent(componentBuilder, false).getResponseEntity().getSuccesses();
 
         componentSuccesses.forEach(componentSuccess -> {
             List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
@@ -135,7 +137,7 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
-    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder) {
+    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder, boolean overrideScenario) {
         String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
@@ -144,31 +146,7 @@ public class ComponentsUtil {
                 .body("groupItems",
                     Collections.singletonList(ComponentRequest.builder()
                         .filename(componentBuilder.getResourceFile().getName())
-                        .override(false)
-                        .resourceName(resourceName)
-                        .scenarioName(componentBuilder.getScenarioName())
-                        .build()))
-                .token(componentBuilder.getUser().getToken());
-
-        return HTTPRequest.build(requestEntity).post();
-    }
-
-    /**
-     * POST new component and allow Override of Scenario Name
-     *
-     * @param componentBuilder - the component object
-     * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
-     */
-    public ResponseWrapper<PostComponentResponse> postComponentWithOverride(ComponentInfoBuilder componentBuilder) {
-        String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
-            .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
-
-        RequestEntity requestEntity =
-            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_CREATE, PostComponentResponse.class)
-                .body("groupItems",
-                    Collections.singletonList(ComponentRequest.builder()
-                        .filename(componentBuilder.getResourceFile().getName())
-                        .override(true)
+                        .override(overrideScenario)
                         .resourceName(resourceName)
                         .scenarioName(componentBuilder.getScenarioName())
                         .build()))
@@ -251,6 +229,31 @@ public class ComponentsUtil {
     }
 
     /**
+     * GET components for the current user matching an identity ewith an expected Return Code
+     *
+     * @param componentInfo - the component info builder object
+     * @param httpStatus - The expected return code as an int
+     * @return response object
+     */
+    public ResponseWrapper<Object> getComponentIdentityExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
+        final int SOCKET_TIMEOUT = 240000;
+        final int METHOD_TIMEOUT = 30;
+        final LocalDateTime methodStartTime = LocalDateTime.now();
+        String componentId = componentInfo.getComponentIdentity();
+        ResponseWrapper<Object> response;
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+                .inlineVariables(componentId)
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(false)
+                .socketTimeout(SOCKET_TIMEOUT);
+        do {
+            response = HTTPRequest.build(requestEntity).get();
+        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
+        return response;
+    }
+
+    /**
      * GET components for the current user matching an identity and component
      *
      * @param componentInfo - the component info builder object
@@ -263,6 +266,32 @@ public class ComponentsUtil {
                 .token(componentInfo.getUser().getToken());
 
         return checkNonNullIterationLatest(requestEntity);
+    }
+
+    /**
+     * GET components for the current user matching an identity ewith an expected Return Code
+     *
+     * @param componentInfo - the component info builder object
+     * @param httpStatus - The expected return code as an int
+     * @return response object
+     */
+    public ResponseWrapper<Object> getComponentIterationLatestExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
+        final int SOCKET_TIMEOUT = 240000;
+        final int METHOD_TIMEOUT = 30;
+        final LocalDateTime methodStartTime = LocalDateTime.now();
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
+        ResponseWrapper<Object> response;
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, null)
+                .inlineVariables(componentId, scenarioId)
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(false)
+                .socketTimeout(SOCKET_TIMEOUT);
+        do {
+            response = HTTPRequest.build(requestEntity).get();
+        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
+        return response;
     }
 
     /**

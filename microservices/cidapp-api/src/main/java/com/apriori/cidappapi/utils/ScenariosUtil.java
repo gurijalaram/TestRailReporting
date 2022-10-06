@@ -37,6 +37,8 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -197,6 +199,33 @@ public class ScenariosUtil {
             String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds.",
                 componentName, scenarioName, WAIT_TIME)
         );
+    }
+
+    /**
+     * Call GET on Scenario Representation by Component Endpoint with an expected Return Code
+     *
+     * @param componentInfo - The component info builder object
+     * @param httpStatus - The expected return code as an int
+     *
+     * @return response - A response object
+     */
+    public ResponseWrapper<Object> getScenarioRepresentationExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
+        final int SOCKET_TIMEOUT = 240000;
+        final int METHOD_TIMEOUT = 30;
+        final LocalDateTime methodStartTime = LocalDateTime.now();
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
+        ResponseWrapper<Object> response;
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS, null)
+                .inlineVariables(componentId, scenarioId)
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(false)
+                .socketTimeout(SOCKET_TIMEOUT);
+        do {
+            response = HTTPRequest.build(requestEntity).get();
+        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
+        return response;
     }
 
     private ResponseWrapper<ScenarioResponse> scenarioRequestEntity(ComponentInfoBuilder componentInfo) {

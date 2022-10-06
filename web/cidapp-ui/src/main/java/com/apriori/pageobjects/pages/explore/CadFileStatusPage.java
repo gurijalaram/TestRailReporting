@@ -57,6 +57,10 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
         assertTrue("Failures tab is not displayed", pageUtils.waitForElementToAppear(failuresTab).isDisplayed());
     }
 
+    /**
+     * Open the successes tab once import concluded
+     *
+     */
     public void openSuccessesTab() {
         pageUtils.waitForElementAndClick(successesTab);
     }
@@ -92,13 +96,13 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     /**
      * Open specified file from Successes tab
      *
-     * @param filename - The filename of the item to open
+     * @param componentName - The componentName of the item to open
      *
      * @return - Evaluate Page Object
      */
-    public EvaluatePage openFile(String filename) {
+    public EvaluatePage openComponent(String componentName) {
         openSuccessesTab();
-        WebElement fileLink = driver.findElement(By.xpath("//a[contains(text(),'" + filename + "')]"));
+        WebElement fileLink = driver.findElement(By.xpath("//a[contains(text(),'" + componentName + "')]"));
         pageUtils.waitForElementAndClick(fileLink);
         return new EvaluatePage(driver);
     }
