@@ -38,6 +38,7 @@ public class ComponentIteration {
     private String updatedByName;
     private String customerIdentity;
     private Integer iteration;
+    private String costingMessage;
     private String scenarioIterationKey;
     private CostingInput costingInput;
     private List<Object> scenarioCustomAttributes = null;

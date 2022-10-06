@@ -78,22 +78,22 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "g.highcharts-label.highcharts-data-label")
     private List<WebElement> chartPercentage;
 
-    @FindBy(xpath = "//h6[text()='Masking']/..//input[@value='defaultNoMasking']")
+    @FindBy(xpath = "//h6[contains(.,'Masking']/..//input[@value='defaultNoMasking']")
     private WebElement maskingDefault;
 
-    @FindBy(xpath = "//h6[text()='Number of Masked Features']/..//input[@value='none']")
+    @FindBy(xpath = "//h6[contains(.,'Number of Masked Features']/..//input[@value='none']")
     private WebElement noMasking;
 
-    @FindBy(xpath = "//h6[text()='Number of Components Per Load Bar']/..//input[@value='auto']")
+    @FindBy(xpath = "//h6[contains(.,'Number of Components Per Load Bar']/..//input[@value='auto']")
     private WebElement compLoadBarDefault;
 
-    @FindBy(xpath = "//h6[text()='Number of Cavities']/..//input[@value='optimize']")
+    @FindBy(xpath = "//h6[contains(.,'Number of Cavities')]/..//input[@value='optimize']")
     private WebElement optimizeMinCost;
 
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
-    @FindBy(xpath = "//h6[text()='Number of cavities  (Piece Part & Tooling Cost Driver)']/..//input[@value='optimize']")
+    @FindBy(xpath = "//h6[contains(.,'Number of cavities  (Piece Part & Tooling Cost Driver)']/..//input[@value='optimize']")
     private WebElement cavitiesOptimizeMinCost;
 
     private WebDriver driver;

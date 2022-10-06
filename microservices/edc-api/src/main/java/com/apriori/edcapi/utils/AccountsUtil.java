@@ -24,7 +24,7 @@ public class AccountsUtil extends TestUtil {
      */
     public static List<AccountsResponse> getAllAccounts() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.GET_ACCOUNTS, AccountsItemsResponse.class);
+            RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsItemsResponse.class);
 
         ResponseWrapper<AccountsItemsResponse> getAllAccountsResponse = HTTPRequest.build(requestEntity).get();
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, getAllAccountsResponse.getStatusCode());
@@ -50,7 +50,7 @@ public class AccountsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<AccountsResponse> getAccountByIdentity(String identity, Class klass) {
-        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.GET_ACCOUNTS_BY_IDENTITY, klass);
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.ACCOUNT_BY_IDENTITY, klass);
 
         return HTTPRequest.build(requestEntity).get();
     }
@@ -62,7 +62,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> postCreateNewAccount() {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_ACCOUNTS, AccountsResponse.class)
+            RequestEntityUtil.init(EDCAPIEnum.ACCOUNTS, AccountsResponse.class)
                 .body(postBodyInformation());
 
         return HTTPRequest.build(requestEntity).post();
@@ -84,7 +84,7 @@ public class AccountsUtil extends TestUtil {
      * @return response object
      */
     public static ResponseWrapper<AccountsResponse> deleteAccountByIdentity(String identity) {
-        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.DELETE_ACCOUNTS_BY_IDENTITY, null);
+        RequestEntity requestEntity = BillOfMaterialsUtil.genericRequest(identity, EDCAPIEnum.ACCOUNT_BY_IDENTITY, null);
 
         return HTTPRequest.build(requestEntity).delete();
     }
@@ -97,7 +97,7 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> patchUpdateAccountByIdentity(String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.PATCH_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
+            RequestEntityUtil.init(EDCAPIEnum.ACCOUNT_BY_IDENTITY, AccountsResponse.class)
                 .inlineVariables(identity)
                 .body(postBodyInformation());
 
@@ -112,9 +112,36 @@ public class AccountsUtil extends TestUtil {
      */
     public ResponseWrapper<AccountsResponse> postActivateAnAccount(String identity) {
         RequestEntity requestEntity =
-            RequestEntityUtil.init(EDCAPIEnum.POST_ACCOUNTS_BY_IDENTITY, AccountsResponse.class)
+            RequestEntityUtil.init(EDCAPIEnum.ACTIVATE_ACCOUNT_BY_IDENTITY, AccountsResponse.class)
                 .inlineVariables(identity);
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Post refresh the license by identity
+     *
+     * @param identity - the identity
+     * @return response object
+     */
+    public ResponseWrapper<AccountsResponse> postRefreshLicense(String identity) {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.REFRESH_LICENSE_BY_IDENTITY, AccountsResponse.class)
+
+                .inlineVariables(identity);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * GET current representation of an active account
+     *
+     * @return response object
+     */
+    public ResponseWrapper<AccountsResponse> getActiveAccount() {
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(EDCAPIEnum.CURRENT_ACTIVE_ACCOUNT, AccountsResponse.class);
+
+        return HTTPRequest.build(requestEntity).get();
     }
 }
