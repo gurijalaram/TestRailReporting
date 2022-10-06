@@ -1,31 +1,53 @@
 package com.explore;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
 import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 public class GroupEditTests extends TestBase {
+
+    private File resourceFile;
+    private File resourceFile1;
+    private File resourceFile2;
+    private File resourceFile3;
+    private File resourceFile4;
+    private File resourceFile5;
+    private File resourceFile6;
+    private File resourceFile7;
+    private File resourceFile8;
+    private File resourceFile9;
+    private File resourceFile10;
+    private File resourceFile11;
 
     private UserCredentials currentUser;
     private CidAppLoginPage loginPage;
     private EditComponentsPage editComponentsPage;
+    private CssComponent cssComponent = new CssComponent();
     private ExplorePage explorePage;
     private SoftAssertions softAssertions = new SoftAssertions();
 
@@ -171,5 +193,58 @@ public class GroupEditTests extends TestBase {
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14726"})
+    @Description("Attempt to edit more than 10 scenarios")
+    public void testEditMoreThanTenScenarios() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        List<MultiUpload> multiComponents = new ArrayList<>();
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "big ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "Pin.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.FORGING, "small ring.SLDPRT"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "Part0004.ipt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, "bracket_basic.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.POWDER_METAL, "PowderMetalShaft.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.PLASTIC_MOLDING, "Push Pin.stp"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt"), scenarioName));
+        multiComponents.add(new MultiUpload(FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt"), scenarioName));
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .importCadFile()
+            .inputScenarioName(scenarioName)
+            .inputMultiComponents(multiComponents)
+            .submit()
+            .clickClose()
+            .setPagination()
+            .selectFilter("Recent");
+
+        multiComponents.forEach(component ->
+            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+
+        explorePage.refresh()
+            .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",
+                "" + "Pin" + ", " + scenarioName + "",
+                "" + "small ring" + ", " + scenarioName + "",
+                "" + "Part0004" + ", " + scenarioName + "",
+                "" + "bracket_basic" + ", " + scenarioName + "",
+                "" + "PowderMetalShaft" + ", " + scenarioName + "",
+                "" + "Push Pin" + ", " + scenarioName + "",
+                "" + "piston cover_model1" + ", " + scenarioName + "",
+                "" + "piston pin_model1" + ", " + scenarioName + "",
+                "" + "piston rod_model1" + ", " + scenarioName + "")
+            .publishScenario(PublishPage.class)
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(PublishPage.class)
+            .close(ExplorePage.class)
+            .selectFilter("Public");
+
     }
 }
