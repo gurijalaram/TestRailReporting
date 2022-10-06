@@ -23,6 +23,7 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterfaces.SmokeTests;
@@ -175,13 +176,17 @@ public class ReCostScenarioTests {
 
         AnalysisOfScenario analysisOfScenario = componentIterationResponse.getResponseEntity().getAnalysisOfScenario();
 
-        assertThat(analysisOfScenario.getProcessRoutingName(), containsString(processRoutingName));
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(analysisOfScenario.getProcessRoutingName()).contains(processRoutingName);
 
         postCostScenario(processGroupEnum, componentName, scenarioName, currentUser, componentResponse, digitalFactoryEnum);
 
         ResponseWrapper<ScenarioResponse> scenarioRepresentation = getScenarioResponseResponseWrapper(componentResponse);
 
-        assertThat(scenarioRepresentation.getResponseEntity().getScenarioState(), is(equalTo(NewCostingLabelEnum.COST_COMPLETE.name())));
+        softAssertions.assertThat(scenarioRepresentation.getResponseEntity().getScenarioState()).isEqualTo(NewCostingLabelEnum.COST_COMPLETE.name());
+
+        softAssertions.assertAll();
     }
 
     private void postCostScenario(ProcessGroupEnum processGroupEnum, String componentName, String scenarioName, UserCredentials currentUser, ComponentInfoBuilder componentInfo, DigitalFactoryEnum digitalFactory) {
