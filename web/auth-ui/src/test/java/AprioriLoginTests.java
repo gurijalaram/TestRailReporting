@@ -49,7 +49,7 @@ public class AprioriLoginTests extends TestBase {
     @Description("Test unsuccessful login with correct email, incorrect password")
     public void testIncorrectPwd() {
 
-        aprioriLoginPage.failedLoginAs(UserUtil.getUser().getUsername(), "fakePassword");
+        aprioriLoginPage.failedLoginAs(UserUtil.getUser().getEmail(), "fakePassword");
 
         assertThat(loginPageErrorMessage.toUpperCase(), is(aprioriLoginPage.getLoginErrorMessage()));
     }

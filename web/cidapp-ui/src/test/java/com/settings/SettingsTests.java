@@ -32,6 +32,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColourEnum;
 import com.utils.CurrencyEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -348,6 +349,7 @@ public class SettingsTests extends TestBase {
     }
 
     @Test
+    @Issue("CID-1182")
     @TestRail(testCaseId = {"6308"})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
     public void saveAllTabs() {
