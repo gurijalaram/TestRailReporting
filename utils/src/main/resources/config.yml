@@ -453,5 +453,5 @@ qa-test:
     api_url: https://css.${default.aws_region}-v23-1.${env}.apriori.net/
 
   reports:
-    ui_url: ${qa-test.base_url}/jasperserver-pro/
+    ui_url: ${qa-test.base_url}jasperserver-pro/
     on_prem_vm_url: https://conqbaci01/jasperserver-pro/
