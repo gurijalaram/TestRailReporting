@@ -29,7 +29,7 @@ public class ConfigurePage extends LoadableComponent<ConfigurePage> {
     @FindBy(css = ".apriori-card.medium-card.shuttle-box-list.card")
     private List<WebElement> columnList;
 
-    @FindBy(xpath = "//div[@class='modal-content']//button[.='Submit']")
+    @FindBy(css = ".table-configurator [type='submit']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;

@@ -19,7 +19,6 @@ import java.util.List;
 public class ScenarioIteration {
     private String customerIdentity;
     private String scenarioKey;
-    private Object scenarioProcesses;
     private Object scenarioIterationKey;
     private String hasThumbnail;
     private Thumbnail thumbnail;
@@ -36,6 +35,8 @@ public class ScenarioIteration {
     private List<String> scenarioDesignInvestigations;
     private List<String> scenarioDesignIssues;
     private List<String> scenarioDesignNotices;
+    private List<String> scenarioRoutings;
+    private List<String> scenarioProcesses;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;

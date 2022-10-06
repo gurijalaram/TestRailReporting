@@ -42,7 +42,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".apriori-table .table-head")
     private WebElement tableHeaders;
 
-    @FindBy(css = ".table-head .checkbox-icon")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement selectAllCheckBox;
 
     private PageUtils pageUtils;
