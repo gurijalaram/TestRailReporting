@@ -11,7 +11,7 @@ import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -39,15 +39,15 @@ public class ScenarioIterationService {
     /**
      * calls 'scenario-iterations' GET endpoint
      *
-     * @param formParams - pass parameters to the curl
+     * @param queryParams - pass parameters to the curl
      */
 
-    public ResponseWrapper getScenarioIterationWithParams(FormParams formParams) {
+    public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParams(QueryParams queryParams) {
 
         RequestEntity requestEntity =
                 RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY, CssComponentResponse.class)
                         .token(currentUser.getToken())
-                    .formParams(formParams);
+                    .queryParams(queryParams);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -56,7 +56,7 @@ public class ScenarioIterationService {
      *
      * @param scenarioIterationRequest - pass the body
      */
-    public ResponseWrapper getScenarioIterationWithParamsPostForErrors(ScenarioIterationRequest scenarioIterationRequest) {
+    public ResponseWrapper<ErrorRequestResponse> getScenarioIterationWithParamsPostForErrors(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
                 RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY_NEW, ErrorRequestResponse.class)
@@ -70,7 +70,7 @@ public class ScenarioIterationService {
      *
      * @param scenarioIterationRequest - pass the body
      */
-    public ResponseWrapper getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
+    public ResponseWrapper<CssComponentResponse> getScenarioIterationWithParamsPost(ScenarioIterationRequest scenarioIterationRequest) {
 
         RequestEntity requestEntity =
             RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_QUERY_NEW, CssComponentResponse.class)
@@ -127,11 +127,11 @@ public class ScenarioIterationService {
         String searchedItem = component[0];
         String property = "componentName[EQ]";
 
-        FormParams formParams = new FormParams();
-        formParams.use(property, searchedItem);
+        QueryParams queryParams = new QueryParams();
+        queryParams.use(property, searchedItem);
 
         ResponseWrapper<CssComponentResponse> scenarioIterationRespond =
-                getScenarioIterationWithParams(formParams);
+                getScenarioIterationWithParams(queryParams);
         if (scenarioIterationRespond.getResponseEntity().getItems().size() > 0) {
             return true;
         }
