@@ -1,7 +1,7 @@
 package com.apriori.pageobjects.pages.explore;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;

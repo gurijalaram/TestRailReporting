@@ -4,9 +4,9 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import com.apriori.css.entity.apicalls.ScenarioIterationService;
-import com.apriori.css.entity.response.CssComponentResponse;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.apicalls.ScenarioIterationService;
+import com.apriori.entity.response.CssComponentResponse;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.ResponseWrapper;
