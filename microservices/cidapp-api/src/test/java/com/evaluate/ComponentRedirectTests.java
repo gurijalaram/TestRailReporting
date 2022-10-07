@@ -49,7 +49,7 @@ public class ComponentRedirectTests {
             .user(currentUser)
             .build();
 
-        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart, false);
+        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart);
 
         existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
@@ -78,7 +78,7 @@ public class ComponentRedirectTests {
             .user(currentUser)
             .build();
 
-        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart, false);
+        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart);
 
         existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
@@ -105,10 +105,11 @@ public class ComponentRedirectTests {
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
             .user(currentUser)
+            .overrideScenario(true)
             .build();
 
-        componentsUtil.postComponent(existingPart, false);
-        ResponseWrapper<PostComponentResponse> existingPartScenarioResponse = componentsUtil.postComponent(existingPart, true);
+        componentsUtil.postComponent(existingPart);
+        ResponseWrapper<PostComponentResponse> existingPartScenarioResponse = componentsUtil.postComponent(existingPart);
 
         existingPart.setComponentIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartScenarioResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());
@@ -137,7 +138,7 @@ public class ComponentRedirectTests {
             .user(currentUser)
             .build();
 
-        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart, false);
+        ResponseWrapper<PostComponentResponse> existingPartResponse = componentsUtil.postComponent(existingPart);
 
         existingPart.setComponentIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getComponentIdentity());
         existingPart.setScenarioIdentity(existingPartResponse.getResponseEntity().getSuccesses().get(0).getScenarioIdentity());

@@ -104,7 +104,7 @@ public class ComponentsUtil {
      */
     public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
 
-        List<Successes> componentSuccesses = postComponent(componentBuilder, false).getResponseEntity().getSuccesses();
+        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
 
         componentSuccesses.forEach(componentSuccess -> {
             List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
@@ -137,7 +137,7 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return PostComponentResponse object with a list of <b>Successes</b> and <b>Failures</b>
      */
-    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder, boolean overrideScenario) {
+    public ResponseWrapper<PostComponentResponse> postComponent(ComponentInfoBuilder componentBuilder) {
         String resourceName = postCadFile(componentBuilder).getResponseEntity().getCadFiles().stream()
             .map(CadFile::getResourceName).collect(Collectors.toList()).get(0);
 
@@ -146,7 +146,7 @@ public class ComponentsUtil {
                 .body("groupItems",
                     Collections.singletonList(ComponentRequest.builder()
                         .filename(componentBuilder.getResourceFile().getName())
-                        .override(overrideScenario)
+                        .override(componentBuilder.isOverrideScenario())
                         .resourceName(resourceName)
                         .scenarioName(componentBuilder.getScenarioName())
                         .build()))
