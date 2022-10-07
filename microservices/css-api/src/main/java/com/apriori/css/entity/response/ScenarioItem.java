@@ -2,7 +2,6 @@ package com.apriori.css.entity.response;
 
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -66,17 +65,15 @@ public class ScenarioItem {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioLockedAt;
-    @JsonIgnore
-    private Boolean scenarioLockedBy;
-    @JsonIgnore
-    private Boolean scenarioLockedByName;
+    private String scenarioLockedBy;
+    private String scenarioLockedByName;
     private Boolean scenarioPublished;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioPublishedAt;
     private String scenarioPublishedBy;
     private String scenarioPublishedByName;
-    private String scenarioSystemLocked;
+    private Boolean scenarioSystemLocked;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime scenarioCreatedAt;

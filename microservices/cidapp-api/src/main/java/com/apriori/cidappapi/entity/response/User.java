@@ -27,6 +27,7 @@ public class User {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String customerIdentity;
     private UserProfile userProfile;
     private String email;
@@ -40,5 +41,10 @@ public class User {
     private String updatedBy;
 
     public static class CustomProperties {
+    }
+
+    @Data
+    public static class CustomAttributes {
+        private Integer workspaceId;
     }
 }

@@ -2,12 +2,14 @@ package com.apriori.cds.tests;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.cds.entity.IdentityHolder;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.objects.response.LicensedApplication;
+import com.apriori.cds.objects.response.LicensedApplications;
 import com.apriori.cds.objects.response.Site;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.cds.utils.Constants;
@@ -17,35 +19,35 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 public class CdsSitesApplicationsTests {
 
-    private static IdentityHolder licensedAppIdentityHolder;
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static String customerIdentity;
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static ResponseWrapper<Customer> customer;
-    private static String siteName;
-    private static String siteID;
-    private static ResponseWrapper<Site> site;
-    private static String siteIdentity;
+    private IdentityHolder licensedAppIdentityHolder;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private String customerIdentity;
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private ResponseWrapper<Customer> customer;
+    private String siteName;
+    private String siteID;
+    private ResponseWrapper<Site> site;
+    private String siteIdentity;
 
-    @BeforeClass
-    public static void setDetails() {
-
+    @Before
+    public void setDetails() {
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
 
         siteName = generateStringUtil.generateSiteName();
@@ -55,17 +57,17 @@ public class CdsSitesApplicationsTests {
         siteIdentity = site.getResponseEntity().getIdentity();
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (licensedAppIdentityHolder != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_LICENSED_APPLICATIONS_BY_CUSTOMER_SITE_LICENSED_IDS,
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
                 licensedAppIdentityHolder.customerIdentity(),
                 licensedAppIdentityHolder.siteIdentity(),
                 licensedAppIdentityHolder.licenseIdentity()
             );
         }
         if (customerIdentity != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -102,7 +104,16 @@ public class CdsSitesApplicationsTests {
              .licenseIdentity(licensedApplicationIdentity)
              .build();
 
-        ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_LICENSED_APPLICATIONS_BY_CUSTOMER_SITE_LICENSED_IDS,
+        ResponseWrapper<LicensedApplications> licensedApplications = cdsTestUtil.getCommonRequest(CDSAPIEnum.APPLICATION_SITES_BY_CUSTOMER_SITE_IDS,
+            LicensedApplications.class,
+            customerIdentity,
+            siteIdentity
+        );
+
+        assertThat(licensedApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(licensedApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
+        ResponseWrapper<LicensedApplication> licensedApplicationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_LICENSED_APPLICATIONS_BY_IDS,
             LicensedApplication.class,
             customerIdentity,
             siteIdentity,

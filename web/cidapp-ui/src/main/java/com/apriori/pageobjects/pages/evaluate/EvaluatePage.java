@@ -6,8 +6,8 @@ import com.apriori.pageobjects.common.StatusIcon;
 import com.apriori.pageobjects.navtoolbars.EvaluateToolbar;
 import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.CustomAttributesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.CustomPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.utils.PageUtils;
@@ -125,7 +125,7 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-process-group-select-field']")
     private WebElement processGroupList;
 
-    @FindBy(css = ".sub-components-summary-card button")
+    @FindBy(css = ".sub-components-summary button")
     private WebElement componentsDetailsButton;
 
     @FindBy(css = "div[id='qa-source-model-modal-select-field'] button")
@@ -141,11 +141,17 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(xpath = "//div[@id='qa-process-group-select-field']//div[@class='text-overflow']")
     private WebElement currentProcessGroup;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Secondary']")
-    private WebElement secondaryTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Advanced']")
+    private WebElement advancedTab;
 
-    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom Attributes']")
-    private WebElement customAttributesTab;
+    @FindBy(xpath = "//div[@class='tabbed-layout scenario-inputs']//button[.='Custom']")
+    private WebElement customTab;
+
+    @FindBy(css = "[id='qa-sub-header-refresh-view-button'] button")
+    private WebElement refreshButton;
+
+    @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
+    private WebElement treeButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -243,23 +249,23 @@ public class EvaluatePage extends EvaluateToolbar {
     }
 
     /**
-     * Opens secondary input tab
+     * Opens advanced input tab
      *
      * @return new page object
      */
-    public SecondaryPage goToSecondaryTab() {
-        pageUtils.waitForElementAndClick(secondaryTab);
-        return new SecondaryPage(driver);
+    public AdvancedPage goToAdvancedTab() {
+        pageUtils.javaScriptClick(pageUtils.waitForElementToAppear(advancedTab));
+        return new AdvancedPage(driver);
     }
 
     /**
-     * Opens custom attributes tab
+     * Opens custom tab
      *
      * @return new page object
      */
-    public CustomAttributesPage goToCustomAttributesTab() {
-        pageUtils.waitForElementAndClick(customAttributesTab);
-        return new CustomAttributesPage(driver);
+    public CustomPage goToCustomTab() {
+        pageUtils.waitForElementAndClick(customTab);
+        return new CustomPage(driver);
     }
 
     /**
@@ -443,8 +449,18 @@ public class EvaluatePage extends EvaluateToolbar {
      * @return double
      */
     public double getCostResults(String label) {
+        return Double.parseDouble(getCostResultsString(label).replaceAll("-", "0").replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
+     * Gets cost result - result is returned as a String including currency symbol
+     *
+     * @param label - the label
+     * @return String
+     */
+    public String getCostResultsString(String label) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[@class='property-value']", label));
-        return Double.parseDouble(pageUtils.waitForElementToAppear(costResult).getAttribute("textContent").replaceAll("[^0-9?!\\.]", ""));
+        return pageUtils.waitForElementToAppear(costResult).getAttribute("textContent");
     }
 
     /**
@@ -456,8 +472,7 @@ public class EvaluatePage extends EvaluateToolbar {
      */
     public boolean isCostResultDisplayed(String label, String value) {
         By costResult = By.xpath(String.format("//div[@class='cost-result-summary']//span[.='%s']/following-sibling::span[.='%s']", label, value));
-        pageUtils.waitForElementToAppear(costResult);
-        return driver.findElement(costResult).isDisplayed();
+        return pageUtils.waitForElementToAppear(costResult).isDisplayed();
     }
 
     /**
@@ -720,5 +735,37 @@ public class EvaluatePage extends EvaluateToolbar {
         pageUtils.windowHandler(1).close();
         pageUtils.windowHandler(0);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Generates missing scenario by clicking Yes or No
+     *
+     * @param label - Yes or No
+     * @return - new page object
+     */
+    public EvaluatePage generateMissingScenario(String label) {
+        By byImages = By.xpath(String.format("//button[contains(text(), '%s')]", label));
+        pageUtils.waitForElementAndClick(byImages);
+        return this;
+    }
+
+    /**
+     * Clicks on the Refresh button
+     *
+     * @return generic page object
+     */
+    public <T> T clickRefresh(Class<T> className) {
+        pageUtils.waitForElementAndClick(refreshButton);
+        return PageFactory.initElements(driver, className);
+    }
+
+    /**
+     * Changes the view to tree view
+     *
+     * @return current page object
+     */
+    public EvaluatePage treeView() {
+        pageUtils.waitForElementAndClick(treeButton);
+        return this;
     }
 }

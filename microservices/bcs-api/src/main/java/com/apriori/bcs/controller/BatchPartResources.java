@@ -1,6 +1,5 @@
 package com.apriori.bcs.controller;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.bcs.entity.request.parts.NewPartRequest;
 import com.apriori.bcs.entity.response.Part;
 import com.apriori.bcs.entity.response.PartReport;
@@ -9,15 +8,18 @@ import com.apriori.bcs.entity.response.Results;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.bcs.enums.BCSState;
 import com.apriori.bcs.enums.FileType;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
 import com.apriori.utils.http.utils.MultiPartFiles;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
+import com.apriori.utils.reader.file.part.PartData;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,7 +37,7 @@ import java.util.concurrent.TimeUnit;
 public class BatchPartResources {
 
     private static RequestEntity requestEntity = null;
-    private static final long WAIT_TIME = 300;
+    private static final long WAIT_TIME = 600;
     private static String batchID;
     static ExecutorService newFixedThreadPool = Executors.newFixedThreadPool(10);
 
@@ -63,13 +65,75 @@ public class BatchPartResources {
     }
 
     /**
+     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
+     *
+     * @param partData      - PartData Object retrieved from cloud
+     * @param batchIdentity - batch Identity
+     * @return Response of type part object
+     */
+    public static ResponseWrapper<Part> createNewBatchPartByID(PartData partData, String batchIdentity) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
+        Map<String, String> header = new HashMap<>();
+        QueryParams queryParams = new QueryParams();
+        partData.setScenarioName("Scenario" + System.currentTimeMillis());
+        partData.setExternalId("External" + System.currentTimeMillis());
+        partData.setDescription("Description" + System.currentTimeMillis());
+        queryParams = (partData.getFilename() != null) ? queryParams.use("filename", partData.getFilename()) : queryParams;
+        queryParams = (partData.getExternalId() != null) ? queryParams.use("externalId", String.format(partData.getExternalId(), System.currentTimeMillis())) : queryParams;
+        queryParams = (partData.getAnnualVolume() != null) ? queryParams.use("AnnualVolume", partData.getAnnualVolume().toString()) : queryParams;
+        queryParams = (partData.getBatchSize() != null) ? queryParams.use("BatchSize", partData.getBatchSize().toString()) : queryParams;
+        queryParams = (partData.getDescription() != null) ? queryParams.use("Description", partData.getDescription()) : queryParams;
+        queryParams = (partData.getProcessGroup() != null) ? queryParams.use("ProcessGroup", partData.getProcessGroup()) : queryParams;
+        queryParams = (partData.getProductionLife() != null) ? queryParams.use("ProductionLife", partData.getProductionLife().toString()) : queryParams;
+        queryParams = (partData.getScenarioName() != null) ? queryParams.use("ScenarioName", partData.getScenarioName()) : queryParams;
+        queryParams = (partData.getDigitalFactory() != null) ? queryParams.use("VpeName", partData.getDigitalFactory()) : queryParams;
+        queryParams = (partData.getMaterial() != null) ? queryParams.use("MaterialName", partData.getMaterial()) : queryParams;
+        queryParams = (partData.getGenerateWatchPointReport() != null) ? queryParams.use("generateWatchpointReport", partData.getGenerateWatchPointReport()) : queryParams;
+        queryParams = (partData.getUdas() != null) ? queryParams.use("udas", partData.getUdas()) : queryParams;
+
+        header.put("Accept", "*/*");
+        header.put("Content-Type", "multipart/form-data");
+        requestEntity.headers(header)
+            .multiPartFiles(new MultiPartFiles()
+                .use("data", partData.getFile()))
+            .queryParams(queryParams);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * Creates a new batch part for specific batch ID and custom NewPartRequest POJO
+     *
+     * @param newPartRequest - Deserialized NewPartRequest Object
+     * @param batchIdentity  - batch Identity
+     * @return Response of type part object
+     * @Param return class name
+     */
+    public static <T> ResponseWrapper<T> createNewBatchPartByID(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
+        requestEntity = batchPartRequestEntity(newPartRequest, batchIdentity, klass);
+        return HTTPRequest.build(requestEntity).postMultipart();
+    }
+
+    /**
+     * This overloaded method is to create Batch Part request entity for Batch ID.
+     *
+     * @param endPoint      BCSAPIEnum
+     * @param batchIdentity - batch id
+     * @param partIdentity  - part id
+     * @param klass         - return class name
+     * @return RequestEntity object
+     */
+    public static <T> RequestEntity getBatchPartRequestEntity(BCSAPIEnum endPoint, String batchIdentity, String partIdentity, Class<T> klass) {
+        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
+    }
+
+    /**
      * Creates a new batch part for specific batch ID by passing uda field.
      *
      * @param batchIdentity - batch id
      * @return Response
      */
     public static ResponseWrapper<Part> createNewBatchPartWithValidUDA(String batchIdentity) {
-        requestEntity = batchPartRequestEntity(newPartRequest("schemas/requests/CreatePartDataWithUda.json"), batchIdentity);
+        requestEntity = batchPartRequestEntity(newPartRequest("schemas/testdata/CreatePartDataWithUda.json"), batchIdentity);
         return HTTPRequest.build(requestEntity).postMultipart();
     }
 
@@ -93,8 +157,23 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Parts> getBatchPartById(String batchIdentity) {
         requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
-            .inlineVariables(batchIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Get all parts for a batch with batch id and
+     * log information only when error occurs
+     *
+     * @param batchIdentity - batch id
+     * @return - Response
+     */
+    public static ResponseWrapper<Parts> getPartsByBatchId(String batchIdentity) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Parts.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity)
+            .queryParams(new QueryParams().use("pageSize", PropertiesContext.get("number_of_parts")));
+        return HTTPRequest.build(requestEntity).getMultipart();
     }
 
     /**
@@ -106,7 +185,7 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Part> getBatchPartRepresentation(String batchIdentity, String partIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
-            .inlineVariables(batchIdentity, partIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -121,9 +200,10 @@ public class BatchPartResources {
         if (BatchPartResources.waitUntilPartStateIsCompleted(batchIdentity, partIdentity)) {
             log.info("Batch Part State is => " + BCSState.COMPLETED);
             RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.PART_REPORT_BY_BATCH_PART_IDS, PartReport.class)
-                .inlineVariables(batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
             return HTTPRequest.build(requestEntity).get();
         }
+        // TODO: 27/09/2022 if null is returned and the test fails you will get a null pointer. this should be coded to catch the npe or recoded
         return null;
     }
 
@@ -144,6 +224,8 @@ public class BatchPartResources {
             case "PDF":
                 requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/TestFile.pdf")));
                 break;
+            default:
+                requestEntity.multiPartFiles(new MultiPartFiles().use("data", FileResourceUtil.getLocalResourceFile("schemas/partfiles/TestFile.jpeg")));
         }
         return HTTPRequest.build(requestEntity).postMultipart();
     }
@@ -157,7 +239,7 @@ public class BatchPartResources {
      */
     public static ResponseWrapper<Results> getBatchPartResults(String batchIdentity, String partIdentity) {
         RequestEntity requestEntity = RequestEntityUtil.init(BCSAPIEnum.RESULTS_BY_BATCH_PART_IDS, Results.class)
-            .inlineVariables(batchIdentity, partIdentity);
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
         return HTTPRequest.build(requestEntity).get();
     }
 
@@ -169,7 +251,7 @@ public class BatchPartResources {
     public static NewPartRequest newPartRequest() {
         NewPartRequest newPartRequest =
             JsonManager.deserializeJsonFromInputStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/CreatePartData.json"), NewPartRequest.class);
+                FileResourceUtil.getResourceFileStream("schemas/testdata/CreatePartData.json"), NewPartRequest.class);
         return newPartRequest;
     }
 
@@ -194,7 +276,7 @@ public class BatchPartResources {
      * @return RequestEntity - Batch Part complete RequestEntity
      */
     public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, Part.class).inlineVariables(batchIdentity);
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_CUSTOMER_BATCH_ID, Part.class).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
         return setPartRequestFormParams(newPartRequest);
     }
 
@@ -206,8 +288,8 @@ public class BatchPartResources {
      * @param klass          - Response class
      * @return RequestEntity - Batch Part complete RequestEntity
      */
-    public static RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class klass) {
-        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(batchIdentity);
+    public static <T> RequestEntity batchPartRequestEntity(NewPartRequest newPartRequest, String batchIdentity, Class<T> klass) {
+        requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PARTS_BY_ID, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity);
         return setPartRequestFormParams(newPartRequest);
     }
 
@@ -236,7 +318,7 @@ public class BatchPartResources {
         Part part;
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
-                .inlineVariables(batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
             part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);
@@ -263,7 +345,7 @@ public class BatchPartResources {
         Part part;
         do {
             requestEntity = RequestEntityUtil.init(BCSAPIEnum.BATCH_PART_BY_BATCH_PART_IDS, Part.class)
-                .inlineVariables(batchIdentity, partIdentity);
+                .inlineVariables(PropertiesContext.get("${env}.customer_identity"), batchIdentity, partIdentity);
             part = (Part) HTTPRequest.build(requestEntity).get().getResponseEntity();
             try {
                 TimeUnit.SECONDS.sleep(10);
@@ -278,7 +360,6 @@ public class BatchPartResources {
     }
 
 
-
     /**
      * This is private method to set the form parameters used in creating batch part
      * request for batch id and customer id.
@@ -289,29 +370,29 @@ public class BatchPartResources {
     private static RequestEntity setPartRequestFormParams(NewPartRequest newPartRequest) {
         File partFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(newPartRequest.getProcessGroup()), newPartRequest.getFilename());
         Map<String, String> header = new HashMap<>();
-        FormParams formParams = new FormParams();
+        QueryParams queryParams = new QueryParams();
         if (newPartRequest.getScenarioName().equals("Unique")) {
             newPartRequest.setScenarioName("Scenario" + System.currentTimeMillis());
         }
-        formParams = (newPartRequest.getFilename() != null) ? formParams.use("filename", newPartRequest.getFilename()) : formParams;
-        formParams = (newPartRequest.getExternalId() != null) ? formParams.use("externalId", String.format(newPartRequest.getExternalId(), System.currentTimeMillis())) : formParams;
-        formParams = (newPartRequest.getAnnualVolume() != null) ? formParams.use("AnnualVolume", newPartRequest.getAnnualVolume().toString()) : formParams;
-        formParams = (newPartRequest.getBatchSize() != null) ? formParams.use("BatchSize", newPartRequest.getBatchSize().toString()) : formParams;
-        formParams = (newPartRequest.getDescription() != null) ? formParams.use("Description", newPartRequest.getDescription()) : formParams;
-        formParams = (newPartRequest.getProcessGroup() != null) ? formParams.use("ProcessGroup", newPartRequest.getProcessGroup()) : formParams;
-        formParams = (newPartRequest.getProductionLife() != null) ? formParams.use("ProductionLife", newPartRequest.getProductionLife().toString()) : formParams;
-        formParams = (newPartRequest.getScenarioName() != null) ? formParams.use("ScenarioName", newPartRequest.getScenarioName()) : formParams;
-        formParams = (newPartRequest.getVpeName() != null) ? formParams.use("VpeName", newPartRequest.getVpeName()) : formParams;
-        formParams = (newPartRequest.getMaterialName() != null) ? formParams.use("MaterialName", newPartRequest.getMaterialName()) : formParams;
-        formParams = (newPartRequest.getGenerateWatchPointReport() != null) ? formParams.use("generateWatchpointReport", newPartRequest.getGenerateWatchPointReport()) : formParams;
-        formParams = (newPartRequest.getUdas() != null) ? formParams.use("udas", newPartRequest.getUdas()) : formParams;
+        queryParams = (newPartRequest.getFilename() != null) ? queryParams.use("filename", newPartRequest.getFilename()) : queryParams;
+        queryParams = (newPartRequest.getExternalId() != null) ? queryParams.use("externalId", String.format(newPartRequest.getExternalId(), System.currentTimeMillis())) : queryParams;
+        queryParams = (newPartRequest.getAnnualVolume() != null) ? queryParams.use("AnnualVolume", newPartRequest.getAnnualVolume().toString()) : queryParams;
+        queryParams = (newPartRequest.getBatchSize() != null) ? queryParams.use("BatchSize", newPartRequest.getBatchSize().toString()) : queryParams;
+        queryParams = (newPartRequest.getDescription() != null) ? queryParams.use("Description", newPartRequest.getDescription()) : queryParams;
+        queryParams = (newPartRequest.getProcessGroup() != null) ? queryParams.use("ProcessGroup", newPartRequest.getProcessGroup()) : queryParams;
+        queryParams = (newPartRequest.getProductionLife() != null) ? queryParams.use("ProductionLife", newPartRequest.getProductionLife().toString()) : queryParams;
+        queryParams = (newPartRequest.getScenarioName() != null) ? queryParams.use("ScenarioName", newPartRequest.getScenarioName()) : queryParams;
+        queryParams = (newPartRequest.getDigitalFactory() != null) ? queryParams.use("VpeName", newPartRequest.getDigitalFactory()) : queryParams;
+        queryParams = (newPartRequest.getMaterial() != null) ? queryParams.use("MaterialName", newPartRequest.getMaterial()) : queryParams;
+        queryParams = (newPartRequest.getGenerateWatchPointReport() != null) ? queryParams.use("generateWatchpointReport", newPartRequest.getGenerateWatchPointReport()) : queryParams;
+        queryParams = (newPartRequest.getUdas() != null) ? queryParams.use("udas", newPartRequest.getUdas()) : queryParams;
 
         header.put("Accept", "*/*");
         header.put("Content-Type", "multipart/form-data");
         requestEntity.headers(header)
             .multiPartFiles(new MultiPartFiles()
                 .use("data", partFile))
-            .formParams(formParams);
+            .queryParams(queryParams);
         return requestEntity;
     }
 }

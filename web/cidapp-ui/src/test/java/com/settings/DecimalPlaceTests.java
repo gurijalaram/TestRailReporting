@@ -2,10 +2,6 @@ package com.settings;
 
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_UNITED_KINGDOM;
 import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
@@ -23,6 +19,8 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.DecimalPlaceEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -51,7 +49,7 @@ public class DecimalPlaceTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295"})
+    @TestRail(testCaseId = {"5287", "5288", "5291", "5297", "5290", "5295", "6633"})
     @Description("User can change the default Displayed Decimal Places")
     public void changeDecimalPlaceDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -63,103 +61,107 @@ public class DecimalPlaceTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-            .openSettings()
-            .selectDecimalPlaces(DecimalPlaceEnum.SIX)
-            .submit(ExplorePage.class)
-            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
-            .selectDigitalFactory(APRIORI_USA)
-            .openMaterialSelectorTable()
-            .search("AISI 1020")
-            .selectMaterial("Steel, Cold Worked, AISI 1020")
-            .submit(EvaluatePage.class)
-            .costScenario();
+                .openSettings()
+                .selectDecimalPlaces(DecimalPlaceEnum.SIX)
+                .submit(ExplorePage.class)
+                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+                .selectProcessGroup(processGroupEnum)
+                .selectDigitalFactory(APRIORI_USA)
+                .openMaterialSelectorTable()
+                .search("AISI 1020")
+                .selectMaterial("Steel, Cold Worked, AISI 1020")
+                .submit(EvaluatePage.class)
+                .costScenario();
 
-        assertThat(evaluatePage.getMaterialResult("Finish Mass"), closeTo(5.309458, 1));
-        assertThat(evaluatePage.getMaterialResult("Utilization"), closeTo(81.163688, 1));
-        assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.400000, 1));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(43.993885, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(51.043238, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(51.043238, 10));
-        assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.000000, 1));
+        SoftAssertions softAssertions = new SoftAssertions();
 
-        evaluatePage.openSettings()
-            .selectDecimalPlaces(DecimalPlaceEnum.ONE)
-            .submit(EvaluatePage.class);
-
-        assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3kg"));
-        assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.2%"));
-        assertThat(evaluatePage.isProcessResultDisplayed("Total Cycle Time", "109.4s"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Material Cost", "$44.0"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Piece Part Cost", "$51.0"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Fully Burdened Cost", "$51.0"), is(true));
-        assertThat(evaluatePage.isCostResultDisplayed("Total Capital Investment", "$0.0"), is(true));
-        materialProcessPage = evaluatePage.openMaterialProcess();
-
-        assertThat(materialProcessPage.getTotalResult("Cycle Time"), closeTo(109.4, 1));
-        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(51.0, 10));
-        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(51.0, 10));
-        assertThat(materialProcessPage.getTotalResult("Total Capital Investment"), closeTo(0.0, 1));
-
-        costDetailsPage = evaluatePage.openCostDetails()
-            .expandDropDown("Piece Part Cost, Fully Burdened Cost");
-
-        assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(46.2, 10));
-        assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead"), closeTo(0.3, 1));
-        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(4.6, 5));
-        assertThat(costDetailsPage.getCostContributionValue("Margin"), closeTo(0.0, 1));
-        assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(51.0, 10));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.309458), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.163688), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.400000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.87099), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.444918), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.444918), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.000000), Offset.offset(15.0));
 
         evaluatePage.openSettings()
-            .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
-            .submit(EvaluatePage.class);
+                .selectDecimalPlaces(DecimalPlaceEnum.ONE)
+                .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.3095kg"));
-        assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.1576%"));
-        assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.4000, 1));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(43.9939, 1));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(51.0432, 1));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(51.0432, 1));
-        assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.0000, 1));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.3), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.1), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.4), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.8), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
+        materialProcessPage = evaluatePage.openMaterialProcess();
+
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(109.4), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Piece Part Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Total Capital Investment")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
+
+        costDetailsPage = evaluatePage.openCostDetails()
+                .expandDropDown("Piece Part Cost, Fully Burdened Cost");
+
+        softAssertions.assertThat(costDetailsPage.getCostSumValue("Total Variable Cost")).isCloseTo(Double.valueOf(46.2), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead")).isCloseTo(Double.valueOf(0.3), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("SG&A")).isCloseTo(Double.valueOf(4.6), Offset.offset(5.0));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Margin")).isCloseTo(Double.valueOf(0.0), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostSumValue("Piece Part Cost")).isCloseTo(Double.valueOf(40.4), Offset.offset(15.0));
+
+        evaluatePage.openSettings()
+                .selectDecimalPlaces(DecimalPlaceEnum.FOUR)
+                .submit(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.309458), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.163688), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.4000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.871), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.4449), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.4449), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.0000), Offset.offset(15.0));
 
         materialProcessPage = evaluatePage.openMaterialProcess();
 
-        assertThat(materialProcessPage.getTotalResult("Cycle Time"), closeTo(109.4000, 1));
-        assertThat(materialProcessPage.getTotalResult("Piece Part Cost"), closeTo(51.0432, 1));
-        assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost"), closeTo(51.0432, 1));
-        assertThat(materialProcessPage.getTotalResult("Total Capital Investment"), closeTo(0.0000, 1));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Cycle Time")).isCloseTo(Double.valueOf(109.4000), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Piece Part Cost")).isCloseTo(Double.valueOf(40.4449), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.4449), Offset.offset(15.0));
+        softAssertions.assertThat(materialProcessPage.getTotalResult("Total Capital Investment")).isCloseTo(Double.valueOf(0.0000), Offset.offset(15.0));
 
         costDetailsPage = evaluatePage.openCostDetails()
-            .expandDropDown("Piece Part Cost, Fully Burdened Cost");
+                .expandDropDown("Piece Part Cost, Fully Burdened Cost");
 
-        assertThat(costDetailsPage.getCostSumValue("Total Variable Cost"), closeTo(46.1543, 10));
-        assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead"), closeTo(0.3179, 1));
-        assertThat(costDetailsPage.getCostContributionValue("SG&A"), closeTo(4.5720, 1));
-        assertThat(costDetailsPage.getCostContributionValue("Margin"), closeTo(0.0000, 1));
-        assertThat(costDetailsPage.getCostSumValue("Piece Part Cost"), closeTo(51.0432, 10));
+        softAssertions.assertThat(costDetailsPage.getCostSumValue("Total Variable Cost")).isCloseTo(Double.valueOf(46.1543), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Indirect Overhead")).isCloseTo(Double.valueOf(0.3179), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("SG&A")).isCloseTo(Double.valueOf(4.5720), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Margin")).isCloseTo(Double.valueOf(0.0000), Offset.offset(15.0));
+        softAssertions.assertThat(costDetailsPage.getCostSumValue("Piece Part Cost")).isCloseTo(Double.valueOf(40.4449), Offset.offset(15.0));
         costDetailsPage.closePanel();
 
         evaluatePage.openSettings()
-            .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
-            .submit(EvaluatePage.class);
+                .selectDecimalPlaces(DecimalPlaceEnum.FIVE)
+                .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
-        assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.15756%"));
-        assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.40000, 10));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(43.99388, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(51.04324, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(51.04324, 10));
-        assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 1));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(33.87099), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(40.44494), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(40.44494), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(0.00000), Offset.offset(15.0));
 
         evaluatePage.selectDigitalFactory(APRIORI_UNITED_KINGDOM)
-            .costScenario();
+                .costScenario();
 
-        assertThat(evaluatePage.isMaterial("Finish Mass"), equalTo("5.30946kg"));
-        assertThat(evaluatePage.isMaterial("Utilization"), equalTo("81.15756%"));
-        assertThat(evaluatePage.getProcessesResult("Total Cycle Time"), closeTo(109.40000, 10));
-        assertThat(evaluatePage.getCostResults("Material Cost"), closeTo(33.96328, 10));
-        assertThat(evaluatePage.getCostResults("Piece Part Cost"), closeTo(29.01580, 10));
-        assertThat(evaluatePage.getCostResults("Fully Burdened Cost"), closeTo(29.01580, 10));
-        assertThat(evaluatePage.getCostResults("Total Capital Investment"), closeTo(0.00000, 50));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Finish Mass")).isCloseTo(Double.valueOf(5.30946), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getMaterialResult("Utilization")).isCloseTo(Double.valueOf(81.16369), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getProcessesResult("Total Cycle Time")).isCloseTo(Double.valueOf(109.40000), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Material Cost")).isCloseTo(Double.valueOf(21.91453), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Piece Part Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(29.01580), Offset.offset(15.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Total Capital Investment")).isCloseTo(Double.valueOf(00.00000), Offset.offset(15.0));
+
+        softAssertions.assertAll();
     }
 }

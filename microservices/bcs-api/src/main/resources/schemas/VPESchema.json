@@ -30,6 +30,7 @@
                   "batchesPerYear",
                   "description",
                   "location",
+                  "materialCatalogVpeIdentity",
                   "name",
                   "ownerType",
                   "productionLife",
@@ -76,6 +77,9 @@
                     "type": "string"
                   },
                   "location": {
+                    "type": "string"
+                  },
+                  "materialCatalogVpeIdentity": {
                     "type": "string"
                   },
                   "name": {

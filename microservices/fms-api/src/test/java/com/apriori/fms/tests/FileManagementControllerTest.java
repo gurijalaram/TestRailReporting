@@ -45,12 +45,12 @@ public class FileManagementControllerTest extends TestUtil {
     @Test
     @TestRail(testCaseId = {"3939", "3934"})
     @Description("Upload a file for a targetCloudContext with an authorized user")
-    public void upLoadFile() {
+    public void uploadFile() {
         String fileIdentity = FileManagementController.uploadFile(
             userCredentials,
             ProcessGroupEnum.SHEET_METAL,
             "bracket_basic.prt"
-        ).getResponseEntity().getIdentity();
+        ).getIdentity();
 
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK,
             FileManagementController.getFileByIdentity(

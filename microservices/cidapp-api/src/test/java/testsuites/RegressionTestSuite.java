@@ -4,6 +4,10 @@ import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
 import com.evaluate.CostAllCadTests;
+import com.evaluate.GroupCostingTests;
+import com.evaluate.GroupEditTests;
+import com.evaluate.GroupPublishTests;
+import com.evaluate.IncludeAndExcludeTests;
 import com.evaluate.ListOfDigitalFactoryTests;
 import com.evaluate.ListProcessGroupTests;
 import com.evaluate.ReCostScenarioTests;
@@ -23,7 +27,11 @@ import testsuites.suiteinterfaces.SmokeTests;
     ListOfDigitalFactoryTests.class,
     ListProcessGroupTests.class,
     ScenariosTests.class,
-    ReCostScenarioTests.class
+    ReCostScenarioTests.class,
+    IncludeAndExcludeTests.class,
+    GroupCostingTests.class,
+    GroupEditTests.class,
+    GroupPublishTests.class
 })
 public class RegressionTestSuite {
 }

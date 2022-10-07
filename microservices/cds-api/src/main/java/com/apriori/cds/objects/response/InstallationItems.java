@@ -55,6 +55,6 @@ public class InstallationItems {
     private LocalDateTime updatedAt;
     private String updatedBy;
     private String url;
-    private List<Object> applications = null;
+    private List<Application> applications;
     private String apVersion;
 }

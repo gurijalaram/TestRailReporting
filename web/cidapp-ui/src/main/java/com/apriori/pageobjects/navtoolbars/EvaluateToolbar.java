@@ -4,14 +4,13 @@ import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.Color;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -19,15 +18,14 @@ import java.util.List;
  * @author cfrith
  */
 
+@Slf4j
 public class EvaluateToolbar extends ExploreToolbar {
-
-    private static final Logger logger = LoggerFactory.getLogger(EvaluateToolbar.class);
-
-    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
-    private WebElement costButton;
 
     @FindBy(css = ".alert")
     private WebElement costLabel;
+
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
+    private WebElement costButton;
 
     @FindBy(css = ".scenario-state-preview [data-icon='cog']")
     private List<WebElement> cogIcon;
@@ -39,9 +37,8 @@ public class EvaluateToolbar extends ExploreToolbar {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
-        pageUtils.waitForElementToAppear(costButton);
         pageUtils.waitForElementsToNotAppear(cogIcon);
     }
 
@@ -51,10 +48,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return new page object
      */
     public EvaluatePage costScenario() {
-        pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
-        waitForCostLabel(2);
-        return new EvaluatePage(driver);
+        return costScenario(2);
     }
 
     /**
@@ -64,21 +58,45 @@ public class EvaluateToolbar extends ExploreToolbar {
      * @return current page object
      */
     public EvaluatePage costScenario(int timeoutInMinutes) {
-        pageUtils.waitForElementToAppear(costLabel);
-        pageUtils.waitForElementAndClick(costButton);
+        clickCostButton();
         waitForCostLabel(timeoutInMinutes);
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Clicks the cost button
+     *
+     * @return current page object
+     */
+    public EvaluateToolbar clickCostButton() {
+        pageUtils.waitForElementToAppear(costLabel);
+        clickCostButton(EvaluateToolbar.class);
+        return this;
     }
 
     /**
      * Method to check cost label is in correct state
      */
     public void waitForCostLabel(int timeoutInMinutes) {
-        By costingDialog = By.xpath("//h5[.='Cost Scenario']");
+        By costingDialog = By.xpath("//h2[.='Cost Scenario']");
 
         pageUtils.waitForElementToAppear(costingDialog);
         pageUtils.waitForElementsToNotAppear(costingDialog);
         pageUtils.waitForElementsToNotAppear(By.xpath(String.format("//div[.='%s']", NewCostingLabelEnum.COSTING_IN_PROGRESS.getCostingText())), timeoutInMinutes);
+    }
+
+    /**
+     * Method to check cost label is in correct state
+     *
+     * @param costLabel        - the cost label type
+     * @param timeoutInMinutes - time out in minutes
+     * @return - new page object
+     */
+    public EvaluatePage waitForCostLabelNotContain(NewCostingLabelEnum costLabel, int timeoutInMinutes) {
+        By byCostLabel = By.xpath(String.format("//div[.='%s']", costLabel.getCostingText()));
+        pageUtils.waitForElementToAppear(byCostLabel);
+        pageUtils.waitForElementsToNotAppear(byCostLabel, timeoutInMinutes);
+        return new EvaluatePage(driver);
     }
 
     /**
@@ -98,5 +116,17 @@ public class EvaluateToolbar extends ExploreToolbar {
      */
     public String getCostColour() {
         return Color.fromString(pageUtils.waitForElementToAppear(costLabel).getCssValue("background-color")).asHex();
+    }
+
+    /**
+     * Confirms to go ahead with costing with a Yes or No
+     *
+     * @param buttonLabel - "Yes" or "No"
+     * @return - new page object
+     */
+    public EvaluatePage confirmCost(String buttonLabel) {
+        By byButton = By.xpath(String.format("//button[contains(text(),'%s')]", buttonLabel));
+        pageUtils.waitForElementAndClick(byButton);
+        return new EvaluatePage(driver);
     }
 }

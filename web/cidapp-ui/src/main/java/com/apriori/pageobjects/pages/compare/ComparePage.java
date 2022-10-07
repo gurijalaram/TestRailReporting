@@ -33,13 +33,13 @@ public class ComparePage extends CompareToolbar {
     @FindBy(css = "[placeholder='Description']")
     private WebElement descriptionInput;
 
-    @FindBy(css = ".basis-column .apriori-card .card-header")
+    @FindBy(css = ".basis .card-header")
     private WebElement basisColumnHeader;
 
-    @FindBy(css = "[data-rbd-droppable-id='basis-column']")
+    @FindBy(css = ".comparison-basis-column")
     private WebElement basisColumn;
 
-    @FindBy(css = "[data-rbd-droppable-id='basis-column'] .close-button")
+    @FindBy(css = ".basis .card-header .close-button")
     private WebElement deleteBasis;
 
     @FindBy(xpath = "//p[.='Preparing Comparison']")
@@ -50,6 +50,9 @@ public class ComparePage extends CompareToolbar {
 
     @FindBy(css = ".comparison-column.draggable .card-header")
     private List<WebElement> cardHeader;
+
+    @FindBy(css = ".card-header")
+    private List<WebElement> cardHeaders;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -74,7 +77,7 @@ public class ComparePage extends CompareToolbar {
      */
     public boolean isIconDisplayed(String componentName, String scenarioName, StatusIconEnum icon) {
         By iconStatus = By.xpath(String.format("//span[contains(text(),'%s')]/following-sibling::span[.='/ %s']/ancestor::div[@class='apriori-card dark medium-card card']//div[@class='scenario-status-icons']//*[@data-icon='%s']",
-                componentName.toUpperCase().trim(), scenarioName.trim(), icon.getStatusIcon()));
+            componentName.toUpperCase().trim(), scenarioName.trim(), icon.getStatusIcon()));
         return driver.findElement(iconStatus).isDisplayed();
     }
 
@@ -110,6 +113,17 @@ public class ComparePage extends CompareToolbar {
     public ComparePage collapse(String section) {
         expandCollapseSection(section, "arrow-up");
         return this;
+    }
+
+    /**
+     * checks if the section is expanded
+     *
+     * @param section - name of the section
+     * @return - boolean
+     */
+    public boolean isSectionExpanded(String section) {
+        By bySection = By.cssSelector(String.format("[data-rbd-drag-handle-draggable-id='%s'] .arrow-up", section));
+        return pageUtils.isElementDisplayed(bySection);
     }
 
     /**
@@ -199,6 +213,15 @@ public class ComparePage extends CompareToolbar {
      */
     public List<String> getScenariosInComparison() {
         return cardHeader.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets list of scenarios included to comparison
+     *
+     * @return list of scenarios
+     */
+    public List<String> getAllScenariosInComparison() {
+        return cardHeaders.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**

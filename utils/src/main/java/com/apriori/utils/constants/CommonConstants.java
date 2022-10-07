@@ -16,4 +16,5 @@ public class CommonConstants {
 
     public static final Level consoleLogLevel = Level.parse(PropertiesContext.get("global.console_log_level"));
     public static final String schemaBasePath = PropertiesContext.get("global.schema_base_path");
+    public static final String REMOTE_SHARED_FOLDER = "Departments/Engineering/QA/Automation/GoNoGoTests";
 }

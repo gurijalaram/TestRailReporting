@@ -1,17 +1,16 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.pageobjects.pages.login.MatchedPartPage;
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class EditBomPage extends LoadableComponent<EditBomPage> {
+public class EditBomPage extends EagerPageComponent<EditBomPage> {
 
     @FindBy(css = ".modal-footer .disabled")
     private WebElement disabledSaveButton;
@@ -22,9 +21,6 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
     @FindBy(id = "pin-count")
     private WebElement pinCountInput;
 
-    @FindBy(css = ".modal-footer .btn-outline-primary")
-    private WebElement saveButton;
-
     @FindBy(css = ".modal-title .bill-of-materials-type")
     private WebElement pcbaLogo;
 
@@ -34,16 +30,10 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
     @FindBy(id = "manufacturer-part-number")
     private WebElement partNumber;
 
-    private PageUtils pageUtils;
-    private WebDriver driver;
-    private DialogController dialogController;
+    private DialogController dialogController = new DialogController(getDriver());
 
     public EditBomPage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        this.dialogController = new DialogController(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
     }
 
     @Override
@@ -53,7 +43,7 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(pcbaLogo);
+        getPageUtils().waitForElementToAppear(pcbaLogo);
     }
 
     /**
@@ -62,25 +52,37 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
      * @return boolean
      */
     public boolean isSaveButtonEnabled() {
-        return pageUtils.waitForElementToAppear(disabledSaveButton).isEnabled();
+        return getPageUtils().waitForElementToAppear(disabledSaveButton).isEnabled();
     }
 
     /**
-     * Enter the Mount Type
+     * Selects the radio button for Surface Mount and Through Hole
      *
-     * @param testMountTypeData
+     * @param mountType - the mount type to select
      * @return current page object
      */
-    public EditBomPage enterMountType(String testMountTypeData) {
-        mountTypeInput.clear();
-        mountTypeInput.sendKeys(testMountTypeData);
+    public EditBomPage selectMountType(String mountType) {
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[@class='input-radio']//label[text()='%s']", mountType)));
+        return this;
+    }
+
+    /**
+     * Selects the radio button for Other Mount type
+     *
+     * @param mountTypeData - mount type data
+     * @return current page object
+     */
+    public EditBomPage selectOtherMountType(String mountTypeData) {
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@class='input-radio']//label[text()='Other:']"));
+        getPageUtils().clearValueOfElement(mountTypeInput);
+        mountTypeInput.sendKeys(mountTypeData);
         return this;
     }
 
     /**
      * Enter the Pin Count
      *
-     * @param testPinCountData
+     * @param testPinCountData - test pin count data
      * @return current page object
      */
     public EditBomPage enterPinCount(String testPinCountData) {
@@ -92,7 +94,7 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
     /**
      * Enter the Average cost
      *
-     * @param testAverageCostData
+     * @param testAverageCostData - test average cost data
      * @return current page object
      */
     public EditBomPage enterAverageCost(String testAverageCostData) {
@@ -104,7 +106,7 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
     /**
      * Enter the Manufacturer part number
      *
-     * @param testPartNumberData
+     * @param testPartNumberData - test part number data
      * @return current page object
      */
     public EditBomPage enterManufacturerPartNumber(String testPartNumberData) {
@@ -120,7 +122,7 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
      */
     public MatchedPartPage clickSave() {
         dialogController.save();
-        return new MatchedPartPage(driver);
+        return new MatchedPartPage(getDriver());
     }
 
     /**
@@ -130,6 +132,6 @@ public class EditBomPage extends LoadableComponent<EditBomPage> {
      */
     public MatchedPartPage clickCancel() {
         dialogController.cancel();
-        return new MatchedPartPage(driver);
+        return new MatchedPartPage(getDriver());
     }
 }

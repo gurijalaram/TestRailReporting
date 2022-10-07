@@ -5,10 +5,14 @@ import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
+import com.apriori.pageobjects.navtoolbars.MainNavBar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
+import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -18,6 +22,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -31,7 +36,9 @@ public class DTCCastingTests extends TestBase {
     private CidAppLoginPage loginPage;
     private GuidanceIssuesPage guidanceIssuesPage;
     private EvaluatePage evaluatePage;
+    private ExplorePage explorePage;
     private UserCredentials currentUser;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
     private InvestigationPage investigationsPage;
@@ -130,7 +137,6 @@ public class DTCCastingTests extends TestBase {
     @TestRail(testCaseId = {"6375", "6379", "6384", "6386", "6388", "6390"})
     @Description("Min & Max DTC checks for Die Casted Part")
     public void highPressureDieCasting() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
         String componentName = "DTCCastingIssues";
@@ -146,32 +152,34 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface has a draft angle less than the recommended draft angle for this material."));
-        assertThat(guidanceIssuesPage.getGcdCount("Curved Wall"), equalTo(87));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Part of this surface has a draft angle less than the recommended draft angle for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdCount("Curved Wall")).isEqualTo(87);
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Minimum wall thickness is less than the recommended thickness for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Maximum wall thickness is greater than the recommended thickness for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Radius Issue, Minimum Internal Edge Radius", "Sharp Edge", "SharpEdge:39");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal edge radius is less than the recommended internal edge radius for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Minimum Hole Diameter", "Simple Hole", "SimpleHole:13");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Hole diameter is less than the recommended minimum diameter for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole diameter is less than the recommended minimum diameter for this material.");
+
+        softAssertions.assertAll();
     }
 
     /*@Test
@@ -249,10 +257,10 @@ public class DTCCastingTests extends TestBase {
     } */
 
     @Test
+    @Issue("BA-2313")
     @TestRail(testCaseId = {"6385", "6393", "6394", "8333"})
     @Description("MAX. thickness checks for Sand casting (Al. 1016.0mm MAX.)")
     public void sandCastingDTCIssues() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
 
         String componentName = "SandCastIssues";
@@ -273,19 +281,55 @@ public class DTCCastingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue, Maximum Hole Depth", "Multi Step Hole", "MultiStepHole:1");
 
-        SoftAssertions softAssertions = new SoftAssertions();
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
+
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.closePanel()
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
 
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = {"6488"})
+    @Description("Failures/warnings tab - Verify costing failures are highlighted within the Design Guidance details tile Warnings tab with useful error message")
+    public void errorMessagesInDesignGuidanceTab() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .openSettings()
+            .goToToleranceTab()
+            .selectCad()
+            .submit(ExplorePage.class);
+
+        guidanceIssuesPage = explorePage
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum.CASTING_DIE)
+            .costScenario(4)
+            .openDesignGuidance()
+            .selectIssueType("Not Supported GCDs", "Detached Solid");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Multiple bodies exist in the model.  Only the largest body is used and the remainder are ignored.");
+
+        guidanceIssuesPage.selectIssueTypeGcd("Failed GCDs", "Failed to cost", "CurvedWall:100");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).isEqualTo("High Pressure Die Casting is incapable of achieving [Diam Tolerance : 0.002 mm (0.0001 in); best achievable for this feature is 0.1335 mm (0.0053 in)].");
+
+        softAssertions.assertAll();
+    }
+
 }

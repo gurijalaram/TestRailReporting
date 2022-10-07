@@ -15,7 +15,7 @@ import java.util.List;
 @Slf4j
 public class DesignGuidanceController {
 
-    @FindBy(css = ".table-head .checkbox-icon")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement gcdCheckbox;
 
     private WebDriver driver;
@@ -102,7 +102,7 @@ public class DesignGuidanceController {
      * @return current page object
      */
     public DesignGuidanceController deSelectAllGcd() {
-        if (!getCheckboxStatus().equals("square")) {
+        if (getCheckboxStatus().equals("CheckBoxIcon")) {
             pageUtils.waitForElementAndClick(gcdCheckbox);
         }
         return this;
@@ -114,6 +114,6 @@ public class DesignGuidanceController {
      * @return string
      */
     private String getCheckboxStatus() {
-        return pageUtils.waitForElementToAppear(gcdCheckbox.findElement(By.cssSelector("svg"))).getAttribute("data-icon");
+        return pageUtils.waitForElementToAppear(gcdCheckbox.findElement(By.cssSelector("svg"))).getAttribute("data-testid");
     }
 }

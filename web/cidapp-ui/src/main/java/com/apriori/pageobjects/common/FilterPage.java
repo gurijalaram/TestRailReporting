@@ -15,6 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 public class FilterPage extends LoadableComponent<FilterPage> {
@@ -35,14 +37,20 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     private WebElement cancelButton;
     @FindBy(css = "input[name='name']")
     private WebElement nameInput;
-    @FindBy(css = "button [data-icon='plus']")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='plus']")
     private WebElement addButton;
-    @FindBy(css = "button [data-icon='clear']")
+    @FindBy(css = ".query-builder-action-buttons [data-icon='circle-xmark']")
     private WebElement clearButton;
-    @FindBy(css = "qa-searchCriterion[0].delete")
+    @FindBy(id = "qa-searchCriterion[0].delete")
     private WebElement deleteButton;
     @FindBy(css = ".filter-manager [type='submit']")
     private WebElement submitButton;
+    @FindBy(xpath = "//div[contains(@class,'delete-btn-column pl-0 col-1')]")
+    private WebElement deleteCriteriaBtn;
+    @FindBy(xpath = "//button[contains(.,'Clear')]")
+    private WebElement clearAllCriteriaBtn;
+    @FindBy(xpath = "//button[contains(.,'Cancel')]")
+    private WebElement cancelBtn;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -104,6 +112,8 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      * @return current page object
      */
     public FilterPage rename() {
+        WebElement section = pageUtils.waitForElementToAppear(By.xpath("//div[contains(@class,'section pb-3')]"));
+        WebElement renameButton = section.findElement(By.xpath("//button[contains(@class,'ml-2 btn btn-secondary')]"));
         pageUtils.waitForElementAndClick(renameButton);
         return this;
     }
@@ -119,12 +129,34 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = driver.findElement(By.xpath(xpath));
+        return pageUtils.waitForWebElement(element);
+    }
+
+    /**
      * Cancel filter input
      *
      * @return current page object
      */
     public FilterPage cancelInput() {
         pageUtils.waitForElementAndClick(cancelButton);
+        return this;
+    }
+
+    /**
+     * Delete All Criteria By Clicking Clear Button
+     *
+     * @return current page object
+     */
+    public FilterPage deleteAllCriteria() {
+        pageUtils.waitForElementAndClick(clearAllCriteriaBtn);
         return this;
     }
 
@@ -136,7 +168,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
      */
     public FilterPage inputName(String name) {
         pageUtils.waitForElementAndClick(nameInput);
-        nameInput.clear();
+        pageUtils.clearValueOfElement(nameInput);
         nameInput.sendKeys(name);
         return this;
     }
@@ -295,6 +327,16 @@ public class FilterPage extends LoadableComponent<FilterPage> {
     }
 
     /**
+     * clicks on the filter dropdown and read in filters names
+     *
+     * @return list of filers names
+     */
+    public String getAllFilters() {
+        WebElement filterName = pageUtils.waitForElementToAppear(By.id("qa-filter-manager-filter-selector"));
+        return filterName.getText();
+    }
+
+    /**
      * Selects the operation from the dropdown
      *
      * @param operationEnum - operation from the enum
@@ -306,6 +348,22 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         By byOperation = By.xpath(String.format("//div[@id='qa-searchCriterion[%s].operation']//div[.='%s']//div[@id]", index, operationEnum.getOperation()));
         pageUtils.waitForElementAndClick(byOperation);
         return this;
+    }
+
+    /**
+     * Checks and return list of properties in Operation dropdown (in criteria section)
+     *
+     * @return list of available properties in Operation dropdown
+     */
+    public List<String> getListOfOperationsForCriteria(PropertyEnum propertyEnum) {
+        selectProperty(0, propertyEnum);
+        By operationDropdown = By.cssSelector(String.format("[id='qa-searchCriterion[%s].operation']", 0));
+        pageUtils.waitForElementAndClick(operationDropdown);
+        WebElement elementsOperations =
+            pageUtils.waitForElementToAppear(By.xpath("//div[@class = 'apriori-select-menu-list css-1ew0esf']"));
+        String operations = elementsOperations.getText();
+
+        return Arrays.asList(operations.split("\n"));
     }
 
     /**
@@ -330,6 +388,7 @@ public class FilterPage extends LoadableComponent<FilterPage> {
         pageUtils.waitForElementAndClick(submitButton);
         return PageFactory.initElements(driver, klass);
     }
+
 
     /**
      * Select the cancel button

@@ -1,5 +1,6 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static org.junit.Assert.assertEquals;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.pageobjects.common.ModalDialogController;
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -29,7 +31,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
-    @FindBy(css = ".modal-content label")
+    @FindBy(css = ".MuiPaper-root h2")
     private WebElement componentLabel;
 
     @FindBy(css = "input[type='file']")
@@ -47,11 +49,11 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     @FindBy(css = ".form-action-buttons [type='submit']")
     private WebElement submitButton;
 
-    @FindBy(css = "h4")
+    @FindBy(css = ".Toastify__toast-body")
     private WebElement fileInputError;
 
-    @FindBy(css = ".import-cad-file-status-message")
-    private WebElement uploadStatus;
+    @FindBy(xpath = "//div[@role='rowgroup']//div[@data-header-id='name']")
+    private List<WebElement> fileName;
 
     private WebDriver driver;
     private PageUtils pageUtils;
@@ -72,7 +74,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(componentLabel);
+        assertEquals("Import CAD File page was not displayed", "Import CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"));
     }
 
     /**
@@ -99,6 +101,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
             String file = multiUpload.getResourceFile().getName();
 
             enterMultiFilePath(multiUpload.getResourceFile())
+                .waitForUploadToBeDone(file)
                 .inputMultiScenarioName(multiUpload.getScenarioName(), file);
         });
         return this;
@@ -149,8 +152,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @return current page object
      */
     private ImportCadFilePage inputMultiScenarioName(String scenarioName, String file) {
-        String[] component = file.split("\\.");
-        By byMultiFileInput = By.cssSelector(String.format("input[name='scenarioNames.%s%s']", component[0], component[component.length - 1]));
+        By byMultiFileInput = By.xpath(String.format("//input[contains(@name,'%s')]", file));
         pageUtils.waitForElementToAppear(byMultiFileInput);
         pageUtils.setValueOfElement(pageUtils.waitForElementToAppear(byMultiFileInput), scenarioName);
         return this;
@@ -205,7 +207,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      *
      * @return string
      */
-    public String getFileInputError() {
+    public String getFileInputErrorMessage() {
         return pageUtils.waitForElementToAppear(fileInputError).getText();
     }
 
@@ -218,7 +220,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage tick(String option) {
         By byCheckbox = byCheckbox(option);
 
-        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-testid").contains("CheckBoxIcon")) {
             pageUtils.waitForElementAndClick(byCheckbox);
         }
         return this;
@@ -233,14 +235,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage unTick(String option) {
         By byCheckbox = byCheckbox(option);
 
-        if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+        if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-testid").contains("CheckBoxIcon")) {
             pageUtils.waitForElementAndClick(byCheckbox);
         }
         return this;
     }
 
     private By byCheckbox(String option) {
-        return with(By.cssSelector(".checkbox-icon"))
+        return with(By.cssSelector("[data-testid='checkbox']"))
             .near(By.xpath(String.format("//div[.='%s']", option)));
     }
 
@@ -305,14 +307,34 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
      * @param componentNames - the component names
      * @return - the current page object
      */
-    public ImportCadFilePage cadFilesToDelete(List<String> componentNames) {
-        // TODO untick() to be removed once the multi upload drop zone is fixed(CID-407) Ticket number BA-2273
-        unTick("Apply to all");
-
+    public ImportCadFilePage deleteCadFiles(List<String> componentNames) {
         for (String componentName : componentNames) {
             By byComponentName = By.xpath(String.format("//*[text()='%s']/following::div[@data-header-id='delete-icon']", componentName));
             pageUtils.waitForElementAndClick(byComponentName);
         }
         return this;
+    }
+
+    /**
+     * components deleted in the drop zone
+     *
+     * @return String
+     */
+    public List<String> getComponentsInDropZone() {
+        try {
+            pageUtils.waitForElementsToAppear(fileName);
+            return fileName.stream().map(x -> x.getAttribute("textContent").trim()).collect(Collectors.toList());
+        } catch (Exception e) {
+            return Collections.emptyList();
+        }
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 }

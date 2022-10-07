@@ -2,11 +2,11 @@ package com.evaluate;
 
 import static com.apriori.utils.enums.ProcessGroupEnum.PLASTIC_MOLDING;
 import static com.apriori.utils.enums.ProcessGroupEnum.STOCK_MACHINING;
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
@@ -24,6 +24,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -44,6 +45,7 @@ public class NewScenarioNameTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemB;
     private ComponentInfoBuilder cidComponentItemC;
     private ComponentInfoBuilder cidComponentItemD;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public NewScenarioNameTests() {
         super();
@@ -72,47 +74,6 @@ public class NewScenarioNameTests extends TestBase {
         assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testScenarioName2), is(true));
     }
 
-    @Category(IgnoreTests.class)
-    @Test
-    @Ignore("At the moment a new scenario name cannot be created from a public scenario")
-    @TestRail(testCaseId = {"5950", "5951", "5952"})
-    @Description("Test entering a new scenario name shows the correct name on the evaluate page after the scenario is published")
-    public void testPublishEnterNewScenarioName() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.POWDER_METAL;
-
-        String componentName = "partbody_2";
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.WITHOUT_PG, componentName + ".stp");
-        String testScenarioName = generateStringUtil.generateScenarioName();
-        String testNewScenarioName = generateStringUtil.generateScenarioName();
-        currentUser = UserUtil.getUser();
-
-        loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
-
-        evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
-
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
-
-        evaluatePage.selectProcessGroup(processGroupEnum)
-            .openMaterialSelectorTable()
-            .selectMaterial("F-0005")
-            .submit(EvaluatePage.class)
-            .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
-            .clickExplore()
-            .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .clickSearch(componentName)
-            .highlightScenario(componentName, testScenarioName)
-            .createScenario()
-            .enterScenarioName(testNewScenarioName)
-            .submit(EvaluatePage.class);
-
-        assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName), is(true));
-    }
-
     @Test
     @TestRail(testCaseId = {"5953"})
     @Description("Ensure a previously uploaded CAD File of the same name can be uploaded subsequent times with a different scenario name")
@@ -138,8 +99,8 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItemB, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItemB, EvaluatePage.class)
             .uploadComponent(componentName, scenarioB, resourceFile, currentUser);
 
         cidComponentItemD = new EvaluatePage(driver).navigateToScenario(cidComponentItemC)
@@ -149,8 +110,8 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("Steel, Hot Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItemC, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItemC, EvaluatePage.class)
             .uploadComponent(componentName, scenarioC, resourceFile, currentUser);
 
         explorePage = new EvaluatePage(driver).navigateToScenario(cidComponentItemD)
@@ -159,8 +120,8 @@ public class NewScenarioNameTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItemD, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItemD, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -170,8 +131,10 @@ public class NewScenarioNameTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA), equalTo(1));
-        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB), equalTo(1));
-        assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioA)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioB)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getListOfScenarios("MultiUpload", scenarioC)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 }

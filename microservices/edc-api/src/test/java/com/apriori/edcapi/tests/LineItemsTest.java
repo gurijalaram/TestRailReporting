@@ -12,7 +12,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
@@ -27,8 +27,8 @@ public class LineItemsTest extends LineItemsUtil {
     private int quantity = 2;
     private int itemsCount = 9;
 
-    @BeforeClass
-    public static void setUp() {
+    @Before
+    public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
         billOfMaterialsIdentity = postBillOfMaterials(filename).getResponseEntity().getIdentity();
     }
@@ -44,17 +44,17 @@ public class LineItemsTest extends LineItemsUtil {
     @TestRail(testCaseId = "9417")
     @Description("GET List the line items in a bill of materials matching a specified query")
     public void testGetLineItems() {
+        List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);
 
         SoftAssertions softAssertions = new SoftAssertions();
-
-        List<LineItemsResponse> allLineItems = getAllLineItems(billOfMaterialsIdentity);
 
         softAssertions.assertThat(allLineItems.size()).isEqualTo(itemsCount);
         softAssertions.assertThat(allLineItems.get(1).getCustomerPartNumber()).isEqualTo(customerPartNumber);
         softAssertions.assertThat(allLineItems.get(0).getStatus()).isEqualTo(status);
         softAssertions.assertThat(allLineItems.get(0).getLevel()).isEqualTo(level);
         softAssertions.assertThat(allLineItems.get(8).getQuantity()).isEqualTo(quantity);
-        softAssertions.assertThat(allLineItems.get(8).getLineItemsPart().get(0).getIsUserPart()).isEqualTo(false);
+        softAssertions.assertThat(allLineItems.get(8).getParts().get(0).getIsUserPart()).isEqualTo(false);
+
         softAssertions.assertAll();
     }
 }

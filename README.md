@@ -200,10 +200,31 @@ Annotate method that needs testRailID using following format. Tags is optional s
 `@TestRail(testCaseId = {"717"})`
 
 ## How to run tests against local dev env
-When we want to run tests against local env we need to override **env** value `-Denv=localhost` 
 
-If we want to run against Eclipse dev env we also need to change **url** and **ignore ssl check** 
-`-Durl=https://localhost:8543/ -DignoreSslCheck=true`
+If you have both local dev stack and ACS you need to modify user list cause only your user can upload file to FMS.
+
+When we want to run tests against local env we need to override change two files:
+* In `config.yml` change next keys:
+  - set local env by default 
+  ```yaml 
+   env: local
+  ```
+  - Change secret_key to what defined in dev stack in `.env` file as value of `SHARED_SECRET` key  
+  ``` yaml
+  local:
+    secret_key: ABC123DEF456
+  ```
+  - Change token_username and token_email to refer your own user
+  ``` yaml
+  local:
+  ats:
+      token_username: dbondar
+      token_email: dbondar@apriori.com
+  ```
+* In `common-users.csv` set only your user 
+``` csv
+dbondar@apriori.com,YourAuth0IntPassword,admin
+```
 
 ## How to use assertj in your test class
 1. Import the assertj lib `import org.assertj.core.api.SoftAssertions;`

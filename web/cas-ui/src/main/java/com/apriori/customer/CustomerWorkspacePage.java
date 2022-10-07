@@ -5,11 +5,12 @@ import com.apriori.customer.users.UsersPage;
 import com.apriori.customeradmin.CustomerAdminPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.newcustomer.InfrastructurePage;
-import com.apriori.siteLicenses.SitesLicensesPage;
+import com.apriori.security.SecurityPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.RoutingComponent;
+import com.apriori.utils.web.components.SelectComponent;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,10 +33,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     private WebElement usersTabRoot;
     private RoutingComponent usersTab;
 
-    @FindBy(xpath = "//a[.='Sites & Licenses']")
-    private WebElement siteLicenseTabRoot;
-    private RoutingComponent siteLicenseTab;
-
     @FindBy(xpath = "//a[.='Infrastructure']")
     private WebElement infrastructureTabRoot;
     private RoutingComponent infrastructureTab;
@@ -48,8 +45,33 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     private WebElement systemConfigurationTabRoot;
     private RoutingComponent systemConfigurationTab;
 
+    @FindBy(xpath = "//div[@class='access-auth-buttons btn-group']//button[.='Request Access']")
+    private WebElement requestAccessButton;
+
+    @FindBy(xpath = "//div[@class='access-auth-buttons btn-group']//button[.='Revoke Access']")
+    private WebElement revokeAccessButton;
+
     @FindBy(css = ".btn-link")
     private WebElement customersButton;
+
+    @FindBy(css = ".service-account-drop-down")
+    private WebElement serviceAccountsDropDown;
+    private SelectComponent serviceAccountsSelectField;
+
+    @FindBy(css = ".mr-2.btn.btn-secondary")
+    private WebElement requestCancelButton;
+
+    @FindBy(css = "[data-testid='form-action-buttons'] .btn-primary")
+    private WebElement requestOkButton;
+
+    @FindBy(css = ".Toastify__toast.Toastify__toast--error .Toastify__toast-body")
+    private WebElement modalError;
+
+    @FindBy(css = ".Toastify__toast.Toastify__toast--success .Toastify__toast-body")
+    private WebElement successMessage;
+
+    @FindBy(css = ".Toastify__close-button.Toastify__close-button--success")
+    private WebElement closeMessage;
 
     /**
      * Initializes a new instance of this object.
@@ -62,7 +84,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
         // Required Tabs
         profileTab = new RoutingComponent(getDriver(), profileTabRoot);
         usersTab = new RoutingComponent(getDriver(), usersTabRoot);
-        siteLicenseTab = new RoutingComponent(getDriver(), siteLicenseTabRoot);
         infrastructureTab = new RoutingComponent(getDriver(), infrastructureTabRoot);
         systemConfigurationTab = new RoutingComponent(getDriver(), systemConfigurationTabRoot);
 
@@ -99,15 +120,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
      */
     public RoutingComponent getUsersTab() {
         return usersTab;
-    }
-
-    /**
-     * Gets the sites and licenses tab.
-     *
-     * @return The sites and licenses tab.
-     */
-    public RoutingComponent getSiteLicenseTab() {
-        return siteLicenseTab;
     }
 
     /**
@@ -158,16 +170,6 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     }
 
     /**
-     * Go to sites and licenses tab
-     *
-     * @return new page object
-     */
-    public SitesLicensesPage goToSitesLicenses() {
-        siteLicenseTab.navigate();
-        return new SitesLicensesPage(getDriver());
-    }
-
-    /**
      * Go to infrastructure tab
      *
      * @return new page object
@@ -185,6 +187,16 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     public SystemConfigurationPage goToSystemConfiguration() {
         systemConfigurationTab.navigate();
         return new SystemConfigurationPage(getDriver());
+    }
+
+    /**
+     * Go to the security tab
+     *
+     * @return new page object
+     */
+    public SecurityPage goToSecurityPage() {
+        securityTab.navigate();
+        return new SecurityPage(getDriver());
     }
 
     /**
@@ -231,5 +243,112 @@ public class CustomerWorkspacePage extends EagerPageComponent<CustomerWorkspaceP
     public CustomerAdminPage goToCustomersList() {
         getPageUtils().waitForElementAndClick(customersButton);
         return new CustomerAdminPage(getDriver());
+    }
+
+    /**
+     * Clicks on Request access button
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage clickRequestAccessButton() {
+        getPageUtils().waitForElementAndClick(requestAccessButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Revoke access button
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage clickRevokeAccessButton() {
+        getPageUtils().waitForElementAndClick(revokeAccessButton);
+        return this;
+    }
+
+    /**
+     * Selects value in drop down
+     *
+     * @param account name of account
+     * @return this page object
+     */
+    public CustomerWorkspacePage selectServiceAccount(String account) {
+        this.serviceAccountsSelectField = new SelectComponent(getDriver(), serviceAccountsDropDown);
+        getPageUtils().waitForElementToAppear(serviceAccountsDropDown);
+        serviceAccountsSelectField.select(account);
+        return this;
+    }
+
+    /**
+     * Clicks on Cancel button on request access popup
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage clickCancelRequest() {
+        getPageUtils().waitForElementAndClick(requestCancelButton);
+        return this;
+    }
+
+    /**
+     * Clicks on Om button on request access popup
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage clickOkRequestRevokeAccess() {
+        getPageUtils().waitForElementAndClick(requestOkButton);
+        return this;
+    }
+
+    /**
+     * @param button button locator
+     * @return true or false
+     */
+    private boolean isButtonEnabled(WebElement button) {
+        return button != null && button.isEnabled();
+    }
+
+    /**
+     * Can click the revoke button.
+     *
+     * @return Boolean representing can click revoke button
+     */
+    public boolean canRevoke() {
+        return isButtonEnabled(revokeAccessButton);
+    }
+
+    /**
+     * Can click the request button
+     *
+     * @return Boolean representing can click request button
+     */
+    public boolean canRequest() {
+        return isButtonEnabled(requestAccessButton);
+    }
+
+    /**
+     * Gets error message text
+     *
+     * @return string error message
+     */
+    public String getTextErrorMessage() {
+        return getPageUtils().waitForElementToAppear(modalError).getAttribute(("textContent"));
+    }
+
+    /**
+     * Gets success message text
+     *
+     * @return string success message
+     */
+    public String getTextSuccessMessage() {
+        return getPageUtils().waitForElementToAppear(successMessage).getAttribute(("textContent"));
+    }
+
+    /**
+     * Closes modal message
+     *
+     * @return this page object
+     */
+    public CustomerWorkspacePage closeMessage() {
+        closeMessage.click();
+        return this;
     }
 }

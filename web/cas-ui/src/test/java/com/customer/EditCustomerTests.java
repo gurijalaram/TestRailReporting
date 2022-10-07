@@ -6,6 +6,7 @@ import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.newcustomer.CustomerProfilePage;
 import com.apriori.testsuites.categories.SmokeTest;
+import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
@@ -34,6 +35,7 @@ public class EditCustomerTests extends TestBase {
     private CdsTestUtil cdsTestUtil;
     private List<String> created;
     private Map<String, String> valueMap;
+    private String cloudReference = new GenerateStringUtil().generateCloudReference();
 
     @Before
     public void setup() {
@@ -43,7 +45,7 @@ public class EditCustomerTests extends TestBase {
         valueMap.put("description", "Set Description Test");
         valueMap.put("customerType", "Cloud");
         valueMap.put("salesforceId", "200000000000002");
-        valueMap.put("cloudReference", "200000000000002");
+        valueMap.put("cloudReference", cloudReference);
         valueMap.put("emailDomains", "testCustomer.com");
         valueMap.put("maxCadFileRetentionDays", "1");
         valueMap.put("maxCadFileSize", "10");
@@ -57,6 +59,7 @@ public class EditCustomerTests extends TestBase {
         DateFormat format = new SimpleDateFormat("0yyyyMMddHHmmss");
         format.setTimeZone(TimeZone.getTimeZone("UTC"));
         String salesforceId = format.format(new Date());
+        String cloudRef = new GenerateStringUtil().generateCloudReference();
         String customerName = String.format("QA Automation %s", salesforceId);
 
         customerProfilePage
@@ -65,15 +68,15 @@ public class EditCustomerTests extends TestBase {
             .enterEmailDomains("apriori.com")
             .enterCustomerName(customerName)
             .selectCustomerTypeOnPremiseAndCloud()
-            .enterCloudRef(salesforceId)
+            .enterCloudRef(cloudRef)
             .clickSaveButton();
 
-        created.add(customerViewPage.findExistingCustomerIdentity());
+        created.add(customerViewPage.findCustomerIdentity());
     }
 
     @After
     public void teardown() {
-        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, identity));
+        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
     }
 
     @FunctionalInterface

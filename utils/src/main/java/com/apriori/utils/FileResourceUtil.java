@@ -2,30 +2,39 @@ package com.apriori.utils;
 
 import com.apriori.utils.enums.ProcessGroupEnum;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
+import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.ProfileCredentialsProvider;
 import software.amazon.awssdk.core.ResponseInputStream;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.core.waiters.WaiterResponse;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectRequest;
 import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.ListObjectsRequest;
-import software.amazon.awssdk.services.s3.model.S3Object;
+import software.amazon.awssdk.services.s3.model.HeadObjectRequest;
+import software.amazon.awssdk.services.s3.model.HeadObjectResponse;
+import software.amazon.awssdk.services.s3.model.PutObjectRequest;
+import software.amazon.awssdk.services.s3.waiters.S3Waiter;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.util.ArrayList;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.List;
 
+@Slf4j
 public class FileResourceUtil {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileResourceUtil.class);
     private static final int TEMP_DIR_ATTEMPTS = 50;
     private static final String S3_BUCKET_NAME = "qa-test-parts";
     private static final Region S3_REGION_NAME = Region.US_EAST_1;
@@ -49,22 +58,33 @@ public class FileResourceUtil {
     public static File getLocalResourceFile(String resourceFileName) {
         try {
             return new File(
-                    URLDecoder.decode(
-                            ClassLoader.getSystemResource(resourceFileName).getFile(),
-                            "UTF-8"
-                    )
+                URLDecoder.decode(
+                    ClassLoader.getSystemResource(resourceFileName).getFile(),
+                    "UTF-8"
+                )
             );
         } catch (UnsupportedEncodingException e) {
-            logger.error(String.format("Resource file: %s was not found", resourceFileName));
+            log.error(String.format("Resource file: %s was not found", resourceFileName));
             throw new IllegalArgumentException();
         }
+    }
+
+    @SneakyThrows
+    public static File getS3FileAndSaveWithUniqueName(String s3ComponentName, ProcessGroupEnum processGroup) {
+        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(s3ComponentName);
+        File tempFile = getCloudFile(processGroup, s3ComponentName);
+        File newFile = new File(tempFile.getParent(), uniqueComponentName);
+        Files.move(tempFile.toPath(), newFile.toPath());
+
+        return newFile;
     }
 
     /**
      * Get file from cad workspace in S3 bucket
      * The file will be copied inti local temp directory
+     *
      * @param processGroup - the file process group
-     * @param fileName - the file name
+     * @param fileName     - the file name
      * @return
      */
     public static File getCloudCadFile(final ProcessGroupEnum processGroup, final String fileName) {
@@ -74,32 +94,122 @@ public class FileResourceUtil {
     /**
      * Get file from common workspace in S3 bucket
      * The file will be copied inti local temp directory
+     *
      * @param processGroup - the file process group
-     * @param fileName - the file name
+     * @param fileName     - the file name
      * @return
      */
     public static File getCloudFile(final ProcessGroupEnum processGroup, final String fileName) {
         return copyFileFromCloudToTempFolder("common", processGroup, fileName);
     }
 
+    /**
+     * Get file from common workspace in S3 bucket
+     * The file will be copied inti local temp directory
+     *
+     * @param workspaceName - subfolder in bucket
+     * @return
+     */
+    public static File getCloudFile(String workspaceName, String fileName) {
+
+        return copyFileFromCloudToTempFolder(workspaceName, fileName);
+    }
+
+    public static void uploadCloudFile(final String workspaceName, File fileToUpload) {
+        String fileName = fileToUpload.getName();
+        final String cloudFilePath = String.format("%s/%s", workspaceName, fileName);
+
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+            .bucket(S3_BUCKET_NAME)
+            .key(cloudFilePath)
+            .acl("public-read")
+            .build();
+
+        getS3ClientInstance().putObject(putObjectRequest, RequestBody.fromFile(fileToUpload));
+        S3Waiter s3Waiter = getS3ClientInstance().waiter();
+        HeadObjectRequest waitRequest = HeadObjectRequest.builder()
+            .bucket(S3_BUCKET_NAME)
+            .key(cloudFilePath)
+            .build();
+        WaiterResponse<HeadObjectResponse> waiterResponse = s3Waiter.waitUntilObjectExists(waitRequest);
+
+        waiterResponse.matched().response().ifPresent(System.out::println);
+        log.info(String.format("File Uploaded to AWS S3 Bucket  %s/%s", S3_BUCKET_NAME, cloudFilePath));
+    }
+
+    /**
+     * Delete the file from AWS S3 bucket
+     *
+     * @param workspaceName - subfolder under s3 bucket
+     * @param fileName      name of the file to delete
+     */
+    public static void deleteCloudFile(String workspaceName, final String fileName) {
+        final String cloudFilePath = String.format("%s/%s", workspaceName, fileName);
+        final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, fileName);
+
+        getS3ClientInstance().deleteObject(DeleteObjectRequest.builder()
+            .bucket(S3_BUCKET_NAME)
+            .key(cloudFilePath).build());
+        log.info(String.format("File deleted from AWS S3 Bucket  %s/%s", S3_BUCKET_NAME, cloudFilePath));
+
+    }
+
+    /**
+     * Connect to AWS S3 client
+     *
+     * @return S3Client instance
+     */
+    private static S3Client getS3ClientInstance() {
+        S3Client s3Client = S3Client.builder()
+            .region(S3_REGION_NAME)
+            .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
+                ? EnvironmentVariableCredentialsProvider.create()
+                : ProfileCredentialsProvider.create()
+            )
+            .build();
+        return s3Client;
+    }
+
+    /**
+     * connect to AWS S3 bucket and copy the file from S3 bucket to local temp directory
+     *
+     * @param workspaceName - subfolder name under S3 bucket
+     * @param processGroup  - subforder name under workspace name
+     * @param fileName      - name of the file
+     * @return File
+     */
     private static File copyFileFromCloudToTempFolder(final String workspaceName, final ProcessGroupEnum processGroup, final String fileName) {
         final String cloudFilePath = String.format("%s/%s/%s", workspaceName, processGroup.getProcessGroup(), fileName);
         final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, processGroup.getProcessGroup());
-
-        S3Client s3Client = S3Client.builder()
-                .region(S3_REGION_NAME)
-                .credentialsProvider(System.getenv("AWS_ACCESS_KEY_ID") != null
-                    ? EnvironmentVariableCredentialsProvider.create()
-                    : ProfileCredentialsProvider.create()
-                )
-            .build();
 
         GetObjectRequest getObjectRequest = GetObjectRequest.builder()
             .bucket(S3_BUCKET_NAME)
             .key(cloudFilePath)
             .build();
 
-        ResponseInputStream<GetObjectResponse> object = s3Client.getObject(getObjectRequest);
+        ResponseInputStream<GetObjectResponse> object = getS3ClientInstance().getObject(getObjectRequest);
+
+        return copyIntoTempFile(object, localTempFolderPath, fileName);
+    }
+
+    /**
+     * connect to AWS S3 bucket and copy the file from S3 bucket to local temp directory
+     * using folder and file name as parameters
+     *
+     * @param workspaceName - subfolder under S3 bucket
+     * @param fileName      - name of the file to copy
+     * @return File
+     */
+    private static File copyFileFromCloudToTempFolder(String workspaceName, String fileName) {
+        final String cloudFilePath = String.format("%s/%s", workspaceName, fileName);
+        final String localTempFolderPath = String.format("cloud/s3/%s/%s", workspaceName, fileName);
+
+        GetObjectRequest getObjectRequest = GetObjectRequest.builder()
+            .bucket(S3_BUCKET_NAME)
+            .key(cloudFilePath)
+            .build();
+
+        ResponseInputStream<GetObjectResponse> object = getS3ClientInstance().getObject(getObjectRequest);
 
         return copyIntoTempFile(object, localTempFolderPath, fileName);
     }
@@ -175,7 +285,7 @@ public class FileResourceUtil {
 
     }
 
-    private static File createTempDir(String path) {
+    public static File createTempDir(String path) {
 
         File baseDir = new File(System.getProperty("java.io.tmpdir"));
         String baseName = System.currentTimeMillis() + "-";
@@ -194,13 +304,55 @@ public class FileResourceUtil {
             }
         }
         throw new IllegalStateException(
-                "Failed to create directory within "
-                        + TEMP_DIR_ATTEMPTS
-                        + " attempts (tried "
-                        + baseName
-                        + "0 to "
-                        + baseName
-                        + (TEMP_DIR_ATTEMPTS - 1)
-                        + ')');
+            "Failed to create directory within "
+                + TEMP_DIR_ATTEMPTS
+                + " attempts (tried "
+                + baseName
+                + "0 to "
+                + baseName
+                + (TEMP_DIR_ATTEMPTS - 1)
+                + ')');
+    }
+
+    /**
+     * Read CSV file from AWS S3 bucket
+     *
+     * @param workspaceName - Name of the folder under S3 bucket
+     * @param filename      - file to be read
+     * @return List of Strings
+     */
+    public static List<String[]> getCloudFileContent(String workspaceName, String filename) {
+        File file = getCloudFile(workspaceName, filename);
+        List<String[]> fileData = null;
+        try {
+            FileReader fileReader = new FileReader(file);
+            CSVReader csvReader = new CSVReaderBuilder(fileReader)
+                .withSkipLines(1)
+                .build();
+            fileData = csvReader.readAll();
+            fileReader.close();
+            csvReader.close();
+        } catch (Exception e) {
+            log.error(String.format("FILE NOT FOUND ::: %s", e.getMessage()));
+        }
+        return fileData;
+    }
+
+    /**
+     * Convert JSON file into string
+     *
+     * @param file
+     * @return String
+     * @throws Exception
+     */
+    public static String convertFileIntoString(String file) {
+        // declare a variable in which we store the JSON data as a string and return it to the main() method
+        String jsonFileContent = null;
+        try {
+            jsonFileContent = new String(Files.readAllBytes(Paths.get(file)));
+        } catch (Exception e) {
+            log.warn(e.getMessage());
+        }
+        return jsonFileContent;
     }
 }

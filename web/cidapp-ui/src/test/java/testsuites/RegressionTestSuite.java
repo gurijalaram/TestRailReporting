@@ -15,7 +15,12 @@ import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
 import com.evaluate.assemblies.EditAssembliesTest;
+import com.evaluate.assemblies.FiltersTests;
+import com.evaluate.assemblies.GroupCostingTests;
+import com.evaluate.assemblies.GroupEditAssemblies;
+import com.evaluate.assemblies.IncludeAndExcludeNestedAssemblyTests;
 import com.evaluate.assemblies.IncludeAndExcludeTests;
+import com.evaluate.assemblies.LargeGroupAssemblyTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -29,6 +34,7 @@ import com.evaluate.materialutilization.MaterialPMITests;
 import com.evaluate.materialutilization.MaterialStockTests;
 import com.evaluate.materialutilization.PartNestingTests;
 import com.explore.ActionsTests;
+import com.explore.FilterCriteriaTests;
 import com.explore.PreviewPanelTests;
 import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
@@ -48,6 +54,7 @@ import testsuites.suiteinterface.SmokeTests;
 @Categories.ExcludeCategory({SmokeTests.class, SanityTests.class, IgnoreTests.class})
 @Suite.SuiteClasses({
     EditAssembliesTest.class,
+    GroupCostingTests.class,
     CostAllCadTests.class,
     CostScenarioTests.class,
     NewScenarioNameTests.class,
@@ -80,6 +87,11 @@ import testsuites.suiteinterface.SmokeTests;
     PartNestingTests.class,
     PsoEditTests.class,
     IncludeAndExcludeTests.class,
+    GroupEditAssemblies.class,
+    LargeGroupAssemblyTests.class,
+    IncludeAndExcludeNestedAssemblyTests.class,
+    FiltersTests.class,
+    FilterCriteriaTests.class
 })
 public class RegressionTestSuite {
 }

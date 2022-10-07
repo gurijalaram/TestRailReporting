@@ -17,6 +17,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -29,6 +31,7 @@ public class PartNestingTests extends TestBase {
     private MaterialProcessPage materialProcessPage;
     private PartNestingPage partNestingPage;
     private UserCredentials currentUser;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
 
@@ -54,9 +57,11 @@ public class PartNestingTests extends TestBase {
             .openMaterialProcess()
             .openPartNestingTab();
 
-        assertThat(partNestingPage.getNestingInfo("Selected Sheet"), is("4.00mm x 1,250.00mm x 2,500.00mm"));
-        assertThat(partNestingPage.getNestingInfo("Blank Size"), is("470.78mm x 400.00mm"));
-        assertThat(partNestingPage.getNestingInfo("Parts Per Sheet"), is("15"));
+        softAssertions.assertThat(partNestingPage.getNestingInfo("Selected Sheet")).isEqualTo("4.00mm x 1,250.00mm x 2,500.00mm");
+        softAssertions.assertThat(partNestingPage.getNestingInfo("Blank Size")).isEqualTo("470.78mm x 400.00mm");
+        softAssertions.assertThat(partNestingPage.getNestingInfo("Parts Per Sheet")).isEqualTo("15");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -85,7 +90,7 @@ public class PartNestingTests extends TestBase {
             .selectUtilizationModeDropDown("Rectangular Nesting")
             .closePanel();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
     }
 
     @Test
@@ -109,10 +114,11 @@ public class PartNestingTests extends TestBase {
             .selectUtilizationModeDropDown("True-Part Shape Nesting")
             .closePanel();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
     }
 
     @Test
+    @Issue("Cost-280")
     @TestRail(testCaseId = {"7699"})
     @Description("Select Machine Default method of Part Nesting and cost")
     public void partNestingTabMachineDefaultNesting() {
@@ -137,7 +143,7 @@ public class PartNestingTests extends TestBase {
             .selectUtilizationModeDropDown("Machine Default")
             .closePanel();
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_UP_TO_DATE), is(true));
+        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE), is(true));
     }
 
     @Test

@@ -8,7 +8,9 @@ include(':utils')
 include(':apibase')
 include(':db')
 
-final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api", "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api", "reporting-api"]
+final String[] microservicesModules = ["acs-api", "ats-api", "cas-api", "cds-api", "cidapp-api", "cir-api", "css-api",
+                                       "bcs-api", "edc-api", "fms-api", "nts-api", "vds-api", "sds-api", "cis-api",
+                                       "cic-api","qds-api"]
 final String[] webModules = ["auth-ui", "cas-ui", "cia-ui", "ciconnect-ui", "cidapp-ui", "cir-ui", "edc-ui", "cis-ui"]
 final String[] intModules = ["integration"]
 
@@ -48,7 +50,8 @@ if (configuration != null) {
     include(':microservices:vds-api')
     include(':microservices:sds-api')
     include(':microservices:cis-api')
-    include(':microservices:reporting-api')
+    include(':microservices:cic-api')
+    include(':microservices:qds-api')
 
     //Web
     include ':web:auth-ui'
@@ -68,3 +71,4 @@ void includeProject(final String includePath, final String filePath) {
     include(includePath)
     project(includePath).projectDir = file(filePath)
 }
+

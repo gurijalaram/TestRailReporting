@@ -1,7 +1,7 @@
 package com.apriori.bcs.controller;
 
 import com.apriori.bcs.entity.request.PatchCostingPreferenceRequest;
-import com.apriori.bcs.entity.response.CostingPreferences;
+import com.apriori.bcs.entity.response.UserPreferences;
 import com.apriori.bcs.enums.BCSAPIEnum;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -9,6 +9,7 @@ import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
 
 import java.util.Random;
 
@@ -22,14 +23,15 @@ public class CustomerResources {
      *
      * @return response  - Object of responseWrapper
      */
-    public static ResponseWrapper<CostingPreferences> patchCostingPreferences() {
+    public static ResponseWrapper<UserPreferences> patchCostingPreferences() {
         PatchCostingPreferenceRequest request =
             JsonManager.deserializeJsonFromInputStream(
-                FileResourceUtil.getResourceFileStream("schemas/requests/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
+                FileResourceUtil.getResourceFileStream("schemas/testdata/UpdateCostingPreferences.json"), PatchCostingPreferenceRequest.class);
         request.setCadToleranceReplacement(100.00);
         request.setMinCadToleranceThreshold(new Random().nextDouble());
         RequestEntity requestEntity = RequestEntityUtil
-            .init(BCSAPIEnum.CUSTOMER_COSTING_PREFERENCES, CostingPreferences.class)
+            .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .body(request);
         return HTTPRequest.build(requestEntity).patch();
     }
@@ -40,10 +42,23 @@ public class CustomerResources {
      *
      * @return response  - Object of responseWrapper
      */
-    public static ResponseWrapper<CostingPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
+    public static ResponseWrapper<UserPreferences> patchCostingPreferences(PatchCostingPreferenceRequest patchCostingPreferenceRequest) {
         RequestEntity requestEntity = RequestEntityUtil
-            .init(BCSAPIEnum.CUSTOMER_COSTING_PREFERENCES, CostingPreferences.class)
+            .init(BCSAPIEnum.CUSTOMER_USER_PREFERENCES, UserPreferences.class)
+            .inlineVariables(PropertiesContext.get("${env}.customer_identity"))
             .body(patchCostingPreferenceRequest);
         return HTTPRequest.build(requestEntity).patch();
+    }
+
+    /**
+     * This overloaded method is to create customer request entity.
+     *
+     * @param newPartRequest - Deserialized NewPartRequest POJO.
+     * @param batchIdentity  - Batch ID
+     * @param klass          - Response class
+     * @return RequestEntity - Batch Part complete RequestEntity
+     */
+    public static <T> RequestEntity getCustomerRequestEntity(BCSAPIEnum endPoint, Class<T> klass) {
+        return RequestEntityUtil.init(endPoint, klass).inlineVariables(PropertiesContext.get("${env}.customer_identity"));
     }
 }

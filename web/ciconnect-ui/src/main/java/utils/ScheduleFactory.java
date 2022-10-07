@@ -1,6 +1,6 @@
 package utils;
 
-import com.apriori.objects.WorkflowSchedule;
+import com.apriori.pages.workflows.schedule.details.WorkflowSchedule;
 
 import java.util.ArrayList;
 

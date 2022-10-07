@@ -12,7 +12,6 @@
         "identity",
         "createdAt",
         "createdBy",
-        "updatedAt",
         "customerIdentity",
         "userProfile",
         "email",
@@ -23,7 +22,8 @@
         "userType"
       ],
       "optional": [
-        "customProperties"
+        "customProperties",
+        "updatedAt"
       ],
       "properties": {
         "isSystemUser": {
@@ -87,14 +87,13 @@
           "type": "object"
         },
         "customAttributes": {
-          "type": "object",
-          "optional": [
-            "function",
-            "workspaceId"
-          ]
+          "type": "object"
         },
         "resourcesAllowedToCreate": {
           "type": "array"
+        },
+        "updatedBy": {
+          "type": "string"
         },
         "userType": {
           "type": "string"

@@ -1,5 +1,7 @@
 package com.apriori.utils.enums;
 
+import java.util.EnumSet;
+
 public enum ScenarioStateEnum {
     PROCESSING("PROCESSING"),
     PROCESSING_FAILED("PROCESSING_FAILED"),
@@ -19,4 +21,7 @@ public enum ScenarioStateEnum {
     public String getState() {
         return this.state;
     }
+
+    public static EnumSet<ScenarioStateEnum> transientState = EnumSet.of(PROCESSING, COSTING);
+    public static EnumSet<ScenarioStateEnum> terminalState = EnumSet.of(PROCESSING_FAILED, NOT_COSTED, COST_COMPLETE, COST_INCOMPLETE, COSTING_FAILED, COST_UP_TO_DATE);
 }

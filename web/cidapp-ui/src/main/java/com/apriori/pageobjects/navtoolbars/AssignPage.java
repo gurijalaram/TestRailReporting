@@ -52,7 +52,7 @@ public class AssignPage extends LoadableComponent<AssignPage> {
      * @return current page object
      */
     public AssignPage selectAssignee(String assignee) {
-        pageUtils.typeAheadSelect(assigneeDropdown, "modal-body", assignee);
+        pageUtils.typeAheadSelect(assigneeDropdown, "qa-assign-scenario-select-field", assignee);
         return this;
     }
 

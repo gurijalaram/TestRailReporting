@@ -2,7 +2,12 @@ package com.apriori.pageobjects.common;
 
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
@@ -37,7 +42,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".apriori-table .table-head")
     private WebElement tableHeaders;
 
-    @FindBy(css = ".table-head .checkbox-icon")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement selectAllCheckBox;
 
     private PageUtils pageUtils;
@@ -123,17 +128,29 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
-     * Expands the assembly
+     * Expands the subassembly
      *
      * @param componentName - component name
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ScenarioTableController expandAssembly(String componentName, String scenarioName) {
+    public ScenarioTableController expandSubassembly(String componentName, String scenarioName) {
         moveToScenario(componentName, scenarioName);
-        By byAssembly = with(By.cssSelector(".expand-button-wrapper"))
-            .toLeftOf(byComponentName(componentName, scenarioName));
+        By byAssembly = with(By.cssSelector("[data-icon='circle-chevron-down']"))
+            .toLeftOf(By.xpath(String.format("//span[text()='%s']/ancestor::div[@class='cell-text']", componentName.toUpperCase().trim())));
         pageUtils.waitForElementAndClick(byAssembly);
+        return this;
+    }
+
+    /**
+     * Collapses the subassembly
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController collapseSubassembly(String componentName, String scenarioName) {
+        expandSubassembly(componentName, scenarioName);
         return this;
     }
 
@@ -159,6 +176,30 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return pageUtils.waitForElementsToAppear(byScenarioName(componentName, scenarioName)).size();
     }
 
+    /**
+     * Checks if the component is present on the page by scenario state
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return size of the element as int
+     */
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        String stateIcon;
+        switch (scenarioState) {
+            case PROCESSING_FAILED:
+                stateIcon = "circle-xmark";
+                break;
+            case NOT_COSTED:
+                stateIcon = "circle-minus";
+                break;
+            case COST_COMPLETE:
+                stateIcon = "check";
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value: " + scenarioState);
+        }
+        return pageUtils.isElementDisplayed(byScenarioNameWithStatus(componentName, scenarioName, stateIcon));
+    }
 
     /**
      * Gets the info in the row
@@ -220,6 +261,33 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
+            .getAttribute("data-icon");
+    }
+
+    /**
+     * Get the State of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon
+     */
+    public Double getScenarioFullyBurdenedCost(String componentName, String scenarioName) {
+        String cost = getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("div[data-header-id='analysisOfScenario.fullyBurdenedCost'] span"))
+            .getText();
+        return Double.parseDouble(cost.replaceAll("[^0-9?!\\.]", ""));
+    }
+
+    /**
      * Gets the scenario 'webelement' locator
      *
      * @param componentName - name of the part
@@ -238,7 +306,23 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return by
      */
     private By byScenarioName(String componentName, String scenarioName) {
-        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[contains(text(),'%s')]", scenarioName.trim(), componentName.toUpperCase().trim()));
+        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%s']", scenarioName.trim(), componentName.toUpperCase().trim()));
+        return byScenario;
+    }
+
+    /**
+     * Get the scenario with the state status
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param stateIcon     - state icon
+     * @return - by
+     */
+    private By byScenarioNameWithStatus(String componentName, String scenarioName, String stateIcon) {
+        By byScenario = By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//a[@class]//span[text()='%s']/ancestor::div[@role='row']/child::div[@data-header-id='scenarioState']//*[@data-icon='%s']",
+            scenarioName.trim(),
+            componentName.toUpperCase().trim(),
+            stateIcon));
         return byScenario;
     }
 
@@ -250,7 +334,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement getByParentLocator(String componentName, String scenarioName) {
-        return driver.findElement(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim())));
+        return pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/parent::div//span[contains(text(),'%s')]/ancestor::div[@role='row']", scenarioName.trim(), componentName.toUpperCase().trim())));
     }
 
     /**
@@ -288,6 +372,22 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ScenarioTableController shiftHighlightScenario(String componentName, String scenarioName) {
+        Actions shiftHighlight = new Actions(driver);
+        shiftHighlight.sendKeys(Keys.LEFT_SHIFT)
+            .click(pageUtils.waitForElementToAppear(byComponentName(componentName, scenarioName)))
+            .build()
+            .perform();
+        return this;
+    }
+
+    /**
      * Multi-select scenario
      * This method takes any number of arguments as string. A combination of component and scenario name needs to passed in the argument eg. {"PISTON, Initial", "Television, AutoScenario101"}
      *
@@ -309,7 +409,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @param scenarioName  - scenario name
      * @return current page object
      */
-    public ScenarioTableController selectScenario(String componentName, String scenarioName) {
+    public ScenarioTableController clickScenarioCheckbox(String componentName, String scenarioName) {
         findScenarioCheckbox(componentName, scenarioName).click();
         return this;
     }
@@ -322,7 +422,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//div[@class='checkbox-icon']",
+        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//span[@data-testid='checkbox']",
             componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
@@ -370,7 +470,33 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return string
      */
     public String getCellColour(String componentName, String scenarioName) {
-        return Color.fromString(driver.findElement(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
+        return Color.fromString(pageUtils.waitForElementToAppear(By.xpath(String.format("//div[.='%s']/ancestor::div[@role='row']//span[contains(text(),'%s')]/ancestor::div[@role='row']",
             scenarioName.trim(), componentName.toUpperCase().trim()))).getCssValue("background-color")).asHex();
+    }
+
+    /**
+     * Checks component is in a required state
+     *
+     * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state to check for
+     * @return current page object
+     */
+    public ScenarioTableController checkComponentState(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        new ScenariosUtil().getScenarioRepresentation(componentInfo, scenarioState);
+        return this;
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
+     * @param userCredentials - the user credentials
+     * @return current page object
+     */
+    public ScenarioTableController getComponentQueryCssParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+        new CssComponent().getCssComponentQueryParams(componentName, scenarioName, userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
+        return this;
     }
 }

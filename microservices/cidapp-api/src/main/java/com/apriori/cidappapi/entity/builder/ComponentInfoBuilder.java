@@ -41,4 +41,8 @@ public class ComponentInfoBuilder {
     private ScenarioItem scenarioItem;
     private List<ScenarioItem> scenarioItems;
     private PostComponentResponse component;
+    private String assignedTo;
+    private String status;
+    @Builder.Default
+    private ComponentInfoBuilderSettings settings = ComponentInfoBuilderSettings.builder().build();
 }

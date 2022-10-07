@@ -3,6 +3,7 @@ package com.apriori.bcs.entity.response;
 import com.apriori.database.dto.BCSPartBenchmarkingDTO;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
+import com.apriori.utils.reader.file.part.PartData;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -37,6 +38,20 @@ public class Part {
     private String message;
 
 
+    /**
+     * Add metrics to existing PartData object
+     * @param partData
+     */
+    public void convertToBCSPartBenchData(PartData partData) {
+        partData.setStartTime(this.createdAt);
+        partData.setIdentity(this.getIdentity());
+        partData.setPartName(this.getPartName());
+    }
+
+    /**
+     * Add metrics and return new PartData object
+     * @return BCSPartBenchmarkingDTO
+     */
     public BCSPartBenchmarkingDTO convertToBCSPartBenchData() {
         return BCSPartBenchmarkingDTO.builder()
             .startTime(this.createdAt)

@@ -8,8 +8,11 @@ def browser
 def customer
 def testSuite
 def global_users_csv_file
+def default_aws_region
 def folder
 def addlJavaOpts
+def number_of_parts
+def parts_csv_file
 
 pipeline {
 /*
@@ -17,8 +20,8 @@ Configure the following parameters on your Jenkins jobs directly.  You only need
 This should reduce the need for multiple jenkinsfiles
 Those marked with a * are required or the job will not run
     parameters {
-        * choice(name: 'MODULE_TYPE', choices: ['web', 'microservices'], description: 'What module type to run?')
-        * choice(name: 'MODULE', choices: ['edc-ui', 'cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui'], description: 'What target module to run?')
+        * choice(name: 'MODULE_TYPE', choices: ['web', 'microservices', 'integrate'], description: 'What module type to run?')
+        * choice(name: 'MODULE', choices: ['edc-ui', 'cid-ui', 'apitests', 'ciconnect-ui', 'cas-ui', 'cir-ui', 'cia-ui', 'cidapp-ui', 'integration'], description: 'What target module to run?')
         * choice(name: 'TARGET_ENV', choices: ['qa-21-1', 'qa-20-1', 'int-core'], description: 'What is the target environment?')
         * choice(name: 'TEST_MODE', choices: ['GRID', 'LOCAL', 'QA'], description: 'What is target test mode?')
 
@@ -66,6 +69,9 @@ Those marked with a * are required or the job will not run
                     else if (!folder && "${MODULE}".contains("-api")) {
                         folder = "microservices"
                     }
+                    else {
+                          folder = "integrate"
+                    }
 
                     url = params.TARGET_URL
                     if (url && url != "none") {
@@ -99,6 +105,21 @@ Those marked with a * are required or the job will not run
                     customer = params.CUSTOMER
                     if (customer && customer != "none") {
                        javaOpts = javaOpts + " -Dcustomer=${params.CUSTOMER}"
+                    }
+
+                    default_aws_region = params.REGION
+                    if (default_aws_region && default_aws_region != "none") {
+                       javaOpts = javaOpts + " -Ddefault_aws_region=${params.REGION}"
+                    }
+
+                    number_of_parts = params.NUMBER_OF_PARTS
+                    if (number_of_parts && number_of_parts != "none") {
+                       javaOpts = javaOpts + " -Dnumber_of_parts=${params.NUMBER_OF_PARTS}"
+                    }
+
+                    parts_csv_file = params.PARTS_CSV_FILE
+                    if (parts_csv_file && parts_csv_file != "none") {
+                       javaOpts = javaOpts + " -Dparts_csv_file=${params.PARTS_CSV_FILE}"
                     }
 
                     addlJavaOpts = params.JAVAOPTS

@@ -18,17 +18,23 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Schema(location = "UserSchema.json")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @Builder
 @JsonRootName("response")
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private String identity;
     private String createdBy;
-    private String userType;
+    private String updatedBy;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime createdAt;
+
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    private LocalDateTime updatedAt;
     private UserProfile userProfile;
     private String email;
     private String username;
@@ -36,12 +42,8 @@ public class User {
     private List<UserSite> sites;
     private CustomAttributes customAttributes;
     private String customerIdentity;
-    private String updatedBy;
+    private String userType;
     private Boolean mfaRequired;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime createdAt;
-    @JsonSerialize(using = ToStringSerializer.class)
-    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
-    private LocalDateTime updatedAt;
+    private String mfaAuthenticator;
+    private List<String> roles;
 }

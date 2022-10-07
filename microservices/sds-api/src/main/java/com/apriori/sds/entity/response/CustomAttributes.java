@@ -1,5 +1,6 @@
 package com.apriori.sds.entity.response;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,8 +19,6 @@ import java.util.List;
 public class CustomAttributes {
     @JsonProperty("StringPredefDefault_1")
     private List<String> stringPredefDefault1;
-    @JsonProperty("UDARegion")
-    private String udaRegion;
     @JsonProperty("UserListMulti")
     private List<String> userListMulti;
     @JsonProperty("UserList")
