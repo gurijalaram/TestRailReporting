@@ -3,7 +3,7 @@ package com.apriori.utils.authusercontext;
 import com.apriori.utils.enums.AuthUserContextEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
+import com.apriori.utils.http.utils.QueryParams;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
@@ -24,7 +24,7 @@ public class AuthUserContextUtil {
      */
     public String getAuthUserContext(String email) {
         RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
-            .formParams(new FormParams().use("email[EQ]", email));
+            .queryParams(new QueryParams().use("email[EQ]", email));
 
         ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();
 
@@ -43,5 +43,20 @@ public class AuthUserContextUtil {
 
         //Repackage the object into a string format
         return new String(encodedUserIdBytes);
+    }
+
+
+    /**
+     * Get Autorization user Identity
+     * @param email
+     * @return user Identity
+     */
+    public String getAuthUserIdentity(String email) {
+        RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
+            .queryParams(new QueryParams().use("email[EQ]", email));
+
+        ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();
+
+        return userResponse.getResponseEntity().getItems().get(0).getIdentity();
     }
 }

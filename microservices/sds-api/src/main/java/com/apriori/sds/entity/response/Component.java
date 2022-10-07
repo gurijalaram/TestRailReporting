@@ -23,6 +23,8 @@ public class Component {
     private String filename;
     private String identity;
     private String componentName;
+    private Boolean isJtComponent;
+    private Boolean isStepComponent;
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;

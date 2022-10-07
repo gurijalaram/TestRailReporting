@@ -21,6 +21,9 @@ public class ScenarioManifest {
     private String scenarioIdentity;
     private String scenarioName;
     private String scenarioState;
+    private String scenarioPublished;
     private String totalSubComponents;
     private String scenarioType;
+    private Integer depth;
+    private Boolean excluded;
 }

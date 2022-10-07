@@ -6,6 +6,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.acs.entity.enums.workorders.CidWorkorderApiEnum;
 import com.apriori.acs.entity.enums.workorders.WorkorderStatusEnum;
+import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.request.workorders.cost.createcostworkorder.CostOrderInputs;
 import com.apriori.acs.entity.request.workorders.cost.createcostworkorder.CostOrderScenario;
 import com.apriori.acs.entity.request.workorders.cost.createcostworkorder.CostOrderScenarioIteration;
@@ -15,8 +16,6 @@ import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionI
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoScenarioKey;
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoVpe;
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishInputs;
-import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishScenarioIterationKey;
-import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishScenarioKey;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.cost.iterations.CostIteration;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioInputs;
@@ -27,6 +26,7 @@ import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllI
 import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
 import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
+import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesSubComponent;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
 import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
 import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataInputs;
@@ -44,21 +44,20 @@ import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadata
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
-import com.apriori.acs.entity.response.workorders.upload.FileResponse;
+import com.apriori.acs.entity.response.workorders.upload.Assembly;
+import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
-import com.apriori.apibase.services.cid.objects.request.NewPartRequest;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
-import com.apriori.apibase.utils.APIAuthentication;
-import com.apriori.utils.FileResourceUtil;
+import com.apriori.fms.controller.FileManagementController;
+import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.authorization.OldAuthorizationUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
-import com.apriori.utils.http.utils.FormParams;
-import com.apriori.utils.http.utils.MultiPartFiles;
 import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.reader.file.user.UserUtil;
 
@@ -66,9 +65,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.net.UrlEscapers;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -78,13 +76,12 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class FileUploadResources {
 
-    private static final Logger logger = LoggerFactory.getLogger(FileUploadResources.class);
     private static final long WAIT_TIME = 180;
 
-    private static final HashMap<String, String> token = new APIAuthentication()
-        .initAuthorizationHeaderNoContent(UserUtil.getUser().getEmail());
+    private static final String token = new OldAuthorizationUtil().getTokenAsString();
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
@@ -93,6 +90,7 @@ public class FileUploadResources {
     private final ArrayList<LoadCadMetadataOutputs> componentMetadataOutputs = new ArrayList<>();
 
     private FileUploadOutputs currentFileUploadOutputs;
+    private Assembly currentAssembly;
 
     private String currentWorkorderId;
 
@@ -103,14 +101,14 @@ public class FileUploadResources {
      * @param processGroup - process group of file
      * @return FileResponse - response to use in next call
      */
-    public FileResponse initialisePartUpload(String fileName, String processGroup) {
+    public FileResponse initializePartUpload(String fileName, String processGroup) {
         return initializeFileUpload(fileName, processGroup);
     }
 
     /**
      * Upload part, suppress 500 error (retry file upload three times)
      *
-     * @param fileResponse response from file upload initialise
+     * @param fileResponse response from file upload initialize
      * @param scenarioName scenario name to use
      * @return FileUploadOutputs instance
      */
@@ -134,9 +132,37 @@ public class FileUploadResources {
     }
 
     /**
+     * Create file upload workorder for assembly, inc subcomponents
+     *
+     * @param assembly - Assembly object to use in request
+     * @return FileUploadOutputs instance - response from API
+     */
+    public FileUploadOutputs createFileUploadWorkorderAssemblySuppressError(Assembly assembly) {
+        List<AssemblyComponent> assemblyComponentsList = assembly.getSubComponents().isEmpty() ? null : assembly.getSubComponents();
+
+        String fileUploadWorkorderId = createFileUploadWorkorder(WorkorderCommands.LOAD_CAD_FILE.getWorkorderCommand(),
+            FileUploadInputs.builder()
+                .keepFreeBodies(false)
+                .freeBodiesPreserveCad(false)
+                .freeBodiesIgnoreMissingComponents(true)
+                .scenarioName(assembly.getScenarioName())
+                .fileKey(assembly.getFileKey())
+                .fileName(assembly.getFileName())
+                .subComponents(assemblyComponentsList)
+                .build(),
+            true
+        );
+        submitWorkorder(fileUploadWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(fileUploadWorkorderId),
+            FileUploadOutputs.class
+        );
+    }
+
+    /**
      * Upload part, expose 500 error (only one file upload attempt)
      *
-     * @param fileResponse response from file upload initialise
+     * @param fileResponse response from file upload initialize
      * @param scenarioName scenario name to use
      * @return FileUploadOutputs instance
      */
@@ -173,7 +199,6 @@ public class FileUploadResources {
                 .freeBodiesIgnoreMissingComponents(true)
                 .fileMetadataIdentity(fileResponse.getIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
-                .fileName(fileResponse.getFilename())
                 .build(),
             true
         );
@@ -198,7 +223,6 @@ public class FileUploadResources {
                 .freeBodiesIgnoreMissingComponents(true)
                 .fileMetadataIdentity(fileResponse.getIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
-                .fileName(fileResponse.getFilename())
                 .build(),
             false
         );
@@ -248,11 +272,11 @@ public class FileUploadResources {
 
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
-        List<GenerateAssemblyImagesInputs> subComponentsList = new ArrayList<>();
+        List<GenerateAssemblyImagesSubComponent> subComponentsList = new ArrayList<>();
 
         for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
             subComponentsList.add(
-                GenerateAssemblyImagesInputs.builder()
+                GenerateAssemblyImagesSubComponent.builder()
                     .componentIdentity(generateStringUtil.getRandomString())
                     .scenarioIdentity(generateStringUtil.getRandomString())
                     .cadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
@@ -314,18 +338,83 @@ public class FileUploadResources {
     }
 
     /**
+     * Cost uploaded part or assembly
+     *
+     * @param productionInfoInputs - production info inputs
+     * @param fileUploadOutputs    - output from file upload
+     * @param processGroup         - process group
+     * @param includeSubComponents - to include sub components or not
+     * @return CostOrderStatusOutputs instance
+     */
+    public CostOrderStatusOutputs costAssemblyOrPart(Object productionInfoInputs, FileUploadOutputs fileUploadOutputs, String processGroup, boolean includeSubComponents) {
+        int inputSetId = initializeCostScenario(
+            productionInfoInputs,
+            fileUploadOutputs.getScenarioIterationKey().getScenarioKey(),
+            processGroup
+        );
+
+        CostOrderInputs inputs = CostOrderInputs.builder()
+            .keepFreeBodies(false)
+            .freeBodiesPreserveCad(false)
+            .freeBodiesIgnoreMissingComponents(true)
+            .inputSetId(inputSetId)
+            .scenarioIterationKey(
+                setCostOrderScenarioIteration(
+                    fileUploadOutputs.getScenarioIterationKey().getScenarioKey()))
+            //.subComponents(getCurrentAssembly().getSubComponents())
+            .build();
+
+        if (includeSubComponents) {
+            inputs.setSubComponents(getCurrentAssembly().getSubComponents());
+        }
+
+        String costWorkorderId = createWorkorder(
+            WorkorderCommands.COSTING.getWorkorderCommand(),
+            inputs,
+            false
+        );
+        submitWorkorder(costWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(costWorkorderId),
+            CostOrderStatusOutputs.class
+        );
+    }
+
+    /**
      * Publish part
      *
      * @param costOutputs - outputs from cost
      * @return PublishResultOutputs - outputs from publish
      */
     public PublishResultOutputs publishPart(CostOrderStatusOutputs costOutputs) {
+        return publishPartCore(createScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()));
+    }
+
+    public PublishResultOutputs publishAssembly(CostOrderStatusOutputs costOutputs, List<ScenarioIterationKey> scenarioIterationKey) {
+        List<PublishResultOutputs> componentPublishOutputs = new ArrayList<>();
+        for (ScenarioIterationKey scenarioIterationKeyItem : scenarioIterationKey) {
+            componentPublishOutputs.add(publishPartCore(scenarioIterationKeyItem));
+        }
+
+        List<AssemblyComponent> assemblyComponents = new ArrayList<>();
+        for (PublishResultOutputs publishResultOutput : componentPublishOutputs) {
+            assemblyComponents.add(
+                AssemblyComponent.builder()
+                    .scenarioIterationKey(publishResultOutput.getScenarioIterationKey())
+                    .ignored(false)
+                    .build()
+            );
+        }
+
         String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
             PublishInputs.builder()
                 .comments("Comments go here...")
                 .description("Description goes here...")
                 .scenarioIterationKey(
-                    setPublishScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
+                    createScenarioIterationKey(costOutputs.getScenarioIterationKey().getScenarioKey()))
+                .subComponents(assemblyComponents)
+                .overwrite(true)
+                .lock(false)
                 .build(),
             false
         );
@@ -442,27 +531,6 @@ public class FileUploadResources {
     }
 
     /**
-     * Initializes file upload
-     *
-     * @param fileName     - the filename
-     * @param processGroup - the process group
-     * @return FileResponse
-     */
-    private FileResponse initializeFileUpload(String fileName, String processGroup) {
-        setupHeaders("multipart/form-data");
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.INITIALISE_FILE_UPLOAD, FileResponse.class)
-            .headers(headers)
-            .multiPartFiles(new MultiPartFiles().use("data",
-                FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(processGroup), fileName)))
-            .formParams(new FormParams().use("filename", fileName));
-
-        assertThat(HTTPRequest.build(requestEntity).post().getStatusCode(), is(equalTo(201)));
-        return (FileResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
-    }
-
-    /**
      * Gets Admin Info
      *
      * @param publishScenarioKey - Scenario Key from publish action
@@ -472,7 +540,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_ADMIN_INFO, GetAdminInfoResponse.class)
+            .init(CidWorkorderApiEnum.ADMIN_INFO, GetAdminInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 publishScenarioKey.getWorkspaceId().toString(),
@@ -493,7 +561,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_IMAGE_INFO, GetImageInfoResponse.class)
+            .init(CidWorkorderApiEnum.IMAGE_INFO, GetImageInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -515,50 +583,11 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_CAD_METADATA, GetCadMetadataResponse.class)
+            .init(CidWorkorderApiEnum.CAD_METADATA, GetCadMetadataResponse.class)
             .headers(headers)
             .inlineVariables(fileMetadataIdentity);
 
         return (GetCadMetadataResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
-    }
-
-    /**
-     * Creates file upload workorder (with ignore HTTP 500 error capability)
-     *
-     * @param commandType    String
-     * @param inputs         Object
-     * @param ignore500Error Boolean
-     * @return String file upload workorder id
-     */
-    private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
-        setupHeaders("application/json");
-
-        RequestEntity requestEntity;
-        if (ignore500Error) {
-            requestEntity = RequestEntityUtil
-                .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
-                .headers(headers)
-                .body(new WorkorderRequest()
-                    .setCommand(new WorkorderCommand(
-                        commandType,
-                        inputs))
-                );
-            int counter = 0;
-            while (HTTPRequest.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
-                counter++;
-            }
-        }
-
-        requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
-            .headers(headers)
-            .body(new WorkorderRequest()
-                .setCommand(new WorkorderCommand(
-                    commandType,
-                    inputs))
-            );
-
-        return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
     }
 
     /**
@@ -600,23 +629,6 @@ public class FileUploadResources {
     }
 
     /**
-     * Checks if workorder processing has successfully completed
-     *
-     * @param workorderId - workorder id
-     * @return Object
-     */
-    private Object getWorkorderDetails(String workorderId) {
-        setupHeaders("application/json");
-
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_WORKORDER_DETAILS, WorkorderDetailsResponse.class)
-            .headers(headers)
-            .inlineVariables(workorderId);
-
-        return HTTPRequest.build(requestEntity).get().getResponseEntity();
-    }
-
-    /**
      * Gets image by image id
      *
      * @param imageId - id to send
@@ -626,7 +638,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_IMAGES, null)
+            .init(CidWorkorderApiEnum.IMAGES, null)
             .headers(headers)
             .inlineVariables(imageId);
 
@@ -672,15 +684,6 @@ public class FileUploadResources {
     }
 
     /**
-     * Sets Current FileUploadOutput as Global Variable
-     *
-     * @param fileUploadOutputs - FileUploadOutputs to set
-     */
-    public void setCurrentFileUploadOutputs(FileUploadOutputs fileUploadOutputs) {
-        this.currentFileUploadOutputs = fileUploadOutputs;
-    }
-
-    /**
      * Get Current FileUploadOutputs
      *
      * @return FileUploadOutputs instance currently set
@@ -690,15 +693,138 @@ public class FileUploadResources {
     }
 
     /**
-     * Sets Publish Scenario Iteration Key
+     * Sets Current FileUploadOutput as Global Variable
+     *
+     * @param fileUploadOutputs - FileUploadOutputs to set
+     */
+    public void setCurrentFileUploadOutputs(FileUploadOutputs fileUploadOutputs) {
+        this.currentFileUploadOutputs = fileUploadOutputs;
+    }
+
+    /**
+     * Gets current Assembly
+     *
+     * @return Assembly instance
+     */
+    public Assembly getCurrentAssembly() {
+        return currentAssembly;
+    }
+
+    /**
+     * Sets current Assembly as a global variable
+     *
+     * @param currentAssembly Assembly instance
+     */
+    public void setCurrentAssembly(Assembly currentAssembly) {
+        this.currentAssembly = currentAssembly;
+    }
+
+    /**
+     * Creates file upload workorder (with ignore HTTP 500 error capability)
+     *
+     * @param commandType    String
+     * @param inputs         Object
+     * @param ignore500Error Boolean
+     * @return String file upload workorder id
+     */
+    private String createFileUploadWorkorder(String commandType, Object inputs, Boolean ignore500Error) {
+        setupHeaders("application/json");
+
+        RequestEntity requestEntity;
+        if (ignore500Error) {
+            requestEntity = RequestEntityUtil
+                .init(CidWorkorderApiEnum.CREATE_WORKORDER, null)
+                .headers(headers)
+                .body(new WorkorderRequest()
+                    .setCommand(new WorkorderCommand(
+                        commandType,
+                        inputs))
+                );
+            int counter = 0;
+            while (HTTPRequest.build(requestEntity).post().getStatusCode() == 500 && counter < 2) {
+                counter++;
+            }
+        }
+
+        requestEntity = RequestEntityUtil
+            .init(CidWorkorderApiEnum.CREATE_WORKORDER, CreateWorkorderResponse.class)
+            .headers(headers)
+            .body(new WorkorderRequest()
+                .setCommand(new WorkorderCommand(
+                    commandType,
+                    inputs))
+            );
+
+        return jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id");
+    }
+
+    /**
+     * Checks if workorder processing has successfully completed
+     *
+     * @param workorderId - workorder id
+     * @return Object
+     */
+    private Object getWorkorderDetails(String workorderId) {
+        setupHeaders("application/json");
+
+        final RequestEntity requestEntity = RequestEntityUtil
+            .init(CidWorkorderApiEnum.WORKORDER_DETAILS, WorkorderDetailsResponse.class)
+            .headers(headers)
+            .inlineVariables(workorderId);
+
+        return HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
+     * Initializes file upload
+     *
+     * @param fileName     - the filename
+     * @param processGroup - the process group
+     * @return FileResponse
+     */
+    private FileResponse initializeFileUpload(String fileName, String processGroup) {
+        return FileManagementController.uploadFile(
+            UserUtil.getUser(),
+            ProcessGroupEnum.fromString(processGroup),
+            fileName
+        );
+    }
+
+    /**
+     * Core publish part code
+     *
+     * @param scenarioIterationKey - scenario iteration key to be used in api call
+     * @return PublishResultOutputs instance
+     */
+    private PublishResultOutputs publishPartCore(ScenarioIterationKey scenarioIterationKey) {
+        String createPublishWorkorderId = createWorkorder(WorkorderCommands.PUBLISH.getWorkorderCommand(),
+            PublishInputs.builder()
+                .comments("Comments go here...")
+                .description("Description goes here...")
+                .scenarioIterationKey(
+                    createScenarioIterationKey(scenarioIterationKey.getScenarioKey()))
+                .overwrite(true)
+                .lock(false)
+                .build(),
+            false
+        );
+        submitWorkorder(createPublishWorkorderId);
+        return objectMapper.convertValue(
+            checkGetWorkorderDetails(createPublishWorkorderId),
+            PublishResultOutputs.class
+        );
+    }
+
+    /**
+     * Creates and Returns Scenario Iteration Key
      *
      * @param scenarioKey - scenario key
      * @return PublishScenarioIterationKey
      */
-    private PublishScenarioIterationKey setPublishScenarioIterationKey(ScenarioKey scenarioKey) {
-        return PublishScenarioIterationKey.builder()
+    private ScenarioIterationKey createScenarioIterationKey(ScenarioKey scenarioKey) {
+        return ScenarioIterationKey.builder()
             .iteration(getLatestIteration(scenarioKey))
-            .scenarioKey(PublishScenarioKey.builder()
+            .scenarioKey(ScenarioKey.builder()
                 .masterName(scenarioKey.getMasterName())
                 .stateName(scenarioKey.getStateName())
                 .typeName(scenarioKey.getTypeName())
@@ -774,7 +900,7 @@ public class FileUploadResources {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.GET_LATEST_ITERATION, CostIteration.class)
+            .init(CidWorkorderApiEnum.LATEST_ITERATION, CostIteration.class)
             .headers(headers)
             .inlineVariables(
                 scenarioKey.getWorkspaceId().toString(),
@@ -799,7 +925,7 @@ public class FileUploadResources {
         try {
             TimeUnit.SECONDS.sleep(3);
         } catch (InterruptedException e) {
-            logger.error(e.getMessage());
+            log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
 
@@ -816,7 +942,7 @@ public class FileUploadResources {
             try {
                 TimeUnit.SECONDS.sleep(1);
             } catch (InterruptedException e) {
-                logger.error(e.getMessage());
+                log.error(e.getMessage());
                 Thread.currentThread().interrupt();
             }
 
@@ -859,58 +985,54 @@ public class FileUploadResources {
         String stateName = scenarioKey.getStateName();
         String masterName = scenarioKey.getMasterName();
 
-        return new ProductionInfo()
-            .setScenarioKey(new ProductionInfoScenario()
-                .setWorkspaceId(workspaceId)
-                .setTypeName(typeName)
-                .setStateName(stateName)
-                .setMasterName(masterName))
-            .setCompType(newPartRequest.getCompType())
-            .setInitialized(false)
-            .setAvailablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
-
-            .setProcessGroupName(processGroup)
-            .setPgEnabled(true)
-
-            .setVpeBean(new ProductionInfoVpe()
-                .setScenarioKey(new ProductionInfoScenarioKey()
-                    .setWorkspaceId(workspaceId)
-                    .setTypeName(typeName)
-                    .setStateName(stateName)
-                    .setMasterName(masterName))
-
-                .setPrimaryPgName(processGroup)
-                .setPrimaryVpeName(newPartRequest.getVpeName())
-                .setAutoSelectedSecondaryVpes(null)
-                .setUsePrimaryAsDefault(true)
-                .setInitialized(false)
-
-                .setMaterialCatalogKeyData(new MaterialCatalogKeyData().setFirst(newPartRequest.getVpeName())
-                    .setSecond(newPartRequest.getVpeName())))
-
-            .setSupportsMaterials(true)
-            .setMaterialBean(new ProductionInfoMaterial().setInitialized(false)
-                .setMaterialMode(newPartRequest.getMaterialMode())
-                .setIsUserMaterialNameValid(false)
-                .setIsCadMaterialNameValid(false))
-
-            .setAnnualVolume(4400)
-            .setAnnualVolumeOverridden(true)
-            .setProductionLife(4)
-            .setProductionLifeOverridden(false)
-            .setBatchSizeOverridden(null)
-            .setComputedBatchSize(458)
-            .setBatchSizeOverridden(false)
-            .setComponentsPerProduct(1)
-            .setManuallyCosted(false)
-            .setAvailableCurrencyCodes(Arrays.asList(newPartRequest.getCurrencyCode()))
-            .setManualCurrencyCode(newPartRequest.getCurrencyCode())
-            .setMachiningMode(newPartRequest.getMachiningMode())
-            .setHasTargetCost(false)
-            .setHasTargetFinishMass(null)
-            .setHasTargetFinishMass(false)
-            .setCadModelLoaded(true)
-            .setThicknessVisible(true);
+        return ProductionInfo.builder()
+            .scenarioKey(ProductionInfoScenario.builder()
+                .workspaceId(workspaceId)
+                .typeName(typeName)
+                .stateName(stateName)
+                .masterName(masterName).build())
+            .compType(newPartRequest.getCompType())
+            .initialized(false)
+            .availablePgNames(Arrays.asList(newPartRequest.getAvailablePg()))
+            .processGroupName(processGroup)
+            .pgEnabled(true)
+            .vpeBean(ProductionInfoVpe.builder()
+                .scenarioKey(ProductionInfoScenarioKey.builder()
+                    .workspaceId(workspaceId)
+                    .typeName(typeName)
+                    .stateName(stateName)
+                    .masterName(masterName).build())
+                .primaryPgName(processGroup)
+                .primaryVpeName(newPartRequest.getVpeName())
+                .autoSelectedSecondaryVpes(null)
+                .usePrimaryAsDefault(true)
+                .initialized(false)
+                .materialCatalogKeyData(
+                    MaterialCatalogKeyData.builder()
+                        .first(newPartRequest.getVpeName())
+                        .second(newPartRequest.getVpeName()).build()).build())
+            .supportsMaterials(true)
+            .materialBean(ProductionInfoMaterial.builder()
+                .initialized(false)
+                .materialMode(newPartRequest.getMaterialMode())
+                .isUserMaterialNameValid(false)
+                .isCadMaterialNameValid(false).build())
+            .annualVolume(4400)
+            .annualVolumeOverridden(true)
+            .productionLife(4)
+            .productionLifeOverridden(false)
+            .batchSizeOverridden(null)
+            .computedBatchSize(458)
+            .batchSizeOverridden(false)
+            .componentsPerProduct(1)
+            .manuallyCosted(false)
+            .availableCurrencyCodes(Arrays.asList(newPartRequest.getCurrencyCode()))
+            .manualCurrencyCode(newPartRequest.getCurrencyCode())
+            .machiningMode(newPartRequest.getMachiningMode())
+            .hasTargetCost(false)
+            .hasTargetFinishMass(false)
+            .cadModelLoaded(true)
+            .thicknessVisible(true).build();
     }
 
     /**
@@ -925,7 +1047,7 @@ public class FileUploadResources {
         try {
             node = new ObjectMapper().readTree(jsonProperties);
         } catch (JsonProcessingException e) {
-            logger.debug(e.getMessage());
+            log.debug(e.getMessage());
             throw new NullPointerException("Not able to read JsonNode");
         }
         return node.findPath(path).asText();
@@ -942,9 +1064,6 @@ public class FileUploadResources {
         headers.put("Accept", "*/*");
         headers.put("apriori.tenantgroup", defaultString);
         headers.put("apriori.tenant", defaultString);
-        Object[] tokenArray = token.keySet().toArray();
-        for (Object key : tokenArray) {
-            headers.put(key.toString(), token.get(key));
-        }
+        headers.put("Authorization", "Bearer " + token);
     }
 }

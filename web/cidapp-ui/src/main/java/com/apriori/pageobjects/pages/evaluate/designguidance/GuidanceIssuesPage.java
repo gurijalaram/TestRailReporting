@@ -100,18 +100,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
     }
 
     /**
-     * Selects issue
-     *
-     * @param issueDropdown - the issue dropdown
-     */
-    private void selectIssue(String issueDropdown) {
-        String[] issues = issueDropdown.split(",");
-
-        Arrays.stream(issues).map(x -> pageUtils.waitForElementToAppear(driver.findElement(By.xpath(String.format("//div[.='%s']/..//div[@class='expand-button-wrapper']//*[local-name()='svg']", x.trim())))))
-            .forEach(x -> pageUtils.scrollWithJavaScript(x, true).click());
-    }
-
-    /**
      * Selects the issue type
      *
      * @param issueType - the issue type
@@ -121,6 +109,19 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         By byIssueType = designGuidanceController.getBy(issueType);
         pageUtils.waitForElementAndClick(byIssueType);
         return this;
+    }
+
+    /**
+     * Selects issue
+     *
+     * @param issueDropdown - the issue dropdown
+     */
+    private void selectIssue(String issueDropdown) {
+        String[] issues = issueDropdown.split(",");
+
+        Arrays.stream(issues).map(issue -> pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@role='cell'][.='%s']", issue.trim())))
+                .findElement(By.cssSelector("[data-icon='circle-chevron-down']")))
+            .forEach(dropdown -> pageUtils.scrollWithJavaScript(dropdown, true).click());
     }
 
     /**

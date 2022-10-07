@@ -3,11 +3,12 @@ package com.apriori.pageobjects.navtoolbars;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.pages.compare.ComparePage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.UpdateCadFilePage;
-import com.apriori.pageobjects.pages.explore.EditScenarioStatusPage;
+import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.utils.PageUtils;
@@ -15,6 +16,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.properties.PropertiesContext;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
+import com.utils.MultiUpload;
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -42,9 +44,6 @@ public class ExploreToolbar extends MainNavBar {
 
     @FindBy(css = "[id='qa-sub-header-import-component']")
     private WebElement cadButton;
-
-    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
-    private WebElement publishButton;
 
     @FindBy(css = "[id='qa-sub-header-revert-button']")
     private WebElement revertButton;
@@ -82,6 +81,12 @@ public class ExploreToolbar extends MainNavBar {
     @FindBy(id = "qa-action-bar-action-update-cad-file")
     private WebElement cadFileButton;
 
+    @FindBy(css = "[id='qa-sub-header-publish-button'] button")
+    private WebElement publishButton;
+
+    @FindBy(css = "[id='qa-sub-header-cost-button'] button")
+    private WebElement costButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
 
@@ -93,6 +98,17 @@ public class ExploreToolbar extends MainNavBar {
         PageFactory.initElements(driver, this);
         pageUtils.waitForElementToAppear(newButton);
         pageUtils.waitForElementToAppear(deleteButton);
+        pageUtils.waitForElementToAppear(costButton);
+    }
+
+    /**
+     * Clicks the cost button
+     *
+     * @return current page object
+     */
+    public <T> T clickCostButton(Class<T> klass) {
+        pageUtils.waitForElementAndClick(costButton);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -114,13 +130,42 @@ public class ExploreToolbar extends MainNavBar {
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSS(
-                ComponentInfoBuilder.builder()
-                        .componentName(componentName)
-                        .scenarioName(scenarioName)
-                        .resourceFile(resourceFile)
-                        .user(userCredentials)
-                        .build());
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(userCredentials)
+                .build());
         return navigateToScenario(component);
+    }
+
+    /**
+     * Checks a component has been deleted
+     *
+     * @param component - the component object
+     * @return new page object
+     */
+    public ExplorePage checkComponentDelete(ComponentInfoBuilder component) {
+        new ScenariosUtil().getDelete(component.getComponentIdentity(), component.getScenarioIdentity(), component.getUser());
+        return new ExplorePage(driver);
+    }
+
+    /**
+     * Opens the uploaded component when it is in a ready state
+     *
+     * @param componentName -the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   - the current user
+     * @return - new page object
+     */
+    public EvaluatePage openComponent(String componentName, String scenarioName, UserCredentials currentUser) {
+        List<ScenarioItem> itemResponses = new ComponentsUtil().getUnCostedComponent(
+            componentName,
+            scenarioName,
+            currentUser);
+
+        ScenarioItem assemblyComponent = itemResponses.stream().filter(item -> item.getComponentName().equalsIgnoreCase(componentName)).findFirst().get();
+        return navigateToScenario(assemblyComponent);
     }
 
     /**
@@ -144,13 +189,13 @@ public class ExploreToolbar extends MainNavBar {
                                                      UserCredentials currentUser) {
 
         ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadAndPublishAssembly(
-                subComponentNames,
-                componentExtension,
-                processGroupEnum,
-                assemblyName,
-                assemblyExtension,
-                scenarioName,
-                currentUser);
+            subComponentNames,
+            componentExtension,
+            processGroupEnum,
+            assemblyName,
+            assemblyExtension,
+            scenarioName,
+            currentUser);
 
         return navigateToScenario(myAssembly);
     }
@@ -170,28 +215,39 @@ public class ExploreToolbar extends MainNavBar {
      * @param currentUser              - the current user
      * @return - a new page object
      */
-    public EvaluatePage uploadCostPublishAndOpenAssembly(String assemblyName,
-                                                         String assemblyExtension,
-                                                         ProcessGroupEnum assemblyProcessGroup,
-                                                         List<String> subComponentNames,
-                                                         String subComponentExtension,
-                                                         ProcessGroupEnum subComponentProcessGroup,
-                                                         String scenarioName,
-                                                         String mode,
-                                                         String material,
-                                                         UserCredentials currentUser) {
+    public EvaluatePage uploadCostPublishAndOpenAssemblySubcomponents(String assemblyName,
+                                                                      String assemblyExtension,
+                                                                      ProcessGroupEnum assemblyProcessGroup,
+                                                                      List<String> subComponentNames,
+                                                                      String subComponentExtension,
+                                                                      ProcessGroupEnum subComponentProcessGroup,
+                                                                      String scenarioName,
+                                                                      String mode,
+                                                                      String material,
+                                                                      UserCredentials currentUser) {
 
-        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadCostPublishScenario(
-                assemblyName,
-                assemblyExtension,
-                assemblyProcessGroup,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                currentUser);
 
-        return navigateToScenario(myAssembly);
+        final AssemblyUtils assemblyUtils = new AssemblyUtils();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        assemblyUtils.publishAssembly(componentAssembly);
+
+        return navigateToScenario(componentAssembly);
     }
 
     /**
@@ -205,19 +261,27 @@ public class ExploreToolbar extends MainNavBar {
      */
     public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
         return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
-                .componentName(componentName)
-                .scenarioName(scenarioName)
-                .resourceFile(resourceFile)
-                .user(userCredentials)
-                .build());
+            .componentName(componentName)
+            .scenarioName(scenarioName)
+            .resourceFile(resourceFile)
+            .user(userCredentials)
+            .build());
     }
 
+    /**
+     * Upload multi-components via api
+     *
+     * @param resourceFiles - the resource files
+     * @param scenarioName  - the scenario name
+     * @param currentUser   - the user credentials
+     * @return response object
+     */
     public ComponentInfoBuilder uploadMultiComponents(List<File> resourceFiles, String scenarioName, UserCredentials currentUser) {
         return new ComponentsUtil().postMultiComponentsQueryCss(ComponentInfoBuilder.builder()
-                .resourceFiles(resourceFiles)
-                .scenarioName(scenarioName)
-                .user(currentUser)
-                .build());
+            .resourceFiles(resourceFiles)
+            .scenarioName(scenarioName)
+            .user(currentUser)
+            .build());
     }
 
     /**
@@ -274,38 +338,29 @@ public class ExploreToolbar extends MainNavBar {
      */
     public <T> T uploadComponentAndCancel(String scenarioName, File filePath, Class<T> className) {
         return importCadFile()
-                .inputComponentDetails(scenarioName, filePath)
-                .cancel(className);
+            .inputComponentDetails(scenarioName, filePath)
+            .cancel(className);
     }
 
     /**
-     * Opens the scenario
+     * Clicks on the publish button
      *
-     * @return new page object
+     * @param <T> - the object type
+     * @return generic page object
      */
-    public PublishPage publishScenario() {
+    public <T> T publishScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(publishButton);
-        return new PublishPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
-     * Clicks on the publish button to open PublishScenario page with Unpublished Scenario(s)
+     * Click edit button to edit the scenario
      *
-     * @return new page object
+     * @return generic page object
      */
-    public PublishScenarioPage publishPrivateScenario() {
-        pageUtils.waitForElementAndClick(publishButton);
-        return new PublishScenarioPage(driver);
-    }
-
-    /**
-     * Edit the scenario
-     *
-     * @return new page object
-     */
-    public EditScenarioStatusPage editScenario() {
+    public <T> T editScenario(Class<T> klass) {
         pageUtils.waitForElementAndClick(editButton);
-        return new EditScenarioStatusPage(driver);
+        return PageFactory.initElements(driver, klass);
     }
 
     /**
@@ -320,12 +375,23 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
+     * Clicks the actions button
+     *
+     * @return current page object
+     */
+    public ExploreToolbar clickActions() {
+        do {
+            pageUtils.waitForElementAndClick(actionsButton);
+        } while (!pageUtils.isElementDisplayed(infoButton) && !pageUtils.isElementDisplayed(lockButton));
+        return this;
+    }
+
+    /**
      * Opens scenario info page
      *
      * @return new page object
      */
     public InfoPage info() {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(infoButton);
         return new InfoPage(driver);
     }
@@ -336,7 +402,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return generic page object
      */
     public <T> T lock(Class<T> klass) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(lockButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -347,7 +412,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return generic page object
      */
     public <T> T unlock(Class<T> klass) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(unlockButton);
         return PageFactory.initElements(driver, klass);
     }
@@ -368,7 +432,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public AssignPage assign() {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(assignButton);
         return new AssignPage(driver);
     }
@@ -391,7 +454,6 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage updateCadFile(File filePath) {
-        pageUtils.waitForElementAndClick(actionsButton);
         pageUtils.waitForElementAndClick(cadFileButton);
         return new UpdateCadFilePage(driver).enterFilePath(filePath).submit(EvaluatePage.class);
     }
@@ -404,5 +466,67 @@ public class ExploreToolbar extends MainNavBar {
     public ExplorePage refresh() {
         pageUtils.waitForElementAndClick(refreshButton);
         return new ExplorePage(driver);
+    }
+
+    /**
+     * This method uploads via drop zone, wait to be in a not costed state and opens the component
+     *
+     * @param multiComponents - the multi components
+     * @param scenarioName    - scenario name
+     * @param assemblyName    - assembly name
+     * @param currentUser     - current user
+     * @return - new page object
+     */
+    public ComponentsListPage uploadAndOpenComponent(List<MultiUpload> multiComponents, String scenarioName, String assemblyName, UserCredentials currentUser) {
+        importCadFile()
+            .inputMultiComponents(multiComponents)
+            .inputScenarioName(scenarioName)
+            .submit()
+            .clickClose()
+            .openComponent(assemblyName, scenarioName, currentUser)
+            .openComponents();
+        return new ComponentsListPage(driver);
+    }
+
+    /**
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the sub component names
+     * @param subComponentExtension    - the sub components extension
+     * @param subComponentProcessGroup - sub components process group
+     * @param scenarioName             - the scenario name
+     * @param currentUser              - the user credential
+     * @return - new page object
+     */
+    public EvaluatePage uploadsAndOpenAssembly(String assemblyName,
+                                               String assemblyExtension,
+                                               ProcessGroupEnum assemblyProcessGroup,
+                                               List<String> subComponentNames,
+                                               String subComponentExtension,
+                                               ProcessGroupEnum subComponentProcessGroup,
+                                               String scenarioName,
+                                               UserCredentials currentUser) {
+
+        ComponentInfoBuilder myAssembly = new AssemblyUtils().uploadsAndOpenAssembly(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        return navigateToScenario(myAssembly);
+    }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isEditButtonEnabled() {
+        return pageUtils.waitForElementToAppear(editButton).isEnabled();
     }
 }

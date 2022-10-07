@@ -30,8 +30,13 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     CUSTOMER_ASSOCIATIONS_USER(CUSTOMER_ASSOCIATIONS_USERS.getEndpointString().concat("/%s")),
 
     //SITES
+    GET_SITES(CUSTOMER.getEndpointString().concat("/sites")),
+    GET_SITE_ID(GET_SITES.getEndpointString().concat("/%s")),
     POST_SITES(CUSTOMER.getEndpointString().concat("/sites")),
     POST_SITES_ID(POST_SITES.getEndpointString().concat("/%s")),
+
+    //APPLICATIONS
+    GET_CUSTOMER_APPLICATIONS(CUSTOMER.getEndpointString().concat("/applications")),
 
     //LICENSES
     DELETE_SPECIFIC_USER_SUB_LICENSE_USERS("customers/%s/sites/%s/licenses/%s/sub-licenses/%s/users/%s"),
@@ -60,18 +65,20 @@ public enum CASAPIEnum implements ExternalEndpointEnum {
     PATCH_USERS(USER.getEndpointString()),
 
     //BATCHES
-    GET_BATCHES(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s/%s")),
-    BATCH_ITEM(GET_BATCHES.getEndpointString().concat("/%s")),
-    CUSTOMER_BATCHES(GET_CUSTOMER.getEndpointString().concat("%s/%s/%s")),
+    GET_BATCHES(CUSTOMER.getEndpointString().concat("/batches")),
+    GET_BATCH(GET_BATCHES.getEndpointString().concat("/%s")),
+    BATCH_ITEMS(GET_BATCH.getEndpointString().concat("/items")),
+    BATCH_ITEM(BATCH_ITEMS.getEndpointString().concat("/%s")),
 
     //CONFIGURATIONS
     GET_CONFIGURATIONS("configurations/ap-versions"),
 
     //CUSTOMER DEPLOYMENTS
-    GET_CUSTOMER_DEPLOYMENT(GET_CUSTOMER.getEndpointString().concat("deployments/%s")),
+    GET_DEPLOYMENTS(CUSTOMER.getEndpointString().concat("/deployments")),
+    GET_CUSTOMER_DEPLOYMENT(GET_DEPLOYMENTS.getEndpointString().concat("/%s")),
 
     //CURRENT USER
-    GET_CURRENT_USER(USERS.getEndpointString().concat("current"));
+    GET_CURRENT_USER("users/current");
 
     private final String endpoint;
 

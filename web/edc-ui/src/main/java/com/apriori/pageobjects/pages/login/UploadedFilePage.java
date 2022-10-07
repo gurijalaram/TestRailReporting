@@ -1,6 +1,6 @@
 package com.apriori.pageobjects.pages.login;
 
-import com.apriori.utils.PageUtils;
+import com.apriori.utils.web.components.EagerPageComponent;
 
 import com.utils.CostStatusEnum;
 import lombok.extern.slf4j.Slf4j;
@@ -8,11 +8,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.LoadableComponent;
 
 @Slf4j
-public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
+public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
 
     @FindBy(css = "[data-icon='exclamation-circle']")
     private WebElement fileOne;
@@ -23,7 +21,7 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
     @FindBy(id = "export-button")
     private WebElement exportBomButton;
 
-    @FindBy(css = ".dropdown-outline [type='button']")
+    @FindBy(css = ".cost-status .dropdown-toggle")
     private WebElement costStatusDropdown;
 
     @FindBy(css = ".filter-actions .form-control")
@@ -32,16 +30,10 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
     @FindBy(css = ".line-item-list .no-content-message")
     private WebElement matchComplete;
 
-    private WebDriver driver;
-    private PageUtils pageUtils;
-    private ElectronicsDataCollectionPage electronicsDataCollectionPage;
+    private ElectronicsDataCollectionPage electronicsDataCollectionPage = new ElectronicsDataCollectionPage(getDriver());
 
     public UploadedFilePage(WebDriver driver) {
-        this.driver = driver;
-        this.pageUtils = new PageUtils(driver);
-        this.electronicsDataCollectionPage = new ElectronicsDataCollectionPage(driver);
-        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
-        PageFactory.initElements(driver, this);
+        super(driver, log);
     }
 
     @Override
@@ -51,7 +43,7 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(filterButton);
+        getPageUtils().waitForElementToAppear(filterButton);
     }
 
     /**
@@ -60,8 +52,8 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      * @return new page object
      */
     public MatchedPartPage selectMatchedPart() {
-        pageUtils.waitForElementAndClick(fileOne);
-        return new MatchedPartPage(driver);
+        getPageUtils().waitForElementAndClick(fileOne);
+        return new MatchedPartPage(getDriver());
     }
 
     /**
@@ -70,7 +62,7 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      * @return new page object
      */
     public UploadedFilePage filterDropdown() {
-        pageUtils.waitForElementAndClick(filterButton);
+        getPageUtils().waitForElementAndClick(filterButton);
         setPagination();
         return this;
     }
@@ -81,18 +73,7 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      * @return same page object
      */
     public UploadedFilePage selectExportBom() {
-        pageUtils.waitForElementAndClick(exportBomButton);
-        return this;
-    }
-
-    /**
-     * Clicks on Cost Status dropdown
-     *
-     * @return same page object
-     */
-    public UploadedFilePage costStatusDropdown() {
-        pageUtils.moveAndClick(costStatusDropdown);
-        pageUtils.waitForElementAndClick(costStatusDropdown);
+        getPageUtils().waitForElementAndClick(exportBomButton);
         return this;
     }
 
@@ -103,19 +84,21 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      * @return same page object
      */
     public UploadedFilePage selectSearch(String searchItem) {
-        pageUtils.clearValueOfElement(searchElement);
+        getPageUtils().clearValueOfElement(searchElement);
         searchElement.sendKeys(searchItem);
         return this;
     }
 
     /**
      * Selects Cost status items
-     * @param costStatus
-     * @return
+     *
+     * @param costStatus - cost status items
+     * @return - same page object
      */
     public UploadedFilePage selectCostStatus(CostStatusEnum costStatus) {
+        getPageUtils().javaScriptClick(costStatusDropdown);
         By costMatchItem = By.cssSelector(String.format(".dropdown-outline [value='%s']", costStatus.getCostStatus()));
-        pageUtils.waitForElementAndClick(costMatchItem);
+        getPageUtils().waitForElementAndClick(costMatchItem);
         return this;
     }
 
@@ -135,6 +118,6 @@ public class UploadedFilePage extends LoadableComponent<UploadedFilePage> {
      * @return String
      */
     public String getMatchCompleteText() {
-        return pageUtils.waitForElementToAppear(matchComplete).getAttribute("textContent");
+        return getPageUtils().waitForElementToAppear(matchComplete).getAttribute("textContent");
     }
 }

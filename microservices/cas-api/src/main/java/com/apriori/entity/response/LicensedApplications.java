@@ -24,5 +24,9 @@ public class LicensedApplications {
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
     private LocalDateTime createdAt;
     private String createdBy;
+    @JsonSerialize(using = ToStringSerializer.class)
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSXXX.class)
+    private LocalDateTime deletedAt;
+    private String deletedBy;
     private String applicationIdentity;
 }

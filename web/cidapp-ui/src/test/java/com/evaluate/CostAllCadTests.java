@@ -3,7 +3,6 @@ package com.evaluate;
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
 
 import com.apriori.pageobjects.pages.evaluate.CostDetailsPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -19,6 +18,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -36,6 +37,7 @@ public class CostAllCadTests extends TestBase {
     private File resourceFile;
     private CostDetailsPage costDetailsPage;
     private ImportCadFilePage importCadFilePage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public CostAllCadTests() {
         super();
@@ -43,7 +45,7 @@ public class CostAllCadTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"5421", "565", "567"})
+    @TestRail(testCaseId = {"5421", "565", "567", "6624", "6626"})
     @Description("CAD file from all supported CAD formats - SLDPRT")
     public void testCADFormatSLDPRT() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -64,12 +66,14 @@ public class CostAllCadTests extends TestBase {
             .openCostDetails()
             .expandDropDown("Piece Part Cost,Total Variable Cost");
 
-        assertThat(costDetailsPage.getCostContributionValue("Material Cost"), (closeTo(27.44, 15)));
-        assertThat(costDetailsPage.getCostContributionValue("Labor"), (closeTo(6.30, 5)));
-        assertThat(costDetailsPage.getCostContributionValue("Direct Overhead"), (closeTo(1.69, 5)));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Material Cost")).isCloseTo(27.44, Offset.offset(15.00));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Labor")).isCloseTo(6.30, Offset.offset(5.00));
+        softAssertions.assertThat(costDetailsPage.getCostContributionValue("Direct Overhead")).isCloseTo(1.69, Offset.offset(5.00));
+
+        softAssertions.assertAll();
     }
 
-    // TODO: 23/10/2020 uncomment when functionality is implemented in app
+    // TODO: 23/10/2020 uncomment when reference panel functionality is implemented in app
     /*@Test
     @TestRail(testCaseId = {"566"})
     @Description("Be able to determine whether a decision has caused a cost increase or decrease")
@@ -112,24 +116,6 @@ public class CostAllCadTests extends TestBase {
             .uploadComponentAndOpen(componentName, new GenerateStringUtil().generateScenarioName(), resourceFile, currentUser);
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), (is(true)));
-    }
-
-    @Test
-    @Ignore("awaiting a response if this is allowed or not for new CID")
-    @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"5447", "2317"})
-    @Description("Ensure scripts cannot be entered into all available text input fields")
-    public void failedUpload() {
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "LargePart.prt.1");
-
-        loginPage = new CidAppLoginPage(driver);
-        importCadFilePage = loginPage.login(UserUtil.getUser())
-            .importCadFile()
-            .inputComponentDetails("<script>alert(document.cookie)</script>", resourceFile);
-
-        assertThat(importCadFilePage.getAlertWarning(), containsString("error occurred"));
     }
 
     @Test

@@ -1,6 +1,6 @@
 package com.apriori.bcs.entity.response;
 
-import com.apriori.apibase.services.Pagination;
+import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -35,6 +35,7 @@ public class CustomerVPE extends Pagination {
     private Number batchesPerYear;
     private String description;
     private String location;
+    private String materialCatalogVpeIdentity;
     private String name;
     private String ownerType;
     private Number productionLife;

@@ -17,4 +17,8 @@ public class Failures {
     private String identity;
     private String resourceName;
     private String scenarioName;
+    private String componentIdentity;
+    private String scenarioIdentity;
+    private String componentName;
+    private String scenarioAssociationIdentity;
 }

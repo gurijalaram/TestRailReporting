@@ -5,6 +5,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
+import com.apriori.apibase.services.cas.Customer;
+import com.apriori.apibase.services.cas.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Applications;
 import com.apriori.utils.TestRail;
@@ -31,8 +33,14 @@ public class ApplicationsTests {
     @TestRail(testCaseId = {"5659"})
     @Description("Returns a list of applications for the customer.")
     public void getCustomerApplications() {
-        ResponseWrapper<Applications> responseApplications = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Applications.class)
-            .token(token)).get();
+        ResponseWrapper<Customers> customersResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
+                .token(token)).get();
+
+        Customer customer = customersResponse.getResponseEntity().getItems().get(0);
+
+        ResponseWrapper<Applications> responseApplications = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_APPLICATIONS, Applications.class)
+            .token(token)
+            .inlineVariables(customer.getIdentity())).get();
 
         assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(responseApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));

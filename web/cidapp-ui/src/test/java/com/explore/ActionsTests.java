@@ -1,5 +1,6 @@
 package com.explore;
 
+import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -10,6 +11,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
 import com.apriori.pageobjects.navtoolbars.InfoPage;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.PreviewPage;
@@ -20,20 +22,21 @@ import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.OperationEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.PropertyEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.enums.StatusIconEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColourEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
-import org.junit.Ignore;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -50,6 +53,7 @@ public class ActionsTests extends TestBase {
     private File resourceFile;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public ActionsTests() {
         super();
@@ -57,7 +61,7 @@ public class ActionsTests extends TestBase {
 
     @Test
     @Issue("BA-2043")
-    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268"})
+    @TestRail(testCaseId = {"7185", "7257", "7264", "7263", "7268", "6342"})
     @Description("Validate user can add notes to a scenario")
     public void addScenarioNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -77,13 +81,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
             .clickSearch(componentName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -93,16 +98,19 @@ public class ActionsTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
-            .openScenario(componentName,scenarioName)
+            .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Low")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+
+        softAssertions.assertAll();
     }
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"7197", "7198"})
+    @TestRail(testCaseId = {"7197", "7198", "7200"})
     @Description("Validate status and cost maturity columns can be added")
     public void addStatusColumn() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -122,13 +130,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("Analysis")
             .inputCostMaturity("Medium")
@@ -173,30 +182,34 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1020")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .lock(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .openPreviewPanel();
 
-        assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(previewPage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
         evaluatePage = previewPage.openScenario();
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.LOCK)).isEqualTo(true);
 
-        evaluatePage.unlock(EvaluatePage.class);
+        evaluatePage.clickActions()
+            .unlock(EvaluatePage.class);
 
-        assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK), is(true));
+        softAssertions.assertThat(evaluatePage.isIconDisplayed(StatusIconEnum.UNLOCK)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"7259", "7265", "7269", "7272"})
+    @TestRail(testCaseId = {"7259", "7265", "7269", "7272", "7189"})
     @Description("User can add scenario info and notes from action on evaluate page")
     public void actionsEvaluatePage() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -206,6 +219,11 @@ public class ActionsTests extends TestBase {
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        final String bulletPointNotes = "• Automation notes 1\n" +
+            "• Automation notes 2\n" +
+            "• Automation notes 3\n" +
+            "• Automation notes 4";
+
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
@@ -213,6 +231,7 @@ public class ActionsTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info()
             .selectStatus("Complete")
             .inputCostMaturity("Medium")
@@ -220,12 +239,23 @@ public class ActionsTests extends TestBase {
             .inputNotes("Uploaded and costed via automation")
             .submit(EvaluatePage.class)
             .costScenario(1)
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("Complete")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("Medium")));
-        assertThat(infoPage.getDescription(), is(equalTo("Qa Auto Test")));
-        assertThat(infoPage.getNotes(), is(equalTo("Uploaded and costed via automation")));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("Complete");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("Qa Auto Test");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Uploaded and costed via automation");
+
+        infoPage.inputNotes(bulletPointNotes)
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(bulletPointNotes);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -242,27 +272,28 @@ public class ActionsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         infoPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .selectProcessGroup(processGroupEnum)
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("High")
             .inputDescription("infoNotesPanel")
             .inputNotes("Panel Test")
             .submit(EvaluatePage.class)
-            .openMaterialSelectorTable()
-            .search("AISI 1010")
-            .selectMaterial("Steel, Cold Worked, AISI 1010")
-            .submit(EvaluatePage.class)
             .costScenario()
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getStatus(), is(equalTo("New")));
-        assertThat(infoPage.getCostMaturity(), is(equalTo("High")));
-        assertThat(infoPage.getDescription(), is("infoNotesPanel"));
-        assertThat(infoPage.getNotes(), is("Panel Test"));
+        softAssertions.assertThat(infoPage.getStatus()).isEqualTo("New");
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("High");
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo("infoNotesPanel");
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo("Panel Test");
+
+        softAssertions.assertAll();
     }
 
     @Test
+    @Issue("CIS-531")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"7172", "7175", "5437"})
     @Description("Validate ASSIGN action can operate directly on Public Workspace without requiring a Private Workspace Edit")
@@ -286,16 +317,18 @@ public class ActionsTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(ExplorePage.class)
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         assertThat(infoPage.isScenarioInfo("Assignee", scenarioCreatedByName), is(true));
@@ -324,15 +357,17 @@ public class ActionsTests extends TestBase {
             .selectMaterial("F-0005")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .openScenario("PowderMetalShaft", scenarioName)
+            .clickActions()
             .assign()
             .selectAssignee(scenarioCreatedByName)
             .submit(EvaluatePage.class)
+            .clickActions()
             .assign();
 
         assertThat(assignPage.isAssigneeDisplayed(scenarioCreatedByName), is(true));
@@ -363,11 +398,11 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .selectStatus("New")
             .selectCostMaturity("Low")
             .selectAssignee(currentUser)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -379,7 +414,7 @@ public class ActionsTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7187"})
+    @TestRail(testCaseId = {"7187", "7271", "6199", "6339"})
     @Description("Validate User can edit notes to a scenario")
     public void editNotes() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -388,6 +423,7 @@ public class ActionsTests extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
+        final String editedNotes = "Testing QA notes validating the ability to edit notes";
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
@@ -400,27 +436,54 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .highlightScenario("BasicScenario_Forging", scenarioName)
+            .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .openScenario("BasicScenario_Forging", scenarioName)
-            .info()
-            .editNotes("Testing QA notes validating the ability to edit notes")
-            .submit(EvaluatePage.class)
+            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
+            .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
-        assertThat(infoPage.getNotes(), is("Testing QA notes validating the ability to edit notes"));
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Low");
+
+        infoPage.cancel(ExplorePage.class)
+            .clickActions()
+            .info()
+            .inputCostMaturity("Medium")
+            .submit(ExplorePage.class)
+            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .refresh()
+            .highlightScenario(componentName, scenarioName)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getCostMaturity()).isEqualTo("Medium");
+
+        infoPage.cancel(ExplorePage.class)
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .openScenario(componentName, scenarioName)
+            .clickActions()
+            .info()
+            .editNotes(editedNotes)
+            .submit(EvaluatePage.class)
+            .clickActions()
+            .info();
+
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(editedNotes);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -445,13 +508,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Steel, Cold Worked, AISI 1010")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -462,9 +526,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editNotes("Validating the ability to edit notes")
             .cancel(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -491,13 +557,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -508,9 +575,11 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editNotes("")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is(""));
@@ -539,13 +608,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -558,6 +628,7 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getNotes(), is("Testing QA notes"));
@@ -586,11 +657,11 @@ public class ActionsTests extends TestBase {
             .selectMaterial("Default")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
+            .publishScenario(PublishPage.class)
             .selectStatus("Complete")
             .selectCostMaturity("Medium")
             .selectAssignee(currentUser)
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .filter()
             .saveAs()
@@ -599,7 +670,7 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("RAPID PROTOTYPING", scenarioName)).isEqualTo(1);
 
         explorePage.filter()
             .newFilter()
@@ -608,7 +679,9 @@ public class ActionsTests extends TestBase {
             .submit(ExplorePage.class)
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING);
 
-        assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName), equalTo(1));
+        softAssertions.assertThat(explorePage.getListOfScenarios("Rapid Prototyping", scenarioName)).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -632,13 +705,14 @@ public class ActionsTests extends TestBase {
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
             .clickExplore()
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName)
             .highlightScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
@@ -649,21 +723,20 @@ public class ActionsTests extends TestBase {
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .enterKeySearch(componentName.toUpperCase())
             .openScenario(componentName, scenarioName)
+            .clickActions()
             .info()
             .editDescription("")
             .submit(EvaluatePage.class)
+            .clickActions()
             .info();
 
         assertThat(infoPage.getDescription(), is(""));
     }
 
-    @Ignore("Not sure if this is allowed or not yet")
     @Test
-    @Category(IgnoreTests.class)
-    @TestRail(testCaseId = {"6727"})
-    @Description("Ensure scripts cannot be entered into text input fields")
-    public void cannotUseScript() {
-
+    @TestRail(testCaseId = {"7177"})
+    @Description("Validate assignee is displayed in the explore view")
+    public void actionsAssignValidateAssignee() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
         String componentName = "Push Pin";
@@ -675,27 +748,112 @@ public class ActionsTests extends TestBase {
         cidComponentItem = loginPage.login(currentUser)
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
+        String scenarioCreatedByName = cidComponentItem.getScenarioItem().getScenarioCreatedByName();
+
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .selectMaterial("ABS")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
+            .assign()
+            .selectAssignee(scenarioCreatedByName)
+            .submit(EvaluatePage.class)
             .clickExplore()
-            .selectFilter("Recent")
-            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-            .enterKeySearch(componentName.toUpperCase())
-            .highlightScenario(componentName, scenarioName)
+            .configure()
+            .selectColumn(ColumnsEnum.ASSIGNEE)
+            .moveColumn(DirectionEnum.RIGHT)
+            .moveToTop(ColumnsEnum.ASSIGNEE)
+            .submit(ExplorePage.class);
+
+        assertThat(explorePage.getTableHeaders(), hasItems(ASSIGNEE.getColumns()));
+
+        explorePage.configure()
+            .selectColumn(ASSIGNEE)
+            .moveColumn(DirectionEnum.LEFT)
+            .submit(ExplorePage.class);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"7190"})
+    @Description("Validate notes can be read by different users")
+    public void notesReadOtherUsers() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+        final String testDescription = "QA Notes to be read by different user";
+        final String testNotes = "Testing QA notes notes to be read by different user";
+
+        loginPage = new CidAppLoginPage(driver);
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+
+        infoPage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .search("AISI 1010")
+            .selectMaterial("Steel, Cold Worked, AISI 1010")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
             .info()
             .selectStatus("New")
             .inputCostMaturity("Low")
-            .inputDescription("<script src=http://www.example.com/malicious-code.js></script>")
-            .inputNotes("<script>alert(document.cookie)</script>")
-            .submit(ExplorePage.class);
+            .inputDescription(testDescription)
+            .inputNotes(testNotes)
+            .submit(EvaluatePage.class)
+            .logout()
+            .login(UserUtil.getUser())
+            .navigateToScenario(cidComponentItem)
+            .clickActions()
+            .info();
 
-        // TODO: 07/05/2021 remove comment
-        //assertThat(warningPage.getWarningText(), containsString("Some of the supplied inputs are invalid"));
+        softAssertions.assertThat(infoPage.getDescription()).isEqualTo(testDescription);
+        softAssertions.assertThat(infoPage.getNotes()).isEqualTo(testNotes);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6207", "6208"})
+    @Description("Validate users can select rows in a sequence by using shift/ctrl buttons")
+    public void shiftControlHighlightScenarios() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
+
+        String componentName = "BasicScenario_Forging";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".stp");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+        String scenarioName4 = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        explorePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName3, resourceFile, currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName4, resourceFile, currentUser)
+            .clickExplore()
+            .selectFilter("Private")
+            .shiftHighlightScenario(componentName, scenarioName)
+            .controlHighlightScenario(componentName, scenarioName2)
+            .shiftHighlightScenario(componentName, scenarioName3)
+            .controlHighlightScenario(componentName, scenarioName4);
+
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName2)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName3)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+        softAssertions.assertThat(explorePage.getCellColour(componentName, scenarioName4)).isEqualTo(ColourEnum.PLACEBO_BLUE.getColour());
+
+        softAssertions.assertAll();
     }
 }

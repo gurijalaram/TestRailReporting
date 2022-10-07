@@ -29,8 +29,8 @@ import java.util.List;
 @RunWith(JUnitParamsRunner.class)
 public class FileUploadAPI {
 
-    final private ComponentsUtil componentsUtil = new ComponentsUtil();
-    final private ScenariosUtil scenariosUtil = new ScenariosUtil();
+    private final ComponentsUtil componentsUtil = new ComponentsUtil();
+    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
 
     @Test
     @FileParameters(value = "classpath:auto_api_upload.csv", mapper = CustomMapper.class, encoding = "ISO-8859-1")

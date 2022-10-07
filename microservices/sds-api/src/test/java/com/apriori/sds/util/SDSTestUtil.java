@@ -3,21 +3,31 @@ package com.apriori.sds.util;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import com.apriori.apibase.services.cas.Customer;
+import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
+import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.enums.CidAppAPIEnum;
 import com.apriori.cidappapi.entity.request.CostRequest;
-import com.apriori.cidappapi.entity.response.Scenario;
-import com.apriori.css.entity.response.ScenarioItem;
-import com.apriori.css.utils.CssComponent;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.entity.response.Application;
+import com.apriori.entity.response.Applications;
+import com.apriori.entity.response.ScenarioItem;
+import com.apriori.fms.controller.FileManagementController;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.PostComponentRequest;
+import com.apriori.sds.entity.request.ShallowPublishRequest;
 import com.apriori.sds.entity.response.CostingTemplate;
 import com.apriori.sds.entity.response.CostingTemplatesItems;
 import com.apriori.sds.entity.response.PostComponentResponse;
-import com.apriori.utils.EncodedFileUtil;
+import com.apriori.sds.entity.response.Scenario;
+import com.apriori.utils.CssComponent;
+import com.apriori.utils.ErrorMessage;
+import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
 import com.apriori.utils.http.builder.request.HTTPRequest;
 import com.apriori.utils.http.utils.RequestEntityUtil;
@@ -31,8 +41,12 @@ import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.BeforeClass;
 
+import java.io.File;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -40,12 +54,15 @@ import java.util.concurrent.TimeUnit;
 public abstract class SDSTestUtil extends TestUtil {
 
     protected static UserCredentials testingUser;
+    protected static String appApplicationContext;
     protected static Set<ScenarioItem> scenariosToDelete = new HashSet<>();
     private static ScenarioItem testingComponent;
 
+
     @BeforeClass
     public static void init() {
-        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser());
+        RequestEntityUtil.useApUserContextForRequests(testingUser = UserUtil.getUser("admin"));
+        RequestEntityUtil.useTokenForRequests(testingUser.getToken());
     }
 
     @AfterClass
@@ -93,11 +110,10 @@ public abstract class SDSTestUtil extends TestUtil {
      * @return object
      */
     protected static ScenarioItem postTestingComponentAndAddToRemoveList() {
-        String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "AGC0-LP-700144754.prt.1";
-        ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
+        final String componentName = "AGC0-LP-700144754.prt.1";
+        final ProcessGroupEnum processGroup = ProcessGroupEnum.SHEET_METAL;
 
-        return postPart(componentName, scenarioName, processGroup);
+        return postPart(componentName, processGroup);
     }
 
     /**
@@ -135,20 +151,38 @@ public abstract class SDSTestUtil extends TestUtil {
      * Adds a new part
      *
      * @param componentName - the part name
-     * @param scenarioName  - the scenario name
      * @return responsewrapper
      */
-    protected static ScenarioItem postPart(String componentName, String scenarioName, ProcessGroupEnum processGroup) {
-        final String uniqueComponentName = new GenerateStringUtil().generateComponentName(componentName);
+    protected static ScenarioItem postPart(String componentName, ProcessGroupEnum processGroup) {
+        final String uniqueScenarioName = new GenerateStringUtil().generateScenarioName();
+        final File fileToUpload = FileResourceUtil.getS3FileAndSaveWithUniqueName(componentName,
+            processGroup
+        );
 
-        final PostComponentRequest postComponentRequest = PostComponentRequest.builder().filename(uniqueComponentName)
-            .componentName(uniqueComponentName)
-            .scenarioName(scenarioName)
-            .override(false)
-            .fileContents(EncodedFileUtil.encodeFileFromCloudToBase64Binary(componentName, processGroup))
+        ComponentInfoBuilder componentInfo = ComponentInfoBuilder.builder()
+            .resourceFiles(
+                Collections.singletonList(fileToUpload)
+            )
+            .scenarioName(uniqueScenarioName)
+            .user(testingUser)
             .build();
 
-        return postComponent(postComponentRequest);
+        String uploadedComponentResourceName = new ComponentsUtil()
+            .postCadFiles(componentInfo)
+            .getResponseEntity()
+            .getCadFiles()
+            .get(0)
+            .getResourceName();
+
+        String fileMetadataIdentity = FileManagementController
+            .uploadFileWithResourceName(testingUser, fileToUpload, uploadedComponentResourceName)
+            .getIdentity();
+
+        return postComponent(PostComponentRequest.builder()
+            .fileMetadataIdentity(fileMetadataIdentity)
+            .scenarioName(uniqueScenarioName)
+            .override(false)
+            .build(), fileToUpload.getName());
     }
 
     /**
@@ -168,24 +202,77 @@ public abstract class SDSTestUtil extends TestUtil {
             .componentType("ROLLUP")
             .build();
 
-        return postComponent(postComponentRequest);
+        return postComponent(postComponentRequest, uniqueComponentName);
     }
 
-    protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest) {
+    /**
+     * Gets the uncosted component from CSS
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param userCredentials - user to upload the part
+     * @return response object
+     */
+    public static List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
+        return new CssComponent().getCssComponentQueryParams(componentName, scenarioName, userCredentials, "scenarioState, not_costed").getResponseEntity().getItems();
+    }
+
+    protected static ScenarioItem postComponent(final PostComponentRequest postComponentRequest, final String componentName) {
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.POST_COMPONENTS, PostComponentResponse.class)
+                .headers(getContextHeaders())
+                .token(testingUser.getToken())
                 .body("component", postComponentRequest);
 
         ResponseWrapper<PostComponentResponse> responseWrapper = HTTPRequest.build(requestEntity).post();
 
-        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", postComponentRequest.getComponentName(), postComponentRequest.getScenarioName()),
+        Assert.assertEquals(String.format("The component with a part name %s, and scenario name %s, was not uploaded.", componentName, postComponentRequest.getScenarioName()),
             HttpStatus.SC_CREATED, responseWrapper.getStatusCode());
 
-        List<ScenarioItem> scenarioItemResponse = new CssComponent().getUnCostedCssComponent(postComponentRequest.getComponentName(), postComponentRequest.getScenarioName(),
+        List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentName, postComponentRequest.getScenarioName(),
             testingUser);
 
         scenariosToDelete.add(scenarioItemResponse.get(0));
         return scenarioItemResponse.get(0);
+    }
+
+    public static Map<String, String> getContextHeaders() {
+        return new HashMap<String, String>() {
+            {
+                put("ap-application-context", getApApplicationContext());
+                put("ap-cloud-context", testingUser.getCloudContext());
+            }
+        };
+    }
+
+    // TODO z: can be migrated to AuthorizationUtil if make this decision based on usage this functionality outside sds
+    private static String getApApplicationContext() {
+
+        if (appApplicationContext != null) {
+            return appApplicationContext;
+        }
+        return appApplicationContext = initApApplicationContext();
+    }
+
+    private static String initApApplicationContext() {
+        ResponseWrapper<Customers> customersResponse = HTTPRequest.build(
+            RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
+                .token(testingUser.getToken())
+
+        ).get();
+
+        Customer customer = customersResponse.getResponseEntity().getItems().get(0);
+
+        ResponseWrapper<Applications> responseApplications = HTTPRequest.build(
+            RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_APPLICATIONS, Applications.class)
+                .inlineVariables(customer.getIdentity())
+                .token(testingUser.getToken())
+        ).get();
+
+        Application cidApplication = responseApplications.getResponseEntity().getItems().stream().filter(app -> app.getServiceName().equals("CID"))
+            .findFirst().orElseThrow(() -> new IllegalArgumentException("CID application was not found."));
+
+        return cidApplication.getIdentity();
     }
 
     /**
@@ -203,7 +290,7 @@ public abstract class SDSTestUtil extends TestUtil {
                 .token(userCredentials.getToken());
 
         long START_TIME = System.currentTimeMillis() / 1000;
-        final long POLLING_INTERVAL = 5L;
+        final long POLLING_INTERVAL = 10L;
         final long MAX_WAIT_TIME = 180L;
         String scenarioState;
         ResponseWrapper<Scenario> scenarioRepresentation;
@@ -264,7 +351,7 @@ public abstract class SDSTestUtil extends TestUtil {
 
         HTTPRequest.build(requestEntity).post();
 
-        return new CssComponent().getCssComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser(), componentInfoBuilder.getScenarioState());
+        return getUnCostedComponent(componentInfoBuilder.getComponentName(), componentInfoBuilder.getScenarioName(), componentInfoBuilder.getUser());
     }
 
     /**
@@ -313,5 +400,110 @@ public abstract class SDSTestUtil extends TestUtil {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
+    }
+
+    /**
+     * Gets the scenario by customer scenario id
+     *
+     * @param componentIdentity - the component id
+     * @param scenarioIdentity  - the scenario id
+     * @return scenario object
+     */
+    protected Scenario getScenarioByCustomerScenarioIdentity(String componentIdentity, final String scenarioIdentity) {
+        if (componentIdentity == null) {
+            componentIdentity = getComponentId();
+        }
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(SDSAPIEnum.GET_SCENARIO_SINGLE_BY_COMPONENT_SCENARIO_IDS, Scenario.class)
+                .inlineVariables(
+                    componentIdentity, scenarioIdentity
+                );
+
+        ResponseWrapper<Scenario> response = HTTPRequest.build(requestEntity).get();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, response.getStatusCode());
+
+        return response.getResponseEntity();
+    }
+
+    /**
+     * Waits for the scenario to be in an expected state
+     *
+     * @param scenario - scenario object
+     * @return boolean
+     */
+    private boolean isScenarioStateAsExpected(final Scenario scenario) {
+        final String currentScenarioState = scenario.getScenarioState().toUpperCase();
+
+        return currentScenarioState.equals(ScenarioStateEnum.NOT_COSTED.getState())
+            || currentScenarioState.equals(ScenarioStateEnum.COST_COMPLETE.getState());
+    }
+
+    /**
+     * Gets scenario in a ready state
+     *
+     * @param componentIdentity - the component id
+     * @param scenarioIdentity  - the scenario id
+     * @return scenario object
+     */
+    protected Scenario getReadyToWorkScenario(final String componentIdentity, final String scenarioIdentity) {
+        final int attemptsCount = 15;
+        final int secondsToWait = 10;
+        int currentCount = 0;
+        Scenario scenario;
+
+        do {
+            waitSeconds(secondsToWait);
+            scenario = this.getScenarioByCustomerScenarioIdentity(componentIdentity, scenarioIdentity);
+
+            if (scenario.getScenarioState().toUpperCase().contains("FAILED")) {
+                throw new IllegalStateException(String.format("Scenario failed state: %s. Scenario Id: %s",
+                    scenario.getScenarioState(), scenario.getIdentity())
+                );
+            }
+
+            if (isScenarioStateAsExpected(scenario)) {
+                return scenario;
+            }
+        } while (currentCount++ < attemptsCount);
+
+        throw new IllegalArgumentException(
+            String.format("Failed to get scenario by identity: %s, after %d attempts with period in %d seconds.",
+                scenarioIdentity, attemptsCount, secondsToWait)
+        );
+    }
+
+    /**
+     * Shallow publish an Assembly
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @return - scenario object
+     */
+    protected <T> ResponseWrapper<Scenario> publishAssembly(ComponentInfoBuilder componentInfoBuilder, Class<T> klass) {
+        ShallowPublishRequest shallowPublishRequest = ShallowPublishRequest.builder()
+            .assignedTo(componentInfoBuilder.getAssignedTo())
+            .locked(false)
+            .override(false)
+            .scenarioName(componentInfoBuilder.getScenarioName())
+            .status(componentInfoBuilder.getStatus())
+            .publishSubComponents(false)
+            .build();
+
+        final RequestEntity requestEntity =
+            RequestEntityUtil.init(SDSAPIEnum.POST_PUBLISH_SCENARIO_BY_COMPONENT_SCENARIO_IDs, klass)
+                .inlineVariables(componentInfoBuilder.getComponentIdentity(), componentInfoBuilder.getScenarioIdentity())
+                .body("scenario", shallowPublishRequest);
+
+        return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * Publish an assembly expecting a conflict
+     *
+     * @param componentInfoBuilder - the component info builder object
+     * @return - scenario object
+     */
+    public ResponseWrapper<Scenario> publishAssemblyExpectError(ComponentInfoBuilder componentInfoBuilder) {
+        return publishAssembly(componentInfoBuilder, ErrorMessage.class);
     }
 }

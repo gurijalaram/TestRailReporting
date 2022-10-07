@@ -1,21 +1,23 @@
 package com.apriori.pageobjects.pages.userguides;
 
-import com.apriori.pageobjects.header.PageHeader;
+import com.apriori.pageobjects.header.AdminPageHeader;
 import com.apriori.utils.PageUtils;
 
+import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
-public class CiaUserGuide extends PageHeader {
+@Slf4j
+public class CiaUserGuide extends AdminPageHeader {
 
-    private static final Logger logger = LoggerFactory.getLogger(CiaUserGuide.class);
+    @FindBy(xpath = "//*[contains(text(), 'Cost Insight Admin Guide')])")
+    private WebElement adminUserGuidePageTitle;
 
-    @FindBy(css = "div[id='page_content'] > div")
-    private WebElement pageTitle;
+    @FindBy(xpath = "//*[contains(text(), 'Cost Insight Admin Guide')]")
+    private WebElement scenarioExportChapterPageTitle;
 
     @FindBy(css = "iframe[id='page_iframe']")
     private WebElement mainContentIframe;
@@ -27,7 +29,7 @@ public class CiaUserGuide extends PageHeader {
         super(driver);
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
-        logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
+        log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
     }
@@ -64,11 +66,10 @@ public class CiaUserGuide extends PageHeader {
      * Gets page heading of Admin User Guide page
      * @return String - page title
      */
-    public String getAdminUserGuidePageHeading() {
-        pageUtils.windowHandler(1);
-        pageUtils.waitForElementToAppear(mainContentIframe);
-        driver.switchTo().frame(mainContentIframe);
-        pageUtils.waitForElementAppear(pageTitle);
-        return pageTitle.getText();
+    public String getAdminOrScenarioChapterUserGuidePageHeading(boolean getScenarioChapterTitle) {
+        By locatorToUse = getScenarioChapterTitle ? By.xpath("//div[@id='mc-main-content']")
+            : By.xpath("//*[contains(text(), 'Cost Insight Admin Guide')]");
+        pageUtils.waitForElementToAppear(locatorToUse);
+        return driver.findElement(locatorToUse).getAttribute("innerText");
     }
 }

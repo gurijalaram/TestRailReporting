@@ -3,9 +3,11 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.customer.users.BatchImportListTests;
 import com.customer.users.CustomerStaffTests;
 import com.customer.users.EditUserTests;
 import com.customer.users.NewUserTests;
+import com.customer.users.UsersGrantApplicationAccessTests;
 import com.customer.users.UsersStaffAssociationTests;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
@@ -17,6 +19,8 @@ import org.junit.runners.Suite;
     CustomerStaffTests.class,
     NewUserTests.class,
     EditUserTests.class,
+    BatchImportListTests.class,
+    UsersGrantApplicationAccessTests.class
 })
 public class UsersTestSuite {
 }

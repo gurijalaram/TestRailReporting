@@ -16,7 +16,7 @@ public class CostRequest {
     private String identity;
     private Integer annualVolume;
     private Integer batchSize;
-    private Object customAttributes;
+    private String customAttributes;
     private String materialMode;
     private String materialName;
     private String processGroupName;
@@ -25,7 +25,5 @@ public class CostRequest {
     private String digitalFactory;
     private Boolean deleteTemplateAfterUse;
     private String costingTemplateIdentity;
-    private List<Object> propertiesToReset;
-    @JsonProperty("UDARegion")
-    private String udaRegion;
+    private List<String> propertiesToReset;
 }

@@ -14,6 +14,7 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     HOOPS_IMAGE_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/hoops-image"),
     SCENARIO_REPRESENTATION_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s"),
     COMPONENT_BY_COMPONENT_SCENARIO_IDS("components/%s/scenarios/%s/cost"),
+    GROUP_COST_COMPONENTS("scenarios/cost"),
 
     //CAD FILES
     CAD_FILES("cad-files"),
@@ -29,12 +30,16 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
     COST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/cost"),
     COPY_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/copy"),
     EDIT_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/fork"),
+    MANIFEST_SCENARIO_BY_COMPONENT_SCENARIO_IDs("components/%s/scenarios/%s/manifest"),
+    EDIT_SCENARIOS("scenarios/fork"),
+    DELETE_SCENARIO("components/%s/scenarios/%s"),
 
     //COSTING TEMPLATES
     COSTING_TEMPLATES("costing-templates"),
 
     //PUBLISH
     PUBLISH_SCENARIO("components/%s/scenarios/%s/publish"),
+    PUBLISH_SCENARIOS("scenarios/publish"),
 
     //USER
     CURRENT_USER("users/current"),
@@ -44,6 +49,9 @@ public enum CidAppAPIEnum implements ExternalEndpointEnum {
 
     //CUSTOMIZATIONS
     CUSTOMIZATIONS("customizations"),
+
+    //SCENARIO ASSOCIATION GROUP OPERATIONS
+    SCENARIO_ASSOCIATIONS("components/%s/scenarios/%s/associations"),
 
     //APPLICATION METADATA
     APPLICATION_METADATA("application-metadata");

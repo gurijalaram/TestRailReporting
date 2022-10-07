@@ -56,8 +56,7 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      * @return current page object
      */
     public ToleranceOverridesPage inputOverride(OverridesEnum label, String value) {
-        WebElement override = driver.findElement(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
-        pageUtils.waitForElementToAppear(override);
+        WebElement override = pageUtils.waitForElementToAppear(By.cssSelector(String.format("[name='%s']", label.getOverrides())));
         pageUtils.clearValueOfElement(override);
         override.sendKeys(value);
         return this;
@@ -80,8 +79,9 @@ public class ToleranceOverridesPage extends LoadableComponent<ToleranceOverrides
      *
      * @return generic page object
      */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(submitButton, klass);
+    public ToleranceDefaultsPage submit() {
+        pageUtils.waitForElementAndClick(submitButton);
+        return new ToleranceDefaultsPage(driver);
     }
 
     /**

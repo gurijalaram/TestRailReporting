@@ -3,11 +3,11 @@ package com.apriori.tests.newendpoint;
 import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-import com.apriori.css.entity.apicalls.ScenarioIterationService;
-import com.apriori.css.entity.request.ErrorRequestResponse;
-import com.apriori.css.entity.request.Params;
-import com.apriori.css.entity.request.ScenarioIterationRequest;
-import com.apriori.css.entity.response.CssComponentResponse;
+import com.apriori.entity.apicalls.ScenarioIterationService;
+import com.apriori.entity.request.ErrorRequestResponse;
+import com.apriori.entity.request.Params;
+import com.apriori.entity.request.ScenarioIterationRequest;
+import com.apriori.entity.response.CssComponentResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.http.utils.ResponseWrapper;

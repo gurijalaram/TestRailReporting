@@ -6,7 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.entity.request.request.ForkRequest;
+import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.Scenario;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
@@ -97,10 +97,12 @@ public class ScenariosTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
+        assemblyUtils.costSubComponents(componentAssembly)
+                .costAssembly(componentAssembly);
+
         assemblyUtils.publishSubComponents(componentAssembly)
             .publishAssembly(componentAssembly);
 
-        //Edit Assembly
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()
@@ -140,6 +142,9 @@ public class ScenariosTests {
         assemblyUtils.uploadSubComponents(componentAssembly)
             .uploadAssembly(componentAssembly);
 
+        assemblyUtils.costSubComponents(componentAssembly)
+            .costAssembly(componentAssembly);
+
         ResponseWrapper<ScenarioResponse> assemblyUploadResponse = assemblyUtils.publishAssemblyExpectError(componentAssembly);
 
         assertThat(assemblyUploadResponse.getStatusCode(), is(HttpStatus.SC_CONFLICT));
@@ -160,7 +165,9 @@ public class ScenariosTests {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        ComponentInfoBuilder componentAssembly = assemblyUtils.uploadCostPublishScenario(
+
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
             assemblyName,
             assemblyExtension,
             assemblyProcessGroup,
@@ -170,11 +177,17 @@ public class ScenariosTests {
             scenarioName,
             currentUser);
 
-        //Edit Assembly
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        assemblyUtils.publishSubComponents(componentAssembly);
+
+        assemblyUtils.publishAssembly(componentAssembly);
+
         Scenario editAssemblyResponse = scenariosUtil.postEditScenario(
                 componentAssembly,
                 ForkRequest.builder()
-                    .override(false)
                     .build())
             .getResponseEntity();
 

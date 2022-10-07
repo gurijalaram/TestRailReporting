@@ -2,7 +2,7 @@ package com.apriori.sds.tests;
 
 import static org.junit.Assert.assertEquals;
 
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.sds.entity.enums.SDSAPIEnum;
 import com.apriori.sds.entity.request.AssociationRequest;
 import com.apriori.sds.entity.response.ScenarioAssociation;
@@ -19,7 +19,6 @@ import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
 import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import java.util.List;
@@ -27,12 +26,6 @@ import java.util.List;
 public class ScenarioAssociationsTest extends SDSTestUtil {
     private static ScenarioItem testingRollUp;
     private static ScenarioAssociation testingAssociation;
-
-    @BeforeClass
-    public static void init() {
-        postAssociationForTestingRollup();
-    }
-
 
     @AfterClass
     public static void clearTestData() {
@@ -52,6 +45,7 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
     @TestRail(testCaseId = {"6929"})
     @Description("Get the current representation of a scenario assocation.")
     public void getAssociationsByIdentity() {
+        postAssociationForTestingRollup();
         final RequestEntity requestEntity =
             RequestEntityUtil.init(SDSAPIEnum.GET_ASSOCIATIONS_SINGLE_BY_COMPONENT_SCENARIO_IDENTITY_IDS, ScenarioAssociation.class)
                 .inlineVariables(
@@ -105,8 +99,10 @@ public class ScenarioAssociationsTest extends SDSTestUtil {
 
         RequestEntity request = RequestEntityUtil.init(SDSAPIEnum.POST_ASSOCIATION_BY_COMPONENT_SCENARIO_IDS, ScenarioAssociation.class)
             .inlineVariables(getTestingRollUp().getComponentIdentity(), getTestingRollUp().getScenarioIdentity())
+            .headers(getContextHeaders())
             .body("association", AssociationRequest.builder().scenarioIdentity(getTestingRollUp().getScenarioIdentity())
                 .occurrences(1)
+                .excluded(false)
                 .createdBy(getTestingRollUp().getComponentCreatedBy())
                 .build());
 

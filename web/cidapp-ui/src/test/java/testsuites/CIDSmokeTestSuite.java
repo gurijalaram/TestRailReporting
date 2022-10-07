@@ -14,6 +14,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
+import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.PublishAssembliesTests;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
@@ -27,6 +28,7 @@ import com.evaluate.materialutilization.ChangeMaterialSelectionTests;
 import com.evaluate.materialutilization.MaterialStockTests;
 import com.evaluate.materialutilization.PartNestingTests;
 import com.explore.ActionsTests;
+import com.explore.FilterCriteriaTests;
 import com.explore.PreviewPanelTests;
 import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
@@ -75,7 +77,9 @@ import testsuites.suiteinterface.SmokeTests;
     ThreadTests.class,
     PartNestingTests.class,
     PsoEditTests.class,
-    PublishAssembliesTests.class
+    PublishAssembliesTests.class,
+    GroupEditAssemblies.class,
+    FilterCriteriaTests.class
 })
 public class CIDSmokeTestSuite {
 }

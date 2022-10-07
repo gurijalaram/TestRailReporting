@@ -1,6 +1,5 @@
 package utils;
 
-import com.apriori.pageobjects.WorkflowPage;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.properties.PropertiesContext;
 
@@ -26,33 +25,11 @@ public class TableUtils {
      * Determine if the actual list contains all of the items in the expected list
      *
      * @param expectedList The list of expected values
-     * @param actualList The list of actual values
+     * @param actualList   The list of actual values
      * @return True if the actual list contains all items in the expected list
      */
     public boolean actualListContainsAllItems(List<String> expectedList, List<String> actualList) {
         return expectedList.stream().allMatch(actualList::contains);
-    }
-
-    /**
-     * Find an item in a table by name
-     *
-     * @param table The table to search
-     * @param name The name to search for
-     * @return The webelement if found
-     */
-    public WebElement findTableItemByName(WebElement table, String name) {
-        pageUtils.waitForElementToBeClickable(table);
-        List<WebElement> rows =
-                table.findElements(By.tagName("tr"))
-                .stream()
-                .skip(1)
-                .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
-                .collect(Collectors.toList());
-        if (rows.size() > 0) {
-            return rows.get(0);
-        } else {
-            return null;
-        }
     }
 
 
@@ -66,11 +43,11 @@ public class TableUtils {
         pageUtils.waitForElementToBeClickable(table);
         String connector = PropertiesContext.get("${env}.ci-connect.default_connector");
         List<WebElement> rows =
-                table.findElements(By.tagName("tr"))
-                        .stream()
-                        .skip(1)
-                        .filter(user -> user.findElements(By.tagName("td")).get(5).getText().equalsIgnoreCase(connector))
-                        .collect(Collectors.toList());
+            table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(5).getText().equalsIgnoreCase(connector))
+                .collect(Collectors.toList());
 
         if (rows.size() > 0) {
             return rows.get(0);
@@ -88,27 +65,27 @@ public class TableUtils {
     public Integer getRowCount(WebElement table) {
         pageUtils.waitForElementToBeClickable(table);
         List<WebElement> rows =
-                table.findElements(By.tagName("tr"))
-                        .stream()
-                        .skip(1)
-                        .collect(Collectors.toList());
-        return  rows.size();
+            table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .collect(Collectors.toList());
+        return rows.size();
     }
 
     /**
      * Return the index of a workflow
      *
      * @param table table to search
-     * @param name workflow name
+     * @param name  workflow name
      * @return The row number of the specified
      */
     public Integer getTableItemIndex(WebElement table, String name) {
         pageUtils.waitForElementToBeClickable(table);
         List<WebElement> rows =
-                table.findElements(By.tagName("tr"))
-                        .stream()
-                        .skip(1)
-                        .collect(Collectors.toList());
+            table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .collect(Collectors.toList());
 
         if (rows.size() <= 0) {
             return null;
@@ -128,6 +105,7 @@ public class TableUtils {
 
     /**
      * Returns the number of displayed rows in a table (skipping the header row)
+     *
      * @param table
      * @return
      */
@@ -138,36 +116,45 @@ public class TableUtils {
     /**
      * Find an item in a table by name
      *
-     * @param table The table to search
+     * @param table     The table to search
      * @param rowNumber The row number to select
      * @return The webelement if found
      */
     public WebElement selectRowByIndex(WebElement table, int rowNumber) {
         int rowId = rowNumber + 1;
-        String cssRow = String.format("tr:nth-child(%d)",rowId);
+        String cssRow = String.format("tr:nth-child(%d)", rowId);
         WebElement row = table.findElement(By.cssSelector(cssRow));
         pageUtils.waitForElementAndClick(row);
         return row;
     }
 
 
+    /**
+     * Select a row by item name
+     *
+     * @param table The table to search
+     * @param name  The item name to search for
+     */
+    public void selectRowByName(WebElement table, String name) {
+        findTableItemByName(table, name).click();
+    }
 
     /**
      * Select a row by item name
      *
-     * @param table  The table to search
-     * @param name The item name to search for
+     * @param table The table to search
+     * @param name  The item name to search for
      */
-    public  void selectRowByName(WebElement table, String name) {
-        findTableItemByName(table, name).click();
+    public void selectRowByName(WebElement table, String name, int columnIndex) {
+        findTableItemByName(table, name, columnIndex).click();
     }
 
     /**
      * Select a row by item connector name
      *
-     * @param table  The table to search
+     * @param table The table to search
      */
-    public  WebElement selectRowByConnector(WebElement table) {
+    public WebElement selectRowByConnector(WebElement table, String connectorName) {
         return findTableItemByConnector(table);
     }
 
@@ -175,8 +162,8 @@ public class TableUtils {
     /**
      * Check if a item exisits in the table. Search by item name
      *
-     * @param table  The table to search
-     * @param name The workflow name to check for
+     * @param table The table to search
+     * @param name  The workflow name to check for
      * @return True if the item exists in the table
      */
     public Boolean itemExistsInTable(WebElement table, String name) {
@@ -198,7 +185,7 @@ public class TableUtils {
         pageUtils.waitForElementToBeClickable(tableHeaders);
         List<String> headers = new ArrayList<>();
         tableHeaders.findElements(By.tagName("td"))
-                .forEach(column -> headers.add(column.getText()));
+            .forEach(column -> headers.add(column.getText()));
         return headers;
     }
 
@@ -216,12 +203,65 @@ public class TableUtils {
         try {
             column = getColumn(tableHeaders, columnHeader);
         } catch (StaleElementReferenceException staleElementReferenceException) {
-            WorkflowPage workflowPage = new WorkflowPage(driver);
-            workflowPage.refreshPage();
             column = getColumn(tableHeaders, columnHeader);
         }
 
         return column;
+    }
+
+    /**
+     * Find an item in a table by name
+     *
+     * @param table The table to search
+     * @param name  The name to search for
+     * @return The webelement if found
+     */
+    public WebElement findTableItemByName(WebElement table, String name, int columnIndex) {
+        List<WebElement> rows =
+            table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(columnIndex).getText().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+        if (rows.size() > 0) {
+            return rows.get(0);
+        }
+        return null;
+    }
+
+    /**
+     * Find an item in a table by name
+     *
+     * @param table The table to search
+     * @param name  The name to search for
+     * @return The webelement if found
+     */
+    public WebElement findTableItemByName(WebElement table, String name) {
+        pageUtils.waitForElementToBeClickable(table);
+        List<WebElement> rows =
+            table.findElements(By.tagName("tr"))
+                .stream()
+                .skip(1)
+                .filter(user -> user.findElements(By.tagName("td")).get(0).getText().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
+        if (rows.size() > 0) {
+            return rows.get(0);
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * get webelement for an item in table by index
+     *
+     * @param tableRow    WebElement of table row
+     * @param columnIndex - table column index
+     * @return WebElement
+     */
+    public WebElement getItemNameFromTable(WebElement tableRow, int columnIndex) {
+        WebElement webElement = tableRow.findElement(By.cssSelector("td:nth-child(" + columnIndex + ")"));
+        System.out.println(webElement.getText());
+        return (webElement != null) ? webElement : null;
     }
 
     /**

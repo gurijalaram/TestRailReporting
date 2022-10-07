@@ -24,8 +24,8 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
 
-    @FindBy(css = ".modal-content .modal-header")
-    private WebElement componentHeader;
+    @FindBy(css = ".MuiPaper-root h1")
+    private WebElement componentLabel;
 
     @FindBy(css = "input[type='file']")
     private WebElement fileInput;
@@ -61,7 +61,7 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
 
     @Override
     protected void isLoaded() throws Error {
-        assertEquals("Update CAD File page was not displayed", "Update CAD File", pageUtils.waitForElementToAppear(componentHeader).getAttribute("textContent"));
+        assertEquals("Update CAD File page was not displayed", "Update CAD File", pageUtils.waitForElementToAppear(componentLabel).getAttribute("textContent"));
     }
 
 
@@ -73,7 +73,6 @@ public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
      */
     public UpdateCadFilePage enterFilePath(File filePath) {
         try {
-            fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
             fileInput.sendKeys(URLDecoder.decode(filePath.getAbsolutePath(), StandardCharsets.UTF_8.toString()));
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();

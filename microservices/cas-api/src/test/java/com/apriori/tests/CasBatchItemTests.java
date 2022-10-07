@@ -8,6 +8,8 @@ import static org.hamcrest.Matchers.is;
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItems;
 import com.apriori.entity.response.PostBatch;
@@ -20,6 +22,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -27,10 +30,19 @@ import org.junit.Test;
 public class CasBatchItemTests {
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private String customerIdentity;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void getToken() {
         token = new AuthorizationUtil().getTokenAsString();
+    }
+
+    @After
+    public void cleanUp() {
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
+        }
     }
 
     @Test
@@ -44,15 +56,15 @@ public class CasBatchItemTests {
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
+        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, BatchItems.class)
             .token(token)
-            .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
+            .inlineVariables(customerIdentity, batchIdentity)).get();
 
         assertThat(getItems.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(getItems.getResponseEntity().getPageItemCount(), is(greaterThanOrEqualTo(1)));
@@ -69,7 +81,7 @@ public class CasBatchItemTests {
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
@@ -91,15 +103,15 @@ public class CasBatchItemTests {
 
         ResponseWrapper<Customer> customer = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        String customerIdentity = customer.getResponseEntity().getIdentity();
+        customerIdentity = customer.getResponseEntity().getIdentity();
 
         ResponseWrapper<PostBatch> batch = CasTestUtil.addBatchFile(customerIdentity);
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
+        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, BatchItems.class)
             .token(token)
-            .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
+            .inlineVariables(customerIdentity, batchIdentity)).get();
 
         BatchItem batchItem = getItems.getResponseEntity().getItems().get(0);
         String itemId = batchItem.getIdentity();
@@ -107,7 +119,7 @@ public class CasBatchItemTests {
 
         ResponseWrapper<BatchItem> getItem = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEM, BatchItem.class)
             .token(token)
-            .inlineVariables(customerIdentity, "batches", batchIdentity, "items", itemId)).get();
+            .inlineVariables(customerIdentity, batchIdentity, itemId)).get();
 
         assertThat(getItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(getItem.getResponseEntity().getIdentity(), is(equalTo(itemId)));
@@ -133,9 +145,9 @@ public class CasBatchItemTests {
 
         String batchIdentity = batch.getResponseEntity().getIdentity();
 
-        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_BATCHES, BatchItems.class)
+        ResponseWrapper<BatchItems> getItems = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.BATCH_ITEMS, BatchItems.class)
             .token(token)
-            .inlineVariables(customerIdentity, "batches", batchIdentity, "items")).get();
+            .inlineVariables(customerIdentity, batchIdentity)).get();
 
         String itemId = getItems.getResponseEntity().getItems().get(0).getIdentity();
 

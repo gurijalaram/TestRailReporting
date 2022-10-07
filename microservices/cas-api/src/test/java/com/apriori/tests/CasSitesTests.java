@@ -11,6 +11,8 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
+import com.apriori.cds.enums.CDSAPIEnum;
+import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.Site;
 import com.apriori.entity.response.Sites;
 import com.apriori.entity.response.ValidateSite;
@@ -24,6 +26,8 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
+import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -31,26 +35,35 @@ public class CasSitesTests {
 
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private String customerIdentity;
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Before
     public void getToken() {
         token = new AuthorizationUtil().getTokenAsString();
     }
 
+    @After
+    public void cleanUp() {
+        if (customerIdentity != null) {
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
+        }
+    }
+
     @Test
     @TestRail(testCaseId = {"5649"})
     @Description("Returns a list of sites for the customer")
     public void getCustomerSites() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        String identity = response.getResponseEntity().getItems().get(0).getIdentity();
+        String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> siteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES, Sites.class)
+        ResponseWrapper<Sites> siteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITES, Sites.class)
             .token(token)
-            .inlineVariables(identity)).get();
+            .inlineVariables(customerIdentity)).get();
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
@@ -61,14 +74,14 @@ public class CasSitesTests {
     @TestRail(testCaseId = {"5650"})
     @Description("Get the Site identified by its identity.")
     public void getSiteByIdentity() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES, Sites.class)
+        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITES, Sites.class)
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
@@ -77,7 +90,7 @@ public class CasSitesTests {
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Site> site = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES_ID, Site.class)
+        ResponseWrapper<Site> site = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITE_ID, Site.class)
             .token(token)
             .inlineVariables(customerIdentity, siteIdentity)).get();
 
@@ -89,30 +102,29 @@ public class CasSitesTests {
     @TestRail(testCaseId = {"5651"})
     @Description("Validates Customer's Site record by site ID.")
     public void validateCustomerSite() {
-        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER, Customers.class)
+        ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
 
-        String identity = response.getResponseEntity().getItems().get(0).getIdentity();
+        String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
-        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.POST_SITES, Sites.class)
+        ResponseWrapper<Sites> sitesResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SITES, Sites.class)
             .token(token)
-            .inlineVariables(identity)).get();
+            .inlineVariables(customerIdentity)).get();
 
         assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
-        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(identity, siteId);
+        ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(customerIdentity, siteId);
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(siteResponse.getResponseEntity().getResponse().getStatus(), is(equalTo("EXISTS")));
     }
 
     @Test
-    @Issue("MIC-1678")
     @TestRail(testCaseId = {"5648"})
     @Description("Create a new Site for the Customer")
     public void createCustomerSite() {
@@ -127,9 +139,9 @@ public class CasSitesTests {
 
         assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
 
-        String identity = response.getResponseEntity().getIdentity();
+        customerIdentity = response.getResponseEntity().getIdentity();
 
-        ResponseWrapper<Site> site = CasTestUtil.addSite(identity, siteID, siteName);
+        ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
 
         assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         assertThat(site.getResponseEntity().getSiteId(), is(equalTo(siteID)));

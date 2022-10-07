@@ -6,8 +6,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
-import com.apriori.pageobjects.pages.evaluate.components.ComponentsListPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -23,17 +23,16 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 public class UploadTests extends TestBase {
     private CidAppLoginPage loginPage;
     private ExplorePage explorePage;
     private EvaluatePage evaluatePage;
-    private ComponentsListPage componentsListPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -43,16 +42,15 @@ public class UploadTests extends TestBase {
     @TestRail(testCaseId = {"5422"})
     @Description("Failed upload of any other types of files")
     public void invalidFile() {
-
         resourceFile = FileResourceUtil.getResourceAsFile("InvalidFileType.txt");
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
         String fileError;
 
         loginPage = new CidAppLoginPage(driver);
         fileError = loginPage.login(UserUtil.getUser())
-                .importCadFile()
-                .inputComponentDetails(testScenarioName, resourceFile)
-                .getFileInputError();
+            .importCadFile()
+            .inputComponentDetails(testScenarioName, resourceFile)
+            .getAlertWarning();
 
         assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
@@ -72,13 +70,15 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
-                .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-                .createScenario()
-                .enterScenarioName(newScenarioName)
-                .submit(EvaluatePage.class);
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .createScenario()
+            .enterScenarioName(newScenarioName)
+            .submit(EvaluatePage.class);
 
-        assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED), is(true));
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(newScenarioName)));
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName()).isEqualTo(newScenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -93,8 +93,8 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         explorePage = loginPage.login(UserUtil.getUser())
-                .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
-                .clickSearch(componentName);
+            .uploadComponentAndCancel(testScenarioName, resourceFile, ExplorePage.class)
+            .clickSearch(componentName);
 
         assertThat(explorePage.getListOfScenarios(componentName, testScenarioName), is(equalTo(0)));
     }
@@ -112,7 +112,7 @@ public class UploadTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
                 .selectProcessGroup(processGroupEnum)
@@ -121,8 +121,8 @@ public class UploadTests extends TestBase {
                 .selectMaterial("Steel, Hot Worked, AISI 1010")
                 .submit(EvaluatePage.class)
                 .costScenario()
-                .publishScenario()
-                .publish(cidComponentItem, currentUser, EvaluatePage.class)
+                .publishScenario(PublishPage.class)
+                .publish(cidComponentItem,  EvaluatePage.class)
                 .logout()
                 .login(UserUtil.getUser())
                 .selectFilter("Public")
@@ -134,29 +134,24 @@ public class UploadTests extends TestBase {
     }
 
     @Test
-    @Description("Upload multi-components")
-    public void multiUploadComponents() {
-        final File resource1 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston cover_model1.prt");
-        final File resource2 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston pin_model1.prt");
-        final File resource3 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston rod_model1.prt");
-        final File resource4 = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_INVESTMENT, "piston_model1.prt");
-        final File resource5 = FileResourceUtil.getCloudFile(ProcessGroupEnum.ASSEMBLY, "v6 piston assembly_asm1.prt");
-        final List<File> resourceFiles = Arrays.asList(resource1, resource2, resource3, resource4, resource5);
-        final UserCredentials currentUser = UserUtil.getUser();
+    @TestRail(testCaseId = "5623")
+    @Description("Validate a user cannot upload an assembly from a non supported CAD package")
+    public void uploadUnsupportedCADFile() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.WITHOUT_PG;
+
+        String componentName = "SC Plasma 009-005";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".f3d");
+        currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
+        String fileError;
+
         loginPage = new CidAppLoginPage(driver);
-        cidComponentItem = loginPage.login(currentUser)
-                .uploadMultiComponents(resourceFiles, scenarioName, currentUser);
+        fileError = loginPage.login(UserUtil.getUser())
+            .importCadFile()
+            .inputComponentDetails(scenarioName, resourceFile)
+            .getAlertWarning();
 
-        evaluatePage = new ExplorePage(driver).selectFilter("Recent")
-                .clickSearch("v6 piston assembly")
-                .openScenario("V6 PISTON ASSEMBLY_ASM1", scenarioName);
-
-        componentsListPage = new ComponentsListPage(driver);
-        componentsListPage.selectCheckAllBox()
-                .setInputs()
-                .selectProcessGroup(ProcessGroupEnum.CASTING_INVESTMENT)
-                .applyAndCost(ComponentsListPage.class);
+        assertThat(fileError, containsString("The file type of the selected file is not supported"));
     }
 }

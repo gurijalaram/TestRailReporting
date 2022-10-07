@@ -19,58 +19,58 @@ import com.apriori.utils.properties.PropertiesContext;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import java.util.stream.Collectors;
 
 public class CdsAssociationUserTests {
-    private static String customerAssociationUserIdentity;
-    private static String customerAssociationUserIdentityEndpoint;
-    private static GenerateStringUtil generateStringUtil = new GenerateStringUtil();
-    private static CdsTestUtil cdsTestUtil = new CdsTestUtil();
-    private static ResponseWrapper<Customer> customer;
-    private static String customerName;
-    private static String cloudRef;
-    private static String salesForceId;
-    private static String emailPattern;
-    private static String customerIdentity;
-    private static String url;
-    private static String customerIdentityEndpoint;
-    private static String aPCustomerIdentity;
-    private static String associationsEndpoint;
-    private static String associationIdentity;
-    private static ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
+    private String customerAssociationUserIdentity;
+    private String customerAssociationUserIdentityEndpoint;
+    private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
+    private CdsTestUtil cdsTestUtil = new CdsTestUtil();
+    private ResponseWrapper<Customer> customer;
+    private String customerName;
+    private String cloudRef;
+    private String salesForceId;
+    private String emailPattern;
+    private String customerIdentity;
+    private String url;
+    private String customerIdentityEndpoint;
+    private String aPCustomerIdentity;
+    private String associationIdentity;
+    private ResponseWrapper<CustomerAssociationResponse> customerAssociationResponse;
 
-    @BeforeClass
-    public static void setDetails() {
+    @Before
+    public void setDetails() {
         url = Constants.getServiceUrl();
 
         customerName = generateStringUtil.generateCustomerName();
         cloudRef = generateStringUtil.generateCloudReference();
         salesForceId = generateStringUtil.generateSalesForceId();
         emailPattern = "\\S+@".concat(customerName);
+        String customerType = Constants.CLOUD_CUSTOMER;
 
-        customer = cdsTestUtil.addCustomer(customerName, cloudRef, salesForceId, emailPattern);
+        customer = cdsTestUtil.addCustomer(customerName, customerType, cloudRef, salesForceId, emailPattern);
         customerIdentity = customer.getResponseEntity().getIdentity();
         customerIdentityEndpoint = String.format(url, String.format("customers/%s", customerIdentity));
 
         aPCustomerIdentity = Constants.getAPrioriInternalCustomerIdentity();
 
-        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMERS_ASSOCIATIONS_WITH_PAGE_BY_ID, CustomerAssociationResponse.class, aPCustomerIdentity);
+        customerAssociationResponse = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMERS_ASSOCIATIONS, CustomerAssociationResponse.class,aPCustomerIdentity);
         associationIdentity = customerAssociationResponse.getResponseEntity().getItems().stream().filter(target -> target.getTargetCustomerIdentity().equals(customerIdentity)).collect(Collectors.toList()).get(0).getIdentity();
 
     }
 
-    @AfterClass
-    public static void cleanUp() {
+    @After
+    public void cleanUp() {
         if (customerAssociationUserIdentityEndpoint != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_ASSOCIATIONS,
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
                 aPCustomerIdentity, associationIdentity, customerAssociationUserIdentity);
         }
         if (customerIdentityEndpoint != null) {
-            cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, customerIdentity);
+            cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, customerIdentity);
         }
     }
 
@@ -96,15 +96,23 @@ public class CdsAssociationUserTests {
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AssociationUserResponse> users = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_ASSOCIATIONS,
+        ResponseWrapper<AssociationUserResponse> associationUsers = cdsTestUtil.getCommonRequest(CDSAPIEnum.ASSOCIATIONS_BY_CUSTOMER_ASSOCIATIONS_IDS,
             AssociationUserResponse.class,
+            aPCustomerIdentity,
+            associationIdentity
+        );
+
+        assertThat(associationUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        assertThat(associationUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+
+        ResponseWrapper<AssociationUserItems> users = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
+            AssociationUserItems.class,
             aPCustomerIdentity,
             associationIdentity,
             customerAssociationUserIdentity
         );
 
         assertThat(users.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(users.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
     }
 
     @Test
@@ -117,7 +125,7 @@ public class CdsAssociationUserTests {
         assertThat(associationUser.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
         customerAssociationUserIdentity = associationUser.getResponseEntity().getIdentity();
 
-        ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.GET_CUSTOMER_ASSOCIATIONS,
+        ResponseWrapper<AssociationUserItems> associationUserIdentity = cdsTestUtil.getCommonRequest(CDSAPIEnum.CUSTOMER_ASSOCIATION_USER_BY_ID,
             AssociationUserItems.class,
             aPCustomerIdentity,
             associationIdentity,

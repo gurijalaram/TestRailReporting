@@ -1,7 +1,7 @@
 package com.apriori.cidappapi.entity.builder;
 
 import com.apriori.cidappapi.entity.response.PostComponentResponse;
-import com.apriori.css.entity.response.ScenarioItem;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.utils.enums.DigitalFactoryEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.enums.ScenarioStateEnum;
@@ -41,4 +41,8 @@ public class ComponentInfoBuilder {
     private ScenarioItem scenarioItem;
     private List<ScenarioItem> scenarioItems;
     private PostComponentResponse component;
+    private String assignedTo;
+    private String status;
+    @Builder.Default
+    private ComponentInfoBuilderSettings settings = ComponentInfoBuilderSettings.builder().build();
 }

@@ -6,6 +6,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialUtilizationPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -21,6 +22,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -35,13 +37,14 @@ public class ChangeMaterialSelectionTests extends TestBase {
     private File resourceFile;
     private MaterialUtilizationPage materialUtilizationPage;
     private ComponentInfoBuilder cidComponentItem;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     public ChangeMaterialSelectionTests() {
         super();
     }
 
     @Test
-    @TestRail(testCaseId = {"6186"})
+    @TestRail(testCaseId = {"6186", "5898"})
     @Description("Test making changes to the Material for Sand Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -60,7 +63,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("270")
@@ -68,7 +71,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Brass, Cast, Yellow 270")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -91,7 +96,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Aluminum, Cast, ANSI AL380.0")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("C28000")
@@ -99,7 +104,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, Cast, UNS C28000"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Copper, Cast, UNS C28000")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -121,7 +128,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("ABS"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("ABS")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("PET")
@@ -129,7 +136,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("PET 30% Glass"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("PET 30% Glass")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -152,7 +161,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Cold Worked, AISI 1020")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .search("625")
@@ -160,7 +169,9 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .submit(EvaluatePage.class)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Inconel 625"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Inconel 625")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
 
@@ -185,21 +196,23 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .selectDigitalFactory(APRIORI_USA)
             .costScenario();
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Steel, Hot Worked, AISI 1010")).isEqualTo(true);
 
         evaluatePage.openMaterialSelectorTable()
             .selectMaterial("Polyetheretherketone (PEEK)")
             .submit(EvaluatePage.class)
             .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem,  EvaluatePage.class)
             .clickExplore()
             .selectFilter("Public")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .clickSearch(componentName)
             .openScenario(componentName, scenarioName);
 
-        assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)"), is(true));
+        softAssertions.assertThat(evaluatePage.isMaterialInfoDisplayed("Polyetheretherketone (PEEK)")).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -231,7 +244,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6192"})
+    @TestRail(testCaseId = {"6192", "5896"})
     @Description("Test closing and opening Material Properties, information within correct")
     public void changeMaterialSelectionTestMaterialProperties() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -262,7 +275,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    @TestRail(testCaseId = {"6193", "5420"})
+    @TestRail(testCaseId = {"6193", "5420", "5910", "6303"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMI() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -286,7 +299,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6194"})
+    @TestRail(testCaseId = {"6194", "5911"})
     @Description("Test opening a CAD part with material PMI, selecting and costing with MCAD option")
     public void changeMaterialSelectionTestPMINotExist() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -301,7 +314,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
-            .selectionMethod("Digital Factory Default [Steel, Hot Worked, AISI 1010]")
+            .selectMaterialMode("Digital Factory Default [Steel, Hot Worked, AISI 1010]")
             .submit(EvaluatePage.class)
             .costScenario();
 
@@ -309,7 +322,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6195"})
+    @TestRail(testCaseId = {"6195", "5921"})
     @Description("Test opening material selection and selecting apply without making a selection")
     public void changeMaterialSelectionTestNoChange() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;

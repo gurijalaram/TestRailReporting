@@ -12,6 +12,7 @@ import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
 import com.evaluate.SecondaryProcessTests;
 import com.evaluate.TwoModelMachiningTests;
+import com.evaluate.assemblies.GroupEditAssemblies;
 import com.evaluate.assemblies.UploadAssembliesTests;
 import com.evaluate.dtc.DFMRiskTests;
 import com.evaluate.dtc.DTCCastingTests;
@@ -71,7 +72,8 @@ import testsuites.suiteinterface.AdhocTests;
     ToleranceTests.class,
     ComparisonTests.class,
     ThreadTests.class,
-    PartNestingTests.class
+    PartNestingTests.class,
+    GroupEditAssemblies.class
 })
 public class AdhocTestSuite {
 }

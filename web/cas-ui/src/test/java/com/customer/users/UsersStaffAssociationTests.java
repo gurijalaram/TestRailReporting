@@ -11,6 +11,7 @@ import com.apriori.cds.objects.response.Customers;
 import com.apriori.cds.objects.response.User;
 import com.apriori.cds.objects.response.Users;
 import com.apriori.cds.utils.CdsTestUtil;
+import com.apriori.cds.utils.Constants;
 import com.apriori.customer.users.StaffPage;
 import com.apriori.login.CasLoginPage;
 import com.apriori.testsuites.categories.SmokeTest;
@@ -54,24 +55,22 @@ public class UsersStaffAssociationTests extends TestBase {
     public void setup() {
         Map<String, Object> existingUsers = Collections.singletonMap("username[CN]", STAFF_TEST_USER);
         Map<String, Object> existingCustomer = Collections.singletonMap("name[EQ]", STAFF_TEST_CUSTOMER);
-        String now = new SimpleDateFormat("yyyyMMddHHmmss").format(new Date());
         String cloudRef = new GenerateStringUtil().generateCloudReference();
-        String salesforce = StringUtils.leftPad(now, 15, "0");
-        String email = "test.com";
+        String email = STAFF_TEST_CUSTOMER.toLowerCase();
 
         cdsTestUtil = new CdsTestUtil();
         aprioriInternal = cdsTestUtil.getAprioriInternal();
         sourceUsers = new ArrayList<>(cdsTestUtil.findAll(
-            CDSAPIEnum.GET_USERS_BY_CUSTOMER_ID,
+            CDSAPIEnum.CUSTOMER_USERS,
             Users.class,
             existingUsers,
             Collections.emptyMap(),
             aprioriInternal.getIdentity()
         ));
 
-        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.GET_CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
+        targetCustomer = cdsTestUtil.findFirst(CDSAPIEnum.CUSTOMERS, Customers.class, existingCustomer, Collections.emptyMap());
         targetCustomer = targetCustomer == null
-            ? cdsTestUtil.addCustomer(STAFF_TEST_CUSTOMER, cloudRef, salesforce, email).getResponseEntity()
+            ? cdsTestUtil.addCASCustomer(STAFF_TEST_CUSTOMER, cloudRef, email).getResponseEntity()
             : targetCustomer;
 
         staffPage = new CasLoginPage(driver)
@@ -83,8 +82,8 @@ public class UsersStaffAssociationTests extends TestBase {
 
     @After
     public void teardown() {
-        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_USERS_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
-        cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, targetCustomer.getIdentity());
+        sourceUsers.forEach((user) -> cdsTestUtil.delete(CDSAPIEnum.USER_BY_CUSTOMER_USER_IDS, aprioriInternal.getIdentity(), user.getIdentity()));
+        cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, targetCustomer.getIdentity());
     }
 
     private void populateStaffTestUsers(int count) {
@@ -141,6 +140,7 @@ public class UsersStaffAssociationTests extends TestBase {
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
         userCandidatesTable.getRows().findFirst().ifPresent((row) -> Obligation.mandatory(row::getCheck, "The check cell is missing").check(true));
+        ++selected;
         paginator.clickFirstPage().getPageSize().select("50").select("100");
         utils.waitForCondition(userCandidates::isStable, PageUtils.DURATION_LOADING);
 
@@ -205,7 +205,7 @@ public class UsersStaffAssociationTests extends TestBase {
         staffPage.clickAddFromList();
         SourceListComponent candidatesUpd = staffPage.getCandidates();
         TableComponent candidatesUpdTable = Obligation.mandatory(candidatesUpd::getTable, "The candidate table is missing.");
-        Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search("qatest");
+        Obligation.mandatory(candidates::getSearch, "The candidate search feature is missing.").search(STAFF_TEST_USER);
         long removedUser = candidatesUpdTable.getRows().count();
         assertThat("Users do not appear in the list of aPriori staff candidates", removedUser, is(equalTo(count)));
     }

@@ -1,8 +1,8 @@
 package com.apriori.cidappapi.utils;
 
-import com.apriori.apibase.services.common.objects.ErrorMessage;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
+import com.apriori.utils.ErrorMessage;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -88,7 +88,7 @@ public class AssemblyUtils {
     public AssemblyUtils uploadSubComponents(ComponentInfoBuilder componentAssembly) {
 
         componentAssembly.getSubComponents().forEach(subComponent -> {
-            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.postComponent(subComponent);
+            ComponentInfoBuilder subComponentScenarioItem = componentsUtil.setFilePostComponentQueryCSS(subComponent);
             subComponent.setComponentIdentity(subComponentScenarioItem.getComponentIdentity());
             subComponent.setScenarioIdentity(subComponentScenarioItem.getScenarioIdentity());
         });
@@ -101,7 +101,7 @@ public class AssemblyUtils {
      * @return component info builder object
      */
     public ComponentInfoBuilder uploadAssembly(ComponentInfoBuilder componentAssembly) {
-        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.postComponent(componentAssembly);
+        ComponentInfoBuilder assemblyScenarioItem = componentsUtil.setFilePostComponentQueryCSS(componentAssembly);
         componentAssembly.setComponentIdentity(assemblyScenarioItem.getComponentIdentity());
         componentAssembly.setScenarioIdentity(assemblyScenarioItem.getScenarioIdentity());
 
@@ -161,49 +161,6 @@ public class AssemblyUtils {
     }
 
     /**
-     * Uploads an assembly with all subcomponents, cost and publish all
-     *
-     * @param assemblyName             - the assembly name
-     * @param assemblyExtension        - the assembly extension
-     * @param assemblyProcessGroup     - the assembly process group
-     * @param subComponentNames        - the subComponent names
-     * @param subComponentExtension    - the subComponent extension
-     * @param subComponentProcessGroup - the subComponent process group
-     * @param scenarioName             - the scenario name
-     * @param currentUser              - the current user
-     * @return - the object of ComponentInfoBuilder
-     */
-    public ComponentInfoBuilder uploadCostPublishScenario(String assemblyName,
-                                                          String assemblyExtension,
-                                                          ProcessGroupEnum assemblyProcessGroup,
-                                                          List<String> subComponentNames,
-                                                          String subComponentExtension,
-                                                          ProcessGroupEnum subComponentProcessGroup,
-                                                          String scenarioName,
-                                                          UserCredentials currentUser) {
-
-        ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(
-            assemblyName,
-            assemblyExtension,
-            assemblyProcessGroup,
-            subComponentNames,
-            subComponentExtension,
-            subComponentProcessGroup,
-            scenarioName,
-            currentUser);
-
-        uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
-
-        costSubComponents(componentAssembly).costAssembly(componentAssembly);
-
-        publishSubComponents(componentAssembly);
-
-        publishAssembly(componentAssembly);
-
-        return componentAssembly;
-    }
-
-    /**
      * This method uploads an assembly with all subcomponents and publish all
      *
      * @param subComponentNames  - the subcomponent names
@@ -247,5 +204,56 @@ public class AssemblyUtils {
         myAssembly.setScenarioIdentity(assemblyUploadResponse.getScenarioIdentity());
 
         return myAssembly;
+    }
+
+    /**
+     * Uploads an assembly with all subcomponents, cost and publish all
+     *
+     * @param assemblyName             - the assembly name
+     * @param assemblyExtension        - the assembly extension
+     * @param assemblyProcessGroup     - the assembly process group
+     * @param subComponentNames        - the subComponent names
+     * @param subComponentExtension    - the subComponent extension
+     * @param subComponentProcessGroup - the subComponent process group
+     * @param scenarioName             - the scenario name
+     * @param currentUser              - the current user
+     * @return - the object of ComponentInfoBuilder
+     */
+    public ComponentInfoBuilder uploadsAndOpenAssembly(String assemblyName,
+                                                       String assemblyExtension,
+                                                       ProcessGroupEnum assemblyProcessGroup,
+                                                       List<String> subComponentNames,
+                                                       String subComponentExtension,
+                                                       ProcessGroupEnum subComponentProcessGroup,
+                                                       String scenarioName,
+                                                       UserCredentials currentUser) {
+
+        ComponentInfoBuilder componentAssembly = associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        return componentAssembly;
+    }
+
+    /**
+     * Shallow publishes an assembly
+     *
+     * @param componentAssembly - the component assembly
+     * @return current object
+     */
+    public AssemblyUtils shallowPublishAssembly(ComponentInfoBuilder componentAssembly) {
+        uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        costAssembly(componentAssembly);
+        publishSubComponents(componentAssembly);
+        publishAssembly(componentAssembly);
+        return this;
     }
 }

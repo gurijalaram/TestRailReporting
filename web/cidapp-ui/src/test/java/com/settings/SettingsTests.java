@@ -1,15 +1,18 @@
 package com.settings;
 
+import static com.apriori.utils.enums.DigitalFactoryEnum.APRIORI_USA;
+import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.emptyString;
 import static org.hamcrest.Matchers.hasItems;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryPage;
+import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
@@ -27,12 +30,13 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.ColourEnum;
+import com.utils.CurrencyEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.suiteinterface.IgnoreTests;
 import testsuites.suiteinterface.SmokeTests;
 
 import java.io.File;
@@ -46,8 +50,9 @@ public class SettingsTests extends TestBase {
     private UserCredentials currentUser;
     private SelectionPage selectionPage;
     private ComponentInfoBuilder cidComponentItem;
-    private SecondaryPage secondaryPage;
+    private AdvancedPage advancedPage;
     private MaterialSelectorPage materialSelectorPage;
+    private SoftAssertions softAssertions = new SoftAssertions();
 
     @After
     public void resetAllSettings() {
@@ -58,7 +63,7 @@ public class SettingsTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
-    @TestRail(testCaseId = {"6283"})
+    @TestRail(testCaseId = {"6283", "6637", "6275", "8883"})
     @Description("User can change the default Production Defaults")
     public void changeProductionDefaults() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -82,11 +87,13 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getScenarioName(), is("MP Auto Test"));
-        assertThat(productionDefaultPage.getProcessGroup(), is(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()));
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterial(), is("ABS, Plating"));
+        softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("MP Auto Test");
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_BRAZIL.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_EASTERN_EUROPE.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("ABS, Plating");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -109,9 +116,7 @@ public class SettingsTests extends TestBase {
             .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .costScenario()
-            .publishScenario()
-            .publish(cidComponentItem, currentUser, EvaluatePage.class);
+            .costScenario();
 
         assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED), is(true));
     }
@@ -162,8 +167,10 @@ public class SettingsTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.getAnnualVolume(), is("9524"));
-        assertThat(evaluatePage.getProductionLife(), is("7"));
+        softAssertions.assertThat(evaluatePage.getAnnualVolume()).isEqualTo("9524");
+        softAssertions.assertThat(evaluatePage.getProductionLife()).isEqualTo("7");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -179,7 +186,7 @@ public class SettingsTests extends TestBase {
         currentUser = UserUtil.getUser();
 
         loginPage = new CidAppLoginPage(driver);
-        secondaryPage = loginPage.login(currentUser)
+        advancedPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize(batchSize)
@@ -187,9 +194,9 @@ public class SettingsTests extends TestBase {
             .uploadComponentAndOpen(componentName, testScenarioName, resourceFile, currentUser)
             .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .goToSecondaryTab();
+            .goToAdvancedTab();
 
-        assertThat(secondaryPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
+        assertThat(advancedPage.getBatchSize(), is(equalTo(Integer.parseInt(batchSize))));
     }
 
     @Test
@@ -209,8 +216,10 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory()));
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_USA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_GERMANY.getDigitalFactory());
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -252,14 +261,16 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getProcessGroup(), is(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()));
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterial(), is("HIPS Extrusion"));
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_UNITED_KINGDOM.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("HIPS Extrusion");
+
+        softAssertions.assertAll();
     }
 
     @Test
-    @TestRail(testCaseId = {"6279"})
+    @TestRail(testCaseId = {"6279", "6692", "6696"})
     @Description("Have the users defaults automatically loaded for each login")
     public void logoutSettings() {
         currentUser = UserUtil.getUser();
@@ -280,15 +291,15 @@ public class SettingsTests extends TestBase {
             .openSettings()
             .goToProductionTab();
 
-        assertThat(productionDefaultPage.getProcessGroup(), is(ProcessGroupEnum.POWDER_METAL.getProcessGroup()));
-        assertThat(productionDefaultPage.getDigitalFactory(), is(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterialCatalog(), is(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory()));
-        assertThat(productionDefaultPage.getMaterial(), is("F-0005 Sponge"));
+        softAssertions.assertThat(productionDefaultPage.getProcessGroup()).isEqualTo(ProcessGroupEnum.POWDER_METAL.getProcessGroup());
+        softAssertions.assertThat(productionDefaultPage.getDigitalFactory()).isEqualTo(DigitalFactoryEnum.APRIORI_INDIA.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterialCatalog()).isEqualTo(DigitalFactoryEnum.APRIORI_MEXICO.getDigitalFactory());
+        softAssertions.assertThat(productionDefaultPage.getMaterial()).isEqualTo("F-0005 Sponge");
+
+        softAssertions.assertAll();
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6289"})
     @Description("Manual Batch Quantity cannot be zero")
     public void batchSize0() {
@@ -296,19 +307,16 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
-            .inputBatchSize("0");
+            .inputBatchSize("0")
+            .submit();
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), Matchers.is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be greater than 0.")));
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"3605"})
     @Description("Manual Batch Quantity cannot be junk")
     public void batchSizeJunk() {
@@ -316,19 +324,15 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize("JUNK");
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getBatchSize(), is(emptyString()));
     }
 
-    @Ignore("feature has not yet been added for 21.1")
     @Test
-    @Category(IgnoreTests.class)
     @TestRail(testCaseId = {"6306", "6307"})
     @Description("Manual Batch Quantity cannot be a decimal")
     public void batchSizeDecimal() {
@@ -336,17 +340,16 @@ public class SettingsTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
-        loginPage.login(currentUser)
+        productionDefaultPage = loginPage.login(currentUser)
             .openSettings()
             .goToProductionTab()
             .inputBatchSize("0.12.00");
 
-        /*warningPage = new DisplayPreferencesPage(driver).save(WarningPage.class);
-
-        assertThat(warningPage.getWarningText(), is(containsString("Some of the supplied inputs are invalid.")));*/
+        assertThat(productionDefaultPage.getErrorMessage(), is(equalTo("Must be an integer.")));
     }
 
     @Test
+    @Issue("CID-1182")
     @TestRail(testCaseId = {"6308"})
     @Description("Changes made on all tabs of the user preferences should be saved regardless of the tab that the save button was closed on")
     public void saveAllTabs() {
@@ -367,13 +370,17 @@ public class SettingsTests extends TestBase {
             .submit(ExplorePage.class)
             .openSettings();
 
-        assertThat(displayPreferencesPage.isSystemChecked("Imperial"), is(true));
+        softAssertions.assertThat(displayPreferencesPage.isSystemChecked("Imperial")).isEqualTo(true);
 
         productionDefaultPage = displayPreferencesPage.goToProductionTab();
-        assertThat(productionDefaultPage.getScenarioName(), is("Save all tabs test"));
+
+        softAssertions.assertThat(productionDefaultPage.getScenarioName()).isEqualTo("Save all tabs test");
 
         selectionPage = productionDefaultPage.goToSelectionTab();
-        assertThat(selectionPage.isColour(ColourEnum.AMBER), is(true));
+
+        softAssertions.assertThat(selectionPage.isColour(ColourEnum.AMBER)).isEqualTo(true);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -392,5 +399,35 @@ public class SettingsTests extends TestBase {
             .openMaterialSelectorTable();
 
         assertThat(materialSelectorPage.getListOfMaterials(), hasItems("F-0005", "F-0005 Sponge", "FC-0205", "FD-0405", "FLC-4605", "FLN2-4405", "FN-0205"));
+    }
+
+    @Test
+    // TODO: 9/15/2022 Work this test into defaultProductionLife() once CID-1182 is resolved.
+    @TestRail(testCaseId = {"6277"})
+    @Description("Successfully change the Currency")
+    public void changeCurrency() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "bracket_basic";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".prt");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .openSettings()
+            .selectCurrency(CurrencyEnum.EUR)
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(APRIORI_USA)
+            .openMaterialSelectorTable()
+            .search("AISI 1020")
+            .selectMaterial("Steel, Cold Worked, AISI 1020")
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        assertThat(evaluatePage.getCostResultsString("Fully Burdened Cost"), containsString("€"));
     }
 }

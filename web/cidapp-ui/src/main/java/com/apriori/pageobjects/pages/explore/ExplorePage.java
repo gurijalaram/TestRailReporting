@@ -1,15 +1,21 @@
 package com.apriori.pageobjects.pages.explore;
 
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
+import com.apriori.utils.enums.ScenarioStateEnum;
+import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -18,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author cfrith
@@ -35,6 +42,9 @@ public class ExplorePage extends ExploreToolbar {
 
     @FindBy(css = "[id='qa-scenario-explorer-filter-button'] button")
     private WebElement filterButton;
+
+    @FindBy(css = "[id='qa-sub-component-detail-filter-button'] button")
+    private WebElement filterButtonOnTableView;
 
     @FindBy(css = "[id='qa-scenario-explorer-preview-button'] button")
     private WebElement previewButton;
@@ -80,7 +90,7 @@ public class ExplorePage extends ExploreToolbar {
      * @return current page object
      */
     public ExplorePage selectFilter(String filter) {
-        pageUtils.typeAheadSelect(filterDropdown, "root", filter);
+        pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return this;
     }
@@ -102,6 +112,15 @@ public class ExplorePage extends ExploreToolbar {
     public ExplorePage selectAllScenarios() {
         scenarioTableController.selectAllScenarios();
         return this;
+    }
+
+    /**
+     * check if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isFilterTablePresent() {
+        return pageUtils.isElementPresent(By.xpath("//h5[contains(.,'Scenario Filter')][@class = 'modal-title']"));
     }
 
     /**
@@ -150,6 +169,17 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the number of elements with state present on the page
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return boolean
+     */
+    public boolean getListOfScenariosWithStatus(String componentName, String scenarioName, ScenarioStateEnum scenarioState) {
+        return scenarioTableController.getListOfScenariosWithStatus(componentName, scenarioName, scenarioState);
+    }
+
+    /**
      * Open configure page
      *
      * @return new page object
@@ -193,6 +223,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Highlights the scenario in the table using the keyboard shift key
+     *
+     * @param componentName - component name
+     * @param scenarioName  - scenario name
+     * @return current page object
+     */
+    public ExplorePage shiftHighlightScenario(String componentName, String scenarioName) {
+        scenarioTableController.shiftHighlightScenario(componentName, scenarioName);
+        return this;
+    }
+
+    /**
      * Gets the icon in the row
      *
      * @param componentName - name of the part
@@ -210,6 +252,15 @@ public class ExplorePage extends ExploreToolbar {
      */
     public FilterPage filter() {
         return componentTableActions.filter(filterButton);
+    }
+
+    /**
+     * Open filters page on Table View
+     *
+     * @return new page object
+     */
+    public FilterPage filterOnTableView() {
+        return componentTableActions.filter(filterButtonOnTableView);
     }
 
     /**
@@ -291,5 +342,84 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getSortOrder(ColumnsEnum column) {
         return scenarioTableController.getSortOrder(column);
+    }
+
+    /**
+     * Gets the processing failed state
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @return - String
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponentQueryParams(componentName, scenarioName, currentUser, "scenarioState, " + stateEnum.getState())
+            .getResponseEntity().getItems();
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    }
+
+    /**
+     * Checks component is in a required state
+     *
+     * @param componentInfo - the component info builder object
+     * @param scenarioState - the scenario state to check for
+     * @return current page object
+     */
+    public ExplorePage checkComponentStateRefresh(ComponentInfoBuilder componentInfo, ScenarioStateEnum scenarioState) {
+        scenarioTableController.checkComponentState(componentInfo, scenarioState);
+        refresh();
+        return this;
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param componentName   - the component name
+     * @param scenarioName    - the scenario name
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
+     * @param userCredentials - the user credentials
+     * @return current page object
+     */
+    public ExplorePage queryCssComponentParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+        scenarioTableController.getComponentQueryCssParams(componentName, scenarioName, userCredentials, paramKeysValues);
+        return this;
+    }
+
+    /**
+     * Gets all scenario Component Names from Explorer Table
+     *
+     * @return - list of all scenario Component Names
+     */
+    public List<String> getAllScenarioComponentName() {
+        List<WebElement> rows =
+            pageUtils.waitForElementsToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"));
+        List<String> componentNames = rows.stream().map(WebElement::getText).collect(Collectors.toList());
+        componentNames.remove("Component Name");
+        return componentNames;
+    }
+
+    /**
+     * assert if element exists in the DOM
+     *
+     * @return boolean
+     */
+    public boolean isElementDisplayed(String searchedText, String className) {
+
+        String xpath = "//div[contains(.,'".concat(searchedText).concat("')][@class = '").concat(className).concat("']");
+        WebElement element = pageUtils.waitForElementToAppear(By.xpath(xpath));
+        return element.isDisplayed();
+    }
+
+    /**
+     * Gets the background colour of the cell
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @return current page object
+     */
+    public String getCellColour(String componentName, String scenarioName) {
+        return scenarioTableController.getCellColour(componentName, scenarioName);
     }
 }

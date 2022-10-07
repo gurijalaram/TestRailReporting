@@ -38,6 +38,7 @@ public class ComponentIteration {
     private String updatedByName;
     private String customerIdentity;
     private Integer iteration;
+    private String costingMessage;
     private String scenarioIterationKey;
     private CostingInput costingInput;
     private List<Object> scenarioCustomAttributes = null;
@@ -45,6 +46,7 @@ public class ComponentIteration {
     private ScenarioGcd scenarioGcd;
     private ScenarioMetadata scenarioMetadata;
     private List<ScenarioProcess> scenarioProcesses = null;
+    private List<ScenarioRoutings> scenarioRoutings;
     private AnalysisOfChildren analysisOfChildren;
     private AnalysisOfScenario analysisOfScenario;
     private AnalysisOfScenarioAndChildren analysisOfScenarioAndChildren;
@@ -58,15 +60,4 @@ public class ComponentIteration {
     private List<ScenarioDesignIssues> scenarioDesignIssues;
     private List<ScenarioDesignNotices> scenarioDesignNotices;
     private Boolean hasCustomImage;
-
-    @Data
-    @Builder
-    static class AnalysisOfScenarioAndChildren {
-    }
-
-    @Data
-    @Builder
-    static class AnalysisOfChildren {
-
-    }
 }

@@ -27,6 +27,11 @@ class BaseRequestImpl implements Request {
     }
 
     @Override
+    public <T> ResponseWrapper<T> getMultipart() {
+        return initRequestData().getWithNoLogInfo();
+    }
+
+    @Override
     public <T> ResponseWrapper<T> postMultipart() {
         return initRequestData().postMultiPart();
     }

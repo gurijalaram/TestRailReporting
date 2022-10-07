@@ -1,5 +1,8 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static org.junit.Assert.assertTrue;
+
+import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,21 +19,26 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
-    @FindBy(xpath = "//button[.='Close']")
+    @FindBy(css = "[data-testid='close-button']")
     private WebElement closeButton;
 
-    @FindBy(css = ".modal-body .mb-3")
-    private WebElement uploadStatusText;
+    @FindBy(xpath = "//button[(text()='Successes')]")
+    private WebElement successesTab;
 
-    @FindBy(css = ".modal-body .message")
-    private WebElement messageText;
+    @FindBy(xpath = "//button[(text()='Failures')]")
+    private WebElement failuresTab;
+
+    @FindBy(xpath = "//button[(text()='Successes')]//span")
+    private WebElement numberOfSuccesses;
 
     private WebDriver driver;
     private PageUtils pageUtils;
+    private ModalDialogController modalDialogController;
 
     public CadFileStatusPage(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.modalDialogController = new ModalDialogController(driver);
         log.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -43,7 +51,8 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(messageText);
+        assertTrue("Successes tab is not displayed", pageUtils.waitForElementToAppear(successesTab).isDisplayed());
+        assertTrue("Failures tab is not displayed", pageUtils.waitForElementToAppear(failuresTab).isDisplayed());
     }
 
     /**
@@ -51,17 +60,26 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
      *
      * @return new page object
      */
-    public ExplorePage close() {
+    public ExplorePage clickClose() {
         pageUtils.waitForElementAndClick(closeButton);
         return new ExplorePage(driver);
     }
 
     /**
-     * This gets the message of the import status
+     * This gets the number of successes
      *
-     * @return - string
+     * @return - int
      */
-    public String getImportMessage() {
-        return pageUtils.waitForElementToAppear(uploadStatusText).getText();
+    public int getNumberOfSuccesses() {
+        return Integer.parseInt(pageUtils.waitForElementToAppear(numberOfSuccesses).getAttribute("textContent"));
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 }

@@ -4,6 +4,7 @@ import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClick
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfAllElements;
 import static org.openqa.selenium.support.ui.ExpectedConditions.invisibilityOfElementLocated;
 import static org.openqa.selenium.support.ui.ExpectedConditions.not;
+import static org.openqa.selenium.support.ui.ExpectedConditions.numberOfElementsToBe;
 import static org.openqa.selenium.support.ui.ExpectedConditions.or;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOf;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfAllElements;
@@ -241,6 +242,11 @@ public class PageUtils {
     public void jsNewTab() {
         JavascriptExecutor executor = (JavascriptExecutor) driver;
         executor.executeScript("window.open()");
+    }
+
+    public void javaScriptDelete(WebElement element) {
+        JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].remove();", element);
     }
 
     /**
@@ -661,6 +667,32 @@ public class PageUtils {
     }
 
     /**
+     * Checks the specific elements number are displayed
+     *
+     * @param element - the element
+     * @return int
+     */
+    public List<WebElement> waitForSpecificElementsNumberToAppear(By element, int size) {
+        long webDriverWait = 5L;
+        int retries = 0;
+        int maxRetries = 12;
+
+        while (retries < maxRetries) {
+            try {
+
+                return new WebDriverWait(driver, Duration.ofSeconds(webDriverWait))
+                    .ignoreAll(ignoredWebDriverExceptions)
+                    .until(numberOfElementsToBe(element,size));
+
+            } catch (Exception e) {
+                logger.info(String.format("Trying to recover from exception: %s", e.getClass().getName()));
+                retries++;
+            }
+        }
+        return driver.findElements(element);
+    }
+
+    /**
      * Checks element is not displayed by size
      *
      * @param element - the element
@@ -800,6 +832,7 @@ public class PageUtils {
                 throw new RuntimeException(String.format("Exception: %s, %s", ex.getClass().getName(), ex.getMessage()));
             }
         }
+        this.waitForJavascriptLoadComplete();
     }
 
     /**
@@ -963,6 +996,18 @@ public class PageUtils {
         new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
             .ignoreAll(ignoredWebDriverExceptions)
             .until(not((ExpectedCondition<Boolean>) element -> (locator).isDisplayed()));
+    }
+
+    /**
+     * Waits for the element to become invisible
+     *
+     * @param locator - the locator of the element
+     * @return
+     */
+    public void waitForElementNotVisible(WebElement locator, int timeoutInMinutes) {
+        new WebDriverWait(driver, Duration.ofSeconds(BASIC_WAIT_TIME_IN_SECONDS * timeoutInMinutes))
+            .ignoreAll(ignoredWebDriverExceptions)
+            .until(ExpectedConditions.invisibilityOf(locator));
     }
 
     /**
@@ -1161,9 +1206,39 @@ public class PageUtils {
      * @return current page object
      */
     public void typeAheadSelect(WebElement dropdownSelector, String root, String locatorValue) {
-        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@id]", root))).getAttribute("textContent").equals(locatorValue)) {
+        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[@class]", root))).getAttribute("textContent").equals(locatorValue)) {
             waitForElementAndClick(dropdownSelector);
-            javaScriptClick(waitForElementToAppear(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue))));
+            waitForElementAndClick(By.xpath(String.format("//div[@id='%s']//div[.='%s']//div[@id]", root, locatorValue)));
+        }
+    }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param label            - the label preceding the element
+     * @param locatorValue     - the locator value
+     * @return current page object
+     */
+    public void optionsTypeAheadSelect(WebElement dropdownSelector, String label, String locatorValue) {
+        if (!waitForElementToAppear(By.xpath(String.format("//label[text()='%s']/..//div[@class]", label))).getAttribute("textContent").equals(locatorValue)) {
+            waitForElementAndClick(dropdownSelector);
+            javaScriptClick(driver.findElement(By.xpath(String.format("//label[text()='%s']/..//div[.='%s']//div[@id]", label, locatorValue))));
+        }
+    }
+
+    /**
+     * Interacts with a dropdown and input the relevant info
+     *
+     * @param dropdownSelector - the selector
+     * @param label            - the label preceding the element
+     * @param locatorValue     - the locator value
+     * @return current page object
+     */
+    public void modalTypeAheadSelect(WebElement dropdownSelector, String label, String locatorValue) {
+        if (!waitForElementToAppear(By.xpath(String.format("//div[@id='modal-body']//label[text()='%s']/..//div[@class]", label))).getAttribute("textContent").equals(locatorValue)) {
+            waitForElementAndClick(dropdownSelector);
+            waitForElementAndClick(By.xpath(String.format("//label[text()='%s']/..//div[.='%s']//div[@id]", label, locatorValue)));
         }
     }
 
@@ -1255,4 +1330,33 @@ public class PageUtils {
         final WebElement fontAwesomeSpinner = Obligation.optional(() -> waitForElementToAppear(fontAwesomeSpinnerQuery, DURATION_INSTANT, search));
         return fontAwesomeSpinner;
     }
+
+    /**
+     * Waits for a page to load, and to complete running all default JavaScript that might be associated
+     * with loading that page.
+     * before throwing exception
+     */
+    public void waitForJavascriptLoadComplete() {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until((ExpectedCondition<Boolean>) wdriver -> ((JavascriptExecutor) driver).executeScript("return document.readyState").equals("complete"));
+    }
+
+    /**
+     * Waits for a WebElement to become visible.
+     *
+     * @param element          - WebElement for which visibility is being waited.
+     * @param timeoutInSeconds Number of seconds to wait for WebElement to become visible before assuming
+     *                         it will not become visible. Defaults to 60 seconds.
+     * @return <b>True</b> if WebElement is visible, <b>false</b> if not visisble
+     */
+    public Boolean waitForWebElement(WebElement element) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+            wait.until(ExpectedConditions.visibilityOf(element));
+            return true;
+        } catch (TimeoutException e) {
+            return false;
+        }
+    }
+
 }

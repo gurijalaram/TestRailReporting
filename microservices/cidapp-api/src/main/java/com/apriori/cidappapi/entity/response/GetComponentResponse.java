@@ -1,6 +1,6 @@
 package com.apriori.cidappapi.entity.response;
 
-import com.apriori.apibase.services.common.objects.Pagination;
+import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -19,8 +19,4 @@ import java.util.List;
 @JsonRootName("response")
 public class GetComponentResponse extends Pagination {
     private List<GetComponentItems> items;
-
-    public List<GetComponentItems> getItems() {
-        return items;
-    }
 }

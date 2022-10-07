@@ -24,6 +24,7 @@ import org.apache.commons.lang3.RandomStringUtils;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import org.openqa.selenium.By;
@@ -55,7 +56,7 @@ public class NewCustomerTests extends TestBase {
 
     @After
     public void teardown() {
-        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.DELETE_CUSTOMER_BY_ID, identity));
+        created.forEach((identity) -> cdsTestUtil.delete(CDSAPIEnum.CUSTOMER_BY_ID, identity));
     }
 
     @Test
@@ -69,9 +70,6 @@ public class NewCustomerTests extends TestBase {
             .isTrue();
         soft.assertThat(customerViewPage.getUsersTab().isEnabled())
             .overridingErrorMessage("The users tab is enabled on a new customer.")
-            .isFalse();
-        soft.assertThat(customerViewPage.getSiteLicenseTab().isEnabled())
-            .overridingErrorMessage("The sites and licenses tab is enabled on a new customer.")
             .isFalse();
         soft.assertThat(customerViewPage.getInfrastructureTab().isEnabled())
             .overridingErrorMessage("The infrastructure tab is enabled on a new customer.")
@@ -96,8 +94,7 @@ public class NewCustomerTests extends TestBase {
                 "Updated By:",
                 "Created:",
                 "Created By:",
-                "Authentication:",
-                "Status:"
+                "Authentication:"
         );
 
         testNewCustomerLabelAvailable(labels, soft);
@@ -154,7 +151,7 @@ public class NewCustomerTests extends TestBase {
 
         editPage.clickCancelButton(CustomerProfilePage.class);
 
-        assertThat(customerProfilePage.getStatus(), is(equalTo("Active")));
+        assertThat(customerProfilePage.getCustomerName(), is(equalTo(customerName)));
     }
 
     private void testTheNecessaryFieldsAreRequired(SoftAssertions soft) {
@@ -260,6 +257,7 @@ public class NewCustomerTests extends TestBase {
     }
 
     @Test
+    @Ignore("Status is currently disabled in customer profile")
     @Description("Validate that customer can be set to inactive by unselecting Status checkbox")
     @TestRail(testCaseId = {"10633"})
     public void testNewCustomerCanBeCreatedWithInactiveStatus() {
@@ -288,6 +286,6 @@ public class NewCustomerTests extends TestBase {
         Obligation.mandatory(customers::getSearch, "Customers list search is missing").search(customerIdentity);
         utils.waitForCondition(customers::isStable, PageUtils.DURATION_LOADING);
 
-        assertThat(findCustomer.isStatusIconColour(customerIdentity, "red"), is(true));
+        assertThat(findCustomer.isStatusIconColour("red"), is(true));
     }
 }

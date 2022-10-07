@@ -1,18 +1,25 @@
 package com.apriori.customeradmin;
 
+import com.apriori.common.UsersTableController;
 import com.apriori.customer.CustomerWorkspacePage;
 import com.apriori.utils.Obligation;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 import com.apriori.utils.web.components.SearchFieldComponent;
 import com.apriori.utils.web.components.SourceListComponent;
+import com.apriori.utils.web.components.TableComponent;
+import com.apriori.utils.web.components.TableHeaderComponent;
 
 import lombok.extern.slf4j.Slf4j;
+import org.assertj.core.api.SoftAssertions;
 import org.openqa.selenium.By;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Represents the root customer list.
@@ -29,12 +36,20 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     private WebElement sourceListRoot;
     private final SourceListComponent customerSourceList;
 
+    @FindBy(css = ".apriori-source-list-layout-table")
+    private WebElement customersTableRoot;
+    private final SourceListComponent customersTable;
+
     @FindBy(className = "apriori-source-list-layout-card-button")
     private WebElement cardViewButton;
+
+    private UsersTableController usersTableController;
 
     public CustomerAdminPage(WebDriver driver) {
         super(driver, log);
         this.customerSourceList = new SourceListComponent(getDriver(), sourceListRoot);
+        this.customersTable = new SourceListComponent(getDriver(), customersTableRoot);
+        usersTableController = new UsersTableController(driver);
     }
 
     @Override
@@ -95,6 +110,16 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     }
 
     /**
+     * Gets the customers table.
+     *
+     * @return The customers list.
+     */
+    public SourceListComponent getCustomersTable() {
+        getPageUtils().waitForCondition(customersTable::isStable, getPageUtils().DURATION_LOADING);
+        return customersTable;
+    }
+
+    /**
      * Clicks the card view button
      *
      * @return This object
@@ -105,25 +130,79 @@ public class CustomerAdminPage extends EagerPageComponent<CustomerAdminPage> {
     }
 
     /**
-     * Gets locator of status icon
+     * Checks is icon has an expected color
      *
-     * @param customerIdentity the customer identity
-     * @return web element
-     */
-    private WebElement findStatusIcon(String customerIdentity) {
-        return getDriver().findElement(By.xpath(String.format("//a[@href='/customers/%s']//span[@class='float-right']",
-                customerIdentity.toUpperCase().trim())));
-    }
-
-    /**
-     * Checks is icon has a expected color
-     *
-     * @param customerIdentity the customer identity
      * @param color color of icon
      * @return true or false
      */
-    public boolean isStatusIconColour(String customerIdentity, String color) {
-        return getPageUtils().scrollWithJavaScript(findStatusIcon(customerIdentity)
-                .findElement(By.cssSelector("svg")), true).getAttribute("color").equals(color);
+    public boolean isStatusIconColour(String color) {
+        return getPageUtils().waitForElementToAppear(By.cssSelector(".apriori-card.card.customer-card.light.medium-card svg[role='img']"))
+            .getAttribute("color").equals(color);
+    }
+
+    /**
+     * Validates that table is pageable and refreshable
+     *
+     * @param soft soft assertions
+     * @return This object
+     */
+    public CustomerAdminPage validateCustomersTableArePageableRefreshable(SoftAssertions soft) {
+        return usersTableController.validateUsersTableArePageableAndRefreshable(soft, CustomerAdminPage.class);
+    }
+
+    /**
+     * Validates that table has a correct columns
+     *
+     * @param expectedName name of column
+     * @param id           id of column
+     * @param soft         soft assertions
+     * @return This object
+     */
+    public CustomerAdminPage validateCustomersTableHasCorrectColumns(String expectedName, String id, SoftAssertions soft) {
+        SourceListComponent list = getCustomersTable();
+        TableComponent table = Obligation.mandatory(list::getTable, "The customers table is missing");
+
+        TableHeaderComponent header = table.getHeader(id);
+        soft.assertThat(header)
+            .overridingErrorMessage(String.format("The '%s' column is missing.", expectedName))
+            .isNotNull();
+
+        if (header != null) {
+            String name = header.getName();
+            soft.assertThat(name)
+                .overridingErrorMessage(String.format("The '%s' column is incorrectly named '%s'", expectedName, name))
+                .isEqualTo(expectedName);
+        }
+        return this;
+    }
+
+    /**
+     * Validates that table columns are sortable
+     *
+     * @param id   - id of column
+     * @param soft - soft assertions
+     * @return This object
+     */
+    public CustomerAdminPage validateCustomersTableIsSortable(String id, SoftAssertions soft) {
+        SourceListComponent list = getCustomersTable();
+        TableComponent table = Obligation.mandatory(list::getTable, "The customers table is missing");
+        TableHeaderComponent header = table.getHeader(id);
+        if (header != null) {
+            String name = header.getName();
+            soft.assertThat(header.canSort())
+                .overridingErrorMessage(String.format("The '%s' column is not sortable.", name))
+                .isTrue();
+        }
+        return this;
+    }
+
+    /**
+     * Gets field names of customer card
+     *
+     * @return list of names
+     */
+    public List<String> getFieldName() {
+        List<WebElement> fieldsName = getDriver().findElements(By.cssSelector(".display-property-item-name.form-label.m-0"));
+        return fieldsName.stream().map(x -> x.getAttribute("textContent")).collect(Collectors.toList());
     }
 }

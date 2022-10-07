@@ -1,6 +1,6 @@
 package com.apriori.bcs.entity.response;
 
-import com.apriori.apibase.services.Pagination;
+import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
@@ -22,20 +22,16 @@ public class DigitalFactories extends Pagination {
     private Integer annualVolume;
     private String baseVpeIdentity;
     private Integer batchesPerYear;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime createdAt;
-
     private String createdBy;
     private String createdByName;
     private String currencyCode;
     private String customerIdentity;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime deletedAt;
-
     private String deletedBy;
     private String deletedByName;
     private String description;
@@ -53,11 +49,9 @@ public class DigitalFactories extends Pagination {
     private String revision;
     private String subjectIdentity;
     private String toolShopVpeIdentity;
-
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
-
     private String updatedBy;
     private String updatedByName;
     private String useType;

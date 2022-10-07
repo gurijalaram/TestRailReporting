@@ -54,6 +54,9 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     @FindBy(css = "[name='production.defaultBatchSize']")
     private WebElement batchSizeInput;
 
+    @FindBy(css = ".invalid-feedback-for-production-default-batch-size")
+    private WebElement errorMessage;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private ModalDialogController modalDialogController;
@@ -126,7 +129,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectProcessGroup(ProcessGroupEnum processGroup) {
-        pageUtils.typeAheadSelect(processGroupDropdown, "qa-production-defaults-process-group-select", processGroup.getProcessGroup());
+        pageUtils.modalTypeAheadSelect(processGroupDropdown, "Process Group", processGroup.getProcessGroup());
         return this;
     }
 
@@ -137,7 +140,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectDigitalFactory(DigitalFactoryEnum digitalFactory) {
-        pageUtils.typeAheadSelect(digitalFactoryDropdown, "qa-production-defaults-digital-factory-select", digitalFactory.getDigitalFactory());
+        pageUtils.modalTypeAheadSelect(digitalFactoryDropdown, "Digital Factory", digitalFactory.getDigitalFactory());
         return this;
     }
 
@@ -148,7 +151,7 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
      * @return current page object
      */
     public ProductionDefaultsPage selectMaterialCatalog(DigitalFactoryEnum materialCatalog) {
-        pageUtils.typeAheadSelect(materialCatalogDropdown, "qa-production-defaults-material-catalog-select", materialCatalog.getDigitalFactory());
+        pageUtils.modalTypeAheadSelect(materialCatalogDropdown, "Material Catalog", materialCatalog.getDigitalFactory());
         return this;
     }
 
@@ -271,12 +274,31 @@ public class ProductionDefaultsPage extends LoadableComponent<ProductionDefaults
     }
 
     /**
+     * Get error message
+     *
+     * @return string
+     */
+    public String getErrorMessage() {
+        return pageUtils.waitForElementToAppear(errorMessage).getAttribute("textContent");
+    }
+
+    /**
      * Selects the submit button
      *
      * @return generic page object
      */
     public <T> T submit(Class<T> klass) {
         return modalDialogController.submit(submitButton, klass);
+    }
+
+    /**
+     * Selects the submit button
+     *
+     * @return current page object
+     */
+    public ProductionDefaultsPage submit() {
+        modalDialogController.submit(submitButton);
+        return this;
     }
 
     /**

@@ -45,14 +45,14 @@ public class PartUtil {
     public static PartData getPartDataWithFile() {
         PartData partData = PartCommonService.getPartData();
         partData.setFile(
-            FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(partData.getProcessGroup()), partData.getFileName())
+            FileResourceUtil.getCloudFile(ProcessGroupEnum.fromString(partData.getProcessGroup()), partData.getFilename())
         );
         logInfo(partData);
         return partData;
     }
 
     private static void logInfo(PartData partData) {
-        log.info(String.format("Received PART for tests fileName:%s processGroup:%s ", partData.getFileName(), partData.getProcessGroup()));
+        log.info(String.format("Received PART for tests fileName:%s processGroup:%s ", partData.getFilename(), partData.getProcessGroup()));
     }
 
 }
