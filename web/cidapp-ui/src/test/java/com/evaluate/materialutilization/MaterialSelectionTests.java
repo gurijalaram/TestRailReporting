@@ -11,18 +11,16 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 import io.qameta.allure.Description;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
-import testsuites.RegressionTestSuite;
 import org.junit.runner.RunWith;
-
-import org.assertj.core.api.SoftAssertions;
+import testsuites.RegressionTestSuite;
 
 import java.io.File;
 
@@ -36,7 +34,9 @@ public class MaterialSelectionTests extends TestBase {
     private File resourceFile;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    public MaterialSelectionTests() { super(); }
+    public MaterialSelectionTests() {
+        super();
+    }
 
     private Object[] testParameters() {
         return new Object[] {
@@ -67,7 +67,7 @@ public class MaterialSelectionTests extends TestBase {
     @Category(RegressionTestSuite.class)
     @TestRail(testCaseId = {"5901"})
     @Description("Verify default material for each Process Group")
-    public void DefaultMaterialTest(ProcessGroupEnum pg, String defaultMaterial, String componentName, String componentExt) {
+    public void defaultMaterialTest(ProcessGroupEnum pg, String defaultMaterial, String componentName, String componentExt) {
 
         resourceFile = FileResourceUtil.getCloudFile(pg, componentName + componentExt);
         String scenarioName = new GenerateStringUtil().generateScenarioName();

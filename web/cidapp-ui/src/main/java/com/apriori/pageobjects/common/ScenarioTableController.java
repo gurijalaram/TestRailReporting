@@ -102,6 +102,20 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     }
 
     /**
+     * Get Component and Scenario names of first scenario in table
+     *
+     * @return The component and scenario names in a comma-separated String
+     */
+    public String getFirstScenarioDetails() {
+        By topComponentNameLocator = By.xpath("(//div[@class='table-body']/div)[1]//span[@data-testid='component-name']");
+        By topScenarioNameLocator = By.xpath("(//div[@class='table-body']/div)[1]//div[@data-header-id='scenarioName']//div[@data-testid='text-overflow']");
+        String componentName = driver.findElement(topComponentNameLocator).getText();
+        String scenarioName = driver.findElement(topScenarioNameLocator).getText();
+
+        return componentName + "," + scenarioName;
+    }
+
+    /**
      * Hovers over the scenario
      *
      * @param componentName - component name
@@ -271,6 +285,19 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return getByParentLocator(componentName, scenarioName)
             .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
             .getAttribute("data-icon");
+    }
+
+    /**
+     * Get the Published state of the specified scenario
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of icon (Public | Private)
+     */
+    public String getPublishedState(String componentName, String scenarioName) {
+        return getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("svg[id*='scenario-workspace-icon-']"))
+            .getAttribute("aria-label");
     }
 
     /**

@@ -14,6 +14,7 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -143,6 +144,15 @@ public class ExplorePage extends ExploreToolbar {
     public EvaluatePage openFirstScenario() {
         scenarioTableController.openFirstScenario();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Get Component and Scenario names of first scenario in table
+     *
+     * @return The component and scenario names in a comma-separated String
+     */
+    public String getFirstScenarioDetails() {
+        return scenarioTableController.getFirstScenarioDetails();
     }
 
     /**
@@ -291,6 +301,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the Published state of a given scenario
+     *
+     * @param componentName - The component name to be checked
+     * @param scenarioName - The scenario name to be checked
+     *
+     * @return String representation of published column
+     */
+    public String getPublishedState(String componentName, String scenarioName) {
+        return scenarioTableController.getPublishedState(componentName, scenarioName);
+    }
+
+    /**
      * Sets pagination to by default
      *
      * @return current page object
@@ -331,7 +353,7 @@ public class ExplorePage extends ExploreToolbar {
      */
     public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
-        return this;
+        return new ExplorePage(driver);
     }
 
     /**
@@ -421,5 +443,25 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getCellColour(String componentName, String scenarioName) {
         return scenarioTableController.getCellColour(componentName, scenarioName);
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param currentHeaders - List of currently displayed table headers
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ExplorePage addColumn(List<String> currentHeaders, ColumnsEnum columnToAdd) {
+        if (!currentHeaders.contains(columnToAdd.toString())) {
+            configure()
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.RIGHT)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
+                .submit(ExplorePage.class);
+        }
+        return this;
     }
 }

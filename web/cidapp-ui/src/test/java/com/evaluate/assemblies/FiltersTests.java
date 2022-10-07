@@ -20,6 +20,9 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.MatcherAssert;
@@ -480,5 +483,41 @@ public class FiltersTests extends TestBase {
 
         soft.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isTrue();
         soft.assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
+    }
+
+    @Test
+    @TestRail(testCaseId = "6075")
+    @Description("Validate Private filter displays only Private Scenarios")
+    public void showOnlyPrivateScenariosTest() {
+        SoftAssertions softAssert = new SoftAssertions();
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        explorePage = loginPage.login(currentUser);
+
+        List<String> tableHeaders = explorePage.getTableHeaders();
+
+        explorePage.selectFilter("Private")
+            .addColumn(tableHeaders, ColumnsEnum.PUBLISHED)
+            .sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.ASCENDING);
+
+        String[] topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
+        String topComponentName = topScenarioDetails[0];
+        String topScenarioName = topScenarioDetails[1];
+
+        softAssert.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
+            .as("Top scenario sorted ascending")
+            .isEqualTo("Private");
+
+        explorePage.sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.DESCENDING);
+        topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
+        topComponentName = topScenarioDetails[0];
+        topScenarioName = topScenarioDetails[1];
+
+        softAssert.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
+            .as("Top scenario sorted ascending")
+            .isEqualTo("Private");
+
+        softAssert.assertAll();
     }
 }
