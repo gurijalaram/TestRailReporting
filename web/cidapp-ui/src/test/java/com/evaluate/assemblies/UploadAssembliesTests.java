@@ -20,6 +20,9 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ButtonTypeEnum;
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
@@ -418,7 +421,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12156"})
+    @TestRail(testCaseId = {"12156", "6557"})
     @Description("Column Configuration button in Tree View is clickable and opens menu")
     public void testColumnConfigurationButton() {
         currentUser = UserUtil.getUser();
@@ -451,6 +454,120 @@ public class UploadAssembliesTests extends TestBase {
 
         softAssertions.assertThat(configurePage.getChoicesList()).containsAnyOf("Assigned At", "Assigned By", "Cost Maturity");
         softAssertions.assertThat(configurePage.getChosenList()).containsAnyOf("Component Name", "Scenario Name", "Component Type");
+
+        componentsListPage = configurePage.selectColumn(ColumnsEnum.NOTES)
+            .moveColumn(DirectionEnum.RIGHT)
+            .submit(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.NOTES.getColumns());
+
+        componentsListPage.configure()
+            .selectColumn(ColumnsEnum.PUBLISHED)
+            .moveColumn(DirectionEnum.RIGHT)
+            .selectColumn(ColumnsEnum.LOCKED)
+            .moveColumn(DirectionEnum.RIGHT)
+            .submit(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.PUBLISHED.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
+
+        componentsListPage.configure()
+            .selectColumn(ColumnsEnum.PUBLISHED)
+            .moveColumn(DirectionEnum.LEFT)
+            .selectColumn(ColumnsEnum.LOCKED)
+            .moveColumn(DirectionEnum.LEFT)
+            .submit(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.PUBLISHED.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.LOCKED.getColumns());
+
+        componentsListPage.configure()
+            .selectChoices()
+            .moveColumn(DirectionEnum.RIGHT)
+            .submit(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.PROCESS_ROUTING.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.LABOR_COST.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.FINISH_MASS.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.BATCH_SIZE.getColumns());
+
+        componentsListPage.configure()
+            .selectChosen()
+            .moveColumn(DirectionEnum.LEFT);
+
+        softAssertions.assertThat((configurePage.isSubmitButtonDisabled())).isEqualTo(true);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"12139", "12101", "12136"})
+    @Description("Column configuration in Tree View with All filter does not affect column configuration in List View")
+    public void testColumnConfigurationListView() {
+        currentUser = UserUtil.getUser();
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final String assemblyName = "titan charger ass";
+        final String assemblyExtension = ".SLDASM";
+        final List<String> subComponentNames = Arrays.asList("titan charger base", "titan charger lead", "titan charger upper");
+        final String subComponentExtension = ".SLDPRT";
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            assemblyName,
+            assemblyExtension,
+            ProcessGroupEnum.ASSEMBLY,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        componentsListPage = loginPage.login(currentUser)
+            .openComponent("titan charger base", scenarioName, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.PLASTIC_MOLDING)
+            .costScenario()
+            .clickActions()
+            .info()
+            .selectStatus("New")
+            .inputCostMaturity("Medium")
+            .editDescription("Test Description")
+            .editNotes("Test Notes")
+            .submit(EvaluatePage.class)
+            .clickExplore()
+            .openComponent(assemblyName, scenarioName, currentUser)
+            .openComponents()
+            .configure()
+            .selectChoices()
+            .moveColumn(DirectionEnum.RIGHT)
+            .submit(ComponentsListPage.class);
+
+        softAssertions.assertThat(componentsListPage.getRowDetails("titan charger base", scenarioName)).contains("Medium", "Test Description", "Test Notes",
+               "New", "5 years", "Plastic Molding", "Injection Molding", "ABS");
+
+        componentsListPage.tableView()
+            .configure()
+            .selectChosen()
+            .moveColumn(DirectionEnum.LEFT)
+            .selectColumn(ColumnsEnum.COMPONENT_NAME)
+            .moveColumn(DirectionEnum.RIGHT)
+            .selectColumn(ColumnsEnum.CAD_CONNECTED)
+            .moveColumn(DirectionEnum.RIGHT)
+            .selectColumn(ColumnsEnum.LOCKED)
+            .moveColumn(DirectionEnum.RIGHT)
+            .submit(ComponentsListPage.class);
+
+
+        softAssertions.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isEqualTo(true);
+
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.MATERIAL_NAME.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).doesNotContain(ColumnsEnum.PIECE_PART_COST.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.COMPONENT_NAME.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.CAD_CONNECTED.getColumns());
+        softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
 
         softAssertions.assertAll();
     }

@@ -28,7 +28,7 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
     @FindBy(xpath = "//span[.='No']")
     private WebElement noButton;
 
-    @FindBy(css = "placeholder...")
+    @FindBy(css = "[data-testid='primary-button']")
     private WebElement submitButton;
 
     private WebDriver driver;
@@ -79,7 +79,7 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
      */
     public SecondaryDFPage selectDropdown(String secondaryProcess, DigitalFactoryEnum digitalFactory) {
         WebElement machiningDropdown = pageUtils.waitForElementToAppear(driver.findElement(By.cssSelector(String.format("[id='qa-%s-select-field'] .apriori-select", secondaryProcess))));
-        inputsController.selectInputsDropdown(machiningDropdown, "qa-digital-factory-select-field", digitalFactory.getDigitalFactory());
+        inputsController.selectInputsDropdown(machiningDropdown, digitalFactory.getDigitalFactory());
         return this;
     }
 
@@ -99,5 +99,14 @@ public class SecondaryDFPage extends LoadableComponent<SecondaryDFPage> {
      */
     public <T> T cancel(Class<T> klass) {
         return modalDialogController.cancel(klass);
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 }

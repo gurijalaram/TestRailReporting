@@ -220,7 +220,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage tick(String option) {
         By byCheckbox = byCheckbox(option);
 
-        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+        if (!driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-testid").contains("CheckBoxIcon")) {
             pageUtils.waitForElementAndClick(byCheckbox);
         }
         return this;
@@ -235,14 +235,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     public ImportCadFilePage unTick(String option) {
         By byCheckbox = byCheckbox(option);
 
-        if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-icon").contains("check")) {
+        if (driver.findElement(byCheckbox).findElement(By.cssSelector("svg")).getAttribute("data-testid").contains("CheckBoxIcon")) {
             pageUtils.waitForElementAndClick(byCheckbox);
         }
         return this;
     }
 
     private By byCheckbox(String option) {
-        return with(By.cssSelector(".checkbox-icon"))
+        return with(By.cssSelector("[data-testid='checkbox']"))
             .near(By.xpath(String.format("//div[.='%s']", option)));
     }
 
@@ -318,7 +318,7 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
     /**
      * components deleted in the drop zone
      *
-     * @return
+     * @return String
      */
     public List<String> getComponentsInDropZone() {
         try {
@@ -327,5 +327,14 @@ public class ImportCadFilePage extends LoadableComponent<ImportCadFilePage> {
         } catch (Exception e) {
             return Collections.emptyList();
         }
+    }
+
+    /**
+     * Clicks the x button to close the modal
+     *
+     * @return generic page object
+     */
+    public <T> T closeDialog(Class<T> klass) {
+        return modalDialogController.closeDialog(klass);
     }
 }

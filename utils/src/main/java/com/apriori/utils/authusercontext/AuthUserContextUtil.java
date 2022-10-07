@@ -44,4 +44,19 @@ public class AuthUserContextUtil {
         //Repackage the object into a string format
         return new String(encodedUserIdBytes);
     }
+
+
+    /**
+     * Get Autorization user Identity
+     * @param email
+     * @return user Identity
+     */
+    public String getAuthUserIdentity(String email) {
+        RequestEntity userEntity = RequestEntityUtil.init(AuthUserContextEnum.GET_AUTH_USER_CONTEXT, Users.class)
+            .queryParams(new QueryParams().use("email[EQ]", email));
+
+        ResponseWrapper<Users> userResponse = HTTPRequest.build(userEntity).get();
+
+        return userResponse.getResponseEntity().getItems().get(0).getIdentity();
+    }
 }

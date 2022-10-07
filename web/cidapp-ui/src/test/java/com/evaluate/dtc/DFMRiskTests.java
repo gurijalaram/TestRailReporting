@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -30,6 +31,7 @@ public class DFMRiskTests extends TestBase {
 
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
+    private InvestigationPage investigationPage;
 
     private UserCredentials currentUser;
     private File resourceFile;
@@ -144,7 +146,7 @@ public class DFMRiskTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"6462"})
+    @TestRail(testCaseId = {"6462", "6415", "6416"})
     @Description("Validate DFM Risk - Medium Plastic Moulding")
     public void plasticMouldedMediumDFM() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -164,6 +166,13 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.MEDIUM.getIcon());
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Medium");
+
+        investigationPage = new EvaluatePage(driver).openDesignGuidance()
+            .openInvestigationTab()
+            .selectTopic("Slides and Lifters");
+
+        softAssertions.assertThat(investigationPage.getGcdCount("SlideBundle")).isEqualTo(2);
+        softAssertions.assertThat(investigationPage.getGcdCount("LifterBundle")).isEqualTo(1);
 
         softAssertions.assertAll();
     }
@@ -436,14 +445,14 @@ public class DFMRiskTests extends TestBase {
             .selectProcessGroup(processGroupEnum)
             .costScenario(5);
 
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(908.43), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Initial Fully Burdened Cost").isCloseTo(Double.valueOf(857.47), Offset.offset(30.0));
 
         evaluatePage.clickActions()
             .updateCadFile(cadResourceFile)
             .waitForCostLabelNotContain(NewCostingLabelEnum.PROCESSING_UPDATE_CAD, 3);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COST_COMPLETE)).isTrue();
-        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(771.24), Offset.offset(30.0));
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).as("Updated Fully Burdened Cost").isCloseTo(Double.valueOf(721.1), Offset.offset(30.0));
 
         // TODO uncomment this section when revert is implemented
         /*evaluatePage.revert()
@@ -480,7 +489,7 @@ public class DFMRiskTests extends TestBase {
 
         softAssertions.assertAll();
     }
-    
+
     @Test
     @TestRail(testCaseId = {"6470"})
     @Description("Validate DFM Risk - Medium Sand Casting")

@@ -42,7 +42,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".apriori-table .table-head")
     private WebElement tableHeaders;
 
-    @FindBy(css = ".table-head .checkbox-icon")
+    @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement selectAllCheckBox;
 
     private PageUtils pageUtils;
@@ -422,7 +422,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return webelement
      */
     private WebElement findScenarioCheckbox(String componentName, String scenarioName) {
-        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//div[@class='checkbox-icon']",
+        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//div[.='%s']/ancestor::div[@role='row']//span[@data-testid='checkbox']",
             componentName.toUpperCase().trim(), scenarioName.trim()));
         pageUtils.waitForElementToAppear(scenario);
         return pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);

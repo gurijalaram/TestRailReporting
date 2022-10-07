@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "required": [
+    "response"
+  ],
+  "properties": {
+    "response": {
+      "type": "object",
+      "required": [
+        "identity",
+        "bidPackageItem"
+      ],
+      "properties": {
+        "identity": {"type": "string"},
+        "bidPackageItem": {
+          "type": "object",
+          "required": [
+            "identity",
+            "bidPackageIdentity",
+            "projectIdentity",
+            "componentIdentity",
+            "scenarioIdentity",
+            "iterationIdentity"
+          ],
+          "properties": {
+            "identity": {"type": "string"},
+            "bidPackageIdentity": {"type": "string"},
+            "projectIdentity": {"type": "string"},
+            "componentIdentity": {"type": "string"},
+            "scenarioIdentity": {"type": "string"},
+            "iterationIdentity": {"type": "string"}
+          }
+        }
+      }
+    }
+  }
+}
