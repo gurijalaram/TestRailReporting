@@ -29,6 +29,7 @@ import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -486,10 +487,11 @@ public class FiltersTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "6075")
+    @TestRail(testCaseId = {"6075", "6080"})
     @Description("Validate Private filter displays only Private Scenarios")
-    public void showOnlyPrivateScenariosTest() {
+    public void verifyFilterContentTest() {
         SoftAssertions softAssert = new SoftAssertions();
+        LocalDateTime filterStartTime = LocalDateTime.now().minusHours(24);
         loginPage = new CidAppLoginPage(driver);
         currentUser = UserUtil.getUser();
 
@@ -506,7 +508,7 @@ public class FiltersTests extends TestBase {
         String topScenarioName = topScenarioDetails[1];
 
         softAssert.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
-            .as("Top scenario sorted ascending")
+            .as("Published state of top scenario sorted ascending")
             .isEqualTo("Private");
 
         explorePage.sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.DESCENDING);
@@ -515,8 +517,19 @@ public class FiltersTests extends TestBase {
         topScenarioName = topScenarioDetails[1];
 
         softAssert.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
-            .as("Top scenario sorted ascending")
+            .as("Published state of top scenario sorted ascending")
             .isEqualTo("Private");
+
+        explorePage.selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.ASCENDING);
+
+        topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
+        topComponentName = topScenarioDetails[0];
+        topScenarioName = topScenarioDetails[1];
+
+        softAssert.assertThat(explorePage.getCreatedAt(topComponentName, topScenarioName))
+                .as("Created At date of oldest scenario in Recent")
+                .isAfterOrEqualTo(filterStartTime);
 
         softAssert.assertAll();
     }

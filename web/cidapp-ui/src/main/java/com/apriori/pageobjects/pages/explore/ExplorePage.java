@@ -24,6 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -103,6 +104,18 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getComponentsFound() {
         return pageUtils.waitForElementToAppear(scenarioCount).getText();
+    }
+
+    /**
+     * Get the Created At value for a given scenario
+     *
+     * @param componentName - Name of the component
+     * @param scenarioName - Name of the scenario
+     *
+     * @return LocalDateTime representation of Created At value
+     */
+    public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
+        return scenarioTableController.getCreatedAt(componentName, scenarioName);
     }
 
     /**

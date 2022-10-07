@@ -23,9 +23,12 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Locale;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -285,6 +288,22 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
         return getByParentLocator(componentName, scenarioName)
             .findElement(By.cssSelector("svg[id*='scenario-state-icon-']"))
             .getAttribute("data-icon");
+    }
+
+    /**
+     * Get the Created At value for a given scenario
+     *
+     * @param componentName - Name of the component
+     * @param scenarioName - Name of the scenario
+     *
+     * @return LocalDateTime representation of Created At value
+     */
+    public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/y, h:m a", Locale.US);
+        String dateTimeString = getByParentLocator(componentName, scenarioName)
+            .findElement(By.cssSelector("div[data-testid='display-date'] div"))
+            .getText();
+        return LocalDateTime.parse(dateTimeString, formatter);
     }
 
     /**
