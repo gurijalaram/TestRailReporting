@@ -1,15 +1,11 @@
 package com.apriori.pageobjects.pages.partsandassemblies;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cidappapi.utils.ComponentsUtil;
-import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.cisapi.utils.ComponentsUtil;
+import com.apriori.cisapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.PartsAndAssemblyFilterController;
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
-import com.apriori.utils.enums.DigitalFactoryEnum;
-import com.apriori.utils.enums.ProcessGroupEnum;
-import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
