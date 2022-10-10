@@ -28,24 +28,24 @@ import testsuites.suiteinterface.OnPremTest;
 @RunWith(CategorySuiteRunner.class)
 @Categories.IncludeCategory(OnPremTest.class)
 @Suite.SuiteClasses({
-        AssemblyDetailsReportTests.class,
-        AssemblyCostReportTests.class,
-        CastingDtcReportTests.class,
-        CastingDtcComparisonReportTests.class,
-        ComponentCostReportTests.class,
-        CostOutlierIdentificationDetailsReportTests.class,
-        CycleTimeValueTrackingReportTests.class,
-        CycleTimeValueTrackingDetailsReportTests.class,
-        DesignOutlierIdentificationReportTests.class,
-        DesignOutlierIdentificationDetailsReportTests.class,
-        LoginTests.class,
-        PlasticDtcReportTests.class,
-        MachiningDtcReportTests.class,
-        ReportsNavigationTests.class,
-        SheetMetalDtcReportTests.class,
-        ScenarioComparisonReportTests.class,
-        TargetAndQuotedCostTrendReportTests.class,
-        TargetAndQuotedCostValueTrackingReportTests.class
+    AssemblyDetailsReportTests.class,
+    AssemblyCostReportTests.class,
+    CastingDtcReportTests.class,
+    CastingDtcComparisonReportTests.class,
+    ComponentCostReportTests.class,
+    CostOutlierIdentificationDetailsReportTests.class,
+    CycleTimeValueTrackingReportTests.class,
+    CycleTimeValueTrackingDetailsReportTests.class,
+    DesignOutlierIdentificationReportTests.class,
+    DesignOutlierIdentificationDetailsReportTests.class,
+    LoginTests.class,
+    PlasticDtcReportTests.class,
+    MachiningDtcReportTests.class,
+    ReportsNavigationTests.class,
+    SheetMetalDtcReportTests.class,
+    ScenarioComparisonReportTests.class,
+    TargetAndQuotedCostTrendReportTests.class,
+    TargetAndQuotedCostValueTrackingReportTests.class
 })
 
 public class OnPremCirSuite {

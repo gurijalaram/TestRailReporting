@@ -16,7 +16,6 @@ import com.apriori.utils.enums.CurrencyEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.apriori.utils.reader.file.user.UserUtil;
 import io.qameta.allure.Description;
 import org.junit.Before;
 import org.junit.Ignore;
