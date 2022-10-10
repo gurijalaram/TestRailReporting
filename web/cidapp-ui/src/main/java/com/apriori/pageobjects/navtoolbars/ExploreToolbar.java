@@ -520,4 +520,13 @@ public class ExploreToolbar extends MainNavBar {
 
         return navigateToScenario(myAssembly);
     }
+
+    /**
+     * Checks if button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isEditButtonEnabled() {
+        return pageUtils.waitForElementToAppear(editButton).isEnabled();
+    }
 }
