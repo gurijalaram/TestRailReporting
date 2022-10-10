@@ -16,8 +16,10 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CasIdentityProvidersTests extends TestUtil {
@@ -30,13 +32,15 @@ public class CasIdentityProvidersTests extends TestUtil {
     }
 
     @Test
+    @Ignore ("Will be fixed after fixing a bug IDS-851")
+    @Issue("IDS-851")
     @TestRail(testCaseId = {"5646", "5647"})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
 
         ResponseWrapper<IdentityProviders> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProviders.class)
             .token(token)
-            .inlineVariables("L2H992828N8M/deployments")).get();
+            .inlineVariables("L2H992828N8M/identity-providers")).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
         assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
