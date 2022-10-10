@@ -776,8 +776,8 @@ public class EvaluatePage extends EvaluateToolbar {
      * Selects the Do not machine this part checkbox
      * @return current page object
      */
-    public EvaluatePage selectMachinePartCheckbox() {
-        inputsController.selectMachinePartCheckbox(machinePartCheckbox);
+    public EvaluatePage selectMachineOptionsCheckbox() {
+        inputsController.selectMachineOptionsCheckbox(machinePartCheckbox);
         return this;
     }
 
@@ -785,7 +785,7 @@ public class EvaluatePage extends EvaluateToolbar {
      * Checks if the machine part checkbox is displayed
      * @return boolean
      */
-    public boolean isMachinePartCheckboxDisplayed() {
-        return inputsController.isMachinePartCheckboxDisplayed(machinePartCheckbox);
+    public boolean isMachineOptionsCheckboxDisplayed() {
+        return inputsController.isMachineOptionsCheckboxDisplayed(machinePartCheckbox);
     }
 }

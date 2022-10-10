@@ -149,7 +149,7 @@ public class InputsController {
      * @param machineCheckbox - the machine checkbox webelement
      * @return current page object
      */
-    public InputsController selectMachinePartCheckbox(WebElement machineCheckbox) {
+    public InputsController selectMachineOptionsCheckbox(WebElement machineCheckbox) {
         pageUtils.waitForElementAndClick(machineCheckbox);
         return this;
     }
@@ -159,7 +159,7 @@ public class InputsController {
      * @param machineCheckbox - the machine checkbox webelement
      * @return boolean
      */
-    public boolean isMachinePartCheckboxDisplayed(WebElement machineCheckbox) {
+    public boolean isMachineOptionsCheckboxDisplayed(WebElement machineCheckbox) {
         return pageUtils.isElementDisplayed(machineCheckbox);
     }
 }
