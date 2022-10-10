@@ -85,7 +85,7 @@ public class DTCPlasticMouldingTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    @Category( {SmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6411", "6412"})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
