@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -14,7 +15,9 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -27,9 +30,11 @@ public class DTCPlasticMouldingTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
     private GuidanceIssuesPage guidanceIssuesPage;
+    private InvestigationPage investigationPage;
 
     private UserCredentials currentUser;
     private File resourceFile;
+    SoftAssertions softAssertions = new SoftAssertions();
 
     public DTCPlasticMouldingTests() {
         super();
@@ -37,6 +42,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
     @Category(SmokeTests.class)
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"6410", "8334"})
     @Description("Min. draft for Injection Moulding & Reaction Injection Moulding (>0.25 Degrees)")
     public void testDTCMouldingDraft() {
@@ -60,32 +66,33 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface has a draft angle less than the recommended draft angle for this material."));
 
-        /*guidanceIssuesPage.closePanel()
-            .openProcesses()
-            .selectRoutingsButton()
-            .selectRouting("Reaction Injection Mold")
-            .apply()
-            .closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Nylon, Type 6")
-            .apply()
+        guidanceIssuesPage.closePanel()
+            .openMaterialSelectorTable()
+            .search("Nylon, Type 6")
+            .selectMaterial("Nylon, Type 6")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Reaction Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:3");
+            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:6");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
-        assertThat(guidanceIssuesPage.getGuidanceCell("Curved Walls", "Count"), is(equalTo("22")));*/
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Surface draft is less than the recommended draft angle for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdCount("Curved Wall")).isEqualTo(22);
+
+        softAssertions.assertAll();
     }
 
-    /*@Category({CustomerSmokeTests.class})
+    @Category({SmokeTests.class})
     @Test
     @TestRail(testCaseId = {"6411", "6412"})
     @Description("Min. draft for SFM Moulding (>0.5 Degrees)")
     public void structuralFoamMouldDraft() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
 
-       String componentName = "Plastic moulded cap noDraft";
+        String componentName = "Plastic moulded cap noDraft";
         resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
         currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -93,21 +100,21 @@ public class DTCPlasticMouldingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         guidanceIssuesPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Planar Faces", "PlanarFace:11");
+            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Planar Face", "PlanarFace:10");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("No Surface draft has been applied."));
-        assertThat(guidanceIssuesPage.getGuidanceCell("Planar Faces", "Count"), is(equalTo("4")));
-    }*/
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Surface draft is less than the recommended draft angle for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdCount("Planar Face")).isEqualTo(4);
+
+        softAssertions.assertAll();
+    }
 
     @Test
     @TestRail(testCaseId = {"6426"})
@@ -131,7 +138,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Radii Issue, Minimum Internal Edge Radius", "Sharp Edge", "SharpEdge:8");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal edge radius is less than the recommended internal edge radius for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
     }
 
     @Test
@@ -156,10 +163,11 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Radii Issue, Minimum External Edge Radius", "Sharp Edge", "SharpEdge:7");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("External edge radius is less than the recommended external edge radius for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("External edge radius is less than the recommended external edge radius for this material.");
     }
 
-    /*@Test
+    @Test
+    @Issue("BA-2634")
     @TestRail(testCaseId = {"6463", "6421", "6414", "6425", "6426"})
     @Description("Min. wall thickness for Structural Foam Moulding")
     public void minWallThicknessSFM() {
@@ -171,35 +179,35 @@ public class DTCPlasticMouldingTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
+        evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario();
 
-        assertThat(evaluatePage.isDFMRiskIcon("dtc-low-risk-icon"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Low"), is(true));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.LOW.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Low");
 
-        guidanceIssuesPage = evaluatePage.openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
+        guidanceIssuesPage = evaluatePage.goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
             .costScenario(1)
             .openDesignGuidance()
-            .openGuidanceTab()
             .selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Structural Foam Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Radii Issue", "Minimum Edge Radius on Parting Line", "SharpEdge:1");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sharp Edge may partially be off the parting line, in which case no feasible molding options could be found."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("SharpEdge:1 may partially be off the parting line, in which case the edge radius is less than the recommended external edge radius for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Radii Issue", "Minimum External Edge Radius", "SharpEdge:14");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("External Edge Radius is less than the minimum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("External edge radius is less than the recommended external edge radius for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Radii Issue", "Minimum Internal Edge Radius", "SharpEdge:5");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Internal Edge Radius is less than the minimum limit with this material."));
-    }*/
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
+
+        softAssertions.assertAll();
+    }
 
     @Test
     @TestRail(testCaseId = {"6420", "6421", "6424", "6460"})
@@ -231,44 +239,39 @@ public class DTCPlasticMouldingTests extends TestBase {
         evaluatePage = guidanceIssuesPage.closePanel();
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
+        guidanceIssuesPage = new GuidanceIssuesPage(driver);
+        guidanceIssuesPage = guidanceIssuesPage.closePanel()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 15 mm"));
+
+        guidanceIssuesPage = new GuidanceIssuesPage(driver);
+        guidanceIssuesPage = guidanceIssuesPage.closePanel()
+            .openMaterialSelectorTable()
+            .selectMaterial("Polyurethane, Polymeric MDI")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Reaction Injection Mold")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openDesignGuidance()
+            .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 50.8 mm"));
         softAssertions.assertAll();
-
-        /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
-        guidanceIssuesPage = designguidanceIssuesPage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
-
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
-        assertThat(guidanceIssuesPage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 15 mm")));
-
-        designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
-        guidanceIssuesPage = designguidanceIssuesPage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Reaction Injection Mold")
-            .apply()
-            .closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Polyurethane, Polymeric MDI")
-            .apply()
-            .costScenario()
-            .openDesignGuidance()
-            .openGuidanceTab()
-            .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
-
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material."));
-        assertThat(guidanceIssuesPage.getGCDGuidance("Component:1", "Suggested"), is(equalTo("<= 50.8 mm")));
-    */
     }
 
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"6419", "6423"})
     @Description("Testing DTC Moulding Thickness Min")
     public void plasticMinWallThickness() {
@@ -290,24 +293,23 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Minimum Wall Thickness", "Component", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Minimum wall thickness is less than the recommended thickness for this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
-        /*designguidanceIssuesPage = new DesignguidanceIssuesPage(driver);
-        guidanceIssuesPage = designguidanceIssuesPage.closePanel()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Reaction Injection Mold")
-            .apply()
-            .closePanel()
-            .openMaterialCompositionTable()
-            .selectMaterialComposition("Polyurethane, Polymeric MDI")
-            .apply()
+        guidanceIssuesPage = new GuidanceIssuesPage(driver);
+        guidanceIssuesPage = guidanceIssuesPage.closePanel()
+            .openMaterialSelectorTable()
+            .selectMaterial("Polyurethane, Polymeric MDI")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Reaction Injection Mold")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
-            .openGuidanceTab()
             .selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Reaction Injection Mold is not feasible. Part Thickness is less than the minimum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
+        softAssertions.assertAll();
     }
 
     @Test
@@ -322,21 +324,22 @@ public class DTCPlasticMouldingTests extends TestBase {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
         loginPage = new CidAppLoginPage(driver);
-        guidanceIssuesPage = loginPage.login(currentUser)
+        investigationPage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .costScenario()
             .openDesignGuidance()
             .openInvestigationTab()
-            .selectInvestigationTopic("Slides and Lifters");
+            .selectTopic("Slides and Lifters");
 
-        assertThat(investigationPage.getInvestigationCell("SlideBundle", "GCD Count"), is(equalTo("1")));
-        assertThat(investigationPage.getInvestigationCell("LifterBundle", "GCD Count"), is(equalTo("7")));
+        softAssertions.assertThat(investigationPage.getGcdCount("SlideBundle")).isEqualTo(2);
+        softAssertions.assertThat(investigationPage.getGcdCount("LifterBundle")).isEqualTo(7);
 
-        investigationPage.selectInvestigationTopic("Special Mold Tooling");
+        investigationPage.selectTopic("Special Mold Tooling");
 
-        assertThat(investigationPage.getInvestigationCell("Threading Mechanisms", "GCD Count"), is(equalTo("9")));
-        assertThat(investigationPage.getInvestigationCell("Ribs", "GCD Count"), is(equalTo("1")));
-    }*/
+        softAssertions.assertThat(investigationPage.getGcdCount("Threading Mechanisms")).isEqualTo(9);
+        softAssertions.assertThat(investigationPage.getGcdCount("Ribs")).isEqualTo(1);
+
+        softAssertions.assertAll();
     }
 }
