@@ -1,5 +1,6 @@
 package com.partsandassembliesdetails;
 
+import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
 import com.apriori.pageobjects.pages.login.CisLoginPage;
 import com.apriori.pageobjects.pages.partsandassemblies.PartsAndAssembliesPage;
 import com.apriori.pageobjects.pages.partsandassembliesdetails.PartsAndAssembliesDetailsPage;
@@ -19,6 +20,7 @@ import com.utils.CisInsightsFieldsEnum;
 import com.utils.CisScenarioResultsEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.Test;
 
 import java.io.File;
@@ -48,14 +50,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -85,14 +87,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -148,14 +150,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -182,14 +184,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickPartNestingIcon();
@@ -222,14 +224,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickMaterialPropertiesIcon();
@@ -262,14 +264,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickMaterialStockIcon();
@@ -301,14 +303,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadComponent(componentName, scenarioName, resourceFile, currentUser)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadComponent(componentName, scenarioName, resourceFile, currentUser)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -332,14 +334,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         String cardName = "Process Cost Card";
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -386,14 +388,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         String cardName = "Process Cost Card";
         String editedCardName = "Process Analysis Card";
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -440,14 +442,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         String cardName = "Process Cost Card";
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -485,14 +487,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(componentName, scenarioName)
             .clickProcessRouting();
@@ -535,14 +537,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -581,14 +583,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -632,9 +634,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostAssembly(assemblyName,
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostAssembly(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
                 subComponentNames,
@@ -642,11 +643,12 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 subComponentProcessGroup,
                 scenarioName,
                 currentUser)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(assemblyName);
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(assemblyName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName, scenarioName)
             .clickAssemblyTree();
@@ -662,7 +664,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
 
-        partsAndAssembliesDetailsPage.openAssembly("Pin", scenarioName);
+        partsAndAssembliesDetailsPage.openAssembly("PIN", scenarioName);
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("Pin");
 
@@ -679,14 +681,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickDesignGuidance()
@@ -727,14 +729,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickDesignGuidance()
@@ -769,14 +771,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -810,14 +812,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
             .clickDesignGuidance()
@@ -857,21 +859,21 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostAssembly(assemblyName,
-                assemblyExtension,
-                assemblyProcessGroup,
-                subComponentNames,
-                subComponentExtension,
-                subComponentProcessGroup,
-                scenarioName,
-                currentUser)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(assemblyName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostAssembly(assemblyName,
+                        assemblyExtension,
+                        assemblyProcessGroup,
+                        subComponentNames,
+                        subComponentExtension,
+                        subComponentProcessGroup,
+                        scenarioName,
+                        currentUser)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(assemblyName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponent(assemblyName, scenarioName);
 
@@ -908,14 +910,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -951,14 +953,14 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        loginPage = new CisLoginPage(driver);
-        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-            .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-            .clickPartsAndAssemblies()
-            .sortDownCreatedAtField()
-            .clickSearchOption()
-            .clickOnSearchField()
-            .enterAComponentName(componentName);
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
 
         partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
 
@@ -994,5 +996,67 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionMessage()).contains("New Comment for Digital Factory");
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14466", "14467", "14468", "14469", "14470", "14471", "14543", "14641", "14691"})
+    @Description("Verify that discussions can be created by comment section")
+    public void testCreateDiscussionByCommentSection() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        partsAndAssembliesPage = new CisLoginPage(driver)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .cisLogin(currentUser)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName);
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isMessageIconDisplayedOnComments()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickMessageIconOnCommentSection();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentThreadModalDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCommentButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCancelButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCommentButtonState()).contains("Mui-disabled");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCancelButtonState()).doesNotContain("Mui-disabled");
+
+        partsAndAssembliesDetailsPage.clickOnAttribute();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttributeList()).contains(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName(),CisScenarioResultsEnum.PROCESS_GROUP.getFieldName(), CisScenarioResultsEnum.MATERIAL.getFieldName(),
+                CisScenarioResultsEnum.MANUFACTURING.getFieldName(), CisScenarioResultsEnum.TOTAL_CAPITAL_EXPENSES.getFieldName(),
+                CisScenarioResultsEnum.PIECE_PART_COST.getFieldName(), CisScenarioResultsEnum.ANNUAL_VOLUME.getFieldName(),
+                CisScenarioResultsEnum.BATCH_SIZE.getFieldName(), CisScenarioResultsEnum.FINISH_MASS.getFieldName());
+
+        partsAndAssembliesDetailsPage.selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+                        .addComment("New Comment With Attribute")
+                        .clickComment();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionAttribute()).isEqualTo(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName());
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionMessage()).contains("New Comment With Attribute");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatorAvatarDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickMessageIconOnCommentSection()
+                .addComment("New Comment Without Attribute")
+                .clickComment();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionMessage()).contains("New Comment Without Attribute");
+
     }
 }

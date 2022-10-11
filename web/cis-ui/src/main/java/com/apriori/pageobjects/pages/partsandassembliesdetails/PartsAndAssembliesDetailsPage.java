@@ -347,6 +347,15 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='property-thread-attribute']//div[contains(@id,'attribute')]")
     private WebElement discussionAttribute;
 
+    @FindBy(xpath = "//button[@aria-label='New Message']//*[local-name()='svg']")
+    private WebElement commentsMessageIcon;
+
+    @FindBy(xpath = "//div[@id='new-comment-popper']//div[@data-testid='select-control-Attribute']//*[local-name()='svg']")
+    private WebElement attributeDropDown;
+
+    @FindBy(xpath = "//div[@data-testid='property-costingInput.vpeName']//span")
+    private WebElement userAvatar;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -1846,5 +1855,64 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public String getCancelButtonState() {
         return getPageUtils().waitForElementToAppear(btnCancel).getAttribute("class");
+    }
+
+    /**
+     * Checks if message Icon displayed on comments section
+     *
+     * @return true/false
+     */
+    public boolean isMessageIconDisplayedOnComments() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
+        return getPageUtils().waitForElementAppear(commentsMessageIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on message icon on comments section
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickMessageIconOnCommentSection() {
+        getPageUtils().moveAndClick(commentsMessageIcon);
+        return this;
+    }
+
+    /**
+     * select Attribute
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectAttribute(String attribute) {
+        getPageUtils().waitForElementToAppear(By.xpath("//li[@role='option']//span[text()='" + attribute + "']")).click();
+        return this;
+    }
+
+    /**
+     * clicks on attribute list Attribute
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickOnAttribute() {
+        getPageUtils().waitForElementToAppear(attributeDropDown);
+        getPageUtils().moveAndClick(attributeDropDown);
+        return this;
+    }
+
+    /**
+     * Gets attribute list
+     *
+     * @return list of string
+     */
+    public  List<String> getAttributeList() {
+        return partsAndAssemblyDetailsController.getAttributeList();
+    }
+
+    /**
+     * Checks if discussion creator avatar displayed
+     *
+     * @return true/false
+     */
+    public boolean isCreatorAvatarDisplayed() {
+        return getPageUtils().waitForElementAppear(userAvatar).isDisplayed();
     }
 }
