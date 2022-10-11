@@ -50,9 +50,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -87,9 +87,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -150,9 +150,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -184,9 +184,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -224,9 +224,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -264,9 +264,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -303,9 +303,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadComponent(componentName, scenarioName, resourceFile, currentUser)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -334,9 +334,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         String cardName = "Process Cost Card";
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -388,9 +388,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         String cardName = "Process Cost Card";
         String editedCardName = "Process Analysis Card";
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -442,9 +442,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         currentUser = UserUtil.getUser();
 
         String cardName = "Process Cost Card";
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -487,9 +487,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -537,9 +537,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -583,9 +583,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -634,7 +634,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostAssembly(assemblyName,
                 assemblyExtension,
                 assemblyProcessGroup,
@@ -643,7 +644,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 subComponentProcessGroup,
                 scenarioName,
                 currentUser)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -681,9 +681,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -729,9 +729,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -771,9 +771,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -812,9 +812,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -859,7 +859,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         UserCredentials currentUser = UserUtil.getUser();
         String scenarioName = new GenerateStringUtil().generateScenarioName();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostAssembly(assemblyName,
                         assemblyExtension,
                         assemblyProcessGroup,
@@ -868,7 +869,6 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                         subComponentProcessGroup,
                         scenarioName,
                         currentUser)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -910,9 +910,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -953,9 +953,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()
@@ -1008,9 +1008,9 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownCreatedAtField()
                 .clickSearchOption()

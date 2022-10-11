@@ -176,9 +176,9 @@ public class PartsAndAssemblyTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies();
 
         assertThat(partsAndAssembliesPage.isSearchOptionDisplayed(), is(true));
@@ -239,9 +239,9 @@ public class PartsAndAssemblyTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .clickFilter();
 
@@ -298,9 +298,9 @@ public class PartsAndAssemblyTest extends TestBase {
         resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
-        partsAndAssembliesPage = new CisLoginPage(driver)
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
                 .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
-                .cisLogin(currentUser)
                 .clickPartsAndAssemblies()
                 .sortDownDigitalFactoryField()
                 .pinToLeftProcessGroupColumn()
