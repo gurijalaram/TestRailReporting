@@ -761,10 +761,14 @@ public class ComparisonTests extends TestBase {
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
             .createComparison();
 
-        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS)).isEqualTo("31.97%");
-        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS)).isEqualTo("75.00%");
-        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME)).isEqualTo("139.70%");
-        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT)).isEqualTo("3.56%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.MATERIAL_FINISH_MASS))
+            .as("Material Finish Mass").isEqualTo("31.97%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.DESIGN_DESIGN_WARNINGS))
+            .as("Design Warnings").isEqualTo("75.00%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.PROCESS_TOTAL_CYCLE_TIME))
+            .as("Total Cycle Time").isEqualTo("139.70%");
+        softAssertions.assertThat(comparePage.getDeltaPercentage(componentName2, scenarioName2, ComparisonCardEnum.COST_TOTAL_CAPITAL_INVESTMENT))
+            .as("Total Capital Investment").isEqualTo("3.53%");
 
         softAssertions.assertAll();
     }

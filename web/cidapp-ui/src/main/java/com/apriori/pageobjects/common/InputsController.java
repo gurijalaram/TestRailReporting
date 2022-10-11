@@ -143,4 +143,23 @@ public class InputsController {
     public List<String> getListOfDigitalFactory(WebElement digitalFactoryList, String filterOption) {
         return Arrays.stream(digitalFactoryList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase(filterOption)).collect(Collectors.toList());
     }
+
+    /**
+     * Selects the Do not machine this part checkbox
+     * @param machineCheckbox - the machine checkbox webelement
+     * @return current page object
+     */
+    public InputsController selectMachineOptionsCheckbox(WebElement machineCheckbox) {
+        pageUtils.waitForElementAndClick(machineCheckbox);
+        return this;
+    }
+
+    /**
+     * Checks if the machine part checkbox is displayed
+     * @param machineCheckbox - the machine checkbox webelement
+     * @return boolean
+     */
+    public boolean isMachineOptionsCheckboxDisplayed(WebElement machineCheckbox) {
+        return pageUtils.isElementDisplayed(machineCheckbox);
+    }
 }
