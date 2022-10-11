@@ -186,14 +186,14 @@ public class PsoEditTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Compaction Pressing")
             .selectOptionsTab()
-            .inputMaterialAllowance("0.611")
+            .inputMaterialAllowance("0.61")
             .closePanel()
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Compaction Pressing")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getOverriddenPso("Material Allowance (Piece Part Cost Driver)"), is(0.611));
+        assertThat(materialProcessPage.getOverriddenPso("Material Allowance (Piece Part Cost Driver)"), is(0.61));
     }
 
     @Test
