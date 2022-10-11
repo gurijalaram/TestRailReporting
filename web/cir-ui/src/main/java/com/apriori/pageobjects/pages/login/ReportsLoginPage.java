@@ -18,7 +18,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
-    private UserCredentials userCredentials = UserUtil.getUser();
+    private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     public ReportsLoginPage(WebDriver driver) {
         super(driver);
