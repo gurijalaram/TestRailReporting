@@ -427,6 +427,9 @@ qa-test:
     ui_url: https://cas.na-1.qa-test.apriori.net/
     api_url: https://cas-api.na-1.qa-test.apriori.net/
 
+  dds:
+    api_url: https://dds.na-1-v23-1.qa-test.apriori.net/
+
   cds:
     apriori_core_services_installation_identity: 7GFDL6LCI5N4
     apriori_cloud_home_identity: 1J8M416FBJBK
