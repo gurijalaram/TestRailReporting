@@ -139,6 +139,8 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectIssueTypeGcd("Radii Issue, Minimum Internal Edge Radius", "Sharp Edge", "SharpEdge:8");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -164,6 +166,8 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectIssueTypeGcd("Radii Issue, Minimum External Edge Radius", "Sharp Edge", "SharpEdge:7");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("External edge radius is less than the recommended external edge radius for this material.");
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -231,17 +235,13 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue, Maximum Wall Thickness", "Component", "Component:1");
 
-        SoftAssertions softAssertions = new SoftAssertions();
-
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
-        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 3.56mm"));
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 3.56mm");
 
         evaluatePage = guidanceIssuesPage.closePanel();
         softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
-        guidanceIssuesPage = new GuidanceIssuesPage(driver);
-        guidanceIssuesPage = guidanceIssuesPage.closePanel()
-            .goToAdvancedTab()
+        guidanceIssuesPage = evaluatePage.goToAdvancedTab()
             .openRoutingSelection()
             .selectRoutingPreferenceByName("Structural Foam Mold")
             .submit(EvaluatePage.class)
@@ -250,10 +250,9 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material.");
-        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 15 mm"));
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 15 mm");
 
-        guidanceIssuesPage = new GuidanceIssuesPage(driver);
-        guidanceIssuesPage = guidanceIssuesPage.closePanel()
+        guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
             .selectMaterial("Polyurethane, Polymeric MDI")
             .submit(EvaluatePage.class)
@@ -266,7 +265,8 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material.");
-        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1").contains("<= 50.8 mm"));
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 50.8 mm");
+
         softAssertions.assertAll();
     }
 
@@ -295,8 +295,7 @@ public class DTCPlasticMouldingTests extends TestBase {
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
-        guidanceIssuesPage = new GuidanceIssuesPage(driver);
-        guidanceIssuesPage = guidanceIssuesPage.closePanel()
+        guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
             .selectMaterial("Polyurethane, Polymeric MDI")
             .submit(EvaluatePage.class)
@@ -309,6 +308,7 @@ public class DTCPlasticMouldingTests extends TestBase {
             .selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
 
         softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
+
         softAssertions.assertAll();
     }
 
