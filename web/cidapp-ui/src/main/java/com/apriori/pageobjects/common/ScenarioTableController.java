@@ -4,12 +4,14 @@ import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.ScenariosUtil;
+import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -48,12 +50,17 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     @FindBy(css = ".table-head [data-testid='checkbox']")
     private WebElement selectAllCheckBox;
 
+    @FindBy(css = "[id='qa-scenario-explorer-configure-button']")
+    private WebElement configureButton;
+
     private PageUtils pageUtils;
     private WebDriver driver;
+    private ComponentTableActions componentTableActions;
 
     public ScenarioTableController(WebDriver driver) {
         this.driver = driver;
         this.pageUtils = new PageUtils(driver);
+        this.componentTableActions = new ComponentTableActions(driver);
         logger.debug(pageUtils.currentlyOnPage(this.getClass().getSimpleName()));
         PageFactory.initElements(driver, this);
         this.get();
@@ -110,10 +117,11 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return The component and scenario names in a comma-separated String
      */
     public String getFirstScenarioDetails() {
-        By topComponentNameLocator = By.xpath("(//div[@class='table-body']/div)[1]//span[@data-testid='component-name']");
-        By topScenarioNameLocator = By.xpath("(//div[@class='table-body']/div)[1]//div[@data-header-id='scenarioName']//div[@data-testid='text-overflow']");
-        String componentName = driver.findElement(topComponentNameLocator).getText();
-        String scenarioName = driver.findElement(topScenarioNameLocator).getText();
+        By firstComponentNameLocator = By.xpath("(//div[@class='table-body']/div)[1]//span[@data-testid='component-name']");
+        By firstScenarioNameLocator = By.xpath("(//div[@class='table-body']/div)[1]//div[@data-header-id='scenarioName']//div[@data-testid='text-overflow']");
+        pageUtils.waitForElementToAppear(firstScenarioNameLocator);
+        String componentName = driver.findElement(firstComponentNameLocator).getText();
+        String scenarioName = driver.findElement(firstScenarioNameLocator).getText();
 
         return componentName + "," + scenarioName;
     }
@@ -301,7 +309,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/y, h:m a", Locale.US);
         String dateTimeString = getByParentLocator(componentName, scenarioName)
-            .findElement(By.cssSelector("div[data-testid='display-date'] div"))
+            .findElement(By.cssSelector("[data-header-id='scenarioCreatedAt']"))
             .getText();
         return LocalDateTime.parse(dateTimeString, formatter);
     }
@@ -315,7 +323,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      */
     public String getPublishedState(String componentName, String scenarioName) {
         return getByParentLocator(componentName, scenarioName)
-            .findElement(By.cssSelector("svg[id*='scenario-workspace-icon-']"))
+            .findElement(By.cssSelector("div[data-header-id='scenarioPublished'] svg.scenario-workspace-icon"))
             .getAttribute("aria-label");
     }
 
@@ -506,6 +514,25 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     public String getSortOrder(ColumnsEnum column) {
         By byColumn = By.xpath(String.format("//div[.='%s']//div[@class]//*[local-name()='svg']", column.getColumns()));
         return driver.findElement(byColumn).getAttribute("data-icon");
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ScenarioTableController addColumn(ColumnsEnum columnToAdd) {
+        if (!getTableHeaders().contains(columnToAdd.toString())) {
+            componentTableActions.configure(configureButton)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.RIGHT)
+                .selectColumn(columnToAdd)
+                .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
+                .submit(ExplorePage.class);
+        }
+        return this;
     }
 
     /**

@@ -461,20 +461,11 @@ public class ExplorePage extends ExploreToolbar {
     /**
      * Check if table column already displayed and add if not
      *
-     * @param currentHeaders - List of currently displayed table headers
      * @param columnToAdd - Name of column to be added
      * @return - The current page object
      */
-    public ExplorePage addColumn(List<String> currentHeaders, ColumnsEnum columnToAdd) {
-        if (!currentHeaders.contains(columnToAdd.toString())) {
-            configure()
-                .selectColumn(columnToAdd)
-                .moveColumn(DirectionEnum.RIGHT)
-                .selectColumn(columnToAdd)
-                .moveColumn(DirectionEnum.UP)
-                .moveColumn(DirectionEnum.UP)
-                .submit(ExplorePage.class);
-        }
+    public ExplorePage addColumn(ColumnsEnum columnToAdd) {
+        scenarioTableController.addColumn(columnToAdd);
         return this;
     }
 }

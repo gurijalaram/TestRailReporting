@@ -497,10 +497,8 @@ public class FiltersTests extends TestBase {
 
         explorePage = loginPage.login(currentUser);
 
-        List<String> tableHeaders = explorePage.getTableHeaders();
-
         explorePage.selectFilter("Private")
-            .addColumn(tableHeaders, ColumnsEnum.PUBLISHED)
+            .addColumn(ColumnsEnum.PUBLISHED)
             .sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.ASCENDING);
 
         String[] topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
