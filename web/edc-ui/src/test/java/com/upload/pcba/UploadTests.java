@@ -53,7 +53,7 @@ public class UploadTests extends TestBase {
         editBomPage = loginPage.login(currentUser)
             .uploadComponent(resourceFile)
             .clickUploadPCBA()
-            .selectMatchedPart()
+            .selectMatchedPart("460819 BK005")
             .highlightItem()
             .editSelectedBom();
 

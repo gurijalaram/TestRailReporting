@@ -1,26 +1,22 @@
 package com.evaluate.dtc;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
-import com.apriori.pageobjects.navtoolbars.MainNavBar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.designguidance.InvestigationPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.TolerancesPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
-import com.apriori.pageobjects.pages.settings.DisplayPreferencesPage;
-import com.apriori.pageobjects.pages.settings.ToleranceDefaultsPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.ToleranceEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.EvaluateDfmIconEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
@@ -38,6 +34,7 @@ public class DTCCastingTests extends TestBase {
     private EvaluatePage evaluatePage;
     private ExplorePage explorePage;
     private UserCredentials currentUser;
+    private TolerancesPage tolerancesPage;
     SoftAssertions softAssertions = new SoftAssertions();
 
     private File resourceFile;
@@ -54,8 +51,8 @@ public class DTCCastingTests extends TestBase {
         }
     }
 
-    /*    @Test
-    @TestRail(testCaseId = {"6468", "6379", "6383", "6387", "6389", "6391", "6382", "6292"})
+    @Test
+    @TestRail(testCaseId = {"6468", "6379", "6383", "6389", "6382", "6292"})
     @Description("Testing DTC Casting - Sand Casting")
     public void sandCastingDTC() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -68,69 +65,33 @@ public class DTCCastingTests extends TestBase {
         loginPage = new CidAppLoginPage(driver);
         evaluatePage = loginPage.login(currentUser)
             .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .selectProcessGroup(processGroupEnum)
             .openMaterialSelectorTable()
             .search("ANSI AL380")
             .selectMaterial("Aluminum, Cast, ANSI AL380.0")
-            .submit()
+            .submit(EvaluatePage.class)
             .costScenario(8);
 
-        assertThat(evaluatePage.isDfmRiskIcon("Critical"), is(true));
-        assertThat(evaluatePage.isDfmRisk("Critical"), is(true));
+        softAssertions.assertThat(evaluatePage.getDfmRiskIcon()).isEqualTo(EvaluateDfmIconEnum.CRITICAL.getIcon());
+        softAssertions.assertThat(evaluatePage.getDfmRisk()).isEqualTo("Critical");
 
         guidanceIssuesPage = evaluatePage.openDesignGuidance()
-            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Walls", "CurvedWall:18");
+            .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:18");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Part of this surface has a draft angle less than the recommended draft angle for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Hole Issue", "Maximum Hole Depth", "SimpleHole:2");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. The Hole Depth is greater than the maximum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole depth is greater than the recommended depth for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Hole Issue", "Minimum Hole Diameter", "SimpleHole:10");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Hole Diameter is less than the minimum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Hole diameter is less than the recommended minimum diameter for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Sand Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
-
-        guidanceIssuesPage.selectIssueTypeGcd("Machining Issues", "Obstructed Surfaces", "PlanarFace:4");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Facing: Feature is obstructed. Override operation feasibility, select a specialized machining operation, or modify CAD geometry."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
     }
-
-    /*@Category({CustomerSmokeTests.class, SmokeTests.class})
-    @Test
-    @TestRail(testCaseId = {"1261"})
-    @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
-    public void geometryTest() {
-
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        loginPage = new CidAppLoginPage(driver);
-        currentUser = UserUtil.getUser();
-
-        toleranceSettingsPage = loginPage.login(currentUser)
-            .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        geometryPage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
-            .costScenario(3)
-            .openDesignGuidance()
-            .openGeometryTab()
-            .selectGCDAndGCDProperty("Surfaces", "Planar Faces", "PlanarFace:1");
-
-        evaluatePage = new EvaluatePage(driver);
-        propertiesDialogPage = evaluatePage.selectAnalysis()
-            .selectProperties()
-            .expandDropdown("Properties");
-        assertThat(propertiesDialogPage.getProperties("Finished Area (mm2)"), containsString("85.62"));
-    }*/
 
     @Test
     @Category(SmokeTests.class)
@@ -182,79 +143,76 @@ public class DTCCastingTests extends TestBase {
         softAssertions.assertAll();
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"6379", "6384", "6388"})
     @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
     public void gravityDieCasting() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
 
-        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
-
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        toleranceSettingsPage = loginPage.login(currentUser)
+        loginPage = new CidAppLoginPage(driver);
+        guidanceIssuesPage = loginPage.login(currentUser)
             .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        guidanceIssuesPage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .goToToleranceTab()
+            .selectCad()
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Gravity Die Cast")
-            .apply()
-            .closePanel()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Gravity Die Cast")
+            .submit(EvaluatePage.class)
             .costScenario()
             .openDesignGuidance()
-            .openGuidanceTab()
             .selectIssueTypeGcd("Draft Issue, Draft Angle", "Curved Wall", "CurvedWall:7");
 
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Part of this surface is below the minimum recommended draft angle."));
-        guidanceIssuesPage.closePanel();
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Part of this surface has a draft angle less than the recommended draft angle for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Material Issue", "Minimum Wall Thickness", "Component:1");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Gravity Die Casting is not feasible. Part Thickness is less than the minimum limit with this material."));
-        guidanceIssuesPage.closePanel();
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Minimum wall thickness is less than the recommended thickness for this material.");
 
         guidanceIssuesPage.selectIssueTypeGcd("Radius Issue", "Minimum Internal Edge Radius", "SharpEdge:38");
-        assertThat(guidanceIssuesPage.getIssueDescription(), containsString("Gravity Die Casting is not feasible. Internal Edge Radius is less than the minimum limit with this material."));
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Internal edge radius is less than the recommended internal edge radius for this material.");
+        softAssertions.assertAll();
     }
 
     @Test
-    @Category({SmokeTests.class, SanityTests.class})
+    @Category({SmokeTests.class})
     @TestRail(testCaseId = {"6377"})
     @Description("Validate Tolerance counts are correct")
     public void dtcTolerances() {
-
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
 
-        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
-        loginPage = new CidAppLoginPage(driver);
+        String componentName = "DTCCastingIssues";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".catpart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        toleranceSettingsPage = loginPage.login(currentUser)
+        loginPage = new CidAppLoginPage(driver);
+        tolerancesPage = loginPage.login(currentUser)
             .openSettings()
-            .openTolerancesTab()
-            .selectUseCADModel();
-
-        settingsPage = new SettingsPage(driver);
-        tolerancePage = settingsPage.save(ExplorePage.class)
-            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
-            .inputProcessGroup(processGroupEnum.getProcessGroup())
+            .goToToleranceTab()
+            .selectCad()
+            .submit(ExplorePage.class)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(ProcessGroupEnum.CASTING_DIE)
             .costScenario()
             .openDesignGuidance()
             .openTolerancesTab();
 
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.DIAMTOLERANCE.getToleranceName()), "9"), Matchers.is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.FLATNESS.getToleranceName()), "5"), Matchers.is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.PROFILESURFACE.getToleranceName()), "6"), Matchers.is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.ROUGHNESSRA.getToleranceName()), "3"), Matchers.is(true));
-        assertThat(tolerancePage.isToleranceCount((ToleranceEnum.STRAIGHTNESS.getToleranceName()), "3"), Matchers.is(true));
-    } */
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.DIAMTOLERANCE)).isEqualTo(9);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.FLATNESS)).isEqualTo(5);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.PROFILESURFACE)).isEqualTo(6);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA)).isEqualTo(3);
+        softAssertions.assertThat(tolerancesPage.getGcdCount(ToleranceEnum.ROUGHNESSRA)).isEqualTo(3);
+
+        softAssertions.assertAll();
+    }
 
     @Test
     @Issue("BA-2313")
@@ -331,5 +289,4 @@ public class DTCCastingTests extends TestBase {
 
         softAssertions.assertAll();
     }
-
 }
