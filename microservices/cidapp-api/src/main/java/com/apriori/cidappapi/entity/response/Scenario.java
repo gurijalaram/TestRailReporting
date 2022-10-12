@@ -35,6 +35,7 @@ public class Scenario {
     private Integer productionLife;
     private String vpeName;
     private List<String> propertiesToReset;
+    private List<String> routingNodeOptions;
     private Boolean locked;
     private String ownedByName;
     private String scenarioName;

@@ -24,7 +24,7 @@ import java.nio.charset.StandardCharsets;
 @Slf4j
 public class UpdateCadFilePage extends LoadableComponent<UpdateCadFilePage> {
 
-    @FindBy(css = ".MuiPaper-root h1")
+    @FindBy(css = "[role='dialog'] .dialog-title")
     private WebElement componentLabel;
 
     @FindBy(css = "input[type='file']")
