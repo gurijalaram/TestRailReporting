@@ -11,6 +11,7 @@ import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterati
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -27,11 +28,10 @@ import testsuites.categories.AcsTest;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GetActiveAxesByScenarioIterationKeyTests {
+public class GetActiveAxesByScenarioIterationKeyTests extends TestUtil {
 
     @Test
     @Issue("COST-173")
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10980")
     @Description("Validate Get Active Axes by Scenario Iteration Key")
     public void testGetActiveAxesByScenarioIterationKey() {
