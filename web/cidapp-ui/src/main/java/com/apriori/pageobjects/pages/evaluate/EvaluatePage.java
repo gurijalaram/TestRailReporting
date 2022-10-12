@@ -98,6 +98,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = ".material-summary-card.card input")
     private WebElement materialName;
 
+    @FindBy(css = "div[id='qa-material-modal-select-field'] .modal-select-content")
+    private WebElement currentMaterial;
+
     @FindBy(xpath = "//span[contains(text(), 'Finish Mass')]/following-sibling::span")
     private WebElement finishMass;
 
@@ -289,6 +292,16 @@ public class EvaluatePage extends EvaluateToolbar {
     public MaterialSelectorPage openMaterialSelectorTable() {
         inputsController.openMaterialSelectorTable(materialsPencil);
         return new MaterialSelectorPage(driver);
+    }
+
+    /**
+     * Get the currently selected Material
+     *
+     * @return String of currently used material
+     */
+    public String getCurrentlySelectedMaterial() {
+        pageUtils.waitForElementToAppear(currentMaterial);
+        return currentMaterial.getAttribute("textContent");
     }
 
     /**
