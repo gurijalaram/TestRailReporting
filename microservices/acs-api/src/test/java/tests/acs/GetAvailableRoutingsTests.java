@@ -1,7 +1,7 @@
 package tests.acs;
 
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
-import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
+import com.apriori.acs.entity.response.acs.getavailableroutings.GetAvailableRoutingsResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
