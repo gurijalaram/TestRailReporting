@@ -569,6 +569,45 @@ public class AcsResources {
     }
 
     /**
+     * Get Available Routings
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @return GenericResourceCreatedIdResponse instance
+     */
+
+    public GetAvailableRoutingsResponse getAvailableRoutings(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.GET_AVAILABLE_ROUTINGS, GetAvailableRoutingsResponse.class)
+                .headers(headers);
+                .queryParams(new QueryParams().use("applyEdits", "true"))
+                .inlineVariables(
+                        scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                        scenarioIterationKey.getScenarioKey().getTypeName(),
+                        scenarioIterationKey.getScenarioKey().getMasterName(),
+                        scenarioIterationKey.getScenarioKey().getStateName(),
+                        scenarioIterationKey.getIteration().toString()
+        return (GetAvailableRoutingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+    public GetProductionInfoResponse getProductionInfo(ScenarioIterationKey scenarioIterationKey) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.PRODUCTION_INFO, GetProductionInfoResponse.class)
+                .headers(headers)
+                .queryParams(new QueryParams().use("applyEdits", "true"))
+                .inlineVariables(
+                        scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                        scenarioIterationKey.getScenarioKey().getTypeName(),
+                        scenarioIterationKey.getScenarioKey().getMasterName(),
+                        scenarioIterationKey.getScenarioKey().getStateName(),
+                        scenarioIterationKey.getIteration().toString()
+                );
+
+        return (GetProductionInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+    /**
      * Save routing selection
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
