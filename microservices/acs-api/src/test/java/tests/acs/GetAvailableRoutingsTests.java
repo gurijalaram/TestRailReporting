@@ -23,7 +23,7 @@ public class GetAvailableRoutingsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "15429")
+    @TestRail(testCaseId = "14814")
     @Description("Get available routings after Cost")
     public void testGetAvailableRoutings() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -53,11 +53,13 @@ public class GetAvailableRoutingsTests {
                 false
         );
 
-        GetAvailableRoutingsResponse getAvailableRoutingsResponse = acsResources.getAvailableRoutings(
+        GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
             costOutputs.getScenarioIterationKey()
         );
 
-        assertThat(response.getId(), is(notNullValue()));
-        assertThat(response.getResourceCreated(), is(equalTo("true")));
+        assertThat(response.getName(), is(notNullValue()));
+        assertThat(response.getDisplayName(), is(notNullValue()));
+        assertThat(response.getPlantName(), is(notNullValue()));
+        assertThat(response.getProcessGroupName(), is(notNullValue()));
     }
 }
