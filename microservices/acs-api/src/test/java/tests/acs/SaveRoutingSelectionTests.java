@@ -11,6 +11,7 @@ import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostO
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -22,7 +23,7 @@ import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
 
-public class SaveRoutingSelectionTests {
+public class SaveRoutingSelectionTests extends TestUtil {
 
     @Test
     @Category(AcsTest.class)

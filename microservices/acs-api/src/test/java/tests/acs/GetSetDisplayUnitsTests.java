@@ -11,6 +11,7 @@ import com.apriori.acs.entity.response.acs.getsetdisplayunits.GetDisplayUnitsRes
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
@@ -19,7 +20,7 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetDisplayUnitsTests {
+public class GetSetDisplayUnitsTests extends TestUtil {
 
     @Test
     @Category(AcsTest.class)
