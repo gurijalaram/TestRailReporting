@@ -171,14 +171,14 @@ public class PartsAndAssemblyTest extends TestBase {
     @Description("Verify that Parts and Assemblies can search by Component Name")
     public void testSearchByComponentName() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "Y_shape";
+        String componentName = "ChampferOut";
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies();
 
         assertThat(partsAndAssembliesPage.isSearchOptionDisplayed(), is(true));
@@ -234,14 +234,14 @@ public class PartsAndAssemblyTest extends TestBase {
     @Description("Verify that user can filter results in parts and assemblies page")
     public void testFilterAComponent() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "Y_shape";
+        String componentName = "ChampferOut";
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .clickFilter();
 
@@ -293,14 +293,14 @@ public class PartsAndAssemblyTest extends TestBase {
     @Description("Verify that user can Save the parts and assemblies page configuration")
     public void testSaveConfigurations() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
-        String componentName = "Y_shape";
+        String componentName = "ChampferOut";
 
-        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.CASTING_DIE, componentName + ".prt");
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
         currentUser = UserUtil.getUser();
 
         loginPage = new CisLoginPage(driver);
         partsAndAssembliesPage = loginPage.cisLogin(currentUser)
-                .uploadAndCostScenario(componentName, scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
                 .clickPartsAndAssemblies()
                 .sortDownDigitalFactoryField()
                 .pinToLeftProcessGroupColumn()

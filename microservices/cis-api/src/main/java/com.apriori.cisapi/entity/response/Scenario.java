@@ -61,4 +61,5 @@ public class Scenario {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime assignedAt;
+    private List<String> routingNodeOptions;
 }

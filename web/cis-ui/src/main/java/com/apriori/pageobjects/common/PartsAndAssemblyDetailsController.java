@@ -30,6 +30,9 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
     @FindBy(xpath = "//div[@data-testid='Threads']")
     private WebElement threadsItemsList;
 
+    @FindBy(xpath = "//ul[@role='listbox']")
+    private WebElement attributeList;
+
     public PartsAndAssemblyDetailsController(WebDriver driver) {
         super(driver, log);
     }
@@ -100,5 +103,14 @@ public class PartsAndAssemblyDetailsController extends EagerPageComponent<PartsA
      */
     public List<String> getThreadsDetails() {
         return Stream.of(threadsItemsList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
+    }
+
+    /**
+     * Gets attribute list
+     *
+     * @return list of string
+     */
+    public List<String> getAttributeList() {
+        return Stream.of(attributeList.getAttribute("innerText").split("\n")).collect(Collectors.toList());
     }
 }
