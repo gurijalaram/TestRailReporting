@@ -18,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -95,6 +96,7 @@ public class ThreadTests extends TestBase {
     }*/
 
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"8902"})
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
