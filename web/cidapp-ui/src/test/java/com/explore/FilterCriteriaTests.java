@@ -25,6 +25,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -239,6 +240,7 @@ public class FilterCriteriaTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2610")
     @Category(SmokeTests.class)
     @TestRail(testCaseId = {"6221"})
     @Description("Test multiple attributes")
