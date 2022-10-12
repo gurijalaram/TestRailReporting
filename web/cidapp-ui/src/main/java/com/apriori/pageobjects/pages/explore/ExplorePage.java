@@ -366,7 +366,8 @@ public class ExplorePage extends ExploreToolbar {
      */
     public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
-        return new ExplorePage(driver);
+        pageUtils.waitForElementToAppear(scenarioCount);
+        return this;
     }
 
     /**
