@@ -125,11 +125,10 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * Get the value of the cost status
      *
      * @param routingPreference - the routing preference
-     * @param status            - the cost status
      * @return string
      */
-    public String getCostStatusValue(String routingPreference, NewCostingLabelEnum status) {
-        By value = byCostStatus(routingPreference, status);
+    public String getCostStatusValue(String routingPreference) {
+        By value = byCostStatus(routingPreference);
         return getPageUtils().waitForElementToAppear(value).getAttribute("textContent");
     }
 
@@ -137,11 +136,10 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * Get by routing preference and cost status
      *
      * @param routingPreference - the routing preference
-     * @param status            - the cost status
      * @return by
      */
-    private By byCostStatus(String routingPreference, NewCostingLabelEnum status) {
-        return By.xpath(String.format("//h3[text()='%s']/parent::div//div[.='%s']", routingPreference, status.getCostingText()));
+    private By byCostStatus(String routingPreference) {
+        return By.xpath(String.format("//h3[text()='%s']", routingPreference));
     }
 
     /**
