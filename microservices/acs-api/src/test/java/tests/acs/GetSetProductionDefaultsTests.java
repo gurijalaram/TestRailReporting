@@ -21,7 +21,6 @@ import testsuites.categories.AcsTest;
 public class GetSetProductionDefaultsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10586")
     @Description("Verify Get Production Defaults Endpoint")
     public void testGetProductionDefaultsEndpoint() {
@@ -32,7 +31,6 @@ public class GetSetProductionDefaultsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10587")
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
@@ -43,7 +41,6 @@ public class GetSetProductionDefaultsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10588")
     @Description("Verify Set Production Defaults Endpoint")
     public void testSetProductionDetailsEndpoint() {
@@ -64,7 +61,6 @@ public class GetSetProductionDefaultsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10606")
     @Description("Set Production Defaults Negative Test")
     public void testNegativeSetProductionDefaults() {

@@ -18,7 +18,6 @@ import testsuites.categories.AcsTest;
 public class GetArtifactTableInfoTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "12062")
     @Description("Test Get Artifact Table Info")
     public void testGetArtifactTableInfo() {
@@ -32,7 +31,6 @@ public class GetArtifactTableInfoTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "12070")
     @Description("Test Get Artifact Table Info - Negative - Invalid Process Group")
     public void testGetArtifactTableInfoNegativeInvalidProcessGroup() {

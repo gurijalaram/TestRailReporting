@@ -22,7 +22,6 @@ import java.util.stream.Collectors;
 public class GetPartPrimaryProcessGroupsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10881")
     @Description("Validate Get Part Primary Process Groups Endpoint")
     public void testGetPartPrimaryProcessGroupsEndpoint() {

@@ -22,7 +22,6 @@ import java.util.List;
 public class GetUnitVariantSettingsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8772")
     @Description("Test Get Unit Variant Settings")
     public void testGetUnitVariantSettings() {
@@ -40,7 +39,6 @@ public class GetUnitVariantSettingsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8773")
     @Description("Test Get Custom Unit Variant Settings")
     public void testGetCustomUnitVariantSettings() {

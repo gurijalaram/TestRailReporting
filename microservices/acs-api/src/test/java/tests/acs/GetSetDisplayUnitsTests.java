@@ -23,7 +23,6 @@ import testsuites.categories.AcsTest;
 public class GetSetDisplayUnitsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8769")
     @Description("Test Get Display Units")
     public void testGetDisplayUnits() {
@@ -49,7 +48,6 @@ public class GetSetDisplayUnitsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8770")
     @Description("Test Set Currency Display Unit")
     public void setCurrencyDisplayUnitTest() {
@@ -83,7 +81,6 @@ public class GetSetDisplayUnitsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8771")
     @Description("Test Set Length and Mass Display Unit")
     public void setLengthAndMassDisplayUnitTest() {

@@ -24,7 +24,6 @@ import java.time.ZoneOffset;
 public class CreateMissingScenarioTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8767")
     @Description("Test Create Missing Scenario")
     public void testCreateMissingScenario() {

@@ -24,7 +24,6 @@ import testsuites.categories.AcsTest;
 public class GetSetTolerancePolicyDefaultsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10473")
     @Description("Test Get Tolerance Policy Defaults")
     public void testGetTolerancePolicyDefaults() {
@@ -45,7 +44,6 @@ public class GetSetTolerancePolicyDefaultsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10555")
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
@@ -56,7 +54,6 @@ public class GetSetTolerancePolicyDefaultsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10556")
     @Description("Test Set Tolerance Policy Defaults")
     public void testSetTolerancePolicyDefaults() {
@@ -82,7 +79,6 @@ public class GetSetTolerancePolicyDefaultsTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10557")
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {

@@ -12,7 +12,6 @@ import testsuites.categories.AcsTest;
 public class GetEnabledCurrencyRateVersionsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8768")
     @Description("Test Get Enabled Currency Rate Versions")
     public void testGetEnabledCurrencyRateVersions() {

@@ -22,7 +22,6 @@ import testsuites.categories.AcsTest;
 public class Get2DImageByScenarioIterationKeyTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10902")
     @Description("Validate Get 2D Image by Scenario Iteration Key Endpoint")
     public void testGet2DImageByScenarioIterationKey() {

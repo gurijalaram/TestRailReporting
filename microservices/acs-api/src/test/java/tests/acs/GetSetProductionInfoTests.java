@@ -24,7 +24,6 @@ import testsuites.categories.AcsTest;
 public class GetSetProductionInfoTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "15430")
     @Description("Get Set Production Info Test")
     public void testGetSetProductionInfo() {

@@ -27,7 +27,6 @@ import java.util.List;
 public class GetActiveDimensionsByScenarioIterationKeyTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10941")
     @Description("Validate Get Active Dimensions by Scenario Iteration Key Endpoint")
     public void testGetActiveDimensionsByScenarioIterationKeyEndpoint() {

@@ -44,8 +44,6 @@ import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.categories.WorkorderTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -63,7 +61,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void testLoadCadMetadataAndGeneratePartImages() {
@@ -93,7 +90,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
@@ -124,7 +120,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11974")
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
@@ -175,7 +170,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"7710"})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
@@ -199,7 +193,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8681"})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
@@ -233,7 +226,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8682"})
     @Description("Upload a part, load cad metadata with part name and extension and get cad metadata to verify")
     public void testFileNameAndExtensionInputAndOutput() {
@@ -263,7 +255,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8689"})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
@@ -290,7 +281,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
@@ -326,7 +316,6 @@ public class WorkorderAPITests extends TestUtil {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
@@ -365,7 +354,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11981")
     @Description("Delete Scenario")
     public void testDeleteScenario() {
@@ -395,7 +383,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11990")
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
@@ -406,7 +393,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11991")
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
@@ -417,7 +403,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "12044")
     @Description("Generate All Images - Part File")
     public void testGenerateAllPartImages() {
@@ -440,7 +425,6 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "12047")
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {

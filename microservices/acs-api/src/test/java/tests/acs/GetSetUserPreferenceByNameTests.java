@@ -20,7 +20,6 @@ import testsuites.categories.AcsTest;
 public class GetSetUserPreferenceByNameTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10798")
     @Description("Validate Get User Preference By Name Endpoint")
     public void testGetUserPreferenceByName() {
@@ -33,7 +32,6 @@ public class GetSetUserPreferenceByNameTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10846")
     @Description("Validate Get User Preference By Name Endpoint - Negative - Invalid User")
     public void testGetUserPreferenceByNameInvalid() {
@@ -44,7 +42,6 @@ public class GetSetUserPreferenceByNameTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10847")
     @Description("Validate Set User Preference By Name")
     public void testSetUserPreferenceByName() {
@@ -68,7 +65,6 @@ public class GetSetUserPreferenceByNameTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10848")
     @Description("Validate Set User Preferences By Name - Negative - Invalid User")
     public void testSetUserPreferenceByNameInvalidUser() {

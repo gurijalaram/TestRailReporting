@@ -32,7 +32,6 @@ public class GetActiveAxesByScenarioIterationKeyTests extends TestUtil {
 
     @Test
     @Issue("COST-173")
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10980")
     @Description("Validate Get Active Axes by Scenario Iteration Key")
     public void testGetActiveAxesByScenarioIterationKey() {

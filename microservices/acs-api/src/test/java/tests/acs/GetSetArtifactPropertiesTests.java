@@ -28,7 +28,6 @@ import testsuites.categories.AcsTest;
 public class GetSetArtifactPropertiesTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "12079")
     @Description("Verify Get Artifact Properties Endpoint")
     public void testGetArtifactPropertiesEndpoint() {

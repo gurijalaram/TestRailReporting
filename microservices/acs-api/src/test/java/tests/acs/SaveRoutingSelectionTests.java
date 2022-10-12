@@ -26,7 +26,6 @@ import testsuites.categories.AcsTest;
 public class SaveRoutingSelectionTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "15429")
     @Description("Save Routing Selection after Cost")
     public void testSaveRoutingSelection() {

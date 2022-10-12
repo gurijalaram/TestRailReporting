@@ -20,8 +20,6 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.categories.AcsTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -30,7 +28,6 @@ import java.util.List;
 public class GetScenariosInfoTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "9597")
     @Description("Validate Get Scenarios Info - Two Parts")
     public void testGetScenariosInfoTwoParts() {
@@ -42,7 +39,6 @@ public class GetScenariosInfoTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10384")
     @Description("Validate Get Scenarios Info - Four Parts")
     public void testGetScenariosInfoFourParts() {
@@ -54,7 +50,6 @@ public class GetScenariosInfoTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10182")
     @Description("Negative Get Scenarios Info - Invalid Iteration Identities")
     public void negativeGetScenariosInfoInvalidIterationIdentitiesTest() {
@@ -78,7 +73,6 @@ public class GetScenariosInfoTests extends TestUtil {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10203")
     @Description("Negative Get Scenarios Info - Empty Body")
     public void negativeGetScenariosInfoEmptyBodyTest() {
