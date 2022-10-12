@@ -27,7 +27,9 @@ public class AccountsControllerTest extends AccountsUtil {
     @Before
     public void setUp() {
         RequestEntityUtil.useTokenForRequests(new AuthorizationUtil().getTokenAsString());
-        identity = postCreateNewAccount().getResponseEntity().getIdentity();
+        if (identity == null) {
+            identity = postCreateNewAccount().getResponseEntity().getIdentity();
+        }
     }
 
     @AfterClass
@@ -46,22 +48,10 @@ public class AccountsControllerTest extends AccountsUtil {
     }
 
     @Test
-    @TestRail(testCaseId = "1492")
+    @TestRail(testCaseId = {"1492", "1497"})
     @Description("GET the current representation of an account.")
     public void testGetAccountByIdentity() {
         ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
-    }
-
-    @Test
-    @TestRail(testCaseId = "1497")
-    @Description("POST Add a new account.")
-    public void testCreateNewAccount() {
-        ResponseWrapper<AccountsResponse> postResponse = postCreateNewAccount();
-        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_CREATED, postResponse.getStatusCode());
-        String postResponseIdentity = postResponse.getResponseEntity().getIdentity();
-
-        ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(postResponseIdentity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
     }
 
@@ -109,6 +99,11 @@ public class AccountsControllerTest extends AccountsUtil {
     @TestRail(testCaseId = "1495")
     @Description("POST Activate an account.")
     public void testPostActivateAnAccount() {
+        ResponseWrapper<AccountsResponse> originalAccount = getActiveAccount();
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, originalAccount.getStatusCode());
+
+        String originalIdentity = originalAccount.getResponseEntity().getIdentity();
+
         ResponseWrapper<AccountsResponse> accountByIdentity = getAccountByIdentity(identity);
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, accountByIdentity.getStatusCode());
 
@@ -116,6 +111,11 @@ public class AccountsControllerTest extends AccountsUtil {
         validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, activateAnAccountByIdentity.getStatusCode());
 
         assertThat(activateAnAccountByIdentity.getResponseEntity().getIsActive(), is(equalTo(true)));
+
+        ResponseWrapper<AccountsResponse> activateOriginalAccount = postActivateAnAccount(originalIdentity);
+        validateResponseCodeByExpectingAndRealCode(HttpStatus.SC_OK, activateAnAccountByIdentity.getStatusCode());
+
+        assertThat(activateOriginalAccount.getResponseEntity().getIsActive(), is(equalTo(true)));
     }
 
     @Test

@@ -156,6 +156,9 @@ public class EvaluatePage extends EvaluateToolbar {
     @FindBy(css = "[id='qa-scenario-list-card-view-button'] button")
     private WebElement treeButton;
 
+    @FindBy(css = ".MuiFormControlLabel-root [data-testid='checkbox']")
+    private WebElement machinePartCheckbox;
+
     private PageUtils pageUtils;
     private WebDriver driver;
     private InputsController inputsController;
@@ -780,5 +783,22 @@ public class EvaluatePage extends EvaluateToolbar {
     public EvaluatePage treeView() {
         pageUtils.waitForElementAndClick(treeButton);
         return this;
+    }
+
+    /**
+     * Selects the Do not machine this part checkbox
+     * @return current page object
+     */
+    public EvaluatePage selectMachineOptionsCheckbox() {
+        inputsController.selectMachineOptionsCheckbox(machinePartCheckbox);
+        return this;
+    }
+
+    /**
+     * Checks if the machine part checkbox is displayed
+     * @return boolean
+     */
+    public boolean isMachineOptionsCheckboxDisplayed() {
+        return inputsController.isMachineOptionsCheckboxDisplayed(machinePartCheckbox);
     }
 }

@@ -13,10 +13,12 @@ import com.apriori.cirapi.entity.response.InputControl;
 import com.apriori.cirapi.utils.JasperReportUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
+import com.apriori.utils.enums.reports.CostMetricEnum;
 import com.apriori.utils.enums.reports.ExportSetEnum;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import org.jsoup.nodes.Element;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,6 +32,9 @@ import java.security.NoSuchAlgorithmException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class CastingDtcReportTests extends TestBase {
 
@@ -100,11 +105,39 @@ public class CastingDtcReportTests extends TestBase {
         assertThat(gbpAnnualSpend, is(not(equalTo(usdAnnualSpend))));
     }
 
+    @Test
+    @Category(ReportsApiTest.class)
+    @TestRail(testCaseId = {"1695"})
+    @Description("Verify cost metric input control functions correctly - PPC - Casting DTC Report")
+    public void testCostMetricInputControlPpc() {
+        ReportRequest reportRequest = ReportRequest.initFromJsonFile("ReportCastingDTCRequest");
+
+        InputControl inputControl = JasperReportUtil.init(jSessionId)
+                .getInputControls();
+        String value = inputControl.getExportSetName().getOption(exportSetName).getValue();
+
+        reportRequest.getParameters().getReportParameterByName("costMetric")
+                .setValue(Collections.singletonList(CostMetricEnum.PIECE_PART_COST.getCostMetricName()));
+
+        reportRequest.getParameters().getReportParameterByName("exportSetName")
+                .setValue(Collections.singletonList(value));
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern(dateFormat);
+        String currentDateTime = dtf.format(LocalDateTime.now());
+        reportRequest.getParameters().getReportParameterByName("latestExportDate")
+                .setValue(Collections.singletonList(currentDateTime));
+
+        List<Element> elements = JasperReportUtil.init(jSessionId).generateJasperReportSummary(reportRequest).getReportHtmlPart().getElementsContainingText("Piece Part Cost");
+        List<Element> tdPPCElements = elements.stream().filter(element -> element.toString().startsWith("<td")).collect(Collectors.toList());
+        assertThat(tdPPCElements.toString().contains("Piece Part Cost"), is(equalTo(true)));
+    }
+
     private ChartDataPoint generateReportAndGetSummary(ReportRequest reportRequest) {
         JasperReportSummary jasperReportSummary = JasperReportUtil.init(jSessionId)
             .generateJasperReportSummary(reportRequest);
         return jasperReportSummary.getChartDataPointByPartName(reportCurrencyTestPartName);
     }
+
 
     /**
      * Example, created by Vlad Z
