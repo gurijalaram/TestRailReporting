@@ -87,8 +87,15 @@ public class MaterialSelectionTests {
 
         ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(component);
 
-        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostScenario(componentResponse);
-
+        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostScenario(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
+                .processGroup(pg)
+                .user(currentUser)
+                .build());
 
         ResponseWrapper<ScenarioResponse> getScenarioInfo = scenariosUtil.getScenarioRepresentation(componentResponse);
         getScenarioInfo.getResponseEntity();
