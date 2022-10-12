@@ -22,6 +22,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -77,6 +78,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"6187"})
     @Description("Test making changes to the Material for Die Casting, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestDieCasting() {
@@ -110,6 +112,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"6188"})
     @Description("Test making changes to the Material for Plastic Molding, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestPlasticMolding() {
@@ -142,6 +145,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"6189"})
     @Description("Test making changes to the Material for Sheet Metal, the change is respected and the scenario can be cost")
     public void changeMaterialSelectionTestSheetMetal() {
@@ -216,6 +220,7 @@ public class ChangeMaterialSelectionTests extends TestBase {
     }
 
     @Test
+    @Issue("CID-1247")
     @TestRail(testCaseId = {"6191"})
     @Description("Test re-selecting same material and the scenario can be recost")
     public void changeMaterialSelectionTestReSelect() {
