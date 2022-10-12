@@ -9,8 +9,13 @@ import java.util.List;
 @Builder
 public class GetAvailableRoutingsResponse {
     private String name;
+    private String displayName;
     private String plantName;
     private String processGroupName;
-    private List<GetAvailableRoutingsResponse> children;
+    private Boolean optional;
+    private Boolean included;
+    private Boolean overriden;
     private Boolean alternNode;
+    private List<GetAvailableRoutingsResponse> children;
+
 }

@@ -24,7 +24,7 @@ public class GetAvailableRoutingsTests {
     @Test
     @Category(AcsTest.class)
     @TestRail(testCaseId = "15429")
-    @Description("Get available routing after Cost")
+    @Description("Get available routings after Cost")
     public void testGetAvailableRoutings() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
@@ -53,7 +53,7 @@ public class GetAvailableRoutingsTests {
                 false
         );
 
-        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
+        GetAvailableRoutingsResponse getAvailableRoutingsResponse = acsResources.getAvailableRoutings(
             costOutputs.getScenarioIterationKey()
         );
 
