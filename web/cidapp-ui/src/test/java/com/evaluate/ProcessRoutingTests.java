@@ -312,9 +312,68 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection()
             .selectRoutingPreferenceByName("Powder Bed Fusion / Direct Metal Laser Sintering")
             .submit(EvaluatePage.class)
-                .costScenario();
+            .costScenario();
 
         softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Stress Relief / Ultrasonic Cleaning");
         softAssertions.assertAll();
     }
+
+    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @Description("Validate a variety of secondary processes can be added for newly selected routings")
+    public void secondaryProcessesRoutings() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "PMI_AllTolTypesCatia";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .goToAdvancedTab()
+            .openSecondaryProcesses()
+            .goToOtherSecProcessesTab()
+            .selectSecondaryProcess("Packaging")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Injection Mold")
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Carton Forming", "Pack & Load", "Carton Sealing");
+        softAssertions.assertAll();
+    }
+
+/*    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID and un comment when BA-2646 is complete
+    @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
+    public void routingPGs() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "plasticLid";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        routingSelectionPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection();
+
+        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).doesNotContain("MillTurn Routing", "Die Casting");
+        softAssertions.assertAll();
+    }*/
 }
