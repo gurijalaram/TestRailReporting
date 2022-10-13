@@ -65,7 +65,7 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .clickDeleteIcon()
-            .clickDeleteButton(ExplorePage.class)
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .refresh();
 
@@ -105,7 +105,7 @@ public class DeleteTests extends TestBase {
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
             .clickDeleteIcon()
-            .clickDeleteButton(ExplorePage.class)
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .refresh();
 
@@ -130,7 +130,7 @@ public class DeleteTests extends TestBase {
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
             .clickDeleteIcon()
-            .clickDeleteButton(ExplorePage.class)
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .filter()
             .saveAs()
@@ -167,7 +167,7 @@ public class DeleteTests extends TestBase {
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
             .clickDeleteIcon()
-            .clickDeleteButton(ExplorePage.class)
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .filter()
             .saveAs()

@@ -173,7 +173,7 @@ public class GroupEditTests extends TestBase {
 
         explorePage.multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "")
             .clickDeleteIcon()
-            .clickDeleteButton(ExplorePage.class)
+            .clickDelete(ExplorePage.class)
             .selectFilter("Public")
             .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "");
 
