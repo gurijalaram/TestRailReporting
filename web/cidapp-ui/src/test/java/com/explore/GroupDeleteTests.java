@@ -54,8 +54,8 @@ public class GroupDeleteTests extends TestBase {
 
         explorePage = new ExplorePage(driver).refresh()
             .multiSelectScenarios("" + componentName + ", " + scenarioName + "", "" + componentName2 + ", " + scenarioName2 + "")
-            .delete()
-            .submit(DeletePage.class)
+            .clickDeleteIcon()
+            .delete(DeletePage.class)
             .close(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .checkComponentDelete(cidComponentItemB)
