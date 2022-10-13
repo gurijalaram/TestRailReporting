@@ -9,6 +9,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -16,10 +17,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetUserPreferenceByNameTests {
+public class GetSetUserPreferenceByNameTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10798")
     @Description("Validate Get User Preference By Name Endpoint")
     public void testGetUserPreferenceByName() {
@@ -32,7 +32,6 @@ public class GetSetUserPreferenceByNameTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10846")
     @Description("Validate Get User Preference By Name Endpoint - Negative - Invalid User")
     public void testGetUserPreferenceByNameInvalid() {
@@ -43,7 +42,6 @@ public class GetSetUserPreferenceByNameTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10847")
     @Description("Validate Set User Preference By Name")
     public void testSetUserPreferenceByName() {
@@ -67,7 +65,6 @@ public class GetSetUserPreferenceByNameTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10848")
     @Description("Validate Set User Preferences By Name - Negative - Invalid User")
     public void testSetUserPreferenceByNameInvalidUser() {

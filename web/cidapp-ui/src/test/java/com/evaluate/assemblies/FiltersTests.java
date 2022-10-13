@@ -20,12 +20,16 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
+import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
+import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.hamcrest.MatcherAssert;
 import org.junit.Test;
 
 import java.io.File;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -480,5 +484,51 @@ public class FiltersTests extends TestBase {
 
         soft.assertThat(componentsListPage.isElementDisplayed("All", "text-overflow")).isTrue();
         soft.assertThat(componentsListPage.getAllScenarioComponentName(3)).hasSize(3);
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6075", "6080"})
+    @Description("Validate Private filter displays only Private Scenarios")
+    public void verifyFilterContentTest() {
+        SoftAssertions softAssert = new SoftAssertions();
+        LocalDateTime filterStartTime = LocalDateTime.now().minusHours(24);
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        explorePage = loginPage.login(currentUser);
+
+        explorePage.selectFilter("Private")
+            .addColumn(ColumnsEnum.PUBLISHED)
+            .sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.ASCENDING);
+
+        String[] topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
+        String topComponentName = topScenarioDetails[0];
+        String topScenarioName = topScenarioDetails[1];
+
+        softAssert.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
+            .as("Published state of top scenario sorted ascending")
+            .isEqualTo("Private");
+
+        explorePage.sortColumn(ColumnsEnum.PUBLISHED, SortOrderEnum.DESCENDING);
+        topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
+        topComponentName = topScenarioDetails[0];
+        topScenarioName = topScenarioDetails[1];
+
+        softAssert.assertThat(explorePage.getPublishedState(topComponentName, topScenarioName))
+            .as("Published state of top scenario sorted ascending")
+            .isEqualTo("Private");
+
+        explorePage.selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.ASCENDING);
+
+        topScenarioDetails = explorePage.getFirstScenarioDetails().split(",");
+        topComponentName = topScenarioDetails[0];
+        topScenarioName = topScenarioDetails[1];
+
+        softAssert.assertThat(explorePage.getCreatedAt(topComponentName, topScenarioName))
+                .as("Created At date of oldest scenario in Recent")
+                .isAfterOrEqualTo(filterStartTime);
+
+        softAssert.assertAll();
     }
 }

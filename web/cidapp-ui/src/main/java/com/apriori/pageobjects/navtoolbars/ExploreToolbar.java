@@ -522,11 +522,21 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Checks if button is enabled
+     * Checks if edit button is enabled
      *
      * @return true/false
      */
     public boolean isEditButtonEnabled() {
         return pageUtils.waitForElementToAppear(editButton).isEnabled();
+    }
+
+
+    /**
+     * Checks if delete button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonEnabled() {
+        return pageUtils.waitForElementToAppear(deleteButton).isEnabled();
     }
 }
