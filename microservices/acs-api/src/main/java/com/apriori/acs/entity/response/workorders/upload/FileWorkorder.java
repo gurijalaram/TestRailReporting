@@ -1,26 +1,13 @@
 package com.apriori.acs.entity.response.workorders.upload;
 
+import lombok.Builder;
+import lombok.Data;
+
 import java.util.List;
 
+@Data
+@Builder
 public class FileWorkorder {
     private String action;
-    private List<String> orderIds;
-
-    public String getAction() {
-        return action;
-    }
-
-    public FileWorkorder setAction(String action) {
-        this.action = action;
-        return this;
-    }
-
-    public List<String> getOrderIds() {
-        return orderIds;
-    }
-
-    public FileWorkorder setOrderIds(List<String> orderIds) {
-        this.orderIds = orderIds;
-        return this;
-    }
+    private List<OrderId> groupItems;
 }

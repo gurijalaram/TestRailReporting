@@ -78,7 +78,7 @@ public class EvaluateToolbar extends ExploreToolbar {
      * Method to check cost label is in correct state
      */
     public void waitForCostLabel(int timeoutInMinutes) {
-        By costingDialog = By.xpath("//h2[.='Cost Scenario']");
+        By costingDialog = By.cssSelector("[role='dialog'] .dialog-title");
 
         pageUtils.waitForElementToAppear(costingDialog);
         pageUtils.waitForElementsToNotAppear(costingDialog);

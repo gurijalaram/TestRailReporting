@@ -464,11 +464,11 @@ public class IncludeAndExcludeTests extends TestBase {
             .clickExplore()
             .selectFilter("Recent")
             .highlightScenario(assemblyName, scenarioName)
-            .delete()
-            .submit(ExplorePage.class)
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
-            .delete()
-            .submit(ExplorePage.class);
+            .clickDeleteIcon()
+            .clickDelete(ExplorePage.class);
     }
 
     @Test
