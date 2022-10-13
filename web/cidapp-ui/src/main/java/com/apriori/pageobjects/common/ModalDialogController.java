@@ -101,6 +101,16 @@ public class ModalDialogController {
     }
 
     /**
+     * Selects the delete button
+     *
+     * @return current page object
+     */
+    public <T> T delete(WebElement button,Class<T> klass) {
+        pageUtils.waitForElementAndClick(button);
+        return PageFactory.initElements(driver, klass);
+    }
+
+    /**
      * Select the cancel button
      *
      * @return generic page object

@@ -11,6 +11,7 @@ import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferencesResponse;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -18,10 +19,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetUserPreferencesTests {
+public class GetSetUserPreferencesTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10759")
     @Description("Verify Get User Preferences Endpoint")
     public void testGetUserPreferencesEndpoint() {
@@ -37,7 +37,6 @@ public class GetSetUserPreferencesTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10796")
     @Description("Get User Preferences Negative Test - Invalid Username")
     public void testGetUserPreferencesInvalidUser() {
@@ -48,7 +47,6 @@ public class GetSetUserPreferencesTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10842")
     @Description("Validate Set User Preferences Endpoint")
     public void testSetUserPreferencesEndpoint() {
@@ -78,7 +76,6 @@ public class GetSetUserPreferencesTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10844")
     @Description("Validate Set User Preferences Endpoint - Negative - Invalid User")
     public void testSetUserPreferencesEndpointInvalidUser() {

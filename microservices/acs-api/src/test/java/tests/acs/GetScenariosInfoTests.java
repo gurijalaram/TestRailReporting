@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterati
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -19,17 +20,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.categories.AcsTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GetScenariosInfoTests {
+public class GetScenariosInfoTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "9597")
     @Description("Validate Get Scenarios Info - Two Parts")
     public void testGetScenariosInfoTwoParts() {
@@ -41,7 +39,6 @@ public class GetScenariosInfoTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10384")
     @Description("Validate Get Scenarios Info - Four Parts")
     public void testGetScenariosInfoFourParts() {
@@ -53,7 +50,6 @@ public class GetScenariosInfoTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10182")
     @Description("Negative Get Scenarios Info - Invalid Iteration Identities")
     public void negativeGetScenariosInfoInvalidIterationIdentitiesTest() {
@@ -77,7 +73,6 @@ public class GetScenariosInfoTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10203")
     @Description("Negative Get Scenarios Info - Empty Body")
     public void negativeGetScenariosInfoEmptyBodyTest() {
