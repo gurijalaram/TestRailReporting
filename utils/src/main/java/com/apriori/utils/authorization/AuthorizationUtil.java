@@ -103,8 +103,8 @@ public class AuthorizationUtil {
         String deploymentApplication = "";
 
         String deploymentItemName = deploymentItem.getName();
-        String installationItemName = deploymentItem.getInstallations().get(3).getName();
-        String applicationItemName = deploymentItem.getInstallations().get(3).getApplications().get(2).getServiceName();
+        String installationItemName = deploymentItem.getInstallations().get(4).getName();
+        String applicationItemName = deploymentItem.getInstallations().get(4).getApplications().get(2).getServiceName();
 
         boolean correctInstallation = deploymentItemName.equalsIgnoreCase(PropertiesContext.get("${env}.deployment_name")) &&
             installationItemName.equalsIgnoreCase(PropertiesContext.get("${env}.installation_name")) &&

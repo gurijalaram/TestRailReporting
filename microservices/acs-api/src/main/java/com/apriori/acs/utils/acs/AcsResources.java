@@ -53,8 +53,8 @@ public class AcsResources {
 
     private static final HashMap<String, String> headers = new HashMap<>();
 
-    private final String validUsername = UserUtil.getUser().getUsername();
-    private final String invalidUsername = UserUtil.getUser().getUsername().substring(0, 14).concat("41");
+    private final String validUsername = UserUtil.getUserTokenOnly().getUsername();
+    private final String invalidUsername = UserUtil.getUserTokenOnly().getUsername().substring(0, 14).concat("41");
 
     /**
      * Creates Missing Scenario
