@@ -49,6 +49,7 @@ import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
+import com.apriori.acs.entity.response.workorders.upload.OrderId;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
 import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.fms.controller.FileManagementController;
@@ -961,11 +962,17 @@ public class FileUploadResources {
     private void submitWorkorder(String orderId) {
         setupHeaders("application/json");
 
+        OrderId orderId1 = new OrderId();
+        orderId1.setOrderId(orderId);
+
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, SubmitWorkOrder.class)
+            .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, null)
             .headers(headers)
-            .body(new FileWorkorder().setOrderIds(Collections.singletonList(orderId))
-                .setAction("SUBMIT"));
+            .body(FileWorkorder.builder()
+                .action("SUBMIT")
+                .groupItems(Collections.singletonList(orderId1))
+                .build()
+            );
 
         HTTPRequest.build(requestEntity).post();
     }
