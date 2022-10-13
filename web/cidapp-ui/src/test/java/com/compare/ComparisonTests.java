@@ -561,8 +561,8 @@ public class ComparisonTests extends TestBase {
             .selectFilter("Recent")
             .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
             .highlightScenario(componentName2, scenarioName2)
-            .clickDeleteIcon()
-            .delete(ExplorePage.class)
+            .clickDelete()
+            .clickDelete(ExplorePage.class)
             .clickCompare()
             .openScenario(componentName2, scenarioName2);
 
@@ -613,8 +613,8 @@ public class ComparisonTests extends TestBase {
             .clickExplore()
             .selectFilter("Public")
             .highlightScenario(componentName, scenarioName)
-            .clickDeleteIcon()
-            .delete(ExplorePage.class)
+            .clickDelete()
+            .clickDelete(ExplorePage.class)
             .clickCompare()
             .openScenario(componentName, scenarioName);
 

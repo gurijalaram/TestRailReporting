@@ -64,8 +64,8 @@ public class DeleteTests extends TestBase {
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
-            .clickDeleteIcon()
-            .delete(ExplorePage.class)
+            .clickDelete()
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .refresh();
 
@@ -104,8 +104,8 @@ public class DeleteTests extends TestBase {
             .addCriteria(PropertyEnum.SCENARIO_NAME, OperationEnum.CONTAINS, scenarioName)
             .submit(ExplorePage.class)
             .highlightScenario(componentName, scenarioName)
-            .clickDeleteIcon()
-            .delete(ExplorePage.class)
+            .clickDelete()
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .refresh();
 
@@ -129,8 +129,8 @@ public class DeleteTests extends TestBase {
             .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-            .clickDeleteIcon()
-            .delete(ExplorePage.class)
+            .clickDelete()
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .filter()
             .saveAs()
@@ -166,8 +166,8 @@ public class DeleteTests extends TestBase {
             .costScenario()
             .publishScenario(PublishPage.class)
             .publish(cidComponentItem, EvaluatePage.class)
-            .clickDeleteIcon()
-            .delete(ExplorePage.class)
+            .clickDelete()
+            .clickDelete(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .filter()
             .saveAs()
