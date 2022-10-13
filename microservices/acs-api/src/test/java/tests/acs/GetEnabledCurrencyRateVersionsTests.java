@@ -1,6 +1,7 @@
 package tests.acs;
 
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -8,10 +9,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetEnabledCurrencyRateVersionsTests {
+public class GetEnabledCurrencyRateVersionsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8768")
     @Description("Test Get Enabled Currency Rate Versions")
     public void testGetEnabledCurrencyRateVersions() {
