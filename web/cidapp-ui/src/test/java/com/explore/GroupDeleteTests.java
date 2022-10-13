@@ -65,9 +65,9 @@ public class GroupDeleteTests extends TestBase {
 
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
 
-        explorePage.delete()
-            .submit(DeletePage.class)
-            .close(ExplorePage.class)
+        explorePage.clickDeleteIcon()
+            .clickDelete(DeletePage.class)
+            .clickClose(ExplorePage.class)
             .checkComponentDelete(cidComponentItem)
             .checkComponentDelete(cidComponentItemB)
             .refresh();
