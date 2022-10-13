@@ -45,6 +45,18 @@ public class UserUtil {
      */
     public static UserCredentials getUser() {
         UserCredentials user = UserCommonService.getUser()
+            .generateToken();
+        logInfo(user);
+        return user;
+    }
+
+    /**
+     * Return common user with cloud context
+     *
+     * @return User
+     */
+    public static UserCredentials getUserWithCloudContext() {
+        UserCredentials user = UserCommonService.getUser()
             .generateToken()
             .generateCloudContext();
         logInfo(user);
