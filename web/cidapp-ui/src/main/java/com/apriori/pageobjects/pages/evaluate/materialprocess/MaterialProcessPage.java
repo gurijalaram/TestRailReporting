@@ -588,4 +588,56 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     public HelpDocPage openHelp() {
         return panelController.openHelp();
     }
+
+    /**
+     * Get Part tolerance
+     *
+     * @return string
+     */
+    public String getPartOrientation() {
+        return psoController.dropdownLocator("Orientation").getAttribute("textContent");
+    }
+
+    /**
+     * Select tolerance
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selectPartOrientation(String value) {
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Orientation"), "Orientation", value);
+        return this;
+    }
+
+    /**
+     * Get Part tolerance
+     *
+     * @return string
+     */
+    public String getGrainDirection() {
+        return psoController.dropdownLocator("Direction").getAttribute("textContent");
+    }
+
+    /**
+     * Select tolerance
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selecGrainDirection(String value) {
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Direction"), "Direction", value);
+        return this;
+    }
+
+    /**
+     * Input Minimum Recommended Hole Diameter count
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputMinimumRecommendedHoleDiameter(String value) {
+        psoController.inputOverrideValue(psoController.buildLocator("Minimum Recommended Hole Diameter", "userOverride"),
+            psoController.inputLocator("Minimum Recommended Hole Diameter"), value);
+        return this;
+    }
 }

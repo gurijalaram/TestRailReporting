@@ -1,7 +1,6 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import com.utils.ComparisonDeltaEnum;
@@ -86,16 +85,16 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
         return getPageUtils().isElementEnabled(submit);
     }
 
-    /**
+/*    *//**
      * Get cost label from a specific routing preference
      *
      * @param routingPreference - the routing preference
      * @param status            - cost label
      * @return - Boolean
-     */
+     *//*
     public boolean isCostStatus(String routingPreference, NewCostingLabelEnum status) {
         return getPageUtils().textPresentInElement(getDriver().findElement(byCostStatus(routingPreference, status)), status.getCostingText());
-    }
+    }*/
 
     /**
      * verify the cost difference

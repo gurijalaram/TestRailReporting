@@ -227,6 +227,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    //TODO cn to uncomment this
     @TestRail(testCaseId = {"8972"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {

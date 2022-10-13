@@ -3,6 +3,8 @@ package com.evaluate;
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.RoutingSelectionPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
@@ -18,6 +20,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
+import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -31,6 +34,8 @@ public class ProcessRoutingTests extends TestBase {
     private AdvancedPage advancedPage;
     private MaterialProcessPage materialProcessPage;
     private RoutingSelectionPage routingSelectionPage;
+    private GuidanceIssuesPage guidanceIssuesPage;
+    private MaterialSelectorPage materialSelectorPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -166,6 +171,150 @@ public class ProcessRoutingTests extends TestBase {
             .openRoutingSelection();
 
         softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo(NewCostingLabelEnum.COST_COMPLETE);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @Description("Validate behaviour when forcing a material that will fail costing within CID")
+    public void failCostingRouting() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
+
+        String componentName = "CastedPart";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Vat Photopolymerization")
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
+
+        /*TODO uncomment this section when dfm messaging appears for this failure
+        evaluatePage.openDesignGuidance()
+                .selectIssueTypeGcd("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
+
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("This DMLS material is not compatible with Stereolithography.");*/
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @Description("Validate costing results update accordingly for a newly selected and costed routing")
+    public void costUpdatedRouting() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
+
+        String componentName = "HoleProximityTest";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.56), Offset.offset(5.0));
+
+        evaluatePage.goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("[CTL]/Waterjet/[Bend]")
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getCostResults("Fully Burdened Cost")).isCloseTo(Double.valueOf(1.96), Offset.offset(5.0));
+
+        materialProcessPage = evaluatePage.openMaterialProcess()
+            .selectBarChart("Waterjet Cut")
+            .selectOptionsTab()
+            .selectPartOrientation("Position Bend with Smallest Radius Parallel to Grain")
+            .selecGrainDirection("Parallel to Sheet Length")
+            .inputMinimumRecommendedHoleDiameter("0.5")
+            .closePanel()
+            .costScenario()
+            .openMaterialProcess()
+            .selectBarChart("Waterjet Cut")
+            .selectOptionsTab();
+
+        softAssertions.assertThat(materialProcessPage.getPartOrientation().contains("Position Bend with Smallest Radius Parallel to Grain"));
+        softAssertions.assertThat(materialProcessPage.getGrainDirection().contains("Parallel to Sheet Length"));
+        // TODO CN to fix this assertion softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness (Piece Part Cost Driver)")).isEqualTo(0.5);
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @Description("Validate materials selected are appropriate for selected routing.")
+    public void routingMaterials() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
+
+        String componentName = "plasticLid";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".SLDPRT");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        materialSelectorPage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .openMaterialSelectorTable();
+
+        //TODO cn fix this softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes()).containsExactlyInAnyOrder("test", "All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
+        softAssertions.assertAll();
+    }
+
+    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
+    public void routingSecondaryPG() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
+
+        String componentName = "CastedPart";
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, componentName + ".CATPart");
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .uploadComponentAndOpen(componentName, scenarioName, resourceFile, currentUser)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario()
+            .openMaterialSelectorTable()
+            .selectMaterial("Visijet M3 Black")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Material Jetting")
+            .submit(EvaluatePage.class)
+            .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Printing / Breakoff");
+
+        evaluatePage.openMaterialSelectorTable()
+            .selectMaterial("Aluminum AlSi10Mg")
+            .submit(EvaluatePage.class)
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Powder Bed Fusion / Direct Metal Laser Sintering")
+            .submit(EvaluatePage.class)
+                .costScenario();
+
+        softAssertions.assertThat(evaluatePage.getProcessRoutingDetails()).contains("Stress Relief / Ultrasonic Cleaning");
         softAssertions.assertAll();
     }
 }
