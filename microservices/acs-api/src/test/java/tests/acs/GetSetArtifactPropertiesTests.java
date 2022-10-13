@@ -12,6 +12,7 @@ import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostO
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -24,10 +25,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetArtifactPropertiesTests {
+public class GetSetArtifactPropertiesTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "12079")
     @Description("Verify Get Artifact Properties Endpoint")
     public void testGetArtifactPropertiesEndpoint() {

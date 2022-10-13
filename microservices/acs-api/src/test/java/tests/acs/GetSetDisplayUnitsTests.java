@@ -11,6 +11,7 @@ import com.apriori.acs.entity.response.acs.getsetdisplayunits.GetDisplayUnitsRes
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.SetDisplayUnitsInputs;
 import com.apriori.acs.entity.response.acs.getsetdisplayunits.UnitVariantSettingsInfoInputs;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.CurrencyEnum;
 
@@ -19,10 +20,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetDisplayUnitsTests {
+public class GetSetDisplayUnitsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8769")
     @Description("Test Get Display Units")
     public void testGetDisplayUnits() {
@@ -48,7 +48,6 @@ public class GetSetDisplayUnitsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8770")
     @Description("Test Set Currency Display Unit")
     public void setCurrencyDisplayUnitTest() {
@@ -82,7 +81,6 @@ public class GetSetDisplayUnitsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8771")
     @Description("Test Set Length and Mass Display Unit")
     public void setLengthAndMassDisplayUnitTest() {

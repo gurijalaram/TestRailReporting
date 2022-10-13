@@ -9,7 +9,7 @@
         "createdAt",
         "createdBy",
         "customerIdentity"
-        ],
+      ],
       "properties": {
         "identity": {
           "type": "string"
@@ -102,6 +102,11 @@
         },
         "assignedByName": {
           "type": "string"
+        },
+        "routingNodeOptions": {
+          "type": "array",
+          "items": {
+          }
         }
       }
     }
