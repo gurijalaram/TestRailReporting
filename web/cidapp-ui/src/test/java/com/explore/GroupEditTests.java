@@ -172,8 +172,8 @@ public class GroupEditTests extends TestBase {
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
         explorePage.multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "")
-            .clickDelete()
-            .clickDelete(ExplorePage.class)
+            .clickDeleteIcon()
+            .clickDeleteButton(ExplorePage.class)
             .selectFilter("Public")
             .multiSelectScenarios("" + componentName1 + ", " + scenarioName1 + "", "" + componentName2 + ", " + scenarioName2 + "");
 

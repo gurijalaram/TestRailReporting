@@ -945,8 +945,8 @@ public class EditAssembliesTest extends TestBase {
             .selectFilter("Private")
             .clickSearch(BOLT)
             .multiSelectScenarios("" + BOLT + ", " + scenarioName + "")
-            .clickDelete()
-            .clickDelete(ExplorePage.class)
+            .clickDeleteIcon()
+            .clickDeleteButton(ExplorePage.class)
             .navigateToScenario(componentAssembly)
             .openComponents();
 
