@@ -573,7 +573,7 @@ public class AcsResources {
      * Get Available Routings
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
-     * @return GenericResourceCreatedIdResponse instance
+     * @return GetAvailableRoutingsResponse instance
      */
 
     public GetAvailableRoutingsResponse getAvailableRoutings(ScenarioIterationKey scenarioIterationKey) {
