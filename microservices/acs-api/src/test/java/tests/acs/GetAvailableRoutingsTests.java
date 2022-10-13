@@ -25,7 +25,7 @@ public class GetAvailableRoutingsTests {
     @Category(AcsTest.class)
     @TestRail(testCaseId = "14814")
     @Description("Get available routings after Cost")
-    public void testGetAvailableRoutings() {
+    public void testGetAvailableRoutingsCosted() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -62,5 +62,40 @@ public class GetAvailableRoutingsTests {
         assertThat(response.getPlantName(), is(notNullValue()));
         assertThat(response.getProcessGroupName(), is(notNullValue()));
         assertThat(response.getCostStatus(), is(notNullValue()));
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14812")
+    @Description("Get available routings before Cost")
+    public void testGetAvailableRoutingsUncosted() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+                "bracket_basic.prt",
+                processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+                fileResponse,
+                testScenarioName
+        );
+
+
+        GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
+                fileUploadOutputs.getScenarioIterationKey()
+        );
+
+        assertThat(response.getName(), is(notNullValue()));
+        assertThat(response.getDisplayName(), is(notNullValue()));
+        assertThat(response.getPlantName(), is(notNullValue()));
+        assertThat(response.getProcessGroupName(), is(notNullValue()));
+        assertThat(response.getCostStatus(), is("UNCOSTED"));
     }
 }
