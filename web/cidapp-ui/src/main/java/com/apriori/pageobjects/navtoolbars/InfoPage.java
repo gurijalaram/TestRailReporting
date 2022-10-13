@@ -49,7 +49,7 @@ public class InfoPage extends LoadableComponent<InfoPage> {
     @FindBy(css = "[id='qa-scenario-info-form-cost-maturity-select'] [id]")
     private WebElement costMaturityText;
 
-    @FindBy(css = ".scenario-info-form [type='submit']")
+    @FindBy(css = "button[data-testid='primary-button']")
     private WebElement submitButton;
 
     private PageUtils pageUtils;
