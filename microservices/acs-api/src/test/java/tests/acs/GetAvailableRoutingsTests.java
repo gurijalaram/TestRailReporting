@@ -61,5 +61,6 @@ public class GetAvailableRoutingsTests {
         assertThat(response.getDisplayName(), is(notNullValue()));
         assertThat(response.getPlantName(), is(notNullValue()));
         assertThat(response.getProcessGroupName(), is(notNullValue()));
+        assertThat(response.getCostStatus(), is(notNullValue()));
     }
 }

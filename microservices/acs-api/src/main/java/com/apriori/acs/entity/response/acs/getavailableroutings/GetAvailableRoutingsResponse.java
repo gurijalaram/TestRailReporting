@@ -17,5 +17,6 @@ public class GetAvailableRoutingsResponse {
     private Boolean overriden;
     private Boolean alternNode;
     private List<GetAvailableRoutingsResponse> children;
+    private String costStatus;
 
 }
