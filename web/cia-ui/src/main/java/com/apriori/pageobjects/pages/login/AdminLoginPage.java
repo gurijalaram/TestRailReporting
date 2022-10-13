@@ -48,6 +48,9 @@ public class AdminLoginPage extends AdminHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
 
+    @FindBy(xpath = "//input[@type='email']")
+    private WebElement emailInput;
+
     public AdminLoginPage(WebDriver driver) {
         super(driver);
         init(driver, "", true);
@@ -85,6 +88,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
+        pageUtils.waitForElementToAppear(emailInput);
     }
 
     /**
