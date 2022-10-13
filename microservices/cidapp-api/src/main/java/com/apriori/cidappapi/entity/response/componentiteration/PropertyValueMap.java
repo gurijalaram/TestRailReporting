@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PropertyValueMap {
     private String artifactTypeName;
+    private Double minWallThickness;
     private Integer minGcdVersion;
     private Double surfaceArea;
     private Double nonSolidSurfaceArea;

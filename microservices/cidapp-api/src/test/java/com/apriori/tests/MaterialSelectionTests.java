@@ -9,9 +9,11 @@ import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.entity.request.ForkRequest;
 import com.apriori.cidappapi.entity.response.ComponentIdentityResponse;
 import com.apriori.cidappapi.entity.response.Scenario;
+import com.apriori.cidappapi.entity.response.componentiteration.ComponentIteration;
 import com.apriori.cidappapi.entity.response.scenarios.ScenarioResponse;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.IterationsUtil;
 import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -38,7 +40,7 @@ public class MaterialSelectionTests {
 
     private ComponentsUtil componentsUtil = new ComponentsUtil();
     private ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private IterationsUtil iterationUtil = new IterationsUtil();
 
     UserCredentials currentUser;
     private File resourceFile;
@@ -77,17 +79,16 @@ public class MaterialSelectionTests {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
         currentUser = UserUtil.getUser();
 
-        ComponentInfoBuilder component = ComponentInfoBuilder.builder()
-            .componentName(componentName)
-            .processGroup(pg)
-            .scenarioName(scenarioName)
-            .resourceFile(resourceFile)
-            .user(currentUser)
-            .build();
+        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .resourceFile(resourceFile)
+                .user(currentUser)
+                .build()
+        );
 
-        ComponentInfoBuilder componentResponse = componentsUtil.postComponentQueryCSS(component);
-
-        ResponseWrapper<ScenarioResponse> costResponse = scenariosUtil.postCostScenario(
+        scenariosUtil.postCostScenario(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -97,7 +98,16 @@ public class MaterialSelectionTests {
                 .user(currentUser)
                 .build());
 
-        ResponseWrapper<ScenarioResponse> getScenarioInfo = scenariosUtil.getScenarioRepresentation(componentResponse);
-        getScenarioInfo.getResponseEntity();
+        ResponseWrapper<ComponentIteration> getScenarioInfo = componentsUtil.getComponentIterationLatest(
+            ComponentInfoBuilder.builder()
+                .componentName(componentName)
+                .scenarioName(scenarioName)
+                .componentIdentity(componentResponse.getComponentIdentity())
+                .scenarioIdentity(componentResponse.getScenarioIdentity())
+                .processGroup(pg)
+                .user(currentUser)
+                .build());
+
+        assertThat(getScenarioInfo.getResponseEntity().getMaterial().getName(), is(equalTo(defaultMaterial)));
     }
 }
