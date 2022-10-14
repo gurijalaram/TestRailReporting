@@ -1,7 +1,11 @@
 package com.apriori.utils.json.utils;
 
+import com.apriori.utils.GetDeploymentsResponse;
+import com.apriori.utils.http.utils.ResponseWrapper;
+import com.apriori.utils.reader.file.user.UserCredentials;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
@@ -80,4 +84,12 @@ public class JsonManager {
         }
     }
 
+    public static <T> T convertBodyToJson(ResponseWrapper<String> getDeploymentsResponse, Class<T> klass) {
+        Gson gson = new Gson();
+        return gson.fromJson(
+            gson.toJson(
+                JsonParser.parseString(
+                    getDeploymentsResponse.getBody()).getAsJsonObject().getAsJsonObject("response")),
+            klass);
+    }
 }

@@ -91,12 +91,7 @@ public class AuthorizationUtil {
      * @return GetDeploymentsResponse instance
      */
     private GetDeploymentsResponse getDeploymentsResponse(UserCredentials userCredentials) {
-        Gson gson = new Gson();
-        return gson.fromJson(
-            gson.toJson(
-                JsonParser.parseString(
-                    getDeployments(userCredentials).getBody()).getAsJsonObject().getAsJsonObject("response")),
-            GetDeploymentsResponse.class);
+        return JsonManager.convertBodyToJson(getDeployments(userCredentials), GetDeploymentsResponse.class);
     }
 
     /**
