@@ -65,7 +65,7 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .goToAdvancedTab()
             .openRoutingSelection()
-            .selectRoutingPreferenceByName("3 Axis Mill")
+            .selectRoutingPreferenceByName("3 Axis Mill Routing")
             .submit(EvaluatePage.class)
             .costScenario();
 
