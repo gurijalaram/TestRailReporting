@@ -27,7 +27,7 @@ public class LoginPage extends CICBasePage {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIC login page was not displayed", aprioriLoginPage.getPageTitle().contains("Cost Insight Connect"));
+        assertTrue("CIC login page was not displayed", aprioriLoginPage.getLoginTitle().contains("Cost Insight Connect"));
     }
 
     /**
