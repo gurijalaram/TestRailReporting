@@ -63,13 +63,6 @@ public class UserUtil {
         return user;
     }
 
-    public static UserCredentials getUserTokenOnly() {
-        UserCredentials user = UserCommonService.getUser()
-            .generateToken();
-        logInfo(user);
-        return user;
-    }
-
     /**
      * Gets a common user for on prem env (without token or cloud context)
      *

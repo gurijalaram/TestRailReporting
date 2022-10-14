@@ -33,7 +33,7 @@ public class OldAuthorizationUtil {
     private OldTokenRequest getToken() {
         log.info("Getting Token from old CID API...");
 
-        UserCredentials user = UserUtil.getUserTokenOnly();
+        UserCredentials user = UserUtil.getUser();
 
         headers.put("Content-Type", "application/x-www-form-urlencoded");
         headers.put("Accept", "*/*");
