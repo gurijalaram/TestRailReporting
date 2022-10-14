@@ -239,7 +239,7 @@ public class ProcessRoutingTests extends TestBase {
 
         softAssertions.assertThat(materialProcessPage.getPartOrientation()).contains("Position Bend with Smallest Radius Parallel to Grain");
         softAssertions.assertThat(materialProcessPage.getGrainDirection()).contains("Parallel to Sheet Length");
-        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness (Piece Part Cost Driver)")).isEqualTo(0.5);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Minimum Recommended Hole Diameter")).isEqualTo(0.5);
         softAssertions.assertAll();
     }
 
