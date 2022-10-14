@@ -101,9 +101,9 @@ public class GetAvailableRoutingsTests {
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "14814")
-    @Description("Get available routings after Cost")
-    public void testGetAvailableRoutings2MM() {
+    @TestRail(testCaseId = "14823")
+    @Description("Get available routings after Cost for Additive Manufacturing scenario")
+    public void testGetAvailableRoutingsAdditiveManufacturing() {
         FileUploadResources fileUploadResources = new FileUploadResources();
         AcsResources acsResources = new AcsResources();
         WorkorderAPITests workorderAPITests = new WorkorderAPITests();
@@ -111,7 +111,7 @@ public class GetAvailableRoutingsTests {
 
         String testScenarioName = new GenerateStringUtil().generateScenarioName();
 
-        String processGroup = ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup();
+        String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
