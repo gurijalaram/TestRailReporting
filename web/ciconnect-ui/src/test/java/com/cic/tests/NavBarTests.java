@@ -3,7 +3,7 @@ package com.cic.tests;
 import com.apriori.pages.connectors.ConnectorsPage;
 import com.apriori.pages.home.help.cicuserguide.CicUserGuide;
 import com.apriori.pages.home.settings.CostingServiceSettings;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.users.UsersPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.utils.TestRail;
@@ -25,7 +25,7 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3653"})
     public void testNavigateToUsersTab() {
-        UsersPage usersPage = new LoginPage(driver)
+        UsersPage usersPage = new CicLoginPage(driver)
             .login(currentUser)
             .clickUsersMenu();
         Assert.assertEquals("Verify users menu", "Users", usersPage.getUsersText());
@@ -34,7 +34,7 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3654"})
     public void testNavigateToConnectorsTab() {
-        ConnectorsPage connectorsPage = new LoginPage(driver)
+        ConnectorsPage connectorsPage = new CicLoginPage(driver)
             .login(currentUser)
             .clickConnectorsMenu();
 
@@ -45,7 +45,7 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3652"})
     public void testNavigateToWorkflowsTab() {
-        WorkflowHome workflowHome = new LoginPage(driver)
+        WorkflowHome workflowHome = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu();
 
@@ -55,7 +55,7 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3659"})
     public void testUserDropDownInfo() {
-        WorkflowHome workflowHome = new LoginPage(driver)
+        WorkflowHome workflowHome = new CicLoginPage(driver)
             .login(currentUser)
             .expandUserInfoDropdown();
 
@@ -66,7 +66,7 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3655"})
     public void testCicUserGuideNavigation() throws Exception {
-        CicUserGuide cicUserGuide = new LoginPage(driver)
+        CicUserGuide cicUserGuide = new CicLoginPage(driver)
             .login(currentUser)
             .navigateToCicUserGuide()
             .switchTab();
@@ -78,7 +78,7 @@ public class NavBarTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"4002"})
     public void testNavigateToCostingServiceSettings() {
-        CostingServiceSettings costingServiceSettings = new LoginPage(driver)
+        CostingServiceSettings costingServiceSettings = new CicLoginPage(driver)
             .login(currentUser)
             .openCostingServiceSettings();
 

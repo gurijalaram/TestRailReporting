@@ -43,7 +43,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(emailInput);
+        assertTrue("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains("CI-Admin"));
     }
 
     /**

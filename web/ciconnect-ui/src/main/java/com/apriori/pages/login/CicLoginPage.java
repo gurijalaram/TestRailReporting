@@ -10,11 +10,11 @@ import com.apriori.utils.reader.file.user.UserCredentials;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage extends CICBasePage {
+public class CicLoginPage extends CICBasePage {
 
     private AprioriLoginPage aprioriLoginPage;
 
-    public LoginPage(WebDriver driver) {
+    public CicLoginPage(WebDriver driver) {
         super(driver);
         this.aprioriLoginPage = new AprioriLoginPage(driver, "ci-connect");
         PageFactory.initElements(driver, this);
