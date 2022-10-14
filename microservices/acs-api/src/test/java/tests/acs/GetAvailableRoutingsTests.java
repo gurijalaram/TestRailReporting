@@ -98,4 +98,47 @@ public class GetAvailableRoutingsTests {
         assertThat(response.getProcessGroupName(), is(notNullValue()));
         assertThat(response.getCostStatus(), is("UNCOSTED"));
     }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14814")
+    @Description("Get available routings after Cost")
+    public void testGetAvailableRoutings2MM() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.TWO_MODEL_MACHINING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+                "bracket_basic.prt",
+                processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+                fileResponse,
+                testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+                productionInfoInputs,
+                fileUploadOutputs,
+                processGroup,
+                false
+        );
+
+        GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
+                costOutputs.getScenarioIterationKey()
+        );
+
+        assertThat(response.getName(), is(notNullValue()));
+        assertThat(response.getDisplayName(), is(notNullValue()));
+        assertThat(response.getPlantName(), is(notNullValue()));
+        assertThat(response.getProcessGroupName(), is(notNullValue()));
+        assertThat(response.getCostStatus(), is(notNullValue()));
+    }
 }
