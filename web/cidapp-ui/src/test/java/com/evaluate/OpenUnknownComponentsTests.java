@@ -1,9 +1,5 @@
 package com.evaluate;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
@@ -56,12 +52,17 @@ public class OpenUnknownComponentsTests extends TestBase {
             .submit()
             .clickClose();
 
-        assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName), is(equalTo("gear")));
+        softAssertions.assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName))
+            .as("Verify scenario in processing state").isEqualTo("gear");
 
         evaluatePage = explorePage.openScenario(componentName, scenarioName);
 
-        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        softAssertions.assertThat(evaluatePage.getPartName())
+            .as("Verify Part Name").isEqualTo(componentName.toUpperCase());
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName())
+            .as("Verify Scenario Name").isEqualTo(scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -84,12 +85,17 @@ public class OpenUnknownComponentsTests extends TestBase {
             .submit()
             .clickClose();
 
-        assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName), is(equalTo("gear")));
+        softAssertions.assertThat(explorePage.getScenarioState(componentName.toUpperCase(), scenarioName))
+            .as("Verify scenario in processing state").isEqualTo("gear");
 
         evaluatePage = explorePage.openScenario(componentName, scenarioName);
 
-        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        softAssertions.assertThat(evaluatePage.getPartName())
+            .as("Verify Part Name").isEqualTo(componentName.toUpperCase());
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName())
+            .as("Verify Scenario Name").isEqualTo(scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -112,8 +118,12 @@ public class OpenUnknownComponentsTests extends TestBase {
             .submit()
             .openComponent(componentName + extension);
 
-        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        softAssertions.assertThat(evaluatePage.getPartName())
+            .as("Verify Part Name").isEqualTo(componentName.toUpperCase());
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName())
+            .as("Verify Scenario Name").isEqualTo(scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -136,8 +146,12 @@ public class OpenUnknownComponentsTests extends TestBase {
             .submit()
             .openComponent(componentName + extension);
 
-        assertThat(evaluatePage.getPartName(), is(equalTo(componentName.toUpperCase())));
-        assertThat(evaluatePage.getCurrentScenarioName(), is(equalTo(scenarioName)));
+        softAssertions.assertThat(evaluatePage.getPartName())
+            .as("Verify Part Name").isEqualTo(componentName.toUpperCase());
+        softAssertions.assertThat(evaluatePage.getCurrentScenarioName())
+            .as("Verify Scenario Name").isEqualTo(scenarioName);
+
+        softAssertions.assertAll();
     }
 
     @Test
@@ -162,6 +176,9 @@ public class OpenUnknownComponentsTests extends TestBase {
             .submit()
             .openComponent(targetComponentName + extension);
 
-        assertThat(evaluatePage.getPartName(), is(equalTo(targetComponentName.toUpperCase())));
+        softAssertions.assertThat(evaluatePage.getPartName())
+            .as("Verify Part Name").isEqualTo(targetComponentName.toUpperCase());
+
+        softAssertions.assertAll();
     }
 }
