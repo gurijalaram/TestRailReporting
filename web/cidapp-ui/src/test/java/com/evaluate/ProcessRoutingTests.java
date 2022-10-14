@@ -18,6 +18,7 @@ import io.qameta.allure.Description;
 import org.assertj.core.api.SoftAssertions;
 import org.assertj.core.data.Offset;
 import org.junit.After;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.suiteinterface.SmokeTests;
@@ -167,6 +168,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Ignore("Due to update 14/10/22 routings can't be change for additive manufacturing")
     //@TestRail(testCaseId = {"}) TODO add testrail ID
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
@@ -274,6 +276,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
+    @Ignore("Due to update 14/10/22 routings can't be change for additive manufacturing")
     //@TestRail(testCaseId = {"}) TODO add testrail ID
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
