@@ -181,7 +181,7 @@ public class CasLicenseTests {
                 .userIdentity(userIdentity)
                 .build();
 
-        ResponseWrapper deleteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS, null)
+        ResponseWrapper<String> deleteResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.DELETE_SPECIFIC_USER_SUB_LICENSE_USERS, null)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity)).delete();
 
