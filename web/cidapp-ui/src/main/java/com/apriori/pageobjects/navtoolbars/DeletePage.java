@@ -25,8 +25,8 @@ public class DeletePage extends LoadableComponent<DeletePage> {
     @FindBy(css = "[role='dialog'] li")
     private List<WebElement> componentScenarioNames;
 
-    @FindBy(css = "[role='dialog'] [type='submit']")
-    private WebElement submitButton;
+    @FindBy(id = "qa-delete-confirmation-submit-button")
+    private WebElement deleteButton;
 
     private PageUtils pageUtils;
     private WebDriver driver;
@@ -64,8 +64,8 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      *
      * @return generic page object
      */
-    public <T> T submit(Class<T> klass) {
-        return modalDialogController.submit(submitButton, klass);
+    public <T> T clickDelete(Class<T> klass) {
+        return modalDialogController.delete(deleteButton, klass);
     }
 
     /**
@@ -91,7 +91,7 @@ public class DeletePage extends LoadableComponent<DeletePage> {
      *
      * @return generic page object
      */
-    public <T> T close(Class<T> klass) {
+    public <T> T clickClose(Class<T> klass) {
         return modalDialogController.close(klass);
     }
 }

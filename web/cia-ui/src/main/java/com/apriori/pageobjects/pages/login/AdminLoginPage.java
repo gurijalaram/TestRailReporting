@@ -11,6 +11,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
@@ -20,6 +22,9 @@ public class AdminLoginPage extends AdminHeader {
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
     private UserCredentials userCredentials = UserUtil.getUser();
+
+    @FindBy(xpath = "//input[@type='email']")
+    private WebElement emailInput;
 
     public AdminLoginPage(WebDriver driver) {
         super(driver);
@@ -38,7 +43,7 @@ public class AdminLoginPage extends AdminHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIA login page was not displayed", aprioriLoginPage.getPageTitle().contains("CI Design APRIORI"));
+        pageUtils.waitForElementToAppear(emailInput);
     }
 
     /**

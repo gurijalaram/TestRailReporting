@@ -421,7 +421,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public DeletePage delete() {
+    public DeletePage clickDeleteIcon() {
         pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }
