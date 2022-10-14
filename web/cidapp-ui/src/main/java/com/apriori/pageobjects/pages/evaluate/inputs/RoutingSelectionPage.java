@@ -38,7 +38,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("Select Routing page is not displyed",getPageUtils().waitForElementToAppear(dialogTitle).getAttribute("textContent").contains("Select Routing"));
+        assertTrue("Select Routing page is not displayed", getPageUtils().waitForElementToAppear(dialogTitle).getAttribute("textContent").contains("Select Routing"));
     }
 
     /**
