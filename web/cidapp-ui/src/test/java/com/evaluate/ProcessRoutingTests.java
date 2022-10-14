@@ -162,7 +162,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo(NewCostingLabelEnum.COST_COMPLETE);
+        softAssertions.assertThat(routingSelectionPage.getCostStatusValue("Gravity Die Cast")).isEqualTo("Cost Complete");
         softAssertions.assertAll();
     }
 
@@ -265,11 +265,13 @@ public class ProcessRoutingTests extends TestBase {
             .selectRoutingPreferenceByName("Structural Foam Mold")
             .submit(EvaluatePage.class)
             .costScenario()
-            .openMaterialSelectorTable();
+            .openMaterialSelectorTable()
+            .selectMaterial("ABS");
 
         //TODO cn fix this
         softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
-            .containsExactlyInAnyOrder("test", "All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
+            .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
+                "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
         softAssertions.assertAll();
     }
 

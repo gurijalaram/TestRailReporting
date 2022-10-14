@@ -1,5 +1,7 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
 import com.apriori.utils.web.components.EagerPageComponent;
 
@@ -16,8 +18,8 @@ import java.util.stream.Collectors;
 @Slf4j
 public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPage> {
 
-    @FindBy(xpath = "//*[text()='Select Routing']")
-    private WebElement selectRouting;
+    @FindBy(css = "[role='dialog'] .dialog-title")
+    private WebElement dialogTitle;
 
     @FindBy(css = ".MuiCheckbox-colorPrimary")
     private WebElement checkBox;
@@ -36,7 +38,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(selectRouting);
+        assertTrue("Select Routing page is not displyed",getPageUtils().waitForElementToAppear(dialogTitle).getAttribute("textContent").contains("Select Routing"));
     }
 
     /**
