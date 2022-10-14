@@ -1,11 +1,13 @@
 package com.apriori.acs.entity.response.acs.getavailableroutings;
 
+import com.apriori.utils.http.enums.Schema;
 import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
+@Schema(location = "acs/GetAvailableRoutingsResponse.json")
 @Builder
 public class GetAvailableRoutingsResponse {
     private String name;
