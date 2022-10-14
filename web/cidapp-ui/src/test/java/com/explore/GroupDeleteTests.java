@@ -30,6 +30,7 @@ public class GroupDeleteTests extends TestBase {
     private ExplorePage explorePage;
     private ComponentInfoBuilder cidComponentItem;
     private ComponentInfoBuilder cidComponentItemB;
+    private ComponentInfoBuilder cidComponentItemC;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
@@ -103,6 +104,64 @@ public class GroupDeleteTests extends TestBase {
             .close(ExplorePage.class);
 
         softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"15017", "15016", "15020"})
+    @Description("Verify user can delete 2 or more assemblies. Verify correct behavior of Delete button when multi-selecting.")
+    @Category(SmokeTests.class)
+    public void testGroupDeleteAssemblies() {
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyName = "titan cordless drill";
+        final File resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, assemblyName + ".SLDASM");
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        final ProcessGroupEnum processGroupEnum2 = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyName2 = "titan charger ass";
+        final File resourceFile2 = FileResourceUtil.getCloudFile(processGroupEnum2, assemblyName2 + ".SLDASM");
+        final String scenarioName2 = new GenerateStringUtil().generateScenarioName();
+
+        final ProcessGroupEnum processGroupEnum3 = ProcessGroupEnum.PLASTIC_MOLDING;
+        final String componentName = "2062987";
+        final File resourceFile3 = FileResourceUtil.getCloudFile(processGroupEnum3, componentName + ".prt");
+        final String scenarioName3 = new GenerateStringUtil().generateScenarioName();
+
+        currentUser = UserUtil.getUser();
+        loginPage = new CidAppLoginPage(driver);
+
+        cidComponentItem = loginPage.login(currentUser)
+            .uploadComponent(assemblyName, scenarioName, resourceFile, currentUser);
+
+        cidComponentItemB = new ExplorePage(driver).uploadComponent(assemblyName2, scenarioName2, resourceFile2, currentUser);
+
+        cidComponentItemC = new ExplorePage(driver).uploadComponent(componentName, scenarioName3, resourceFile3, currentUser);
+
+        explorePage = new ExplorePage(driver).selectFilter("Recent")
+            .refresh()
+            .multiSelectScenarios("" + assemblyName + ", " + scenarioName + "");
+
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
+
+        explorePage.multiSelectScenarios("" + assemblyName2 + ", " + scenarioName2 + "");
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
+
+        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName3 + "");
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
+
+        explorePage.multiSelectScenarios("" + componentName + ", " + scenarioName3 + "");
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(true);
+
+        explorePage.clickDeleteIcon()
+            .clickDelete(DeletePage.class)
+            .clickClose(ExplorePage.class)
+            .checkComponentDelete(cidComponentItem)
+            .checkComponentDelete(cidComponentItemB)
+            .refresh();
+
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName, scenarioName)).isEqualTo(0);
+        softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName2, scenarioName2)).isEqualTo(0);
 
         softAssertions.assertAll();
     }
