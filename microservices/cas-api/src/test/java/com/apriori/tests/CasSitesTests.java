@@ -121,7 +121,7 @@ public class CasSitesTests {
         ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(customerIdentity, siteId);
 
         assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(siteResponse.getResponseEntity().getResponse().getStatus(), is(equalTo("EXISTS")));
+        assertThat(siteResponse.getResponseEntity().getStatus(), is(equalTo("EXISTS")));
     }
 
     @Test

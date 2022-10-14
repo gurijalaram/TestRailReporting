@@ -21,11 +21,12 @@
         "mfaRequired",
         "customAttributes",
         "createdByName",
-        "licenseAssignments",
         "userType"
       ],
       "optional": [
-        "customProperties"
+        "customProperties",
+        "licenseAssignments",
+        "updatedAt"
       ],
       "properties": {
         "isSystemUser": {
@@ -40,6 +41,9 @@
         "createdBy": {
           "type": "string"
         },
+        "updatedAt": {
+          "type": "string"
+        },
         "customerIdentity": {
           "type": "string"
         },
@@ -52,9 +56,11 @@
             "givenName",
             "familyName",
             "jobTitle",
-            "department",
-            "supervisor",
             "townCity"
+          ],
+          "optional": [
+            "department",
+            "supervisor"
           ],
           "properties": {
             "identity": {
