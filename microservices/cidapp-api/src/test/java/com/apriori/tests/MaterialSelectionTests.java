@@ -27,13 +27,10 @@ import io.qameta.allure.Description;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import junitparams.naming.TestCaseName;
-import org.apache.http.HttpStatus;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
 
 @RunWith(JUnitParamsRunner.class)
 public class MaterialSelectionTests {
@@ -108,6 +105,7 @@ public class MaterialSelectionTests {
                 .user(currentUser)
                 .build());
 
-        assertThat(getScenarioInfo.getResponseEntity().getMaterial().getName(), is(equalTo(defaultMaterial)));
+//        assertThat(getScenarioInfo.getResponseEntity().getMaterial().getName(), is(equalTo(defaultMaterial)));
+        assertThat(getScenarioInfo.getResponseEntity().getAnalysisOfScenario().getDigitalFactoryDefaultMaterialName(), is(equalTo(defaultMaterial)));
     }
 }

@@ -23,6 +23,7 @@ public class PropertyValueMap {
     private String weight;
     private String cadVersion;
     private Double numSurfaces;
+    private String descriptor;
     private String cadConfiguration;
     private String fileBaseName;
     private Double numInsertCores;
