@@ -37,11 +37,16 @@ public class Material {
     private Double hardness;
     private String hardnessSystem;
     private Double k;
+    private String manufacturer;
     private String materialCutCodeName;
     private String materialTypeName;
+    private Double maxPowderCycles;
     private Double millingSpeed;
     private Double n;
     private String name;
+    private String process;
+    private Double recyclePercentage;
+    private Double tappedDensity;
     private Double possionRatio;
     private Double r;
     private Double scrapCostPercent;
