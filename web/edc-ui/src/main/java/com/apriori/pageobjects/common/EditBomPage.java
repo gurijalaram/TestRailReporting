@@ -36,8 +36,8 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
     @FindBy(css = "input[class='form-control is-invalid']")
     private WebElement mountTypeError;
 
-    @FindBy(xpath = "//button[@class = 'btn btn-outline-primary btn-sm disabled']")
-    private WebElement saveBtnDisabled;
+    @FindBy(xpath = "//div[@class='modal-footer'] //button[.='Save']")
+    private WebElement saveButton;
 
     @FindBy(css = "input[type='radio'][name='mountType']")
     private List<WebElement> mountTypeRadioButtons;
@@ -76,7 +76,9 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
      * @return boolean
      */
     public boolean isSaveButtonDisabledDisplayed() {
-        return getPageUtils().waitForElementToAppear(saveBtnDisabled).isDisplayed();
+        return getPageUtils().waitForElementToAppear(saveButton)
+            .getAttribute("class")
+            .contains("disabled");
     }
 
     /**
