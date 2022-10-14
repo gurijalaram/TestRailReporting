@@ -104,7 +104,8 @@ public class AdminNavigationTests extends TestBase {
 
         String currentUrl = ciaUserGuide.getCurrentUrl();
         softAssertions.assertThat(ciaUserGuide.getTabCount()).isEqualTo(2);
-        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL);
+        softAssertions.assertThat(currentUrl).startsWith(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_ONE);
+        softAssertions.assertThat(currentUrl).contains(Constants.SCENARIO_EXPORT_CHAPTER_URL_PART_TWO);
         softAssertions.assertThat(ciaUserGuide.getAdminOrScenarioChapterUserGuidePageHeading(true))
             .startsWith(Constants.SCENARIO_EXPORT_CHAPTER_PAGE_TITLE);
         softAssertions.assertAll();
