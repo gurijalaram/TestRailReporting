@@ -105,7 +105,6 @@ public class MaterialSelectionTests {
                 .user(currentUser)
                 .build());
 
-//        assertThat(getScenarioInfo.getResponseEntity().getMaterial().getName(), is(equalTo(defaultMaterial)));
         assertThat(getScenarioInfo.getResponseEntity().getAnalysisOfScenario().getDigitalFactoryDefaultMaterialName(), is(equalTo(defaultMaterial)));
     }
 }
