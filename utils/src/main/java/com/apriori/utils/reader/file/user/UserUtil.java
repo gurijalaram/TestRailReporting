@@ -8,12 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 
 /**
  * Get user functionality.
- * Has reference to {@link CommonConstants#environment}.properties file
+ * Has reference to {@link CommonConstants}.properties file
  * reference properties:
  * - different.users
  * - if true: will return each time new user
  * - if false: will return each time single user
- * - users.csv.file: the name of csv file with users list from resources/{@link CommonConstants#environment} folder
+ * - users.csv.file: the name of csv file with users list from resources/{@link CommonConstants} folder
  * (if users are absent, return default user with:
  * - username:{@link CommonConstants#DEFAULT_USER_NAME}
  * - password:{@link CommonConstants#DEFAULT_PASSWORD}
