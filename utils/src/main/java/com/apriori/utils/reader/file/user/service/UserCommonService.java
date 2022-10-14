@@ -37,14 +37,11 @@ public class UserCommonService {
     }
 
     static List<UserCredentials> initUsers() {
-        List<String> users = InitFileData.initRows(
-            PropertiesContext.get("global.users_csv_file")
-        );
-
+        List<String> users;
+        users = InitFileData.initRows(PropertiesContext.get("global.users_csv_file"));
         if (users == null) {
             return Collections.singletonList(createDefaultUser());
         }
-
         return parseUsersToUsersCredentialsList(users);
     }
 

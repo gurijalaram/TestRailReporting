@@ -108,7 +108,7 @@ public class GenerateStringUtil {
      */
     @Attachment
     public String generateUserName() {
-        return "AutoUser" + RandomStringUtils.randomAlphabetic(5);
+        return "AutoUser" + RandomStringUtils.randomAlphabetic(5) + System.nanoTime();
     }
 
     /**
