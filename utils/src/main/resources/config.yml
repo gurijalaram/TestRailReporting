@@ -5,7 +5,7 @@ env: qa-test
 global:
   schema_base_path: schemas/
   console_log_level: "OFF"
-  users_csv_file: local-users.csv
+  users_csv_file: common-users.csv
   different_users: true
   different_parts: true
   db_recording: true
