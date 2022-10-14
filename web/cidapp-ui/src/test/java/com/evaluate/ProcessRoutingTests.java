@@ -1,13 +1,9 @@
 package com.evaluate;
 
-import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
-import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.AdvancedPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.RoutingSelectionPage;
-import com.apriori.pageobjects.pages.evaluate.inputs.SecondaryProcessesPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -31,16 +27,12 @@ import java.io.File;
 public class ProcessRoutingTests extends TestBase {
     private CidAppLoginPage loginPage;
     private EvaluatePage evaluatePage;
-    private AdvancedPage advancedPage;
     private MaterialProcessPage materialProcessPage;
     private RoutingSelectionPage routingSelectionPage;
-    private GuidanceIssuesPage guidanceIssuesPage;
     private MaterialSelectorPage materialSelectorPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
-    private SecondaryProcessesPage secondaryProcessPage;
-    private ComponentInfoBuilder cidComponentItem;
     private SoftAssertions softAssertions = new SoftAssertions();
 
     public ProcessRoutingTests() {
@@ -245,9 +237,10 @@ public class ProcessRoutingTests extends TestBase {
             .selectBarChart("Waterjet Cut")
             .selectOptionsTab();
 
-        softAssertions.assertThat(materialProcessPage.getPartOrientation().contains("Position Bend with Smallest Radius Parallel to Grain"));
-        softAssertions.assertThat(materialProcessPage.getGrainDirection().contains("Parallel to Sheet Length"));
-        // TODO CN to fix this assertion softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness (Piece Part Cost Driver)")).isEqualTo(0.5);
+        softAssertions.assertThat(materialProcessPage.getPartOrientation()).contains("Position Bend with Smallest Radius Parallel to Grain");
+        softAssertions.assertThat(materialProcessPage.getGrainDirection()).contains("Parallel to Sheet Length");
+        // TODO CN to fix this assertion
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness (Piece Part Cost Driver)")).isEqualTo(0.5);
         softAssertions.assertAll();
     }
 
@@ -274,7 +267,9 @@ public class ProcessRoutingTests extends TestBase {
             .costScenario()
             .openMaterialSelectorTable();
 
-        //TODO cn fix this softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes()).containsExactlyInAnyOrder("test", "All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
+        //TODO cn fix this
+        softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
+            .containsExactlyInAnyOrder("test", "All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene", "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
         softAssertions.assertAll();
     }
 
@@ -354,8 +349,8 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertAll();
     }
 
-/*    @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID and un comment when BA-2646 is complete
+    @Test
+    //@TestRail(testCaseId = {"}) TODO add testrail ID and check assertion
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -373,7 +368,7 @@ public class ProcessRoutingTests extends TestBase {
             .goToAdvancedTab()
             .openRoutingSelection();
 
-        softAssertions.assertThat(routingSelectionPage.getAvailableRoutings()).doesNotContain("MillTurn Routing", "Die Casting");
+        softAssertions.assertThat(routingSelectionPage.getRoutingStates("Injection Mold")).doesNotContain("MillTurn Routing", "Die Casting");
         softAssertions.assertAll();
-    }*/
+    }
 }

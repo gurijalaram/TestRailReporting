@@ -10,6 +10,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPage> {
 
@@ -85,16 +88,16 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
         return getPageUtils().isElementEnabled(submit);
     }
 
-/*    *//**
-     * Get cost label from a specific routing preference
+    /**
+     * Get cost preferences from a specific routing preference
      *
      * @param routingPreference - the routing preference
-     * @param status            - cost label
      * @return - Boolean
-     *//*
-    public boolean isCostStatus(String routingPreference, NewCostingLabelEnum status) {
-        return getPageUtils().textPresentInElement(getDriver().findElement(byCostStatus(routingPreference, status)), status.getCostingText());
-    }*/
+     */
+
+    public List<String> getRoutingStates(String routingPreference) {
+        return getPageUtils().waitForElementsToAppear(byCostStatus(routingPreference)).stream().map(o -> o.getAttribute("textContent")).collect(Collectors.toList());
+    }
 
     /**
      * verify the cost difference
@@ -138,7 +141,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * @return by
      */
     private By byCostStatus(String routingPreference) {
-        return By.xpath(String.format("//h3[text()='%s']", routingPreference));
+        return By.xpath(String.format("//h3[text()='%s']/..//span[contains(@class,'MuiChip-label MuiChip-labelSmall')]", routingPreference));
     }
 
     /**
