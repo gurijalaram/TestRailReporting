@@ -90,7 +90,7 @@ public class ComponentsUtil {
             .filter(o -> o.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.NOT_COSTED.getState()))
             .findFirst()
             .orElseThrow(
-                () -> new RuntimeException(String.format("Expected scenario state: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
+                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
                     scenarioItem.stream().findFirst().get().getScenarioState())));
 
         return scenarioItem;

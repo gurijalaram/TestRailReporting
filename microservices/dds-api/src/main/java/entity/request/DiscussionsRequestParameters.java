@@ -1,4 +1,4 @@
-package entity.request.workflow;
+package entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CIDataShape {
-    private CIFieldDefinitions ciFieldDefinitions;
+public class DiscussionsRequestParameters {
+    private String status;
+    private String description;
 }

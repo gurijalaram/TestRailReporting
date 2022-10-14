@@ -1,4 +1,4 @@
-package entity.request.workflow;
+package entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 
 @Data
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
-public class CiFdRow {
-    private String key;
-    private String value;
+@AllArgsConstructor
+public class DiscussionsRequest {
+    private DiscussionsRequestParameters discussion;
 }

@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
 import com.apriori.acs.entity.response.acs.getsetproductiondefaults.GetProductionDefaultsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -17,10 +18,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetProductionDefaultsTests {
+public class GetSetProductionDefaultsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10586")
     @Description("Verify Get Production Defaults Endpoint")
     public void testGetProductionDefaultsEndpoint() {
@@ -31,7 +31,6 @@ public class GetSetProductionDefaultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10587")
     @Description("Verify Get Production Defaults Endpoint - Negative Test")
     public void testGetProductionDefaultsEndpointInvalidUser() {
@@ -42,7 +41,6 @@ public class GetSetProductionDefaultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10588")
     @Description("Verify Set Production Defaults Endpoint")
     public void testSetProductionDetailsEndpoint() {
@@ -63,7 +61,6 @@ public class GetSetProductionDefaultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10606")
     @Description("Set Production Defaults Negative Test")
     public void testNegativeSetProductionDefaults() {

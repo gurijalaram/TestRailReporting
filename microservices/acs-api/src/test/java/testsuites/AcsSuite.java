@@ -1,9 +1,8 @@
 package testsuites;
 
 import com.apriori.utils.ProjectRunID;
-import com.apriori.utils.runner.CategorySuiteRunner;
+import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
-import org.junit.experimental.categories.Categories;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import tests.acs.CreateMissingScenarioTests;
@@ -23,11 +22,9 @@ import tests.acs.GetSetUserPreferenceByNameTests;
 import tests.acs.GetSetUserPreferencesTests;
 import tests.acs.GetUnitVariantSettingsTests;
 import tests.acs.SaveRoutingSelectionTests;
-import testsuites.categories.AcsTest;
 
 @ProjectRunID("1347")
-@RunWith(CategorySuiteRunner.class)
-@Categories.IncludeCategory(AcsTest.class)
+@RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
     CreateMissingScenarioTests.class,
     GetActiveAxesByScenarioIterationKeyTests.class,

@@ -36,6 +36,8 @@ import com.evaluate.materialutilization.MaterialStockTests;
 import com.evaluate.materialutilization.PartNestingTests;
 import com.explore.ActionsTests;
 import com.explore.FilterCriteriaTests;
+import com.explore.GroupDeleteTests;
+import com.explore.GroupEditTests;
 import com.explore.PreviewPanelTests;
 import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
@@ -92,6 +94,9 @@ import testsuites.suiteinterface.SmokeTests;
     LargeGroupAssemblyTests.class,
     IncludeAndExcludeNestedAssemblyTests.class,
     FiltersTests.class,
+    FilterCriteriaTests.class,
+    GroupEditTests.class,
+    GroupDeleteTests.class,
     FilterCriteriaTests.class,
     OpenUnknownComponentsTests.class
 })

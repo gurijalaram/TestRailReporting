@@ -1,4 +1,4 @@
-package entity.request.workflow;
+package entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,8 @@ import java.util.ArrayList;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CIEmailConfiguration {
-    private CIDataShape ciDataShape;
-    private ArrayList<CiFdRow> ciFdRows;
+public class CommentsRequestParameters {
+    private String status;
+    private String content;
+    private ArrayList<String> mentionedUserEmails;
 }

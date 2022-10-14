@@ -54,7 +54,8 @@ public class EmailService {
                 Message[] messages = EmailUtil.getEmail(
                     emailSetup.getHost(),
                     emailSetup.getUsername(),
-                    emailSetup.getPassword()
+                    emailSetup.getPassword(),
+                    emailSetup.getFolder()
                 );
                 Message message = messages[messages.length - 1];
                 if (message.getSubject().toLowerCase().equals(subject.toLowerCase())) {
@@ -157,10 +158,10 @@ public class EmailService {
      * @param subject Email subject
      * @return True, if the email exits
      */
-    public EmailData getEmailMessageData(String subject) {
+    public EmailData getEmailMessageData(String subject, String scenarioName) {
         EmailData emailData = new EmailData();
         try {
-            Message message = this.getEmailMessage(subject);
+            Message message = this.getEmailMessage(subject, scenarioName);
             if (message != null) {
                 emailData.setAttachments(this.getAttachmentsFromMessage(message));
                 emailData.setContent(this.getTextFromMessage(message));
@@ -170,7 +171,7 @@ public class EmailService {
                 log.debug("No Emails Found !!!!");
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("REPORT EMAIL WAS NOT RECEIVED!!!" + e.getMessage());
         }
         return emailData;
     }
@@ -181,7 +182,7 @@ public class EmailService {
      * @param subject Email subject
      * @return True, if the email exits
      */
-    private Message getEmailMessage(String subject) {
+    private Message getEmailMessage(String subject, String scenarioName) {
         Message emailMessage = null;
         EmailSetup emailSetup = new EmailSetup();
         emailSetup.getCredentials();
@@ -192,18 +193,19 @@ public class EmailService {
                 Message[] messages = EmailUtil.getEmail(
                     emailSetup.getHost(),
                     emailSetup.getUsername(),
-                    emailSetup.getPassword()
+                    emailSetup.getPassword(),
+                    emailSetup.getFolder()
                 );
                 emailMessage = messages[messages.length - 1];
                 if (emailMessage.getSubject().toLowerCase().equals(subject.toLowerCase())) {
-                    return emailMessage;
+                    return (getTextFromMessage(emailMessage).contains(scenarioName)) ? emailMessage : null;
                 } else {
                     Thread.sleep(5000);
                 }
                 count += 1;
             }
         } catch (Exception e) {
-            log.error(e.getMessage());
+            log.error("REPORT EMAIL NOT FOUND!!! " + e.getMessage());
         }
         return emailMessage;
     }

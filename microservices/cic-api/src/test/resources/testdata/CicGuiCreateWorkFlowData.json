@@ -1,9 +1,9 @@
 {
-  "customer": "aPrioriInternal_Customer",
-  "queryDefinition": {
-    "qdLogicalFilter": {
-      "filterType": "AND",
-      "ruleFilters": [
+  "customer": "%s",
+  "query": {
+    "filters": {
+      "type": "AND",
+      "filters": [
         {
           "fieldName": "partNumber",
           "type": "EQ",
@@ -12,15 +12,15 @@
       ]
     }
   },
-  "plmSystem": "20fd9f72-2d65-406b-b108-8f4efc3a6190_Agent",
-  "name": "AUTO_CIC_AGENT_WF",
+  "plmSystem": "%s",
+  "name": "%s",
   "description": "",
   "schedule": "0 0 0 1/1 * ? *",
   "selectedEmailTemplate": "none",
   "isEmailTemplateSelected": false,
-  "ciEmailConfiguration": {
-    "ciDataShape": {
-      "ciFieldDefinitions": {
+  "emailConfiguration": {
+    "dataShape": {
+      "fieldDefinitions": {
         "key": {
           "name": "key",
           "description": "",
@@ -41,7 +41,7 @@
         }
       }
     },
-    "ciFdRows": [
+    "rows": [
       {
         "key": "CostRounding",
         "value": true

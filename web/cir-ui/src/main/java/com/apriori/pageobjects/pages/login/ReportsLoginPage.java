@@ -10,6 +10,8 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 @Slf4j
@@ -18,7 +20,10 @@ public class ReportsLoginPage extends ReportsPageHeader {
     private WebDriver driver;
     private PageUtils pageUtils;
     private AprioriLoginPage aprioriLoginPage;
-    private UserCredentials userCredentials = UserUtil.getUser();
+    private UserCredentials userCredentials = UserUtil.getUserOnPrem();
+
+    @FindBy(xpath = "//input[@type='email']")
+    private WebElement emailInput;
 
     public ReportsLoginPage(WebDriver driver) {
         super(driver);
@@ -37,7 +42,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        assertTrue("CIR login page was not displayed", aprioriLoginPage.getPageTitle().startsWith("CI-Admin aPriori"));
+        pageUtils.waitForElementToAppear(emailInput);
     }
 
     /**

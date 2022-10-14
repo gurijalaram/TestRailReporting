@@ -36,7 +36,8 @@ public enum CICAPIEnum implements ExternalEndpointEnum {
         if (this.endpoint.contains("Thingworx")) {
             cicUri = PropertiesContext.get("${env}.ci-connect.ui_url") + String.format(getEndpointString(), variables);
         } else {
-            cicUri = PropertiesContext.get("${env}.ci-connect.agent_api_url") + String.format(getEndpointString(), variables);
+            cicUri = PropertiesContext.get("${env}.ci-connect.${customer}.agent_api_url") + String.format(getEndpointString(), variables);
+
         }
         return cicUri;
     }

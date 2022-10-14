@@ -1,4 +1,4 @@
-package entity.request.workflow;
+package entity.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,6 +9,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class QueryDefinition {
-    private QdLogicalFilter qdLogicalFilter;
+public class CommentsRequest {
+    private CommentsRequestParameters comment;
 }

@@ -13,6 +13,7 @@ import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.GetTole
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.PropertyInfoItem;
 import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.PropertyValueMap;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
@@ -20,10 +21,9 @@ import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import testsuites.categories.AcsTest;
 
-public class GetSetTolerancePolicyDefaultsTests {
+public class GetSetTolerancePolicyDefaultsTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10473")
     @Description("Test Get Tolerance Policy Defaults")
     public void testGetTolerancePolicyDefaults() {
@@ -44,7 +44,6 @@ public class GetSetTolerancePolicyDefaultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10555")
     @Description("Test Error on Get Tolerance Policy Defaults Endpoint")
     public void testErrorOnGetTolerancePolicyDefaultsEndpoint() {
@@ -55,7 +54,6 @@ public class GetSetTolerancePolicyDefaultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10556")
     @Description("Test Set Tolerance Policy Defaults")
     public void testSetTolerancePolicyDefaults() {
@@ -81,7 +79,6 @@ public class GetSetTolerancePolicyDefaultsTests {
     }
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "10557")
     @Description("Test Set Tolerance Policy Defaults Invalid User")
     public void testSetGetTolerancePolicyDefaultsInvalidUser() {
