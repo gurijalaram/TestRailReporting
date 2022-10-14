@@ -239,7 +239,6 @@ public class ProcessRoutingTests extends TestBase {
 
         softAssertions.assertThat(materialProcessPage.getPartOrientation()).contains("Position Bend with Smallest Radius Parallel to Grain");
         softAssertions.assertThat(materialProcessPage.getGrainDirection()).contains("Parallel to Sheet Length");
-        // TODO CN to fix this assertion
         softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness (Piece Part Cost Driver)")).isEqualTo(0.5);
         softAssertions.assertAll();
     }
@@ -268,7 +267,6 @@ public class ProcessRoutingTests extends TestBase {
             .openMaterialSelectorTable()
             .selectMaterial("ABS");
 
-        //TODO cn fix this
         softAssertions.assertThat(materialSelectorPage.getListOfMaterialTypes())
             .containsExactlyInAnyOrder("All", "ABS", "Acetal", "Acrylic", "Nylon", "PBT", "PET", "PPS", "Polycarbonate", "Polypropylene", "Polystyrene",
                 "Polyurethane", "TPA", "TPE", "TPO", "TPS", "TPU", "TPV");
