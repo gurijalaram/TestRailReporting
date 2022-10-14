@@ -122,10 +122,540 @@
                         "cidGlobalKey": {
                           "type": "string"
                         },
-                        "cidApiId": {
+                        "customerIdentity": {
                           "type": "string"
                         },
-                        "cidApiSecret": {
+                        "applications": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description"
+                              ]
+                            }
+                          ]
+                        },
+                        "region": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "identity",
+                        "createdBy",
+                        "createdAt",
+                        "updatedAt",
+                        "apVersion",
+                        "name",
+                        "cloudReference",
+                        "description",
+                        "active",
+                        "realm",
+                        "url",
+                        "s3Bucket",
+                        "tenantGroup",
+                        "tenant",
+                        "clientId",
+                        "clientSecret",
+                        "cidGlobalKey",
+                        "customerIdentity",
+                        "applications",
+                        "region"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "identity": {
+                          "type": "string"
+                        },
+                        "createdBy": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "apVersion": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "cloudReference": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "realm": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "s3Bucket": {
+                          "type": "string"
+                        },
+                        "tenantGroup": {
+                          "type": "string"
+                        },
+                        "tenant": {
+                          "type": "string"
+                        },
+                        "clientId": {
+                          "type": "string"
+                        },
+                        "clientSecret": {
+                          "type": "string"
+                        },
+                        "cidGlobalKey": {
                           "type": "string"
                         },
                         "customerIdentity": {
@@ -137,10 +667,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -172,8 +702,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -188,10 +718,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -223,8 +753,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -239,61 +769,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
-                                  "type": "boolean"
-                                },
                                 "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isPublic": {
-                                  "type": "boolean"
-                                },
-                                "identity": {
-                                  "type": "string"
-                                },
-                                "createdBy": {
-                                  "type": "string"
-                                },
-                                "createdAt": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "cloudReference": {
-                                  "type": "string"
-                                },
-                                "serviceName": {
-                                  "type": "string"
-                                },
-                                "description": {
-                                  "type": "string"
-                                },
-                                "iconUrl": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "isCloudHomeApp",
-                                "isSingleTenant",
-                                "isPublic",
-                                "identity",
-                                "createdBy",
-                                "createdAt",
-                                "name",
-                                "cloudReference",
-                                "serviceName",
-                                "description",
-                                "iconUrl"
-                              ]
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
                                 "isCloudHomeApp": {
-                                  "type": "boolean"
-                                },
-                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -322,8 +801,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -337,10 +816,214 @@
                             {
                               "type": "object",
                               "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
                                 "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
                                 "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -369,8 +1052,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -384,163 +1067,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
-                                  "type": "boolean"
-                                },
                                 "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isPublic": {
-                                  "type": "boolean"
-                                },
-                                "identity": {
-                                  "type": "string"
-                                },
-                                "createdBy": {
-                                  "type": "string"
-                                },
-                                "createdAt": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "cloudReference": {
-                                  "type": "string"
-                                },
-                                "serviceName": {
-                                  "type": "string"
-                                },
-                                "description": {
-                                  "type": "string"
-                                },
-                                "iconUrl": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "isCloudHomeApp",
-                                "isSingleTenant",
-                                "isPublic",
-                                "identity",
-                                "createdBy",
-                                "createdAt",
-                                "name",
-                                "cloudReference",
-                                "serviceName",
-                                "description",
-                                "iconUrl"
-                              ]
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
                                 "isCloudHomeApp": {
-                                  "type": "boolean"
-                                },
-                                "isSingleTenant": {
-                                  "type": "boolean"
-                                },
-                                "isPublic": {
-                                  "type": "boolean"
-                                },
-                                "identity": {
-                                  "type": "string"
-                                },
-                                "createdBy": {
-                                  "type": "string"
-                                },
-                                "createdAt": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "cloudReference": {
-                                  "type": "string"
-                                },
-                                "serviceName": {
-                                  "type": "string"
-                                },
-                                "description": {
-                                  "type": "string"
-                                },
-                                "iconUrl": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "isCloudHomeApp",
-                                "isSingleTenant",
-                                "isPublic",
-                                "identity",
-                                "createdBy",
-                                "createdAt",
-                                "name",
-                                "cloudReference",
-                                "serviceName",
-                                "description",
-                                "iconUrl"
-                              ]
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "isCloudHomeApp": {
-                                  "type": "boolean"
-                                },
-                                "isSingleTenant": {
-                                  "type": "boolean"
-                                },
-                                "isPublic": {
-                                  "type": "boolean"
-                                },
-                                "identity": {
-                                  "type": "string"
-                                },
-                                "createdBy": {
-                                  "type": "string"
-                                },
-                                "createdAt": {
-                                  "type": "string"
-                                },
-                                "name": {
-                                  "type": "string"
-                                },
-                                "cloudReference": {
-                                  "type": "string"
-                                },
-                                "serviceName": {
-                                  "type": "string"
-                                },
-                                "description": {
-                                  "type": "string"
-                                },
-                                "iconUrl": {
-                                  "type": "string"
-                                }
-                              },
-                              "required": [
-                                "isCloudHomeApp",
-                                "isSingleTenant",
-                                "isPublic",
-                                "identity",
-                                "createdBy",
-                                "createdAt",
-                                "name",
-                                "cloudReference",
-                                "serviceName",
-                                "description",
-                                "iconUrl"
-                              ]
-                            },
-                            {
-                              "type": "object",
-                              "properties": {
-                                "isCloudHomeApp": {
-                                  "type": "boolean"
-                                },
-                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -569,8 +1099,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -679,10 +1209,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -711,8 +1241,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -726,10 +1256,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -761,8 +1291,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -777,10 +1307,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -812,8 +1342,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -828,10 +1358,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -863,8 +1393,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -879,10 +1409,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -914,8 +1444,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1021,10 +1551,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1056,8 +1586,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1072,10 +1602,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1104,8 +1634,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1119,10 +1649,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1154,8 +1684,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1170,10 +1700,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1205,8 +1735,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1221,10 +1751,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1256,8 +1786,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1272,10 +1802,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1304,8 +1834,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1408,10 +1938,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1443,8 +1973,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1459,10 +1989,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1491,8 +2021,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1506,10 +2036,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1541,8 +2071,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1557,10 +2087,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1592,8 +2122,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1608,10 +2138,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1640,8 +2170,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1803,10 +2333,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1838,8 +2368,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1854,10 +2384,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1889,8 +2419,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1905,10 +2435,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1937,8 +2467,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -1952,10 +2482,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -1987,8 +2517,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2003,10 +2533,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2038,8 +2568,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2145,10 +2675,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2177,8 +2707,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2192,10 +2722,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2227,8 +2757,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2243,10 +2773,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2278,8 +2808,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2294,10 +2824,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2329,8 +2859,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2345,10 +2875,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2380,8 +2910,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2396,10 +2926,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2431,8 +2961,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2447,10 +2977,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2479,8 +3009,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2494,10 +3024,10 @@
                             {
                               "type": "object",
                               "properties": {
-                                "isCloudHomeApp": {
+                                "isSingleTenant": {
                                   "type": "boolean"
                                 },
-                                "isSingleTenant": {
+                                "isCloudHomeApp": {
                                   "type": "boolean"
                                 },
                                 "isPublic": {
@@ -2526,8 +3056,8 @@
                                 }
                               },
                               "required": [
-                                "isCloudHomeApp",
                                 "isSingleTenant",
+                                "isCloudHomeApp",
                                 "isPublic",
                                 "identity",
                                 "createdBy",
@@ -2536,6 +3066,542 @@
                                 "cloudReference",
                                 "serviceName",
                                 "description"
+                              ]
+                            }
+                          ]
+                        },
+                        "region": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "identity",
+                        "createdBy",
+                        "createdAt",
+                        "updatedAt",
+                        "apVersion",
+                        "name",
+                        "cloudReference",
+                        "description",
+                        "active",
+                        "realm",
+                        "url",
+                        "s3Bucket",
+                        "tenantGroup",
+                        "tenant",
+                        "clientId",
+                        "clientSecret",
+                        "cidGlobalKey",
+                        "customerIdentity",
+                        "applications",
+                        "region"
+                      ]
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "identity": {
+                          "type": "string"
+                        },
+                        "createdBy": {
+                          "type": "string"
+                        },
+                        "createdAt": {
+                          "type": "string"
+                        },
+                        "updatedAt": {
+                          "type": "string"
+                        },
+                        "apVersion": {
+                          "type": "string"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "cloudReference": {
+                          "type": "string"
+                        },
+                        "description": {
+                          "type": "string"
+                        },
+                        "active": {
+                          "type": "boolean"
+                        },
+                        "realm": {
+                          "type": "string"
+                        },
+                        "url": {
+                          "type": "string"
+                        },
+                        "s3Bucket": {
+                          "type": "string"
+                        },
+                        "tenantGroup": {
+                          "type": "string"
+                        },
+                        "tenant": {
+                          "type": "string"
+                        },
+                        "clientId": {
+                          "type": "string"
+                        },
+                        "clientSecret": {
+                          "type": "string"
+                        },
+                        "cidGlobalKey": {
+                          "type": "string"
+                        },
+                        "customerIdentity": {
+                          "type": "string"
+                        },
+                        "applications": {
+                          "type": "array",
+                          "items": [
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description"
+                              ]
+                            },
+                            {
+                              "type": "object",
+                              "properties": {
+                                "isSingleTenant": {
+                                  "type": "boolean"
+                                },
+                                "isCloudHomeApp": {
+                                  "type": "boolean"
+                                },
+                                "isPublic": {
+                                  "type": "boolean"
+                                },
+                                "identity": {
+                                  "type": "string"
+                                },
+                                "createdBy": {
+                                  "type": "string"
+                                },
+                                "createdAt": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "cloudReference": {
+                                  "type": "string"
+                                },
+                                "serviceName": {
+                                  "type": "string"
+                                },
+                                "description": {
+                                  "type": "string"
+                                },
+                                "iconUrl": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "isSingleTenant",
+                                "isCloudHomeApp",
+                                "isPublic",
+                                "identity",
+                                "createdBy",
+                                "createdAt",
+                                "name",
+                                "cloudReference",
+                                "serviceName",
+                                "description",
+                                "iconUrl"
                               ]
                             }
                           ]
