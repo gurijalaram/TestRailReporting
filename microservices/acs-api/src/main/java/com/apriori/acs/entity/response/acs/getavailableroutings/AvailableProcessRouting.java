@@ -1,16 +1,10 @@
 package com.apriori.acs.entity.response.acs.getavailableroutings;
 
-import com.apriori.utils.http.enums.Schema;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Data
-@Schema(location = "acs/GetAvailableRoutingsResponse.json")
-@NoArgsConstructor
-public class GetAvailableRoutingsResponse {
+
+public class AvailableProcessRouting {
     private String name;
     private String displayName;
     private String plantName;
@@ -19,6 +13,9 @@ public class GetAvailableRoutingsResponse {
     private Boolean included;
     private Boolean overriden;
     private Boolean alternNode;
-    private List<AvailableRouting> children;
+    private Double fullyBurdenedCost;
+    private Double piecePartCost;
+    private Double totalInvestment;
+    private String costStatus;
 
 }
