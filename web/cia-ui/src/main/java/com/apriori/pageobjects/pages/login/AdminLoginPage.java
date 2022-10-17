@@ -135,7 +135,7 @@ public class AdminLoginPage extends AdminHeader {
      * @return new page object
      */
     public AdminHomePage login() {
-        UserCredentials userCredentials = UserUtil.getUser();
+        UserCredentials userCredentials = UserUtil.getUserOnPrem();
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new AdminHomePage(driver);
     }
