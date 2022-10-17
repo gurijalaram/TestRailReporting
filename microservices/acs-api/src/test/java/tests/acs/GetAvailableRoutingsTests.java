@@ -54,7 +54,9 @@ public class GetAvailableRoutingsTests {
         );
 
         GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
-            costOutputs.getScenarioIterationKey()
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
         assertThat(response.getName(), is(notNullValue()));
@@ -89,7 +91,9 @@ public class GetAvailableRoutingsTests {
 
 
         GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
-                fileUploadOutputs.getScenarioIterationKey()
+                fileUploadOutputs.getScenarioIterationKey(),
+                "aPriori USA",
+                ProcessGroupEnum.SHEET_METAL.getProcessGroup()
         );
 
         assertThat(response.getName(), is(notNullValue()));
@@ -97,48 +101,5 @@ public class GetAvailableRoutingsTests {
         assertThat(response.getPlantName(), is(notNullValue()));
         assertThat(response.getProcessGroupName(), is(notNullValue()));
         assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus(), is("UNCOSTED"));
-    }
-
-    @Test
-    @Category(AcsTest.class)
-    @TestRail(testCaseId = "14823")
-    @Description("Get available routings after Cost for Additive Manufacturing scenario")
-    public void testGetAvailableRoutingsAdditiveManufacturing() {
-        FileUploadResources fileUploadResources = new FileUploadResources();
-        AcsResources acsResources = new AcsResources();
-        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
-        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
-
-        String testScenarioName = new GenerateStringUtil().generateScenarioName();
-
-        String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
-        fileUploadResources.checkValidProcessGroup(processGroup);
-
-        FileResponse fileResponse = fileUploadResources.initializePartUpload(
-                "bracket_basic.prt",
-                processGroup
-        );
-
-        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
-                fileResponse,
-                testScenarioName
-        );
-
-        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
-                productionInfoInputs,
-                fileUploadOutputs,
-                processGroup,
-                false
-        );
-
-        GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
-                costOutputs.getScenarioIterationKey()
-        );
-
-        assertThat(response.getName(), is(notNullValue()));
-        assertThat(response.getDisplayName(), is(notNullValue()));
-        assertThat(response.getPlantName(), is(notNullValue()));
-        assertThat(response.getProcessGroupName(), is(notNullValue()));
-        assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus(), is(notNullValue()));
     }
 }

@@ -576,7 +576,7 @@ public class AcsResources {
      * @return GetAvailableRoutingsResponse instance
      */
 
-    public GetAvailableRoutingsResponse getAvailableRoutings(ScenarioIterationKey scenarioIterationKey) {
+    public GetAvailableRoutingsResponse getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
@@ -587,7 +587,9 @@ public class AcsResources {
                         scenarioIterationKey.getScenarioKey().getTypeName(),
                         scenarioIterationKey.getScenarioKey().getMasterName(),
                         scenarioIterationKey.getScenarioKey().getStateName(),
-                        scenarioIterationKey.getIteration().toString()
+                        scenarioIterationKey.getIteration().toString(),
+                        vpeName,
+                        processGroupName
                 );
         return (GetAvailableRoutingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }

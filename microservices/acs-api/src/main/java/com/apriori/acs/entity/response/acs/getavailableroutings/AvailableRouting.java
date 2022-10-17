@@ -1,8 +1,6 @@
 package com.apriori.acs.entity.response.acs.getavailableroutings;
 
-import com.apriori.utils.http.enums.Schema;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
