@@ -21,4 +21,6 @@ public class AgentWorkflowJob {
     public String errorMessage;
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     public LocalDateTime startedAt;
+    @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
+    public LocalDateTime completedAt;
 }

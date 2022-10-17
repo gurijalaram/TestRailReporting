@@ -263,7 +263,8 @@ public class CostingInputsPart extends CICBasePage {
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
 
         switch (workFlowData.getCostingInputsData().get(rowNum).getFieldName()) {
-            case "Material": case "Scenario Name":
+            case "Material":
+            case "Scenario Name":
                 selectCostingInputRow(rowNum, rowID, "Textbox");
                 break;
             case "Custom Date":
@@ -279,10 +280,12 @@ public class CostingInputsPart extends CICBasePage {
         pageUtils.waitFor(Constants.DEFAULT_WAIT);
         // Select Operator
         WebElement ciConnectOperatorDropdownElement = driver.findElement(By.cssSelector(operatorDDCss.replace("[ID]", cssRowNum.toString())));
-        pageUtils.waitForElementAndClick(ciConnectOperatorDropdownElement);
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
-        this.selectValueFromDDL(workFlowData.getCostingInputsData().get(dataRowNum).getOperatorName());
-        pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        if (!ciConnectOperatorDropdownElement.findElement(By.tagName("div")).findElement(By.tagName("div")).getAttribute("class").contains("ss-disabled")) {
+            pageUtils.waitForElementAndClick(ciConnectOperatorDropdownElement);
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+            this.selectValueFromDDL(workFlowData.getCostingInputsData().get(dataRowNum).getOperatorName());
+            pageUtils.waitFor(Constants.DEFAULT_WAIT);
+        }
 
         switch (valueFieldType) {
             case "Dropdown":
