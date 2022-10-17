@@ -573,6 +573,8 @@ public class AcsResources {
      * Get Available Routings
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param vpeName - String - value to set
+     * @param processGroupName - String - Selected from ENUM
      * @return GetAvailableRoutingsResponse instance
      */
 
