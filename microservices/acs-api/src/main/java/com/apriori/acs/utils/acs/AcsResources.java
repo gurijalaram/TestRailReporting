@@ -573,6 +573,8 @@ public class AcsResources {
      * Get Available Routings
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param vpeName - String - value to set
+     * @param processGroupName - String - Selected from ENUM
      * @return GetAvailableRoutingsResponse instance
      */
 
@@ -580,7 +582,7 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_AVAILABLE_ROUTINGS, GetAvailableRoutingsResponse.class)
+                .init(AcsApiEnum.AVAILABLE_ROUTINGS, GetAvailableRoutingsResponse.class)
                 .headers(headers)
                 .inlineVariables(
                         scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
