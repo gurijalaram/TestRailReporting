@@ -4,6 +4,7 @@ import com.apriori.nts.entity.response.Credentials;
 import com.apriori.utils.EncryptionUtil;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.json.utils.JsonManager;
+import com.apriori.utils.properties.PropertiesContext;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -39,6 +40,10 @@ public class EmailSetup {
 
     public  String getPassword() {
         return credentials.getPassword();
+    }
+
+    public  String getFolder() {
+        return PropertiesContext.get("customer");
     }
 
 
