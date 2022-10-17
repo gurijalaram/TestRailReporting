@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.G
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
+import com.apriori.acs.entity.response.acs.getavailableroutings.GetAvailableRoutingsResponse;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.acs.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
@@ -27,7 +28,6 @@ import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferen
 import com.apriori.acs.entity.response.acs.getsetuserpreferences.SetUserPreferencesInputs;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.GetUnitVariantSettingsResponse;
 import com.apriori.acs.entity.response.acs.getunitvariantsettings.UnitVariantSetting;
-import com.apriori.acs.entity.response.acs.getavailableroutings.GetAvailableRoutingsResponse;
 import com.apriori.acs.entity.response.acs.saveroutingselection.SaveRoutingSelectionInputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.utils.Constants;

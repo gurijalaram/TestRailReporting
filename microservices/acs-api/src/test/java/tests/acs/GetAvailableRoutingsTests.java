@@ -1,5 +1,9 @@
 package tests.acs;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.getavailableroutings.GetAvailableRoutingsResponse;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -10,14 +14,12 @@ import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.ProcessGroupEnum;
+
 import io.qameta.allure.Description;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
 import tests.workorders.WorkorderAPITests;
 import testsuites.categories.AcsTest;
-
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class GetAvailableRoutingsTests {
 
