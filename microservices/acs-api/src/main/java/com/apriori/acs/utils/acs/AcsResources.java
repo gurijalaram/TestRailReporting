@@ -580,7 +580,7 @@ public class AcsResources {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.GET_AVAILABLE_ROUTINGS, GetAvailableRoutingsResponse.class)
+                .init(AcsApiEnum.AVAILABLE_ROUTINGS, GetAvailableRoutingsResponse.class)
                 .headers(headers)
                 .inlineVariables(
                         scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
