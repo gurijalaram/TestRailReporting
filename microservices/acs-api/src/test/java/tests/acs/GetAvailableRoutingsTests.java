@@ -89,7 +89,6 @@ public class GetAvailableRoutingsTests {
                 testScenarioName
         );
 
-
         GetAvailableRoutingsResponse response = acsResources.getAvailableRoutings(
                 fileUploadOutputs.getScenarioIterationKey(),
                 "aPriori USA",
