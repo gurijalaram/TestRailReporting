@@ -56,10 +56,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     private WebDriver driver;
     private PageUtils pageUtils;
-    private UserCredentials userCredentials = UserUtil.getUser();
-
-    @FindBy(xpath = "//input[@type='email']")
-    private WebElement emailInput;
+    private UserCredentials userCredentials = UserUtil.getUserOnPrem();
 
     public ReportsLoginPage(WebDriver driver) {
         super(driver);
@@ -98,7 +95,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(emailInput);
+        pageUtils.waitForElementToAppear(email);
     }
 
     /**
@@ -171,7 +168,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
      * @return new page object
      */
     public ReportsPageHeader login() {
-        UserCredentials userCredentials = UserUtil.getUser();
+        UserCredentials userCredentials = UserUtil.getUserOnPrem();
         executeLogin(userCredentials.getUsername(), userCredentials.getPassword());
         return new ReportsPageHeader(driver);
     }
