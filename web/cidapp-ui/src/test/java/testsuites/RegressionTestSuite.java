@@ -35,6 +35,7 @@ import com.evaluate.materialutilization.MaterialStockTests;
 import com.evaluate.materialutilization.PartNestingTests;
 import com.explore.ActionsTests;
 import com.explore.FilterCriteriaTests;
+import com.explore.GroupCostTests;
 import com.explore.GroupDeleteTests;
 import com.explore.GroupEditTests;
 import com.explore.PreviewPanelTests;
@@ -95,7 +96,8 @@ import testsuites.suiteinterface.SmokeTests;
     FiltersTests.class,
     FilterCriteriaTests.class,
     GroupEditTests.class,
-    GroupDeleteTests.class
+    GroupDeleteTests.class,
+    GroupCostTests.class
 })
 public class RegressionTestSuite {
 }
