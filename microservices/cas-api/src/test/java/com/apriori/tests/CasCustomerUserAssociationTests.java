@@ -138,10 +138,5 @@ public class CasCustomerUserAssociationTests {
         );
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
-
-        //cannot return deleted association
-
-        /*CustomerAssociationUser check = casTestUtil.findCustomerAssociationUser(aprioriInternal, customerAssociationToAprioriInternal, user.getIdentity());
-        assertThat(check.getDeletedAt(), is(notNullValue()));*/
     }
 }
