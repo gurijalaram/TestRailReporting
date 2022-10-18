@@ -44,5 +44,7 @@ public class ComponentInfoBuilder {
     private String assignedTo;
     private String status;
     @Builder.Default
+    private final boolean overrideScenario = false;
+    @Builder.Default
     private ComponentInfoBuilderSettings settings = ComponentInfoBuilderSettings.builder().build();
 }

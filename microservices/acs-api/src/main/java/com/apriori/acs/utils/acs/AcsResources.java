@@ -10,6 +10,7 @@ import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.G
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
+import com.apriori.acs.entity.response.acs.getavailableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.acs.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
@@ -566,6 +567,33 @@ public class AcsResources {
             );
 
         return (GenericResourceCreatedIdResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+    }
+
+    /**
+     * Get Available Routings
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param vpeName - String - value to set
+     * @param processGroupName - String - Selected from ENUM
+     * @return GetAvailableRoutingsResponse instance
+     */
+
+    public AvailableRoutingsFirstLevel getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
+                .headers(headers)
+                .inlineVariables(
+                        scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                        scenarioIterationKey.getScenarioKey().getTypeName(),
+                        scenarioIterationKey.getScenarioKey().getMasterName(),
+                        scenarioIterationKey.getScenarioKey().getStateName(),
+                        scenarioIterationKey.getIteration().toString(),
+                        vpeName,
+                        processGroupName
+                );
+        return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
