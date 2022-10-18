@@ -43,7 +43,7 @@ public class LoginTests extends TestBase {
     @Description("Failed login to CI Report, wrong password")
     public void testFailedLogin() {
         loginPage = new ReportsLoginPage(driver)
-                .failedLogin(UserUtil.getUser().getUsername(), "fakePassword");
+                .failedLogin(UserUtil.getUserOnPrem().getUsername(), "fakePassword");
 
         assertThat(loginPage.getLoginMessage(), is(equalTo(Constants.FAILED_LOGIN_MESSAGE)));
     }
