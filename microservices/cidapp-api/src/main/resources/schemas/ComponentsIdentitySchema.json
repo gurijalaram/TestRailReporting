@@ -19,7 +19,9 @@
       ],
       "optional": [
         "updatedAt",
-        "updatedBy"
+        "updatedBy",
+        "updatedByName",
+        "configurationName"
       ],
       "properties": {
         "identity": {
@@ -50,6 +52,12 @@
           "type": "string"
         },
         "updateBy": {
+          "type": "string"
+        },
+        "updatedByName": {
+          "type": "string"
+        },
+        "configurationName": {
           "type": "string"
         }
       }
