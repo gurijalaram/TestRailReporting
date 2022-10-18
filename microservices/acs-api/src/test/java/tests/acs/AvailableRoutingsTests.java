@@ -1,9 +1,5 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.response.acs.getavailableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
@@ -148,10 +144,12 @@ public class AvailableRoutingsTests {
                 ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup()
         );
 
-        assertThat(response.getName(), is(notNullValue()));
-        assertThat(response.getDisplayName(), is(notNullValue()));
-        assertThat(response.getPlantName(), is(notNullValue()));
-        assertThat(response.getProcessGroupName(), is(notNullValue()));
-        assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus(), is(notNullValue()));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
     }
 }
