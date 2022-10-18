@@ -2,9 +2,11 @@ package com.apriori.acs.entity.response.acs.getavailableroutings;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 
-public class AvailableProcessRouting {
+public class AvailableRoutingsSecondLevel {
     private String name;
     private String displayName;
     private String plantName;
@@ -13,9 +15,5 @@ public class AvailableProcessRouting {
     private Boolean included;
     private Boolean overriden;
     private Boolean alternNode;
-    private Double fullyBurdenedCost;
-    private Double piecePartCost;
-    private Double totalInvestment;
-    private String costStatus;
-
+    private List<AvailableRoutingsThirdLevel> children;
 }

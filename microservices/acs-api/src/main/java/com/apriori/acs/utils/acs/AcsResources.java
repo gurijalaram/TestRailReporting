@@ -10,7 +10,7 @@ import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.G
 import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
 import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
 import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
-import com.apriori.acs.entity.response.acs.getavailableroutings.GetAvailableRoutingsResponse;
+import com.apriori.acs.entity.response.acs.getavailableroutings.AvailableRoutingsFirstLevel;
 import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
 import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
 import com.apriori.acs.entity.response.acs.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
@@ -578,11 +578,11 @@ public class AcsResources {
      * @return GetAvailableRoutingsResponse instance
      */
 
-    public GetAvailableRoutingsResponse getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
+    public AvailableRoutingsFirstLevel getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.AVAILABLE_ROUTINGS, GetAvailableRoutingsResponse.class)
+                .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
                 .headers(headers)
                 .inlineVariables(
                         scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -593,7 +593,7 @@ public class AcsResources {
                         vpeName,
                         processGroupName
                 );
-        return (GetAvailableRoutingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**

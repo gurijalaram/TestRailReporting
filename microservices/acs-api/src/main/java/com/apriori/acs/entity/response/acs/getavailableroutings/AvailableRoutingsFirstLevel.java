@@ -8,9 +8,9 @@ import lombok.NoArgsConstructor;
 import java.util.List;
 
 @Data
-@Schema(location = "acs/GetAvailableRoutingsResponse.json")
+@Schema(location = "acs/AvailableRoutingsResponse.json")
 @NoArgsConstructor
-public class GetAvailableRoutingsResponse {
+public class AvailableRoutingsFirstLevel {
     private String name;
     private String displayName;
     private String plantName;
@@ -19,6 +19,6 @@ public class GetAvailableRoutingsResponse {
     private Boolean included;
     private Boolean overriden;
     private Boolean alternNode;
-    private List<AvailableRouting> children;
+    private List<AvailableRoutingsSecondLevel> children;
 
 }
