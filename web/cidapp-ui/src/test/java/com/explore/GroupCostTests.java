@@ -81,10 +81,10 @@ public class GroupCostTests extends TestBase {
             .checkComponentStateRefresh(cidComponentItem, ScenarioStateEnum.COST_COMPLETE)
             .checkComponentStateRefresh(cidComponentItemB, ScenarioStateEnum.COST_COMPLETE);
 
-        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).contains(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6,000");
+        softAssertions.assertThat(explorePage.getRowDetails(componentName2, scenarioName2)).contains(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6,000");
 
-        softAssertions.assertThat(explorePage.getRowDetails(componentName, scenarioName)).containsExactlyInAnyOrder(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6000");
-        softAssertions.assertThat(explorePage.getRowDetails(componentName2, scenarioName2)).containsExactlyInAnyOrder(DigitalFactoryEnum.APRIORI_CHINA.getDigitalFactory(), "6000");
+        softAssertions.assertAll();
     }
 
     @Test
