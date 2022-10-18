@@ -269,6 +269,17 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the data-icon value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
      * Open filters page
      *
      * @return new page object

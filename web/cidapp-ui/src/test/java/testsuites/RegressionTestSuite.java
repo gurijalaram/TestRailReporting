@@ -8,6 +8,7 @@ import com.evaluate.CostAllCadTests;
 import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
 import com.evaluate.NewScenarioNameTests;
+import com.evaluate.OpenUnknownComponentsTests;
 import com.evaluate.ProcessGroupsTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
@@ -35,6 +36,7 @@ import com.evaluate.materialutilization.MaterialStockTests;
 import com.evaluate.materialutilization.PartNestingTests;
 import com.explore.ActionsTests;
 import com.explore.FilterCriteriaTests;
+import com.explore.GroupCostTests;
 import com.explore.GroupDeleteTests;
 import com.explore.GroupEditTests;
 import com.explore.PreviewPanelTests;
@@ -95,7 +97,9 @@ import testsuites.suiteinterface.SmokeTests;
     FiltersTests.class,
     FilterCriteriaTests.class,
     GroupEditTests.class,
-    GroupDeleteTests.class
+    GroupDeleteTests.class,
+    GroupCostTests.class,
+    OpenUnknownComponentsTests.class
 })
 public class RegressionTestSuite {
 }
