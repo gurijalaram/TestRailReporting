@@ -1,7 +1,7 @@
 package com.cic.tests;
 
 import com.apriori.pages.connectors.ConnectorsPage;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
@@ -29,7 +29,7 @@ public class ConnectorTabTests extends TestBase {
     @Description("Test Connectors List Tab")
     public void testConnectorsTabButtons() {
         SoftAssertions softAssertions = new SoftAssertions();
-        ConnectorsPage connectorsPage = new LoginPage(driver)
+        ConnectorsPage connectorsPage = new CicLoginPage(driver)
             .login(currentUser)
                 .clickConnectorsMenu();
 
