@@ -531,4 +531,26 @@ public class FiltersTests extends TestBase {
 
         softAssert.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = "6094")
+    @Description("Validate Private filter displays only Private Scenarios")
+    public void verifyFilterPersistenceTest() {
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+        String filterName = generateStringUtil.generateFilterName();
+
+        explorePage = loginPage.login(currentUser)
+            .filter()
+            .newFilter()
+            .inputName(filterName)
+            .addCriteria(PropertyEnum.CREATED_AT, OperationEnum.LESS_THAN, LocalDateTime.now().minusHours(1))
+            .submit(ExplorePage.class)
+            .selectFilter(filterName)
+            .logout()
+            .login(currentUser)
+            .selectFilter(filterName);
+
+        assertThat(explorePage.getCurrentFilter()).isEqualTo(filterName);
+    }
 }
