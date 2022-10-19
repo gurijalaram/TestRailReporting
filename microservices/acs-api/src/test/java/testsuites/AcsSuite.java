@@ -9,6 +9,7 @@ import tests.acs.ActiveAxesByScenarioIterationKeyTests;
 import tests.acs.ActiveDimensionsByScenarioIterationKeyTests;
 import tests.acs.ArtifactPropertiesTests;
 import tests.acs.ArtifactTableInfoTests;
+import tests.acs.AvailableRoutingsTests;
 import tests.acs.CreateMissingScenarioTests;
 import tests.acs.DisplayUnitsTests;
 import tests.acs.EnabledCurrencyRateVersionsTests;
@@ -26,6 +27,7 @@ import tests.acs.UserPreferencesTests;
 @ProjectRunID("1347")
 @RunWith(ConcurrentSuiteRunner.class)
 @Suite.SuiteClasses({
+    AvailableRoutingsTests.class,
     CreateMissingScenarioTests.class,
     ActiveAxesByScenarioIterationKeyTests.class,
     ActiveDimensionsByScenarioIterationKeyTests.class,
