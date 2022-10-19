@@ -83,12 +83,12 @@ public class JsonManager {
         }
     }
 
-    public static <T> T convertBodyToJson(ResponseWrapper<String> getDeploymentsResponse, Class<T> klass) {
+    public static <T> T convertBodyToJson(ResponseWrapper<String> response, Class<T> klass) {
         Gson gson = new Gson();
         return gson.fromJson(
             gson.toJson(
                 JsonParser.parseString(
-                    getDeploymentsResponse.getBody()).getAsJsonObject().getAsJsonObject("response")),
+                    response.getBody()).getAsJsonObject().getAsJsonObject("response")),
             klass);
     }
 }
