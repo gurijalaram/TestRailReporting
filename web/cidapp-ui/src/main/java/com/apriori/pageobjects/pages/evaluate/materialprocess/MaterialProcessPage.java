@@ -460,8 +460,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMaterialRegrind(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance   (Piece Part Cost Driver)", "userDefinedMode"),
-            psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance (Piece Part Cost Driver)", "userDefinedMode"),
+            psoController.inputLocator("Material Regrind Allowance (Piece Part Cost Driver)"), value);
         return this;
     }
 

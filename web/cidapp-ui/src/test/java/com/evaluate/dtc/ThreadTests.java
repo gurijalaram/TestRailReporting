@@ -96,7 +96,6 @@ public class ThreadTests extends TestBase {
     }*/
 
     @Test
-    @Issue("CID-1247")
     @TestRail(testCaseId = {"8902"})
     @Description("Testing to verify costed thread with attribute change")
     public void selectScenario() {
