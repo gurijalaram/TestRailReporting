@@ -31,6 +31,7 @@ public class UnitVariantSettingsTests extends TestUtil {
             softAssertions.assertThat(item.getDecimalPlaces()).isEqualTo(2.0);
             softAssertions.assertThat(item.isSystem()).isEqualTo(true);
             softAssertions.assertThat(item.isCustom()).isEqualTo(false);
+            softAssertions.assertAll();
         }
     }
 
