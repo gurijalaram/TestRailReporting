@@ -5,6 +5,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
@@ -52,8 +53,8 @@ public class PsoEditTests extends TestBase {
             .openMaterialProcess()
             .selectBarChart("Injection Molding")
             .selectOptionsTab()
-            .selectDefinedValue("8")
-            .inputOverrideNominal("0.4")
+            .selectNumberOfCavitiesDropdown("8")
+            .overrideWallThickness("0.4")
             .selectAddColorantButton()
             .inputMaterialRegrind("0.3")
             .closePanel()
@@ -231,7 +232,7 @@ public class PsoEditTests extends TestBase {
         assertThat(materialProcessPage.getOverriddenPso("Cooling Time"), is(150.29));
     }
 
-    /*@Test
+    @Test
     @TestRail(testCaseId = {"8972"})
     @Description("Validate user can change a selection of PSOs for a variety of routings in CI Design")
     public void routingPSOs() {
@@ -251,7 +252,7 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("Injection Molding")
             .selectOptionsTab()
             .selectCavitiesOptimizeMinCost()
-            .inputOverrideNominal("0.13")
+            .overrideWallThickness("0.13")
             .inputColorCharge("0.68")
             .closePanel()
             .costScenario()
@@ -259,35 +260,34 @@ public class PsoEditTests extends TestBase {
             .selectBarChart("Injection Molding")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected(), is(true));
-        assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness (Piece Part Cost Driver)"), is(0.13));
-        assertThat(materialProcessPage.getOverriddenPso("Colorant (Piece Part Cost Driver)"), is(0.68));
+        softAssertions.assertThat(materialProcessPage.isCavitiesOptimizeMinCostSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Nominal Wall Thickness  (Piece Part Cost Driver)")).isEqualTo(0.13);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Colorant   (Piece Part Cost Driver)")).isEqualTo(0.68);
 
         materialProcessPage.closePanel()
-            // TODO: 18/08/2021 cn - routing hasn't been implemented
-            .openProcessDetails()
-            .selectRoutingsButton()
-            .selectRouting("Structural Foam Mold")
-            .apply()
-            .closePanel()
-            .costScenario()
+            .goToAdvancedTab()
+            .openRoutingSelection()
+            .selectRoutingPreferenceByName("Structural Foam Mold")
+            .submit(EvaluatePage.class)
+            .costScenario(1)
             .openMaterialProcess()
             .selectBarChart("Structural Foam Molding")
             .selectOptionsTab()
-            .selectDefinedValueDropdown("4")
+            .selectNumberOfCavitiesDropdown("4")
             .selectAddColorantButton()
-            .selectMaterialDefinedButton()
-            .setMaterialRegrindInput("1.00")
+            .inputMaterialRegrind("1.00")
             .closePanel()
             .costScenario()
             .openMaterialProcess()
             .selectBarChart("Structural Foam Molding")
             .selectOptionsTab();
 
-        assertThat(materialProcessPage.getDefinedValueDropdown("4"), is(true));
-        assertThat(materialProcessPage.isAddColorantSelected(), is(true));
-        assertThat(materialProcessPage.getMaterialRegrind(), is("1.00"));
-    }*/
+        softAssertions.assertThat(materialProcessPage.getDefinedValue()).isEqualTo(4);
+        softAssertions.assertThat(materialProcessPage.isColorantSelected()).isEqualTo(true);
+        softAssertions.assertThat(materialProcessPage.getOverriddenPso("Material Regrind Allowance (Piece Part Cost Driver)")).isEqualTo(1.00);
+
+        softAssertions.assertAll();
+    }
 
     @Test
     @Issue("BA-2651")

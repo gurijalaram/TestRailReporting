@@ -1,7 +1,7 @@
 package com.cic.tests;
 
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
 import com.apriori.pages.workflows.schedule.querydefinitions.QueryDefinitions;
@@ -23,7 +23,7 @@ public class QueryDefinitionTests extends TestBase {
     private WorkflowHome workflowHome;
     private QueryDefinitions queryDefinitions;
 
-    private LoginPage loginPage;
+    private CicLoginPage cicLoginPage;
 
 
     public QueryDefinitionTests() {
@@ -40,7 +40,7 @@ public class QueryDefinitionTests extends TestBase {
     @TestRail(testCaseId = {"4303"})
     @Description("Test input fields functionality")
     public void testInputFields() {
-        queryDefinitions = (QueryDefinitions) new LoginPage(driver)
+        queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -63,7 +63,7 @@ public class QueryDefinitionTests extends TestBase {
     @TestRail(testCaseId = {"3957"})
     @Description("Test navigation button states")
     public void testNavigationButtons() {
-        queryDefinitions = (QueryDefinitions) new LoginPage(driver)
+        queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -84,7 +84,7 @@ public class QueryDefinitionTests extends TestBase {
     @TestRail(testCaseId = {"4306","3958"})
     @Description("Verify query widget is correct for each possible PLM System selection")
     public void testRulesListFunctionality() {
-        queryDefinitions = (QueryDefinitions) new LoginPage(driver)
+        queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)

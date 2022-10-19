@@ -1,7 +1,7 @@
 package utils;
 
 import com.apriori.apibase.utils.TestUtil;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.users.UsersPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.http.builder.common.entity.RequestEntity;
@@ -169,7 +169,7 @@ public class CicApiTestUtil extends TestUtil {
      * @return JSessionID
      */
     public static String getLoginSession(UserCredentials currentUser, WebDriver webDriver) {
-        UsersPage usersPage = new LoginPage(webDriver)
+        UsersPage usersPage = new CicLoginPage(webDriver)
             .login(currentUser)
             .clickUsersMenu();
         return String.valueOf(webDriver.manage().getCookies()).replace("[", "").replace("]", "");
