@@ -57,7 +57,7 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
     private WebElement filterInput;
 
-    @FindBy(css = "#qa-scenario-explorer-filter-selector div div div div[class='text-overflow']")
+    @FindBy(css = "[id='qa-scenario-explorer-filter-selector']")
     private WebElement currentFilter;
 
     @FindBy(css = "div.no-content.medium-no-content")
