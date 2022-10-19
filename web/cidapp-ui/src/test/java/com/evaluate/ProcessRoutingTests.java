@@ -3,11 +3,13 @@ package com.evaluate;
 import com.apriori.cidappapi.utils.UserPreferencesUtil;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.MaterialSelectorPage;
+import com.apriori.pageobjects.pages.evaluate.designguidance.GuidanceIssuesPage;
 import com.apriori.pageobjects.pages.evaluate.inputs.RoutingSelectionPage;
 import com.apriori.pageobjects.pages.evaluate.materialprocess.MaterialProcessPage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
+import com.apriori.utils.TestRail;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -31,6 +33,7 @@ public class ProcessRoutingTests extends TestBase {
     private MaterialProcessPage materialProcessPage;
     private RoutingSelectionPage routingSelectionPage;
     private MaterialSelectorPage materialSelectorPage;
+    private GuidanceIssuesPage guidanceIssuesPage;
 
     private File resourceFile;
     private UserCredentials currentUser;
@@ -49,7 +52,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Category(SmokeTests.class)
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"14404", "15002", "15816"})
     @Description("Validate the user can Change the process routing in CI Design")
     public void testAlternateRoutingSelection() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -75,7 +78,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"14992", "15806"})
     @Description("Validate the user can Change the process routing")
     public void changeRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -104,7 +107,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"7854"})
     @Description("Validate the Use selected for future costing checkbox works correctly")
     public void testLetAprioriDecide() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -135,7 +138,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"15012", "14988", "15802"})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -169,7 +172,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Ignore("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"7855", "14985", "15799"})
     @Description("Validate behaviour when forcing a material that will fail costing within CID")
     public void failCostingRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
@@ -192,16 +195,15 @@ public class ProcessRoutingTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.COSTING_FAILED)).isEqualTo(true);
 
-        /*TODO uncomment this section when dfm messaging appears for this failure
         evaluatePage.openDesignGuidance()
                 .selectIssueTypeGcd("Costing Failed", "Additive Manufacturing/Surface Treatment is infeasible", "Component:1");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("This DMLS material is not compatible with Stereolithography.");*/
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("This DMLS material is not compatible with Stereolithography.");
         softAssertions.assertAll();
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"7844", "14996", "15810"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -246,7 +248,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"7846"})
     @Description("Validate materials selected are appropriate for selected routing.")
     public void routingMaterials() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -277,7 +279,7 @@ public class ProcessRoutingTests extends TestBase {
 
     @Test
     @Ignore("Due to update 14/10/22 routings can't be change for additive manufacturing")
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"7850"})
     @Description("Validate behaviour when selecting a PG that auto triggers a secondary process")
     public void routingSecondaryPG() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ADDITIVE_MANUFACTURING;
@@ -317,7 +319,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID
+    @TestRail(testCaseId = {"7848"})
     @Description("Validate a variety of secondary processes can be added for newly selected routings")
     public void secondaryProcessesRoutings() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
@@ -353,7 +355,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {"}) TODO add testrail ID and check assertion
+    @TestRail(testCaseId = {"7859"})
     @Description("Validate user cannot select a routing that does not belong to a certain Process Group")
     public void routingPGs() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.PLASTIC_MOLDING;
