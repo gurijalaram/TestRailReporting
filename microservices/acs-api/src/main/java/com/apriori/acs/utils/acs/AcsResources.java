@@ -1,33 +1,34 @@
 package com.apriori.acs.utils.acs;
 
 import com.apriori.acs.entity.enums.acs.AcsApiEnum;
-import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioInputs;
-import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioResponse;
+import com.apriori.acs.entity.response.acs.activeaxesbyscenarioiterationkey.ActiveAxesByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.acs.activedimensionsbyscenarioiterationkey.ActiveDimensionsResponse;
+import com.apriori.acs.entity.response.acs.artifactproperties.ArtifactPropertiesResponse;
+import com.apriori.acs.entity.response.acs.artifacttableinfo.ArtifactTableInfoResponse;
+import com.apriori.acs.entity.response.acs.availableroutings.AvailableRoutingsFirstLevel;
+import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsInputs;
+import com.apriori.acs.entity.response.acs.displayunits.DisplayUnitsResponse;
+import com.apriori.acs.entity.response.acs.enabledcurrencyrateversions.CurrencyRateVersionResponse;
+import com.apriori.acs.entity.response.acs.gcdmapping.GcdMappingResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedIdResponse;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericResourceCreatedResponse;
-import com.apriori.acs.entity.response.acs.getactiveaxesbyscenarioiterationkey.GetActiveAxesByScenarioIterationKeyResponse;
-import com.apriori.acs.entity.response.acs.getactivedimensionsbyscenarioiterationkey.GetActiveDimensionsResponse;
-import com.apriori.acs.entity.response.acs.getartifactproperties.GetArtifactPropertiesResponse;
-import com.apriori.acs.entity.response.acs.getartifacttableinfo.GetArtifactTableInfoResponse;
-import com.apriori.acs.entity.response.acs.getenabledcurrencyrateversions.CurrencyRateVersionResponse;
-import com.apriori.acs.entity.response.acs.getgcdmapping.GetGcdMappingResponse;
-import com.apriori.acs.entity.response.acs.getpartprimaryprocessgroups.GetPartPrimaryProcessGroupsResponse;
-import com.apriori.acs.entity.response.acs.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
-import com.apriori.acs.entity.response.acs.getscenariosinfo.GetScenariosInfoResponse;
-import com.apriori.acs.entity.response.acs.getscenariosinfo.ScenarioIterationKeysInputs;
-import com.apriori.acs.entity.response.acs.getsetdisplayunits.GetDisplayUnitsResponse;
-import com.apriori.acs.entity.response.acs.getsetdisplayunits.SetDisplayUnitsInputs;
-import com.apriori.acs.entity.response.acs.getsetproductiondefaults.GetProductionDefaultsResponse;
-import com.apriori.acs.entity.response.acs.getsetproductiondefaults.SetProductionDefaultsInputs;
-import com.apriori.acs.entity.response.acs.getsetproductioninfo.GetProductionInfoResponse;
-import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.GetTolerancePolicyDefaultsResponse;
-import com.apriori.acs.entity.response.acs.getsettolerancepolicydefaults.SetTolerancePolicyDefaultsInputs;
-import com.apriori.acs.entity.response.acs.getsetuserpreferences.GetUserPreferencesResponse;
-import com.apriori.acs.entity.response.acs.getsetuserpreferences.SetUserPreferencesInputs;
-import com.apriori.acs.entity.response.acs.getunitvariantsettings.GetUnitVariantSettingsResponse;
-import com.apriori.acs.entity.response.acs.getunitvariantsettings.UnitVariantSetting;
-import com.apriori.acs.entity.response.acs.saveroutingselection.SaveRoutingSelectionInputs;
+import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioInputs;
+import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioResponse;
+import com.apriori.acs.entity.response.acs.partprimaryprocessgroups.PartPrimaryProcessGroupsResponse;
+import com.apriori.acs.entity.response.acs.productiondefaults.ProductionDefaultsInputs;
+import com.apriori.acs.entity.response.acs.productiondefaults.ProductionDefaultsResponse;
+import com.apriori.acs.entity.response.acs.productioninfo.ProductionInfoResponse;
+import com.apriori.acs.entity.response.acs.routingselection.RoutingSelectionInputs;
+import com.apriori.acs.entity.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.acs.scenariosinfo.ScenarioIterationKeysInputs;
+import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoResponse;
+import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsInputs;
+import com.apriori.acs.entity.response.acs.tolerancepolicydefaults.TolerancePolicyDefaultsResponse;
+import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSetting;
+import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
+import com.apriori.acs.entity.response.acs.userpreferences.UserPreferencesInputs;
+import com.apriori.acs.entity.response.acs.userpreferences.UserPreferencesResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.utils.Constants;
 import com.apriori.utils.GenerateStringUtil;
@@ -61,13 +62,13 @@ public class AcsResources {
      *
      * @return CreateMissingScenarioResponse response instance
      */
-    public CreateMissingScenarioResponse createMissingScenario() {
+    public MissingScenarioResponse createMissingScenario() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.CREATE_MISSING_SCENARIO, CreateMissingScenarioResponse.class)
+            .init(AcsApiEnum.CREATE_MISSING_SCENARIO, MissingScenarioResponse.class)
             .headers(headers)
-            .body(CreateMissingScenarioInputs.builder()
+            .body(MissingScenarioInputs.builder()
                     .baseName(Constants.PART_FILE_NAME)
                     .configurationName(Constants.PART_CONFIG_NAME)
                     .modelName(Constants.PART_MODEL_NAME)
@@ -80,7 +81,7 @@ public class AcsResources {
                     .build()
             );
 
-        return (CreateMissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (MissingScenarioResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
 
@@ -89,11 +90,11 @@ public class AcsResources {
      *
      * @return GetScenarioInfoByScenarioIterationKeyResponse instance
      */
-    public GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
+    public ScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKey(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, GetScenarioInfoByScenarioIterationKeyResponse.class)
+            .init(AcsApiEnum.SCENARIO_INFO_BY_SCENARIO_ITERATION_KEY, ScenarioInfoByScenarioIterationKeyResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -103,7 +104,7 @@ public class AcsResources {
                 scenarioIterationKey.getIteration().toString()
             );
 
-        return (GetScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
+        return (ScenarioInfoByScenarioIterationKeyResponse) HTTPRequest
                 .build(requestEntity).get().getResponseEntity();
     }
 
@@ -138,7 +139,7 @@ public class AcsResources {
      * @param scenarioIterationKeyTwo - second Scenario Iteration Key
      * @return instance of GetScenariosInfoResponse
      */
-    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformation(
+    public ResponseWrapper<ScenariosInfoResponse> getScenariosInformation(
             ScenarioIterationKey scenarioIterationKeyOne,
             ScenarioIterationKey scenarioIterationKeyTwo) {
         setupHeader();
@@ -148,7 +149,7 @@ public class AcsResources {
         listOfKeys.add(scenarioIterationKeyTwo);
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+            .init(AcsApiEnum.SCENARIOS_INFORMATION, ScenariosInfoResponse.class)
             .headers(headers)
             .body(ScenarioIterationKeysInputs.builder()
                 .scenarioIterationKeys(listOfKeys)
@@ -164,11 +165,11 @@ public class AcsResources {
      * @param scenarioIterationKeys List of scenario iteration keys
      * @return ResponseWrapper instance
      */
-    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInformationOneScenario(List<ScenarioIterationKey> scenarioIterationKeys) {
+    public ResponseWrapper<ScenariosInfoResponse> getScenariosInformationOneScenario(List<ScenarioIterationKey> scenarioIterationKeys) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.SCENARIOS_INFORMATION, GetScenariosInfoResponse.class)
+            .init(AcsApiEnum.SCENARIOS_INFORMATION, ScenariosInfoResponse.class)
             .headers(headers)
             .body(ScenarioIterationKeysInputs.builder()
                 .scenarioIterationKeys(scenarioIterationKeys)
@@ -183,7 +184,7 @@ public class AcsResources {
      *
      * @return ResponseWrapper of type GetScenariosInfoResponse instance
      */
-    public ResponseWrapper<GetScenariosInfoResponse> getScenariosInfoNullBody() {
+    public ResponseWrapper<ScenariosInfoResponse> getScenariosInfoNullBody() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
@@ -200,15 +201,15 @@ public class AcsResources {
      *
      * @return GetDisplayUnitsResponse
      */
-    public GetDisplayUnitsResponse getDisplayUnits() {
+    public DisplayUnitsResponse getDisplayUnits() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.DISPLAY_UNITS, GetDisplayUnitsResponse.class)
+            .init(AcsApiEnum.DISPLAY_UNITS, DisplayUnitsResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
 
-        return (GetDisplayUnitsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (DisplayUnitsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -217,7 +218,7 @@ public class AcsResources {
      * @param setDisplayUnitsInputs - inputs for body of request
      * @return Set Display Units response instance
      */
-    public GenericResourceCreatedResponse setDisplayUnits(SetDisplayUnitsInputs setDisplayUnitsInputs) {
+    public GenericResourceCreatedResponse setDisplayUnits(DisplayUnitsInputs setDisplayUnitsInputs) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
@@ -234,14 +235,14 @@ public class AcsResources {
      *
      * @return GetUnitVariantSettingsResponse instance
      */
-    public GetUnitVariantSettingsResponse getUnitVariantSettings() {
+    public UnitVariantSettingsResponse getUnitVariantSettings() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.UNIT_VARIANT_SETTINGS, GetUnitVariantSettingsResponse.class)
+            .init(AcsApiEnum.UNIT_VARIANT_SETTINGS, UnitVariantSettingsResponse.class)
             .headers(headers);
 
-        return (GetUnitVariantSettingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (UnitVariantSettingsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -279,15 +280,15 @@ public class AcsResources {
      *
      * @return GetTolerancePolicyDefaults instance
      */
-    public GetTolerancePolicyDefaultsResponse getTolerancePolicyDefaults() {
+    public TolerancePolicyDefaultsResponse getTolerancePolicyDefaults() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, GetTolerancePolicyDefaultsResponse.class)
+            .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, TolerancePolicyDefaultsResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
 
-        return (GetTolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (TolerancePolicyDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -307,7 +308,7 @@ public class AcsResources {
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.TOLERANCE_POLICY_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
-            .body(SetTolerancePolicyDefaultsInputs.builder()
+            .body(TolerancePolicyDefaultsInputs.builder()
                     .totalRunoutOverride(totalRunoutOverride)
                     .toleranceMode(toleranceMode)
                     .useCadToleranceThreshhold(useCadToleranceThreshhold)
@@ -340,15 +341,15 @@ public class AcsResources {
      *
      * @return GetProductionDefaultsResponse instance - response from API
      */
-    public GetProductionDefaultsResponse getProductionDefaults() {
+    public ProductionDefaultsResponse getProductionDefaults() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.PRODUCTION_DEFAULTS, GetProductionDefaultsResponse.class)
+            .init(AcsApiEnum.PRODUCTION_DEFAULTS, ProductionDefaultsResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
 
-        return (GetProductionDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (ProductionDefaultsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -362,7 +363,7 @@ public class AcsResources {
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.PRODUCTION_DEFAULTS, GenericResourceCreatedResponse.class)
             .headers(headers)
-            .body(SetProductionDefaultsInputs.builder()
+            .body(ProductionDefaultsInputs.builder()
                     .material("Accura 10")
                     .annualVolume("5500")
                     .productionLife(5.0)
@@ -397,15 +398,15 @@ public class AcsResources {
      *
      * @return instance of response object
      */
-    public GetUserPreferencesResponse getUserPreferences() {
+    public UserPreferencesResponse getUserPreferences() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.USER_PREFERENCES, GetUserPreferencesResponse.class)
+            .init(AcsApiEnum.USER_PREFERENCES, UserPreferencesResponse.class)
             .headers(headers)
             .inlineVariables(validUsername);
 
-        return (GetUserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (UserPreferencesResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -464,11 +465,11 @@ public class AcsResources {
      * @param scenarioIterationKey - Scenario Iteration Key to use
      * @return GetProductionInfoResponse instance
      */
-    public GetProductionInfoResponse getProductionInfo(ScenarioIterationKey scenarioIterationKey) {
+    public ProductionInfoResponse getProductionInfo(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.PRODUCTION_INFO, GetProductionInfoResponse.class)
+            .init(AcsApiEnum.PRODUCTION_INFO, ProductionInfoResponse.class)
             .headers(headers)
             .queryParams(new QueryParams().use("applyEdits", "true"))
             .inlineVariables(
@@ -479,7 +480,7 @@ public class AcsResources {
                 scenarioIterationKey.getIteration().toString()
             );
 
-        return (GetProductionInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (ProductionInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -496,7 +497,7 @@ public class AcsResources {
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.USER_PREFERENCES, GenericResourceCreatedResponse.class)
             .headers(headers)
-            .body(SetUserPreferencesInputs.builder()
+            .body(UserPreferencesInputs.builder()
                 .costTableDecimalPlaces(costTableDecimalPlaces)
                 .prodInfoDefaultUseVpeForAllProcesses(useVpe)
                 .tolerancePolicyDefaultsToleranceMode(toleranceMode)
@@ -549,7 +550,7 @@ public class AcsResources {
      * @param scenarioIterationKey - scenario to set production info for
      * @return GenericResourceCreatedIdResponse
      */
-    public GenericResourceCreatedIdResponse setProductionInfo(GetProductionInfoResponse getProductionInfoResponse,
+    public GenericResourceCreatedIdResponse setProductionInfo(ProductionInfoResponse getProductionInfoResponse,
                                                               ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
@@ -569,6 +570,33 @@ public class AcsResources {
     }
 
     /**
+     * Get Available Routings
+     *
+     * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
+     * @param vpeName - String - value to set
+     * @param processGroupName - String - Selected from ENUM
+     * @return GetAvailableRoutingsResponse instance
+     */
+
+    public AvailableRoutingsFirstLevel getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
+        setupHeader();
+
+        final RequestEntity requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
+                .headers(headers)
+                .inlineVariables(
+                        scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                        scenarioIterationKey.getScenarioKey().getTypeName(),
+                        scenarioIterationKey.getScenarioKey().getMasterName(),
+                        scenarioIterationKey.getScenarioKey().getStateName(),
+                        scenarioIterationKey.getIteration().toString(),
+                        vpeName,
+                        processGroupName
+                );
+        return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
+    }
+
+    /**
      * Save routing selection
      *
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
@@ -577,8 +605,8 @@ public class AcsResources {
     public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
-        List<SaveRoutingSelectionInputs> childrenList = new ArrayList<>();
-        childrenList.add(SaveRoutingSelectionInputs.builder()
+        List<RoutingSelectionInputs> childrenList = new ArrayList<>();
+        childrenList.add(RoutingSelectionInputs.builder()
             .name("Sheet Metal")
             .plantName("aPriori USA")
             .processGroupName("Sheet Metal")
@@ -589,7 +617,7 @@ public class AcsResources {
         final RequestEntity requestEntity = RequestEntityUtil
             .init(AcsApiEnum.ROUTING_SELECTION, GenericResourceCreatedIdResponse.class)
             .headers(headers)
-            .body(SaveRoutingSelectionInputs.builder()
+            .body(RoutingSelectionInputs.builder()
                 .name("Sheet Metal/Machining")
                 .plantName("aPriori USA")
                 .processGroupName("Sheet Metal")
@@ -612,14 +640,14 @@ public class AcsResources {
      *
      * @return GetPartPrimaryProcessGroupsResponse instance
      */
-    public GetPartPrimaryProcessGroupsResponse getPartPrimaryProcessGroups() {
+    public PartPrimaryProcessGroupsResponse getPartPrimaryProcessGroups() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.PART_PRIMARY_PROCESS_GROUPS, GetPartPrimaryProcessGroupsResponse.class)
+            .init(AcsApiEnum.PART_PRIMARY_PROCESS_GROUPS, PartPrimaryProcessGroupsResponse.class)
             .headers(headers);
 
-        return (GetPartPrimaryProcessGroupsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (PartPrimaryProcessGroupsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -678,11 +706,11 @@ public class AcsResources {
      * @param paramsForUrl - list of values to input into url
      * @return GetActiveDimensionsResponse instance
      */
-    public GetActiveDimensionsResponse getActiveDimensionsByScenarioIterationKeyEndpoint(List<String> paramsForUrl) {
+    public ActiveDimensionsResponse getActiveDimensionsByScenarioIterationKeyEndpoint(List<String> paramsForUrl) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.ACTIVE_DIMENSIONS, GetActiveDimensionsResponse.class)
+            .init(AcsApiEnum.ACTIVE_DIMENSIONS, ActiveDimensionsResponse.class)
             .headers(headers)
             .inlineVariables(
                 paramsForUrl.get(0),
@@ -692,7 +720,7 @@ public class AcsResources {
                 paramsForUrl.get(4)
             );
 
-        return (GetActiveDimensionsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (ActiveDimensionsResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -701,11 +729,11 @@ public class AcsResources {
      * @param paramsForUrl - list of values to input into url
      * @return GetActiveAxesByScenarioIterationKeyResponse instance
      */
-    public GetActiveAxesByScenarioIterationKeyResponse getActiveAxesByScenarioIterationKey(List<String> paramsForUrl) {
+    public ActiveAxesByScenarioIterationKeyResponse getActiveAxesByScenarioIterationKey(List<String> paramsForUrl) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.ACTIVE_AXES, GetActiveAxesByScenarioIterationKeyResponse.class)
+            .init(AcsApiEnum.ACTIVE_AXES, ActiveAxesByScenarioIterationKeyResponse.class)
             .headers(headers)
             .inlineVariables(
                 paramsForUrl.get(0),
@@ -715,7 +743,7 @@ public class AcsResources {
                 paramsForUrl.get(4)
             );
 
-        return (GetActiveAxesByScenarioIterationKeyResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (ActiveAxesByScenarioIterationKeyResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -723,18 +751,18 @@ public class AcsResources {
      *
      * @return Instance of GetArtifactTableInfoResponse
      */
-    public GetArtifactTableInfoResponse getArtifactTableInfo() {
+    public ArtifactTableInfoResponse getArtifactTableInfo() {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.ARTIFACT_TABLE_INFO, GetArtifactTableInfoResponse.class)
+            .init(AcsApiEnum.ARTIFACT_TABLE_INFO, ArtifactTableInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 "Sheet Metal",
                 "SimpleHole"
             );
 
-        return (GetArtifactTableInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (ArtifactTableInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -762,11 +790,11 @@ public class AcsResources {
      * @param scenarioIterationKey - ScenarioIterationKey instance
      * @return GetGcdMappingResponse instance
      */
-    public GetGcdMappingResponse getGcdMapping(ScenarioIterationKey scenarioIterationKey) {
+    public GcdMappingResponse getGcdMapping(ScenarioIterationKey scenarioIterationKey) {
         setupHeader();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.GCD_IMAGE_MAPPING, GetGcdMappingResponse.class)
+            .init(AcsApiEnum.GCD_IMAGE_MAPPING, GcdMappingResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -776,7 +804,7 @@ public class AcsResources {
                 scenarioIterationKey.getIteration().toString()
             );
 
-        return (GetGcdMappingResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (GcdMappingResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -786,14 +814,14 @@ public class AcsResources {
      * @param getGcdMappingResponse - GetGcdMappingResponse to use in body
      * @return GetArtifactPropertiesResponse instance
      */
-    public GetArtifactPropertiesResponse getArtifactProperties(ScenarioIterationKey scenarioIterationKey, GetGcdMappingResponse getGcdMappingResponse) {
+    public ArtifactPropertiesResponse getArtifactProperties(ScenarioIterationKey scenarioIterationKey, GcdMappingResponse getGcdMappingResponse) {
         setupHeader();
 
         String displayNameOne = getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(0).getKey().getDisplayName();
         String displayNameTwo = getGcdMappingResponse.getDrawableNodesByArtifactKeyEntries().get(1).getKey().getDisplayName();
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.ARTIFACT_PROPERTIES, GetArtifactPropertiesResponse.class)
+            .init(AcsApiEnum.ARTIFACT_PROPERTIES, ArtifactPropertiesResponse.class)
             .headers(headers)
             .customBody(
                 String.format(
@@ -810,7 +838,7 @@ public class AcsResources {
                 displayNameOne.split(":")[0]
             );
 
-        return (GetArtifactPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
+        return (ArtifactPropertiesResponse) HTTPRequest.build(requestEntity).post().getResponseEntity();
     }
 
     /**
