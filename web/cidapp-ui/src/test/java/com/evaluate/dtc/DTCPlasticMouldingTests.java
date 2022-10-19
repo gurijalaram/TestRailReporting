@@ -249,8 +249,8 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Structural Foam Mold is not feasible. Part Thickness is more than the maximum limit with this material.");
-        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 15 mm");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 15.00mm");
 
         guidanceIssuesPage.closePanel()
             .openMaterialSelectorTable()
@@ -264,8 +264,8 @@ public class DTCPlasticMouldingTests extends TestBase {
             .openDesignGuidance()
             .selectIssueTypeGcd("Material Issue", "Maximum Wall Thickness", "Component:1");
 
-        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Reaction Injection Mold is not feasible. Part Thickness is more than the maximum limit with this material.");
-        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 50.8 mm");
+        softAssertions.assertThat(guidanceIssuesPage.getIssueDescription()).contains("Maximum wall thickness is greater than the recommended thickness for this material.");
+        softAssertions.assertThat(guidanceIssuesPage.getGcdSuggested("Component:1")).contains("<= 50.80mm");
 
         softAssertions.assertAll();
     }

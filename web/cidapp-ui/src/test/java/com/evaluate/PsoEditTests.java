@@ -17,6 +17,7 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -33,6 +34,7 @@ public class PsoEditTests extends TestBase {
     private SoftAssertions softAssertions = new SoftAssertions();
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7286", "7287", "7288", "7289", "6634", "6635"})
     @Description("Plastic Moulding- Validate the user can edit the number of cavities")
     public void plasticMouldPSO() {
@@ -70,6 +72,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7269", "7297", "7289"})
     @Description("Die Casting edit PSO")
     public void dieCastPSO() {
@@ -140,6 +143,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7293"})
     @Description("Machining - Validate the user can edit bundle sawing count")
     public void machiningPSO() {
@@ -169,6 +173,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7299"})
     @Description("Powder Metal - Validate the user can edit the material allowance")
     public void powderMetalPSO() {
@@ -198,6 +203,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7300"})
     @Description("Sheet Plastic - Validate the user can edit the cooling time")
     public void sheetPlasticPSO() {
@@ -284,6 +290,7 @@ public class PsoEditTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"7275"})
     @Description("Validate PSO Cannot be a junk value")
     public void junkPSO() {
