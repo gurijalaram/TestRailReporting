@@ -6,7 +6,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 
 import com.apriori.apibase.services.cas.Customer;
-import com.apriori.apibase.services.cas.IdentityProviders;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
@@ -14,7 +13,8 @@ import com.apriori.cds.entity.response.IdentityProviderResponse;
 import com.apriori.cds.enums.CDSAPIEnum;
 import com.apriori.cds.utils.CdsTestUtil;
 import com.apriori.entity.response.CustomerUser;
-import com.apriori.entity.response.SingleIdp;
+import com.apriori.entity.response.IdentityProvider;
+import com.apriori.entity.response.IdentityProviders;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.authorization.AuthorizationUtil;
@@ -23,7 +23,6 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
 import org.junit.After;
 import org.junit.Before;
@@ -73,7 +72,6 @@ public class CasIdentityProvidersTests extends TestUtil {
     }
 
     @Test
-    @Issue("IDS-851")
     @TestRail(testCaseId = {"5646", "5647"})
     @Description("Get IDPs for customer and get IDP by identity")
     public void getIdpCustomer() {
@@ -88,13 +86,13 @@ public class CasIdentityProvidersTests extends TestUtil {
             .inlineVariables(customerIdentity + "/identity-providers")).get();
 
         assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getResponse().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
 
-        ResponseWrapper<SingleIdp> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, SingleIdp.class)
+        ResponseWrapper<IdentityProvider> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProvider.class)
             .token(token)
             .inlineVariables(customerIdentity + "/identity-providers/" + idpIdentity)).get();
 
         assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getResponse().getIdentity(), is(equalTo(idpIdentity)));
+        assertThat(responseIdentity.getResponseEntity().getIdentity(), is(equalTo(idpIdentity)));
     }
 }
