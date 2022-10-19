@@ -1,10 +1,11 @@
-package com.apriori.apibase.services.cas;
+package com.apriori.entity.response;
 
 import com.apriori.apibase.services.common.objects.IdentityProviderPlatform;
 import com.apriori.utils.http.enums.Schema;
 import com.apriori.utils.json.deserializers.DateTimeDeserializer_yyyyMMddTHHmmssSSSZ;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonRootName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "IdentityProviderSchema.json")
+@JsonRootName("response")
 @Data
 public class IdentityProvider {
     private String identity;
