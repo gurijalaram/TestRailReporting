@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.CategorySuiteRunner;
 
+import com.evaluate.ComponentRedirectTests;
 import com.evaluate.CostAllCadTests;
 import com.evaluate.GroupCostingTests;
 import com.evaluate.GroupEditTests;
@@ -31,7 +32,8 @@ import testsuites.suiteinterfaces.SmokeTests;
     IncludeAndExcludeTests.class,
     GroupCostingTests.class,
     GroupEditTests.class,
-    GroupPublishTests.class
+    GroupPublishTests.class,
+    ComponentRedirectTests.class
 })
 public class RegressionTestSuite {
 }

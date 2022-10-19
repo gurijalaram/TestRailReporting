@@ -12,20 +12,20 @@ import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfoComponent;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.workorders.allimages.AllImagesOutputs;
+import com.apriori.acs.entity.response.workorders.assemblyimages.AssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
-import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
-import com.apriori.acs.entity.response.workorders.getadmininfo.GetAdminInfoResponse;
-import com.apriori.acs.entity.response.workorders.getimageinfo.GetImageInfoResponse;
-import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadataResponse;
+import com.apriori.acs.entity.response.workorders.getadmininfo.AdminInfoResponse;
+import com.apriori.acs.entity.response.workorders.getimageinfo.ImageInfoResponse;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.CadMetadataResponse;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
+import com.apriori.acs.entity.response.workorders.partimages.PartImagesOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.acs.entity.response.workorders.simpleimagedata.SimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.upload.Assembly;
 import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
@@ -71,7 +71,7 @@ public class WorkorderAPITests extends TestUtil {
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataSuppressError(fileResponse);
 
-        GeneratePartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
+        PartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
                 fileResponse,
                 loadCadMetadataOutputs
         );
@@ -180,7 +180,7 @@ public class WorkorderAPITests extends TestUtil {
             true
         );
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
+        AssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
         images.add(generateAssemblyImagesOutputs.getDesktopImageIdentity());
@@ -214,7 +214,7 @@ public class WorkorderAPITests extends TestUtil {
         );
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
-        GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
+        AdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
         assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
@@ -238,7 +238,7 @@ public class WorkorderAPITests extends TestUtil {
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataExposeError(fileResponse);
 
-        GetCadMetadataResponse getCadMetadataResponse = fileUploadResources
+        CadMetadataResponse getCadMetadataResponse = fileUploadResources
                 .getCadMetadata(loadCadMetadataOutputs.getCadMetadataIdentity());
 
         assertThat(getCadMetadataResponse.getFileMetadataIdentity(), is(equalTo(fileResponse.getIdentity())));
@@ -265,9 +265,9 @@ public class WorkorderAPITests extends TestUtil {
             true
         );
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
+        AssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
-        GetCadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
+        CadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
                 generateAssemblyImagesOutputs.getCadMetadataIdentity());
 
         assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(39)));
@@ -301,7 +301,7 @@ public class WorkorderAPITests extends TestUtil {
             false
         );
 
-        GetImageInfoResponse getImageInfoResponse = fileUploadResources
+        ImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
         SoftAssertions softAssert = new SoftAssertions();
@@ -340,7 +340,7 @@ public class WorkorderAPITests extends TestUtil {
                 false
         );
 
-        GetImageInfoResponse getImageInfoResponse = fileUploadResources
+        ImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
         SoftAssertions softAssert = new SoftAssertions();
@@ -412,7 +412,7 @@ public class WorkorderAPITests extends TestUtil {
             false
         );
 
-        GenerateAllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
+        AllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
 
         assertThat(Base64.isBase64(
             acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), true)),
@@ -434,7 +434,7 @@ public class WorkorderAPITests extends TestUtil {
             false
         );
 
-        GenerateSimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
+        SimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
             .createGenerateSimpleImageDataWorkorderSuppressError(fileUploadOutputs);
 
         assertThat(Base64.isBase64(
@@ -631,7 +631,7 @@ public class WorkorderAPITests extends TestUtil {
      * @param assemblyFileResponse - FileResponse instance
      * @return GenerateAssemblyImagesOutputs instance
      */
-    private GenerateAssemblyImagesOutputs loadCadMetadataAndGenerateAssemblyImages(FileResponse assemblyFileResponse) {
+    private AssemblyImagesOutputs loadCadMetadataAndGenerateAssemblyImages(FileResponse assemblyFileResponse) {
         LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadataSuppressError(assemblyFileResponse);
         return fileUploadResources.generateAssemblyImages(
             assemblyFileResponse,
@@ -641,7 +641,7 @@ public class WorkorderAPITests extends TestUtil {
     }
 
     private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
-        GetImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
+        ImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
 
         assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
         assertThat(imageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));
