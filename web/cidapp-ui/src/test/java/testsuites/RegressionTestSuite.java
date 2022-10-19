@@ -10,6 +10,7 @@ import com.evaluate.DeleteTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.OpenUnknownComponentsTests;
 import com.evaluate.ProcessGroupsTests;
+import com.evaluate.ProcessRoutingTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
@@ -99,7 +100,8 @@ import testsuites.suiteinterface.SmokeTests;
     GroupEditTests.class,
     GroupDeleteTests.class,
     GroupCostTests.class,
-    OpenUnknownComponentsTests.class
+    OpenUnknownComponentsTests.class,
+    ProcessRoutingTests.class
 })
 public class RegressionTestSuite {
 }
