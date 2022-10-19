@@ -233,7 +233,7 @@ public class AcsResources {
     /**
      * Gets Unit Variant Settings
      *
-     * @return GetUnitVariantSettingsResponse instance
+     * @return UnitVariantSettingsResponse instance
      */
     public UnitVariantSettingsResponse getUnitVariantSettings() {
         setupHeader();
@@ -248,7 +248,7 @@ public class AcsResources {
     /**
      * Gets Custom Unit Variant Settings
      *
-     * @return GetUnitVariantSettingsResponse instance
+     * @return UnitVariantSettingsResponse instance
      */
     public UnitVariantSetting getCustomUnitVariantSettings() {
         setupHeader();
