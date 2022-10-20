@@ -2,7 +2,7 @@ package com.cic.tests;
 
 import com.apriori.enums.ReportsEnum;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
@@ -44,7 +44,7 @@ public class NotificationTests extends TestBase {
     @TestRail(testCaseId = {"3951", "4875"})
     @Description("Test email Tab on the Add New Workflow Dialog")
     public void testNotificationsEmailTab() {
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -74,7 +74,7 @@ public class NotificationTests extends TestBase {
     @Description("Test Reports tab in Notification Step during new workflow creation")
     public void testNotificationsReportsTab() {
         SoftAssertions softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -108,7 +108,7 @@ public class NotificationTests extends TestBase {
     @Description("Verify Filter Application checkboxes are disabled until appropriate template(s) selected")
     public void testNotificationsFilterTab() {
         SoftAssertions softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -171,7 +171,7 @@ public class NotificationTests extends TestBase {
             "aPriori Part Number",
             "DFM Risk Score"});
         SoftAssertions softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)

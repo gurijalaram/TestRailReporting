@@ -9,6 +9,7 @@ import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
+import com.evaluate.ProcessRoutingTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
@@ -81,7 +82,8 @@ import testsuites.suiteinterface.SmokeTests;
     PublishAssembliesTests.class,
     GroupEditAssemblies.class,
     FilterCriteriaTests.class,
-    GroupDeleteTests.class
+    GroupDeleteTests.class,
+    ProcessRoutingTests.class
 })
 public class CIDSmokeTestSuite {
 }

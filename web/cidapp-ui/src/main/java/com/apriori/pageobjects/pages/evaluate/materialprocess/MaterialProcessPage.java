@@ -93,7 +93,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
     @FindBy(css = "[value='colorantAdded']")
     private WebElement addColorantButton;
 
-    @FindBy(xpath = "//h6[contains(.,'Number of cavities  (Piece Part & Tooling Cost Driver)']/..//input[@value='optimize']")
+    @FindBy(xpath = "//h6[starts-with(., 'Number of cavities  (Piece Part & Tooling Cost Driver)')]/..//input[@value='optimize']")
     private WebElement cavitiesOptimizeMinCost;
 
     private WebDriver driver;
@@ -386,7 +386,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @param value - the value
      * @return current page object
      */
-    public MaterialProcessPage selectDefinedValue(String value) {
+    public MaterialProcessPage selectNumberOfCavitiesDropdown(String value) {
         pageUtils.waitForElementAndClick(psoController.buildLocator("Number of cavities  (Piece Part & Tooling Cost Driver)", "user"));
         pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("User defined value"), "User defined value", value);
         return this;
@@ -447,7 +447,7 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @param value - the value
      * @return current page object
      */
-    public MaterialProcessPage inputOverrideNominal(String value) {
+    public MaterialProcessPage overrideWallThickness(String value) {
         psoController.inputOverrideValue(psoController.buildLocator("Nominal Wall Thickness  (Piece Part Cost Driver)", "userOverride"),
             psoController.inputLocator("Nominal Wall Thickness  (Piece Part Cost Driver)"), value);
         return this;
@@ -460,8 +460,8 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      * @return current page object
      */
     public MaterialProcessPage inputMaterialRegrind(String value) {
-        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance   (Piece Part Cost Driver)", "userDefinedMode"),
-            psoController.inputLocator("Material Regrind Allowance   (Piece Part Cost Driver)"), value);
+        psoController.inputOverrideValue(psoController.buildLocator("Material Regrind Allowance (Piece Part Cost Driver)", "userDefinedMode"),
+            psoController.inputLocator("Material Regrind Allowance (Piece Part Cost Driver)"), value);
         return this;
     }
 
@@ -587,5 +587,57 @@ public class MaterialProcessPage extends LoadableComponent<MaterialProcessPage> 
      */
     public HelpDocPage openHelp() {
         return panelController.openHelp();
+    }
+
+    /**
+     * Get Part tolerance
+     *
+     * @return string
+     */
+    public String getPartOrientation() {
+        return psoController.dropdownLocator("Orientation").getAttribute("textContent");
+    }
+
+    /**
+     * Select tolerance
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selectPartOrientation(String value) {
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Orientation"), "Orientation", value);
+        return this;
+    }
+
+    /**
+     * Get Part tolerance
+     *
+     * @return string
+     */
+    public String getGrainDirection() {
+        return psoController.dropdownLocator("Direction").getAttribute("textContent");
+    }
+
+    /**
+     * Select tolerance
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage selecGrainDirection(String value) {
+        pageUtils.optionsTypeAheadSelect(psoController.dropdownLocator("Direction"), "Direction", value);
+        return this;
+    }
+
+    /**
+     * Input Minimum Recommended Hole Diameter count
+     *
+     * @param value - the value
+     * @return current page object
+     */
+    public MaterialProcessPage inputMinimumRecommendedHoleDiameter(String value) {
+        psoController.inputOverrideValue(psoController.buildLocator("Minimum Recommended Hole Diameter", "userOverride"),
+            psoController.inputLocator("Minimum Recommended Hole Diameter"), value);
+        return this;
     }
 }
