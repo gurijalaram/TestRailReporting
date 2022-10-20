@@ -81,7 +81,7 @@ public class ScenariosInfoTests extends TestUtil {
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(HttpStatus.SC_BAD_REQUEST).isEqualTo(400);
+        softAssertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
         softAssertions.assertThat(response.getBody().contains("The request should not be null")).isEqualTo(true);
         softAssertions.assertAll();
     }
