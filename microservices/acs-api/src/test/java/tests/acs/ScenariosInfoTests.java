@@ -59,8 +59,8 @@ public class ScenariosInfoTests extends TestUtil {
         ScenarioIterationKey keyOne = fileUploadOutputsArrayList.get(0).getScenarioIterationKey();
         ScenarioIterationKey keyTwo = fileUploadOutputsArrayList.get(1).getScenarioIterationKey();
 
-        keyOne.setIteration(30);
-        keyTwo.setIteration(40);
+        keyOne.setIteration(3000000);
+        keyTwo.setIteration(4000000);
 
         AcsResources acsResources = new AcsResources();
 
@@ -69,7 +69,10 @@ public class ScenariosInfoTests extends TestUtil {
                 keyTwo
         );
 
-        assertThat(response.getResponseEntity().isEmpty(), is(equalTo(true)));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getResponseEntity().isEmpty()).isEqualTo(true);
+        softAssertions.assertAll();
+
     }
 
     @Test
