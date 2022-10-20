@@ -1,9 +1,5 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoItem;
 import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
@@ -83,8 +79,10 @@ public class ScenariosInfoTests extends TestUtil {
 
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
 
-        assertThat(response.getStatusCode(), is(equalTo(400)));
-        assertThat(response.getBody().contains("The request should not be null"), is(equalTo(true)));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getStatusCode()).isEqualTo(400);
+        softAssertions.assertThat(response.getBody().contains("The request should not be null")).isEqualTo(true);
+        softAssertions.assertAll();
     }
 
     /**
