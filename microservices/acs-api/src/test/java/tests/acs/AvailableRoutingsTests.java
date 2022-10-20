@@ -152,4 +152,51 @@ public class AvailableRoutingsTests {
         softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
         softAssertions.assertAll();
     }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14824")
+    @Description("Get available routings after Cost for Bar & Tube Fab scenario")
+    public void testGetAvailableRoutingsBarandTube() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "B&T-LOW-001.SLDPRT",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
 }
