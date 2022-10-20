@@ -14,6 +14,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -80,7 +81,7 @@ public class ScenariosInfoTests extends TestUtil {
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
 
         SoftAssertions softAssertions = new SoftAssertions();
-        softAssertions.assertThat(response.getStatusCode()).isEqualTo(400);
+        softAssertions.assertThat(HttpStatus.SC_BAD_REQUEST).isEqualTo(400);
         softAssertions.assertThat(response.getBody().contains("The request should not be null")).isEqualTo(true);
         softAssertions.assertAll();
     }
