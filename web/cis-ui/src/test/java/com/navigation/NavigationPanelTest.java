@@ -1,6 +1,5 @@
 package com.navigation;
 
-import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -33,31 +32,32 @@ public class NavigationPanelTest extends TestBase {
     private ZendeskSignInPage zendeskSignInPage;
 
     @Test
-    @TestRail(testCaseId = {"11992","12014","12007"})
+    @TestRail(testCaseId = {"11992", "12014", "12007"})
     @Description("Verify the navigation bar default state and Header text on the home page")
     public void testNavigationBarDefaultStateAndWelcomeText() {
         loginPage = new CisLoginPage(driver);
         leftHandNavigationBar = loginPage.cisLogin(UserUtil.getUser());
 
-        assertThat(leftHandNavigationBar.getNavigationPanelDefaultState(), is(equalTo("non-collapsed")));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(leftHandNavigationBar.getNavigationPanelDefaultState()).isEqualTo("non-collapsed");
 
         cisHeaderBar = new CisHeaderBar(driver);
 
-        assertThat(cisHeaderBar.getHeaderText(), is(equalTo("All Messages")));
+        softAssertions.assertThat(cisHeaderBar.getHeaderText()).isEqualTo("All Messages");
 
     }
 
     @Test
-    @TestRail(testCaseId = {"13194","13051","12013"})
+    @TestRail(testCaseId = {"13194", "13051", "12013"})
     @Description("Verify that user can logout from the CIS application")
     public void testUserCanLogOutFromTheCISApplication() {
         loginPage = new CisLoginPage(driver);
         myUserPage = loginPage.cisLogin(UserUtil.getUser())
-                        .clickUserIcon();
+            .clickUserIcon();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(myUserPage.getLoggedUsername().contains("QA"));
+        softAssertions.assertThat(myUserPage.getLoggedUsername()).contains("QA");
         softAssertions.assertThat(myUserPage.isSettingsOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(myUserPage.isTermsOfUseOptionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(myUserPage.isSupportOptionDisplayed()).isEqualTo(true);
@@ -76,10 +76,10 @@ public class NavigationPanelTest extends TestBase {
     public void testUserCanAccessTheTermsOfUsePage() {
         loginPage = new CisLoginPage(driver);
         myUserPage = loginPage.cisLogin(UserUtil.getUser())
-                .clickUserIcon();
+            .clickUserIcon();
 
         termsOfUsePage = new MyUserPage(driver)
-                .clickTermsOfUse();
+            .clickTermsOfUse();
 
         SoftAssertions softAssertions = new SoftAssertions();
 
@@ -90,7 +90,7 @@ public class NavigationPanelTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11997","11999","12000","12003","12008"})
+    @TestRail(testCaseId = {"11997", "11999", "12000", "12003", "12008"})
     @Description("Verify that user can view the left navigation bar items and aPriori logo")
     public void testNavBarItems() {
         loginPage = new CisLoginPage(driver);
@@ -115,9 +115,9 @@ public class NavigationPanelTest extends TestBase {
     public void testUserCanAccessTheSupportPage() {
         loginPage = new CisLoginPage(driver);
         zendeskSignInPage = loginPage.cisLogin(UserUtil.getUser())
-                .clickUserIcon()
-                .clickSupport()
-                .switchTab();
+            .clickUserIcon()
+            .clickSupport()
+            .switchTab();
 
         assertThat(zendeskSignInPage.isSupportLogoDisplayed(), is(true));
     }
