@@ -1,6 +1,4 @@
 {
-  "$schema": "http://json-schema.org/draft-07/schema",
-  "$id": "http://example.com/example.json",
   "type": "object",
   "required": [
     "response"
@@ -9,193 +7,142 @@
     "response": {
       "type": "object",
       "required": [
-        "isFirstPage",
-        "isLastPage",
-        "pageNumber",
-        "pageSize",
-        "pageItemCount",
-        "totalItemCount",
-        "totalPageCount",
-        "hasNextPage",
-        "hasPreviousPage",
-        "items"
+        "identity",
+        "createdAt",
+        "createdBy",
+        "active",
+        "name",
+        "identityProviderPlatform",
+        "displayName",
+        "description",
+        "idpDomains",
+        "signInUrl",
+        "signingCertificate",
+        "signingCertificateExpiresAt",
+        "signRequest",
+        "attributeMappings",
+        "createdByName",
+        "signRequestAlgorithm",
+        "signRequestAlgorithmDigest",
+        "protocolBinding"
       ],
       "properties": {
-        "isFirstPage": {
+        "identity": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "active": {
           "type": "boolean"
         },
-        "isLastPage": {
-          "type": "boolean"
+        "name": {
+          "type": "string"
         },
-        "pageNumber": {
-          "type": "integer"
+        "identityProviderPlatform": {
+          "type": "object",
+          "required": [
+            "identity",
+            "createdAt",
+            "createdBy",
+            "description",
+            "name",
+            "vendor",
+            "identityProviderProtocol"
+          ],
+          "properties": {
+            "identity": {
+              "type": "string"
+            },
+            "createdAt": {
+              "type": "string"
+            },
+            "createdBy": {
+              "type": "string"
+            },
+            "description": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "vendor": {
+              "type": "string"
+            },
+            "identityProviderProtocol": {
+              "type": "string"
+            }
+          }
         },
-        "pageSize": {
-          "type": "integer"
+        "displayName": {
+          "type": "string"
         },
-        "pageItemCount": {
-          "type": "integer"
+        "description": {
+          "type": "string"
         },
-        "totalItemCount": {
-          "type": "integer"
-        },
-        "totalPageCount": {
-          "type": "integer"
-        },
-        "hasNextPage": {
-          "type": "boolean"
-        },
-        "hasPreviousPage": {
-          "type": "boolean"
-        },
-        "items": {
+        "idpDomains": {
           "type": "array",
           "items": {
             "anyOf": [
               {
-                "type": "object",
-                "required": [
-                  "identity",
-                  "createdAt",
-                  "createdBy",
-                  "active",
-                  "name",
-                  "identityProviderPlatform",
-                  "displayName",
-                  "description",
-                  "idpDomains",
-                  "signInUrl",
-                  "signingCertificate",
-                  "signingCertificateExpiresAt",
-                  "signRequest",
-                  "attributeMappings",
-                  "createdByName",
-                  "protocolBinding",
-                  "signRequestAlgorithm",
-                  "signRequestAlgorithmDigest"
-                ],
-                "properties": {
-                  "identity": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "active": {
-                    "type": "boolean"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "identityProviderPlatform": {
-                    "type": "object",
-                    "required": [
-                      "identity",
-                      "createdAt",
-                      "createdBy",
-                      "description",
-                      "name",
-                      "vendor",
-                      "identityProviderProtocol"
-                    ],
-                    "properties": {
-                      "identity": {
-                        "type": "string"
-                      },
-                      "createdAt": {
-                        "type": "string"
-                      },
-                      "createdBy": {
-                        "type": "string"
-                      },
-                      "description": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "vendor": {
-                        "type": "string"
-                      },
-                      "identityProviderProtocol": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "displayName": {
-                    "type": "string"
-                  },
-                  "description": {
-                    "type": "string"
-                  },
-                  "idpDomains": {
-                    "type": "array",
-                    "items": {
-                      "anyOf": [
-                        {
-                          "type": "string"
-                        }
-                      ]
-                    }
-                  },
-                  "signInUrl": {
-                    "type": "string"
-                  },
-                  "signingCertificate": {
-                    "type": "string"
-                  },
-                  "signingCertificateExpiresAt": {
-                    "type": "string"
-                  },
-                  "signRequest": {
-                    "type": "boolean"
-                  },
-                  "attributeMappings": {
-                    "type": "object",
-                    "required": [
-                      "user_id",
-                      "name",
-                      "given_name",
-                      "family_name",
-                      "email"
-                    ],
-                    "properties": {
-                      "user_id": {
-                        "type": "string"
-                      },
-                      "name": {
-                        "type": "string"
-                      },
-                      "given_name": {
-                        "type": "string"
-                      },
-                      "family_name": {
-                        "type": "string"
-                      },
-                      "email": {
-                        "type": "string"
-                      }
-                    }
-                  },
-                  "createdByName": {
-                    "type": "string"
-                  },
-                  "protocolBinding": {
-                    "type": "string"
-                  },
-                  "signRequestAlgorithm": {
-                    "type": "string"
-                  },
-                  "signRequestAlgorithmDigest": {
-                    "type": "string"
-                  }
-                }
+                "type": "string"
               }
             ]
           }
+        },
+        "signInUrl": {
+          "type": "string"
+        },
+        "signingCertificate": {
+          "type": "string"
+        },
+        "signingCertificateExpiresAt": {
+          "type": "string"
+        },
+        "signRequest": {
+          "type": "boolean"
+        },
+        "attributeMappings": {
+          "type": "object",
+          "required": [
+            "givenName",
+            "familyName",
+            "name",
+            "userId",
+            "email"
+          ],
+          "properties": {
+            "givenNama": {
+              "type": "string"
+            },
+            "familyName": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "userId": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string"
+            }
+          }
+        },
+        "createdByName": {
+          "type": "string"
+        },
+        "protocolBinding": {
+          "type": "string"
+        },
+        "signRequestAlgorithm": {
+          "type": "string"
+        },
+        "signRequestAlgorithmDigest": {
+          "type": "string"
         }
       }
     }

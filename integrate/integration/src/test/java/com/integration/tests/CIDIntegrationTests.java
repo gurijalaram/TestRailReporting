@@ -33,6 +33,7 @@ import com.apriori.utils.web.driver.TestBase;
 import com.utils.ColumnsEnum;
 import com.utils.SortOrderEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.hamcrest.CoreMatchers;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -155,8 +156,9 @@ public class CIDIntegrationTests extends TestBase {
     }
 
     @Test
+    @Issue("DEVTOOLS-145")
     @TestRail(testCaseId = {"12046"})
-    @Description("Create and verify component cost OOTB report")
+    @Description("Create and verify component cost OOTB report ")
     public void testCreateComponentCostOOTBReport() {
         componentCostReportPage = new ReportsLoginPage(driver)
             .login()

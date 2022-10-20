@@ -170,4 +170,38 @@ public class IgnoredTests extends TestBase {
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
     }
+
+    /*    @Category({CustomerSmokeTests.class, SmokeTests.class})
+    @Ignore("Properties Dialogue not yet available")
+    @Test
+    @TestRail(testCaseId = {"1261"})
+    @Description("Ensure that the Geometry tab section is expandable table of GCDs to third hierarchical level with total at GCD type level")
+    public void geometryTest() {
+
+        final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
+
+        resourceFile = FileResourceUtil.getCloudFile(processGroupEnum, "DTCCastingIssues.catpart");
+        loginPage = new CidAppLoginPage(driver);
+        currentUser = UserUtil.getUser();
+
+        toleranceSettingsPage = loginPage.login(currentUser)
+            .openSettings()
+            .goToToleranceTab()
+            .selectCad();
+
+        settingsPage = new SettingsPage(driver);
+        geometryPage = settingsPage.save(ExplorePage.class)
+            .uploadFileAndOk(new GenerateStringUtil().generateScenarioName(), resourceFile, EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum)
+            .costScenario(3)
+            .openDesignGuidance()
+            .openGeometryTab()
+            .selectGCDAndGCDProperty("Surfaces", "Planar Faces", "PlanarFace:1");
+
+        evaluatePage = new EvaluatePage(driver);
+        propertiesDialogPage = evaluatePage.selectAnalysis()
+            .selectProperties()
+            .expandDropdown("Properties");
+        assertThat(propertiesDialogPage.getProperties("Finished Area (mm2)"), containsString("85.62"));
+    }*/
 }

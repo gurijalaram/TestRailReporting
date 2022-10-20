@@ -3,9 +3,11 @@ package com.apriori.pageobjects.pages.explore;
 import static org.junit.Assert.assertTrue;
 
 import com.apriori.pageobjects.common.ModalDialogController;
+import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.utils.PageUtils;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -56,6 +58,14 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
     }
 
     /**
+     * Open the successes tab once import concluded
+     *
+     */
+    public void openSuccessesTab() {
+        pageUtils.waitForElementAndClick(successesTab);
+    }
+
+    /**
      * Close the import modal dialog
      *
      * @return new page object
@@ -81,5 +91,19 @@ public class CadFileStatusPage extends LoadableComponent<CadFileStatusPage> {
      */
     public <T> T closeDialog(Class<T> klass) {
         return modalDialogController.closeDialog(klass);
+    }
+
+    /**
+     * Open specified file from Successes tab
+     *
+     * @param componentName - The componentName of the item to open
+     *
+     * @return - Evaluate Page Object
+     */
+    public EvaluatePage openComponent(String componentName) {
+        openSuccessesTab();
+        WebElement fileLink = driver.findElement(By.xpath("//a[contains(text(),'" + componentName + "')]"));
+        pageUtils.waitForElementAndClick(fileLink);
+        return new EvaluatePage(driver);
     }
 }

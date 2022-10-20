@@ -14,6 +14,7 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
+import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,6 +24,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -54,6 +56,9 @@ public class ExplorePage extends ExploreToolbar {
 
     @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
     private WebElement filterInput;
+
+    @FindBy(css = "[id='qa-scenario-explorer-filter-selector']")
+    private WebElement currentFilter;
 
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
@@ -96,12 +101,33 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Get Currently selected Filter
+     *
+     * @return The current filter name as a String
+     */
+    public String getCurrentFilter() {
+        return currentFilter.getText();
+    }
+
+    /**
      * Gets the count of scenarios found
      *
      * @return string
      */
     public String getComponentsFound() {
         return pageUtils.waitForElementToAppear(scenarioCount).getText();
+    }
+
+    /**
+     * Get the Created At value for a given scenario
+     *
+     * @param componentName - Name of the component
+     * @param scenarioName - Name of the scenario
+     *
+     * @return LocalDateTime representation of Created At value
+     */
+    public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
+        return scenarioTableController.getCreatedAt(componentName, scenarioName);
     }
 
     /**
@@ -143,6 +169,15 @@ public class ExplorePage extends ExploreToolbar {
     public EvaluatePage openFirstScenario() {
         scenarioTableController.openFirstScenario();
         return new EvaluatePage(driver);
+    }
+
+    /**
+     * Get Component and Scenario names of first scenario in table
+     *
+     * @return The component and scenario names in a comma-separated String
+     */
+    public String getFirstScenarioDetails() {
+        return scenarioTableController.getFirstScenarioDetails();
     }
 
     /**
@@ -246,6 +281,17 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the data-icon value for the State icon
+     *
+     * @param componentName - name of the part
+     * @param scenarioName  - scenario name
+     * @return String representation of state icon
+     */
+    public String getScenarioState(String componentName, String scenarioName) {
+        return scenarioTableController.getScenarioState(componentName, scenarioName);
+    }
+
+    /**
      * Open filters page
      *
      * @return new page object
@@ -291,6 +337,18 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the Published state of a given scenario
+     *
+     * @param componentName - The component name to be checked
+     * @param scenarioName - The scenario name to be checked
+     *
+     * @return String representation of published column
+     */
+    public String getPublishedState(String componentName, String scenarioName) {
+        return scenarioTableController.getPublishedState(componentName, scenarioName);
+    }
+
+    /**
      * Sets pagination to by default
      *
      * @return current page object
@@ -331,6 +389,7 @@ public class ExplorePage extends ExploreToolbar {
      */
     public ExplorePage sortColumn(ColumnsEnum column, SortOrderEnum order) {
         scenarioTableController.sortColumn(column, order);
+        pageUtils.waitForElementToAppear(scenarioCount);
         return this;
     }
 
@@ -421,5 +480,16 @@ public class ExplorePage extends ExploreToolbar {
      */
     public String getCellColour(String componentName, String scenarioName) {
         return scenarioTableController.getCellColour(componentName, scenarioName);
+    }
+
+    /**
+     * Check if table column already displayed and add if not
+     *
+     * @param columnToAdd - Name of column to be added
+     * @return - The current page object
+     */
+    public ExplorePage addColumn(ColumnsEnum columnToAdd) {
+        scenarioTableController.addColumn(columnToAdd);
+        return this;
     }
 }

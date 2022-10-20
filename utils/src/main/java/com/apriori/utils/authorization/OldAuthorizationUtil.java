@@ -42,14 +42,11 @@ public class OldAuthorizationUtil {
         Map<String, String> requestData2 = new HashMap<>();
         requestData2.put("grant_type", "password");
         requestData2.put("username", user.getEmail());
-        // TODO: 27/09/2022 cn - removed this substring, i don't see why its needed
-        //requestData2.put("password", user.getEmail().substring(0, 16));
         requestData2.put("password", user.getUsername());
         requestData2.put("client_id", "apriori-web-cost");
         requestData2.put("client_secret", "donotusethiskey");
         requestData2.put("scope", "tenantGroup=default tenant=apriori-staging");
         requestData.add(requestData2);
-
 
         RequestEntity requestEntity = RequestEntityUtil.init(OldTokenEnum.POST_TOKEN, OldTokenRequest.class)
             .headers(headers)

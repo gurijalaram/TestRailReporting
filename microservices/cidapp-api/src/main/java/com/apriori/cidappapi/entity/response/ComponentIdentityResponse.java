@@ -11,12 +11,14 @@ import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Schema(location = "ComponentsIdentitySchema.json")
 @AllArgsConstructor
+@NoArgsConstructor
 @Builder
 @Data
 @JsonRootName("response")
@@ -29,8 +31,12 @@ public class ComponentIdentityResponse {
     @JsonSerialize(using = ToStringSerializer.class)
     @JsonDeserialize(using = DateTimeDeserializer_yyyyMMddTHHmmssSSSZ.class)
     private LocalDateTime updatedAt;
+    private String updatedBy;
     private String createdByName;
+    private String updatedByName;
     private String customerIdentity;
     private String componentName;
     private String componentType;
+    private String configurationName;
+    private String filename;
 }

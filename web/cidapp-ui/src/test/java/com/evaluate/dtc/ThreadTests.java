@@ -18,6 +18,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import com.utils.LengthEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;

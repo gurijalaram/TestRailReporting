@@ -13,7 +13,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 @Slf4j
 public class ScenarioPage extends LoadableComponent<ScenarioPage> {
 
-    @FindBy(css = "[role='dialog'] h1")
+    @FindBy(css = "[role='dialog'] .dialog-title")
     private WebElement dialogTitle;
 
     @FindBy(xpath = "//label[contains(text(),'Create')]/following-sibling::div[contains(@class,'apriori-select form-control')]")

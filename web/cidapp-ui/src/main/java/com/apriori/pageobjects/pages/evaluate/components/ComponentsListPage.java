@@ -291,8 +291,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return current page object
      */
     public ComponentsListPage clickScenarioCheckbox(String componentName) {
-        By scenario = By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']/child::div//div[@class='checkbox-icon']",
-            componentName.toUpperCase().trim()));
+        By scenario = getXpath(componentName);
         pageUtils.waitForElementToAppear(scenario);
         pageUtils.scrollWithJavaScript(driver.findElement(scenario), true);
         pageUtils.waitForElementAndClick(scenario);
@@ -317,10 +316,14 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - current page object
      */
     public ComponentsListPage selectSubAssemblySubComponent(String componentName, String subAssemblyName) {
-        By scenario = with(By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//span[@data-testid='checkbox']", componentName.trim())))
+        By scenario = with(getXpath(componentName))
             .below(By.xpath(String.format("//span[text()='%s']", subAssemblyName.toUpperCase().trim())));
         pageUtils.waitForElementAndClick(scenario);
         return this;
+    }
+
+    private By getXpath(String componentName) {
+        return By.xpath(String.format("//span[contains(text(),'%s')]/ancestor::div[@role='row']//span[@data-testid='checkbox']", componentName.toUpperCase().trim()));
     }
 
     /**
@@ -548,7 +551,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
     /**
      * Checks scenario manifest is in a complete state
      *
-     * @param componentInfo - the component info
+     * @param componentInfo     - the component info
      * @param subcomponentNames - the subcomponent names
      * @return current page object
      */
@@ -772,7 +775,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      */
     public List<String> getAllScenarioComponentName(int size) {
         List<WebElement> rows =
-            pageUtils.waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"),size);
+            pageUtils.waitForSpecificElementsNumberToAppear(By.xpath("//div[contains(@class,'table-cell')][contains(@data-header-id,'componentDisplayName')]"), size);
         List<String> componentNames = rows.stream().map(s -> s.getText()).collect(Collectors.toList());
         componentNames.remove("Component Name");
         return componentNames;

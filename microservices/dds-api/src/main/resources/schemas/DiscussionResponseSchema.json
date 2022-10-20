@@ -1,0 +1,76 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "type": "object",
+  "properties": {
+    "response": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "type": "string"
+        },
+        "createdBy": {
+          "type": "string"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string"
+        },
+        "comments": {
+          "type": "array",
+          "items": {}
+        },
+        "participants": {
+          "type": "array",
+          "items": [
+            {
+              "type": "object",
+              "properties": {
+                "identity": {
+                  "type": "string"
+                },
+                "createdBy": {
+                  "type": "string"
+                },
+                "createdAt": {
+                  "type": "string"
+                },
+                "userCustomerIdentity": {
+                  "type": "string"
+                },
+                "userIdentity": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "identity",
+                "createdBy",
+                "createdAt",
+                "userCustomerIdentity",
+                "userIdentity"
+              ]
+            }
+          ]
+        }
+      },
+      "required": [
+        "identity",
+        "createdBy",
+        "createdAt",
+        "status",
+        "comments",
+        "participants"
+      ]
+    }
+  },
+  "required": [
+    "response"
+  ],
+  "optional": [
+    "description"
+  ]
+}

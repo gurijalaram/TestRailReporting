@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class PropertyValueMap {
     private String artifactTypeName;
+    private Double minWallThickness;
     private Integer minGcdVersion;
     private Double surfaceArea;
     private Double nonSolidSurfaceArea;
@@ -22,10 +23,12 @@ public class PropertyValueMap {
     private String weight;
     private String cadVersion;
     private Double numSurfaces;
+    private String descriptor;
     private String cadConfiguration;
     private String fileBaseName;
     private Double numInsertCores;
     private Double height;
+    private Double minHoleDiameter;
     private Double blankBoxWidth;
     private Double length;
     private Integer childArtifactCount;
@@ -44,6 +47,7 @@ public class PropertyValueMap {
     private Double maxThickness;
     private Double numSideCores;
     private Double averageThicknessDev;
+    private Double minRingWidth;
     private Double min80Thickness;
     private Double minStockLength;
     private String cadMaterialName;

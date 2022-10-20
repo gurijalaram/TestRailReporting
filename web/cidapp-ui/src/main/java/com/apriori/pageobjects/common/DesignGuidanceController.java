@@ -55,7 +55,11 @@ public class DesignGuidanceController {
      */
     public String getColumnIcon(String issue, int column) {
         List<WebElement> cells = driver.findElements(By.xpath(String.format("//div[normalize-space()='%s']/..//div[@class]//*[local-name()='svg']", issue.trim())));
-        return pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(cells.get(column - 1)), true).getAttribute("data-icon");
+        String checkBoxState =  pageUtils.scrollWithJavaScript(pageUtils.waitForElementToAppear(cells.get(column - 1)), true).getAttribute("data-testid");
+        if (checkBoxState == "CheckBoxIcon") {
+            return "check";
+        }
+        return "uncheck";
     }
 
     /**
