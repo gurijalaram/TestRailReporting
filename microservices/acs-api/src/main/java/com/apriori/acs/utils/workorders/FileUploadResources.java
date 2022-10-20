@@ -16,21 +16,17 @@ import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionI
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoScenarioKey;
 import com.apriori.acs.entity.request.workorders.cost.productioninfo.ProductionInfoVpe;
 import com.apriori.acs.entity.request.workorders.publish.createpublishworkorder.PublishInputs;
+import com.apriori.acs.entity.response.workorders.allimages.AllImagesInputs;
+import com.apriori.acs.entity.response.workorders.allimages.AllImagesOutputs;
+import com.apriori.acs.entity.response.workorders.assemblyimages.AssemblyImagesInputs;
+import com.apriori.acs.entity.response.workorders.assemblyimages.AssemblyImagesOutputs;
+import com.apriori.acs.entity.response.workorders.assemblyimages.AssemblyImagesSubComponent;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.cost.iterations.CostIteration;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioInputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioInputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
-import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesInputs;
-import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesInputs;
-import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesSubComponent;
-import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesInputs;
-import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataInputs;
-import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.CreateWorkorderResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
@@ -38,19 +34,23 @@ import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderComman
 import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderCommands;
 import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderDetailsResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.WorkorderRequest;
-import com.apriori.acs.entity.response.workorders.getadmininfo.GetAdminInfoResponse;
-import com.apriori.acs.entity.response.workorders.getimageinfo.GetImageInfoResponse;
-import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadataResponse;
+import com.apriori.acs.entity.response.workorders.getadmininfo.AdminInfoResponse;
+import com.apriori.acs.entity.response.workorders.getimageinfo.ImageInfoResponse;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.CadMetadataResponse;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataInputs;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
+import com.apriori.acs.entity.response.workorders.partimages.PartImagesInputs;
+import com.apriori.acs.entity.response.workorders.partimages.PartImagesOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.acs.entity.response.workorders.simpleimagedata.SimpleImageDataInputs;
+import com.apriori.acs.entity.response.workorders.simpleimagedata.SimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.upload.Assembly;
 import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadInputs;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.entity.response.workorders.upload.FileWorkorder;
+import com.apriori.acs.entity.response.workorders.upload.OrderId;
 import com.apriori.apibase.services.response.objects.MaterialCatalogKeyData;
-import com.apriori.apibase.services.response.objects.SubmitWorkOrder;
 import com.apriori.fms.controller.FileManagementController;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.GenerateStringUtil;
@@ -240,11 +240,11 @@ public class FileUploadResources {
      * @param loadCadMetadataOutputs - output from load cad metadata
      * @return GeneratePartImagesOutputs - response to use in next call
      */
-    public GeneratePartImagesOutputs generatePartImages(FileResponse fileResponse,
-                                                        LoadCadMetadataOutputs loadCadMetadataOutputs) {
+    public PartImagesOutputs generatePartImages(FileResponse fileResponse,
+                                                LoadCadMetadataOutputs loadCadMetadataOutputs) {
         String generatePartImagesWorkorderId = createWorkorder(
             WorkorderCommands.GENERATE_PART_IMAGES.getWorkorderCommand(),
-            GeneratePartImagesInputs.builder()
+            PartImagesInputs.builder()
                 .cadMetadataIdentity(loadCadMetadataOutputs.getCadMetadataIdentity())
                 .requestedBy(fileResponse.getUserIdentity())
                 .build(),
@@ -253,7 +253,7 @@ public class FileUploadResources {
         submitWorkorder(generatePartImagesWorkorderId);
         return objectMapper.convertValue(
             checkGetWorkorderDetails(generatePartImagesWorkorderId),
-            GeneratePartImagesOutputs.class
+            PartImagesOutputs.class
         );
     }
 
@@ -265,18 +265,18 @@ public class FileUploadResources {
      * @param assemblyMetadataOutput - output from loading cad metadata for assembly
      * @return GenerateAssemblyImagesOutputs
      */
-    public GenerateAssemblyImagesOutputs generateAssemblyImages(
+    public AssemblyImagesOutputs generateAssemblyImages(
         FileResponse fileResponse,
         ArrayList<LoadCadMetadataOutputs> loadCadMetadataOutputs,
         LoadCadMetadataOutputs assemblyMetadataOutput) {
 
         GenerateStringUtil generateStringUtil = new GenerateStringUtil();
 
-        List<GenerateAssemblyImagesSubComponent> subComponentsList = new ArrayList<>();
+        List<AssemblyImagesSubComponent> subComponentsList = new ArrayList<>();
 
         for (LoadCadMetadataOutputs loadCadMetadataOutput : loadCadMetadataOutputs) {
             subComponentsList.add(
-                GenerateAssemblyImagesSubComponent.builder()
+                AssemblyImagesSubComponent.builder()
                     .componentIdentity(generateStringUtil.getRandomString())
                     .scenarioIdentity(generateStringUtil.getRandomString())
                     .cadMetadataIdentity(loadCadMetadataOutput.getCadMetadataIdentity())
@@ -286,7 +286,7 @@ public class FileUploadResources {
 
         String generateAssemblyImagesWorkorderId = createWorkorder(
             WorkorderCommands.GENERATE_ASSEMBLY_IMAGES.getWorkorderCommand(),
-            GenerateAssemblyImagesInputs.builder()
+            AssemblyImagesInputs.builder()
                 .componentIdentity(generateStringUtil.getRandomString())
                 .scenarioIdentity(generateStringUtil.getRandomString())
                 .cadMetadataIdentity(assemblyMetadataOutput.getCadMetadataIdentity())
@@ -298,7 +298,7 @@ public class FileUploadResources {
         submitWorkorder(generateAssemblyImagesWorkorderId);
         return objectMapper.convertValue(
             checkGetWorkorderDetails(generateAssemblyImagesWorkorderId),
-            GenerateAssemblyImagesOutputs.class
+            AssemblyImagesOutputs.class
         );
     }
 
@@ -494,9 +494,9 @@ public class FileUploadResources {
      * @param fileUploadOutputs - contains scenario iteration key to use
      * @return GenerateAllImagesOutputs - new scenario iteration key
      */
-    public GenerateAllImagesOutputs createGenerateAllImagesWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+    public AllImagesOutputs createGenerateAllImagesWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
         String generateAllImagesWorkorderId = createWorkorder(WorkorderCommands.GENERATE_ALL_IMAGES.getWorkorderCommand(),
-            GenerateAllImagesInputs.builder()
+            AllImagesInputs.builder()
                 .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
                 .keepFreeBodies(false)
                 .freeBodiesPreserveCad(false)
@@ -507,7 +507,7 @@ public class FileUploadResources {
         submitWorkorder(generateAllImagesWorkorderId);
         return objectMapper.convertValue(
             checkGetWorkorderDetails(generateAllImagesWorkorderId),
-            GenerateAllImagesOutputs.class
+            AllImagesOutputs.class
         );
     }
 
@@ -517,16 +517,16 @@ public class FileUploadResources {
      * @param fileUploadOutputs - contains scenario iteration key to use
      * @return GenerateSimpleImageDataOutputs - new scenario iteration key
      */
-    public GenerateSimpleImageDataOutputs createGenerateSimpleImageDataWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
+    public SimpleImageDataOutputs createGenerateSimpleImageDataWorkorderSuppressError(FileUploadOutputs fileUploadOutputs) {
         String generateSimpleImageDataWorkorderId = createWorkorder(WorkorderCommands.GENERATE_SIMPLE_IMAGE_DATA.getWorkorderCommand(),
-            GenerateSimpleImageDataInputs.builder()
+            SimpleImageDataInputs.builder()
                 .scenarioIterationKey(fileUploadOutputs.getScenarioIterationKey())
                 .build(),
             true);
         submitWorkorder(generateSimpleImageDataWorkorderId);
         return objectMapper.convertValue(
             checkGetWorkorderDetails(generateSimpleImageDataWorkorderId),
-            GenerateSimpleImageDataOutputs.class
+            SimpleImageDataOutputs.class
         );
     }
 
@@ -536,11 +536,11 @@ public class FileUploadResources {
      * @param publishScenarioKey - Scenario Key from publish action
      * @return GetAdminInfoResponse object
      */
-    public GetAdminInfoResponse getAdminInfo(ScenarioKey publishScenarioKey) {
+    public AdminInfoResponse getAdminInfo(ScenarioKey publishScenarioKey) {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.ADMIN_INFO, GetAdminInfoResponse.class)
+            .init(CidWorkorderApiEnum.ADMIN_INFO, AdminInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 publishScenarioKey.getWorkspaceId().toString(),
@@ -548,7 +548,7 @@ public class FileUploadResources {
                 publishScenarioKey.getMasterName(),
                 publishScenarioKey.getStateName());
 
-        return (GetAdminInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (AdminInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -557,11 +557,11 @@ public class FileUploadResources {
      * @param scenarioIterationKey - Scenario Iteration Key from previous call
      * @return GetImageInfoResponse - json response from API call
      */
-    public GetImageInfoResponse getImageInfo(ScenarioIterationKey scenarioIterationKey) {
+    public ImageInfoResponse getImageInfo(ScenarioIterationKey scenarioIterationKey) {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.IMAGE_INFO, GetImageInfoResponse.class)
+            .init(CidWorkorderApiEnum.IMAGE_INFO, ImageInfoResponse.class)
             .headers(headers)
             .inlineVariables(
                 scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
@@ -570,7 +570,7 @@ public class FileUploadResources {
                 scenarioIterationKey.getScenarioKey().getStateName(),
                 scenarioIterationKey.getIteration().toString());
 
-        return (GetImageInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (ImageInfoResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -579,15 +579,15 @@ public class FileUploadResources {
      * @param fileMetadataIdentity - String of file metadata identity
      * @return GetCadMetadataResponse
      */
-    public GetCadMetadataResponse getCadMetadata(String fileMetadataIdentity) {
+    public CadMetadataResponse getCadMetadata(String fileMetadataIdentity) {
         setupHeaders("application/json");
 
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.CAD_METADATA, GetCadMetadataResponse.class)
+            .init(CidWorkorderApiEnum.CAD_METADATA, CadMetadataResponse.class)
             .headers(headers)
             .inlineVariables(fileMetadataIdentity);
 
-        return (GetCadMetadataResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
+        return (CadMetadataResponse) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
     /**
@@ -784,7 +784,7 @@ public class FileUploadResources {
      */
     private FileResponse initializeFileUpload(String fileName, String processGroup) {
         return FileManagementController.uploadFile(
-            UserUtil.getUser(),
+            UserUtil.getUserWithCloudContext(),
             ProcessGroupEnum.fromString(processGroup),
             fileName
         );
@@ -961,11 +961,17 @@ public class FileUploadResources {
     private void submitWorkorder(String orderId) {
         setupHeaders("application/json");
 
+        OrderId orderId1 = new OrderId();
+        orderId1.setOrderId(orderId);
+
         final RequestEntity requestEntity = RequestEntityUtil
-            .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, SubmitWorkOrder.class)
+            .init(CidWorkorderApiEnum.SUBMIT_WORKORDER, null)
             .headers(headers)
-            .body(new FileWorkorder().setOrderIds(Collections.singletonList(orderId))
-                .setAction("SUBMIT"));
+            .body(FileWorkorder.builder()
+                .action("SUBMIT")
+                .groupItems(Collections.singletonList(orderId1))
+                .build()
+            );
 
         HTTPRequest.build(requestEntity).post();
     }

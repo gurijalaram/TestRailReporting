@@ -27,6 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpStatus;
 
 import java.io.File;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -88,7 +90,7 @@ public class ComponentsUtil {
             .filter(o -> o.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.NOT_COSTED.getState()))
             .findFirst()
             .orElseThrow(
-                () -> new RuntimeException(String.format("Expected scenario state: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
+                () -> new RuntimeException(String.format("Expected scenario state to be: %s \nFound: %s", ScenarioStateEnum.NOT_COSTED.getState(),
                     scenarioItem.stream().findFirst().get().getScenarioState())));
 
         return scenarioItem;
@@ -144,7 +146,7 @@ public class ComponentsUtil {
                 .body("groupItems",
                     Collections.singletonList(ComponentRequest.builder()
                         .filename(componentBuilder.getResourceFile().getName())
-                        .override(false)
+                        .override(componentBuilder.isOverrideScenario())
                         .resourceName(resourceName)
                         .scenarioName(componentBuilder.getScenarioName())
                         .build()))
@@ -221,9 +223,35 @@ public class ComponentsUtil {
     public ResponseWrapper<ComponentIdentityResponse> getComponentIdentity(ComponentInfoBuilder componentInfo) {
         RequestEntity requestEntity =
             RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, ComponentIdentityResponse.class)
-                .inlineVariables(componentInfo.getComponentIdentity());
+                .inlineVariables(componentInfo.getComponentIdentity())
+                .token(componentInfo.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * GET components for the current user matching an identity ewith an expected Return Code
+     *
+     * @param componentInfo - the component info builder object
+     * @param httpStatus - The expected return code as an int
+     * @return response object
+     */
+    public ResponseWrapper<Object> getComponentIdentityExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
+        final int SOCKET_TIMEOUT = 240000;
+        final int METHOD_TIMEOUT = 30;
+        final LocalDateTime methodStartTime = LocalDateTime.now();
+        String componentId = componentInfo.getComponentIdentity();
+        ResponseWrapper<Object> response;
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENTS_BY_COMPONENT_ID, null)
+                .inlineVariables(componentId)
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(false)
+                .socketTimeout(SOCKET_TIMEOUT);
+        do {
+            response = HTTPRequest.build(requestEntity).get();
+        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
+        return response;
     }
 
     /**
@@ -239,6 +267,32 @@ public class ComponentsUtil {
                 .token(componentInfo.getUser().getToken());
 
         return checkNonNullIterationLatest(requestEntity);
+    }
+
+    /**
+     * GET components for the current user matching an identity ewith an expected Return Code
+     *
+     * @param componentInfo - the component info builder object
+     * @param httpStatus - The expected return code as an int
+     * @return response object
+     */
+    public ResponseWrapper<Object> getComponentIterationLatestExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
+        final int SOCKET_TIMEOUT = 240000;
+        final int METHOD_TIMEOUT = 30;
+        final LocalDateTime methodStartTime = LocalDateTime.now();
+        String componentId = componentInfo.getComponentIdentity();
+        String scenarioId = componentInfo.getScenarioIdentity();
+        ResponseWrapper<Object> response;
+        RequestEntity requestEntity =
+            RequestEntityUtil.init(CidAppAPIEnum.COMPONENT_ITERATION_LATEST_BY_COMPONENT_SCENARIO_IDS, null)
+                .inlineVariables(componentId, scenarioId)
+                .token(componentInfo.getUser().getToken())
+                .followRedirection(false)
+                .socketTimeout(SOCKET_TIMEOUT);
+        do {
+            response = HTTPRequest.build(requestEntity).get();
+        } while (response.getStatusCode() != httpStatus && Duration.between(methodStartTime, LocalDateTime.now()).getSeconds() <= METHOD_TIMEOUT);
+        return response;
     }
 
     /**

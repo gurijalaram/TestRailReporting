@@ -421,7 +421,7 @@ public class ExploreToolbar extends MainNavBar {
      *
      * @return new page object
      */
-    public DeletePage delete() {
+    public DeletePage clickDeleteIcon() {
         pageUtils.waitForElementAndClick(deleteButton);
         return new DeletePage(driver);
     }
@@ -522,11 +522,30 @@ public class ExploreToolbar extends MainNavBar {
     }
 
     /**
-     * Checks if button is enabled
+     * Checks if edit button is enabled
      *
      * @return true/false
      */
     public boolean isEditButtonEnabled() {
         return pageUtils.waitForElementToAppear(editButton).isEnabled();
+    }
+
+
+    /**
+     * Checks if delete button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isDeleteButtonEnabled() {
+        return pageUtils.waitForElementToAppear(deleteButton).isEnabled();
+    }
+
+    /**
+     * Checks if cost button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isCostButtonEnabled() {
+        return pageUtils.waitForElementToAppear(costButton).isEnabled();
     }
 }

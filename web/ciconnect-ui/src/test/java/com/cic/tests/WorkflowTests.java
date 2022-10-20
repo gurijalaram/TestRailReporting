@@ -4,7 +4,7 @@ import com.apriori.enums.SortedOrderType;
 import com.apriori.enums.WorkflowListColumns;
 import com.apriori.features.WorkFlowFeatures;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
@@ -44,7 +44,7 @@ public class WorkflowTests extends TestBase {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         // CREATE WORK FLOW
-        WorkFlowFeatures workFlowFeatures = new LoginPage(driver)
+        WorkFlowFeatures workFlowFeatures = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -79,7 +79,7 @@ public class WorkflowTests extends TestBase {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         // CREATE WORK FLOW
-        QueryDefinitions queryDefinitions = (QueryDefinitions) new LoginPage(driver)
+        QueryDefinitions queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -123,7 +123,7 @@ public class WorkflowTests extends TestBase {
         softAssertions = new SoftAssertions();
         workFlowData = new TestDataService().getTestData("WorkFlowTestData.json",WorkFlowData.class);
         // CREATE WORK FLOW
-        QueryDefinitions queryDefinitions = (QueryDefinitions) new LoginPage(driver)
+        QueryDefinitions queryDefinitions = (QueryDefinitions) new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -160,7 +160,7 @@ public class WorkflowTests extends TestBase {
     @TestRail(testCaseId = {"4302"})
     public void testValidateInputFields() {
         softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -178,7 +178,7 @@ public class WorkflowTests extends TestBase {
     @Test
     @TestRail(testCaseId = {"3991"})
     public void testValidateNameWithSpecial() {
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)

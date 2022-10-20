@@ -6,34 +6,32 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.startsWith;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.apriori.acs.entity.response.acs.createmissingscenario.CreateMissingScenarioResponse;
-import com.apriori.acs.entity.response.acs.getscenarioinfobyscenarioiterationkey.GetScenarioInfoByScenarioIterationKeyResponse;
+import com.apriori.acs.entity.response.acs.missingscenario.MissingScenarioResponse;
+import com.apriori.acs.entity.response.acs.scenarioinfobyscenarioiterationkey.ScenarioInfoByScenarioIterationKeyResponse;
 import com.apriori.acs.utils.Constants;
 import com.apriori.acs.utils.acs.AcsResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.categories.AcsTest;
 
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 
-public class CreateMissingScenarioTests {
+public class CreateMissingScenarioTests extends TestUtil {
 
     @Test
-    @Category(AcsTest.class)
     @TestRail(testCaseId = "8767")
     @Description("Test Create Missing Scenario")
     public void testCreateMissingScenario() {
         AcsResources acsResources = new AcsResources();
-        CreateMissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();
+        MissingScenarioResponse createMissingScenarioResponse = acsResources.createMissingScenario();
 
         assertThat(createMissingScenarioResponse.isResourceCreated(), is(equalTo(true)));
         assertThat(createMissingScenarioResponse.isMissing(), is(equalTo(true)));
 
-        GetScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKeyResponse = acsResources.getScenarioInfoByScenarioIterationKey(createMissingScenarioResponse.getScenarioIterationKey());
+        ScenarioInfoByScenarioIterationKeyResponse getScenarioInfoByScenarioIterationKeyResponse = acsResources.getScenarioInfoByScenarioIterationKey(createMissingScenarioResponse.getScenarioIterationKey());
 
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.isInitialized(), is(equalTo(false)));
         assertThat(getScenarioInfoByScenarioIterationKeyResponse.isVirtual(), is(equalTo(true)));

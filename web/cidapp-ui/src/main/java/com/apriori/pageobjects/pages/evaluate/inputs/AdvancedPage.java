@@ -39,7 +39,7 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
     private WebElement secondaryProcesses;
 
     @FindBy(css = "[id='qa-routing-modal-select-field'] [data-icon='pencil']")
-    private WebElement routingSelection;
+    private WebElement routingSelectionPencil;
 
     @FindBy(css = "[id='qa-routing-modal-select-field']")
     private WebElement preferenceText;
@@ -86,7 +86,7 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
      * @return new page object
      */
     public RoutingSelectionPage openRoutingSelection() {
-        pageUtils.waitForElementAndClick(routingSelection);
+        pageUtils.waitForElementAndClick(routingSelectionPencil);
         return new RoutingSelectionPage(driver);
     }
 
@@ -163,7 +163,7 @@ public class AdvancedPage extends LoadableComponent<AdvancedPage> {
      * @return boolean
      */
     public boolean isRoutingSelectionButtonEnabled() {
-        return pageUtils.isElementEnabled(routingSelection);
+        return pageUtils.isElementEnabled(routingSelectionPencil);
     }
 
     /**

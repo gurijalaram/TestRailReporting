@@ -1,7 +1,10 @@
 package com.apriori.utils.json.utils;
 
+import com.apriori.utils.http.utils.ResponseWrapper;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
 import java.io.File;
@@ -80,4 +83,12 @@ public class JsonManager {
         }
     }
 
+    public static <T> T convertBodyToJson(ResponseWrapper<String> response, Class<T> klass) {
+        Gson gson = new Gson();
+        return gson.fromJson(
+            gson.toJson(
+                JsonParser.parseString(
+                    response.getBody()).getAsJsonObject().getAsJsonObject("response")),
+            klass);
+    }
 }

@@ -11,12 +11,13 @@
         "createdAt",
         "createdBy",
         "updatedAt",
+        "customerIdentity",
+        "siteIdentity",
         "apVersion",
         "active",
         "description",
         "subLicenses",
         "licensedModules",
-        "site",
         "createdByName"
       ],
       "properties": {
@@ -32,6 +33,12 @@
         "updatedAt": {
           "type": "string"
         },
+        "customerIdentity": {
+          "type": "string"
+        },
+        "siteIdentity": {
+          "type": "string"
+        },
         "apVersion": {
           "type": "string"
         },
@@ -44,135 +51,70 @@
         "subLicenses": {
           "type": "array",
           "items": {
-            "anyOf": [
-              {
-                "type": "object",
-                "required": [
-                  "identity",
-                  "createdAt",
-                  "createdBy",
-                  "name",
-                  "uuid",
-                  "licensedModuleNames",
-                  "maxNumUsers",
-                  "numPurchasedUsers",
-                  "numAssignedUsers",
-                  "expiresAt"
-                ],
-                "properties": {
-                  "identity": {
-                    "type": "string"
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  },
-                  "uuid": {
-                    "type": "string"
-                  },
-                  "licensedModuleNames": {
-                    "type": "array",
-                    "items": {
-                    }
-                  },
-                  "maxNumUsers": {
-                    "type": "integer"
-                  },
-                  "numPurchasedUsers": {
-                    "type": "integer"
-                  },
-                  "numAssignedUsers": {
-                    "type": "integer"
-                  },
-                  "expiresAt": {
-                    "type": "string"
-                  }
-                }
+            "type": "object",
+            "required": [
+              "identity",
+              "createdAt",
+              "createdBy",
+              "name",
+              "uuid",
+              "licensedModuleNames",
+              "maxNumUsers",
+              "numPurchasedUsers",
+              "numAssignedUsers",
+              "expiresAt"
+            ],
+            "properties": {
+              "identity": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
+              },
+              "uuid": {
+                "type": "string"
+              },
+              "licensedModuleNames": {
+                "type": "array",
+                "items": {}
+              },
+              "maxNumUsers": {
+                "type": "integer"
+              },
+              "numPurchasedUsers": {
+                "type": "integer"
+              },
+              "numAssignedUsers": {
+                "type": "integer"
+              },
+              "expiresAt": {
+                "type": "string"
               }
-            ]
+            }
           }
         },
         "licensedModules": {
           "type": "array",
           "items": {
-            "anyOf": [
-              {
-                "type": "object",
-                "required": [
-                  "identity",
-                  "createdAt",
-                  "createdBy",
-                  "name"
-                ],
-                "properties": {
-                  "identity": {
-                  },
-                  "createdAt": {
-                    "type": "string"
-                  },
-                  "createdBy": {
-                    "type": "string"
-                  },
-                  "name": {
-                    "type": "string"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        "site": {
-          "type": "object",
-          "required": [
-            "identity",
-            "createdAt",
-            "createdBy",
-            "customerIdentity",
-            "name",
-            "description",
-            "siteId",
-            "active",
-            "deployments",
-            "licensedApplications"
-          ],
-          "properties": {
-            "identity": {
-              "type": "string"
-            },
-            "createdAt": {
-              "type": "string"
-            },
-            "createdBy": {
-              "type": "string"
-            },
-            "customerIdentity": {
-              "type": "string"
-            },
-            "name": {
-              "type": "string"
-            },
-            "description": {
-              "type": "string"
-            },
-            "siteId": {
-              "type": "string"
-            },
-            "active": {
-              "type": "boolean"
-            },
-            "deployments": {
-              "type": "array",
-              "items": {
-              }
-            },
-            "licensedApplications": {
-              "type": "array",
-              "items": {
+            "type": "object",
+            "properties": {
+              "identity": {
+                "type": "string"
+              },
+              "createdAt": {
+                "type": "string"
+              },
+              "createdBy": {
+                "type": "string"
+              },
+              "name": {
+                "type": "string"
               }
             }
           }

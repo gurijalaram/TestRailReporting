@@ -3,6 +3,7 @@ package testsuites;
 import com.apriori.utils.ProjectRunID;
 import com.apriori.utils.runner.ConcurrentSuiteRunner;
 
+import com.fieldsvalidation.mounttype.MountTypeTests;
 import com.help.HelpTests;
 import com.myuser.MyProfileTests;
 import com.myuser.TermsOfUseTests;
@@ -18,7 +19,8 @@ import org.junit.runners.Suite;
     TermsOfUseTests.class,
     HelpTests.class,
     UploadTests.class,
-    FilterPartsTests.class
+    FilterPartsTests.class,
+    MountTypeTests.class
 })
 public class RegressionTestSuite {
 }

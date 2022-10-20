@@ -1,5 +1,7 @@
 package com.apriori.entity.response;
 
+import com.apriori.cds.objects.response.Customer;
+
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,8 @@ public class CustomerAssociation {
     private String identity;
     private Date createdAt;
     private String createdBy;
+    private String createdByName;
+    private Customer targetCustomer;
     private String description;
     private String targetCustomerIdentity;
     private String type;

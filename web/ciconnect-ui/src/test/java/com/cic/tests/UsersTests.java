@@ -1,6 +1,6 @@
 package com.cic.tests;
 
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.users.UsersPage;
 import com.apriori.utils.TestRail;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -27,7 +27,7 @@ public class UsersTests extends TestBase {
     @TestRail(testCaseId = {"3814"})
     @Description("Test Users List Tab")
     public void testUserTab() {
-        UsersPage usersPage = new LoginPage(driver)
+        UsersPage usersPage = new CicLoginPage(driver)
             .login(currentUser)
             .clickUsersMenu();
         usersPage.validateUsersSortedAlphabetical();

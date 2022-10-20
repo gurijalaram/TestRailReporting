@@ -9,6 +9,7 @@ import com.evaluate.CostScenarioTests;
 import com.evaluate.DeleteTests;
 import com.evaluate.NewScenarioNameTests;
 import com.evaluate.ProcessGroupsTests;
+import com.evaluate.ProcessRoutingTests;
 import com.evaluate.PsoEditTests;
 import com.evaluate.PublishExistingCostedTests;
 import com.evaluate.PublishTests;
@@ -29,6 +30,7 @@ import com.evaluate.materialutilization.MaterialStockTests;
 import com.evaluate.materialutilization.PartNestingTests;
 import com.explore.ActionsTests;
 import com.explore.FilterCriteriaTests;
+import com.explore.GroupDeleteTests;
 import com.explore.PreviewPanelTests;
 import com.explore.TableHeadersTests;
 import com.explore.UploadComponentTests;
@@ -79,7 +81,9 @@ import testsuites.suiteinterface.SmokeTests;
     PsoEditTests.class,
     PublishAssembliesTests.class,
     GroupEditAssemblies.class,
-    FilterCriteriaTests.class
+    FilterCriteriaTests.class,
+    GroupDeleteTests.class,
+    ProcessRoutingTests.class
 })
 public class CIDSmokeTestSuite {
 }

@@ -12,9 +12,6 @@ import org.openqa.selenium.support.FindBy;
 @Slf4j
 public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
 
-    @FindBy(css = "[data-icon='exclamation-circle']")
-    private WebElement fileOne;
-
     @FindBy(id = "filter-button")
     private WebElement filterButton;
 
@@ -51,10 +48,11 @@ public class UploadedFilePage extends EagerPageComponent<UploadedFilePage> {
      *
      * @return new page object
      */
-    public MatchedPartPage selectMatchedPart() {
-        getPageUtils().waitForElementAndClick(fileOne);
+    public MatchedPartPage selectMatchedPart(String part) {
+        getPageUtils().waitForElementAndClick(By.xpath(String.format("//div[@class='card-title']//div[text()='%s']", part)));
         return new MatchedPartPage(getDriver());
     }
+
 
     /**
      * Filter drop down

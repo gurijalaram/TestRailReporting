@@ -14,13 +14,14 @@ import com.apriori.pageobjects.pages.login.CidAppLoginPage;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
+import com.apriori.utils.enums.ComponentIconEnum;
 import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.enums.ProcessGroupEnum;
+import com.apriori.utils.enums.UnitsEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 import com.apriori.utils.reader.file.user.UserUtil;
 import com.apriori.utils.web.driver.TestBase;
 
-import com.utils.ButtonTypeEnum;
 import com.utils.ColumnsEnum;
 import com.utils.DirectionEnum;
 import com.utils.MultiUpload;
@@ -295,7 +296,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "5620")
+    @TestRail(testCaseId = {"5620", "6513", "6514"})
     @Description("User can upload an assembly when the same assembly with same scenario name exists in the public workspace")
     public void uploadAnAssemblyExistingInThePublicWorkspace() {
         currentUser = UserUtil.getUser();
@@ -335,6 +336,10 @@ public class UploadAssembliesTests extends TestBase {
             .selectFilter("Public");
 
         softAssertions.assertThat(explorePage.getListOfScenarios(assemblyName1, assemblyScenarioName1)).isEqualTo(1);
+        softAssertions.assertThat(explorePage.getRowDetails(assemblyName1, assemblyScenarioName1)).contains(ComponentIconEnum.ASSEMBLY.getIcon());
+
+        explorePage.highlightScenario(assemblyName1, assemblyScenarioName1);
+        softAssertions.assertThat(explorePage.openPreviewPanel().isImageDisplayed()).isEqualTo(true);
 
         explorePage.importCadFile()
             .inputMultiComponents(secondAssemblyBatch)
@@ -421,7 +426,7 @@ public class UploadAssembliesTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"12156", "6557"})
+    @TestRail(testCaseId = {"12156", "6557", "6524"})
     @Description("Column Configuration button in Tree View is clickable and opens menu")
     public void testColumnConfigurationButton() {
         currentUser = UserUtil.getUser();
@@ -570,6 +575,53 @@ public class UploadAssembliesTests extends TestBase {
         softAssertions.assertThat(componentsListPage.getTableHeaders()).contains(ColumnsEnum.LOCKED.getColumns());
 
         softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"6546"})
+    @Description("Changing unit user preferences when viewing assembly")
+    public void testUnitPreferenceInAssembly() {
+        final String hinge_assembly = "Hinge assembly";
+        final ProcessGroupEnum assemblyProcessGroup = ProcessGroupEnum.ASSEMBLY;
+        final String assemblyExtension = ".SLDASM";
+        final String big_ring = "big ring";
+        final String pin = "Pin";
+        final String small_ring = "small ring";
+        final String subComponentExtension = ".SLDPRT";
+        final List<String> subComponentNames = Arrays.asList(big_ring, pin, small_ring);
+        final ProcessGroupEnum subComponentProcessGroup = ProcessGroupEnum.FORGING;
+
+        final UserCredentials currentUser = UserUtil.getUser();
+        final String scenarioName = new GenerateStringUtil().generateScenarioName();
+
+        ComponentInfoBuilder componentAssembly = assemblyUtils.associateAssemblyAndSubComponents(
+            hinge_assembly,
+            assemblyExtension,
+            assemblyProcessGroup,
+            subComponentNames,
+            subComponentExtension,
+            subComponentProcessGroup,
+            scenarioName,
+            currentUser);
+
+        assemblyUtils.uploadSubComponents(componentAssembly).uploadAssembly(componentAssembly);
+        assemblyUtils.costSubComponents(componentAssembly).costAssembly(componentAssembly);
+
+        loginPage = new CidAppLoginPage(driver);
+        evaluatePage = loginPage.login(currentUser)
+            .navigateToScenario(componentAssembly)
+            .openSettings()
+            .selectUnits(UnitsEnum.FPM)
+            .submit(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("0.25lb");
+
+        evaluatePage.openSettings()
+            .selectUnits(UnitsEnum.MMKS)
+            .submit(EvaluatePage.class);
+
+        softAssertions.assertThat(evaluatePage.getFinishMass()).isEqualTo("0.11kg");
+
     }
 
 }

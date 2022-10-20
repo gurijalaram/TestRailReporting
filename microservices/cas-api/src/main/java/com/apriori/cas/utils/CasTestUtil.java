@@ -4,6 +4,8 @@ import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
+import com.apriori.cds.objects.request.License;
+import com.apriori.cds.objects.request.LicenseRequest;
 import com.apriori.entity.response.AssociationUser;
 import com.apriori.entity.response.BatchItem;
 import com.apriori.entity.response.BatchItemsPost;
@@ -274,12 +276,12 @@ public class CasTestUtil extends TestUtil {
      */
     public static ResponseWrapper<ValidateSite> validateSite(String identity, String siteId) {
 
-        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_SITES, ValidateSite.class)
+        RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.CUSTOMER, ValidateSite.class)
             .token(token)
             .body("site",
                 Site.builder().siteId(siteId)
                     .build())
-            .inlineVariables(identity);
+            .inlineVariables(identity + "/sites/validate");
 
         return HTTPRequest.build(requestEntity).post();
     }
@@ -490,15 +492,18 @@ public class CasTestUtil extends TestUtil {
      */
     public ResponseWrapper<LicenseResponse> addLicense(String casLicense, String customerIdentity, String siteIdentity, String customerName, String siteId, String subLicenseId) {
 
-        InputStream license = new ByteArrayInputStream(String.format(casLicense, customerName, siteId, subLicenseId, subLicenseId).getBytes(StandardCharsets.UTF_8));
-
         RequestEntity requestEntity = RequestEntityUtil.init(CASAPIEnum.POST_LICENSE_BY_CUSTOMER_SITE_IDS, LicenseResponse.class)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity)
-                .multiPartFiles(new MultiPartFiles()
-                .use("apVersion", "2020 R1")
-                .use("description", "Test License")
-                .use("multiPartFile", FileResourceUtil.copyIntoTempFile(license, "license", "licenseTest.xml")));
+                .body(LicenseRequest.builder()
+                    .license(
+                        License.builder()
+                            .description("Test License")
+                            .apVersion("2020 R1")
+                            .createdBy("#SYSTEM00000")
+                            .license(String.format(casLicense, customerName, siteId, subLicenseId, subLicenseId))
+                            .build())
+                        .build());
 
         return HTTPRequest.build(requestEntity).post();
     }
