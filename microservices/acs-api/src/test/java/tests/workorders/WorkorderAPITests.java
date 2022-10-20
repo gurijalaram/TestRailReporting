@@ -12,25 +12,26 @@ import com.apriori.acs.entity.request.workorders.NewPartRequest;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfo;
 import com.apriori.acs.entity.request.workorders.assemblyobjects.AssemblyInfoComponent;
 import com.apriori.acs.entity.response.acs.genericclasses.GenericErrorResponse;
+import com.apriori.acs.entity.response.workorders.allimages.AllImagesOutputs;
+import com.apriori.acs.entity.response.workorders.assemblyimages.AssemblyImagesOutputs;
 import com.apriori.acs.entity.response.workorders.cost.costworkorderstatus.CostOrderStatusOutputs;
 import com.apriori.acs.entity.response.workorders.deletescenario.DeleteScenarioOutputs;
 import com.apriori.acs.entity.response.workorders.editscenario.EditScenarioOutputs;
-import com.apriori.acs.entity.response.workorders.generateallimages.GenerateAllImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generateassemblyimages.GenerateAssemblyImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generatepartimages.GeneratePartImagesOutputs;
-import com.apriori.acs.entity.response.workorders.generatesimpleimagedata.GenerateSimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioKey;
-import com.apriori.acs.entity.response.workorders.getadmininfo.GetAdminInfoResponse;
-import com.apriori.acs.entity.response.workorders.getimageinfo.GetImageInfoResponse;
-import com.apriori.acs.entity.response.workorders.loadcadmetadata.GetCadMetadataResponse;
+import com.apriori.acs.entity.response.workorders.getadmininfo.AdminInfoResponse;
+import com.apriori.acs.entity.response.workorders.getimageinfo.ImageInfoResponse;
+import com.apriori.acs.entity.response.workorders.loadcadmetadata.CadMetadataResponse;
 import com.apriori.acs.entity.response.workorders.loadcadmetadata.LoadCadMetadataOutputs;
+import com.apriori.acs.entity.response.workorders.partimages.PartImagesOutputs;
 import com.apriori.acs.entity.response.workorders.publish.publishworkorderresult.PublishResultOutputs;
+import com.apriori.acs.entity.response.workorders.simpleimagedata.SimpleImageDataOutputs;
 import com.apriori.acs.entity.response.workorders.upload.Assembly;
 import com.apriori.acs.entity.response.workorders.upload.AssemblyComponent;
 import com.apriori.acs.entity.response.workorders.upload.FileUploadOutputs;
 import com.apriori.acs.utils.acs.AcsResources;
 import com.apriori.acs.utils.workorders.FileUploadResources;
+import com.apriori.apibase.utils.TestUtil;
 import com.apriori.fms.entity.response.FileResponse;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
@@ -43,15 +44,13 @@ import io.qameta.allure.Issue;
 import org.apache.commons.codec.binary.Base64;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
-import org.junit.experimental.categories.Category;
-import testsuites.categories.WorkorderTest;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public class WorkorderAPITests {
+public class WorkorderAPITests extends TestUtil {
 
     private final FileUploadResources fileUploadResources = new FileUploadResources();
     private final AcsResources acsResources = new AcsResources();
@@ -62,7 +61,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"6933"})
     @Description("Upload a part, load CAD Metadata, and generate part images")
     public void testLoadCadMetadataAndGeneratePartImages() {
@@ -73,7 +71,7 @@ public class WorkorderAPITests {
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataSuppressError(fileResponse);
 
-        GeneratePartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
+        PartImagesOutputs generatePartImagesOutputs = fileUploadResources.generatePartImages(
                 fileResponse,
                 loadCadMetadataOutputs
         );
@@ -92,7 +90,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"7697"})
     @Description("Get image after each iteration - Upload, Cost, Publish")
     public void testUploadCostPublishGetImage() {
@@ -123,7 +120,6 @@ public class WorkorderAPITests {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11974")
     @Description("Upload, Cost, and Publish an Assembly")
     public void testUploadCostAndPublishAssembly() {
@@ -174,7 +170,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"7710"})
     @Description("Upload a part, load CAD Metadata, and generate assembly images")
     public void testLoadCadMetadataAndGenerateAssemblyImages() {
@@ -185,7 +180,7 @@ public class WorkorderAPITests {
             true
         );
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
+        AssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
         ArrayList<String> images = generateAssemblyImagesOutputs.getGeneratedWebImages();
         images.add(generateAssemblyImagesOutputs.getDesktopImageIdentity());
@@ -198,7 +193,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8681"})
     @Description("Upload a part, cost it and publish it with comment and description fields")
     public void testPublishCommentAndDescriptionFields() {
@@ -220,7 +214,7 @@ public class WorkorderAPITests {
         );
 
         PublishResultOutputs publishResultOutputs = fileUploadResources.publishPart(costOutputs);
-        GetAdminInfoResponse getAdminInfoResponse = fileUploadResources
+        AdminInfoResponse getAdminInfoResponse = fileUploadResources
                 .getAdminInfo(publishResultOutputs.getScenarioIterationKey().getScenarioKey());
 
         assertThat(getAdminInfoResponse.getLastSavedTime(), is(notNullValue()));
@@ -232,7 +226,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8682"})
     @Description("Upload a part, load cad metadata with part name and extension and get cad metadata to verify")
     public void testFileNameAndExtensionInputAndOutput() {
@@ -245,7 +238,7 @@ public class WorkorderAPITests {
 
         LoadCadMetadataOutputs loadCadMetadataOutputs = fileUploadResources.loadCadMetadataExposeError(fileResponse);
 
-        GetCadMetadataResponse getCadMetadataResponse = fileUploadResources
+        CadMetadataResponse getCadMetadataResponse = fileUploadResources
                 .getCadMetadata(loadCadMetadataOutputs.getCadMetadataIdentity());
 
         assertThat(getCadMetadataResponse.getFileMetadataIdentity(), is(equalTo(fileResponse.getIdentity())));
@@ -262,7 +255,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8689"})
     @Description("Upload a part, load cad metadata, then get cad metadata to verify that all components are returned")
     public void testLoadCadMetadataReturnsAllComponents() {
@@ -273,9 +265,9 @@ public class WorkorderAPITests {
             true
         );
 
-        GenerateAssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
+        AssemblyImagesOutputs generateAssemblyImagesOutputs = loadCadMetadataAndGenerateAssemblyImages(assemblyFileResponse);
 
-        GetCadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
+        CadMetadataResponse getCadMetadataResponse = fileUploadResources.getCadMetadata(
                 generateAssemblyImagesOutputs.getCadMetadataIdentity());
 
         assertThat(getCadMetadataResponse.getPmi().size(), is(equalTo(39)));
@@ -289,7 +281,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoSuppress500Version() {
@@ -310,7 +301,7 @@ public class WorkorderAPITests {
             false
         );
 
-        GetImageInfoResponse getImageInfoResponse = fileUploadResources
+        ImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
         SoftAssertions softAssert = new SoftAssertions();
@@ -325,7 +316,6 @@ public class WorkorderAPITests {
 
     @Test
     @Issue("AP-69600")
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = {"8693"})
     @Description("Upload a part, cost it, then get image info to ensure fields are correctly returned")
     public void testGetImageInfoExpose500ErrorVersion() {
@@ -350,7 +340,7 @@ public class WorkorderAPITests {
                 false
         );
 
-        GetImageInfoResponse getImageInfoResponse = fileUploadResources
+        ImageInfoResponse getImageInfoResponse = fileUploadResources
                 .getImageInfo(costOutputs.getScenarioIterationKey());
 
         SoftAssertions softAssert = new SoftAssertions();
@@ -364,7 +354,6 @@ public class WorkorderAPITests {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11981")
     @Description("Delete Scenario")
     public void testDeleteScenario() {
@@ -394,7 +383,6 @@ public class WorkorderAPITests {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11990")
     @Description("Edit Scenario - Part - Shallow - Change Scenario Name")
     public void testShallowEditPartScenario() {
@@ -405,7 +393,6 @@ public class WorkorderAPITests {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "11991")
     @Description("Edit Scenario - Assembly - Shallow - Change Scenario Name")
     public void testShallowEditAssemblyScenario() {
@@ -416,7 +403,6 @@ public class WorkorderAPITests {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "12044")
     @Description("Generate All Images - Part File")
     public void testGenerateAllPartImages() {
@@ -426,7 +412,7 @@ public class WorkorderAPITests {
             false
         );
 
-        GenerateAllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
+        AllImagesOutputs generateAllImagesOutputs = fileUploadResources.createGenerateAllImagesWorkorderSuppressError(fileUploadOutputs);
 
         assertThat(Base64.isBase64(
             acsResources.getImageByScenarioIterationKey(generateAllImagesOutputs.getScenarioIterationKey(), true)),
@@ -439,7 +425,6 @@ public class WorkorderAPITests {
     }
 
     @Test
-    @Category(WorkorderTest.class)
     @TestRail(testCaseId = "12047")
     @Description("Generate Simple Image - Part File")
     public void testGenerateSimpleImageData() {
@@ -449,7 +434,7 @@ public class WorkorderAPITests {
             false
         );
 
-        GenerateSimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
+        SimpleImageDataOutputs generateSimpleImageDataOutputs = fileUploadResources
             .createGenerateSimpleImageDataWorkorderSuppressError(fileUploadOutputs);
 
         assertThat(Base64.isBase64(
@@ -646,7 +631,7 @@ public class WorkorderAPITests {
      * @param assemblyFileResponse - FileResponse instance
      * @return GenerateAssemblyImagesOutputs instance
      */
-    private GenerateAssemblyImagesOutputs loadCadMetadataAndGenerateAssemblyImages(FileResponse assemblyFileResponse) {
+    private AssemblyImagesOutputs loadCadMetadataAndGenerateAssemblyImages(FileResponse assemblyFileResponse) {
         LoadCadMetadataOutputs assemblyMetadataOutput = fileUploadResources.loadCadMetadataSuppressError(assemblyFileResponse);
         return fileUploadResources.generateAssemblyImages(
             assemblyFileResponse,
@@ -656,7 +641,7 @@ public class WorkorderAPITests {
     }
 
     private void getAndValidateImageInfo(ScenarioIterationKey scenarioIterationKey) {
-        GetImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
+        ImageInfoResponse imageInfoResponse = fileUploadResources.getImageInfo(scenarioIterationKey);
 
         assertThat(imageInfoResponse.getDesktopImageAvailable(), is(equalTo("true")));
         assertThat(imageInfoResponse.getThumbnailAvailable(), is(equalTo("true")));

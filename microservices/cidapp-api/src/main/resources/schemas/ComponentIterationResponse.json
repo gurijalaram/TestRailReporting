@@ -88,6 +88,11 @@
             "productionLife": {
               "type": "number"
             },
+            "routingNodeOptions": {
+              "type": "array",
+              "items": {
+              }
+            },
             "usePrimaryDigitalFactoryAsDefaultForSecondaryDigitalFactories": {
               "type": "boolean"
             },

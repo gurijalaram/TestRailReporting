@@ -132,6 +132,7 @@ public class SchedulePage extends CICBasePage {
      */
     public WorkFlowFeatures clickEditButton() {
         pageUtils.waitForElementAndClick(editWorkflowButton);
+        pageUtils.waitFor(Constants.DEFAULT_WAIT);
         return new WorkFlowFeatures(this.driver);
     }
 

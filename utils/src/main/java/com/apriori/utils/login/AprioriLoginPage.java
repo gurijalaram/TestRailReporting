@@ -19,7 +19,7 @@ import org.openqa.selenium.support.ui.LoadableComponent;
 public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
 
     @FindBy(css = ".auth0-lock-name")
-    private WebElement pageTitle;
+    private WebElement loginTitle;
 
     @FindBy(css = "input[name='email']")
     private WebElement email;
@@ -102,8 +102,8 @@ public class AprioriLoginPage extends LoadableComponent<AprioriLoginPage> {
      *
      * @return string
      */
-    public String getPageTitle() {
-        return pageTitle.getAttribute("textContent");
+    public String getLoginTitle() {
+        return loginTitle.getAttribute("textContent");
     }
 
     /**

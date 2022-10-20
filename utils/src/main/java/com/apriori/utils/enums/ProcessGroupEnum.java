@@ -1,6 +1,7 @@
 package com.apriori.utils.enums;
 
 import java.util.Arrays;
+import java.util.EnumSet;
 import java.util.stream.Stream;
 
 public enum ProcessGroupEnum {
@@ -53,4 +54,6 @@ public enum ProcessGroupEnum {
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException(String.format("'%s' doesn't exist in enum ",  pg)));
     }
+
+    public static EnumSet<ProcessGroupEnum> machinePartPG = EnumSet.of(ADDITIVE_MANUFACTURING, CASTING, CASTING_DIE, CASTING_INVESTMENT, FORGING);
 }

@@ -8,6 +8,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.lang.reflect.Array;
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Builder
 @Data
@@ -23,6 +26,7 @@ public class CostingInput {
     private String materialMode;
     private String processGroupName;
     private Double productionLife;
+    private List<Object> routingNodeOptions;
     private String vpeName;
     private ProcessSetupOptions processSetupOptions;
     private SecondaryProcesses secondaryProcesses;

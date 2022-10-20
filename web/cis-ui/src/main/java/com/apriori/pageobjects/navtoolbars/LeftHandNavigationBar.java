@@ -1,9 +1,9 @@
 package com.apriori.pageobjects.navtoolbars;
 
-import com.apriori.cisapi.entity.builder.ComponentInfoBuilder;
-import com.apriori.cisapi.utils.AssemblyUtils;
-import com.apriori.cisapi.utils.ComponentsUtil;
-import com.apriori.cisapi.utils.ScenariosUtil;
+import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.cidappapi.utils.AssemblyUtils;
+import com.apriori.cidappapi.utils.ComponentsUtil;
+import com.apriori.cidappapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.LetNavigationBarController;
 import com.apriori.pageobjects.pages.messages.MessagesPage;
 import com.apriori.pageobjects.pages.myuser.MyUserPage;

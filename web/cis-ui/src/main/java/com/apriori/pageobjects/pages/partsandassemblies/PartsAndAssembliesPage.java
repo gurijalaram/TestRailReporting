@@ -1,7 +1,5 @@
 package com.apriori.pageobjects.pages.partsandassemblies;
 
-import com.apriori.cisapi.utils.ComponentsUtil;
-import com.apriori.cisapi.utils.ScenariosUtil;
 import com.apriori.pageobjects.common.PartsAndAssemblyFilterController;
 import com.apriori.pageobjects.common.PartsAndAssemblyTableController;
 import com.apriori.pageobjects.navtoolbars.LeftHandNavigationBar;
@@ -172,10 +170,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
 
     private WebDriver driver;
     private PartsAndAssemblyTableController partsAndAssemblyTableController;
-    private PartsAndAssembliesDetailsPage partsAndAssembliesDetailsPage;
     private PartsAndAssemblyFilterController partsAndAssemblyFilterController;
-    private final ScenariosUtil scenariosUtil = new ScenariosUtil();
-    private final ComponentsUtil componentsUtil = new ComponentsUtil();
 
 
     public PartsAndAssembliesPage(WebDriver driver, Logger logger) {

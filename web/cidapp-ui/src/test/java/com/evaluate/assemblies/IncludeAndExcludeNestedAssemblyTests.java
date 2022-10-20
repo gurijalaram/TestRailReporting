@@ -100,7 +100,7 @@ public class IncludeAndExcludeNestedAssemblyTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"11157", "11862"})
+    @TestRail(testCaseId = {"11157", "11862", "6556"})
     @Description("Verify Include button disabled when selecting excluded sub-component from sub-assembly")
     public void testIncludeButtonDisabledWithSubcomponentsFromSubAssembly() {
         loginPage = new CidAppLoginPage(driver);
