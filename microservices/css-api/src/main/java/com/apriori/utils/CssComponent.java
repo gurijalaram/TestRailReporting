@@ -142,18 +142,10 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials) {
-
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
 
-        ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
-
-        if (cssComponentResponse.getResponseEntity().getItems().size() > 0) {
-
-            return cssComponentResponse;
-        }
-
-        throw new IllegalArgumentException(String.format("Failed to get component after %d seconds", WAIT_TIME));
+        return HTTPRequest.build(requestEntity).get();
     }
 }
