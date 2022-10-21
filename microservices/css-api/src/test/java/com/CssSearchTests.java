@@ -28,6 +28,7 @@ public class CssSearchTests {
         SoftAssertions softAssertions = new SoftAssertions();
 
         cssComponentResponses.getResponseEntity().getItems().forEach(o -> softAssertions.assertThat(o.getComponentIdentity()).isNotEmpty());
+
         softAssertions.assertAll();
     }
 }
