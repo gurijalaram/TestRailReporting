@@ -1057,6 +1057,53 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isCreatedDiscussionDisplayed()).isEqualTo(true);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionSubject()).isEqualTo(componentName);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getDiscussionMessage()).contains("New Comment Without Attribute");
+    }
 
+    @Test
+    @TestRail(testCaseId = {"14183","14184","14185","14186","14187","14691"})
+    @Description("Verify that replies can be added to a selected comment thread")
+    public void testReplyToACommentThread()  {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName,scenarioName,resourceFile,currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName);
+
+        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+                .clickDigitalFactoryMessageIcon()
+                .addComment("New Discussion")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isReplyFieldDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isReplyButtonDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isCancelButtonOnDiscussionDisplayed()).isEqualTo(true);
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCommentButtonState()).contains("Mui-disabled");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getCancelButtonState()).doesNotContain("Mui-disabled");
+
+        partsAndAssembliesDetailsPage.addComment("New Reply")
+                .clickComment();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getReplyMessage()).contains("New Reply");
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getRepliesCount()).contains("1 reply");
+
+        partsAndAssembliesDetailsPage.clickDigitalFactoryMessageIcon()
+                .addComment("Second Discussion")
+                .clickComment();
+        
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttributeDiscussionCount()).contains("2");
+
+        softAssertions.assertAll();
     }
 }
