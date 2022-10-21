@@ -29,8 +29,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CssComponent {
 
-    QueryParams queryParams = new QueryParams();
-    private String itemScenarioState;
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 600;
@@ -46,13 +44,9 @@ public class CssComponent {
      * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      */
     public ResponseWrapper<CssComponentResponse> getCssComponentQueryParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+        QueryParams queryParams = new QueryParams();
 
-        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
-
-        return getCssComponent(componentName, scenarioName, userCredentials, queryParams.use(paramMap));
+        return getCssComponent(componentName, scenarioName, userCredentials, queryParams.use(getParams(paramKeysValues)));
     }
 
     /**
@@ -139,18 +133,54 @@ public class CssComponent {
     /**
      * Calls an api with GET verb
      *
+     * @param userCredentials - the query form params
+     * @param queryKeyValue   - the key value pair
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<CssComponentResponse> getCssComponentsQueryParams(UserCredentials userCredentials, String... queryKeyValue) {
+        QueryParams queryParams = new QueryParams();
+
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .token(userCredentials.getToken())
+            .queryParams(queryParams.use(getParams(queryKeyValue)))
+            .socketTimeout(SOCKET_TIMEOUT);
+
+        return getBaseCssComponents(requestEntity);
+    }
+
+    private Map<String, String> getParams(String... queryKeyValue) {
+        List<String[]> paramKeyValue = Arrays.stream(queryKeyValue).map(o -> o.split(",")).collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+
+        paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
+        return paramMap;
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param userCredentials -the query form params
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials) {
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .token(userCredentials.getToken())
+            .socketTimeout(SOCKET_TIMEOUT);
+
+        return getBaseCssComponents(requestEntity);
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(RequestEntity requestEntity) {
         final long START_TIME = System.currentTimeMillis() / 1000;
 
         try {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
-
-                RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
-                    .token(userCredentials.getToken())
-                    .socketTimeout(SOCKET_TIMEOUT);
 
                 ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
 

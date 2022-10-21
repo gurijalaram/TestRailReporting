@@ -22,12 +22,27 @@ public class CssSearchTests {
 
     @Test
     @Description("Test CSS base search")
-    public void testGroupPublishPrivateSubcomponent() {
+    public void testCssBaseSearch() {
         ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser);
 
         SoftAssertions softAssertions = new SoftAssertions();
 
         cssComponentResponses.getResponseEntity().getItems().forEach(o -> softAssertions.assertThat(o.getComponentIdentity()).isNotEmpty());
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Description("Test CSS with query params")
+    public void testCssWithQueryParams() {
+        ResponseWrapper<CssComponentResponse> cssComponentsResponse = cssComponent.getCssComponentsQueryParams(currentUser, "componentIdentity, 50MFHK5MA6FI", "lastAction, create");
+        ResponseWrapper<CssComponentResponse> cssComponentsResponse2 = cssComponent.getCssComponentsQueryParams(currentUser, "customerIdentity, 6C1F8C1D4D75",
+            "scenarioIdentity, 50N5K6J03I9F", "lastAction, create");
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(cssComponentsResponse.getResponseEntity().getItems()).hasSizeGreaterThan(0);
+        softAssertions.assertThat(cssComponentsResponse2.getResponseEntity().getItems()).hasSize(1);
 
         softAssertions.assertAll();
     }
