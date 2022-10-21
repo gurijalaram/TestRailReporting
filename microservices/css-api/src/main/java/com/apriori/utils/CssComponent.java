@@ -120,7 +120,7 @@ public class CssComponent {
 
                     cssComponentResponse.getResponseEntity().getItems().stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()
-                        .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
+                            .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
 
                     return cssComponentResponse;
                 }
@@ -134,5 +134,37 @@ public class CssComponent {
         throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds",
             componentName, scenarioName, WAIT_TIME)
         );
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials) {
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+                    .token(userCredentials.getToken())
+                    .socketTimeout(SOCKET_TIMEOUT);
+
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
+
+                if (cssComponentResponse.getResponseEntity().getItems().size() > 0) {
+
+                    return cssComponentResponse;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(String.format("Failed to get component after %d seconds", WAIT_TIME));
     }
 }
