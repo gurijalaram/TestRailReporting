@@ -1,6 +1,7 @@
 package com.apriori.entity.response;
 
 import com.apriori.cds.objects.response.Customer;
+import com.apriori.utils.http.enums.Schema;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonRootName;
@@ -12,6 +13,7 @@ import lombok.NoArgsConstructor;
 import java.util.Date;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(location = "CustomerAssociationSchema.json")
 @Data
 @Builder
 @AllArgsConstructor

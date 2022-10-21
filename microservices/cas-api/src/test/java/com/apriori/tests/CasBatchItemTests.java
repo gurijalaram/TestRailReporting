@@ -2,7 +2,6 @@ package com.apriori.tests;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
 import static org.hamcrest.Matchers.is;
 
 import com.apriori.apibase.services.cas.Customer;
@@ -22,12 +21,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 public class CasBatchItemTests {
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
@@ -66,8 +67,11 @@ public class CasBatchItemTests {
             .token(token)
             .inlineVariables(customerIdentity, batchIdentity)).get();
 
-        assertThat(getItems.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(getItems.getResponseEntity().getPageItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(getItems.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(getItems.getResponseEntity().getPageItemCount())
+            .isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -121,9 +125,12 @@ public class CasBatchItemTests {
             .token(token)
             .inlineVariables(customerIdentity, batchIdentity, itemId)).get();
 
-        assertThat(getItem.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(getItem.getResponseEntity().getIdentity(), is(equalTo(itemId)));
-        assertThat(getItem.getResponseEntity().getUserName(), is(equalTo(userName)));
+        soft.assertThat(getItem.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(getItem.getResponseEntity().getIdentity())
+            .isEqualTo(itemId);
+        soft.assertThat(getItem.getResponseEntity().getUserName())
+            .isEqualTo(userName);
     }
 
     // TODO endpoint is not implemented
