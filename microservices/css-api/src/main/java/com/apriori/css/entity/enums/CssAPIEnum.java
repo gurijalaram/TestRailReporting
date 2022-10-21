@@ -8,8 +8,7 @@ public enum CssAPIEnum implements ExternalEndpointEnum {
     //SCENARIO
     SCENARIO_ITERATIONS("scenario-iterations"),
     SCENARIO_ITERATIONS_SEARCH("scenario-iterations/search"),
-    COMPONENT_SCENARIO_NAME("scenario-iterations?componentName[EQ]=%s&scenarioName[EQ]=%s"),
-    COMPONENT_ID("scenario-iterations?identity[EQ]=%s");
+    COMPONENT_SCENARIO_NAME("scenario-iterations?componentName[EQ]=%s&scenarioName[EQ]=%s");
 
     private final String endpoint;
 
