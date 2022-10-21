@@ -12,6 +12,7 @@ import com.apriori.pageobjects.pages.explore.CadFileStatusPage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.explore.ImportCadFilePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -52,6 +53,7 @@ public class UploadComponentTests extends TestBase {
     private static ComponentInfoBuilder componentAssembly;
     private static AssemblyUtils assemblyUtils = new AssemblyUtils();
     private SoftAssertions softAssertions = new SoftAssertions();
+    private CssComponent cssComponent = new CssComponent();
 
     @Test
     @Category(SanityTests.class)
@@ -263,17 +265,21 @@ public class UploadComponentTests extends TestBase {
             .submit()
             .clickClose();
 
+        SoftAssertions softAssertions = new SoftAssertions();
+
         //API assertion that components are Processing Failed
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.PROCESSING_FAILED), is(ScenarioStateEnum.PROCESSING_FAILED.getState())));
+            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
+                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.PROCESSING_FAILED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh();
 
         //UI Assertion that the explore page shows the Processing Failed Icon
         multiComponents.forEach(component ->
-            assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED), is(true)));
+            softAssertions.assertThat(explorePage.getListOfScenariosWithStatus(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), ScenarioStateEnum.PROCESSING_FAILED)).isTrue());
+
+        softAssertions.assertAll();
     }
 
     @Test

@@ -87,7 +87,7 @@ public class CssComponent {
     }
 
     /**
-     * Calls an api with GET verb
+     * Calls an api with GET verb.  This method will only return parts that have been translated ie. where componentType is known
      *
      * @param componentName - the component name
      * @param scenarioName  - the scenario name
@@ -102,15 +102,13 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(requestEntity);
 
                 assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, cssComponentResponse.getStatusCode()),
                     HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
-                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
-
-                    cssComponentResponse.getResponseEntity().getItems().stream()
-                        .noneMatch(o -> o.getComponentType().equalsIgnoreCase("unknown")) &&
+                if (cssComponentResponse.getResponseEntity().getItems().stream()
+                    .noneMatch(o -> o.getComponentType().equalsIgnoreCase("unknown")) &&
 
                     cssComponentResponse.getResponseEntity().getItems().stream()
                         .allMatch(o -> ScenarioStateEnum.terminalState.stream()

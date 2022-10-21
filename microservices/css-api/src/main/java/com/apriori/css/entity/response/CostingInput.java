@@ -1,6 +1,7 @@
 package com.apriori.css.entity.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -39,7 +40,13 @@ public class CostingInput {
     public static class ProcessSetupOptions {
     }
 
+    @Data
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @Builder
     public static class SecondaryProcesses {
+        @JsonProperty("Other Secondary Processes")
+        private String otherSecondaryProcesses;
     }
 
     public static class SecondaryDigitalFactories {
