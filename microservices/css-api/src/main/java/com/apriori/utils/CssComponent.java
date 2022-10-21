@@ -142,29 +142,18 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials) {
-        final long START_TIME = System.currentTimeMillis() / 1000;
 
-        try {
-            do {
-                TimeUnit.SECONDS.sleep(POLL_TIME);
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .token(userCredentials.getToken())
+            .socketTimeout(SOCKET_TIMEOUT);
 
-                RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
-                    .token(userCredentials.getToken())
-                    .socketTimeout(SOCKET_TIMEOUT);
+        ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
+        if (cssComponentResponse.getResponseEntity().getItems().size() > 0) {
 
-                if (cssComponentResponse.getResponseEntity().getItems().size() > 0) {
-
-                    return cssComponentResponse;
-                }
-
-            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
-
-        } catch (InterruptedException e) {
-            log.error(e.getMessage());
-            Thread.currentThread().interrupt();
+            return cssComponentResponse;
         }
+
         throw new IllegalArgumentException(String.format("Failed to get component after %d seconds", WAIT_TIME));
     }
 }
