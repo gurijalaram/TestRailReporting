@@ -64,7 +64,6 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.net.UrlEscapers;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
@@ -883,9 +882,10 @@ public class FileUploadResources {
             .inlineVariables(
                 scenarioKey.getWorkspaceId().toString(),
                 scenarioKey.getTypeName(),
-                UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
+                scenarioKey.getMasterName(),
                 scenarioKey.getStateName(),
-                String.valueOf(getLatestIteration(scenarioKey)));
+                String.valueOf(getLatestIteration(scenarioKey)))
+            .urlEncodingEnabled(true);
 
         return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id"));
     }
@@ -905,9 +905,10 @@ public class FileUploadResources {
             .inlineVariables(
                 scenarioKey.getWorkspaceId().toString(),
                 scenarioKey.getTypeName(),
-                UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
-                scenarioKey.getStateName()
-            );
+                scenarioKey.getMasterName(),
+                scenarioKey.getStateName())
+            .urlEncodingEnabled(true)
+            ;
 
         return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).get().getBody(), "iteration"));
     }

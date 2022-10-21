@@ -288,8 +288,7 @@
             "optional",
             "included",
             "overriden",
-            "alternNode",
-            "children"
+            "alternNode"
           ]
         }
       ]
@@ -303,7 +302,6 @@
     "optional",
     "included",
     "overriden",
-    "alternNode",
-    "children"
+    "alternNode"
   ]
 }

@@ -478,13 +478,12 @@ public class AvailableRoutingsTests {
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
         softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
         softAssertions.assertAll();
     }
 
     @Test
     @Category(AcsTest.class)
-    @TestRail(testCaseId = "14830")
+    @TestRail(testCaseId = "14834")
     @Description("Get available routings after Cost for Rapid Prototyping scenario")
     public void testGetAvailableRoutingsRapidPrototyping() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -525,6 +524,380 @@ public class AvailableRoutingsTests {
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
         softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14835")
+    @Description("Get available routings after Cost for Roto & Blow Molding scenario")
+    public void testGetAvailableRoutingsRotoandBlowMolding() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "Rapid Prototyping.stp",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.ROTO_BLOW_MOLDING.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14836")
+    @Description("Get available routings after Cost for Sheet Metal scenario")
+    public void testGetAvailableRoutingsSheetMetal() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "78828.ipt",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_METAL.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14837")
+    @Description("Get available routings after Cost for Sheet Metal - Hydroforming scenario")
+    public void testGetAvailableRoutingsSheetMetalHydroforming() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "FlangedRound.SLDPRT",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_METAL_HYDROFORMING.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14838")
+    @Description("Get available routings after Cost for Sheet Metal - Roll Forming scenario")
+    public void testGetAvailableRoutingsSheetMetalRollForming() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "gullwing.prt.8",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_METAL_ROLLFORMING.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14839")
+    @Description("Get available routings after Cost for Sheet Metal - Stretch Forming scenario")
+    public void testGetAvailableRoutingsSheetMetalStretchForming() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "G05752358-107 --.CATPart",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "148340")
+    @Description("Get available routings after Cost for Sheet Metal - Transfer Die scenario")
+    public void testGetAvailableRoutingsSheetMetalTransferDie() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "SheetMetal.prt",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_METAL_TRANSFER_DIE.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14841")
+    @Description("Get available routings after Cost for Sheet Plastic scenario")
+    public void testGetAvailableRoutingsSheetPlastic() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "r151294.prt.1",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.SHEET_PLASTIC.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @Category(AcsTest.class)
+    @TestRail(testCaseId = "14842")
+    @Description("Get available routings after Cost for Stock Machining scenario")
+    public void testGetAvailableRoutingsStockMachining() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.STOCK_MACHINING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "testpart-4.prt",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        AvailableRoutingsFirstLevel response = acsResources.getAvailableRoutings(
+            costOutputs.getScenarioIterationKey(),
+            "aPriori USA",
+            ProcessGroupEnum.STOCK_MACHINING.getProcessGroup()
+        );
+
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getName()).isNotNull();
+        softAssertions.assertThat(response.getDisplayName()).isNotNull();
+        softAssertions.assertThat(response.getPlantName()).isNotNull();
+        softAssertions.assertThat(response.getProcessGroupName()).isEqualTo("Stock Machining");
         softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
         softAssertions.assertAll();
     }

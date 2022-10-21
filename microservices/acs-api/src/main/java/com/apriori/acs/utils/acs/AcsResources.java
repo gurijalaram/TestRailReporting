@@ -591,8 +591,9 @@ public class AcsResources {
                         scenarioIterationKey.getScenarioKey().getStateName(),
                         scenarioIterationKey.getIteration().toString(),
                         vpeName,
-                        processGroupName
-                );
+                        processGroupName)
+                .urlEncodingEnabled(true)
+                ;
         return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
