@@ -1,8 +1,5 @@
 package com.explore;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.AssignPage;
@@ -11,6 +8,7 @@ import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.explore.ExplorePage;
 import com.apriori.pageobjects.pages.login.CidAppLoginPage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.FileResourceUtil;
 import com.apriori.utils.GenerateStringUtil;
 import com.apriori.utils.TestRail;
@@ -39,6 +37,7 @@ public class GroupPublishTests extends TestBase {
     private ComponentInfoBuilder cidComponentItemA;
     private final SoftAssertions softAssertions = new SoftAssertions();
     private final AssemblyUtils assemblyUtils = new AssemblyUtils();
+    private CssComponent cssComponent = new CssComponent();
     private AssignPage assignPage;
     private InfoPage infoPage;
 
@@ -78,8 +77,8 @@ public class GroupPublishTests extends TestBase {
             .close(ExplorePage.class);
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
+                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
                 .selectFilter("Public");
@@ -242,8 +241,8 @@ public class GroupPublishTests extends TestBase {
             .close(ExplorePage.class);
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
+                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         assignPage = explorePage.refresh()
             .selectFilter("Public")
@@ -311,8 +310,8 @@ public class GroupPublishTests extends TestBase {
         softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isEqualTo(false);
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
+            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
+                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .setPagination()
