@@ -144,7 +144,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"15012", "14988", "15802"})
+    @TestRail(testCaseId = {"15012"})
     @Description("Validate the information updates in the routing modal box")
     public void testLastRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -209,7 +209,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"7844", "14996", "15810"})
+    @TestRail(testCaseId = {"7844"})
     @Description("Validate costing results update accordingly for a newly selected and costed routing")
     public void costUpdatedRouting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -384,7 +384,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"16132"})
     @Description("Be able to see basic breakdown of cycle time by process for problem identification.")
     public void routingCycleTime() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.STOCK_MACHINING;
@@ -423,7 +423,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14988", "15802"})
     @Description("Validate routings Die Cast")
     public void routingsDieCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
@@ -446,7 +446,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14990", "15804"})
     @Description("Validate routings Sand Cast")
     public void routingsSandCasting() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_SAND;
@@ -469,7 +469,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14991", "15805"})
     @Description("Validate routings Forging")
     public void routingsForging() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.FORGING;
@@ -492,7 +492,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14994", "15808"})
     @Description("Validate routings Rapid Prototyping")
     public void routingsRapidPrototyping() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.RAPID_PROTOTYPING;
@@ -515,7 +515,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14995", "15809"})
     @Description("Validate routings Roto & Blow Moulding")
     public void routingsRotoBlowMould() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.ROTO_BLOW_MOLDING;
@@ -538,7 +538,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14996", "15810"})
     @Description("Validate routings Sheet Metal")
     public void routingsSheetMetal() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL;
@@ -563,7 +563,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14997", "15811"})
     @Description("Validate routings Sheet Metal - Hydroforming")
     public void routingsHydroforming() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_HYDROFORMING;
@@ -587,7 +587,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"14999", "15813"})
     @Description("Validate routings Sheet Metal - Stretchforming")
     public void routingsStretchforming() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_METAL_STRETCH_FORMING;
@@ -610,7 +610,7 @@ public class ProcessRoutingTests extends TestBase {
     }
 
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"15001", "15815"})
     @Description("Validate routings Sheet Plastic")
     public void routingsSheetPlastic() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.SHEET_PLASTIC;
@@ -632,9 +632,8 @@ public class ProcessRoutingTests extends TestBase {
         softAssertions.assertAll();
     }
 
-
     @Test
-    //@TestRail(testCaseId = {""}) TODO add testrail ID
+    @TestRail(testCaseId = {"7857"})
     @Description("Validate behaviour when Adding/Editing tolerances that may require additional machining.")
     public void routingTolerances() {
         final ProcessGroupEnum processGroupEnum = ProcessGroupEnum.CASTING_DIE;
