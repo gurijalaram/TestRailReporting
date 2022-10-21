@@ -213,8 +213,8 @@ public class GroupEditTests extends TestBase {
             .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         explorePage.refresh()
             .setPagination()
@@ -235,8 +235,8 @@ public class GroupEditTests extends TestBase {
             .close(ExplorePage.class);
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         explorePage.refresh()
             .setPagination()
