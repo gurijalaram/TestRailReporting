@@ -369,8 +369,8 @@ public class UploadComponentTests extends TestBase {
             .clickClose();
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
+                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh();
 
