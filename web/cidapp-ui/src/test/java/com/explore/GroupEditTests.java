@@ -184,7 +184,7 @@ public class GroupEditTests extends TestBase {
 
     @Test
     // TODO: the test can be optimized by uploading and publishing multiple parts via API, but the current methods need to be reworked
-    @TestRail(testCaseId = {"14726"})
+    @TestRail(testCaseId = {"14726", "15015"})
     @Description("Attempt to edit more than 10 scenarios")
     public void testEditMoreThanTenScenarios() {
         currentUser = UserUtil.getUser();
@@ -274,6 +274,7 @@ public class GroupEditTests extends TestBase {
                 "" + "piston_model1" + ", " + scenarioName + "");
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(false);
+        softAssertions.assertThat(explorePage.isDeleteButtonEnabled()).isEqualTo(false);
 
         softAssertions.assertAll();
     }

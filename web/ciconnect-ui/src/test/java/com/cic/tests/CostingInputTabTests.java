@@ -1,7 +1,7 @@
 package com.cic.tests;
 
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
 import com.apriori.pages.workflows.schedule.details.DetailsPart;
@@ -43,7 +43,7 @@ public class CostingInputTabTests extends TestBase {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -80,7 +80,7 @@ public class CostingInputTabTests extends TestBase {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputNegativeTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -110,7 +110,7 @@ public class CostingInputTabTests extends TestBase {
         String[] expectedConnecFields = new String[] {"Scenario Name", "Process Group", "Annual Volume"};
         String[] mappingRuleFields = new String[] {"Mapped from PLM", "Default If No PLM Value", "Constant"};
         softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)
@@ -137,7 +137,7 @@ public class CostingInputTabTests extends TestBase {
         WorkFlowData workFlowData = new TestDataService().getTestData("CostingInputCustomDateTestData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         softAssertions = new SoftAssertions();
-        DetailsPart detailsPart = new LoginPage(driver)
+        DetailsPart detailsPart = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)

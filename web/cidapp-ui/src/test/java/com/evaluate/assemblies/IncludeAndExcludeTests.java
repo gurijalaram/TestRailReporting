@@ -23,6 +23,7 @@ import com.utils.ButtonTypeEnum;
 import com.utils.ColourEnum;
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Issues;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -403,7 +404,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
-    @Issue("AP-74028")
+    @Issues({@Issue("AP-74028"), @Issue("BA-2658")})
     @TestRail(testCaseId = {"12135", "12052", "12138"})
     @Description("Missing sub-component automatically included on update - test with alternate CAD file for Assembly with additional components not on system")
     public void testMissingSubcomponentIncludedOnUpdate() {
@@ -472,6 +473,7 @@ public class IncludeAndExcludeTests extends TestBase {
     }
 
     @Test
+    @Issue("2657")
     @TestRail(testCaseId = {"11099"})
     @Description("Validate  the set inputs button cannot be selected when sub assemblies and parts are selected")
     public void testInputsDisabledPartsSubassemblies() {
