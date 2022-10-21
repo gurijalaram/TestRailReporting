@@ -222,6 +222,7 @@
         "iconUrl"
       ],
       "optional": [
+        "updatedBy",
         "deletedAt",
         "deletedBy"
       ],

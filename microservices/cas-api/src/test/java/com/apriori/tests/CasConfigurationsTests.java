@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.entity.response.Configurations;
@@ -16,11 +11,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasConfigurationsTests extends TestUtil {
-
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
 
     @Before
@@ -35,7 +31,10 @@ public class CasConfigurationsTests extends TestUtil {
         ResponseWrapper<Configurations> configurationsResponse = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CONFIGURATIONS, Configurations.class)
             .token(token)).get();
 
-        assertThat(configurationsResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(configurationsResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(configurationsResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(configurationsResponse.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 }
