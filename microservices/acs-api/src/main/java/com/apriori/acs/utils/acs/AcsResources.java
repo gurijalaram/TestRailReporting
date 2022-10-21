@@ -43,6 +43,9 @@ import com.apriori.utils.reader.file.user.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -581,19 +584,23 @@ public class AcsResources {
     public AvailableRoutingsFirstLevel getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil
-                .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
-                .headers(headers)
-                .inlineVariables(
-                        scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
-                        scenarioIterationKey.getScenarioKey().getTypeName(),
-                        scenarioIterationKey.getScenarioKey().getMasterName(),
-                        scenarioIterationKey.getScenarioKey().getStateName(),
-                        scenarioIterationKey.getIteration().toString(),
-                        vpeName,
-                        processGroupName)
-                .urlEncodingEnabled(true)
-                ;
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                    .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
+                    .headers(headers)
+                    .inlineVariables(
+                            scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                            scenarioIterationKey.getScenarioKey().getTypeName(),
+                            scenarioIterationKey.getScenarioKey().getMasterName(),
+                            scenarioIterationKey.getScenarioKey().getStateName(),
+                            scenarioIterationKey.getIteration().toString(),
+                        URLEncoder.encode("apriori USA", StandardCharsets.UTF_8.toString()),
+                        URLEncoder.encode("Bar & Tube Fab", StandardCharsets.UTF_8.toString()))
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
