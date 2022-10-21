@@ -19,6 +19,7 @@ public class ScenarioGcd {
     private Integer cadVersion;
     private Integer childArtifactCount;
     private String childGcds;
+    private String descriptor;
     private Integer distanceUnits;
     private String engineType;
     private String fileFormat;

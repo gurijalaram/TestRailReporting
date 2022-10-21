@@ -57,6 +57,9 @@ public class ExplorePage extends ExploreToolbar {
     @FindBy(css = "[id='qa-scenario-list-filter-selector'] input")
     private WebElement filterInput;
 
+    @FindBy(css = "[id='qa-scenario-explorer-filter-selector']")
+    private WebElement currentFilter;
+
     @FindBy(css = "div.no-content.medium-no-content")
     private WebElement noScenariosMessage;
 
@@ -95,6 +98,15 @@ public class ExplorePage extends ExploreToolbar {
         pageUtils.typeAheadSelect(filterDropdown, "qa-scenario-explorer-filter-selector", filter);
         setPagination();
         return this;
+    }
+
+    /**
+     * Get Currently selected Filter
+     *
+     * @return The current filter name as a String
+     */
+    public String getCurrentFilter() {
+        return currentFilter.getText();
     }
 
     /**

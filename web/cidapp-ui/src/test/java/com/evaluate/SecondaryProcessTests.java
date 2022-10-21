@@ -24,6 +24,7 @@ import com.apriori.utils.web.driver.TestBase;
 
 import io.qameta.allure.Description;
 import io.qameta.allure.Issue;
+import io.qameta.allure.Issues;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Test;
@@ -92,6 +93,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"5142", "5149"})
     @Description("Test secondary process Carburize")
     public void secondaryProcessCarburize() {
@@ -172,6 +174,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"5157"})
     @Description("Test secondary process Standard Anneal")
     public void secondaryProcessStandardAnneal() {
@@ -374,7 +377,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
-    @Issue("SUSTAIN-16")
+    @Issues({@Issue("BA-2651"), @Issue("BA-2659")})
     @TestRail(testCaseId = {"5141", "5142", "5143"})
     @Description("Test secondary process powder coat cart PSO")
     public void psoPowderCoatCart() {
@@ -410,6 +413,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"5144", "5145", "5146", "5147"})
     @Description("Test secondary process wet coat line PSO")
     public void psoWetCoatLine() {
@@ -526,6 +530,7 @@ public class SecondaryProcessTests extends TestBase {
 
     @Category({SmokeTests.class})
     @Test
+    @Issue("BA-2561")
     @TestRail(testCaseId = {"5117"})
     @Description("Multiple Secondary Processes after Costing")
     public void multiSecondaryProcessAfterCost() {
@@ -560,6 +565,7 @@ public class SecondaryProcessTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2651")
     @TestRail(testCaseId = {"5150"})
     @Description("Test secondary process Carbonitride")
     public void secondaryProcessCarbonitride() {
