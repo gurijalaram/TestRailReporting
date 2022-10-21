@@ -356,6 +356,12 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid='property-costingInput.vpeName']//span")
     private WebElement userAvatar;
 
+    @FindBy(xpath = "//div[contains(@id,'mention-field-output-reply')]")
+    private WebElement replyMessage;
+
+    @FindBy(xpath = "//div[contains(@id,'discussion')]//div[text()='Second Discussion']")
+    private WebElement secondDiscussion;
+
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
         this(driver, log);
@@ -1050,7 +1056,8 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage selectProcess(String processName) {
-        getPageUtils().waitForElementAndClick(processDropdown);
+        getPageUtils().waitForElementToAppear(processDropdown);
+        getPageUtils().moveAndClick(processDropdown);
         getPageUtils().waitForElementAndClick(By.xpath("//ul[@role='listbox']//span[text()='" + processName + "']"));
         return this;
     }
@@ -1914,5 +1921,82 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public boolean isCreatorAvatarDisplayed() {
         return getPageUtils().waitForElementAppear(userAvatar).isDisplayed();
+    }
+
+    /**
+     * clicks on created comment thread
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage selectCreatedDiscussion() {
+        getPageUtils().waitForElementAndClick(createdDiscussion);
+        return this;
+    }
+
+    /**
+     * Checks if reply field displayed
+     *
+     * @return true/false
+     */
+    public boolean isReplyFieldDisplayed() {
+        return getPageUtils().waitForElementAppear(commentField).isDisplayed();
+    }
+
+    /**
+     * Checks if reply button displayed
+     *
+     * @return true/false
+     */
+    public boolean isReplyButtonDisplayed() {
+        return getPageUtils().waitForElementAppear(btnComment).isDisplayed();
+    }
+
+    /**
+     * Checks if cancel button displayed
+     *
+     * @return true/false
+     */
+    public boolean isCancelButtonOnDiscussionDisplayed() {
+        return getPageUtils().waitForElementAppear(btnCancel).isDisplayed();
+    }
+
+    /**
+     * get reply message
+     *
+     * @return a String
+     */
+    public String getReplyMessage() {
+        return getPageUtils().waitForElementToAppear(replyMessage).getAttribute("innerText");
+    }
+
+    /**
+     * get replies count
+     *
+     * @return a String
+     */
+    public String getRepliesCount() {
+        return getPageUtils().waitForElementToAppear(createdDiscussion).getAttribute("innerText");
+    }
+
+    /**
+     * get attribute created discussion count
+     *
+     * @return a String
+     */
+    public String getAttributeDiscussionCount() {
+        getPageUtils().waitForElementAndClick(secondDiscussion);
+        return getPageUtils().waitForElementToAppear(userAvatar).getAttribute("innerText");
+    }
+
+    /**
+     * clicks on digital factory message icon
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesDetailsPage clickDigitalFactoryMessageIcon() {
+        getPageUtils().waitForElementToAppear(proximityLbl);
+        getPageUtils().mouseMove(attributeDigitalFactory);
+        getPageUtils().moveAndClick(attributeMessageIcon);
+        return this;
     }
 }
