@@ -78,8 +78,8 @@ public class GroupPublishTests extends TestBase {
             .close(ExplorePage.class);
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         explorePage.refresh()
                 .selectFilter("Public");
@@ -242,8 +242,8 @@ public class GroupPublishTests extends TestBase {
             .close(ExplorePage.class);
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         assignPage = explorePage.refresh()
             .selectFilter("Public")
@@ -311,8 +311,8 @@ public class GroupPublishTests extends TestBase {
         softAssertions.assertThat(explorePage.isPublishButtonEnabled()).isEqualTo(false);
 
         multiComponents.forEach(component ->
-            assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
-                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED), is(ScenarioStateEnum.NOT_COSTED.getState())));
+            softAssertions.assertThat(explorePage.getScenarioState(component.getResourceFile().getName().split("\\.")[0],
+                component.getScenarioName(), currentUser, ScenarioStateEnum.NOT_COSTED)).isEqualTo(ScenarioStateEnum.NOT_COSTED.getState()));
 
         explorePage.refresh()
             .setPagination()
