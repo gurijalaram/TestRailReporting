@@ -1,5 +1,9 @@
 package com.explore;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.LAST_ACTION_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static com.utils.ColumnsEnum.ASSIGNEE;
 import static com.utils.ColumnsEnum.COST_MATURITY;
 import static com.utils.ColumnsEnum.STATUS;
@@ -449,8 +453,8 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName, "lastAction[EQ], UPDATE",
-                "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE)
+            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName, LAST_ACTION_EQ.getOperand() + "UPDATE",
+                SCENARIO_STATE_EQ.getOperand() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()
@@ -463,8 +467,8 @@ public class ActionsTests extends TestBase {
             .info()
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
-            .getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName, "lastAction[EQ], UPDATE",
-                "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE)
+            .getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName, LAST_ACTION_EQ.getOperand() + " UPDATE",
+                SCENARIO_STATE_EQ.getOperand() + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()

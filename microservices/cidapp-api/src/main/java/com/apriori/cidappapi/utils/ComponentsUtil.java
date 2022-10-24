@@ -1,5 +1,7 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static org.junit.Assert.assertEquals;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -84,7 +86,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        List<ScenarioItem> scenarioItem = new CssComponent().getCssComponents(userCredentials, "componentName[EQ]," + componentName, "scenarioName[EQ]," + scenarioName)
+        List<ScenarioItem> scenarioItem = new CssComponent().getCssComponents(userCredentials, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName)
             .getResponseEntity().getItems();
 
         scenarioItem.stream()
