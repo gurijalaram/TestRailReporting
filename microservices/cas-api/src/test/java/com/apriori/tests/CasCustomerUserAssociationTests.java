@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
@@ -23,6 +18,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -34,7 +30,7 @@ import java.util.List;
 public class CasCustomerUserAssociationTests {
     private final CdsTestUtil cdsTestUtil = new CdsTestUtil();
     private final CasTestUtil casTestUtil = new CasTestUtil();
-
+    private SoftAssertions soft = new SoftAssertions();
     private Customer aprioriInternal;
     private Customer targetCustomer;
     private CustomerAssociation customerAssociationToAprioriInternal;
@@ -84,8 +80,10 @@ public class CasCustomerUserAssociationTests {
         CustomerAssociationUser associatedUser = response.getResponseEntity();
         associatedUsers.add(associatedUser);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(response.getResponseEntity().getUserIdentity(), is(equalTo(user.getIdentity())));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
+        soft.assertThat(response.getResponseEntity().getUserIdentity())
+            .isEqualTo(user.getIdentity());
 
         ResponseWrapper<CasErrorMessage> error = casTestUtil.create(
             CASAPIEnum.CUSTOMER_ASSOCIATIONS_USERS,
@@ -94,7 +92,9 @@ public class CasCustomerUserAssociationTests {
             aprioriInternal.getIdentity(),
             customerAssociationToAprioriInternal.getIdentity()
         );
-        assertThat(error.getStatusCode(), is(equalTo(HttpStatus.SC_CONFLICT)));
+        soft.assertThat(error.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CONFLICT);
+        soft.assertAll();
     }
 
     @Test
@@ -108,8 +108,11 @@ public class CasCustomerUserAssociationTests {
 
         ResponseWrapper<CustomerAssociationUsers> response = casTestUtil.findCustomerAssociationUsers(aprioriInternal, customerAssociationToAprioriInternal);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getItems().size(), is(equalTo(associatedUsers.size())));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(response.getResponseEntity().getItems().size())
+            .isEqualTo(associatedUsers.size());
+        soft.assertAll();
     }
 
     @Test
@@ -120,8 +123,11 @@ public class CasCustomerUserAssociationTests {
         List<CustomerUser> allUsers = casTestUtil.findUsers(aprioriInternal);
         ResponseWrapper<CustomerUsers> response = casTestUtil.findCustomerAssociationCandidates(aprioriInternal, customerAssociationToAprioriInternal);
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getItems().size(), is(equalTo(allUsers.size() - associatedUsers.size())));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(response.getResponseEntity().getItems().size())
+            .isEqualTo(allUsers.size() - associatedUsers.size());
+        soft.assertAll();
     }
 
     @Test
@@ -137,9 +143,7 @@ public class CasCustomerUserAssociationTests {
             user.getIdentity()
         );
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
-
-        CustomerAssociationUser check = casTestUtil.findCustomerAssociationUser(aprioriInternal, customerAssociationToAprioriInternal, user.getIdentity());
-        assertThat(check.getDeletedAt(), is(notNullValue()));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_NO_CONTENT);
     }
 }

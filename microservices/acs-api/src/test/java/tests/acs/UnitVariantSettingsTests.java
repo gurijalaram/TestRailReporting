@@ -1,9 +1,5 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSetting;
 import com.apriori.acs.entity.response.acs.unitvariantsettings.UnitVariantSettingsResponse;
 import com.apriori.acs.utils.acs.AcsResources;
@@ -11,6 +7,7 @@ import com.apriori.apibase.utils.TestUtil;
 import com.apriori.utils.TestRail;
 
 import io.qameta.allure.Description;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -29,10 +26,12 @@ public class UnitVariantSettingsTests extends TestUtil {
         ArrayList<UnitVariantSetting> allItems = getUnitVariantSettingsResponse.getAllUnitVariantSetting();
 
         for (UnitVariantSetting item : allItems) {
-            assertThat(item.getType(), is(equalTo("simple")));
-            assertThat(item.getDecimalPlaces(), is(equalTo(2.0)));
-            assertThat(item.isSystem(), is(equalTo(true)));
-            assertThat(item.isCustom(), is(equalTo(false)));
+            SoftAssertions softAssertions = new SoftAssertions();
+            softAssertions.assertThat(item.getType()).isEqualTo("simple");
+            softAssertions.assertThat(item.getDecimalPlaces()).isEqualTo(2.0);
+            softAssertions.assertThat(item.isSystem()).isEqualTo(true);
+            softAssertions.assertThat(item.isCustom()).isEqualTo(false);
+            softAssertions.assertAll();
         }
     }
 
@@ -41,23 +40,24 @@ public class UnitVariantSettingsTests extends TestUtil {
     @Description("Test Get Custom Unit Variant Settings")
     public void testGetCustomUnitVariantSettings() {
         AcsResources acsResources = new AcsResources();
-        UnitVariantSetting getCustomUnitVariantSettingsResponse =
-                acsResources.getCustomUnitVariantSettings();
+        UnitVariantSetting getCustomUnitVariantSettingsResponse = acsResources.getCustomUnitVariantSettings();
 
-        assertThat(getCustomUnitVariantSettingsResponse.getType(), is(equalTo("simple")));
-        assertThat(getCustomUnitVariantSettingsResponse.getName(), is(equalTo("CUSTOM")));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getType()).isEqualTo("simple");
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getName()).isEqualTo("CUSTOM");
 
         String expectedMetric = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "true" : "false";
-        String expectedLength = getCustomUnitVariantSettingsResponse.getMetric().equals("true") ? "mm" : "in";
+        String expectedLength = getCustomUnitVariantSettingsResponse.getLength().equals("true") ? "mm" : "ft";
         List<String> potentialMassValues = new ArrayList<>(Arrays.asList("kg", "oz", "lb"));
 
-        assertThat(getCustomUnitVariantSettingsResponse.getMetric(), is(equalTo(expectedMetric)));
-        assertThat(getCustomUnitVariantSettingsResponse.getLength(), is(equalTo(expectedLength)));
-        assertThat(potentialMassValues.contains(getCustomUnitVariantSettingsResponse.getMass()), is(equalTo(true)));
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getMetric()).isEqualTo(expectedMetric);
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getLength()).isEqualTo(expectedLength);
+        softAssertions.assertThat(potentialMassValues.contains(getCustomUnitVariantSettingsResponse.getMass())).isEqualTo(true);
 
-        assertThat(getCustomUnitVariantSettingsResponse.getTime(), is(equalTo("s")));
-        assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces(), is(equalTo(2.0)));
-        assertThat(getCustomUnitVariantSettingsResponse.isSystem(), is(false));
-        assertThat(getCustomUnitVariantSettingsResponse.isCustom(), is(true));
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getTime()).isEqualTo("min");
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.getDecimalPlaces()).isEqualTo(2.0);
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.isSystem()).isEqualTo(false);
+        softAssertions.assertThat(getCustomUnitVariantSettingsResponse.isCustom()).isEqualTo(true);
+        softAssertions.assertAll();
     }
 }

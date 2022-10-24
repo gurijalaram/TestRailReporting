@@ -9,7 +9,7 @@ import com.apriori.nts.pdf.PDFDocument;
 import com.apriori.nts.reports.componentsummary.MultipleComponentSummary;
 import com.apriori.nts.reports.partscost.PartsCost;
 import com.apriori.pagedata.WorkFlowData;
-import com.apriori.pages.login.LoginPage;
+import com.apriori.pages.login.CicLoginPage;
 import com.apriori.pages.workflows.WorkflowHome;
 import com.apriori.pages.workflows.schedule.SchedulePage;
 import com.apriori.pages.workflows.schedule.costinginputs.CostingInputsPart;
@@ -71,7 +71,7 @@ public class CICIntegrationTests extends TestBase {
         WorkFlowData workFlowData = new TestDataService().getTestData("WorkFlowData.json", WorkFlowData.class);
         workFlowData.setWorkflowName(StringUtils.saltString(workFlowData.getWorkflowName()));
         log.info(String.format("Start Creating Workflow >> %s <<", workFlowData.getWorkflowName()));
-        SchedulePage schedulePage = new LoginPage(driver)
+        SchedulePage schedulePage = new CicLoginPage(driver)
             .login(currentUser)
             .clickWorkflowMenu()
             .setTestData(workFlowData)

@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
@@ -23,11 +18,13 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasCustomersUsersTests {
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private IdentityHolder userIdentityHolder;
@@ -72,15 +69,19 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
-        assertThat(user.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
+        soft.assertThat(user.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
+        soft.assertThat(user.getResponseEntity().getUsername())
+            .isEqualTo(userName);
 
         ResponseWrapper<CustomerUsers> customerUsers = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMERS, CustomerUsers.class)
             .token(token)
             .inlineVariables(customerIdentity, "users")).get();
 
-        assertThat(customerUsers.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(customerUsers.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(customerUsers.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(customerUsers.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
 
         String userIdentity = customerUsers.getResponseEntity().getItems().get(0).getIdentity();
         userIdentityHolder = IdentityHolder.builder()
@@ -92,7 +93,9 @@ public class CasCustomersUsersTests {
             .token(token)
             .inlineVariables(customerIdentity, userIdentity)).get();
 
-        assertThat(singleUser.getResponseEntity().getIdentity(), is(equalTo(userIdentity)));
+        soft.assertThat(singleUser.getResponseEntity().getIdentity())
+            .isEqualTo(userIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -113,7 +116,8 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
-        assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
+        soft.assertThat(user.getResponseEntity().getUsername())
+            .isEqualTo(userName);
 
         String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityHolder = IdentityHolder.builder()
@@ -124,8 +128,11 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<UpdateUser> updatedUser = CasTestUtil.updateUser(userName, customerName, userIdentity, customerIdentity, profileIdentity);
 
-        assertThat(updatedUser.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment(), is(equalTo("QA")));
+        soft.assertThat(updatedUser.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(updatedUser.getResponseEntity().getUserProfile().getDepartment())
+            .isEqualTo("QA");
+        soft.assertAll();
     }
 
     @Test
@@ -146,7 +153,8 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<CustomerUser> user = CasTestUtil.addUser(customerIdentity, userName, customerName);
 
-        assertThat(user.getResponseEntity().getUsername(), is(equalTo(userName)));
+        soft.assertThat(user.getResponseEntity().getUsername())
+            .isEqualTo(userName);
 
         String userIdentity = user.getResponseEntity().getIdentity();
         userIdentityHolder = IdentityHolder.builder()
@@ -156,6 +164,8 @@ public class CasCustomersUsersTests {
 
         ResponseWrapper<String> resetMfa = CasTestUtil.resetMfa(customerIdentity, userIdentity);
 
-        assertThat(resetMfa.getStatusCode(), is(equalTo(HttpStatus.SC_ACCEPTED)));
+        soft.assertThat(resetMfa.getStatusCode())
+            .isEqualTo(HttpStatus.SC_ACCEPTED);
+        soft.assertAll();
     }
 }

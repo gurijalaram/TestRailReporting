@@ -95,7 +95,7 @@ public class ReportsLoginPage extends ReportsPageHeader {
 
     @Override
     protected void isLoaded() throws Error {
-        pageUtils.waitForElementToAppear(email);
+        assertTrue("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains("CI-Admin"));
     }
 
     /**

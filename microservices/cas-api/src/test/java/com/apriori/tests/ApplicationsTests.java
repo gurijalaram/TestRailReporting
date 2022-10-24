@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
@@ -17,12 +12,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
 public class ApplicationsTests {
 
     private String token;
+    private SoftAssertions soft = new SoftAssertions();
 
     @Before
     public void getToken() {
@@ -42,7 +39,10 @@ public class ApplicationsTests {
             .token(token)
             .inlineVariables(customer.getIdentity())).get();
 
-        assertThat(responseApplications.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseApplications.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(responseApplications.getStatusCode())
+                .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(responseApplications.getResponseEntity().getTotalItemCount())
+                .isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 }
