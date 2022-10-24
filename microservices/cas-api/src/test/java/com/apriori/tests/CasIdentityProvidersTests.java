@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.utils.TestUtil;
 import com.apriori.cas.enums.CASAPIEnum;
@@ -24,12 +19,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasIdentityProvidersTests extends TestUtil {
 
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private String customerIdentity;
     private String userIdentity;
@@ -78,21 +75,27 @@ public class CasIdentityProvidersTests extends TestUtil {
         String customerName = generateStringUtil.generateCustomerName();
 
         ResponseWrapper<IdentityProviderResponse> postResponse = cdsTestUtil.addSaml(customerIdentity, userIdentity, customerName);
-        assertThat(postResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        soft.assertThat(postResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
         idpIdentity = postResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<IdentityProviders> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProviders.class)
             .token(token)
             .inlineVariables(customerIdentity + "/identity-providers")).get();
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(response.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(response.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
 
         ResponseWrapper<IdentityProvider> responseIdentity = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMER, IdentityProvider.class)
             .token(token)
             .inlineVariables(customerIdentity + "/identity-providers/" + idpIdentity)).get();
 
-        assertThat(responseIdentity.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseIdentity.getResponseEntity().getIdentity(), is(equalTo(idpIdentity)));
+        soft.assertThat(responseIdentity.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(responseIdentity.getResponseEntity().getIdentity())
+            .isEqualTo(idpIdentity);
+        soft.assertAll();
     }
 }

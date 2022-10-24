@@ -1,12 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-import static org.hamcrest.Matchers.not;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.apibase.services.cas.Customers;
 import com.apriori.cas.enums.CASAPIEnum;
@@ -24,15 +17,15 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
-import io.qameta.allure.Issue;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasSitesTests {
 
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private String customerIdentity;
@@ -57,7 +50,8 @@ public class CasSitesTests {
         ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
@@ -65,9 +59,12 @@ public class CasSitesTests {
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
-        assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(siteResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
-        assertThat(siteResponse.getResponseEntity().getItems().get(0).getSiteId(), is(not(emptyString())));
+        soft.assertThat(siteResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(siteResponse.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
+        soft.assertThat(siteResponse.getResponseEntity().getItems().get(0).getSiteId())
+            .isNotEmpty();
     }
 
     @Test
@@ -77,7 +74,8 @@ public class CasSitesTests {
         ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
@@ -85,8 +83,10 @@ public class CasSitesTests {
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
-        assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(sitesResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(sitesResponse.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
 
         String siteIdentity = sitesResponse.getResponseEntity().getItems().get(0).getIdentity();
 
@@ -94,8 +94,11 @@ public class CasSitesTests {
             .token(token)
             .inlineVariables(customerIdentity, siteIdentity)).get();
 
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(site.getResponseEntity().getIdentity(), is(equalTo(siteIdentity)));
+        soft.assertThat(site.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(site.getResponseEntity().getIdentity())
+            .isEqualTo(siteIdentity);
+        soft.assertAll();
     }
 
     @Test
@@ -105,7 +108,8 @@ public class CasSitesTests {
         ResponseWrapper<Customers> response = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.CUSTOMERS, Customers.class)
             .token(token)).get();
 
-        assertThat(response.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
+        soft.assertThat(response.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
 
         String customerIdentity = response.getResponseEntity().getItems().get(0).getIdentity();
 
@@ -113,15 +117,20 @@ public class CasSitesTests {
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
-        assertThat(sitesResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(sitesResponse.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(sitesResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(sitesResponse.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
 
         String siteId = sitesResponse.getResponseEntity().getItems().get(0).getSiteId();
 
         ResponseWrapper<ValidateSite> siteResponse = CasTestUtil.validateSite(customerIdentity, siteId);
 
-        assertThat(siteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(siteResponse.getResponseEntity().getStatus(), is(equalTo("EXISTS")));
+        soft.assertThat(siteResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(siteResponse.getResponseEntity().getStatus())
+            .isEqualTo("EXISTS");
+        soft.assertAll();
     }
 
     @Test
@@ -137,13 +146,17 @@ public class CasSitesTests {
 
         ResponseWrapper<Customer> response = CasTestUtil.addCustomer(customerName, cloudRef, description, email);
 
-        assertThat(response.getResponseEntity().getName(), is(equalTo(customerName)));
+        soft.assertThat(response.getResponseEntity().getName())
+            .isEqualTo(customerName);
 
         customerIdentity = response.getResponseEntity().getIdentity();
 
         ResponseWrapper<Site> site = CasTestUtil.addSite(customerIdentity, siteID, siteName);
 
-        assertThat(site.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(site.getResponseEntity().getSiteId(), is(equalTo(siteID)));
+        soft.assertThat(site.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
+        soft.assertThat(site.getResponseEntity().getSiteId())
+            .isEqualTo(siteID);
+        soft.assertAll();
     }
 }
