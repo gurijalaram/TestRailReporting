@@ -76,7 +76,7 @@ public class CssComponent {
     }
 
     /**
-     * Calls an api with GET verb
+     * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Parts/Assemblies
      *
      * @param requestEntity - the request data
      * @return the response wrapper that contains the response data
