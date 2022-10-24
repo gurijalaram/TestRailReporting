@@ -24,7 +24,7 @@ import tests.workorders.WorkorderAPITests;
 public class RoutingSelectionTests extends TestUtil {
 
     @Test
-    @TestRail(testCaseId = "15429")
+    @TestRail(testCaseId = "14843")
     @Description("Save Routing Selection after Cost")
     public void testSaveRoutingSelection() {
         FileUploadResources fileUploadResources = new FileUploadResources();
@@ -55,7 +55,52 @@ public class RoutingSelectionTests extends TestUtil {
         );
 
         GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
-            costOutputs.getScenarioIterationKey()
+            costOutputs.getScenarioIterationKey(),
+            "Sheet Metal",
+            "aPriori USA",
+            "Sheet Metal"
+        );
+
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "14854")
+    @Description("Save Routing Selection after Cost for Additive Manufacturing")
+    public void testSaveRoutingSelectionAdditiveManufacturing() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.ADDITIVE_MANUFACTURING.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "BasicScenario_Additive.prt.1",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
+            costOutputs.getScenarioIterationKey(),
+            "Additive Manufacturing",
+            "aPriori India",
+            "Additive Manufacturing"
         );
 
         assertThat(response.getId(), is(notNullValue()));
