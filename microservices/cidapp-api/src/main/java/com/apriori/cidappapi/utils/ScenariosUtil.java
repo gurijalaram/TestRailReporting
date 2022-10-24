@@ -402,10 +402,10 @@ public class ScenariosUtil {
             if (componentInfo.getSubComponents().stream()
                 .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
 
-                new CssComponent().getCssComponents(componentInfo.getUser(), COMPONENT_NAME_EQ.getOperand() + componentScenario[0],
-                        SCENARIO_NAME_EQ.getOperand() + componentScenario[1]).getResponseEntity().getItems()
-                    .forEach(o -> new CssComponent().getCssComponents(componentInfo.getUser(), COMPONENT_NAME_EQ.getOperand() + o.getComponentName(),
-                        SCENARIO_NAME_EQ.getOperand() + componentScenario[1]));
+                new CssComponent().getCssComponents(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
+                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]).getResponseEntity().getItems()
+                    .forEach(o -> new CssComponent().getCssComponents(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
+                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]));
 
                 subComponentInfo.add(componentInfo.getSubComponents().stream()
                     .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
@@ -598,8 +598,8 @@ public class ScenariosUtil {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         for (String[] componentScenario : componentScenarioNames) {
-            ScenarioItem component = new CssComponent().getCssComponents(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getOperand() + componentScenario[0],
-                    SCENARIO_NAME_EQ.getOperand() + componentScenario[1])
+            ScenarioItem component = new CssComponent().getCssComponents(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
+                    SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                 .getResponseEntity()
                 .getItems()
                 .stream()

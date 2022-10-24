@@ -413,8 +413,8 @@ public class ExplorePage extends ExploreToolbar {
      * @return - String
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName,
-            SCENARIO_STATE_EQ.getOperand() + stateEnum.getState()).getResponseEntity().getItems();
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + stateEnum.getState()).getResponseEntity().getItems();
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();

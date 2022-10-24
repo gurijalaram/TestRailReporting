@@ -13,13 +13,13 @@ public enum CssSearch {
     ITERATION_EQ("iteration[EQ],"),
     SCENARIO_LOCKED_EQ("scenarioLocked[EQ],");
 
-    private final String operand;
+    private final String key;
 
-    CssSearch(String operand) {
-        this.operand = operand;
+    CssSearch(String key) {
+        this.key = key;
     }
 
-    public String getOperand() {
-        return this.operand;
+    public String getKey() {
+        return this.key;
     }
 }

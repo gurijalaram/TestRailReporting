@@ -86,7 +86,7 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        List<ScenarioItem> scenarioItem = new CssComponent().getCssComponents(userCredentials, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName)
+        List<ScenarioItem> scenarioItem = new CssComponent().getCssComponents(userCredentials, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName)
             .getResponseEntity().getItems();
 
         scenarioItem.stream()
