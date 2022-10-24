@@ -41,6 +41,7 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
+import com.google.common.net.UrlEscapers;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.UnsupportedEncodingException;
@@ -592,11 +593,11 @@ public class AcsResources {
                     .inlineVariables(
                             scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
                             scenarioIterationKey.getScenarioKey().getTypeName(),
-                            scenarioIterationKey.getScenarioKey().getMasterName(),
-                            scenarioIterationKey.getScenarioKey().getStateName(),
+                            UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getMasterName()),
+                        UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
                             scenarioIterationKey.getIteration().toString(),
-                        URLEncoder.encode("apriori USA", StandardCharsets.UTF_8.toString()),
-                        URLEncoder.encode("Bar & Tube Fab", StandardCharsets.UTF_8.toString()))
+                        URLEncoder.encode(vpeName, StandardCharsets.UTF_8.toString()),
+                        URLEncoder.encode(processGroupName, StandardCharsets.UTF_8.toString()))
                 .urlEncodingEnabled(false);
         } catch (UnsupportedEncodingException e) {
             throw new RuntimeException(e);
