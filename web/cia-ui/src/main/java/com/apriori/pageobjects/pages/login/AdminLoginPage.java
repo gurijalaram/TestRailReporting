@@ -84,8 +84,8 @@ public class AdminLoginPage extends AdminHeader {
     }
 
     @Override
-    protected void isLoaded() throws Error {
-        assertTrue("CIA login page was not displayed", aprioriLoginPage.getLoginTitle().contains("CI-Admin"));
+    protected void isLoaded() {
+        pageUtils.waitForElementToAppear(emailInput);
     }
 
     /**

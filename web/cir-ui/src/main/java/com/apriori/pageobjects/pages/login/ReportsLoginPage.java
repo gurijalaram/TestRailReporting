@@ -54,6 +54,9 @@ public class ReportsLoginPage extends ReportsPageHeader {
     @FindBy(css = "a[href='https://www.apriori.com/privacy-policy']")
     private WebElement privacyPolicyButton;
 
+    @FindBy(xpath = "//div[@class='devices']")
+    private WebElement reportsLoginText;
+
     private WebDriver driver;
     private PageUtils pageUtils;
     private UserCredentials userCredentials = UserUtil.getUserOnPrem();
@@ -94,8 +97,8 @@ public class ReportsLoginPage extends ReportsPageHeader {
     }
 
     @Override
-    protected void isLoaded() throws Error {
-        assertTrue("CIR login page was not displayed", aprioriLoginPage.getLoginTitle().contains("CI-Admin"));
+    protected void isLoaded() {
+        assertTrue("CIR login page was not displayed", reportsLoginText.getText().contains("Report"));
     }
 
     /**
