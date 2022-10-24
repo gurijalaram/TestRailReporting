@@ -98,7 +98,8 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        cssComponent.getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + STAND, SCENARIO_NAME_EQ.getOperand() + scenarioName, LAST_ACTION_EQ.getOperand() + " publish").getResponseEntity()
+        cssComponent.getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + STAND, SCENARIO_NAME_EQ.getOperand() + scenarioName, LAST_ACTION_EQ.getOperand() + " publish")
+            .getResponseEntity()
             .getItems()
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
@@ -118,7 +119,8 @@ public class GroupPublishTests {
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);
 
-        cssComponent.getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + DRIVE, SCENARIO_NAME_EQ.getOperand() + scenarioName, LAST_ACTION_EQ.getOperand() + "  publish").getResponseEntity()
+        cssComponent.getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + DRIVE, SCENARIO_NAME_EQ.getOperand() + scenarioName, LAST_ACTION_EQ.getOperand() + "  publish")
+            .getResponseEntity()
             .getItems()
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
