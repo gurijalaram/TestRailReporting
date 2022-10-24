@@ -54,7 +54,7 @@ public class CssComponent {
             .queryParams(queryParams.use(paramMap))
             .socketTimeout(SOCKET_TIMEOUT);
 
-        return getComponentParts(userCredentials, requestEntity);
+        return getComponentParts(requestEntity);
     }
 
     /**
@@ -81,7 +81,7 @@ public class CssComponent {
      * @param requestEntity - the request data
      * @return the response wrapper that contains the response data
      */
-    private ResponseWrapper<CssComponentResponse> getComponentParts(UserCredentials userCredentials, RequestEntity requestEntity) {
+    private ResponseWrapper<CssComponentResponse> getComponentParts(RequestEntity requestEntity) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
