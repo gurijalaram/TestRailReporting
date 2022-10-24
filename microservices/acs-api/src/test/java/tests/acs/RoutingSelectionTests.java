@@ -106,4 +106,46 @@ public class RoutingSelectionTests extends TestUtil {
         assertThat(response.getId(), is(notNullValue()));
         assertThat(response.getResourceCreated(), is(equalTo("true")));
     }
+
+    @Test
+    @TestRail(testCaseId = "14854")
+    @Description("Save Routing Selection after Cost for Bar & Tube")
+    public void testSaveRoutingSelectionBarandTube() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.BAR_TUBE_FAB.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "BasicScenario_Additive.prt.1",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
+            costOutputs.getScenarioIterationKey(),
+            "Additive Manufacturing",
+            "aPriori India",
+            "Additive Manufacturing"
+        );
+
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
+    }
 }
