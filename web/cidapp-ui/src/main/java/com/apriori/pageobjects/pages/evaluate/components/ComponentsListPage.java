@@ -397,7 +397,7 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - string
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
+        List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
             SCENARIO_STATE_EQ.getKey() + stateEnum.getState()).getResponseEntity().getItems();
 
         return itemResponse.stream().filter(item ->

@@ -162,7 +162,7 @@ public class IgnoredTests extends TestBase {
             .publish(cidComponentItem, EvaluatePage.class)
             .clickActions()
             .lock(EvaluatePage.class);
-        cssComponent.getCssComponents(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_LOCKED_EQ.getKey() + " true");
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, SCENARIO_LOCKED_EQ.getKey() + " true");
 
         evaluatePage = new EvaluatePage(driver).uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.FORGING)

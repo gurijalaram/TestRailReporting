@@ -402,9 +402,9 @@ public class ScenariosUtil {
             if (componentInfo.getSubComponents().stream()
                 .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
 
-                new CssComponent().getCssComponents(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
+                new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
                         SCENARIO_NAME_EQ.getKey() + componentScenario[1]).getResponseEntity().getItems()
-                    .forEach(o -> new CssComponent().getCssComponents(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
+                    .forEach(o -> new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
                         SCENARIO_NAME_EQ.getKey() + componentScenario[1]));
 
                 subComponentInfo.add(componentInfo.getSubComponents().stream()
@@ -598,7 +598,7 @@ public class ScenariosUtil {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         for (String[] componentScenario : componentScenarioNames) {
-            ScenarioItem component = new CssComponent().getCssComponents(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
+            ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
                     SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                 .getResponseEntity()
                 .getItems()

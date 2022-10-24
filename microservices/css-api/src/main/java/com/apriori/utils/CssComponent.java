@@ -35,53 +35,13 @@ public class CssComponent {
     private final int WAIT_TIME = 600;
 
     /**
-     * Calls an api with GET verb
+     * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Parts/Assemblies
      *
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
-     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-
-        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
-            .token(userCredentials.getToken())
-            .queryParams(queryParams.use(paramMap))
-            .socketTimeout(SOCKET_TIMEOUT);
-
-        return getComponentParts(requestEntity);
-    }
-
-    /**
-     * Calls an api with GET verb
-     *
-     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
-     * @param userCredentials - the user credentials
-     * @return the response wrapper that contains the response data
-     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
-     */
-    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-
-        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
-        Map<String, String> paramMap = new HashMap<>();
-
-        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
-
-        return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
-    }
-
-    /**
-     * Calls an api with GET verb. This method will ONLY get translated parts ie. componentType = Parts/Assemblies
-     *
-     * @param requestEntity - the request data
-     * @return the response wrapper that contains the response data
-     */
-    private ResponseWrapper<CssComponentResponse> getComponentParts(RequestEntity requestEntity) {
+    public ResponseWrapper<CssComponentResponse> getComponentParts(UserCredentials userCredentials, String... paramKeysValues) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -89,7 +49,7 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
 
                 assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
@@ -113,6 +73,24 @@ public class CssComponent {
         }
         throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
         );
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
+     * @param userCredentials - the user credentials
+     * @return the response wrapper that contains the response data
+     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
+     */
+    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+
+        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+
+        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+
+        return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
     }
 
     /**

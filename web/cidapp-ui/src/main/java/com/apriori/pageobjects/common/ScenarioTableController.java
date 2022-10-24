@@ -567,7 +567,7 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
      * @return current page object
      */
     public ScenarioTableController getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
-        new CssComponent().getCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
+        new CssComponent().getComponentParts(userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
         return this;
     }
 }
