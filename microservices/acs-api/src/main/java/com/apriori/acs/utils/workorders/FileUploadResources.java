@@ -908,7 +908,6 @@ public class FileUploadResources {
                 scenarioKey.getTypeName(),
                 UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
                 scenarioKey.getStateName())
-            .urlEncodingEnabled(true)
             ;
 
         return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).get().getBody(), "iteration"));
