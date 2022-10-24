@@ -89,7 +89,7 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, requestEntity);
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
 
                 assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
@@ -126,15 +126,6 @@ public class CssComponent {
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
 
-        return HTTPRequest.build(requestEntity).get();
-    }
-
-    /**
-     * Calls an api with GET verb
-     *
-     * @return the response wrapper that contains the response data
-     */
-    private ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, RequestEntity requestEntity) {
         return HTTPRequest.build(requestEntity).get();
     }
 }
