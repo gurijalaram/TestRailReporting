@@ -26,7 +26,9 @@
       "optional": [
         "customProperties",
         "licenseAssignments",
-        "updatedAt"
+        "updatedAt",
+        "updatedBy",
+        "updatedByName"
       ],
       "properties": {
         "isSystemUser": {
@@ -60,7 +62,8 @@
           ],
           "optional": [
             "department",
-            "supervisor"
+            "supervisor",
+            "updatedAt"
           ],
           "properties": {
             "identity": {

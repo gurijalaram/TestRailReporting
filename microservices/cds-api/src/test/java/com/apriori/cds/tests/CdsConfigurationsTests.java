@@ -15,12 +15,14 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class CdsConfigurationsTests {
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
 
     @Test
+    @Ignore("Not relevant for now")
     @TestRail(testCaseId = {"5966"})
     @Description("API returns a list of all the available roles in the CDS DB")
     public void getBlacklistedEmailDomains() {

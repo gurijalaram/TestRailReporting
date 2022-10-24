@@ -27,6 +27,7 @@ import com.utils.MultiUpload;
 import com.utils.SortOrderEnum;
 import com.utils.UploadStatusEnum;
 import io.qameta.allure.Description;
+import io.qameta.allure.Issue;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 import org.junit.experimental.categories.Category;
@@ -238,6 +239,7 @@ public class UploadComponentTests extends TestBase {
     }
 
     @Test
+    @Issue("BA-2660")
     @TestRail(testCaseId = "11889")
     @Description("Validate override existing scenario leads to processing failure if unchecked and there are duplicate scenarios")
     public void testOverrideExistingScenarioFailure() {

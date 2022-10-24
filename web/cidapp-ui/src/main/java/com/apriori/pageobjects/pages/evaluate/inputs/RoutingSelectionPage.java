@@ -1,7 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.inputs;
 
+import static org.junit.Assert.assertTrue;
+
 import com.apriori.pageobjects.common.ModalDialogController;
-import com.apriori.utils.enums.NewCostingLabelEnum;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import com.utils.ComparisonDeltaEnum;
@@ -11,11 +12,14 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Slf4j
 public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPage> {
 
-    @FindBy(xpath = "//*[text()='Select Routing']")
-    private WebElement selectRouting;
+    @FindBy(css = "[role='dialog'] .dialog-title")
+    private WebElement dialogTitle;
 
     @FindBy(css = ".MuiCheckbox-colorPrimary")
     private WebElement checkBox;
@@ -26,6 +30,9 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     @FindBy(css = ".MuiChip-label [data-testid='logo']")
     private WebElement aPLogo;
 
+    @FindBy(css = "[role='dialog'] h3")
+    private List<WebElement> routingNames;
+
     private ModalDialogController modalDialogController = new ModalDialogController(getDriver());
 
     public RoutingSelectionPage(WebDriver driver) {
@@ -34,7 +41,7 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
 
     @Override
     protected void isLoaded() throws Error {
-        getPageUtils().waitForElementToAppear(selectRouting);
+        assertTrue("Select Routing page is not displayed", getPageUtils().waitForElementToAppear(dialogTitle).getAttribute("textContent").contains("Select Routing"));
     }
 
     /**
@@ -87,14 +94,14 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     }
 
     /**
-     * Get cost label from a specific routing preference
+     * Get cost preferences from a specific routing preference
      *
      * @param routingPreference - the routing preference
-     * @param status            - cost label
      * @return - Boolean
      */
-    public boolean isCostStatus(String routingPreference, NewCostingLabelEnum status) {
-        return getPageUtils().textPresentInElement(getDriver().findElement(byCostStatus(routingPreference, status)), status.getCostingText());
+
+    public List<String> getRoutingStates(String routingPreference) {
+        return getPageUtils().waitForElementsToAppear(byCostStatus(routingPreference)).stream().map(o -> o.getAttribute("textContent")).collect(Collectors.toList());
     }
 
     /**
@@ -125,11 +132,10 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * Get the value of the cost status
      *
      * @param routingPreference - the routing preference
-     * @param status            - the cost status
      * @return string
      */
-    public String getCostStatusValue(String routingPreference, NewCostingLabelEnum status) {
-        By value = byCostStatus(routingPreference, status);
+    public String getCostStatusValue(String routingPreference) {
+        By value = byCostStatus(routingPreference);
         return getPageUtils().waitForElementToAppear(value).getAttribute("textContent");
     }
 
@@ -137,11 +143,10 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
      * Get by routing preference and cost status
      *
      * @param routingPreference - the routing preference
-     * @param status            - the cost status
      * @return by
      */
-    private By byCostStatus(String routingPreference, NewCostingLabelEnum status) {
-        return By.xpath(String.format("//h3[text()='%s']/parent::div//div[.='%s']", routingPreference, status.getCostingText()));
+    private By byCostStatus(String routingPreference) {
+        return By.xpath(String.format("//h3[text()='%s']/..//span[contains(@class,'MuiChip-label MuiChip-labelSmall')]", routingPreference));
     }
 
     /**
@@ -165,5 +170,12 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     public boolean isAprioriLogoDisplayed(String routingPreference) {
         return getPageUtils().isElementDisplayed(getDriver().findElement(
             By.xpath(String.format("//h3[text()='%s']/parent::div//*[@data-testid='logo']", routingPreference))));
+    }
+
+    /**
+     * @return the list of available routings
+     */
+    public List<String> getAvailableRoutings() {
+        return getPageUtils().waitForElementsToAppear(routingNames).stream().map(routingName -> routingName.getAttribute("textContent")).collect(Collectors.toList());
     }
 }

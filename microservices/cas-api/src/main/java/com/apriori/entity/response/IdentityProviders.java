@@ -1,4 +1,4 @@
-package com.apriori.apibase.services.cas;
+package com.apriori.entity.response;
 
 import com.apriori.utils.Pagination;
 import com.apriori.utils.http.enums.Schema;
@@ -15,5 +15,4 @@ import java.util.List;
 @Data
 public class IdentityProviders extends Pagination {
     private List<IdentityProvider> items;
-    private IdentityProviders response;
 }

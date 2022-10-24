@@ -24,11 +24,11 @@
         "customAttributes",
         "createdByName",
         "updatedByName",
-        "licenseAssignments",
         "userType"
       ],
       "optional": [
-        "customProperties"
+        "customProperties",
+        "licenseAssignments"
       ],
       "properties": {
         "isSystemUser": {

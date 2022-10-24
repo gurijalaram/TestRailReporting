@@ -11,6 +11,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.LoadableComponent;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,9 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
 
     @FindBy(css = "div[id='qa-material-type-select'] [data-icon='chevron-down']")
     private WebElement typeDropdown;
+
+    @FindBy(css = "[id='qa-material-type-select']")
+    private WebElement materialTypeList;
 
     @FindBy(css = "div[id='qa-material-selection-method-select'] [data-icon='chevron-down']")
     private WebElement modeDropdown;
@@ -154,5 +158,15 @@ public class MaterialSelectorPage extends LoadableComponent<MaterialSelectorPage
      */
     public <T> T closeDialog(Class<T> klass) {
         return modalDialogController.closeDialog(klass);
+    }
+
+    /**
+     * Gets list of material types
+     *
+     * @return list as string
+     */
+    public List<String> getListOfMaterialTypes() {
+        pageUtils.waitForElementAndClick(materialTypeList);
+        return Arrays.stream(materialTypeList.getText().split("\n")).filter(x -> !x.equalsIgnoreCase("Type")).collect(Collectors.toList());
     }
 }
