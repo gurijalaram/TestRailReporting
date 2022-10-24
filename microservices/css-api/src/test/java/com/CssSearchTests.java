@@ -1,5 +1,8 @@
 package com;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -23,7 +26,8 @@ public class CssSearchTests {
     @Test
     @Description("Test CSS base search")
     public void testCssBaseSearchCapability() {
-        ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser, "componentIdentity[EQ], 50MFHK5MA6FI", "scenarioIdentity[EQ], 50N5K6J03I9F");
+        ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser, COMPONENT_IDENTITY_EQ.getOperand() + " 50MFHK5MA6FI",
+            SCENARIO_IDENTITY_EQ.getOperand() + " 50N5K6J03I9F");
 
         SoftAssertions softAssertions = new SoftAssertions();
 

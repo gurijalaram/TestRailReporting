@@ -1,5 +1,8 @@
 package com.apriori.pageobjects.pages.evaluate.components;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.openqa.selenium.support.locators.RelativeLocator.with;
 
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
@@ -394,8 +397,8 @@ public class ComponentsListPage extends LoadableComponent<ComponentsListPage> {
      * @return - string
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName,
-            "scenarioState[EQ], " + stateEnum.getState()).getResponseEntity().getItems();
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName,
+            SCENARIO_STATE_EQ.getOperand() + stateEnum.getState()).getResponseEntity().getItems();
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();

@@ -1,5 +1,9 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
@@ -409,8 +413,8 @@ public class ExplorePage extends ExploreToolbar {
      * @return - String
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, componentName.concat("[EQ]"), scenarioName.concat("[EQ]"),
-            "scenarioState[EQ], " + stateEnum.getState()).getResponseEntity().getItems();
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName,
+            SCENARIO_STATE_EQ.getOperand() + stateEnum.getState()).getResponseEntity().getItems();
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();

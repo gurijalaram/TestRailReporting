@@ -1,5 +1,9 @@
 package com;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_LOCKED_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
@@ -158,7 +162,7 @@ public class IgnoredTests extends TestBase {
             .publish(cidComponentItem, EvaluatePage.class)
             .clickActions()
             .lock(EvaluatePage.class);
-        cssComponent.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName, "scenarioLocked[EQ], true");
+        cssComponent.getCssComponents(currentUser, COMPONENT_NAME_EQ.getOperand() + componentName, SCENARIO_NAME_EQ.getOperand() + scenarioName, SCENARIO_LOCKED_EQ.getOperand() + " true");
 
         evaluatePage = new EvaluatePage(driver).uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
             .selectProcessGroup(ProcessGroupEnum.FORGING)
