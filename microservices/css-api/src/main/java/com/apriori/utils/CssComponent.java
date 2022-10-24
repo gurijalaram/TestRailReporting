@@ -29,7 +29,6 @@ import java.util.stream.Collectors;
 @Slf4j
 public class CssComponent {
 
-    QueryParams queryParams = new QueryParams();
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 600;
@@ -84,6 +83,7 @@ public class CssComponent {
      * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      */
     public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+        QueryParams queryParams = new QueryParams();
 
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
