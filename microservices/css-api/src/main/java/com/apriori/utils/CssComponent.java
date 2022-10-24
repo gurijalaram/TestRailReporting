@@ -30,7 +30,6 @@ import java.util.stream.Collectors;
 public class CssComponent {
 
     QueryParams queryParams = new QueryParams();
-    private String itemScenarioState;
     private final int SOCKET_TIMEOUT = 630000;
     private final int POLL_TIME = 2;
     private final int WAIT_TIME = 600;
@@ -53,6 +52,24 @@ public class CssComponent {
         paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
 
         return getCssComponent(componentName, scenarioName, userCredentials, queryParams.use(paramMap));
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
+     * @param userCredentials - the user credentials
+     * @return the response wrapper that contains the response data
+     * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
+     */
+    public ResponseWrapper<CssComponentResponse> getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+
+        List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
+        Map<String, String> paramMap = new HashMap<>();
+
+        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
+
+        return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
     }
 
     /**
@@ -141,8 +158,9 @@ public class CssComponent {
      *
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials) {
+    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .queryParams(queryParams)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
 
