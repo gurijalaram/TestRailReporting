@@ -22,8 +22,8 @@ public class CssSearchTests {
 
     @Test
     @Description("Test CSS base search")
-    public void testGroupPublishPrivateSubcomponent() {
-        ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getCssComponents(currentUser, "componentIdentity[EQ], 50MFHK5MA6FI", "scenarioIdentity[EQ], 50N5K6J03I9F");
+    public void testCssBaseSearchCapability() {
+        ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser, "componentIdentity[EQ], 50MFHK5MA6FI", "scenarioIdentity[EQ], 50N5K6J03I9F");
 
         SoftAssertions softAssertions = new SoftAssertions();
 

@@ -30,7 +30,6 @@ import testsuites.suiteinterface.IgnoreTests;
 import java.io.File;
 
 
-
 public class IgnoredTests extends TestBase {
 
     private UserCredentials currentUser;
@@ -66,27 +65,27 @@ public class IgnoredTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, testScenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem);
 
         softAssertions.assertThat(evaluatePage.isCostLabel(NewCostingLabelEnum.NOT_COSTED)).isEqualTo(true);
 
         evaluatePage.selectProcessGroup(processGroupEnum)
-                .openMaterialSelectorTable()
-                .selectMaterial("F-0005")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .clickExplore()
-                .selectFilter("Recent")
-                .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
-                .clickSearch(componentName)
-                .highlightScenario(componentName, testScenarioName)
-                .createScenario()
-                .enterScenarioName(testNewScenarioName)
-                .submit(EvaluatePage.class);
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickExplore()
+            .selectFilter("Recent")
+            .sortColumn(ColumnsEnum.CREATED_AT, SortOrderEnum.DESCENDING)
+            .clickSearch(componentName)
+            .highlightScenario(componentName, testScenarioName)
+            .createScenario()
+            .enterScenarioName(testNewScenarioName)
+            .submit(EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(testNewScenarioName)).isEqualTo(true);
 
@@ -108,27 +107,27 @@ public class IgnoredTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         explorePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .openMaterialSelectorTable()
-                .selectMaterial("F-0005")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .editScenario(EditScenarioStatusPage.class)
-                .close(EvaluatePage.class)
-                .selectProcessGroup(processGroupEnum)
-                .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
-                .publishScenario(PublishPage.class)
-                .override()
-                .clickContinue(PublishPage.class)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .clickActions()
-                .lock(EvaluatePage.class)
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, ExplorePage.class);
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .editScenario(EditScenarioStatusPage.class)
+            .close(EvaluatePage.class)
+            .selectProcessGroup(processGroupEnum)
+            .selectDigitalFactory(DigitalFactoryEnum.APRIORI_USA)
+            .publishScenario(PublishPage.class)
+            .override()
+            .clickContinue(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
+            .lock(EvaluatePage.class)
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, ExplorePage.class);
 
         softAssertions.assertThat(explorePage.getListOfScenarios(componentName, scenarioNameB)).isEqualTo(0);
     }
@@ -147,26 +146,26 @@ public class IgnoredTests extends TestBase {
 
         loginPage = new CidAppLoginPage(driver);
         cidComponentItem = loginPage.login(currentUser)
-                .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
+            .uploadComponent(componentName, scenarioName, resourceFile, currentUser);
 
         evaluatePage = new ExplorePage(driver).navigateToScenario(cidComponentItem)
-                .selectProcessGroup(processGroupEnum.POWDER_METAL)
-                .openMaterialSelectorTable()
-                .selectMaterial("F-0005")
-                .submit(EvaluatePage.class)
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .publish(cidComponentItem, EvaluatePage.class)
-                .clickActions()
-                .lock(EvaluatePage.class);
-        cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "scenarioLocked, true");
+            .selectProcessGroup(processGroupEnum)
+            .openMaterialSelectorTable()
+            .selectMaterial("F-0005")
+            .submit(EvaluatePage.class)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .publish(cidComponentItem, EvaluatePage.class)
+            .clickActions()
+            .lock(EvaluatePage.class);
+        cssComponent.getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName, "scenarioLocked[EQ], true");
 
         evaluatePage = new EvaluatePage(driver).uploadComponentAndOpen(componentName, scenarioName2, resourceFile, currentUser)
-                .selectProcessGroup(processGroupEnum.FORGING)
-                .costScenario()
-                .publishScenario(PublishPage.class)
-                .changeName(scenarioName2)
-                .publish(cidComponentItem, EvaluatePage.class);
+            .selectProcessGroup(ProcessGroupEnum.FORGING)
+            .costScenario()
+            .publishScenario(PublishPage.class)
+            .changeName(scenarioName2)
+            .publish(cidComponentItem, EvaluatePage.class);
 
         softAssertions.assertThat(evaluatePage.isCurrentScenarioNameDisplayed(scenarioName2)).isEqualTo(true);
     }

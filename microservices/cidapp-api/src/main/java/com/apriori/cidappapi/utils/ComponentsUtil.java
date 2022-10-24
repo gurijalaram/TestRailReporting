@@ -84,7 +84,8 @@ public class ComponentsUtil {
      * @return response object
      */
     public List<ScenarioItem> getUnCostedComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        List<ScenarioItem> scenarioItem = new ArrayList<>(new CssComponent().getCssComponent(componentName, scenarioName, userCredentials).getResponseEntity().getItems());
+        List<ScenarioItem> scenarioItem = new CssComponent().getCssComponents(userCredentials, "componentName[EQ]," + componentName, "scenarioName[EQ]," + scenarioName)
+            .getResponseEntity().getItems();
 
         scenarioItem.stream()
             .filter(o -> o.getScenarioState().equalsIgnoreCase(ScenarioStateEnum.NOT_COSTED.getState()))
@@ -233,7 +234,7 @@ public class ComponentsUtil {
      * GET components for the current user matching an identity ewith an expected Return Code
      *
      * @param componentInfo - the component info builder object
-     * @param httpStatus - The expected return code as an int
+     * @param httpStatus    - The expected return code as an int
      * @return response object
      */
     public ResponseWrapper<Object> getComponentIdentityExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
@@ -273,7 +274,7 @@ public class ComponentsUtil {
      * GET components for the current user matching an identity ewith an expected Return Code
      *
      * @param componentInfo - the component info builder object
-     * @param httpStatus - The expected return code as an int
+     * @param httpStatus    - The expected return code as an int
      * @return response object
      */
     public ResponseWrapper<Object> getComponentIterationLatestExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {

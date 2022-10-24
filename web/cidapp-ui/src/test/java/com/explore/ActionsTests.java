@@ -449,7 +449,8 @@ public class ActionsTests extends TestBase {
             .inputDescription("QA Test Description")
             .inputNotes("Testing QA notes")
             .submit(ExplorePage.class)
-            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName, "lastAction[EQ], UPDATE",
+                "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()
@@ -462,7 +463,8 @@ public class ActionsTests extends TestBase {
             .info()
             .inputCostMaturity("Medium")
             .submit(ExplorePage.class)
-            .queryCssComponentParams(componentName, scenarioName, currentUser, "lastAction, UPDATE", "scenarioState, " + ScenarioStateEnum.COST_COMPLETE)
+            .getCssComponents(currentUser, "componentName[EQ], " + componentName, "scenarioName[EQ], " + scenarioName, "lastAction[EQ], UPDATE",
+                "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE)
             .refresh()
             .highlightScenario(componentName, scenarioName)
             .clickActions()

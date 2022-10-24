@@ -14,7 +14,6 @@ import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
 
 import com.utils.ColumnsEnum;
-import com.utils.DirectionEnum;
 import com.utils.SortOrderEnum;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -122,8 +121,7 @@ public class ExplorePage extends ExploreToolbar {
      * Get the Created At value for a given scenario
      *
      * @param componentName - Name of the component
-     * @param scenarioName - Name of the scenario
-     *
+     * @param scenarioName  - Name of the scenario
      * @return LocalDateTime representation of Created At value
      */
     public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
@@ -340,8 +338,7 @@ public class ExplorePage extends ExploreToolbar {
      * Gets the Published state of a given scenario
      *
      * @param componentName - The component name to be checked
-     * @param scenarioName - The scenario name to be checked
-     *
+     * @param scenarioName  - The scenario name to be checked
      * @return String representation of published column
      */
     public String getPublishedState(String componentName, String scenarioName) {
@@ -412,8 +409,8 @@ public class ExplorePage extends ExploreToolbar {
      * @return - String
      */
     public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
-        List<ScenarioItem> itemResponse = new CssComponent().getCssComponentQueryParams(componentName, scenarioName, currentUser, "scenarioState, " + stateEnum.getState())
-            .getResponseEntity().getItems();
+        List<ScenarioItem> itemResponse = new CssComponent().getCssComponents(currentUser, componentName.concat("[EQ]"), scenarioName.concat("[EQ]"),
+            "scenarioState[EQ], " + stateEnum.getState()).getResponseEntity().getItems();
 
         return itemResponse.stream().filter(item ->
             item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
@@ -435,14 +432,12 @@ public class ExplorePage extends ExploreToolbar {
     /**
      * Calls an api with GET verb
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
      * @param userCredentials - the user credentials
      * @return current page object
      */
-    public ExplorePage queryCssComponentParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
-        scenarioTableController.getComponentQueryCssParams(componentName, scenarioName, userCredentials, paramKeysValues);
+    public ExplorePage getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+        scenarioTableController.getCssComponents(userCredentials, paramKeysValues);
         return this;
     }
 

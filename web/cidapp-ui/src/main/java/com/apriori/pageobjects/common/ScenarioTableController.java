@@ -562,14 +562,12 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
     /**
      * Calls an api with GET verb
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
      * @param userCredentials - the user credentials
      * @return current page object
      */
-    public ScenarioTableController getComponentQueryCssParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
-        new CssComponent().getCssComponentQueryParams(componentName, scenarioName, userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
+    public ScenarioTableController getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+        new CssComponent().getCssComponents(userCredentials, paramKeysValues).getResponseEntity().getItems().stream();
         return this;
     }
 }

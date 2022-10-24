@@ -37,21 +37,24 @@ public class CssComponent {
     /**
      * Calls an api with GET verb
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed". The operand (eg. [CN]) MUST be included in the query.
      * @param userCredentials - the user credentials
      * @return the response wrapper that contains the response data
      * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponentQueryParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
+    public ResponseWrapper<CssComponentResponse> getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
 
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
 
-        paramKeyValue.forEach(o -> paramMap.put(o[0].trim().concat("[EQ]"), o[1].trim()));
+        paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
 
-        return getCssComponent(componentName, scenarioName, userCredentials, queryParams.use(paramMap));
+        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
+            .token(userCredentials.getToken())
+            .queryParams(queryParams.use(paramMap))
+            .socketTimeout(SOCKET_TIMEOUT);
+
+        return getComponentPart(userCredentials, requestEntity);
     }
 
     /**
@@ -62,7 +65,7 @@ public class CssComponent {
      * @return the response wrapper that contains the response data
      * @throws ArrayIndexOutOfBoundsException if only one of the paramKeysValues is supplied eg. "scenarioState" rather than "scenarioState, not_costed"
      */
-    public ResponseWrapper<CssComponentResponse> getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
 
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
@@ -75,49 +78,10 @@ public class CssComponent {
     /**
      * Calls an api with GET verb
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - the user credentials
-     * @return the response wrapper that contains the response data
-     */
-    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials) {
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
-            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(userCredentials.getToken())
-            .socketTimeout(SOCKET_TIMEOUT);
-
-        return getComponentPart(componentName, scenarioName, requestEntity);
-    }
-
-    /**
-     * Calls an api with GET verb
-     *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
-     * @param userCredentials - the user credentials
-     * @param queryParams     - the query form params
-     * @return the response wrapper that contains the response data
-     */
-    public ResponseWrapper<CssComponentResponse> getCssComponent(String componentName, String scenarioName, UserCredentials userCredentials, QueryParams queryParams) {
-
-        RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.COMPONENT_SCENARIO_NAME, CssComponentResponse.class)
-            .inlineVariables(componentName.split("\\.")[0].toUpperCase(), scenarioName)
-            .token(userCredentials.getToken())
-            .queryParams(queryParams)
-            .socketTimeout(SOCKET_TIMEOUT);
-
-        return getComponentPart(componentName, scenarioName, requestEntity);
-    }
-
-    /**
-     * Calls an api with GET verb
-     *
-     * @param componentName - the component name
-     * @param scenarioName  - the scenario name
      * @param requestEntity - the request data
      * @return the response wrapper that contains the response data
      */
-    private ResponseWrapper<CssComponentResponse> getComponentPart(String componentName, String scenarioName, RequestEntity requestEntity) {
+    private ResponseWrapper<CssComponentResponse> getComponentPart(UserCredentials userCredentials, RequestEntity requestEntity) {
 
         final long START_TIME = System.currentTimeMillis() / 1000;
 
@@ -125,10 +89,9 @@ public class CssComponent {
             do {
                 TimeUnit.SECONDS.sleep(POLL_TIME);
 
-                ResponseWrapper<CssComponentResponse> cssComponentResponse = HTTPRequest.build(requestEntity).get();
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, requestEntity);
 
-                assertEquals(String.format("Failed to receive data about component name: %s, scenario name: %s, status code: %s", componentName, scenarioName, cssComponentResponse.getStatusCode()),
-                    HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
 
                 if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
 
@@ -148,8 +111,7 @@ public class CssComponent {
             log.error(e.getMessage());
             Thread.currentThread().interrupt();
         }
-        throw new IllegalArgumentException(String.format("Failed to get uploaded component name: %s, with scenario name: %s, after %d seconds",
-            componentName, scenarioName, WAIT_TIME)
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
         );
     }
 
@@ -158,12 +120,21 @@ public class CssComponent {
      *
      * @return the response wrapper that contains the response data
      */
-    public ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
+    private ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
         RequestEntity requestEntity = RequestEntityUtil.init(CssAPIEnum.SCENARIO_ITERATIONS, CssComponentResponse.class)
             .queryParams(queryParams)
             .token(userCredentials.getToken())
             .socketTimeout(SOCKET_TIMEOUT);
 
+        return HTTPRequest.build(requestEntity).get();
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
+     * @return the response wrapper that contains the response data
+     */
+    private ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, RequestEntity requestEntity) {
         return HTTPRequest.build(requestEntity).get();
     }
 }
