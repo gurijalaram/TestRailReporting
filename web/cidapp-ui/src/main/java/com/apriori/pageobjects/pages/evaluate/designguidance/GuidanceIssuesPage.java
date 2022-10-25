@@ -81,7 +81,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
      * @return current page object
      */
     public GuidanceIssuesPage selectIssueTypeGcd(String issueDropdown, String issueType, String gcd) {
-        collapseDropdowns();
         selectIssueType(issueDropdown, issueType)
             .selectGcd(gcd.trim());
         return this;
@@ -123,14 +122,6 @@ public class GuidanceIssuesPage extends LoadableComponent<GuidanceIssuesPage> {
         Arrays.stream(issues).map(issue -> pageUtils.waitForElementToAppear(By.xpath(String.format("//div[@role='cell'][.='%s']", issue.trim())))
                 .findElement(By.cssSelector("[data-icon='circle-chevron-down']")))
             .forEach(dropdown -> pageUtils.scrollWithJavaScript(dropdown, true).click());
-    }
-
-    /**
-     * Collapses issue dropdowns if expanded
-     */
-    private void collapseDropdowns() {
-        driver.findElements(By.cssSelector("[role='cell'] .expanded"))
-            .forEach(WebElement::click);
     }
 
     /**
