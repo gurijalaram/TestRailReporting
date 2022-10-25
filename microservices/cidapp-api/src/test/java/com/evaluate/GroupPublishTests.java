@@ -1,5 +1,11 @@
 package com.evaluate;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.ITERATION_EQ;
+import static com.apriori.css.entity.enums.CssSearch.LAST_ACTION_EQ;
+import static com.apriori.css.entity.enums.CssSearch.LATEST_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -92,7 +98,8 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "lastAction, publish").getResponseEntity()
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " publish")
+            .getResponseEntity()
             .getItems()
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
@@ -112,7 +119,8 @@ public class GroupPublishTests {
 
         scenariosUtil.postPublishGroupScenarios(groupPublishRequest2, DRIVE + "," + scenarioName);
 
-        cssComponent.getCssComponentQueryParams(DRIVE, newScenarioName, currentUser, "lastAction, publish").getResponseEntity()
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + DRIVE, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + "  publish")
+            .getResponseEntity()
             .getItems()
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
@@ -166,10 +174,11 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, scenarioName, currentUser, "lastAction, publish")
-            .getResponseEntity()
-            .getItems()
-            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+        subComponentNames.forEach(componentName ->
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName, LAST_ACTION_EQ.getKey() + " publish")
+                .getResponseEntity()
+                .getItems()
+                .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         softAssertions.assertAll();
     }
@@ -223,11 +232,15 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        subComponentNames.forEach(componentName -> cssComponent.getCssComponentQueryParams(componentName, newScenarioName, currentUser, "lastAction, publish").getResponseEntity()
-            .getItems()
-            .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+        subComponentNames.forEach(componentName ->
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() +
+                    scenarioName, LAST_ACTION_EQ.getKey() + " publish")
+                .getResponseEntity()
+                .getItems()
+                .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
-        subComponentNames.forEach(componentName -> cssComponent.getCssComponent(componentName, newScenarioName, currentUser).getResponseEntity()
+        subComponentNames.forEach(componentName -> cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName,
+                SCENARIO_NAME_EQ.getKey() + newScenarioName).getResponseEntity()
             .getItems()
             .forEach(scenario -> softAssertions.assertThat(scenario.getScenarioIterationKey().getWorkspaceId()).isNotEqualTo(user.getCustomAttributes().getWorkspaceId())));
 
@@ -287,17 +300,19 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        softAssertions.assertThat(cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "iteration, 1", "latest, false")
+        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_STATE_EQ.getKey() + scenarioName,
+                ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "false")
             .getResponseEntity()
             .getItems()
             .size()).isGreaterThanOrEqualTo(1);
 
-        softAssertions.assertThat(cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "iteration, 2", "latest, true")
+        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_STATE_EQ.getKey() + scenarioName,
+                ITERATION_EQ.getKey() + " 2", LATEST_EQ.getKey() + "true")
             .getResponseEntity()
             .getItems()
             .size()).isGreaterThanOrEqualTo(1);
 
-        softAssertions.assertThat(cssComponent.getCssComponent(STAND, scenarioName, currentUser)
+        softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_STATE_EQ.getKey() + scenarioName)
                 .getResponseEntity()
                 .getItems()
                 .stream()
@@ -375,12 +390,15 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        cssComponent.getCssComponentQueryParams(STAND, scenarioName, currentUser, "iteration, 1", "latest, true")
+
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_STATE_EQ.getKey() + scenarioName,
+                ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "true")
             .getResponseEntity()
             .getItems()
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
 
-        cssComponent.getCssComponentQueryParams(STAND, newScenarioName, currentUser, "iteration, 1", "latest, true")
+        cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + STAND, SCENARIO_STATE_EQ.getKey() + newScenarioName,
+                ITERATION_EQ.getKey() + " 1", LATEST_EQ.getKey() + "true")
             .getResponseEntity()
             .getItems()
             .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE));
@@ -456,15 +474,19 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        subComponentNames.forEach(subComponent -> cssComponent.getCssComponentQueryParams(subComponent, scenarioName, currentUser, "iteration, 1", "latest, false")
-            .getResponseEntity()
-            .getItems()
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+        subComponentNames.forEach(subComponent ->
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ + " 1",
+                    LATEST_EQ.getKey() + " false")
+                .getResponseEntity()
+                .getItems()
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
-        subComponentNames.forEach(subComponent -> cssComponent.getCssComponentQueryParams(subComponent, scenarioName, currentUser, "iteration, 2", "latest, true")
-            .getResponseEntity()
-            .getItems()
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+        subComponentNames.forEach(subComponent ->
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 2",
+                    LATEST_EQ.getKey() + " true")
+                .getResponseEntity()
+                .getItems()
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         softAssertions.assertAll();
     }
@@ -539,15 +561,19 @@ public class GroupPublishTests {
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        subComponentNames.forEach(subComponent -> cssComponent.getCssComponentQueryParams(subComponent, scenarioName, currentUser, "iteration, 1", "latest, true")
-            .getResponseEntity()
-            .getItems()
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+        subComponentNames.forEach(subComponent ->
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName, ITERATION_EQ.getKey() + " 1",
+                    LATEST_EQ.getKey() + " true")
+                .getResponseEntity()
+                .getItems()
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
-        subComponentNames.forEach(subComponent -> cssComponent.getCssComponentQueryParams(subComponent, scenarioName2, currentUser, "iteration, 1", "latest, true")
-            .getResponseEntity()
-            .getItems()
-            .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
+        subComponentNames.forEach(subComponent ->
+            cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + subComponent, SCENARIO_NAME_EQ.getKey() + scenarioName2, ITERATION_EQ.getKey() + " 1",
+                    LATEST_EQ.getKey() + " true")
+                .getResponseEntity()
+                .getItems()
+                .forEach(o -> softAssertions.assertThat(o.getScenarioIterationKey().getWorkspaceId()).isEqualTo(PUBLIC_WORKSPACE)));
 
         softAssertions.assertAll();
     }
