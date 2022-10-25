@@ -122,7 +122,7 @@ public class RoutingSelectionTests extends TestUtil {
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            "BasicScenario_Additive.prt.1",
+            "B&T-LOW-001.SLDPRT",
             processGroup
         );
 
@@ -140,9 +140,51 @@ public class RoutingSelectionTests extends TestUtil {
 
         GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
             costOutputs.getScenarioIterationKey(),
-            "Additive Manufacturing",
+            "Bar & Tube Fab",
             "aPriori India",
-            "Additive Manufacturing"
+            "Bar & Tube Fab"
+        );
+
+        assertThat(response.getId(), is(notNullValue()));
+        assertThat(response.getResourceCreated(), is(equalTo("true")));
+    }
+
+    @Test
+    @TestRail(testCaseId = "14854")
+    @Description("Save Routing Selection after Cost for Casting - Die")
+    public void testSaveRoutingSelectionCastingDie() {
+        FileUploadResources fileUploadResources = new FileUploadResources();
+        AcsResources acsResources = new AcsResources();
+        WorkorderAPITests workorderAPITests = new WorkorderAPITests();
+        NewPartRequest productionInfoInputs = workorderAPITests.setupProductionInfoInputs();
+
+        String testScenarioName = new GenerateStringUtil().generateScenarioName();
+
+        String processGroup = ProcessGroupEnum.CASTING_DIE.getProcessGroup();
+        fileUploadResources.checkValidProcessGroup(processGroup);
+
+        FileResponse fileResponse = fileUploadResources.initializePartUpload(
+            "Casting-Die.stp",
+            processGroup
+        );
+
+        FileUploadOutputs fileUploadOutputs = fileUploadResources.createFileUploadWorkorderSuppressError(
+            fileResponse,
+            testScenarioName
+        );
+
+        CostOrderStatusOutputs costOutputs = fileUploadResources.costAssemblyOrPart(
+            productionInfoInputs,
+            fileUploadOutputs,
+            processGroup,
+            false
+        );
+
+        GenericResourceCreatedIdResponse response = acsResources.saveRoutingSelection(
+            costOutputs.getScenarioIterationKey(),
+            "Casting - Die",
+            "aPriori India",
+            "Casting - Die"
         );
 
         assertThat(response.getId(), is(notNullValue()));
