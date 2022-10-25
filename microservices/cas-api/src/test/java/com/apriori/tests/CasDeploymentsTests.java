@@ -1,10 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.greaterThanOrEqualTo;
-
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cds.objects.response.Customer;
 import com.apriori.cds.utils.CdsTestUtil;
@@ -18,10 +13,12 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.Before;
 import org.junit.Test;
 
 public class CasDeploymentsTests {
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private Customer aprioriInternal;
     private CdsTestUtil cdsTestUtil = new CdsTestUtil();
@@ -43,8 +40,11 @@ public class CasDeploymentsTests {
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
-        assertThat(responseDeployment.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseDeployment.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(responseDeployment.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(responseDeployment.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
+        soft.assertAll();
     }
 
     @Test
@@ -56,8 +56,10 @@ public class CasDeploymentsTests {
             .token(token)
             .inlineVariables(customerIdentity)).get();
 
-        assertThat(responseDeployments.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(responseDeployments.getResponseEntity().getTotalItemCount(), is(greaterThanOrEqualTo(1)));
+        soft.assertThat(responseDeployments.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(responseDeployments.getResponseEntity().getTotalItemCount())
+            .isGreaterThanOrEqualTo(1);
 
         String deploymentIdentity = responseDeployments.getResponseEntity().getItems().get(0).getIdentity();
 
@@ -65,7 +67,10 @@ public class CasDeploymentsTests {
             .token(token)
             .inlineVariables(customerIdentity, deploymentIdentity)).get();
 
-        assertThat(deploymentByID.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(deploymentByID.getResponseEntity().getIdentity(), is(equalTo(deploymentIdentity)));
+        soft.assertThat(deploymentByID.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(deploymentByID.getResponseEntity().getIdentity())
+            .isEqualTo(deploymentIdentity);
+        soft.assertAll();
     }
 }

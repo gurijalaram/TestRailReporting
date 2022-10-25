@@ -548,4 +548,13 @@ public class ExploreToolbar extends MainNavBar {
     public boolean isCostButtonEnabled() {
         return pageUtils.waitForElementToAppear(costButton).isEnabled();
     }
+
+    /**
+     * Checks if publish button is enabled
+     *
+     * @return true/false
+     */
+    public boolean isPublishButtonEnabled() {
+        return pageUtils.waitForElementToAppear(publishButton).isEnabled();
+    }
 }

@@ -20,7 +20,8 @@
         "updatedAt",
         "updatedBy",
         "deletedAt",
-        "deletedBy"
+        "deletedBy",
+        "createdByName"
       ],
       "properties": {
         "identity": {
@@ -39,6 +40,9 @@
           "type": "string"
         },
         "type": {
+          "type": "string"
+        },
+        "createdByName": {
           "type": "string"
         },
         "updatedAt": {

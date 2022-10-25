@@ -1,9 +1,5 @@
 package tests.acs;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoItem;
 import com.apriori.acs.entity.response.acs.scenariosinfo.ScenariosInfoResponse;
 import com.apriori.acs.entity.response.workorders.genericclasses.ScenarioIterationKey;
@@ -18,6 +14,7 @@ import com.apriori.utils.enums.ProcessGroupEnum;
 import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
+import org.apache.http.HttpStatus;
 import org.assertj.core.api.SoftAssertions;
 import org.junit.Test;
 
@@ -59,8 +56,8 @@ public class ScenariosInfoTests extends TestUtil {
         ScenarioIterationKey keyOne = fileUploadOutputsArrayList.get(0).getScenarioIterationKey();
         ScenarioIterationKey keyTwo = fileUploadOutputsArrayList.get(1).getScenarioIterationKey();
 
-        keyOne.setIteration(30);
-        keyTwo.setIteration(40);
+        keyOne.setIteration(3000000);
+        keyTwo.setIteration(4000000);
 
         AcsResources acsResources = new AcsResources();
 
@@ -69,7 +66,10 @@ public class ScenariosInfoTests extends TestUtil {
                 keyTwo
         );
 
-        assertThat(response.getResponseEntity().isEmpty(), is(equalTo(true)));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getResponseEntity().isEmpty()).isEqualTo(true);
+        softAssertions.assertAll();
+
     }
 
     @Test
@@ -80,8 +80,10 @@ public class ScenariosInfoTests extends TestUtil {
 
         ResponseWrapper<ScenariosInfoResponse> response = acsResources.getScenariosInfoNullBody();
 
-        assertThat(response.getStatusCode(), is(equalTo(400)));
-        assertThat(response.getBody().contains("The request should not be null"), is(equalTo(true)));
+        SoftAssertions softAssertions = new SoftAssertions();
+        softAssertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.SC_BAD_REQUEST);
+        softAssertions.assertThat(response.getBody().contains("The request should not be null")).isEqualTo(true);
+        softAssertions.assertAll();
     }
 
     /**

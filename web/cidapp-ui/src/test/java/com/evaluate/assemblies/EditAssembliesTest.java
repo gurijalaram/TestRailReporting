@@ -940,7 +940,8 @@ public class EditAssembliesTest extends TestBase {
             .close(ComponentsListPage.class)
             .closePanel()
             .clickExplore()
-            .queryCssComponentParams(BOLT, scenarioName, currentUser, "scenarioState, " + ScenarioStateEnum.COST_COMPLETE, "scenarioPublished, false", "iteration, 1")
+            .getCssComponents(currentUser, "componentName[EQ], " + BOLT, "scenarioName[EQ], " + scenarioName, "scenarioState[EQ], " + ScenarioStateEnum.COST_COMPLETE,
+                "scenarioPublished[EQ], false", "iteration[EQ], 1")
             .refresh()
             .selectFilter("Private")
             .clickSearch(BOLT)

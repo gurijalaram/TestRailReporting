@@ -30,6 +30,9 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     @FindBy(css = ".MuiChip-label [data-testid='logo']")
     private WebElement aPLogo;
 
+    @FindBy(css = "[role='dialog'] h3")
+    private List<WebElement> routingNames;
+
     private ModalDialogController modalDialogController = new ModalDialogController(getDriver());
 
     public RoutingSelectionPage(WebDriver driver) {
@@ -167,5 +170,12 @@ public class RoutingSelectionPage extends EagerPageComponent<RoutingSelectionPag
     public boolean isAprioriLogoDisplayed(String routingPreference) {
         return getPageUtils().isElementDisplayed(getDriver().findElement(
             By.xpath(String.format("//h3[text()='%s']/parent::div//*[@data-testid='logo']", routingPreference))));
+    }
+
+    /**
+     * @return the list of available routings
+     */
+    public List<String> getAvailableRoutings() {
+        return getPageUtils().waitForElementsToAppear(routingNames).stream().map(routingName -> routingName.getAttribute("textContent")).collect(Collectors.toList());
     }
 }

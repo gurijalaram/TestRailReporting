@@ -1,9 +1,5 @@
 package com.apriori.tests;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import com.apriori.apibase.services.cas.Customer;
 import com.apriori.cas.enums.CASAPIEnum;
 import com.apriori.cas.utils.CasTestUtil;
@@ -27,6 +23,7 @@ import com.apriori.utils.http.utils.ResponseWrapper;
 
 import io.qameta.allure.Description;
 import org.apache.http.HttpStatus;
+import org.assertj.core.api.SoftAssertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +33,7 @@ import java.util.UUID;
 
 public class CasLicenseTests {
 
+    private SoftAssertions soft = new SoftAssertions();
     private String token;
     private IdentityHolder deleteIdentityHolder;
     private IdentityHolder userIdentityHolder;
@@ -103,15 +101,19 @@ public class CasLicenseTests {
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_EXPIRED_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        soft.assertThat(licenseResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
         String subLicenseIdentity = licenseResponse.getResponseEntity().getSubLicenses().get(0).getIdentity();
         LocalDate expireDate = licenseResponse.getResponseEntity().getSubLicenses().get(0).getExpiresAt();
 
         ResponseWrapper<CasErrorMessage> associationErrorResponse = casTestUtil.addSubLicenseAssociationUser(CasErrorMessage.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
-        assertThat(associationErrorResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CONFLICT)));
-        assertThat(associationErrorResponse.getResponseEntity().getMessage(), is(equalTo(String.format("Sub License with identity '%s' expired on '%s' and cannot be assigned to a user.", subLicenseIdentity, expireDate))));
+        soft.assertThat(associationErrorResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CONFLICT);
+        soft.assertThat(associationErrorResponse.getResponseEntity().getMessage())
+            .isEqualTo(String.format("Sub License with identity '%s' expired on '%s' and cannot be assigned to a user.", subLicenseIdentity, expireDate));
+        soft.assertAll();
 
         deleteIdentityHolder = IdentityHolder.builder()
                 .customerIdentity(customerIdentity)
@@ -152,7 +154,8 @@ public class CasLicenseTests {
         String siteIdentity = site.getResponseEntity().getIdentity();
 
         ResponseWrapper<LicenseResponse> licenseResponse = casTestUtil.addLicense(Constants.CAS_LICENSE, customerIdentity, siteIdentity, customerName, siteID, subLicenseId);
-        assertThat(licenseResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
+        soft.assertThat(licenseResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
         String licenseIdentity = licenseResponse.getResponseEntity().getIdentity();
 
         ResponseWrapper<SubLicenses> subLicenses = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SUBLICENSES_BY_LICENSE_ID, SubLicenses.class)
@@ -163,15 +166,19 @@ public class CasLicenseTests {
 
         ResponseWrapper<AssociationUser> associationUserResponse = casTestUtil.addSubLicenseAssociationUser(AssociationUser.class, customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity);
 
-        assertThat(associationUserResponse.getStatusCode(), is(equalTo(HttpStatus.SC_CREATED)));
-        assertThat(associationUserResponse.getResponseEntity().getUserIdentity(), is(equalTo(userIdentity)));
+        soft.assertThat(associationUserResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_CREATED);
+        soft.assertThat(associationUserResponse.getResponseEntity().getUserIdentity())
+            .isEqualTo(userIdentity);
 
         ResponseWrapper<SublicenseAssociation> sublicenseAssociations = HTTPRequest.build(RequestEntityUtil.init(CASAPIEnum.GET_SUBLICENSE_ASSOCIATIONS, SublicenseAssociation.class)
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity)).get();
 
-        assertThat(sublicenseAssociations.getStatusCode(), is(equalTo(HttpStatus.SC_OK)));
-        assertThat(sublicenseAssociations.getResponseEntity().getItems().get(0).getIdentity(), is(equalTo(userIdentity)));
+        soft.assertThat(sublicenseAssociations.getStatusCode())
+            .isEqualTo(HttpStatus.SC_OK);
+        soft.assertThat(sublicenseAssociations.getResponseEntity().getItems().get(0).getIdentity())
+            .isEqualTo(userIdentity);
 
         deleteIdentityHolder = IdentityHolder.builder()
                 .customerIdentity(customerIdentity)
@@ -185,6 +192,8 @@ public class CasLicenseTests {
                 .token(token)
                 .inlineVariables(customerIdentity, siteIdentity, licenseIdentity, subLicenseIdentity, userIdentity)).delete();
 
-        assertThat(deleteResponse.getStatusCode(), is(equalTo(HttpStatus.SC_NO_CONTENT)));
+        soft.assertThat(deleteResponse.getStatusCode())
+            .isEqualTo(HttpStatus.SC_NO_CONTENT);
+        soft.assertAll();
     }
 }
