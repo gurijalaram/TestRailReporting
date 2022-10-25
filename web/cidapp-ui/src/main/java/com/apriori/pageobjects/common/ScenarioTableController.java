@@ -530,6 +530,8 @@ public class ScenarioTableController extends LoadableComponent<ScenarioTableCont
                 .selectColumn(columnToAdd)
                 .moveColumn(DirectionEnum.UP)
                 .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
+                .moveColumn(DirectionEnum.UP)
                 .submit(ExplorePage.class);
         }
         return this;
