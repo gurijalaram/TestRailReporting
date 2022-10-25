@@ -1,12 +1,18 @@
 package com.apriori.pageobjects.pages.explore;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
+import com.apriori.css.entity.response.ScenarioItem;
 import com.apriori.pageobjects.common.ComponentTableActions;
 import com.apriori.pageobjects.common.ConfigurePage;
 import com.apriori.pageobjects.common.FilterPage;
 import com.apriori.pageobjects.common.ScenarioTableController;
 import com.apriori.pageobjects.navtoolbars.ExploreToolbar;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
+import com.apriori.utils.CssComponent;
 import com.apriori.utils.PageUtils;
 import com.apriori.utils.enums.ScenarioStateEnum;
 import com.apriori.utils.reader.file.user.UserCredentials;
@@ -119,8 +125,7 @@ public class ExplorePage extends ExploreToolbar {
      * Get the Created At value for a given scenario
      *
      * @param componentName - Name of the component
-     * @param scenarioName - Name of the scenario
-     *
+     * @param scenarioName  - Name of the scenario
      * @return LocalDateTime representation of Created At value
      */
     public LocalDateTime getCreatedAt(String componentName, String scenarioName) {
@@ -337,8 +342,7 @@ public class ExplorePage extends ExploreToolbar {
      * Gets the Published state of a given scenario
      *
      * @param componentName - The component name to be checked
-     * @param scenarioName - The scenario name to be checked
-     *
+     * @param scenarioName  - The scenario name to be checked
      * @return String representation of published column
      */
     public String getPublishedState(String componentName, String scenarioName) {
@@ -401,6 +405,22 @@ public class ExplorePage extends ExploreToolbar {
     }
 
     /**
+     * Gets the processing failed state
+     *
+     * @param componentName - the component name
+     * @param scenarioName  - the scenario name
+     * @param currentUser   -  current user
+     * @return - String
+     */
+    public String getScenarioState(String componentName, String scenarioName, UserCredentials currentUser, ScenarioStateEnum stateEnum) {
+        List<ScenarioItem> itemResponse = new CssComponent().getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + componentName, SCENARIO_NAME_EQ.getKey() + scenarioName,
+            SCENARIO_STATE_EQ.getKey() + stateEnum.getState()).getResponseEntity().getItems();
+
+        return itemResponse.stream().filter(item ->
+            item.getScenarioState().equalsIgnoreCase(stateEnum.getState())).findFirst().get().getScenarioState();
+    }
+
+    /**
      * Checks component is in a required state
      *
      * @param componentInfo - the component info builder object
@@ -416,14 +436,12 @@ public class ExplorePage extends ExploreToolbar {
     /**
      * Calls an api with GET verb
      *
-     * @param componentName   - the component name
-     * @param scenarioName    - the scenario name
      * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState, not_costed"
      * @param userCredentials - the user credentials
      * @return current page object
      */
-    public ExplorePage queryCssComponentParams(String componentName, String scenarioName, UserCredentials userCredentials, String... paramKeysValues) {
-        scenarioTableController.getComponentQueryCssParams(componentName, scenarioName, userCredentials, paramKeysValues);
+    public ExplorePage getCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+        scenarioTableController.getCssComponents(userCredentials, paramKeysValues);
         return this;
     }
 

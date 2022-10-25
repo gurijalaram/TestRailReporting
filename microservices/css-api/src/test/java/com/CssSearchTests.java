@@ -1,5 +1,8 @@
 package com;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_IDENTITY_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_IDENTITY_EQ;
+
 import com.apriori.css.entity.response.CssComponentResponse;
 import com.apriori.utils.CssComponent;
 import com.apriori.utils.http.utils.ResponseWrapper;
@@ -22,27 +25,16 @@ public class CssSearchTests {
 
     @Test
     @Description("Test CSS base search")
-    public void testCssBaseSearch() {
-        ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser);
+    public void testCssBaseSearchCapability() {
+        ResponseWrapper<CssComponentResponse> cssComponentResponses = cssComponent.getBaseCssComponents(currentUser, COMPONENT_IDENTITY_EQ.getKey() + " 50MFHK5MA6FI",
+            SCENARIO_IDENTITY_EQ.getKey() + " 50N5K6J03I9F");
 
         SoftAssertions softAssertions = new SoftAssertions();
 
-        cssComponentResponses.getResponseEntity().getItems().forEach(o -> softAssertions.assertThat(o.getComponentIdentity()).isNotEmpty());
-
-        softAssertions.assertAll();
-    }
-
-    @Test
-    @Description("Test CSS with query params")
-    public void testCssWithQueryParams() {
-        ResponseWrapper<CssComponentResponse> cssComponentsResponse = cssComponent.getCssComponentsQueryParams(currentUser, "componentIdentity, 50MFHK5MA6FI", "lastAction, create");
-        ResponseWrapper<CssComponentResponse> cssComponentsResponse2 = cssComponent.getCssComponentsQueryParams(currentUser, "customerIdentity, 6C1F8C1D4D75",
-            "scenarioIdentity, 50N5K6J03I9F", "lastAction, create");
-
-        SoftAssertions softAssertions = new SoftAssertions();
-
-        softAssertions.assertThat(cssComponentsResponse.getResponseEntity().getItems()).hasSizeGreaterThan(0);
-        softAssertions.assertThat(cssComponentsResponse2.getResponseEntity().getItems()).hasSize(1);
+        cssComponentResponses.getResponseEntity().getItems().forEach(o -> {
+            softAssertions.assertThat(o.getComponentIdentity()).isEqualTo("50MFHK5MA6FI");
+            softAssertions.assertThat(o.getScenarioIdentity()).isEqualTo("50N5K6J03I9F");
+        });
 
         softAssertions.assertAll();
     }
