@@ -1,5 +1,9 @@
 package com.explore;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+
 import com.apriori.cidappapi.entity.builder.ComponentInfoBuilder;
 import com.apriori.cidappapi.utils.AssemblyUtils;
 import com.apriori.pageobjects.navtoolbars.PublishPage;
@@ -116,8 +120,8 @@ public class GroupCostTests extends TestBase {
             .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
-                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .setPagination()
@@ -254,8 +258,8 @@ public class GroupCostTests extends TestBase {
         softAssertions.assertThat(explorePage.isCostButtonEnabled()).isEqualTo(false);
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
-                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .multiSelectScenarios("" + "big ring" + ", " + scenarioName + "",

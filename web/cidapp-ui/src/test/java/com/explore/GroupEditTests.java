@@ -1,5 +1,9 @@
 package com.explore;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
+
 import com.apriori.pageobjects.navtoolbars.PublishPage;
 import com.apriori.pageobjects.pages.evaluate.EvaluatePage;
 import com.apriori.pageobjects.pages.evaluate.components.EditComponentsPage;
@@ -212,8 +216,8 @@ public class GroupEditTests extends TestBase {
             .selectFilter("Recent");
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
-                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .setPagination()
@@ -234,22 +238,22 @@ public class GroupEditTests extends TestBase {
             .close(ExplorePage.class);
 
         multiComponents.forEach(component ->
-            softAssertions.assertThat(cssComponent.getCssComponentsQueryParams(currentUser, "componentName, " + component.getResourceFile().getName().split("\\.")[0],
-                "scenarioName, " + component.getScenarioName(), "scenarioState, " + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
+            softAssertions.assertThat(cssComponent.getComponentParts(currentUser, COMPONENT_NAME_EQ.getKey() + component.getResourceFile().getName().split("\\.")[0],
+                SCENARIO_NAME_EQ.getKey() + component.getScenarioName(), SCENARIO_STATE_EQ.getKey() + ScenarioStateEnum.NOT_COSTED).getResponseEntity().getItems()).hasSizeGreaterThan(0));
 
         explorePage.refresh()
             .setPagination()
             .selectFilter("Public")
             .multiSelectScenarios("" + "piston rod_model1" + ", " + scenarioName + "",
-                    "" + "Part0005b" + ", " + scenarioName + "",
-                    "" + "piston cover_model1" + ", " + scenarioName + "",
-                    "" + "Push Pin" + ", " + scenarioName + "",
-                    "" + "PowderMetalShaft" + ", " + scenarioName + "",
-                    "" + "bracket_basic" + ", " + scenarioName + "",
-                    "" + "Part0004" + ", " + scenarioName + "",
-                    "" + "small ring" + ", " + scenarioName + "",
-                    "" + "titan charger lead" + ", " + scenarioName + "",
-                    "" + "big ring" + ", " + scenarioName + "");
+                "" + "Part0005b" + ", " + scenarioName + "",
+                "" + "piston cover_model1" + ", " + scenarioName + "",
+                "" + "Push Pin" + ", " + scenarioName + "",
+                "" + "PowderMetalShaft" + ", " + scenarioName + "",
+                "" + "bracket_basic" + ", " + scenarioName + "",
+                "" + "Part0004" + ", " + scenarioName + "",
+                "" + "small ring" + ", " + scenarioName + "",
+                "" + "titan charger lead" + ", " + scenarioName + "",
+                "" + "big ring" + ", " + scenarioName + "");
 
         softAssertions.assertThat(explorePage.isEditButtonEnabled()).isEqualTo(true);
 
