@@ -24,6 +24,9 @@ public class MatchedPartPage extends EagerPageComponent<MatchedPartPage> {
     @FindBy(css = "p:nth-child(5) > span.title")
     private WebElement pinCount;
 
+    @FindBy(css = "p:nth-child(4) > span.title")
+    private WebElement mountType;
+
     private UploadedBomTableActions uploadedBomTableActions = new UploadedBomTableActions(getDriver());
 
     public MatchedPartPage(WebDriver driver) {
@@ -66,5 +69,14 @@ public class MatchedPartPage extends EagerPageComponent<MatchedPartPage> {
      */
     public String getPinCountHeaderText() {
         return getPageUtils().waitForElementToAppear(pinCount).getAttribute("textContent");
+    }
+
+    /**
+     * Mount Type text
+     *
+     * @return String
+     */
+    public String getMountTypeHeaderText() {
+        return getPageUtils().waitForElementToAppear(mountType).getAttribute("textContent");
     }
 }
