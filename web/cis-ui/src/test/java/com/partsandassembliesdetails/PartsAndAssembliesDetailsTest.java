@@ -294,7 +294,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = {"13180", "13182", "13197"})
+    @TestRail(testCaseId = {"13180", "13182", "13197","13924"})
     @Description("Verify insights for a non-costed scenario")
     public void testInsightsSectionForUnCostedScenario() {
         String scenarioName = new GenerateStringUtil().generateScenarioName();
@@ -319,6 +319,10 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isPartNestingMenuIconDisplayed()).isEqualTo(false);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialPropertiesMenuIconDisplayed()).isEqualTo(false);
         softAssertions.assertThat(partsAndAssembliesDetailsPage.isMaterialStockMenuIconDisplayed()).isEqualTo(false);
+
+        partsAndAssembliesDetailsPage.clickCostsOption();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getUnCostMessage()).contains("Cost the scenario to see the cost result summary.");
 
         softAssertions.assertAll();
     }

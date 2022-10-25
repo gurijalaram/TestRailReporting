@@ -104,7 +104,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(xpath = "//div[@data-testid ='Details']")
     private WebElement partNestingDetailsSection;
 
-    @FindBy(xpath = "//header[@data-testid='app-bar']//a")
+    @FindBy(xpath = "//header[@data-testid='app-bar']//button[contains(@class,'MuiButton-text')]")
     private WebElement linkBackToPartNAssemblyPage;
 
     @FindBy(xpath = "//button[@aria-label='Create New Card']")
@@ -361,6 +361,9 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
 
     @FindBy(xpath = "//div[contains(@id,'discussion')]//div[text()='Second Discussion']")
     private WebElement secondDiscussion;
+
+    @FindBy(xpath = "//div[@data-testid='uncosted-message-Cost the scenario to see the cost result summary.']")
+    private WebElement unCostMessage;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -884,7 +887,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      * @return current page object
      */
     public PartsAndAssembliesDetailsPage clickMoreOptions(String cardName) {
-        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-v']"));
+        getPageUtils().waitForElementAndClick(By.xpath("//div[@data-testid ='" + cardName + "']//*[@data-icon='ellipsis-vertical']"));
         return this;
     }
 
@@ -1998,5 +2001,14 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
         getPageUtils().mouseMove(attributeDigitalFactory);
         getPageUtils().moveAndClick(attributeMessageIcon);
         return this;
+    }
+
+    /**
+     * get un cost message
+     *
+     * @return a String
+     */
+    public String getUnCostMessage() {
+        return getPageUtils().waitForElementToAppear(unCostMessage).getAttribute("innerText");
     }
 }
