@@ -96,6 +96,44 @@ public class CssComponent {
     /**
      * Calls an api with GET verb
      *
+     * @param paramKeysValues - the query param key and value. Comma separated for key/value pair eg. "scenarioState[EQ], not_costed". The operand (eg. [CN]) MUST be included in the query.
+     * @param userCredentials - the user credentials
+     * @return the response wrapper that contains the response data
+     */
+    public ResponseWrapper<CssComponentResponse> getWaitBaseCssComponents(UserCredentials userCredentials, String... paramKeysValues) {
+
+        final long START_TIME = System.currentTimeMillis() / 1000;
+
+        try {
+            do {
+                TimeUnit.SECONDS.sleep(POLL_TIME);
+
+                ResponseWrapper<CssComponentResponse> cssComponentResponse = getBaseCssComponents(userCredentials, paramKeysValues);
+
+                assertEquals("Failed to receive data about component", HttpStatus.SC_OK, cssComponentResponse.getStatusCode());
+
+                if (cssComponentResponse.getResponseEntity().getItems().size() > 0 &&
+
+                    cssComponentResponse.getResponseEntity().getItems().stream()
+                        .allMatch(o -> ScenarioStateEnum.terminalState.stream()
+                            .anyMatch(x -> x.getState().equalsIgnoreCase(o.getScenarioState())))) {
+
+                    return cssComponentResponse;
+                }
+
+            } while (((System.currentTimeMillis() / 1000) - START_TIME) < WAIT_TIME);
+
+        } catch (InterruptedException e) {
+            log.error(e.getMessage());
+            Thread.currentThread().interrupt();
+        }
+        throw new IllegalArgumentException(String.format("Failed to get uploaded component after %d seconds", WAIT_TIME)
+        );
+    }
+
+    /**
+     * Calls an api with GET verb
+     *
      * @return the response wrapper that contains the response data
      */
     private ResponseWrapper<CssComponentResponse> getBaseCssComponents(UserCredentials userCredentials, QueryParams queryParams) {
