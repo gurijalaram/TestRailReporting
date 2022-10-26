@@ -196,7 +196,7 @@ public class AvailableRoutingsTests {
         softAssertions.assertThat(response.getDisplayName()).isNotNull();
         softAssertions.assertThat(response.getPlantName()).isNotNull();
         softAssertions.assertThat(response.getProcessGroupName()).isNotNull();
-        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
+        softAssertions.assertThat(response.getChildren().get(0).getChildren().get(0).getChildren().get(0).getCostStatus()).isNotNull();
         softAssertions.assertAll();
     }
 
@@ -497,7 +497,7 @@ public class AvailableRoutingsTests {
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            "Plastic moulded cap DFM.CATPart",
+            "blow_mold_duct_1.prt.1",
             processGroup
         );
 
@@ -544,7 +544,7 @@ public class AvailableRoutingsTests {
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            "Rapid Prototyping.stp",
+            "blow_mold_duct_1.prt.1",
             processGroup
         );
 
@@ -731,7 +731,7 @@ public class AvailableRoutingsTests {
         fileUploadResources.checkValidProcessGroup(processGroup);
 
         FileResponse fileResponse = fileUploadResources.initializePartUpload(
-            "G05752358-107 --.CATPart",
+            "Hydroforming.stp",
             processGroup
         );
 

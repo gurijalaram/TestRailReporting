@@ -44,6 +44,9 @@ import com.apriori.utils.reader.file.user.UserUtil;
 import com.google.common.net.UrlEscapers;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -582,18 +585,23 @@ public class AcsResources {
     public AvailableRoutingsFirstLevel getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil
-            .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
-            .headers(headers)
-            .inlineVariables(
-                scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
-                scenarioIterationKey.getScenarioKey().getTypeName(),
-                UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getMasterName()),
-                UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
-                scenarioIterationKey.getIteration().toString(),
-                vpeName,
-                processGroupName
-            );
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
+                .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
+                .headers(headers)
+                .inlineVariables(
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString(),
+                    URLEncoder.encode(vpeName, StandardCharsets.UTF_8.toString()),
+                    URLEncoder.encode(processGroupName, StandardCharsets.UTF_8.toString()))
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
