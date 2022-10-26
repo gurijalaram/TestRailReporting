@@ -88,6 +88,7 @@ public class CssComponent {
         List<String[]> paramKeyValue = Arrays.stream(paramKeysValues).map(o -> o.split(",")).collect(Collectors.toList());
         Map<String, String> paramMap = new HashMap<>();
 
+        // TODO: 26/10/2022 cn - wrap in a try/catch/throw, when incorrect k,v is entered its easily debuggable
         paramKeyValue.forEach(o -> paramMap.put(o[0].trim(), o[1].trim()));
 
         return getBaseCssComponents(userCredentials, queryParams.use(paramMap));
