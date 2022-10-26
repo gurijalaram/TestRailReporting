@@ -100,41 +100,6 @@ public class ComponentsUtil {
     }
 
     /**
-     * POST new component and query CSS
-     *
-     * @param componentBuilder - the component object
-     * @return response object
-     */
-    public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
-
-        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
-
-        componentSuccesses.forEach(componentSuccess -> {
-            List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
-                componentBuilder.getUser());
-            componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
-            componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
-            componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
-        });
-
-        return componentBuilder;
-    }
-
-    /**
-     * Upload a component
-     *
-     * @param componentBuilder - the component
-     * @return response object
-     */
-    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
-        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
-
-        componentBuilder.setResourceFile(resourceFile);
-
-        return postComponentQueryCSS(componentBuilder);
-    }
-
-    /**
      * POST new component
      *
      * @param componentBuilder - the component object
@@ -156,6 +121,27 @@ public class ComponentsUtil {
                 .token(componentBuilder.getUser().getToken());
 
         return HTTPRequest.build(requestEntity).post();
+    }
+
+    /**
+     * POST new component and query CSS
+     *
+     * @param componentBuilder - the component object
+     * @return response object
+     */
+    public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
+
+        List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
+
+        componentSuccesses.forEach(componentSuccess -> {
+            List<ScenarioItem> scenarioItemResponse = getUnCostedComponent(componentSuccess.getFilename().split("\\.", 2)[0], componentSuccess.getScenarioName(),
+                componentBuilder.getUser());
+            componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
+            componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+            componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
+        });
+
+        return componentBuilder;
     }
 
     /**
@@ -203,6 +189,20 @@ public class ComponentsUtil {
         componentInfoBuilder.setScenarioItems(scenarioItemList);
 
         return componentInfoBuilder;
+    }
+
+    /**
+     * Upload a component
+     *
+     * @param componentBuilder - the component
+     * @return response object
+     */
+    public ComponentInfoBuilder setFilePostComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
+        File resourceFile = FileResourceUtil.getCloudFile(componentBuilder.getProcessGroup(), componentBuilder.getComponentName() + componentBuilder.getExtension());
+
+        componentBuilder.setResourceFile(resourceFile);
+
+        return postComponentQueryCSS(componentBuilder);
     }
 
     /**
