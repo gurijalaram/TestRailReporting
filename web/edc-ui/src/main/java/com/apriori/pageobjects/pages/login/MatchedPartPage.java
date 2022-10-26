@@ -21,8 +21,11 @@ public class MatchedPartPage extends EagerPageComponent<MatchedPartPage> {
     @FindBy(css = "[data-icon='plus']")
     private WebElement addButton;
 
-    @FindBy(css = "p:nth-child(5) > span.title")
+    @FindBy(xpath = "//span[.='Pin Count']")
     private WebElement pinCount;
+
+    @FindBy(xpath = "//span[.='Mount Type']")
+    private WebElement mountType;
 
     private UploadedBomTableActions uploadedBomTableActions = new UploadedBomTableActions(getDriver());
 
@@ -66,5 +69,14 @@ public class MatchedPartPage extends EagerPageComponent<MatchedPartPage> {
      */
     public String getPinCountHeaderText() {
         return getPageUtils().waitForElementToAppear(pinCount).getAttribute("textContent");
+    }
+
+    /**
+     * Mount Type text
+     *
+     * @return String
+     */
+    public String getMountTypeHeaderText() {
+        return getPageUtils().waitForElementToAppear(mountType).getAttribute("textContent");
     }
 }
