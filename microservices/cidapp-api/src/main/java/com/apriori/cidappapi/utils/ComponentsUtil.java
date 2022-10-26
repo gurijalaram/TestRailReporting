@@ -105,6 +105,7 @@ public class ComponentsUtil {
 
     /**
      * Post new component and query css.  This method will only return a component that has been translated ie. componentType = PART
+     *
      * @param componentBuilder - the component object
      * @return response object
      */
@@ -112,7 +113,7 @@ public class ComponentsUtil {
         postComponent(componentBuilder);
 
         return new CssComponent().getWaitBaseCssComponents(componentBuilder.getUser(),
-            COMPONENT_NAME_EQ.getKey() + componentBuilder.getComponentName(), SCENARIO_NAME_EQ.getKey() + componentBuilder.getScenarioName(), COMPONENT_TYPE_EQ.getKey() + " PART")
+                COMPONENT_NAME_EQ.getKey() + componentBuilder.getComponentName(), SCENARIO_NAME_EQ.getKey() + componentBuilder.getScenarioName(), COMPONENT_TYPE_EQ.getKey() + " PART")
             .getResponseEntity()
             .getItems()
             .get(0);
