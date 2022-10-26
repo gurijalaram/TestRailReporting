@@ -268,7 +268,7 @@ public abstract class SDSTestUtil extends TestUtil {
         Customer customer = customersResponse.getResponseEntity().getItems().get(0);
 
         ResponseWrapper<Applications> responseApplications = HTTPRequest.build(
-            RequestEntityUtil.init(CASAPIEnum.GET_CUSTOMER_APPLICATIONS, Applications.class)
+            RequestEntityUtil.init(CASAPIEnum.CUSTOMER_APPLICATIONS, Applications.class)
                 .inlineVariables(customer.getIdentity())
                 .token(testingUser.getToken())
         ).get();

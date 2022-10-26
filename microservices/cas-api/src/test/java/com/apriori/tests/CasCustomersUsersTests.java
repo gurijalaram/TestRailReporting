@@ -162,7 +162,7 @@ public class CasCustomersUsersTests {
                 .userIdentity(userIdentity)
                 .build();
 
-        ResponseWrapper<String> resetMfa = CasTestUtil.resetMfa(customerIdentity, userIdentity);
+        ResponseWrapper<String> resetMfa = CasTestUtil.resetUserMfa(customerIdentity, userIdentity);
 
         soft.assertThat(resetMfa.getStatusCode())
             .isEqualTo(HttpStatus.SC_ACCEPTED);
