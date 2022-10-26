@@ -906,8 +906,8 @@ public class FileUploadResources {
                 scenarioKey.getWorkspaceId().toString(),
                 scenarioKey.getTypeName(),
                 UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
-                scenarioKey.getStateName())
-            ;
+                scenarioKey.getStateName()
+            );
 
         return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).get().getBody(), "iteration"));
     }
