@@ -668,7 +668,7 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getTableHeaders()).doesNotContain(CisColumnsEnum.STATE.getColumns());
 
-        partsAndAssembliesDetailsPage.openAssembly("PIN", scenarioName);
+        partsAndAssembliesDetailsPage.openAssembly("Pin", scenarioName);
 
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getSubComponentName()).isEqualTo("Pin");
 
@@ -1107,6 +1107,47 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickComment();
         
         softAssertions.assertThat(partsAndAssembliesDetailsPage.getAttributeDiscussionCount()).contains("2");
+
+        softAssertions.assertAll();
+    }
+
+    @Test
+    @TestRail(testCaseId = {"14189","14190","14697","14698","14699"})
+    @Description("Verify that user can resolve and unresolve a discussion")
+    public void testResolveAndUnresolvedComment() {
+        String scenarioName = new GenerateStringUtil().generateScenarioName();
+        String componentName = "ChampferOut";
+
+        resourceFile = FileResourceUtil.getCloudFile(ProcessGroupEnum.SHEET_METAL, componentName + ".SLDPRT");
+        currentUser = UserUtil.getUser();
+
+        loginPage = new CisLoginPage(driver);
+        partsAndAssembliesDetailsPage = loginPage.cisLogin(currentUser)
+                .uploadAndCostScenario(componentName, scenarioName, resourceFile, currentUser, ProcessGroupEnum.SHEET_METAL, DigitalFactoryEnum.APRIORI_USA)
+                .clickPartsAndAssemblies()
+                .sortDownCreatedAtField()
+                .clickSearchOption()
+                .clickOnSearchField()
+                .enterAComponentName(componentName)
+                .clickOnComponentName(componentName)
+                .clickMessageIconOnCommentSection()
+                .clickOnAttribute()
+                .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
+                .addComment("New Comment With Attribute")
+                .clickComment()
+                .selectCreatedDiscussion();
+
+        SoftAssertions softAssertions = new SoftAssertions();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.isResolveOptionDisplayed()).isEqualTo(true);
+
+        partsAndAssembliesDetailsPage.clickOnResolveIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getResolveStatus()).contains("resolved");
+
+        partsAndAssembliesDetailsPage.clickOnUnResolveIcon();
+
+        softAssertions.assertThat(partsAndAssembliesDetailsPage.getUnResolveStatus()).contains("active");
 
         softAssertions.assertAll();
     }

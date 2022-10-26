@@ -25,7 +25,7 @@ public class MessagesPage extends EagerPageComponent<MessagesPage> {
     @FindBy(xpath = "//div[contains(@data-testid,'date-from-now')]")
     private WebElement time;
 
-    @FindBy(xpath = "//p[contains(@data-testid,'comment-content')]")
+    @FindBy(xpath = "//div[contains(@data-testid,'comment-content')]")
     private WebElement commentContent;
 
     public MessagesPage(WebDriver driver) {

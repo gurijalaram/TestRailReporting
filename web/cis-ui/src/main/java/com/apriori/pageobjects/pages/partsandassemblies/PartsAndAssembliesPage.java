@@ -798,6 +798,31 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage clickToRemoveAddedFilter() {
         getPageUtils().waitForElementAndClick(removeIcon);
         getPageUtils().waitForElementsToAppear(tableRow);
-        return new PartsAndAssembliesPage(getDriver());
+        return this;
+    }
+
+    /**
+     * hide filter modal
+     *
+     * @return current page object
+     */
+    public PartsAndAssembliesPage hideFilterModal() {
+        getPageUtils().waitForElementAndClick(btnFilter);
+        getPageUtils().waitForElementsToNotAppear(By.id("popover-filter-control"),1);
+        return this;
+    }
+
+    /**
+     * check components
+     *
+     * @return current page object
+     */
+
+    public PartsAndAssembliesPage checkFilteredComponents() {
+        if (getPageUtils().waitForElementsToAppear(tableRow).size() > 0) {
+            getPageUtils().waitForElementAndClick(checkAllCheckBox);
+            getPageUtils().waitForElementToAppear(By.xpath("//input[@aria-label='Unselect row']"));
+        }
+        return this;
     }
 }
