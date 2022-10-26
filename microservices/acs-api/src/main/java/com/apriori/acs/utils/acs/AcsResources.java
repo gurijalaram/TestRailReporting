@@ -611,14 +611,14 @@ public class AcsResources {
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
      * @return GenericResourceCreatedIdResponse instance
      */
-    public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey) {
+    public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey, String name, String plantName, String processGroupName) {
         setupHeader();
 
         List<RoutingSelectionInputs> childrenList = new ArrayList<>();
         childrenList.add(RoutingSelectionInputs.builder()
-            .name("Sheet Metal")
-            .plantName("aPriori USA")
-            .processGroupName("Sheet Metal")
+            .name(name)
+            .plantName(plantName)
+            .processGroupName(processGroupName)
             .alternNode(true)
             .build()
         );
@@ -627,9 +627,9 @@ public class AcsResources {
             .init(AcsApiEnum.ROUTING_SELECTION, GenericResourceCreatedIdResponse.class)
             .headers(headers)
             .body(RoutingSelectionInputs.builder()
-                .name("Sheet Metal/Machining")
-                .plantName("aPriori USA")
-                .processGroupName("Sheet Metal")
+                .name(name)
+                .plantName(plantName)
+                .processGroupName(processGroupName)
                 .children(childrenList)
                 .alternNode(false)
                 .build())
