@@ -883,10 +883,9 @@ public class FileUploadResources {
             .inlineVariables(
                 scenarioKey.getWorkspaceId().toString(),
                 scenarioKey.getTypeName(),
-                scenarioKey.getMasterName(),
+                UrlEscapers.urlFragmentEscaper().escape(scenarioKey.getMasterName()),
                 scenarioKey.getStateName(),
-                String.valueOf(getLatestIteration(scenarioKey)))
-            .urlEncodingEnabled(true);
+                String.valueOf(getLatestIteration(scenarioKey)));
 
         return Integer.parseInt(jsonNode(HTTPRequest.build(requestEntity).post().getBody(), "id"));
     }
