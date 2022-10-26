@@ -1,4 +1,4 @@
-package com.fieldsvalidation.mounttype;
+package com.fieldsvalidation;
 
 import com.apriori.edcapi.utils.BillOfMaterialsUtil;
 import com.apriori.pageobjects.common.EditBomPage;
@@ -21,17 +21,16 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class MountTypeTests extends TestBase {
+public class MountTypePinCountTests extends TestBase {
 
     private File resourceFile;
     private EdcAppLoginPage loginPage;
     private EditBomPage editBomPage;
-    private MatchedPartPage matchedPartPage;
     private GenerateStringUtil generateStringUtil = new GenerateStringUtil();
     private UserCredentials currentUser;
     private SoftAssertions softAssertions = new SoftAssertions();
 
-    public MountTypeTests() {
+    public MountTypePinCountTests() {
         super();
     }
 
@@ -41,7 +40,7 @@ public class MountTypeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "564068")
+    @TestRail(testCaseId = "15407")
     @Description("Verify that three variants radio buttons for Mount Type field exists")
     public void mountTypeRadioBtnTest() {
         currentUser = UserUtil.getUser();
@@ -64,9 +63,12 @@ public class MountTypeTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "64904")
-    @Description("Verify Mount Type Accepted Values >=5 Characters ")
-    public void mountTypeValueSizeTest() {
+    @TestRail(testCaseId = {"3223", "3217"})
+    @Description("Verify Mount Type Accepted Values >=5 Characters ,Verify Pin Count and Mount Type are required fields")
+    public void mountTypePinCountAreRequiredTest() {
+        String testMountTypeData = generateStringUtil.getRandomString();
+        String testPinCountData = generateStringUtil.getRandomNumbers();
+
         currentUser = UserUtil.getUser();
         String fileName = "Test BOM 5.csv";
         resourceFile = FileResourceUtil.getResourceAsFile(fileName);
@@ -82,6 +84,43 @@ public class MountTypeTests extends TestBase {
 
         softAssertions.assertThat(editBomPage.isMountTypeWarnMsgDisplayed()).isTrue();
         softAssertions.assertThat(editBomPage.isSaveButtonDisabledDisplayed()).isTrue();
+
+        editBomPage.selectOtherMountType(testMountTypeData)
+            .enterPinCount(testPinCountData);
+
+        softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isTrue();
         softAssertions.assertAll();
     }
+
+    @Test
+    @TestRail(testCaseId = "3222")
+    @Description("Verify Pin Count only accepts integer values")
+    public void pinCountNeedsToBeIntTest() {
+        String testMountTypeData = generateStringUtil.getRandomString();
+        String testPinCountData = generateStringUtil.getRandomNumbers();
+
+        currentUser = UserUtil.getUser();
+        String fileName = "Test BOM 5.csv";
+        resourceFile = FileResourceUtil.getResourceAsFile(fileName);
+
+        loginPage = new EdcAppLoginPage(driver);
+        editBomPage = loginPage.login(currentUser)
+            .uploadComponent(resourceFile)
+            .clickUploadPCBA()
+            .selectMatchedPart("460819 BK005")
+            .highlightItem()
+            .editSelectedBom()
+            .selectOtherMountType(testMountTypeData)
+            .enterPinCount("123a");
+
+        softAssertions.assertThat(editBomPage
+            .isErrorMessageDisplayed("Pin Count must be a whole number")).isTrue();
+        softAssertions.assertThat(editBomPage.isSaveButtonDisabledDisplayed()).isTrue();
+
+        editBomPage.enterPinCount("12345");
+
+        softAssertions.assertThat(editBomPage.isSaveButtonEnabled()).isTrue();
+        softAssertions.assertAll();
+    }
+
 }

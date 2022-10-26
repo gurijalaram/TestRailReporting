@@ -1,5 +1,7 @@
 package com.apriori.cidappapi.utils;
 
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.utils.enums.ScenarioStateEnum.PROCESSING_FAILED;
 import static com.apriori.utils.enums.ScenarioStateEnum.transientState;
 import static org.junit.Assert.assertEquals;
@@ -205,8 +207,7 @@ public class ScenariosUtil {
      * Call GET on Scenario Representation by Component Endpoint with an expected Return Code
      *
      * @param componentInfo - The component info builder object
-     * @param httpStatus - The expected return code as an int
-     *
+     * @param httpStatus    - The expected return code as an int
      * @return response - A response object
      */
     public ResponseWrapper<Object> getScenarioRepresentationExpectingStatusCode(ComponentInfoBuilder componentInfo, int httpStatus) {
@@ -401,8 +402,10 @@ public class ScenariosUtil {
             if (componentInfo.getSubComponents().stream()
                 .anyMatch(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))) {
 
-                new CssComponent().getCssComponent(componentScenario[0], componentScenario[1], componentInfo.getUser()).getResponseEntity().getItems()
-                    .forEach(o -> new CssComponent().getCssComponent(o.getComponentName(), componentScenario[1], componentInfo.getUser()));
+                new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
+                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]).getResponseEntity().getItems()
+                    .forEach(o -> new CssComponent().getComponentParts(componentInfo.getUser(), COMPONENT_NAME_EQ.getKey() + o.getComponentName(),
+                        SCENARIO_NAME_EQ.getKey() + componentScenario[1]));
 
                 subComponentInfo.add(componentInfo.getSubComponents().stream()
                     .filter(o -> o.getComponentName().equalsIgnoreCase(componentScenario[0].trim()) && o.getScenarioName().equalsIgnoreCase(componentScenario[1].trim()))
@@ -595,7 +598,8 @@ public class ScenariosUtil {
         List<ComponentInfoBuilder> subComponentInfo = new ArrayList<>();
 
         for (String[] componentScenario : componentScenarioNames) {
-            ScenarioItem component = new CssComponent().getCssComponent(componentScenario[0], componentScenario[1], groupPublishRequest.getComponentInfo().getUser())
+            ScenarioItem component = new CssComponent().getComponentParts(groupPublishRequest.getComponentInfo().getUser(), COMPONENT_NAME_EQ.getKey() + componentScenario[0],
+                    SCENARIO_NAME_EQ.getKey() + componentScenario[1])
                 .getResponseEntity()
                 .getItems()
                 .stream()
