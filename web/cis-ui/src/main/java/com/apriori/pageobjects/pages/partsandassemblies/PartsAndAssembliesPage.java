@@ -809,7 +809,7 @@ public class PartsAndAssembliesPage extends EagerPageComponent<PartsAndAssemblie
     public PartsAndAssembliesPage hideFilterModal() {
         getPageUtils().waitForElementAndClick(btnFilter);
         getPageUtils().waitForElementsToNotAppear(By.id("popover-filter-control"),1);
-        return new PartsAndAssembliesPage(getDriver());
+        return this;
     }
 
     /**
