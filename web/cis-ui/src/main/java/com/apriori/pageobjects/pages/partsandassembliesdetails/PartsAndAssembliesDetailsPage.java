@@ -131,7 +131,7 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
     @FindBy(id = "title")
     private WebElement nameField;
 
-    @FindBy(xpath = "//div[@role='dialog']//*[@data-icon='times-circle']")
+    @FindBy(xpath = "//div[@role='dialog']//*[@data-icon='circle-xmark']")
     private WebElement modalCloseIcon;
 
     @FindBy(xpath = "//div[@role='dialog']")
@@ -364,6 +364,12 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
 
     @FindBy(xpath = "//div[@data-testid='uncosted-message-Cost the scenario to see the cost result summary.']")
     private WebElement unCostMessage;
+
+    @FindBy(xpath = "//div[@aria-label='Resolve Comment']//*[local-name()='svg']")
+    private WebElement unResolveIcon;
+
+    @FindBy(xpath = "//div[@aria-label='Unresolve Comment']//*[local-name()='svg']")
+    private WebElement resolveIcon;
 
     public PartsAndAssembliesDetailsPage(WebDriver driver) {
 
@@ -2010,5 +2016,54 @@ public class PartsAndAssembliesDetailsPage extends EagerPageComponent<PartsAndAs
      */
     public String getUnCostMessage() {
         return getPageUtils().waitForElementToAppear(unCostMessage).getAttribute("innerText");
+    }
+
+    /**
+     * Checks if resolve option displayed
+     *
+     * @return true/false
+     */
+    public boolean isResolveOptionDisplayed() {
+        return getPageUtils().waitForElementAppear(unResolveIcon).isDisplayed();
+    }
+
+    /**
+     * clicks on resolve icon
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickOnResolveIcon() {
+        getPageUtils().waitForElementAppear(unResolveIcon).click();
+        return this;
+    }
+
+    /**
+     * get resolve state
+     *
+     * @return a String
+     */
+    public String getResolveStatus() {
+        getPageUtils().waitForElementToAppear(resolveIcon);
+        return getPageUtils().waitForElementToAppear(resolveIcon).getAttribute("class");
+    }
+
+    /**
+     * clicks on unresolve icon
+     *
+     * @return true/false
+     */
+    public PartsAndAssembliesDetailsPage clickOnUnResolveIcon() {
+        getPageUtils().waitForElementAppear(resolveIcon).click();
+        return this;
+    }
+
+    /**
+     * get unresolve state
+     *
+     * @return a String
+     */
+    public String getUnResolveStatus() {
+        getPageUtils().waitForElementToAppear(unResolveIcon);
+        return getPageUtils().waitForElementToAppear(unResolveIcon).getAttribute("class");
     }
 }

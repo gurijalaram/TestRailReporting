@@ -310,6 +310,9 @@ public class PartsAndAssemblyTest extends TestBase {
                 .clickFilter()
                 .clickAddCondition()
                 .addFilterValue(componentName, scenarioName)
+                .clickAddCondition()
+                .hideFilterModal()
+                .checkFilteredComponents()
                 .clickMessages()
                 .clickPartsAndAssemblies();
 
