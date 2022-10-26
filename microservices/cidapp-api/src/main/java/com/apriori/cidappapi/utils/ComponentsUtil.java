@@ -1,6 +1,7 @@
 package com.apriori.cidappapi.utils;
 
 import static com.apriori.css.entity.enums.CssSearch.COMPONENT_NAME_EQ;
+import static com.apriori.css.entity.enums.CssSearch.COMPONENT_TYPE_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_NAME_EQ;
 import static com.apriori.css.entity.enums.CssSearch.SCENARIO_STATE_EQ;
 import static org.junit.Assert.assertEquals;
@@ -103,6 +104,21 @@ public class ComponentsUtil {
     }
 
     /**
+     * Post new component and query css.  This method will only return a component that has been translated ie. componentType = PART
+     * @param componentBuilder - the component object
+     * @return response object
+     */
+    public ScenarioItem postComponentQueryCssPart(ComponentInfoBuilder componentBuilder) {
+        postComponent(componentBuilder);
+
+        return new CssComponent().getWaitBaseCssComponents(componentBuilder.getUser(),
+            COMPONENT_NAME_EQ.getKey() + componentBuilder.getComponentName(), SCENARIO_NAME_EQ.getKey() + componentBuilder.getScenarioName(), COMPONENT_TYPE_EQ.getKey() + " PART")
+            .getResponseEntity()
+            .getItems()
+            .get(0);
+    }
+
+    /**
      * POST new component and query CSS
      *
      * @param componentBuilder - the component object
@@ -117,6 +133,7 @@ public class ComponentsUtil {
                 componentBuilder.getUser());
             componentBuilder.setComponentIdentity(scenarioItemResponse.get(0).getComponentIdentity());
             componentBuilder.setScenarioIdentity(scenarioItemResponse.get(0).getScenarioIdentity());
+            // TODO: 26/10/2022 see where needed and remove/fix up if necessary
             componentBuilder.setScenarioItem(scenarioItemResponse.get(0));
         });
 
