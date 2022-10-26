@@ -41,8 +41,12 @@ import com.apriori.utils.http.utils.RequestEntityUtil;
 import com.apriori.utils.http.utils.ResponseWrapper;
 import com.apriori.utils.reader.file.user.UserUtil;
 
+import com.google.common.net.UrlEscapers;
 import lombok.extern.slf4j.Slf4j;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -581,18 +585,23 @@ public class AcsResources {
     public AvailableRoutingsFirstLevel getAvailableRoutings(ScenarioIterationKey scenarioIterationKey, String vpeName, String processGroupName) {
         setupHeader();
 
-        final RequestEntity requestEntity = RequestEntityUtil
+        final RequestEntity requestEntity;
+        try {
+            requestEntity = RequestEntityUtil
                 .init(AcsApiEnum.AVAILABLE_ROUTINGS, AvailableRoutingsFirstLevel.class)
                 .headers(headers)
                 .inlineVariables(
-                        scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
-                        scenarioIterationKey.getScenarioKey().getTypeName(),
-                        scenarioIterationKey.getScenarioKey().getMasterName(),
-                        scenarioIterationKey.getScenarioKey().getStateName(),
-                        scenarioIterationKey.getIteration().toString(),
-                        vpeName,
-                        processGroupName
-                );
+                    scenarioIterationKey.getScenarioKey().getWorkspaceId().toString(),
+                    scenarioIterationKey.getScenarioKey().getTypeName(),
+                    URLEncoder.encode(scenarioIterationKey.getScenarioKey().getMasterName(), StandardCharsets.UTF_8.toString()),
+                    UrlEscapers.urlFragmentEscaper().escape(scenarioIterationKey.getScenarioKey().getStateName()),
+                    scenarioIterationKey.getIteration().toString(),
+                    URLEncoder.encode(vpeName, StandardCharsets.UTF_8.toString()),
+                    URLEncoder.encode(processGroupName, StandardCharsets.UTF_8.toString()))
+                .urlEncodingEnabled(false);
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
+        }
         return (AvailableRoutingsFirstLevel) HTTPRequest.build(requestEntity).get().getResponseEntity();
     }
 
@@ -602,14 +611,14 @@ public class AcsResources {
      * @param scenarioIterationKey - details of scenario to use (ScenarioIterationKey)
      * @return GenericResourceCreatedIdResponse instance
      */
-    public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey) {
+    public GenericResourceCreatedIdResponse saveRoutingSelection(ScenarioIterationKey scenarioIterationKey, String name, String plantName, String processGroupName) {
         setupHeader();
 
         List<RoutingSelectionInputs> childrenList = new ArrayList<>();
         childrenList.add(RoutingSelectionInputs.builder()
-            .name("Sheet Metal")
-            .plantName("aPriori USA")
-            .processGroupName("Sheet Metal")
+            .name(name)
+            .plantName(plantName)
+            .processGroupName(processGroupName)
             .alternNode(true)
             .build()
         );
@@ -618,9 +627,9 @@ public class AcsResources {
             .init(AcsApiEnum.ROUTING_SELECTION, GenericResourceCreatedIdResponse.class)
             .headers(headers)
             .body(RoutingSelectionInputs.builder()
-                .name("Sheet Metal/Machining")
-                .plantName("aPriori USA")
-                .processGroupName("Sheet Metal")
+                .name(name)
+                .plantName(plantName)
+                .processGroupName(processGroupName)
                 .children(childrenList)
                 .alternNode(false)
                 .build())
