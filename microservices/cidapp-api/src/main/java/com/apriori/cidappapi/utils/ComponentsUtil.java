@@ -108,7 +108,7 @@ public class ComponentsUtil {
      * @param componentBuilder - the component object
      * @return response object
      */
-    public ComponentInfoBuilder postComponentQueryCSS(ComponentInfoBuilder componentBuilder) {
+    public ComponentInfoBuilder postComponentQueryCSSUncosted(ComponentInfoBuilder componentBuilder) {
 
         List<Successes> componentSuccesses = postComponent(componentBuilder).getResponseEntity().getSuccesses();
 
@@ -202,7 +202,7 @@ public class ComponentsUtil {
 
         componentBuilder.setResourceFile(resourceFile);
 
-        return postComponentQueryCSS(componentBuilder);
+        return postComponentQueryCSSUncosted(componentBuilder);
     }
 
     /**

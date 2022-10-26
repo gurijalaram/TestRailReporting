@@ -129,7 +129,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return new page object
      */
     public EvaluatePage uploadComponentAndOpen(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSS(
+        ComponentInfoBuilder component = new ComponentsUtil().postComponentQueryCSSUncosted(
             ComponentInfoBuilder.builder()
                 .componentName(componentName)
                 .scenarioName(scenarioName)
@@ -260,7 +260,7 @@ public class ExploreToolbar extends MainNavBar {
      * @return response object
      */
     public ComponentInfoBuilder uploadComponent(String componentName, String scenarioName, File resourceFile, UserCredentials userCredentials) {
-        return new ComponentsUtil().postComponentQueryCSS(ComponentInfoBuilder.builder()
+        return new ComponentsUtil().postComponentQueryCSSUncosted(ComponentInfoBuilder.builder()
             .componentName(componentName)
             .scenarioName(scenarioName)
             .resourceFile(resourceFile)
