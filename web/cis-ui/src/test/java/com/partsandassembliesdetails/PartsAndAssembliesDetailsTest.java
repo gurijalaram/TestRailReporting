@@ -1130,7 +1130,8 @@ public class PartsAndAssembliesDetailsTest extends TestBase {
                 .clickOnSearchField()
                 .enterAComponentName(componentName);
 
-        partsAndAssembliesDetailsPage = partsAndAssembliesPage.clickOnComponentName(componentName)
+        .enterAComponentName(componentName)
+        .clickOnComponentName(componentName)
                 .clickMessageIconOnCommentSection()
                 .clickOnAttribute()
                 .selectAttribute(CisScenarioResultsEnum.DIGITAL_FACTORY.getFieldName())
