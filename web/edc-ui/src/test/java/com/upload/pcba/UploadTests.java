@@ -39,8 +39,8 @@ public class UploadTests extends TestBase {
     }
 
     @Test
-    @TestRail(testCaseId = "1553")
-    @Description("Basic workflow to upload a csv file, edit missing sections and save")
+    @TestRail(testCaseId = {"1553", "3225"})
+    @Description("Basic workflow to upload a csv file, edit missing sections and save, verify Pin Count and Mount Type are in Part Detail Brief view")
     public void testUploadBOM() {
         currentUser = UserUtil.getUser();
 
@@ -66,6 +66,7 @@ public class UploadTests extends TestBase {
             .clickSave();
 
         softAssertions.assertThat(matchedPartPage.getPinCountHeaderText()).isEqualTo("Pin Count");
+        softAssertions.assertThat(matchedPartPage.getMountTypeHeaderText()).isEqualTo("Mount Type");
 
         softAssertions.assertAll();
     }

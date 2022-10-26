@@ -1,6 +1,7 @@
 package com.apriori.pageobjects.common;
 
 import com.apriori.pageobjects.pages.login.MatchedPartPage;
+import com.apriori.utils.PageUtils;
 import com.apriori.utils.web.components.EagerPageComponent;
 
 import lombok.extern.slf4j.Slf4j;
@@ -46,6 +47,7 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
     private List<WebElement> mountTypeButtonsText;
 
     private DialogController dialogController = new DialogController(getDriver());
+    private PageUtils pageUtils;
 
     public EditBomPage(WebDriver driver) {
         super(driver, log);
@@ -67,7 +69,7 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
      * @return boolean
      */
     public boolean isSaveButtonEnabled() {
-        return getPageUtils().waitForElementToAppear(disabledSaveButton).isEnabled();
+        return getPageUtils().waitForElementToAppear(saveButton).isEnabled();
     }
 
     /**
@@ -79,6 +81,17 @@ public class EditBomPage extends EagerPageComponent<EditBomPage> {
         return getPageUtils().waitForElementToAppear(saveButton)
             .getAttribute("class")
             .contains("disabled");
+    }
+
+    /**
+     * Check if particular error on the edit BOM  page is displayed
+     *
+     * @return boolean
+     */
+    public boolean isErrorMessageDisplayed(String textDisplayed) {
+        By errorMessage =
+            By.xpath(String.format("//div[contains(.,'%s')][@class = 'invalid-feedback']", textDisplayed));
+        return getPageUtils().isElementDisplayed(errorMessage);
     }
 
     /**
